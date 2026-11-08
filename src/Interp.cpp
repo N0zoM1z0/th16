@@ -289,18 +289,14 @@ i32 InterpInt::step()
 }
 
 // The fields are read through a local copy of this, as in InterpFloat3::step.
-// TODO: 99%; the timer tick stores current_f in each branch (the original once after both), and initial = bezier_2 + tmp loads bezier_2.x first (the original tmp.x).
+// TODO: reconcile vector load/store scheduling with the complete target owner.
 // FUNCTION: TH16 0x463d40
 HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step()
 {
-    // Never used: four more named locals put the x components of the vector
-    // adds in the original's load order (see InterpFloat3::step).
-    i32 unused_0, unused_1, unused_2, unused_3;
-    (void)unused_0, (void)unused_1, (void)unused_2, (void)unused_3;
     InterpFloat2 *self = this;
     if (self->end_time > 0)
     {
-        self->time.tick_mixed();
+        self->time.tick();
         if (self->time.current >= self->end_time)
         {
             self->time.set(self->end_time);
@@ -417,18 +413,14 @@ D3DXVECTOR3 InterpFloat3::step()
     return self->current;
 }
 
-// TODO: 99%; the same remaining differences as InterpFloat2::step, of which this is a second copy.
+// TODO: the same remaining vector scheduling differences as InterpFloat2::step.
 // FUNCTION: TH16 0x425570
 HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
 {
-    // Never used: four more named locals put the x components of the vector
-    // adds in the original's load order (see InterpFloat3::step).
-    i32 unused_0, unused_1, unused_2, unused_3;
-    (void)unused_0, (void)unused_1, (void)unused_2, (void)unused_3;
     InterpFloat2 *self = this;
     if (self->end_time > 0)
     {
-        self->time.tick_mixed();
+        self->time.tick();
         if (self->time.current >= self->end_time)
         {
             self->time.set(self->end_time);

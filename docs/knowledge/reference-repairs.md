@@ -152,3 +152,46 @@ Two further source trials were reverted: integerizing the slot address in
 `EnemyManager::destroy_all` leaves the same SIB encoding difference, and using
 aggregate Int2 assignment in `Player::set_position_subpixel` leaves its early
 coordinate-conversion load unchanged.
+
+## Float2 timer and vector scheduling
+
+Both `InterpFloat2::step` (`0x00463D40`) and `step_radial_dist` (`0x00425570`)
+now use the regular timer helper, which merges the floating-frame store after
+the speed branches. Their four unused integer placeholders have been removed.
+The resulting diagnostic replay has a complete 757-byte contribution and first
+differs at offset `0x104`: the 260-byte timer/early-return prefix agrees, while
+vector load/store scheduling remains different. Both functions remain mismatch.
+
+Four explicit weighted-vector terms produced 749-byte contributions; four
+named scalar subexpressions produced 761; a switch dispatcher produced 769.
+Directly expanding the timer preserved the same vector differences. Swapping
+the acceleration sum did not help, and a named horizontal-wrap predicate in
+`Bullet::step_ex_12` left its four differing bytes unchanged. These experiments
+were reverted. Keep the remaining vector problem separate from the corrected
+timer store; no prefix-only result receives exact credit.
+
+The unannotated original at `0x0042F150` is the implicit
+`ItemManagerInner::~ItemManagerInner` (70 bytes): it destroys `0x1258` items of
+size `0xc78` through the EH vector destructor iterator. The candidate already
+has a complete 70-byte PDB contribution from Item.obj. Its EH-handler address
+and iterator linkage still need independent bindings, so no annotation or exact
+claim has been added merely from the similar compiler-generated wrapper.
+
+## Sign mask and derived cursor validation
+
+The complete sign-mask witness makes `collision_line_intersection` (982 bytes)
+and `zun_fabsf` (25 bytes) decidable and exact. The separately checked square-root
+runtime extents make `draw_sprite_fog` decidable, exposing its mistaken
+nearest-global binding for the loop limit. The bounded cursor proof described
+in `reviewed-linkages.md` fixes that provenance and replays all 522 bytes exactly.
+
+The final incremental audit has **606 exact, 41 mismatch and 567 incomplete**
+among 1214 annotated candidates. All 603 exact results from `e91bf45` remain
+exact. Two other previously incomplete candidates become decidable mismatches.
+The two Float2 functions remain mismatch after removing their unused locals;
+their partial timer agreement receives no exact credit. Twenty-three reviewed
+linkage controls, thirteen cursor-limit controls and twelve complete-owner
+controls passed. The relevant private evidence is
+`.analysis/pointer-limit-final-audit.log`, `.analysis/draw-sprite-fog-exact.json`
+and `.analysis/fabsf-exact.json`. No further cold build was used after the user
+requested incremental iteration.

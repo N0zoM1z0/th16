@@ -14,7 +14,7 @@ import struct
 
 import pefile
 
-from strict_oracle import Context, Incomplete, ROOT
+from strict_oracle import Context, Incomplete, ROOT, pointer_limit
 from linked_image import linked_code_fields, pdb_section_contributions
 
 
@@ -255,6 +255,10 @@ def main():
             unresolved = []
             for field in fields["fields"]:
                 destination = int(field["candidate_target"])
+                limit = pointer_limit(context, function, field, unit["linkages"])
+                if limit is not None:
+                    unit["linkages"].append(dict(offset=field["offset"], width=field["width"], type=field["type"], **limit))
+                    continue
                 if address <= destination < address + size:
                     unit["linkages"].append(dict(offset=field["offset"], width=field["width"], type=field["type"],
                         local=True, symbol="<local>", target=original + destination - address))

@@ -49,7 +49,9 @@ def reviewed_linkages(context, path=None):
             if row["kind"] == "runtime-function":
                 owners = [f for f in context.linked["functions"] if f["symbol"] == symbol]
                 target = context.boundaries.get(address)
-                if len(owners) != 1 or owners[0]["size"] != size or not target or int(target["size"]) != size:
+                candidate_size = int(row.get("candidate_size") or size)
+                if (len(owners) != 1 or owners[0]["size"] != candidate_size or not target
+                        or int(target["size"]) != size or candidate_size <= 0):
                     raise Incomplete("reviewed runtime linkage lacks both complete function extents")
                 library = row["candidate_library"]
                 library_root = (ROOT / ".tools/toolchain/sdk/Program Files/Windows Kits/10/Lib/10.0.10240.0/ucrt/x86"
@@ -150,6 +152,135 @@ def expected_fields(unit):
         occupied.update(extent)
         fields.append(row)
     return sorted(fields, key=lambda r: (r["offset"], r["type"]))
+
+
+def pointer_limit(context, function, field, linkages):
+    """Prove a non-dereferenced limit for a bounded field cursor over typed storage."""
+    import capstone
+    from capstone import x86
+    if field["type"] != "DIR32" or field.get("width", 4) != 4 or field.get("local"):
+        return None
+    start, size = int(function["address"], 0), int(function["size"])
+    code = context.image.read_address(start, size)
+    cache = context.__dict__.setdefault("_pointer_limit_instructions", {})
+    key = (start, code)
+    if key not in cache:
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        cache[key] = list(decoder.disasm(code, start))
+    instructions = cache[key]
+    positions = {i.address: n for n, i in enumerate(instructions)}
+    n = next((n for n, i in enumerate(instructions)
+              if i.imm_size == 4 and i.address - start + i.imm_offset == field["offset"]), -1)
+    if n < 0 or n + 1 >= len(instructions):
+        return None
+    compare, branch = instructions[n:n + 2]
+    if (compare.mnemonic != "cmp" or len(compare.operands) != 2
+            or compare.operands[0].type != x86.X86_OP_REG or compare.operands[1].type != x86.X86_OP_IMM
+            or branch.mnemonic != "jl" or branch.operands[0].type != x86.X86_OP_IMM):
+        return None
+    register = compare.operands[0].reg
+    if register not in {x86.X86_REG_EBX, x86.X86_REG_ESI, x86.X86_REG_EDI}:
+        return None
+    loop_start = branch.operands[0].imm
+    if loop_start not in positions or not start < loop_start < compare.address:
+        return None
+    body = instructions[positions[loop_start]:n]
+    writes = [i for i in body if register in i.regs_access()[1]]
+    if len(writes) != 1:
+        return None
+    step = writes[0]
+    if (step.mnemonic != "add" or len(step.operands) != 2
+            or step.operands[0].type != x86.X86_OP_REG or step.operands[0].reg != register
+            or step.operands[1].type != x86.X86_OP_IMM or step.operands[1].imm <= 0):
+        return None
+    stride = step.operands[1].imm
+    prior = [i for i in instructions[:positions[loop_start]] if register in i.regs_access()[1]]
+    if not prior:
+        return None
+    initial = prior[-1]
+    if (initial.mnemonic != "mov" or len(initial.operands) != 2
+            or initial.operands[0].type != x86.X86_OP_REG or initial.operands[0].reg != register
+            or initial.operands[1].type != x86.X86_OP_IMM or initial.imm_size != 4):
+        return None
+    initial_offset = initial.address - start + initial.imm_offset
+    anchors = [f for f in linkages if f["offset"] == initial_offset and f["type"] == "DIR32"
+               and "storage_name" in f and "storage_size" in f and not f.get("pointer_limit")]
+    if len(anchors) != 1:
+        return None
+    anchor = anchors[0]
+    offset, extent = anchor.get("addend", 0), anchor["storage_size"]
+    publics = [p for p in context.publics if p["symbol"] == anchor["symbol"]]
+    if len(publics) != 1 or not 0 <= offset < stride or extent <= 0 or extent % stride:
+        return None
+    base = publics[0]["address"]
+    if (initial.operands[1].imm != base + offset or compare.operands[1].imm != base + extent + offset
+            or not 0 <= base < base + extent + offset < 0x80000000
+            or not 0 <= anchor["target"] < anchor["target"] + extent + offset < 0x80000000):
+        return None
+    # No preheader edge may enter the loop after skipping its initializer.
+    for instruction in instructions[:positions[loop_start]]:
+        if instruction.mnemonic.startswith("loop") or instruction.mnemonic in {"jcxz", "jecxz"}:
+            return None
+        if instruction.group(capstone.CS_GRP_JUMP):
+            if instruction.operands[0].type != x86.X86_OP_IMM:
+                return None
+            destination = instruction.operands[0].imm
+            if instruction.address < initial.address and initial.address < destination <= branch.address:
+                return None
+    # Once the limit is reached, the old cursor may only be discarded/reset.
+    for instruction in instructions[n + 2:]:
+        reads, writes = instruction.regs_access()
+        if register in reads:
+            return None
+        if register in writes:
+            break
+    by_offset = {f["offset"]: f for f in linkages}
+    count = extent // stride
+    for instruction in body:
+        if (instruction.mnemonic.startswith("loop") or instruction.mnemonic in {"jcxz", "jecxz"}
+                or instruction.group(capstone.CS_GRP_INT) or instruction.group(capstone.CS_GRP_IRET)
+                or instruction.group(capstone.CS_GRP_PRIVILEGE)):
+            return None
+        if instruction.group(capstone.CS_GRP_RET):
+            return None
+        if instruction.group(capstone.CS_GRP_JUMP):
+            if (instruction.operands[0].type != x86.X86_OP_IMM
+                    or not instruction.address < instruction.operands[0].imm <= step.address):
+                return None
+        if instruction.group(capstone.CS_GRP_CALL):
+            operand = instruction.operands[0]
+            if operand.type == x86.X86_OP_IMM:
+                operand_offset, destination = instruction.imm_offset, operand.imm
+            elif operand.type == x86.X86_OP_MEM and not operand.mem.base and not operand.mem.index:
+                operand_offset, destination = instruction.disp_offset, operand.mem.disp
+            else:
+                return None
+            call = by_offset.get(instruction.address - start + operand_offset, {})
+            symbol = call.get("symbol", "")
+            addresses = [p["address"] for p in context.publics if p["symbol"] == symbol]
+            stdcall_import = symbol.startswith("__imp__") and re.search(r"@\d+$", symbol)
+            # This compiler math helper's reviewed x86 contract preserves the
+            # nonvolatile cursor. Other private runtime conventions need review.
+            runtime = (symbol == "__libm_sse2_sqrt_precise"
+                       and context.reviewed_linkages.get(symbol, {}).get("kind") == "runtime-function")
+            if addresses != [destination] or call.get("addend", 0) or not (stdcall_import or runtime):
+                return None
+        if (register in instruction.regs_access()[0] and not any(
+                op.type == x86.X86_OP_REG and op.reg == register or
+                op.type == x86.X86_OP_MEM and register in {op.mem.base, op.mem.index}
+                for op in instruction.operands)):
+            return None
+        for operand in instruction.operands:
+            if operand.type == x86.X86_OP_REG and operand.reg == register and instruction is not step:
+                return None
+            if operand.type == x86.X86_OP_MEM and register in {operand.mem.base, operand.mem.index}:
+                if (instruction.mnemonic == "lea" or operand.mem.base != register or operand.mem.index
+                        or operand.mem.segment or operand.size <= 0 or offset + operand.mem.disp < 0
+                        or offset + (count - 1) * stride + operand.mem.disp + operand.size > extent):
+                    return None
+    return dict(symbol=anchor["symbol"], target=anchor["target"], addend=extent + offset,
+                storage_name=anchor["storage_name"], storage_size=extent, pointer_limit=True)
 
 
 def replay_owner(image, target, publics, function, unit):
@@ -296,6 +427,10 @@ class Context:
             raise Incomplete("target boundary has a different span end")
         self.check_boundary(unit)
         for field in unit["linkages"]:
+            if field.get("pointer_limit"):
+                proof = pointer_limit(self, function, field, unit["linkages"])
+                if proof is None or any(field.get(key) != value for key, value in proof.items()):
+                    raise Incomplete("pointer limit lacks its bounded typed-cursor proof")
             reviewed = self.reviewed_linkages.get(field.get("symbol"))
             if reviewed and field["target"] != reviewed["target"]:
                 raise Incomplete("linkage differs from the independently reviewed fixed destination")
@@ -311,7 +446,7 @@ class Context:
             typed = [r for r in self.typed_globals if r["name"] == field["storage_name"] and r["address"] in addresses]
             if len(typed) != 1 or typed[0]["size"] != field["storage_size"]:
                 raise Incomplete("data addend lacks its declared unique PDB type extent")
-            if not 0 <= field.get("addend", 0) < field["storage_size"]:
+            if not field.get("pointer_limit") and not 0 <= field.get("addend", 0) < field["storage_size"]:
                 raise Incomplete("data addend leaves its typed global storage")
             target_base = field["target"]
             if not any(not s.characteristics & 0x20 and self.target.image_base + s.rva <= target_base

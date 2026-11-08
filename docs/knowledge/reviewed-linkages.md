@@ -18,14 +18,23 @@ The machine inputs are `config/linkage-bindings.csv`.
 | `_free` | `0x00477FB2` | 5 | The unsized-delete jump at `0x0047514B` reaches this UCRT thunk. |
 | `__free_base` | `0x0047BCB2` | 58 | The free jump at `0x00477FB2` reaches the null-checked HeapFree implementation with GetLastError and errno handling. |
 | `__malloc_base` | `0x0047BCEC` | 78 | The malloc jump at `0x00477FAD` reaches the size-checked HeapAlloc implementation with new-mode retry and errno handling. |
+| `__libm_sse2_sqrt_precise` | `0x00488690` | 254 | Independent Ghidra identification and the complete SSE2 square-root implementation, including MXCSR/x87 environment checks and the fallback path. Its pinned UCRT candidate contribution is 256 bytes. |
 
-Every entry has matching complete target and candidate PDB extents. The candidate
+Every entry checks its complete target extent and candidate PDB extent. The candidate
 PDB must name the pinned Microsoft `LIBCMT.lib`, `libvcruntime.lib` or UCRT
 `libucrt.lib`, as specified in the table input. UCRT ownership is checked against
 the separately pinned Windows SDK library path. The target extent hash is
 checked before use. These records
 establish reviewed external linkage identities; they do not grant a separate
 exact-code claim to each runtime implementation.
+
+The square-root helper has separately recorded target and candidate sizes. Both
+complete extents are mandatory: the original independent function is 254 bytes,
+while the candidate PDB contribution includes a trailing two-byte `mov edi, edi`
+after the final return. The `candidate_size` column records 256 rather than
+truncating that contribution. The target hash covers all 254 declared bytes.
+Tests reject either truncated extent. This entry identifies an external callee;
+its differing physical extents do not receive a callee exact-code claim.
 
 The five allocator entries also carry fixed incoming call/jump witnesses. The
 checker decodes the complete reviewed parent, requires the witness to start an
@@ -54,6 +63,7 @@ locations were reviewed through fixed instructions in separate target functions:
 | `__real@43000000` / 128.0f | `0x00494644` | `0x00407473`: `movss xmm3, [0x00494644]` | `anm_on_draw_masked` constructs the masked rectangle. |
 | `__real@3c000000` / 1/128 | `0x004943F4` | `0x0040E7CC`: `mulss xmm0, [0x004943F4]` | `BombAyaAInf::begin` scales the player's horizontal movement for bomb angle and speed. |
 | `__real@43e00000` / 448.0f | `0x004946B0` | `0x0040AB51`: `addss xmm7, [0x004946B0]` | `StdObject::is_culled` adds the vertical playfield extent. |
+| `__xmm@7fffffffffffffff7fffffffffffffff` / two double sign masks | `0x00494880` | `0x0040524A`: `andps xmm0, [0x00494880]` | `zun_fabsf` clears the widened floating-point sign bit. The witness reads the entire 16-byte literal. |
 
 The loader checks each entire typed payload in both images, the fixed target
 instruction mnemonic, absolute operand, operand width and payload hash. It does
@@ -105,3 +115,40 @@ addend against that storage, and checks mapped non-code target storage. Removing
 the proof or changing its size is rejected. This supplies the missing storage
 evidence without masking unknown addresses or expanding a global to the next
 convenient symbol.
+
+## Derived field-cursor limits
+
+`AnmManager::draw_sprite_fog` at `0x00467200` walks the alpha bytes of the four
+28-byte vertices in `g_sprite_temp_buffer`. The independent target base is
+`0x004DF830`; the PDB establishes 112 bytes of candidate storage. The cursor
+starts at byte 19, advances by 28, and compares against base + 112 + 19.
+Its final comparison immediate is `0x004DF8B3`. That computed limit is not
+dereferenced.
+
+In the candidate layout this address coincides with `g_arcfiles + 3`, while the
+original globals are unrelated. Choosing the nearest preceding public therefore
+bound the comparison to the wrong target global. Its two differing address
+bytes were a binding error rather than an instruction difference.
+
+The producer now recognizes this bounded cursor form from candidate code and
+the previously bound, typed initializer. It derives the limit from the original
+initializer's fixed object base, complete PDB storage size and field offset;
+it never chooses the original comparison operand to make a match. The manifest
+records `pointer_limit = true`, and the checker independently re-derives it.
+
+The supported proof requires a nonvolatile register initialized by a bound
+immediate, one positive constant increment, a signed-less-than backedge, an
+acyclic loop body, no edge bypassing initialization and no escaped cursor.
+Every cursor-relative memory operand must fit inside the real object for all
+iterations. The old cursor must be discarded or reset after the loop. Calls
+must have a supported preservation contract: decorated
+stdcall imports or the specifically reviewed SSE2 square-root helper. Counted
+secondary loops, unknown callees and implicit cursor uses are rejected.
+
+Ordinary data addends still must remain inside their typed storage. A computed
+limit is eligible only as the proven comparison immediate; putting the flag on
+a memory access does not authorize it. Thirteen controls include complete
+522-byte replay, the wrong-neighbor mismatch, missing proof, wrong addend,
+wrong stride, wrong backedge, bypassing initialization or the limit, escaped
+cursor, out-of-bounds store and missing callee preservation evidence. No candidate or
+target extent is truncated or expanded for this result.

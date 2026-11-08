@@ -50,6 +50,20 @@ class ReviewedLinkageControls(unittest.TestCase):
         with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
             self.check_rows(rows)
 
+    def test_runtime_identity_requires_the_full_candidate_extent(self):
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r["symbol"] == "__libm_sse2_sqrt_precise")["candidate_size"] = "254"
+        with self.assertRaisesRegex(Incomplete, "complete function extents"):
+            self.check_rows(rows)
+
+    def test_runtime_identity_requires_the_full_target_extent(self):
+        rows = copy.deepcopy(self.rows)
+        row = next(r for r in rows if r["symbol"] == "__libm_sse2_sqrt_precise")
+        row["size"] = "253"
+        row["target_sha256"] = hashlib.sha256(self.context.target.read_address(0x488690, 253)).hexdigest()
+        with self.assertRaisesRegex(Incomplete, "complete function extents"):
+            self.check_rows(rows)
+
     def test_string_must_have_its_complete_pdb_extent(self):
         rows = copy.deepcopy(self.rows)
         row = next(r for r in rows if r["kind"] == "string-literal")

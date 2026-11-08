@@ -56,13 +56,13 @@ address,name,source_file,symbol,result,reason,evidence
 0x00403110,PosVel::step,src/PosVel.cpp,?step@PosVel@@QAEXXZ,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004033D0,PosVel::step_from_center,src/PosVel.cpp,?step_from_center@PosVel@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004033F0,interp_common_methods,src/Interp.cpp,?interp_common_methods@@YAMHMM@Z,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00403A90,collision_test_points_in_rect,src/Collision.cpp,?collision_test_points_in_rect@@YGHMMMMMPAUD3DXVECTOR2@@@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00403D30,collision_test_circle_rect,src/Collision.cpp,?collision_test_circle_rect@@YGHMMMMMMMM@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00403EC0,collision_segment_intersection,src/Collision.cpp,?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00404220,collision_line_intersection,src/Collision.cpp,?collision_line_intersection@@YGHPAM0MMMMMM@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00403A90,collision_test_points_in_rect,src/Collision.cpp,?collision_test_points_in_rect@@YGHMMMMMPAUD3DXVECTOR2@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00403D30,collision_test_circle_rect,src/Collision.cpp,?collision_test_circle_rect@@YGHMMMMMMMM@Z,mismatch,,.analysis/reference-audit.json
+0x00403EC0,collision_segment_intersection,src/Collision.cpp,?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00404220,collision_line_intersection,src/Collision.cpp,?collision_line_intersection@@YGHPAM0MMMMMM@Z,exact,,.analysis/reference-audit.json
 0x00404600,collision_line_rect,src/Collision.cpp,?collision_line_rect@@YGHPAUD3DXVECTOR2@@0PAUD3DXVECTOR3@@MMMMMM@Z,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004049C0,collision_test_rect_rect,src/Collision.cpp,?collision_test_rect_rect@@YGHMMMMMMMMMM@Z,incomplete,12 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00405240,zun_fabsf,src/ZunMath.cpp,?zun_fabsf@@YAMM@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004049C0,collision_test_rect_rect,src/Collision.cpp,?collision_test_rect_rect@@YGHMMMMMMMMMM@Z,incomplete,8 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00405240,zun_fabsf,src/ZunMath.cpp,?zun_fabsf@@YAMM@Z,exact,,.analysis/reference-audit.json
 0x00405260,_floorf,src/CrtInline.cpp,_floorf,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004052A0,zun_atan2f,src/ZunMath.cpp,?zun_atan2f@@YAMMM@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004052E0,ZunAngle::operator+,src/ZunAngle.cpp,??HZunAngle@@QBE?AU0@M@Z,exact,,.analysis/reference-audit.json
@@ -235,7 +235,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00410470,BombMarisaSubInf::compute_damage,src/BombSub.cpp,?compute_damage@BombMarisaSubInf@@UAEHHH@Z,exact,,.analysis/reference-audit.json
 0x00410480,BombMarisaSubInf::cancel_bullets,src/BombSub.cpp,?cancel_bullets@BombMarisaSubInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x00410540,BombMarisaSubInf::end_at_stage_clear,src/BombSub.cpp,?end_at_stage_clear@BombMarisaSubInf@@UAEXXZ,exact,,.analysis/reference-audit.json
-0x00410550,BombReimuAOrb::update,src/BombMain.cpp,?update@BombReimuAOrb@@QAEXXZ,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00410550,BombReimuAOrb::update,src/BombMain.cpp,?update@BombReimuAOrb@@QAEXXZ,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004109D0,BombReimuAOrb::start,src/BombMain.cpp,?start@BombReimuAOrb@@QAEXHPAUD3DXVECTOR3@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00410AE0,BombReimuAOrb::finish,src/BombMain.cpp,?finish@BombReimuAOrb@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00410BB0,BombReimuAOrbs::finish_all,src/BombMain.cpp,?finish_all@BombReimuAOrbs@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -267,12 +267,12 @@ address,name,source_file,symbol,result,reason,evidence
 0x00412A60,BulletManager::on_draw_body,src/BulletManager.cpp,?on_draw_body@BulletManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00412C50,BulletManager::on_tick_callback,src/BulletManager.cpp,?on_tick_callback@BulletManager@@SIHPAU1@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00412C80,BulletManager::on_draw_callback,src/BulletManager.cpp,?on_draw_callback@BulletManager@@SIHPAU1@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00412CB0,BulletManager::shoot_one,src/BulletManager.cpp,?shoot_one@BulletManager@@QAEHPAUEnemyBulletShooter@@HHM@Z,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00412CB0,BulletManager::shoot_one,src/BulletManager.cpp,?shoot_one@BulletManager@@QAEHPAUEnemyBulletShooter@@HHM@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00413860,Bullet::run_ex,src/BulletManager.cpp,?run_ex@Bullet@@QAEXXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00414DA0,BulletManager::shoot_bullets,src/BulletManager.cpp,?shoot_bullets@BulletManager@@QAEHPAUEnemyBulletShooter@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00414EC0,Bullet::step_ex_00,src/BulletManager.cpp,?step_ex_00@Bullet@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00414FB0,Bullet::step_ex_02,src/BulletManager.cpp,?step_ex_02@Bullet@@QAEHXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004151E0,Bullet::step_ex_21,src/BulletManager.cpp,?step_ex_21@Bullet@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00414FB0,Bullet::step_ex_02,src/BulletManager.cpp,?step_ex_02@Bullet@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004151E0,Bullet::step_ex_21,src/BulletManager.cpp,?step_ex_21@Bullet@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004153E0,Bullet::step_ex_03,src/BulletManager.cpp,?step_ex_03@Bullet@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00415570,Bullet::step_ex_04,src/BulletManager.cpp,?step_ex_04@Bullet@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00415790,Bullet::bounce_left,src/BulletManager.cpp,?bounce_left@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -281,7 +281,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00415AE0,Bullet::bounce_bottom,src/BulletManager.cpp,?bounce_bottom@Bullet@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00415BB0,Bullet::step_ex_06,src/BulletManager.cpp,?step_ex_06@Bullet@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00415D80,Bullet::step_ex_12,src/BulletManager.cpp,?step_ex_12@Bullet@@QAEHXZ,mismatch,,.analysis/reference-audit.json
-0x00415F90,Bullet::step_ex_17,src/BulletManager.cpp,?step_ex_17@Bullet@@QAEHXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00415F90,Bullet::step_ex_17,src/BulletManager.cpp,?step_ex_17@Bullet@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004161F0,Bullet::step_ex_19,src/BulletManager.cpp,?step_ex_19@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004162D0,Bullet::step_ex_08,src/BulletManager.cpp,?step_ex_08@Bullet@@QAEHXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00416840,Bullet::cancel,src/BulletManager.cpp,?cancel@Bullet@@QAEHH@Z,exact,,.analysis/reference-audit.json
@@ -383,7 +383,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0041B540,EnemyRef::get,src/Enemy.cpp,?get@EnemyRef@@QAEPAVEnemyInf@@XZ,exact,,.analysis/reference-audit.json
 0x0041B580,EnemyInf::EnemyInf,src/Enemy.cpp,??0EnemyInf@@QAE@PBD@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0041BA10,EnemyInf::~EnemyInf,src/Enemy.cpp,??1EnemyInf@@UAE@XZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0041BB50,EnemyData::step_interpolators,src/Enemy.cpp,?step_interpolators@EnemyData@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0041BB50,EnemyData::step_interpolators,src/Enemy.cpp,?step_interpolators@EnemyData@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041C1F0,EnemyData::update_final_pos,src/Enemy.cpp,?update_final_pos@EnemyData@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0041C330,EnemyData::step_logic,src/Enemy.cpp,?step_logic@EnemyData@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0041CBD0,EnemyData::update_fog,src/EnemyFog.cpp,?update_fog@EnemyData@@QAEXXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -399,9 +399,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x00423050,EnemyData::ecl_enm_create,src/Enemy.cpp,?ecl_enm_create@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00423260,EnemyData::ecl_anm_set_sprite,src/Enemy.cpp,?ecl_anm_set_sprite@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004233A0,EnemyData::ecl_anm_vm_instr,src/Enemy.cpp,?ecl_anm_vm_instr@EnemyData@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00423810,EnemyInf::get_int_global,src/Enemy.cpp,?get_int_global@EnemyInf@@UAEHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00423810,EnemyInf::get_int_global,src/Enemy.cpp,?get_int_global@EnemyInf@@UAEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00423F80,EnemyInf::get_int_global_ptr,src/Enemy.cpp,?get_int_global_ptr@EnemyInf@@UAEPAHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00424110,EnemyInf::get_float_global,src/Enemy.cpp,?get_float_global@EnemyInf@@UAEMH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00424110,EnemyInf::get_float_global,src/Enemy.cpp,?get_float_global@EnemyInf@@UAEMH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00424C10,EnemyInf::get_float_global_ptr,src/Enemy.cpp,?get_float_global_ptr@EnemyInf@@UAEPAMH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00424E40,EnemyInf::set_interrupt,src/Enemy.cpp,?set_interrupt@EnemyInf@@QAEXHHPBD@Z,exact,,.analysis/reference-audit.json
 0x00424EB0,EnemyInf::set_timeout,src/Enemy.cpp,?set_timeout@EnemyInf@@QAEXHPBD@Z,exact,,.analysis/reference-audit.json
@@ -516,7 +516,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042F260,ItemManager::initialize,src/Item.cpp,?initialize@ItemManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0042F2D0,ItemManager::~ItemManager,src/Item.cpp,??1ItemManager@@QAE@XZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0042F440,ItemManager::create,src/Item.cpp,?create@ItemManager@@SAPAU1@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0042F4E0,ItemManager::on_tick_body,src/Item.cpp,?on_tick_body@ItemManager@@QAEHXZ,incomplete,8 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042F4E0,ItemManager::on_tick_body,src/Item.cpp,?on_tick_body@ItemManager@@QAEHXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00430100,Item::collect_power,src/Item.cpp,?collect_power@Item@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004303A0,Item::collect_full_power,src/Item.cpp,?collect_full_power@Item@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004304A0,Item::collect_big_power,src/Item.cpp,?collect_big_power@Item@@QAEXXZ,mismatch,,.analysis/reference-audit.json
@@ -585,13 +585,13 @@ address,name,source_file,symbol,result,reason,evidence
 0x00431FE0,LaserLineInf::run_ex,src/Laser.cpp,?run_ex@LaserLineInf@@UAEXXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00432620,LaserLineInf::step_ex_bounce,src/Laser.cpp,?step_ex_bounce@LaserLineInf@@UAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00432C20,LaserLineInf::step_ex_angle,src/Laser.cpp,?step_ex_angle@LaserLineInf@@UAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00432DC0,LaserLineInf::step_ex_accel,src/LaserLine.cpp,?step_ex_accel@LaserLineInf@@UAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00432DC0,LaserLineInf::step_ex_accel,src/LaserLine.cpp,?step_ex_accel@LaserLineInf@@UAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00432F40,LaserLineInf::on_tick,src/Laser.cpp,?on_tick@LaserLineInf@@UAEHXZ,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00433510,LaserLineInf::check_graze_or_kill,src/Laser.cpp,?check_graze_or_kill@LaserLineInf@@UAEHH@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00433720,LaserLineInf::on_draw,src/Laser.cpp,?on_draw@LaserLineInf@@UAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00433850,LaserLineInf::on_destroy,src/LaserLine.cpp,?on_destroy@LaserLineInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x00433860,LaserLineInf::cancel_as_bomb_rectangle,src/Laser.cpp,?cancel_as_bomb_rectangle@LaserLineInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00434010,LaserLineInf::sum_rect_damage,src/Laser.cpp,?sum_rect_damage@LaserLineInf@@UAEHHHHHHH@Z,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00434010,LaserLineInf::sum_rect_damage,src/Laser.cpp,?sum_rect_damage@LaserLineInf@@UAEHHHHHHH@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00434730,LaserLineInf::cancel_as_bomb_circle,src/Laser.cpp,?cancel_as_bomb_circle@LaserLineInf@@UAEHPAUD3DXVECTOR3@@MHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00434CD0,LaserLineInf::cancel,src/Laser.cpp,?cancel@LaserLineInf@@UAEHHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00434F70,LaserLineInf::touches_circle,src/LaserLine.cpp,?touches_circle@LaserLineInf@@UAEHPAUD3DXVECTOR3@@M@Z,exact,,.analysis/reference-audit.json
@@ -601,7 +601,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004357A0,LaserInfiniteInf::on_draw,src/Laser.cpp,?on_draw@LaserInfiniteInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x00435870,LaserInfiniteInf::on_destroy,src/LaserInfinite.cpp,?on_destroy@LaserInfiniteInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x00435880,LaserInfiniteInf::cancel_as_bomb_rectangle,src/Laser.cpp,?cancel_as_bomb_rectangle@LaserInfiniteInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00436010,LaserInfiniteInf::sum_rect_damage,src/Laser.cpp,?sum_rect_damage@LaserInfiniteInf@@UAEHHHHHHH@Z,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00436010,LaserInfiniteInf::sum_rect_damage,src/Laser.cpp,?sum_rect_damage@LaserInfiniteInf@@UAEHHHHHHH@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00436670,LaserInfiniteInf::cancel_as_bomb_circle,src/Laser.cpp,?cancel_as_bomb_circle@LaserInfiniteInf@@UAEHPAUD3DXVECTOR3@@MHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00436C70,LaserInfiniteInf::cancel,src/Laser.cpp,?cancel@LaserInfiniteInf@@UAEHHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00436EF0,LaserInfiniteInf::touches_circle,src/LaserInfinite.cpp,?touches_circle@LaserInfiniteInf@@UAEHPAUD3DXVECTOR3@@M@Z,exact,,.analysis/reference-audit.json
@@ -610,16 +610,16 @@ address,name,source_file,symbol,result,reason,evidence
 0x00437760,LaserCurveInf::on_destroy,src/LaserCurve.cpp,?on_destroy@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x004377D0,LaserCurveInf::on_tick,src/Laser.cpp,?on_tick@LaserCurveInf@@UAEHXZ,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00437CF0,LaserCurveInf::check_graze_or_kill,src/Laser.cpp,?check_graze_or_kill@LaserCurveInf@@UAEHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00437EE0,LaserCurveNode::get_state,src/Laser.cpp,?get_state@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM1M@Z,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00438370,LaserCurveNode::step_back,src/Laser.cpp,?step_back@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM10MMM@Z,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00437EE0,LaserCurveNode::get_state,src/Laser.cpp,?get_state@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM1M@Z,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00438370,LaserCurveNode::step_back,src/Laser.cpp,?step_back@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM10MMM@Z,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00438750,LaserCurveInf::on_draw,src/Laser.cpp,?on_draw@LaserCurveInf@@UAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00438CB0,LaserCurveInf::run_ex,src/Laser.cpp,?run_ex@LaserCurveInf@@UAEXXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004392C0,LaserCurveInf::step_ex_angle,src/Laser.cpp,?step_ex_angle@LaserCurveInf@@UAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00439460,LaserCurveInf::step_ex_angle_accel,src/Laser.cpp,?step_ex_angle_accel@LaserCurveInf@@UAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004395B0,LaserCurveInf::step_ex_accel,src/Laser.cpp,?step_ex_accel@LaserCurveInf@@UAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004395B0,LaserCurveInf::step_ex_accel,src/Laser.cpp,?step_ex_accel@LaserCurveInf@@UAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00439730,LaserCurveInf::step_ex_offscreen,src/LaserCurve.cpp,?step_ex_offscreen@LaserCurveInf@@UAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004397D0,LaserCurveInf::cancel_as_bomb_rectangle,src/LaserCurve.cpp,?cancel_as_bomb_rectangle@LaserCurveInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00439D60,LaserCurveInf::sum_rect_damage,src/Laser.cpp,?sum_rect_damage@LaserCurveInf@@UAEHHHHHHH@Z,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004397D0,LaserCurveInf::cancel_as_bomb_rectangle,src/LaserCurve.cpp,?cancel_as_bomb_rectangle@LaserCurveInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00439D60,LaserCurveInf::sum_rect_damage,src/Laser.cpp,?sum_rect_damage@LaserCurveInf@@UAEHHHHHHH@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0043A2F0,LaserCurveInf::cancel_as_bomb_circle,src/LaserCurve.cpp,?cancel_as_bomb_circle@LaserCurveInf@@UAEHPAUD3DXVECTOR3@@MHH@Z,exact,,.analysis/reference-audit.json
 0x0043A620,LaserCurveInf::cancel,src/LaserCurve.cpp,?cancel@LaserCurveInf@@UAEHHH@Z,exact,,.analysis/reference-audit.json
 0x0043A760,LaserCurveInf::touches_circle,src/LaserCurve.cpp,?touches_circle@LaserCurveInf@@UAEHPAUD3DXVECTOR3@@M@Z,exact,,.analysis/reference-audit.json
@@ -761,11 +761,11 @@ address,name,source_file,symbol,result,reason,evidence
 0x00445D40,damage_source_on_hit_bullet,src/PlayerShot.cpp,?damage_source_on_hit_bullet@@YIHPAUPlayerDamageSource@@HHMM@Z,exact,,.analysis/reference-audit.json
 0x00445E20,PlayerBullet::hit,src/PlayerShot.cpp,?hit@PlayerBullet@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00445ED0,sht_on_init_homing,src/PlayerShot.cpp,?sht_on_init_homing@@YIHPAUPlayerBullet@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00445EE0,sht_on_tick_homing,src/PlayerShot.cpp,?sht_on_tick_homing@@YIHPAUPlayerBullet@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00445EE0,sht_on_tick_homing,src/PlayerShot.cpp,?sht_on_tick_homing@@YIHPAUPlayerBullet@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004460C0,sht_on_hit_spark_back,src/PlayerShot.cpp,?sht_on_hit_spark_back@@YIHPAUPlayerBullet@@HHMM@Z,exact,,.analysis/reference-audit.json
 0x00446200,sht_on_init_laser,src/PlayerShot.cpp,?sht_on_init_laser@@YIHPAUPlayerBullet@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00446260,sht_on_tick_laser,src/PlayerShot.cpp,?sht_on_tick_laser@@YIHPAUPlayerBullet@@@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00446870,sht_on_hit_laser,src/PlayerShot.cpp,?sht_on_hit_laser@@YIHPAUPlayerBullet@@HHMM@Z,incomplete,8 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00446260,sht_on_tick_laser,src/PlayerShot.cpp,?sht_on_tick_laser@@YIHPAUPlayerBullet@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00446870,sht_on_hit_laser,src/PlayerShot.cpp,?sht_on_hit_laser@@YIHPAUPlayerBullet@@HHMM@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00446E00,sht_on_tick_accelerate,src/PlayerShot.cpp,?sht_on_tick_accelerate@@YIHPAUPlayerBullet@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00446E20,sht_on_hit_burst_rising,src/PlayerShot.cpp,?sht_on_hit_burst_rising@@YIHPAUPlayerBullet@@HHMM@Z,mismatch,,.analysis/reference-audit.json
 0x00446F80,sht_on_hit_burst,src/PlayerShot.cpp,?sht_on_hit_burst@@YIHPAUPlayerBullet@@HHMM@Z,exact,,.analysis/reference-audit.json
@@ -866,7 +866,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00453C10,TitleInf::do_replay_save,src/MainMenuStates.cpp,?do_replay_save@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004541B0,TitleInf::on_draw__replay_save,src/MainMenuStates.cpp,?on_draw__replay_save@TitleInf@@QAEHXZ,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004545A0,TitleInf::do_manual,src/MainMenuStates.cpp,?do_manual@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x004546F0,TitleInf::do_music_room,src/MainMenuStates.cpp,?do_music_room@TitleInf@@QAEHXZ,incomplete,8 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004546F0,TitleInf::do_music_room,src/MainMenuStates.cpp,?do_music_room@TitleInf@@QAEHXZ,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00455330,skip_line,src/MainMenu.cpp,?skip_line@@YIPADPADPAH@Z,exact,,.analysis/reference-audit.json
 0x00455370,read_line,src/MainMenu.cpp,?read_line@@YIPADPAD0PAH@Z,exact,,.analysis/reference-audit.json
 0x004553D0,TitleInf::do_spell_practice_stage_select,src/MainMenuStates.cpp,?do_spell_practice_stage_select@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -1021,11 +1021,11 @@ address,name,source_file,symbol,result,reason,evidence
 0x00465B50,AnmManager::write_sprite,src/AnmRender.cpp,?write_sprite@AnmManager@@QAEHPAURenderVertex144@@@Z,exact,,.analysis/reference-audit.json
 0x00465C40,AnmVm::write_sprite_corners__without_rot,src/AnmDraw.cpp,?write_sprite_corners__without_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004660B0,AnmVm::write_sprite_corners__with_z_rot,src/AnmDraw.cpp,?write_sprite_corners__with_z_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z,incomplete,8 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00466390,AnmManager::write_billboard_corners,src/AnmDraw.cpp,?write_billboard_corners@AnmManager@@SGHPAUAnmVm@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00466820,AnmManager::draw_billboard_fog,src/AnmDraw.cpp,?draw_billboard_fog@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00466390,AnmManager::write_billboard_corners,src/AnmDraw.cpp,?write_billboard_corners@AnmManager@@SGHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00466820,AnmManager::draw_billboard_fog,src/AnmDraw.cpp,?draw_billboard_fog@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00466F00,AnmManager::build_world_matrix,src/AnmRender.cpp,?build_world_matrix@AnmManager@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004671B0,AnmManager::draw_mode_5,src/AnmRender.cpp,?draw_mode_5@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
-0x00467200,AnmManager::draw_sprite_fog,src/AnmDraw.cpp,?draw_sprite_fog@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00467200,AnmManager::draw_sprite_fog,src/AnmDraw.cpp,?draw_sprite_fog@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00467410,AnmManager::draw_3d,src/AnmDraw.cpp,?draw_3d@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00467D00,AnmManager::draw_3d_vertex_strip,src/AnmDraw.cpp,?draw_3d_vertex_strip@AnmManager@@QAEHPAUAnmVm@@PAURenderVertexXyzDiffuseTex@@H@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004681F0,AnmManager::draw_vertex_strip,src/AnmRender.cpp,?draw_vertex_strip@AnmManager@@QAEHPAUAnmVm@@PAURenderVertex144@@H@Z,mismatch,,.analysis/reference-audit.json
@@ -1183,7 +1183,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00471D90,dsutil_debug_log,src/DSUtil.cpp,?dsutil_debug_log@@YAXZZ,exact,,.analysis/reference-audit.json
 0x00471DA0,ecl_log,src/EclRunContext.cpp,?ecl_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x00471DB0,EclRunContext::call_sub,src/EclRunContext.cpp,?call_sub@EclRunContext@@QAEHPAU1@HH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00472030,EclRunContext::ecl_run,src/EclRunContext.cpp,?ecl_run@EclRunContext@@QAEHM@Z,incomplete,10 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00472030,EclRunContext::ecl_run,src/EclRunContext.cpp,?ecl_run@EclRunContext@@QAEHM@Z,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00473BC0,SptInf::run_ecl,src/EclRunContext.cpp,?run_ecl@SptInf@@QAEHM@Z,exact,,.analysis/reference-audit.json
 0x00473C90,EclRunContext::get_int_arg,src/EclRunContext.cpp,?get_int_arg@EclRunContext@@QAEHH@Z,incomplete,indirect jump requires reviewed switch/owned-data extents,.analysis/reference-audit.json
 0x00473D40,EclRunContext::get_float_arg,src/EclRunContext.cpp,?get_float_arg@EclRunContext@@QAEMH@Z,exact,,.analysis/reference-audit.json
