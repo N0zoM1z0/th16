@@ -1,0 +1,161 @@
+[target]
+title = "東方天空璋 ～ Hidden Star in Four Seasons"
+version = "1.00a"
+region = "original-japanese"
+filename = "th16.exe"
+size = 683520
+sha256 = "c11776019f083978e66027e7394dafb1fb9543afca986f28049a49417e341929"
+sha1 = "90765f3688eb286332e2f8fcce73211bc167ef30"
+md5 = "cb9caf54ce5738f70086e783ec88fd2a"
+
+[provenance]
+classification = "original"
+version_database_commit = "25acfe37f0bed5008eb8b94afc3d72679fd50384"
+version_database_file_sha256 = "9ac6c0247b9c53129429f9522f66e035a7880d15082f8d519990ac7ed82c14e1"
+version_database_url = "https://github.com/thpatch/thcrap-tsa/blob/25acfe37f0bed5008eb8b94afc3d72679fd50384/base_tsa/versions.js"
+evidence = "User-supplied ZIP th16.exe; SHA-256 matches the thcrap original v1.00a entry. Immutable database commit is recorded in docs/BOOTSTRAP.md."
+
+[pe]
+machine = "i386"
+machine_id = 332
+image_base = "0x00400000"
+entry_point = "0x0047537B"
+entry_rva = "0x0007537B"
+linker_version = "14.10"
+section_count = 5
+size_of_image = 929792
+headers_raw_size = 1024
+timestamp_unix = 1501534029
+text_start = "0x00401000"
+text_end = "0x0048ACD9"
+text_raw_offset = "0x00000400"
+text_raw_size = 564736
+
+[[pe.sections]]
+name = ".text"
+rva = "0x00001000"
+virtual_size = 564442
+raw_offset = "0x00000400"
+raw_size = 564736
+
+[[pe.sections]]
+name = ".rdata"
+rva = "0x0008B000"
+virtual_size = 73070
+raw_offset = "0x0008A200"
+raw_size = 73216
+
+[[pe.sections]]
+name = ".data"
+rva = "0x0009D000"
+virtual_size = 274292
+raw_offset = "0x0009C000"
+raw_size = 37888
+
+[[pe.sections]]
+name = ".tls"
+rva = "0x000E0000"
+virtual_size = 9
+raw_offset = "0x000A5400"
+raw_size = 512
+
+[[pe.sections]]
+name = ".rsrc"
+rva = "0x000E1000"
+virtual_size = 6136
+raw_offset = "0x000A5600"
+raw_size = 6144
+
+[[rich_header.records]]
+product_id = 241
+build = 40116
+count = 32
+
+[[rich_header.records]]
+product_id = 243
+build = 40116
+count = 144
+
+[[rich_header.records]]
+product_id = 242
+build = 40116
+count = 31
+
+[[rich_header.records]]
+product_id = 199
+build = 41118
+count = 1
+
+[[rich_header.records]]
+product_id = 259
+build = 24723
+count = 23
+
+[[rich_header.records]]
+product_id = 260
+build = 24723
+count = 18
+
+[[rich_header.records]]
+product_id = 261
+build = 24723
+count = 44
+
+[[rich_header.records]]
+product_id = 171
+build = 30319
+count = 1
+
+[[rich_header.records]]
+product_id = 156
+build = 21202
+count = 2
+
+[[rich_header.records]]
+product_id = 123
+build = 50727
+count = 2
+
+[[rich_header.records]]
+product_id = 1
+build = 0
+count = 197
+
+[[rich_header.records]]
+product_id = 147
+build = 30729
+count = 15
+
+[[rich_header.records]]
+product_id = 131
+build = 30729
+count = 6
+
+[[rich_header.records]]
+product_id = 265
+build = 25017
+count = 71
+
+[[rich_header.records]]
+product_id = 255
+build = 25017
+count = 1
+
+[[rich_header.records]]
+product_id = 151
+build = 0
+count = 1
+
+[[rich_header.records]]
+product_id = 258
+build = 25017
+count = 1
+
+[toolchain]
+family = "Microsoft Visual C++ 2017-era v141 candidate with mixed earlier library records"
+compiler_version_candidate = "19.10.25017"
+linker_version = "14.10"
+profile_state = "unknown"
+translation_unit_partition_state = "unknown"
+link_order_state = "unknown"
+evidence = "PE linker 14.10; Rich build 25017 includes product 265 (71 records), with earlier 24723 and 40116 records. Per-unit compiler attribution remains under review."

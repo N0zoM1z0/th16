@@ -1,0 +1,186 @@
+[ghidra]
+version = "12.1.3"
+selection = ".tools/ghidra"
+authority = "provisional-semantic-analysis"
+
+[temurin_jdk]
+version = "21.0.12.1+1"
+selection = ".tools/jdk"
+
+[wine]
+runtime = "system-wine"
+architecture = "win32"
+prefix = ".tools/wine"
+display_mode = "xvfb-headless"
+
+[[analysis_files]]
+path = ".tools/ghidra/Ghidra/application.properties"
+sha256 = "fb9b6292c801e4a18b7c20829437d3b18b2241b273aea9b1cbdebdf3e5d0dc15"
+
+[[analysis_files]]
+path = ".tools/ghidra/support/analyzeHeadless"
+sha256 = "302880328a0024ee24cfe0326d4d9a61c2237116d95f2e0e0df090f747f95e30"
+
+[[analysis_files]]
+path = ".tools/jdk/bin/java"
+sha256 = "2a207f5e7d075afa01d97f8048389a64432a44c4a5af0f5e77d6e286ec5f401d"
+
+[msvc]
+version = "19.10.25017"
+linker_version = "14.10.25017.0"
+selection = ".tools/toolchain"
+profile_state = "unknown"
+
+[objdiff]
+version = "3.8.0"
+sha256 = "bc1e047126f9c6914bd1695798175234642ab9eaf45e886f841b59a4231e1a81"
+
+[python]
+minimum = "3.11"
+pefile = "2024.8.26"
+capstone = "5.0.9"
+reccmp = "0.1.7"
+
+[[compiler_files]]
+path = "dxsdk/Lib/x86/d3dx9.lib"
+sha256 = "0b1cd009d5e5ed15080c4d7ad0245a273242da07e0747921e80ac3ccf9bc0fc2"
+
+[[compiler_files]]
+path = "sdk/Program Files/Microsoft SDKs/Windows/v7.1A/Bin/RC.Exe"
+sha256 = "b72a640265ca5f0d8cad043e5661081aee9bd4aecaf8256aed1dd69742d44222"
+
+[[compiler_files]]
+path = "sdk/Program Files/Microsoft SDKs/Windows/v7.1A/Bin/RcDll.Dll"
+sha256 = "2f57f4df9705ccc44b8fcfc913d69c0a10bb5f87f0fa8488ab9c0ee5fc5901ef"
+
+[[compiler_files]]
+path = "sdk/Program Files/Microsoft SDKs/Windows/v7.1A/Lib/Kernel32.Lib"
+sha256 = "5c76cde0da4a277962316070b966e0829d35df93d5b54d79d81f964e56cd4819"
+
+[[compiler_files]]
+path = "sdk/Program Files/Windows Kits/10/Lib/10.0.10240.0/ucrt/x86/libucrt.lib"
+sha256 = "20b6a9d5e1e2198c8a7868045fae496c6a1b6743f22d1486920335f7c90bc860"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/atlprov.dll"
+sha256 = "5a0fb6a7c649a35c9bcb0a59f3eb7394cc08eec7817defc4ca55ca8c231b356e"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/bscmake.exe"
+sha256 = "d1da9c4ba9332f4cd9ab40a62ca9d743f417308250960e1611d46dfc10a584dd"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/c1.dll"
+sha256 = "8fc2428bf0bd91b1077440d835abecc26655cccd266fdd3be20256b0824ea574"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/c1xx.dll"
+sha256 = "5bdde40ab5da4cfeadd823e88e6d655d45434fa71a937034918586b3d91dda1a"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/c2.dll"
+sha256 = "3ca2a4f245e00b4535e6b6845274ea064a68f68d89b0339a71f2f0f73e0d7458"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/cl.exe"
+sha256 = "bb9f1a05139e3264d6e3c977f1cb34d89877758a06e849fcbfe20d2cd7baeedd"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/cvtres.exe"
+sha256 = "504aba058cfa571f5457bb181b8464363ac303d41a1b6e89dae779184dc3dd4d"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/d3dcompiler_47.dll"
+sha256 = "32651b76fc037ba563856a037e3a5d99bcbe14f92fb85d115351b294d2a9a680"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/dpcmi.dll"
+sha256 = "30d2b6fce8d2f6e767ae3e2f0a95492647fd4e3a3a8cf925c018632a9490af6b"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/dumpbin.exe"
+sha256 = "1065cc6dcd85efbfd9836f50aa0fba7cb2cd09f122c8050ac286eaec31a5a9e5"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/editbin.exe"
+sha256 = "cc4624a68ff52e01d5f0261de8b03c4e54afef25e12a12edf196bbb1210b12ac"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/ifc.exe"
+sha256 = "e2beef0d044d8587c5709e8851e65633ee4873619c0c394445dd47042220f06f"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/lib.exe"
+sha256 = "18f2d3e8b7677e32e5c098762f38e6304b6f6b556956915a0b44b268d0f723c1"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/link.exe"
+sha256 = "730f405d285b62fe7fb2716842164ccc439291d68770f6f6737e002062495dfa"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/ml.exe"
+sha256 = "e4fd3f894381357b33d6680bbdf6da1636c39aa515e356f39d1010f642e3ca9e"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/msobj140.dll"
+sha256 = "9ecea096743dd2a2d2083ccca7f67561ea30502a902a5b308292a42d0b96ac6f"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/mspdb140.dll"
+sha256 = "6a7b997c66604bed61caac7e7152af4a43bc52985f95064ff600c613b6e83ce2"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/mspdbcmf.exe"
+sha256 = "2fe422081ba6c1e93387816f22e763cc33f25a9efa3f88e1dd9dba8101f19120"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/mspdbcore.dll"
+sha256 = "394b0d213f22fb7aba7bf5666fe404e917c2c6b25da9bce1db65897f3ed68a87"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/mspdbsrv.exe"
+sha256 = "ebf115011a90425bc8987f9f126019cb6090ce1c18eec7e28d1ca5b303845ebf"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/mspdbst.dll"
+sha256 = "8c2774f67663081b9e26e2f72b51da7be67594c24f2171f114c56bfbd59df01d"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/mspft140.dll"
+sha256 = "8937d2f8290789af18022efcac3124392fdf70753dd702928810d6879f3dbb4b"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/msvcdis140.dll"
+sha256 = "d0495cef00f59501f537ea391eda90a51517d16f920c1abf1d152dddc92c0d90"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/msvcp140.dll"
+sha256 = "7b71100189a6bcdf3e4cf4b75283081b132e6855543bbbf112be774fb73ae089"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/nmake.exe"
+sha256 = "1268e75383b8460fb3d8deb3e56e24d66c42da9fd6e749a62e884a959abc835c"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/undname.exe"
+sha256 = "794ea3ee349497287a176892d5233bfbedd73da8cbc9e6dac265f339cb31cdab"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/vcmeta.dll"
+sha256 = "bfbe881e892af72f278c5505bb5e26647ae52b8fce5e7c4813c40ad6ae613e68"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/vcruntime140.dll"
+sha256 = "1676bffca4b8f024e5f1896f9f26612028cc46fcc0a2fe408098846929f9b200"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/bin/Hostx86/x86/xdcmake.exe"
+sha256 = "18d586635dba1f6f5cc5ba38791a970bd58148788b97f0141b0e1233def6e1e7"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/lib/x86/libcmt.lib"
+sha256 = "18b6808e41af919eb009f5f8450d5d095e720260036e7958c5eb8b15806af732"
+
+[[compiler_files]]
+path = "vs/VC/Tools/MSVC/14.10.25017/lib/x86/libvcruntime.lib"
+sha256 = "016bec76f1790699257c173f8815716367bd8ccb737c897d203912766be75afd"
