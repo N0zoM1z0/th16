@@ -468,3 +468,20 @@ linkage, cursor, PDB type and build-context controls). The final audit is
 `1a32210` match ledger. Game source and compiled artifacts are unchanged in
 this metadata batch. No new game build was needed. Complete code-comparison
 rules stay in force; source-origin review and Factory acceptance remain open.
+
+## Laser primary vftables
+
+All five laser primary tables now pass the existing RTTI/PDB proof without a
+checker change. Each has 26 callable slots, with a complete 108-byte candidate
+contribution including its locator prefix. All 130 slot identities agree with
+the fixed original function bindings. There is no virtual destructor slot;
+cloning is slot 25. The complete source contract and original type names were
+reviewed alongside the pointer inventory in `.analysis/laser-vtable-slots.csv`.
+
+The report advances to **620 exact, 49 mismatch and 545 incomplete** among 1214
+candidates, retaining every previous 614 exact result. New complete passes are
+LaserDataInf's constructor (138 bytes), LaserLineInf::clone (117), and the line,
+infinite, beam and curve constructors (83, 81, 61 and 72). Thirty vftable controls
+pass, including the new full 138-byte, 26-slot constructor replay. Evidence is
+`.analysis/laser-vtable-audit.log` and `.analysis/laser-vtable-controls.log`.
+No game rebuild, code-comparison relaxation or source-origin acceptance is used.

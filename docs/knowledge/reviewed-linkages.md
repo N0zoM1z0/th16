@@ -134,13 +134,18 @@ heap or for their error-handling callees. Unreviewed fields remain incomplete.
 
 ## Primary vftable identities
 
-Two address points are independently identified through original RTTI and
+The following address points are independently identified through original RTTI and
 complete virtual-function contracts:
 
 | Class | Original address point | Slot bytes | Complete candidate object |
 | --- | --- | ---: | ---: |
 | `ThreadInf` | `0x00491C34` | 4 | 8 bytes, including its locator pointer |
 | `Pbg::File` | `0x00493768` | 36 | 40 bytes, including its locator pointer |
+| `LaserDataInf` | `0x00492490` | 104 | 108 bytes, including its locator pointer |
+| `LaserLineInf` | `0x00492424` | 104 | 108 bytes, including its locator pointer |
+| `LaserInfiniteInf` | `0x004923B8` | 104 | 108 bytes, including its locator pointer |
+| `LaserCurveInf` | `0x004922E0` | 104 | 108 bytes, including its locator pointer |
+| `LaserBeamInf` | `0x0049234C` | 104 | 108 bytes, including its locator pointer |
 
 These are `vftable` records in the linkage table. Their hashes cover every
 original slot byte. The preceding locator pointer and all supporting RTTI
@@ -154,6 +159,20 @@ Pbg::File's nine slots are open (`0x00457700`), close (`0x00457850`), read
 and read_whole (`0x00457970`). These fixed function identities are checked
 against the original entries and candidate PDB owners; the checker does not
 select a target from the operand of the constructor being compared.
+
+The five laser tables each have 26 callable slots and no virtual destructor
+slot. Their layout is independently corroborated by the original RTTI and the
+full class contract: point sampling, ex execution, method_8, initialization,
+tick/draw/destroy, rectangle damage, rectangle/circle/full cancellation,
+method_2c, circle contact, graze handling, eleven ex-step methods, and cloning.
+Derived classes override their corresponding slots and inherit the others.
+Every one of the 130 pointers is checked against a complete candidate function
+owner and its previously fixed original identity. The per-slot original address
+and symbol inventory is `.analysis/laser-vtable-slots.csv`. Original callable
+end witnesses and full candidate contributions agree at 104 slot bytes plus the
+four-byte locator pointer; no extent is inferred merely from the next class's
+address. The existing proof and comparison rules needed no change for these
+five records.
 
 The proof supports PE32 primary tables with a zero-signature, zero-offset,
 non-construction CompleteObjectLocator. It reads the entire 20-byte locator,

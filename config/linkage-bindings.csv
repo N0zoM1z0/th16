@@ -39,3 +39,8 @@ __localtime64,0x47a36a,39,runtime-function,f91fcc9da1b445d5de93ab389b96c0542e34d
 ??_U@YAPAXI@Z,0x475142,9,runtime-function,2fc632fa16d745bcef2933b3c0d562c3e027159d2874f23ae4730a3b14ab0604,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,
 ??_7ThreadInf@@6B@,0x491c34,4,vftable,39496dca40380219600fa23f88f4ac0a514bb36ed96fb9d651d801a0ae868946,,,docs/knowledge/reviewed-linkages.md,,
 ??_7File@Pbg@@6B@,0x493768,36,vftable,af13ffc9f55e48d68e6e4f716568182e1ce7c1faab39d5bc66409c7cc41c6c44,,,docs/knowledge/reviewed-linkages.md,,
+??_7LaserDataInf@@6B@,0x492490,104,vftable,2a0ee2f32fa3db0b0b5e7f8de8b90b6e8f15eb87948a15790cf69dc882500e0d,,,docs/knowledge/reviewed-linkages.md,,
+??_7LaserLineInf@@6B@,0x492424,104,vftable,b39423042fc616c7a5b5759a889c0002f43d8e273e38aa3cea7b1e2977320b36,,,docs/knowledge/reviewed-linkages.md,,
+??_7LaserInfiniteInf@@6B@,0x4923b8,104,vftable,2aa83f63657476a7cf5eec0fbbfd6834dedd2764975d939b9b49621201e34851,,,docs/knowledge/reviewed-linkages.md,,
+??_7LaserCurveInf@@6B@,0x4922e0,104,vftable,798e18214e10a70d2d8d60a9b77ace829da19e423d25d9514f9f22af487d9346,,,docs/knowledge/reviewed-linkages.md,,
+??_7LaserBeamInf@@6B@,0x49234c,104,vftable,d20f15e65fee836581d5eec451f0fc0a3050dcfc81986a4875317301bff5f4ab,,,docs/knowledge/reviewed-linkages.md,,

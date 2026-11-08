@@ -6623,6 +6623,67 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-00430fc0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0LaserDataInf@@QAE@XZ"
+object = "Laser.obj"
+candidate_address = 4465424
+target_address = 4394944
+size = 138
+compare_size = 138
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 10, width = 4, type = "DIR32", symbol = "??_7LaserDataInf@@6B@", target = 4793488, addend = 0 },
+  { offset = 65, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+]
+
+[units.reference-004310b0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?clone@LaserLineInf@@UAEPAVLaserDataInf@@XZ"
+object = "Laser.obj"
+candidate_address = 4465664
+target_address = 4395184
+size = 117
+compare_size = 117
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 14, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 29, width = 4, type = "REL32", symbol = "??0LaserDataInf@@QAE@XZ", target = 4394944, addend = 0 },
+  { offset = 46, width = 4, type = "DIR32", symbol = "??_7LaserLineInf@@6B@", target = 4793380, addend = 0 },
+  { offset = 54, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 68, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 79, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 90, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 102, width = 4, type = "REL32", symbol = "_memcpy", target = 4747568, addend = 0 },
+]
+
+[units.reference-00431130]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0LaserLineInf@@QAE@XZ"
+object = "Laser.obj"
+candidate_address = 4465792
+target_address = 4395312
+size = 83
+compare_size = 83
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 11, width = 4, type = "REL32", symbol = "??0LaserDataInf@@QAE@XZ", target = 4394944, addend = 0 },
+  { offset = 28, width = 4, type = "DIR32", symbol = "??_7LaserLineInf@@6B@", target = 4793380, addend = 0 },
+  { offset = 36, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 50, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 61, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 72, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+]
+
 [units.reference-00431190]
 artifact_kind = "linked-pe"
 source = "src/LaserCurve.cpp"
@@ -6743,6 +6804,65 @@ linkages = [
   { offset = 72, width = 4, type = "REL32", symbol = "?on_tick_body@LaserManager@@QAEHXZ", target = 4396304, addend = 0 },
   { offset = 85, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
   { offset = 94, width = 4, type = "REL32", symbol = "?on_tick_body@LaserManager@@QAEHXZ", target = 4396304, addend = 0 },
+]
+
+[units.reference-00431860]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0LaserInfiniteInf@@QAE@XZ"
+object = "Laser.obj"
+candidate_address = 4467536
+target_address = 4397152
+size = 81
+compare_size = 81
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 12, width = 4, type = "REL32", symbol = "??0LaserDataInf@@QAE@XZ", target = 4394944, addend = 0 },
+  { offset = 29, width = 4, type = "DIR32", symbol = "??_7LaserInfiniteInf@@6B@", target = 4793272, addend = 0 },
+  { offset = 37, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 58, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 69, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+]
+
+[units.reference-004318c0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0LaserBeamInf@@QAE@XZ"
+object = "Laser.obj"
+candidate_address = 4467632
+target_address = 4397248
+size = 61
+compare_size = 61
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 11, width = 4, type = "REL32", symbol = "??0LaserDataInf@@QAE@XZ", target = 4394944, addend = 0 },
+  { offset = 28, width = 4, type = "DIR32", symbol = "??_7LaserBeamInf@@6B@", target = 4793164, addend = 0 },
+  { offset = 36, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 50, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+]
+
+[units.reference-00431900]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0LaserCurveInf@@QAE@XZ"
+object = "Laser.obj"
+candidate_address = 4467696
+target_address = 4397312
+size = 72
+compare_size = 72
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 11, width = 4, type = "REL32", symbol = "??0LaserDataInf@@QAE@XZ", target = 4394944, addend = 0 },
+  { offset = 28, width = 4, type = "DIR32", symbol = "??_7LaserCurveInf@@6B@", target = 4793056, addend = 0 },
+  { offset = 36, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 50, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 61, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
 ]
 
 [units.reference-00431950]

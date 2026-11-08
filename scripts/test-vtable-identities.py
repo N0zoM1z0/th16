@@ -73,6 +73,11 @@ class VftableControls(unittest.TestCase):
         self.assertEqual(result[THREAD]["size"], 4)
         self.assertEqual(result[FILE]["size"], 36)
 
+    def test_complete_laser_constructor_with_26_slots_replays(self):
+        units = tomllib.loads((ROOT / "config/match-units.toml").read_text())["units"]
+        result = self.context.compare(units["reference-00430fc0"])
+        self.assertEqual((result["result"], result["compared_size"], result["matched_bytes"]), ("exact", 138, 138))
+
     def test_pdb_table_cannot_be_truncated(self):
         context = copy.copy(self.context)
         context.data_contributions = copy.deepcopy(context.data_contributions)
