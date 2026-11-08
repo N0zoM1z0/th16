@@ -196,11 +196,6 @@ static __forceinline i32 help_menu_moved(MenuHelper *m)
 // FUNCTION: TH16 0x42eab0
 DECOMP_NOINLINE i32 HelpManual::on_tick_body()
 {
-    // A dead double: it makes LTCG realign this frame (and esp, -8) early,
-    // as the original does, which also gives create_ui_vm its padded frame.
-    // It stands in for AnmVm::run wanting an aligned stack (docs/findings.md).
-    double unused = 0.0;
-    (void)unused;
     D3DXVECTOR3 pos;
     pos.y = 0.0f;
     pos.z = 0.0f;

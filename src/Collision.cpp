@@ -403,20 +403,6 @@ HARNESS_CALLED i32 __stdcall collision_line_rect(Float2 *near_point, Float2 *far
 HARNESS_CALLED i32 __stdcall collision_test_rect_rect(f32 x1, f32 y1, f32 w1, f32 h1, f32 angle1, f32 x2, f32 y2,
                                                       f32 w2, f32 h2, f32 angle2)
 {
-    // Dead named locals for matching: the count of named variables changes
-    // MSVC's register and stack slot choices, and six come closest.
-    i32 unused_0 = 0;
-    (void)unused_0;
-    i32 unused_1 = 0;
-    (void)unused_1;
-    i32 unused_2 = 0;
-    (void)unused_2;
-    i32 unused_3 = 0;
-    (void)unused_3;
-    i32 unused_4 = 0;
-    (void)unused_4;
-    i32 unused_5 = 0;
-    (void)unused_5;
     Float2 corners2[4];
     Float2 corners1[4];
     Float2 rel[4];

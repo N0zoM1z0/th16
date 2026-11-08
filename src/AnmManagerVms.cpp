@@ -198,14 +198,9 @@ void __stdcall AnmManager::interrupt_tree(AnmId id, i32 interrupt)
     }
 }
 
-// interrupt_tree_and_run's body. The dead double is not ZUN's code: it makes
-// the frame realign (and esp, -8) like the original's; the callers reach it
-// through the inline interrupt_tree_and_run, so they do not realign early.
 // FUNCTION: TH16 0x46f130
 void __stdcall AnmManager::interrupt_tree_and_run_out_of_line(AnmId id, i32 interrupt)
 {
-    double unused = 0.0;
-    (void)unused;
     AnmVm *vm = g_AnmManager->get_vm_with_id(id);
     if (vm == NULL)
     {

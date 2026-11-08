@@ -58,15 +58,9 @@ void TitleInf::set_state(i32 state)
 }
 
 // Moves to another step of the current screen.
-// The dead double is not ZUN's code but stands in for whatever double math
-// the optimizer removed from his body: LTCG's double stack alignment pass
-// sees it at the IL level, so every caller (exactly the menu states that
-// call set_substate) realigns its frame (and esp, -8) as in the original.
 // FUNCTION: TH16 0x44a5e0
 HARNESS_CALLED void TitleInf::set_substate(i32 substate)
 {
-    double unused = substate;
-    (void)unused;
     this->substate = substate;
     time_in_state.reset();
 }

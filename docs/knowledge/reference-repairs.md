@@ -317,3 +317,82 @@ record `.analysis/draw-line-exact.json`. `scripts/progress.py` validates current
 source, artifact, report and retained-unit identities. No cold build, new
 Oracle rule or additional acceptance authority was used in this source batch.
 Source-origin review and Factory acceptance remain open.
+
+## Removing explicit compiler-perturbation locals
+
+A controlled probe of `world_pos` temporary ownership tested direct expression,
+const-reference, named-vector and component-wise forms under the pinned compiler.
+All four non-LTCG COFF procedures contain a GS cookie. The existing non-LTCG
+symbol-discovery object also contains it. This rules out simply assuming that a
+const reference or scalar component additions remove the cookie. It does not
+settle the original LTCG context or authorize disabling GS for one function.
+The ignored probe and disassembly are `.analysis/world-position-gs-probe.cpp`
+and `.analysis/world-position-gs-probe-disasm.txt`.
+
+The remaining source contained variables explicitly documented as non-original
+and used only to perturb MSVC's named-variable allocation or double-stack
+alignment passes. This batch removes 80 declaration statements containing
+86 variables (22 doubles and 64 integers), their discarded-value casts, and
+self-multiplications of a dead zero. The declarations occur in 39 blocks across
+18 C++ files. Compiler-context comments in AnmManager.h were updated to stop
+asserting alignment properties caused by these removed variables.
+
+| Source | Doubles removed | Integers removed |
+| --- | ---: | ---: |
+| `src/AnmManager.cpp` | 1 | 0 |
+| `src/AnmManagerVms.cpp` | 1 | 0 |
+| `src/AnmVmCallbacks.cpp` | 2 | 3 |
+| `src/BulletManager.cpp` | 1 | 8 |
+| `src/Collision.cpp` | 0 | 6 |
+| `src/Enemy.cpp` | 1 | 0 |
+| `src/Globals.cpp` | 2 | 0 |
+| `src/Gui.cpp` | 5 | 0 |
+| `src/HelpManual.cpp` | 1 | 0 |
+| `src/Interp.cpp` | 0 | 4 |
+| `src/Laser.cpp` | 3 | 24 |
+| `src/LaserInfinite.cpp` | 1 | 2 |
+| `src/MainMenu.cpp` | 1 | 0 |
+| `src/MainMenuStates.cpp` | 0 | 4 |
+| `src/PlayerShot.cpp` | 1 | 0 |
+| `src/PosVel.cpp` | 0 | 5 |
+| `src/Stage.cpp` | 1 | 8 |
+| `src/ZunAngle.cpp` | 1 | 0 |
+
+The removal is limited to these reviewed standalone locals. Unused function
+parameters, unknown/padding structure fields, mathematical operations that feed
+real results, source annotations, ABI macros and compiler-context harnesses are
+preserved. All function/global/vtable annotations in the 19 changed source files
+were compared with checkpoint `54c6d82` and remain identical. Compiler/link flags,
+Oracle code, target boundaries and reviewed linkage inputs are unchanged.
+
+The exact original fragments are retained in
+`.analysis/artificial-locals-removal.json`; this is also the source for the table
+above. No surviving exact result is inferred from the removal. Every affected
+and unaffected annotated owner must pass the new current-source replay. A
+previous exact result that depended on these artificial inputs is withdrawn
+rather than kept through padding, forced arithmetic or a changed comparison.
+Other compiler-context helpers, forced accesses and type hypotheses still need
+separate source review; this cleanup is not whole-source origin acceptance.
+
+The completed incremental replay reports **600 exact, 49 mismatch and 565
+incomplete** among the same 1214 annotated candidates, totaling 107,651 exact
+owned bytes. Twenty-three previous exact results from `54c6d82` are withdrawn:
+fifteen no longer have equal complete extents, and eight have complete byte
+differences. No new exact result is claimed for this cleanup. All other 600
+previous exact owners remain exact, including the 569-byte line renderer.
+
+The withdrawals include directly edited effect/notice functions and callers
+whose LTCG frame context changes, including shooting, menu cursors and input
+polling. Full per-function changes are in
+`.analysis/artificial-locals-regression-check.json`; generated canonical ledgers
+and retained units reflect these withdrawals. The current report is
+`.analysis/reference-audit.json`, and the incremental build/audit logs are
+`.analysis/artificial-locals-final-build.log` and
+`.analysis/artificial-locals-final-audit.log`.
+
+Fifty-five controls pass against the new artifacts: twelve complete-owner,
+twenty-three reviewed-linkage, thirteen cursor-limit and seven PDB type/storage
+checks. `scripts/progress.py` confirms current source, artifact, report and unit
+identities. This source cleanup does not change the Oracle or confer Factory
+acceptance. Do not recover the withdrawn exact labels by restoring the removed
+dead metadata; reconstruct the real dataflow, types and calling context instead.

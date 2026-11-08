@@ -41,16 +41,22 @@ alignment before restoring any affected exact result. Other explicitly
 non-original dead locals and arithmetic remain in the import and still need
 source review; a local byte match alone does not settle that review.
 
-The latest local checkpoint has 623 exact, 41 mismatch and 550 incomplete
-candidates from an incremental build. All 622 exact results at `c5eff1f` remain
-exact. `draw_line` is now a complete 569-byte strict pass through a source-level
-vector-indexing change. Both Float2 interpolation functions first differ at
-byte 453 rather than 260; collision rotation writes y before x but still has
-register differences. These partial improvements remain mismatch.
+The latest local checkpoint has 600 exact, 49 mismatch and 565 incomplete
+candidates after removing 86 explicitly artificial locals (22 doubles and
+64 integers) from 39 blocks in 18 C++ files. Standalone declaration statements,
+discard casts and dead zero multiplications were removed; parameters, structure
+layouts, annotations, ABI macros and compiler-context harnesses remain intact.
+The 23 withdrawn exact results are recorded in
+`.analysis/artificial-locals-regression-check.json`. Fifteen now lack matching
+complete extents and eight mismatch. All other 600 previous exact results remain
+exact. This correction is intentional: do not restore dead source solely to
+raise the match count. Recover real types, dataflow and calling context.
 
-`world_pos` now uses a direct recursive vector expression, with its imported
-artificial local, volatile cast and safebuffers helper removed. Its new GS
-cookie makes the candidate 315 bytes versus the original 297, so it remains
-incomplete. Recover that compiler/temporary context before claiming exactness.
-The source trials and full regression result are in
-`knowledge/reference-repairs.md`; no Oracle comparison rule was changed.
+`draw_line` remains a complete 569-byte strict pass. `world_pos` still has an
+unresolved GS-cookie/extent difference. A four-form non-LTCG probe found a cookie
+for direct expression, reference, named vector and scalar component variants;
+that evidence does not settle original LTCG context or justify disabling GS.
+The cleanup is a dependency-tracked incremental build, with a complete replay
+and 55 passing Oracle controls. See `knowledge/reference-repairs.md` for source
+inventory and evidence. No Oracle comparison rule was changed; origin review
+and Factory acceptance remain open.

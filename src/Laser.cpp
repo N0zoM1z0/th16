@@ -1158,15 +1158,6 @@ i32 LaserLineInf::cancel(i32 mode, i32 skip_invuln)
     {
         return 0;
     }
-    // Three dead named locals, as in LaserInfiniteInf::cancel: the count of
-    // named variables decides MSVC's choices here (docs/findings.md), and
-    // these come closer to the original. Matching only.
-    i32 unused_a = 0;
-    i32 unused_b = 0;
-    i32 unused_c = 0;
-    (void)unused_a;
-    (void)unused_b;
-    (void)unused_c;
     f32 dist = 8.0f;
     i32 count = 0;
     Float3 step;
@@ -1210,15 +1201,6 @@ i32 LaserInfiniteInf::cancel(i32 mode, i32 skip_invuln)
     {
         return 0;
     }
-    // Three dead named locals: MSVC orders the x component's load by the
-    // function's count of named variables (period 8; docs/findings.md), and
-    // these give the original's order. Matching only.
-    i32 unused_a = 0;
-    i32 unused_b = 0;
-    i32 unused_c = 0;
-    (void)unused_a;
-    (void)unused_b;
-    (void)unused_c;
     f32 dist = 8.0f;
     i32 count = 0;
     Float3 step;
@@ -1268,11 +1250,6 @@ i32 LaserLineInf::cancel_as_bomb_circle(Float3 *center, f32 radius, i32 mode, i3
     {
         return 0;
     }
-    // A dead named local: MSVC's register choices here follow the function's
-    // count of named variables (docs/findings.md, vector operand order), and
-    // one more gives the original's. Matching only.
-    i32 unused_a = 0;
-    (void)unused_a;
     Float3 origin = position;
     i32 count = 0;
     f32 dist = 8.0f;
@@ -1462,27 +1439,10 @@ static_assert(offsetof(EnemyInf, enemy.anm_ids) == 0x1330, "EnemyInf::enemy.anm_
 // Never called. LaserInfiniteInf::sum_rect_damage for a straight laser: the boss
 // is only tested when it exists, and the damage per point also depends on
 // the laser's length, as in LaserCurveInf::sum_rect_damage.
-// The seven dead locals are not ZUN's: the count of named variables decides
-// MSVC's register choices here (period 8; docs/findings.md), and seven more
-// come closest to the original. Matching only.
 // TODO: register allocation differs as in LaserInfiniteInf::sum_rect_damage (the original keeps this in edi, size in esi).
 // FUNCTION: TH16 0x434010
 i32 LaserLineInf::sum_rect_damage(i32 a, i32 b, i32 c, i32 d, i32 e, i32 f)
 {
-    i32 unused_a = 0;
-    i32 unused_b = 0;
-    i32 unused_c = 0;
-    i32 unused_d = 0;
-    i32 unused_e = 0;
-    i32 unused_f = 0;
-    i32 unused_g = 0;
-    (void)unused_a;
-    (void)unused_b;
-    (void)unused_c;
-    (void)unused_d;
-    (void)unused_e;
-    (void)unused_f;
-    (void)unused_g;
     Float3 *pos = (Float3 *)a;
     Float3 *size = (Float3 *)b;
     f32 rect_angle = *(f32 *)&c;
@@ -2318,13 +2278,9 @@ i32 LaserInfiniteInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32
 
 // Sets the laser up from its parameters: the body and its origin VM, the
 // shot sound, and the start offset along the aim.
-// The dead double is not ZUN's code: as in LaserLineInf::initialize, it
-// makes LTCG realign the frame (and esp, -8) like the original.
 // FUNCTION: TH16 0x435050
 i32 LaserInfiniteInf::initialize(void *params)
 {
-    double unused = 0.0;
-    (void)unused;
     inner = *(LaserInfiniteInner *)params;
     bullet_type = inner.type;
     state = LASER_STATE_WARNING;
@@ -2846,27 +2802,11 @@ void LaserCurveInf::run_ex()
 // Steps a segment back from the previous one's position (pos, speed, angle)
 // along the node's motion. In mode 2 the whole part of t is kept as the
 // double floor returns: the original converts it with cvtpd2ps.
-// The six dead locals are not ZUN's: MSVC orders the x component loads by
-// the function's count of named variables (period 8; docs/findings.md), and
-// these give the original's dt copy and, with D3DXVec3Add(&sum, &a, &b), the
-// x operands of the sum. Matching only.
 // TODO: mode 1 still squares sum.y into the register it adds to where the original squares sum.x (the operand order of the sum, a length-squared local, offset_length_sq, D3DXVec2Length and field-wise sums do not change it).
 // FUNCTION: TH16 0x438370
 void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, Float3 *pos, f32 speed, f32 angle,
                                f32 t)
 {
-    i32 unused_a = 0;
-    i32 unused_b = 0;
-    i32 unused_c = 0;
-    i32 unused_d = 0;
-    i32 unused_e = 0;
-    i32 unused_f = 0;
-    (void)unused_a;
-    (void)unused_b;
-    (void)unused_c;
-    (void)unused_d;
-    (void)unused_e;
-    (void)unused_f;
     switch (mode)
     {
     case 0:
@@ -2931,22 +2871,11 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
     }
 }
 
-// The four dead locals are not ZUN's: the function's count of named
-// variables decides MSVC's register choices here (docs/findings.md), and
-// these come closest to the original. The mode 2 loop is a guarded do/while
-// counting down like the original's sub/jne. Matching only.
+// Mode 2 uses a guarded countdown loop for the whole elapsed frames.
 // TODO: in mode 2's loop the original keeps s in xmm6 and pos.x in its stack slot (ours keeps pos.x in xmm7 and s in memory); the frame is aligned to 64.
 // FUNCTION: TH16 0x437ee0
 void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, f32 time)
 {
-    i32 unused_a = 0;
-    i32 unused_b = 0;
-    i32 unused_c = 0;
-    i32 unused_d = 0;
-    (void)unused_a;
-    (void)unused_b;
-    (void)unused_c;
-    (void)unused_d;
     time -= start_time;
     switch (mode)
     {
@@ -3027,14 +2956,10 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
 // full length, moving and shrinking to laser_new_arg_3), leaving the screen
 // once the two delay timers ran out, then the graze check and the VMs.
 // Nonzero once the laser is done.
-// The dead double is not ZUN's code: as in LaserLineInf::initialize, it
-// makes LTCG realign the frame (and esp, -8) like the original.
 // TODO: the original keeps the * 1.0f of the inlined timer decrements, adds the tip offset's x component into its own register, and keeps the zero constant in xmm5 (ours xmm6).
 // FUNCTION: TH16 0x432f40
 i32 LaserLineInf::on_tick()
 {
-    double unused = 0.0;
-    (void)unused;
     i32 again;
     do
     {
@@ -3473,15 +3398,9 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
 
 // Sets the laser up from its parameters: the body, origin and tip VMs, the
 // delay timers, the shot sound and the start offset along the aim.
-// The dead double is not ZUN's code: it stands in for double math the
-// optimizer removed from his body. LTCG's double stack alignment pass sees it
-// at the IL level, so this function realigns its frame (and esp, -8) like the
-// original (see TitleInf::set_substate).
 // FUNCTION: TH16 0x431b30
 i32 LaserLineInf::initialize(void *params)
 {
-    double unused = 0.0;
-    (void)unused;
     inner = *(LaserLineInner *)params;
     bullet_type = inner.bullet_type;
     state = LASER_STATE_ACTIVE;

@@ -64,10 +64,7 @@ HARNESS_CALLED i32 score_extend_quota_out_of_line()
 }
 
 // Adds power up to the maximum (with the full power notice when it gets
-// there). The dead double is not ZUN's code: it stands in for whatever made
-// LTCG's stack alignment pass treat the show_notice call as wanting an
-// aligned stack. With it and the one in Gui::show_notice the frame is
-// padded like the original's (esi saved up front, a 4-byte slot).
+// there).
 // FUNCTION: TH16 0x43ddf0
 i32 Globals::add_power(i32 amount)
 {
@@ -79,8 +76,6 @@ i32 Globals::add_power(i32 amount)
     if (power > max_power)
     {
         power = max_power;
-        double unused = amount;
-        (void)unused;
         g_Gui->show_notice(0, GUI_NOTICE_FULL_POWER);
     }
     return (power - amount) / power_per_level != power / power_per_level;
@@ -186,18 +181,9 @@ void Globals::collect_bomb_fragment(i32 unused)
     g_Gui->update_bombs(g_Globals.bombs, g_Globals.bomb_fragments);
 }
 
-// The extend notice. The dead double is not ZUN's code: it stands in for
-// whatever made LTCG's stack alignment pass count Gui::show_notice as a
-// callee that wants an aligned frame. In an inline helper it belongs to the
-// helper's call graph node, so add_to_score realigns through ebx (with a
-// 4-byte slot and esi saved up front) like the original. show_notice is
-// called through its member pointer: as a direct call, show_notice's own
-// dead double adds up with this one and add_to_score realigns with
-// `and esp, -8` instead.
+// The extend notice.
 static inline void show_extend_notice()
 {
-    double unused = 0.0;
-    (void)unused;
     (g_Gui->*gui_show_notice_func())(0, GUI_NOTICE_EXTEND);
 }
 

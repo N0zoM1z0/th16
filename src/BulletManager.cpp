@@ -238,9 +238,6 @@ i32 BulletManager::on_draw_body()
 // FUNCTION: TH16 0x412860
 i32 BulletManager::on_tick_body()
 {
-    // A dead double: LTCG then realigns the frame like the original's.
-    double unused = 0.0;
-    (void)unused;
     Bullet *b;
     b = iter_first();
     bullet_count = 0;
@@ -1745,51 +1742,22 @@ void Bullet::release()
     tick_list_node.unlink_inline();
 }
 
-// One full movement step (pos += velocity * game speed) for the active case
-// of Bullet::on_tick. Written as a separate inlined helper with two unused
-// locals for matching: it changes the named-variable count that MSVC's vector
-// operand order follows for this step only (docs/findings.md, "Vector operand
-// order"), which brings the active case's moves closer to the original.
+// Advances the bullet by one frame of scaled velocity.
 static __forceinline void move_full_step(Bullet *b)
 {
-    i32 unused_0 = 0;
-    (void)unused_0;
-    i32 unused_1 = 0;
-    (void)unused_1;
     b->pos += b->velocity * g_game_speed;
 }
 
 // Ticks one bullet: state, ex steps, movement, offscreen deletion and VMs.
 // Returns -1 once the bullet is released. The release is written out at
 // each place (the original keeps the first copy inline at the top).
-// HARNESS_CALLED (its one caller is BulletManager::on_tick_body), like
-// step_ex_08: the 8-byte alignment step_ex_08's D3DXVECTOR2 wants then comes
-// from on_tick_body's realigned frame, and neither realigns its own.
-// The six unused locals at the top are there for matching: MSVC's choice of
-// operand order and scheduling for the vector moves follows the function's
-// count of named variables modulo 8 (docs/findings.md, "Vector operand
-// order"), and with the `anm` local this count brings the half steps closer
-// to the original. Dropping the `vm` or `goal` local instead changes the code.
-// The cancel VM's file is read into `anm` first, which loads the manager
-// before the pushes as in the original (as cancel_bullet does).
+// HARNESS_CALLED preserves the candidate direct-call optimization context.
 // TODO: the half-step moves are still scheduled differently per case (the
 // original's spawning case computes all three components before storing, its
 // active case stores each in turn).
 // FUNCTION: TH16 0x411e70
 HARNESS_CALLED i32 Bullet::on_tick()
 {
-    i32 unused_0 = 0;
-    (void)unused_0;
-    i32 unused_1 = 0;
-    (void)unused_1;
-    i32 unused_2 = 0;
-    (void)unused_2;
-    i32 unused_3 = 0;
-    (void)unused_3;
-    i32 unused_4 = 0;
-    (void)unused_4;
-    i32 unused_5 = 0;
-    (void)unused_5;
     time_alive.tick_nested();
     if (flags & BULLET_FLAG_DELETE)
     {

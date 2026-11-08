@@ -234,10 +234,6 @@ HARNESS_CALLED Stage *Stage::create(const char *path)
 // FUNCTION: TH16 0x409e50
 i32 Stage::on_tick()
 {
-    // A dead double: it makes LTCG realign this frame (and esp, -8) early,
-    // as the original does (docs/findings.md).
-    double unused = 0.0;
-    (void)unused;
     if (stage_flags & STAGE_DISABLED)
     {
         return UPDATE_FUNC_CONTINUE;
@@ -454,16 +450,6 @@ i32 Stage::on_draw_06()
 // FUNCTION: TH16 0x40a7d0
 HARNESS_CALLED i32 StdObject::is_culled(D3DXVECTOR3 *pos, f32 max_distance_sq, Camera *camera)
 {
-    // Dead named locals, not ZUN's code: with three more named variables the
-    // x sums load center.x and rocking_vector_1.x first like the original
-    // (docs/findings.md, the count of named variables); the camera sum's
-    // operands are swapped to compensate for that count.
-    i32 unused_1 = 0;
-    i32 unused_2 = 0;
-    i32 unused_3 = 0;
-    (void)unused_1;
-    (void)unused_2;
-    (void)unused_3;
     D3DXVECTOR3 corners[16];
     D3DXVECTOR3 projected[16];
     D3DXMATRIX world;
@@ -672,11 +658,6 @@ void StageInner::draw_vms(i32 layer)
 // FUNCTION: TH16 0x40c4a0
 void StageInner::step_fog()
 {
-    // A dead named local, not ZUN's code: one more named variable makes
-    // MSVC load pos.x before adding d.x in the kind 1 loop, as the original
-    // does (docs/findings.md, the count of named variables).
-    i32 unused = 0;
-    (void)unused;
     if (fog == NULL)
     {
         return;
@@ -972,17 +953,6 @@ static __declspec(safebuffers) __forceinline void sky_step_other(InterpCameraSky
 // FUNCTION: TH16 0x40cd10
 CameraSky InterpCameraSky::step()
 {
-    // Dead named locals, not ZUN's code: with four more named variables
-    // method 8 multiplies initial's first field in the original's operand
-    // order (docs/findings.md, the count of named variables).
-    i32 unused_1 = 0;
-    i32 unused_2 = 0;
-    i32 unused_3 = 0;
-    i32 unused_4 = 0;
-    (void)unused_1;
-    (void)unused_2;
-    (void)unused_3;
-    (void)unused_4;
     if (end_time > 0)
     {
         time.tick();

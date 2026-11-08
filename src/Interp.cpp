@@ -354,11 +354,6 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step()
 // FUNCTION: TH16 0x406e10
 D3DXVECTOR3 InterpFloat3::step()
 {
-    // Never used: one more named local puts the x components of the vector
-    // adds in the original's load order (that order follows the function's
-    // count of named variables).
-    i32 unused;
-    (void)unused;
     InterpFloat3 *self = this;
     if (self->end_time > 0)
     {
@@ -570,10 +565,6 @@ D3DXVECTOR3 InterpStrange1::step()
 // FUNCTION: TH16 0x464590
 HARNESS_CALLED Int3 InterpInt3::step()
 {
-    // Never used: three more named locals give the lerp's y lea the
-    // original's operand order (it follows the count of named variables).
-    i32 unused_0, unused_1, unused_2;
-    (void)unused_0, (void)unused_1, (void)unused_2;
     if (end_time > 0)
     {
         time.tick_nested();

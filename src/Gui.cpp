@@ -818,13 +818,6 @@ waiting:
 // FUNCTION: TH16 0x42b480
 void GuiMsgVm::update_callout(AnmVm *vm)
 {
-    // Dead double math, not ZUN's code: with it LTCG realigns the frame
-    // (and esp, -8, esp-relative locals) like the original's. A plain dead
-    // double is not enough here.
-    double unused = 0.0;
-    unused = unused * 2.0;
-    unused = unused * 2.0;
-    (void)unused;
     i32 script = textbox_kind + FRONT_ANM_BUBBLE_BODY;
     if (get_vm_or_clear(textbox) == NULL)
     {
@@ -1062,14 +1055,6 @@ void Gui::update_score()
 // FUNCTION: TH16 0x42bcf0
 HARNESS_CALLED void Gui::show_notice(i32 bonus, i32 kind)
 {
-    // A dead double, not ZUN's code: LTCG then counts show_notice as wanting
-    // an 8-aligned stack, and its callers realign (the Item::collect_*
-    // functions through ebx, ItemManager::on_tick_body) or are padded for it
-    // (Globals::add_power) as in the original. The create_effect calls go
-    // through create_effect_via_pointer: direct, create_effect's own wish
-    // adds up with this one and show_notice realigns itself.
-    double unused = 0.0;
-    (void)unused;
     switch (kind)
     {
     case GUI_NOTICE_SPELL_BONUS:
@@ -1213,10 +1198,6 @@ static __forceinline AnmId create_vm_inline(AnmLoaded *anm, i32 script, D3DXVECT
 // FUNCTION: TH16 0x42c070
 void Gui::show_stage_clear_bonus()
 {
-    // A dead double: it makes LTCG realign this frame (and esp, -8) early,
-    // as the original does (docs/findings.md).
-    double unused = 0.0;
-    (void)unused;
     Gui *gui = g_Gui;
     gui->overlay_ids[GUI_OVERLAY_STAGE_CLEAR_BONUS] =
         create_vm_inline(gui->front_anm, FRONT_ANM_STAGE_CLEAR_BONUS, NULL, 0.0f, -1);
@@ -1743,10 +1724,6 @@ static inline void set_entity_pos_xyz(AnmId id, f32 x, f32 y, f32 z)
 // FUNCTION: TH16 0x426d70
 void Gui::setup_stage_hud()
 {
-    // A dead double: it makes LTCG realign this frame (and esp, -8) early,
-    // as the original does (docs/findings.md).
-    double unused = 0.0;
-    (void)unused;
     Gui *gui = g_Gui;
     if (gui->on_tick != NULL)
     {
@@ -1841,10 +1818,6 @@ void Gui::setup_stage_hud()
 // FUNCTION: TH16 0x426780
 void Gui::show_lights_out()
 {
-    // A dead double: it makes LTCG realign this frame (and esp, -8) early,
-    // as the original does (docs/findings.md).
-    double unused = 0.0;
-    (void)unused;
     Gui *gui = g_Gui;
     gui->lights_out_id = gui->front_anm->create_vm_inline(FRONT_ANM_LIGHTS_OUT, NULL, 0.0f, -1);
 }

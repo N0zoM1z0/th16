@@ -527,18 +527,11 @@ static __forceinline i32 option_laser_index(ShtShooter *shooter, i32 shooter_ref
 // the values ahead of the or like the original.
 // Declared __declspec(safebuffers) (above): without it ours gets a /GS
 // cookie (offset goes to the asm sincosmul) the original does not have.
-// The dead double math is not ZUN's code: it makes LTCG realign the frame
-// to 8 bytes like the original (a plain dead double did not).
 // TODO: ours loads pi before 2pi, hoists -pi out of the angle wrap loops
 // and pads a loop head with a nop.
 // FUNCTION: TH16 0x446260
 i32 __fastcall sht_on_tick_laser(PlayerBullet *bullet)
 {
-    double unused = 0.0;
-    unused = unused * 2.0;
-    unused = unused * 2.0;
-    unused = unused * 2.0;
-    (void)unused;
     ShtShooter *shooter = g_Player->get_shooter(bullet->shooter_ref);
     Int2 *option = option_pos(g_Player, (i8)shooter->option - 1);
     Float3 pos(option->x / 128.0f, option->y / 128.0f, 0.0f);

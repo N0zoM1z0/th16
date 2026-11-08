@@ -81,22 +81,10 @@ i32 LaserInfiniteInf::touches_circle(Float3 *pos, f32 radius)
 // One frame: et_ex, growth and rotation, following the boss (flag 1),
 // moving, then the warning (3), grow (4), full (2) and fade (5) states.
 // Nonzero once the laser is done.
-// The dead double is not ZUN's code: as in LaserLineInf::initialize, it
-// makes LTCG realign the frame (and esp, -8) like the original. Neither are
-// the two dead ints: MSVC orders the x component's load by the function's
-// count of named variables (period 8; docs/findings.md), and with the
-// velocity scaled field by field into v they give the original's adds.
-// Matching only.
 // TODO: the original keeps a NULL in ecx in the find_enemy_by_id loop and addresses vm_950 through a pointer in edi while ORing the scale flag twice and reloading the sprite index (an AnmVm pointer local, with the scales computed first or not, gives other registers).
 // FUNCTION: TH16 0x4352f0
 i32 LaserInfiniteInf::on_tick()
 {
-    double unused = 0.0;
-    (void)unused;
-    i32 unused_a = 0;
-    i32 unused_b = 0;
-    (void)unused_a;
-    (void)unused_b;
     run_ex();
     if (ex_flags != 0)
     {

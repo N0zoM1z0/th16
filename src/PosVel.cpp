@@ -34,16 +34,10 @@ void PosVel::update_secondary_fields()
 // FUNCTION: TH16 0x403110
 void PosVel::step()
 {
-    // Never used: five named locals give the x components of the vector
-    // sums the original's load order (the x order of a vector op follows the
-    // function's named-variable count; see docs/findings.md).
-    i32 unused_0, unused_1, unused_2, unused_3, unused_4;
-    (void)unused_0, (void)unused_1, (void)unused_2, (void)unused_3, (void)unused_4;
     switch (flags & POSVEL_MODE_MASK)
     {
     case POSVEL_MODE_VELOCITY:
-        // D3DXVec3Add with velocity first: with the five locals above it
-        // loads velocity.x and adds pos.x like the original.
+        // Advance by the velocity vector.
         D3DXVec3Add(&pos, &velocity, &pos);
         break;
     case POSVEL_MODE_CIRCLE:

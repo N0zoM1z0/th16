@@ -85,15 +85,6 @@ static __forceinline void gather_setup_child(AnmId *id, ZunColor color, AnmVm *v
 // FUNCTION: TH16 0x405700
 int __fastcall anm_gather_effect_on_tick(AnmVm *vm)
 {
-    // Dead named locals, not ZUN's code: with three more named variables
-    // more of the vector sums take the original's operand order
-    // (docs/findings.md, the count of named variables).
-    i32 unused_1 = 0;
-    i32 unused_2 = 0;
-    i32 unused_3 = 0;
-    (void)unused_1;
-    (void)unused_2;
-    (void)unused_3;
     i32 alive = 0;
     AnmGatherEffectData *data = (AnmGatherEffectData *)vm->extra_data;
     Float3 offset;
@@ -393,18 +384,10 @@ int __fastcall anm_jagged_line_on_tick(AnmVm *vm)
 }
 
 // Draws the line as a strip through the stored offsets around the VM's
-// position. The dead double math is not ZUN's code: it is enough of it for
-// LTCG's double stack alignment pass to realign the frame (and esp, -8)
-// like the original, and it also gives entity_pos.x + pos.x the original's
-// operand order (one or two plain dead doubles fix only the order).
+// position.
 // FUNCTION: TH16 0x406860
 int __fastcall anm_jagged_line_on_draw(AnmVm *vm)
 {
-    double unused = 0.0;
-    unused = unused * 2.0;
-    unused = unused * 2.0;
-    unused = unused * 2.0;
-    (void)unused;
     AnmJaggedLineData *data = (AnmJaggedLineData *)vm->extra_data;
     g_AnmManager->setup_render_state_for_vm(vm);
     Float3 pos;
@@ -490,13 +473,9 @@ int __fastcall anm_masked_effect_init(AnmVm *vm, D3DXVECTOR3 *pos)
 
 // Steps the four mask VMs and, while any is still running, the overlay;
 // returns 1 once all four have finished.
-// The dead double is not ZUN's code: it makes LTCG realign the frame
-// (and esp, -8) like the original, which AnmVm::run alone does not.
 // FUNCTION: TH16 0x407330
 int __fastcall anm_masked_effect_on_tick(AnmVm *vm)
 {
-    double unused = 0.0;
-    (void)unused;
     AnmMaskedEffectData *data = (AnmMaskedEffectData *)vm->extra_data;
     i32 finished = 0;
     for (i32 i = 0; i < 4; i++)
