@@ -73,8 +73,8 @@ static __forceinline void rotate_points(Float2 *points, f32 angle)
         f32 c = cosf(angle);
         f32 x = points->x;
         f32 y = points->y;
-        points->x = x * c - y * s;
         points->y = y * c + x * s;
+        points->x = x * c - y * s;
     }
 }
 
@@ -148,7 +148,7 @@ static __forceinline i32 segments_cross(f32 x1, f32 y1, f32 x2, f32 y2, f32 x3, 
     return !(c3 * c4 > 0.0f);
 }
 
-// TODO: the rotation loop computes and stores the new x before the new y; the original computes y first and stores it first.
+// TODO: reconcile the remaining register assignments in the rotation loop.
 // FUNCTION: TH16 0x403a90
 HARNESS_CALLED i32 __stdcall collision_test_points_in_rect(f32 x, f32 y, f32 w, f32 h, f32 angle, Float2 *points)
 {

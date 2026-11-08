@@ -192,7 +192,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040E3B0,BombAllSubInf::compute_damage,src/BombSub.cpp,?compute_damage@BombAllSubInf@@UAEHHH@Z,exact,,.analysis/reference-audit.json
 0x0040E3C0,BombAllSubInf::cancel_bullets,src/BombSub.cpp,?cancel_bullets@BombAllSubInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x0040E480,BombAllSubInf::end_at_stage_clear,src/BombSub.cpp,?end_at_stage_clear@BombAllSubInf@@UAEXXZ,exact,,.analysis/reference-audit.json
-0x0040E490,AnmVm::world_pos,src/AnmManager.cpp,?world_pos@AnmVm@@QAE?AUD3DXVECTOR3@@XZ,mismatch,,.analysis/reference-audit.json
+0x0040E490,AnmVm::world_pos,src/AnmManager.cpp,?world_pos@AnmVm@@QAE?AUD3DXVECTOR3@@XZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0040E5C0,AnmLoaded::create_vm,src/AnmManager.cpp,?create_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@MHH@Z,mismatch,,.analysis/reference-audit.json
 0x0040E6C0,EffectManager::next_index,src/EffectManager.cpp,?next_index@EffectManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0040E730,EffectManager::create_tracked,src/EffectManager.cpp,?create_tracked@EffectManager@@QAEHHPAUD3DXVECTOR3@@H@Z,exact,,.analysis/reference-audit.json
@@ -395,7 +395,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0041DA30,EnemyManager::kill_all_in_group,src/Enemy.cpp,?kill_all_in_group@EnemyManager@@SGXH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041DB70,EnemyManager::kill_all_no_set_death,src/Enemy.cpp,?kill_all_no_set_death@EnemyManager@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041DCA0,EnemyInf::run_over_300,src/Enemy.cpp,?run_over_300@EnemyInf@@UAEHXZ,exact,,.analysis/reference-audit.json
-0x0041DCB0,EnemyData::ecl_run_over_300,src/EnemyEcl.cpp,?ecl_run_over_300@EnemyData@@QAEHXZ,incomplete,10 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0041DCB0,EnemyData::ecl_run_over_300,src/EnemyEcl.cpp,?ecl_run_over_300@EnemyData@@QAEHXZ,incomplete,9 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00423050,EnemyData::ecl_enm_create,src/Enemy.cpp,?ecl_enm_create@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00423260,EnemyData::ecl_anm_set_sprite,src/Enemy.cpp,?ecl_anm_set_sprite@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004233A0,EnemyData::ecl_anm_vm_instr,src/Enemy.cpp,?ecl_anm_vm_instr@EnemyData@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -1034,7 +1034,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00468C00,AnmVm::write_sprite_corners,src/AnmRender.cpp,?write_sprite_corners@AnmVm@@QAEXPAUD3DXVECTOR3@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00468C70,AnmManager::draw_rect,src/AnmPrimitives.cpp,?draw_rect@AnmManager@@QAEHMMMMMKKHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00468FC0,AnmManager::draw_rect_outline,src/AnmPrimitives.cpp,?draw_rect_outline@AnmManager@@QAEHMMMMMKKHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00469330,AnmManager::draw_line,src/AnmPrimitives.cpp,?draw_line@AnmManager@@QAEHMMMMKKHH@Z,mismatch,,.analysis/reference-audit.json
+0x00469330,AnmManager::draw_line,src/AnmPrimitives.cpp,?draw_line@AnmManager@@QAEHMMMMKKHH@Z,exact,,.analysis/reference-audit.json
 0x00469570,AnmManager::draw_rect_bordered,src/AnmPrimitives.cpp,?draw_rect_bordered@AnmManager@@QAEHMMMMMKKHH@Z,exact,,.analysis/reference-audit.json
 0x00469640,AnmManager::draw_circle,src/AnmPrimitives.cpp,?draw_circle@AnmManager@@QAEHMMMMHKK@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00469890,AnmManager::draw_triangle_fan,src/AnmRender.cpp,?draw_triangle_fan@AnmManager@@QAEHHPAUD3DXVECTOR3@@PAUD3DXVECTOR2@@PATZunColor@@@Z,mismatch,,.analysis/reference-audit.json

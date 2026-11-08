@@ -254,3 +254,66 @@ is `.analysis/runtime-literal-regression-check.json`. `scripts/progress.py`
 validates report, artifact and retained-unit freshness. All builds in this batch
 were incremental. Source-origin review is still open, and no Factory acceptance
 or remote publication was performed.
+
+## Vector source and world-position cleanup
+
+`AnmManager::draw_line` at `0x00469330` now writes the second endpoint's y
+coordinate through D3DXVECTOR4 indexing. The original computes and stores that
+coordinate before the diffuse and homogeneous-coordinate stores; member access
+had allowed the candidate to sink it below those stores. This one source
+change restores the complete 569-byte owner under the same compiler/link
+profiles. Every instruction and relocation is compared; there is no field mask,
+new linkage binding, assembly patch or comparison-rule change.
+
+Both Float2 interpolation functions now add velocity in the original operand
+order and use scalar-left weighted vectors in the cubic expression. Each retains
+a complete 757-byte contribution. The first difference moves from offset 260
+to 453, and 603 bytes match rather than 591. The early exits, timer and constant
+motion branches agree; the cubic branch still schedules vector loads and
+registers differently. Both remain mismatch, with no prefix-only exact credit.
+
+The four-point collision rotation now writes y before x, as in the original.
+The complete points-in-rectangle owner still has 10 differing bytes out of 661,
+caused by rotation register assignments. Saving both rotated scalar results
+before writing them produces the same result. Copying the original Float2 into
+a local instead produces a 677-byte contribution and was reverted. Other
+consumers of this shared helper remain subject to complete comparison.
+
+`AnmVm::world_pos` no longer uses the explicitly artificial dead integer,
+volatile-cast reload or safebuffers/forceinline parent-position workaround.
+It adds the parent's recursive result directly. This removes source tricks but
+does not solve its code generation: the candidate now contains a GS cookie and
+has a 315-byte extent, while the independent original remains 297 bytes with no
+cookie. Its result is incomplete; neither extent is changed to conceal this.
+Recover the actual compiler/temporary context before claiming an exact result.
+Other explicitly artificial locals elsewhere in the imported source still need
+review.
+
+Two other bounded trials were reverted. A device getter or local in
+`draw_vertex_fan` retains the same four register-encoding differences in its
+313-byte owner. Naming the slow-path snapshot discriminator before storing it
+produces 234 bytes rather than the original 235. These experiments do not justify
+register normalization or padding variables.
+
+Private evidence includes `.analysis/render-owner-diff.txt`,
+`.analysis/interp2-left-weight-owner.txt`,
+`.analysis/world-pos-owner-natural.txt`, and the incremental build logs
+`.analysis/render-device-vector-build.log`,
+`.analysis/snapshot-device-local-build.log`,
+`.analysis/rotation-y-first-build.log` and
+`.analysis/vector-source-final-build.log`.
+
+The final incremental audit reports **623 exact, 41 mismatch and 550 incomplete**
+among 1214 candidates, with 120,545 exact owned bytes. All 622 exact results
+from `c5eff1f` remain exact. The sole new exact result is the complete line
+renderer. The world-position cleanup changes its state from mismatch to
+incomplete because its complete extents now differ; this is not an exact-code
+improvement for that function. Collision and interpolation improvements remain
+full-owner mismatches.
+
+Evidence is `.analysis/vector-source-final-audit.log`,
+`.analysis/vector-source-regression-check.json` and the refreshed complete-owner
+record `.analysis/draw-line-exact.json`. `scripts/progress.py` validates current
+source, artifact, report and retained-unit identities. No cold build, new
+Oracle rule or additional acceptance authority was used in this source batch.
+Source-origin review and Factory acceptance remain open.

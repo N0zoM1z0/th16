@@ -319,7 +319,7 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step()
     if (self->method == INTERP_CONSTANT_VELOCITY)
     {
         D3DXVECTOR2 tmp = self->initial;
-        self->initial = tmp + self->goal;
+        self->initial = self->goal + tmp;
         self->current = self->initial;
     }
     else if (self->method == INTERP_CONSTANT_ACCEL)
@@ -336,8 +336,8 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step()
         f32 c_goal = t * t * (3.0f - 2.0f * t);
         f32 c_bezier_1 = (1.0f - t) * (1.0f - t) * t;
         f32 c_bezier_2 = (t - 1.0f) * t * t;
-        self->current = self->initial * c_initial + self->goal * c_goal + self->bezier_1 * c_bezier_1 +
-                        self->bezier_2 * c_bezier_2;
+        self->current = c_initial * self->initial + c_goal * self->goal + c_bezier_1 * self->bezier_1 +
+                        c_bezier_2 * self->bezier_2;
     }
     else
     {
@@ -443,7 +443,7 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
     if (self->method == INTERP_CONSTANT_VELOCITY)
     {
         D3DXVECTOR2 tmp = self->initial;
-        self->initial = tmp + self->goal;
+        self->initial = self->goal + tmp;
         self->current = self->initial;
     }
     else if (self->method == INTERP_CONSTANT_ACCEL)
@@ -460,8 +460,8 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
         f32 c_goal = t * t * (3.0f - 2.0f * t);
         f32 c_bezier_1 = (1.0f - t) * (1.0f - t) * t;
         f32 c_bezier_2 = (t - 1.0f) * t * t;
-        self->current = self->initial * c_initial + self->goal * c_goal + self->bezier_1 * c_bezier_1 +
-                        self->bezier_2 * c_bezier_2;
+        self->current = c_initial * self->initial + c_goal * self->goal + c_bezier_1 * self->bezier_1 +
+                        c_bezier_2 * self->bezier_2;
     }
     else
     {

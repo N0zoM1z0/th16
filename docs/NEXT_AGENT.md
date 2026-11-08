@@ -41,10 +41,16 @@ alignment before restoring any affected exact result. Other explicitly
 non-original dead locals and arithmetic remain in the import and still need
 source review; a local byte match alone does not settle that review.
 
-The latest local checkpoint has 622 exact, 43 mismatch and 549 incomplete
-candidates from an incremental build. All 606 earlier exact results at `0170209`
-remain exact. Directory/copy/EH-vector/math runtime identities and four scalar
-witnesses account for the new complete passes; no Oracle comparison rule was
-relaxed. The unsuccessful source-order experiments have been reverted and are
-recorded in `knowledge/reference-repairs.md`. Start the next source iteration
-from the remaining full-owner differences rather than repeating these trials.
+The latest local checkpoint has 623 exact, 41 mismatch and 550 incomplete
+candidates from an incremental build. All 622 exact results at `c5eff1f` remain
+exact. `draw_line` is now a complete 569-byte strict pass through a source-level
+vector-indexing change. Both Float2 interpolation functions first differ at
+byte 453 rather than 260; collision rotation writes y before x but still has
+register differences. These partial improvements remain mismatch.
+
+`world_pos` now uses a direct recursive vector expression, with its imported
+artificial local, volatile cast and safebuffers helper removed. Its new GS
+cookie makes the candidate 315 bytes versus the original 297, so it remains
+incomplete. Recover that compiler/temporary context before claiming exactness.
+The source trials and full regression result are in
+`knowledge/reference-repairs.md`; no Oracle comparison rule was changed.

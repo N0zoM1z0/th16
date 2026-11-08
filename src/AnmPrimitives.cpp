@@ -200,7 +200,8 @@ HARNESS_CALLED i32 AnmManager::draw_rect_bordered(f32 x, f32 y, f32 width, f32 h
 
 // A line of the given length through (x, y) at angle, anchored at its
 // center (0), start (1) or end (2), colored from color_1 to color_2.
-// TODO: ours sinks the second vertex's y computation below the color and z/w stores.
+// Use vector indexing for the second endpoint so its coordinate write precedes
+// the color and homogeneous-coordinate writes.
 // FUNCTION: TH16 0x469330
 HARNESS_CALLED i32 AnmManager::draw_line(f32 x, f32 y, f32 length, f32 angle, D3DCOLOR color_1, D3DCOLOR color_2,
                                          i32 anchor, i32 unused)
@@ -236,7 +237,7 @@ HARNESS_CALLED i32 AnmManager::draw_line(f32 x, f32 y, f32 length, f32 angle, D3
     vertices[0].pos.x = start * c - offset * s + x;
     vertices[0].pos.y = start * s + offset * c + y;
     vertices[1].pos.x = end * c - offset * s + x;
-    vertices[1].pos.y = end * s + offset * c + y;
+    vertices[1].pos[1] = end * s + offset * c + y;
     vertices[0].diffuse = color_1;
     vertices[0].pos.z = vertices[1].pos.z = 0.0f;
     vertices[0].pos.w = vertices[1].pos.w = vertices[2].pos.w = vertices[3].pos.w = vertices[4].pos.w = 1.0f;
