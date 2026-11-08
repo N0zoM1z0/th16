@@ -3,6 +3,10 @@
 This work uses the original Japanese TH16 v1.00a target pinned in
 `config/target.toml`. The upstream checkout remains unchanged. All comparison
 results come from the local Factory/TH10-style Oracle.
+Sections below are successive historical batches; their counts and test totals
+describe those checkpoints. Use [NEXT_AGENT.md](../NEXT_AGENT.md) and
+`scripts/progress.py` for current state. Historical JSON reports are now stored
+as `.json.gz`; see [ARTIFACTS.md](../ARTIFACTS.md).
 
 ## Formatting buffers
 
@@ -24,7 +28,7 @@ for the string witness and the allocator entry identities.
 The formatting-buffer results below were finalized with a clean build, complete
 independent boundaries, unique PDB owners, exhaustive relocation fields and byte
 replay through `scripts/audit-reference.py`. The current incremental workflow is
-described at the end of this note.
+described in [REFERENCE_IMPORT.md](../REFERENCE_IMPORT.md).
 
 ## Unsuccessful source experiments
 
@@ -485,3 +489,42 @@ infinite, beam and curve constructors (83, 81, 61 and 72). Thirty vftable contro
 pass, including the new full 138-byte, 26-slot constructor replay. Evidence is
 `.analysis/laser-vtable-audit.log` and `.analysis/laser-vtable-controls.log`.
 No game rebuild, code-comparison relaxation or source-origin acceptance is used.
+
+
+## Unfinished atan2 entry investigation
+
+Work stopped at the user's handoff request before this experiment was tested
+or accepted. There is no `__CIatan2` row in the active linkage bindings and no
+change to the Oracle's same-start contribution rule.
+
+The current candidate public `__CIatan2` is at `0x00487A4A`, ten bytes into the
+complete 20-byte UCRT `87ctriga.obj` contribution rooted at `_atan2`
+(`0x00487A40`). The owning module's CodeView symbol substream has explicit
+S_GPROC32 records for `atan2` and `_CIatan2`, each with code size 10 and its own
+S_END. In the current PDB these are module 266, stream 279, symbol-byte extent
+380, procedure records 276/328 and S_END records 324/376. These indices describe
+this artifact and must be rediscovered after linking. Native LLVM output is
+retained in `.analysis/atan2-module-symbols.txt`.
+
+Both candidate entries are closed ten-byte `mov edx, descriptor; jmp dispatcher`
+stubs. The intrinsic jumps to the named `__cintrindisp2`; the standard entry
+jumps to `__ctrandisp2`. Their descriptor at `0x00494BC0` starts with the complete
+length-prefixed name bytes `05 61 74 61 6e 32 00 00` (atan2).
+
+The original intrinsic entry is the independent ten-byte boundary at
+`0x00487AAA`, loading descriptor `0x00494E50` with the same name and jumping to
+`0x00488BB0`. That independently bounded 68-byte dispatcher consumes two x87
+arguments. The adjacent original standard entry at `0x00487AA0` is not in the
+Ghidra boundary inventory; do not fabricate a 20-byte original function from
+adjacency. The current `zun_atan2f` consumer at original `0x004052A0` has complete
+57-byte candidate/target extents but remains incomplete without the callee
+identity. These observations grant no exact claim.
+
+An unvalidated parser/proof draft is archived in
+`.analysis/experiments/atan2-intrinsic-draft.py.gz`. Its Oracle integration and
+CSV row were withdrawn, restoring the verified `a928c07` comparison inputs.
+A future implementation would need to validate complete MASM procedure records,
+terminators, unique module/library provenance, matching function publics and
+full partition of the entire parent contribution, with negative controls.
+It must not broaden primary game-function ownership, accept an arbitrary
+interior public, truncate the parent, or credit an external callee as exact.

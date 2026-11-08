@@ -1,64 +1,114 @@
 # Current handoff
 
-The user has authorized importing the pinned reference candidates and evaluating
-them with the local Factory/TH10-style strict Oracle. Maintained code, comments
-and documentation must be English, except for the Japanese game title. Do not
-use REA.
-Do not push branches or tags, mirror this repository or publish its contents
-remotely. Local commits are allowed; only the user can revoke this restriction.
+Updated 2026-11-08 after local checkpoint `a928c07` and handoff cleanup.
+This file describes current state; the repair log records historical batches.
 
-- The canonical target is `resources/th16.exe`, original Japanese v1.00a.
-- The historical compiler/SDKs, shared Ghidra/JDK/Wine and game-local state are
-  configured. Full PDB linking also uses the pinned rootless Wine NTLM helper.
-- Candidate game source is in `src/`. Compiler-context callers and opaque
-  support are in `probes/reference-harness/` and `probes/reference-support/`.
-- `_reference/johnthreekay-th16` remains pinned and unchanged at
-  `2b846da735ac71f68b1dc74e8194c8c8d98e2869`. Source provenance is recorded in
-  `config/reference-sources.csv`; README credits the upstream contributors.
-- `scripts/build.py` reuses objects with matching dependency/flag hashes and
-  performs a full LTCG link through the game-owned Wine prefix. It records
-  source/profile/artifact identity. Use `--clean` for a meaningful milestone or
-  a demonstrated dependency/cache problem, rather than each source batch.
-- `scripts/audit-reference.py --write-units` performs the independent strict
-  comparison. `scripts/progress.py` reads current results after checking their
-  freshness. The upstream comparators and library-signature scanner are absent
-  from this verification path.
-- Local comparison results are separate from source-origin review and Factory
-  acceptance. The local Factory registration remains inventory-only; this work
-  has not activated it on the live service or submitted acceptance receipts.
+## Constraints
 
-See `REFERENCE_IMPORT.md` for comparison scope, limitations and commands. Preserve
-ignored reports, logs, projects, prefixes and build artifacts. Start with the
-recorded mismatch and incomplete reasons before modifying any game function.
-The original import audit is `evidence/reference-import-20261108/README.md`.
-See `knowledge/reference-repairs.md` for subsequent source fixes and unsuccessful
-experiments, and `knowledge/reviewed-linkages.md` for fixed linkage evidence.
-Run `scripts/progress.py` for the current validated result.
+- Do not push branches or tags, mirror the repository or publish its contents.
+  Local commits are allowed. Only the user can revoke the publication restriction.
+- Maintained code, comments, documents and commit messages must be English,
+  except for the Japanese game title. Do not use REA.
+- Use our Factory/TH10-style strict Oracle. Upstream similarity scores,
+  comparison scripts and exact labels have no acceptance authority.
+- Write natural C/C++ and compare complete owners. Do not restore dead locals,
+  padding helpers, byte masks or truncated ranges to recover a match.
+- Use incremental builds and focused complete-owner comparisons for iterations.
+  Reserve a clean build and broad replay for a milestone or a cache problem.
 
-The eight imported `*_want_aligned_stack` helpers and 86 explicitly artificial
-standalone locals have been removed. Unused parameters, unknown structure
-fields, ABI macros and compiler-context harnesses were preserved. The cleanup
-withdrew 23 previous exact results; recover real types and calling context rather
-than restoring dead metadata. Other compiler-context helpers and forced-access
-hypotheses still need source review; a local byte match alone does not settle it.
+## Verified checkpoint
 
-The current checkpoint has 614 exact, 49 mismatch and 551 incomplete candidates.
-All 600 natural-source passes after cleanup and all 608 passes at `1a32210`
-remain exact. Five new runtime identities made eight consumers exact; complete
-RTTI/PDB proofs for ThreadInf and Pbg::File primary vftables made six more exact.
-Game code and build artifacts were unchanged for this linkage-evidence batch.
+The current report has **620 exact, 49 mismatch and 545 incomplete** among
+1214 annotated candidates, covering 111,466 exact owned bytes. All 614 exact
+results at `c1b5ada` remain exact. The last six gains are complete laser
+constructors and a clone consumer after reviewing all five 26-slot vftables.
 
-The new `scripts/vtable_identity.py` is part of the Oracle input fingerprint.
-It validates complete storage including the locator prefix, terminated type
-names, entire single-inheritance graphs, relocated slot pointers and independent
-callee identities. Its 29 controls include full ThreadInf destructor replay and
-reject truncated/ambiguous data, wrong class/namespace/slots, missing relocation,
-unsupported hierarchy and address-point misuse. The complete 88-control suite
-passes. The comparison still requires the same full code extents and exhaustive
-byte/field replay; this is not Factory acceptance or source-origin acceptance.
+These are local code-comparison results. Source-origin review remains open;
+`config/implemented.csv` has no implemented entries. Factory registration is
+inventory-only, has not been activated on the live service, and no Truth Kernel
+acceptance receipts have been submitted.
 
-`draw_line` remains a complete 569-byte pass. `world_pos` still has an unresolved
-GS-cookie/extent difference. The four-form non-LTCG probe and Int3 interpolation
-trials are recorded in `knowledge/reference-repairs.md`; do not repeat those
-failed forms or normalize their remaining bytes. Continue from the current
-mismatch/incomplete evidence and preserve the ignored analysis artifacts.
+The current build receipt is incremental. Its PE, MAP, PDB, function map, object
+cache and non-LTCG symbol-discovery cache are retained. Handoff cleanup changed
+no maintained game C++ or Oracle comparison code. The unvalidated atan2 draft
+was withdrawn before handoff, so it grants no binding or exact credit.
+
+Handoff verification passed all 89 controls across the six existing test suites
+(strict Oracle, reviewed linkages, pointer limits, PDB types, build context and
+vftable identities). The log is `.analysis/handoff-controls.log`. Toolchain
+component hashes and report freshness also passed; no game build was needed.
+
+```sh
+.venv/bin/python scripts/progress.py
+```
+
+Run this first: it checks source, artifact, report and retained-unit freshness.
+The current report is `.analysis/reference-audit.json`; complete retained units
+are in `config/match-units.toml`. See [REFERENCE_IMPORT.md](REFERENCE_IMPORT.md)
+for the comparison contract and [reviewed linkage evidence](knowledge/reviewed-linkages.md)
+for fixed runtime, literal and vftable identities.
+
+## Environment and workflow
+
+- Canonical target: `resources/th16.exe`, original Japanese v1.00a, SHA-256
+  `c11776019f083978e66027e7394dafb1fb9543afca986f28049a49417e341929`.
+- Shared historical MSVC 19.10.25017, SDKs, Ghidra/JDK/Wine and the pinned Wine
+  NTLM helper are configured. Prefix, analyzer project and runtime state are
+  game-local. See [SHARED_TOOLS.md](SHARED_TOOLS.md).
+- Game code is under `src/`; separate compiler-context callers and opaque support
+  are under `probes/reference-harness/` and `probes/reference-support/`.
+- `_reference/johnthreekay-th16` is unchanged at
+  `2b846da735ac71f68b1dc74e8194c8c8d98e2869`. Provenance is recorded in
+  `config/reference-sources.csv`; README retains upstream credits and CC0.
+
+For a source iteration:
+
+```sh
+.venv/bin/python scripts/build.py
+.venv/bin/python scripts/compare-linked-function.py reference-00408260
+```
+
+Choose a retained unit relevant to the change. A changed source or header makes
+the previous audit stale; after a coherent batch, regenerate units and results:
+
+```sh
+.venv/bin/python scripts/audit-reference.py --write-units
+.venv/bin/python scripts/progress.py
+```
+
+No rebuild is needed for prose edits. Oracle/binding edits require a new audit
+because their content is fingerprinted; they do not inherently require a new
+compile. Do not run checks that read generated ledgers concurrently with an
+audit writing those ledgers.
+
+## Outstanding work
+
+The 545 incomplete candidates comprise 247 with unresolved fields, 250 with
+candidate/target extent differences, 40 without a same-start contribution,
+six with source-object ownership differences and two requiring reviewed switch
+or owned-data extents. Start from their recorded reasons.
+
+The eight imported alignment helpers and 86 explicitly artificial standalone
+locals were removed. The latter cleanup withdrew 23 earlier exact results;
+all 600 passes after cleanup remain exact. Recover real types and calling
+context rather than restoring the artificial inputs. Other compiler-context
+helpers, forced accesses and type hypotheses still need source review.
+
+`draw_line` is a complete 569-byte pass. `world_pos` has a GS-cookie/extent
+difference. Int3 interpolation at `0x00464590` differs in one SIB byte. Float2
+interpolation, points-in-rectangle and ECL argument-pointer trials also remain
+unresolved. Read [reference-repairs.md](knowledge/reference-repairs.md) before
+repeating their failed expression, temporary-variable or helper variants.
+
+`__CIatan2` is a promising evidence investigation, not an accepted runtime
+binding. Its two explicit MASM procedure records share one complete 20-byte
+contribution. The [investigation note](knowledge/reference-repairs.md#unfinished-atan2-entry-investigation)
+records the native evidence and the withdrawn draft. Do not infer an interior
+entry from a public label or shorten a contribution to obtain exact credit.
+
+## Local artifacts
+
+See [ARTIFACTS.md](ARTIFACTS.md) before cleanup. Historical reports and large
+unused dumps are compressed; the current report remains plain JSON. The cleanup
+manifest is `.analysis/cleanup-20261108.json`. Keep current build objects, PDBs,
+receipts, the private target, reference checkout, Wine prefix and Ghidra project.

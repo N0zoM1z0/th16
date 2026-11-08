@@ -1,6 +1,7 @@
 # Reference import: recorded strict comparison
 
-This record was generated from the final local strict audit of upstream commit
+This historical record was generated from the initial imported-candidate audit
+of upstream commit
 `2b846da735ac71f68b1dc74e8194c8c8d98e2869`. The current result is available through
 `.venv/bin/python scripts/progress.py`. No upstream comparator result was used.
 
@@ -47,17 +48,18 @@ Incomplete entries remain undecided. They are not counted as byte mismatches.
 | `0x00474330` | `EclRunContext::get_int_arg_ptr` | 97 / 98 | `0x45` |
 
 Every difference remains after replaying all declared linkage fields. The full
-byte differences and field bindings are retained in `.analysis/reference-audit.json`.
+byte differences and field bindings for this checkpoint are retained in
+`.analysis/reference-first-audit/report.json.gz`. The uncompressed
+`.analysis/reference-audit.json` tracks the latest source and supersedes this
+historical count.
 
 ## Reproduction and retained identity
 
-```sh
-.venv/bin/python scripts/build.py --clean
-.venv/bin/python scripts/audit-reference.py --write-units
-.venv/bin/python scripts/progress.py
-```
-
-The cold-build receipt is `build/reference-candidate/build-receipt.json`.
+The initial audit used a clean build. Its receipt is preserved in
+`.analysis/reference-first-audit/build-receipt.json`; the live receipt in
+`build/reference-candidate/` belongs to the current build. Rebuilding current
+source does not reproduce these historical counts or hashes. Use the
+[current comparison workflow](../../REFERENCE_IMPORT.md) for continued work.
 
 - `th16.exe` SHA-256: `9780f0b48ae6315c7ad5f6be6ca62d872e0519000d6df622843c57acb90b60ae`
 - `th16.map` SHA-256: `202131af567cdc18970978804882a6387ee4996b888e525d108ee4e3fc1a76d6`

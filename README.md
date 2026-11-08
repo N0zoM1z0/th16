@@ -4,6 +4,8 @@ Environment and analysis workspace for the original Japanese **TH16 v1.00a**.
 The supplied executable is pinned in `config/target.toml`. Imported reconstruction
 candidates are evaluated independently using the Factory/TH10 strict Oracle
 method. Upstream similarity scores and exact labels are not acceptance results.
+This repository is local-only: do not push branches, tags or repository contents.
+Start with the [current handoff](docs/NEXT_AGENT.md).
 
 The layout follows the local TH10 workspace:
 
@@ -68,11 +70,13 @@ use Factory's shared launcher with game-local mutable state.
 `verify-toolchain.py --execute` builds and runs separate normal COFF and LTCG
 smoke programs, including a C unit, C++/STL, Win32/DirectX headers, resources and
 PE32 linking. These are tool availability checks. Per-unit production flags
-and exact comparison recipes remain future reconstruction work.
+and the original translation-unit partition remain reconstruction hypotheses.
+The local comparison workflow is implemented in `scripts/strict_oracle.py`;
+its current profiles and artifact identities are recorded in the build receipt.
 
 See [setup evidence](docs/BOOTSTRAP.md), [shared tools](docs/SHARED_TOOLS.md)
-and [handoff](docs/NEXT_AGENT.md). The reference project's own scripts and
-documentation are credited in the setup notes.
+and [local artifact policy](docs/ARTIFACTS.md). The reference project's own
+scripts and documentation are credited in the setup notes.
 
 ## Credits
 

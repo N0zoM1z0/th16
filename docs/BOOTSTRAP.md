@@ -1,5 +1,9 @@
 # Bootstrap evidence
 
+This is the historical environment-only checkpoint. For the current source,
+comparison results and next steps, see [NEXT_AGENT.md](NEXT_AGENT.md) and
+[REFERENCE_IMPORT.md](REFERENCE_IMPORT.md).
+
 ## Original target
 
 The user supplied a bilingual TH16 game ZIP archive. Its game files were
@@ -36,27 +40,33 @@ extraction. The local banners report compiler 19.10.25017, linker
 script to shared installations and game-local Wine. The Ghidra inventory and
 attestation helpers derive from the local MIT-licensed TH10 workspace.
 The reference's `v141_xp`, `/MT`, `/GL`, `/Oy-` and link-profile findings are
-useful hypotheses for later target-specific work. This setup does not adopt
-the reference source, matching counts or acceptance results.
+useful hypotheses for target-specific work. At this bootstrap checkpoint no
+candidate source had been imported. The later import evaluates maintained
+candidates independently and does not adopt upstream matching counts or
+acceptance results.
 
 ## Analyzer and retained evidence
 
 Ghidra 12.1.3 imported the target using the shared JDK and a fresh project.
 The import's postscript verified executable hashes and mapped bytes before
-exporting 1,761 provisional function candidates. Every origin starts as
+exporting 1,761 provisional function candidates. Every origin started as
 `unknown/review`. Source mappings, implemented functions, match rows and match
-units start empty. Candidate spans have not been reviewed for overlaps,
-noncontiguous bodies or complete ownership.
+units were initially empty. Those initial analyzer spans were provisional;
+subsequent comparison applies explicit boundary and ownership checks. The
+source-origin ledger remains separate from local byte-comparison results.
 
 The entry-function query returns `entry`, a ten-byte wrapper calling
 `___security_init_cookie` and `__scrt_common_main_seh`. Logs and complete query
 text are retained under `.analysis/ghidra/`. The Factory native provider query
 result is `.analysis/factory-validation-result.json`.
 
-Toolchain smoke output is retained under `build/toolchain-smoke/`. Its result
-covers tools and standalone test programs only. Both normal COFF and LTCG C/C++
-variants compiled, linked resources into a PE32 image and ran under the dedicated
-Wine prefix, printing `TH16 toolchain smoke: 42`. Component hashes were verified
+The toolchain smoke result is retained in `.analysis/toolchain-verification.log`.
+Disposable binaries were removed during handoff cleanup; rerun
+`python3 scripts/verify-toolchain.py --execute` to recreate
+`build/toolchain-smoke/`. The result covers tools and standalone test programs
+only. Both normal COFF and LTCG C/C++ variants compiled, linked resources into a
+PE32 image and ran under the dedicated Wine prefix, printing
+`TH16 toolchain smoke: 42`. Component hashes were verified
 before execution. The isolated Factory configuration exposed eleven native
 Ghidra operations and completed an entry-function query. Wrong-target and
 compiler-component mismatch checks reject altered inputs.

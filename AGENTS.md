@@ -2,9 +2,11 @@
 
 Prioritize useful reconstruction and reusable knowledge with minimal workflow.
 Inspect the current worktree and `docs/NEXT_AGENT.md` before editing. Preserve
-dirty work and ignored analysis state. Write code, documentation and commit
-messages in English. The Japanese game title is the only non-English exception
-in maintained code, comments and documentation. Use ordinary Markdown for findings.
+dirty work and required ignored evidence. See `docs/ARTIFACTS.md` before cleaning
+local outputs; retain the current build graph for incremental work. Write code,
+documentation and commit messages in English. The Japanese game title is the
+only non-English exception in maintained code, comments and documentation.
+Use ordinary Markdown for findings.
 
 ## Publication restriction
 

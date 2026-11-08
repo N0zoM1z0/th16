@@ -22,7 +22,7 @@ stand-in callers and `/INCLUDE` choices so their effects remain visible. This
 graph is an experiment, not a recovered production translation-unit partition.
 
 ```sh
-.venv/bin/python scripts/build.py --clean
+.venv/bin/python scripts/build.py
 .venv/bin/python scripts/audit-reference.py --write-units
 .venv/bin/python scripts/compare-linked-function.py reference-00401300
 .venv/bin/python scripts/test-strict-oracle.py
@@ -32,6 +32,9 @@ The individual unit name is an example; select one actually retained in
 `config/match-units.toml`. Build outputs live in `build/reference-candidate/`.
 The build receipt binds source inputs, profiles and PE/MAP/PDB/function-map
 hashes and records whether the full output graph was cleaned.
+Use incremental builds for source iterations. Reserve `--clean` and a broad
+replay for a meaningful milestone or a demonstrated dependency/cache problem.
+Focused comparison reuses the current build and checks its input identity.
 
 ## Independent Oracle
 
@@ -61,6 +64,10 @@ name. Literal storage requires either a unique complete payload or an explicit
 reviewed fixed instruction witness with its full storage proof. Runtime
 identities require complete extents, pinned library ownership and reviewed
 target evidence. See [shared linkage evidence](knowledge/reviewed-linkages.md).
+Reviewed primary vftables additionally require complete PDB storage, the locator
+prefix, full supported RTTI inheritance graphs, every relocated slot and fixed
+callee identities. These data bindings do not grant exact credit to the tables
+or their callees.
 Unknown or ambiguous destinations are incomplete. The
 Oracle never selects a target destination merely because it would make the
 current operand match.
@@ -77,6 +84,8 @@ Full per-function findings, missing fields and artifact identities are retained
 in `.analysis/reference-audit.json`. Canonical source mappings and local match
 rows are organized separately from the origin-review ledger. Source origins
 remain under review even when a local code comparison passes.
+The current handoff is [NEXT_AGENT.md](NEXT_AGENT.md); historical reports and
+safe cleanup rules are described in [ARTIFACTS.md](ARTIFACTS.md).
 
 ## Wine PDB dependency
 
