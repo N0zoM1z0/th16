@@ -39,10 +39,15 @@ python3 scripts/msvc.py link /?
 To rebuild and evaluate the imported candidates:
 
 ```sh
-.venv/bin/python scripts/build.py --clean
+.venv/bin/python scripts/build.py
 .venv/bin/python scripts/audit-reference.py --write-units
 .venv/bin/python scripts/progress.py
 ```
+
+Incremental builds reuse objects by their source, included-header and compiler
+flag hashes, then perform a full LTCG link. Use `--clean` for a milestone or a
+demonstrated cache/dependency problem. Focused comparison also accepts
+`--require-cold` when that additional requirement is needed.
 
 Game source lives in `src/`; imported compiler-context callers and opaque support
 are kept separately under `probes/reference-harness/` and

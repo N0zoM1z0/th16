@@ -204,17 +204,19 @@ def replay_owner(image, target, publics, function, unit):
 
 
 class Context:
-    """Hold one immutable cold-build artifact set for a bounded batch."""
-    def __init__(self):
+    """Hold one immutable, source-current build artifact set for a bounded batch."""
+    def __init__(self, *, require_cold=False):
         self.manifest = tomllib.loads((ROOT / "config/target.toml").read_text())
         self.directory = ROOT / "build/reference-candidate"
         self.receipt_path = self.directory / "build-receipt.json"
         self.receipt = json.loads(self.receipt_path.read_text())
         self.before = self.identity()
-        if self.receipt["coldness"] != "clean-output-graph":
+        if self.receipt["coldness"] not in {"clean-output-graph", "incremental"}:
+            raise Incomplete("unsupported candidate build kind")
+        if require_cold and self.receipt["coldness"] != "clean-output-graph":
             raise Incomplete("strict replay requires a clean-output-graph build")
         if self.receipt["input_sha256"] != source_identity():
-            raise Incomplete("source inputs differ from the cold build")
+            raise Incomplete("source inputs differ from the recorded build")
         for name, value in self.receipt["artifacts"].items():
             if digest(self.directory / name) != value:
                 raise ValueError("candidate artifact hash differs from the build receipt")

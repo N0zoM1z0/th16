@@ -15,8 +15,10 @@ remotely. Local commits are allowed; only the user can revoke this restriction.
 - `_reference/johnthreekay-th16` remains pinned and unchanged at
   `2b846da735ac71f68b1dc74e8194c8c8d98e2869`. Source provenance is recorded in
   `config/reference-sources.csv`; README credits the upstream contributors.
-- `scripts/build.py --clean` builds the complete candidate graph through the
-  game-owned Wine prefix and records source/profile/artifact identity.
+- `scripts/build.py` reuses objects with matching dependency/flag hashes and
+  performs a full LTCG link through the game-owned Wine prefix. It records
+  source/profile/artifact identity. Use `--clean` for a meaningful milestone or
+  a demonstrated dependency/cache problem, rather than each source batch.
 - `scripts/audit-reference.py --write-units` performs the independent strict
   comparison. `scripts/progress.py` reads current results after checking their
   freshness. The upstream comparators and library-signature scanner are absent

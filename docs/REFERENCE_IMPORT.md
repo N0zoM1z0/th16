@@ -42,7 +42,7 @@ instruction-text normalization or upstream exact labels.
 
 The strict path requires:
 
-- the canonical target SHA-256 and a fresh cold build;
+- the canonical target SHA-256 and a build current with its recorded inputs;
 - matching PE CodeView/PDB GUID and age, MAP timestamp and image base;
 - one same-start PDB contribution belonging to the selected source object;
 - the complete independent target candidate extent, dense control flow and

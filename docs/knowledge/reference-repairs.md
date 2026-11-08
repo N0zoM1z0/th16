@@ -21,9 +21,10 @@ its complete 255-byte owner matches once the independently reviewed `%d`
 storage binding is available. See [shared linkage evidence](reviewed-linkages.md)
 for the string witness and the allocator entry identities.
 
-Incremental builds were used only to diagnose these changes. Final claims
-require a clean build, complete independent boundaries, unique PDB owners,
-exhaustive relocation fields and byte replay through `scripts/audit-reference.py`.
+The formatting-buffer results below were finalized with a clean build, complete
+independent boundaries, unique PDB owners, exhaustive relocation fields and byte
+replay through `scripts/audit-reference.py`. The current incremental workflow is
+described at the end of this note.
 
 ## Unsuccessful source experiments
 
@@ -136,3 +137,18 @@ The user subsequently requested faster source progress: use incremental builds
 and focused complete-owner comparisons during reconstruction. Repeat a broad
 clean build at a meaningful milestone or when a dependency/cache issue requires
 it, rather than after every source batch.
+
+The local Oracle now accepts either a current incremental receipt or a clean
+receipt. It still checks the source input identity, artifact hashes, PE/PDB/MAP
+identities, complete boundaries and exhaustive fields. Focused JSON results
+record `build_kind`; `--require-cold` retains the stricter build-kind option.
+Four build-context controls verify current artifacts, explicit cold rejection,
+stale-source rejection and changed-artifact rejection without editing receipts.
+Incremental replay of the 56-byte RNG function and the 77-byte ASCII formatter
+passes, and the full incremental audit retains 603 exact, 40 mismatch and 571
+incomplete results.
+
+Two further source trials were reverted: integerizing the slot address in
+`EnemyManager::destroy_all` leaves the same SIB encoding difference, and using
+aggregate Int2 assignment in `Player::set_position_subpixel` leaves its early
+coordinate-conversion load unchanged.

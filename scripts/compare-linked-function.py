@@ -11,9 +11,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("unit")
     parser.add_argument("--json", type=str)
+    parser.add_argument("--require-cold", action="store_true", help="require a clean-output-graph build")
     args = parser.parse_args()
     manifest = tomllib.loads((ROOT / "config/match-units.toml").read_text())
-    context = Context()
+    context = Context(require_cold=args.require_cold)
     if manifest["target_sha256"] != context.manifest["target"]["sha256"]:
         raise ValueError("unit manifest targets another executable")
     unit = manifest["units"][args.unit]
@@ -22,7 +23,7 @@ def main():
     except Incomplete as error:
         result = {"result": "incomplete", "reason": str(error)}
     context.finish()
-    result.update(unit=args.unit, input_identity=context.before)
+    result.update(unit=args.unit, input_identity=context.before, build_kind=context.receipt["coldness"])
     text = json.dumps(result, indent=2) + "\n"
     if args.json:
         from pathlib import Path
