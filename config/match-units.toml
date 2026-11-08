@@ -583,6 +583,23 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-00402f20]
+artifact_kind = "linked-pe"
+source = "src/Thread.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??1ThreadInf@@UAE@XZ"
+object = "Thread.obj"
+candidate_address = 4662928
+target_address = 4206368
+size = 11
+compare_size = 11
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "DIR32", symbol = "??_7ThreadInf@@6B@", target = 4791348, addend = 0 },
+  { offset = 7, width = 4, type = "REL32", symbol = "?join_if_running@ThreadInf@@QAEXXZ", target = 4206384, addend = 0 },
+]
+
 [units.reference-00402f30]
 artifact_kind = "linked-pe"
 source = "src/Thread.cpp"
@@ -7155,6 +7172,29 @@ linkages = [
   { offset = 85, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
 ]
 
+[units.reference-0043b1f0]
+artifact_kind = "linked-pe"
+source = "src/LoadingThread.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create@LoadingThread@@SAPAU1@XZ"
+object = "LoadingThread.obj"
+candidate_address = 4506816
+target_address = 4436464
+size = 147
+compare_size = 147
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 11, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 29, width = 4, type = "DIR32", symbol = "??_7ThreadInf@@6B@", target = 4791348, addend = 0 },
+  { offset = 62, width = 4, type = "REL32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 85, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 99, width = 4, type = "DIR32", symbol = "?g_LoadingThread@@3PAULoadingThread@@A", target = 4878052, addend = 0 },
+  { offset = 104, width = 4, type = "REL32", symbol = "?initialize@LoadingThread@@QAEHXZ", target = 4435808, addend = 0 },
+  { offset = 115, width = 4, type = "REL32", symbol = "??1LoadingThread@@QAE@XZ", target = 4435936, addend = 0 },
+  { offset = 126, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+]
+
 [units.reference-0043b290]
 artifact_kind = "linked-pe"
 source = "src/LoadingThread.cpp"
@@ -10747,6 +10787,35 @@ linkages = [
   { offset = 1, width = 4, type = "REL32", symbol = "?close@Arcfile@@QAEXXZ", target = 4550752, addend = 0 },
 ]
 
+[units.reference-00457120]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?read_file@Arcfile@@QAEPAEPBDPAE@Z"
+object = "Arcfile.obj"
+candidate_address = 4279616
+target_address = 4550944
+size = 367
+compare_size = 367
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 32, width = 4, type = "REL32", symbol = "?find_entry@Arcfile@@QAEPAUArcfileEntry@@PBD@Z", target = 4551312, addend = 0 },
+  { offset = 78, width = 4, type = "REL32", symbol = "_malloc", target = 4685735, addend = 0 },
+  { offset = 111, width = 4, type = "DIR32", symbol = "??_7File@Pbg@@6B@", target = 4798312, addend = 0 },
+  { offset = 141, width = 4, type = "DIR32", symbol = "__imp__SetFilePointer@16", target = 4763800, addend = 0 },
+  { offset = 219, width = 4, type = "DIR32", symbol = "?g_arcfile_keys@@3PAUArcfileKey@@A", target = 4846200, addend = 8 },
+  { offset = 227, width = 4, type = "DIR32", symbol = "?g_arcfile_keys@@3PAUArcfileKey@@A", target = 4846200, addend = 1 },
+  { offset = 234, width = 4, type = "DIR32", symbol = "?g_arcfile_keys@@3PAUArcfileKey@@A", target = 4846200, addend = 4 },
+  { offset = 243, width = 4, type = "DIR32", symbol = "?g_arcfile_keys@@3PAUArcfileKey@@A", target = 4846200, addend = 0 },
+  { offset = 251, width = 4, type = "REL32", symbol = "?zun_decrypt@@YIPAEPAEHEEHH@Z", target = 4203040, addend = 0 },
+  { offset = 271, width = 4, type = "REL32", symbol = "?lzss_decompress@@YIPAEPAEH0H@Z", target = 4554496, addend = 0 },
+  { offset = 292, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+  { offset = 314, width = 4, type = "DIR32", symbol = "??_C@_0BC@MEMJKKEL@info?5?3?5?$CFs?5error?$AN?6?$AA@", target = 4798288, addend = 0 },
+  { offset = 319, width = 4, type = "REL32", symbol = "?arcfile_log@@YAXPBDZZ", target = 4552352, addend = 0 },
+  { offset = 332, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+]
+
 [units.reference-00457290]
 artifact_kind = "linked-pe"
 source = "src/Arcfile.cpp"
@@ -10808,6 +10877,31 @@ compare_size = 1
 profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
+]
+
+[units.reference-00457700]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?open@File@Pbg@@UAE_NPBD0@Z"
+object = "Arcfile.obj"
+candidate_address = 4281104
+target_address = 4552448
+size = 328
+compare_size = 328
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 10, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 51, width = 4, type = "DIR32", symbol = "??_7File@Pbg@@6B@", target = 4798312, addend = 0 },
+  { offset = 72, width = 4, type = "DIR32", symbol = "__imp__CloseHandle@4", target = 4763776, addend = 0 },
+  { offset = 130, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+  { offset = 167, width = 4, type = "DIR32", symbol = "__imp__DeleteFileA@4", target = 4763828, addend = 0 },
+  { offset = 213, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+  { offset = 236, width = 4, type = "REL32", symbol = "?make_full_path@@YAXPADPBD@Z", target = 4553328, addend = 0 },
+  { offset = 264, width = 4, type = "DIR32", symbol = "__imp__CreateFileA@28", target = 4763768, addend = 0 },
+  { offset = 294, width = 4, type = "DIR32", symbol = "__imp__SetFilePointer@16", target = 4763800, addend = 0 },
+  { offset = 309, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
 ]
 
 [units.reference-00457850]
@@ -10904,6 +10998,29 @@ profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
   { offset = 28, width = 4, type = "DIR32", symbol = "__imp__SetFilePointer@16", target = 4763800, addend = 0 },
+]
+
+[units.reference-00457970]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?read_whole@File@Pbg@@UAEPAXI@Z"
+object = "Arcfile.obj"
+candidate_address = 4281728
+target_address = 4553072
+size = 246
+compare_size = 246
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 29, width = 4, type = "DIR32", symbol = "??_7File@Pbg@@6B@", target = 4798312, addend = 0 },
+  { offset = 56, width = 4, type = "DIR32", symbol = "__imp__GetFileSize@8", target = 4763772, addend = 0 },
+  { offset = 69, width = 4, type = "REL32", symbol = "_malloc", target = 4685735, addend = 0 },
+  { offset = 95, width = 4, type = "DIR32", symbol = "__imp__SetFilePointer@16", target = 4763800, addend = 0 },
+  { offset = 104, width = 4, type = "DIR32", symbol = "??_7File@Pbg@@6B@", target = 4798312, addend = 0 },
+  { offset = 133, width = 4, type = "DIR32", symbol = "__imp__SetFilePointer@16", target = 4763800, addend = 0 },
+  { offset = 145, width = 4, type = "DIR32", symbol = "??_7File@Pbg@@6B@", target = 4798312, addend = 0 },
+  { offset = 185, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
 ]
 
 [units.reference-00457a70]
@@ -11049,6 +11166,24 @@ linkages = [
   { offset = 6, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
   { offset = 16, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
   { offset = 40, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+]
+
+[units.reference-004584f0]
+artifact_kind = "linked-pe"
+source = "src/TextHelper.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??_GD3DThreadInf@@UAEPAXI@Z"
+object = "TextHelper.obj"
+candidate_address = 4658816
+target_address = 4556016
+size = 41
+compare_size = 41
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 8, width = 4, type = "DIR32", symbol = "??_7ThreadInf@@6B@", target = 4791348, addend = 0 },
+  { offset = 13, width = 4, type = "REL32", symbol = "?join_if_running@ThreadInf@@QAEXXZ", target = 4206384, addend = 0 },
+  { offset = 27, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-00458520]

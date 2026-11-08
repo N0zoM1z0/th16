@@ -35,28 +35,30 @@ See `knowledge/reference-repairs.md` for subsequent source fixes and unsuccessfu
 experiments, and `knowledge/reviewed-linkages.md` for fixed linkage evidence.
 Run `scripts/progress.py` for the current validated result.
 
-The eight imported `*_want_aligned_stack` helpers have been removed because
-they only introduced dead doubles to influence LTCG. Recover real caller/callee
-alignment before restoring any affected exact result. Other explicitly
-non-original dead locals and arithmetic remain in the import and still need
-source review; a local byte match alone does not settle that review.
+The eight imported `*_want_aligned_stack` helpers and 86 explicitly artificial
+standalone locals have been removed. Unused parameters, unknown structure
+fields, ABI macros and compiler-context harnesses were preserved. The cleanup
+withdrew 23 previous exact results; recover real types and calling context rather
+than restoring dead metadata. Other compiler-context helpers and forced-access
+hypotheses still need source review; a local byte match alone does not settle it.
 
-The latest local checkpoint has 600 exact, 49 mismatch and 565 incomplete
-candidates after removing 86 explicitly artificial locals (22 doubles and
-64 integers) from 39 blocks in 18 C++ files. Standalone declaration statements,
-discard casts and dead zero multiplications were removed; parameters, structure
-layouts, annotations, ABI macros and compiler-context harnesses remain intact.
-The 23 withdrawn exact results are recorded in
-`.analysis/artificial-locals-regression-check.json`. Fifteen now lack matching
-complete extents and eight mismatch. All other 600 previous exact results remain
-exact. This correction is intentional: do not restore dead source solely to
-raise the match count. Recover real types, dataflow and calling context.
+The current checkpoint has 614 exact, 49 mismatch and 551 incomplete candidates.
+All 600 natural-source passes after cleanup and all 608 passes at `1a32210`
+remain exact. Five new runtime identities made eight consumers exact; complete
+RTTI/PDB proofs for ThreadInf and Pbg::File primary vftables made six more exact.
+Game code and build artifacts were unchanged for this linkage-evidence batch.
 
-`draw_line` remains a complete 569-byte strict pass. `world_pos` still has an
-unresolved GS-cookie/extent difference. A four-form non-LTCG probe found a cookie
-for direct expression, reference, named vector and scalar component variants;
-that evidence does not settle original LTCG context or justify disabling GS.
-The cleanup is a dependency-tracked incremental build, with a complete replay
-and 55 passing Oracle controls. See `knowledge/reference-repairs.md` for source
-inventory and evidence. No Oracle comparison rule was changed; origin review
-and Factory acceptance remain open.
+The new `scripts/vtable_identity.py` is part of the Oracle input fingerprint.
+It validates complete storage including the locator prefix, terminated type
+names, entire single-inheritance graphs, relocated slot pointers and independent
+callee identities. Its 29 controls include full ThreadInf destructor replay and
+reject truncated/ambiguous data, wrong class/namespace/slots, missing relocation,
+unsupported hierarchy and address-point misuse. The complete 88-control suite
+passes. The comparison still requires the same full code extents and exhaustive
+byte/field replay; this is not Factory acceptance or source-origin acceptance.
+
+`draw_line` remains a complete 569-byte pass. `world_pos` still has an unresolved
+GS-cookie/extent difference. The four-form non-LTCG probe and Int3 interpolation
+trials are recorded in `knowledge/reference-repairs.md`; do not repeat those
+failed forms or normalize their remaining bytes. Continue from the current
+mismatch/incomplete evidence and preserve the ignored analysis artifacts.

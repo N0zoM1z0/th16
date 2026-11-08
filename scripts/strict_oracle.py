@@ -35,6 +35,7 @@ def reviewed_linkages(context, path=None):
     import capstone
     result = {}
     runtime_witnesses = []
+    vftables = []
     with (path or ROOT / "config/linkage-bindings.csv").open(newline="") as stream:
         for row in csv.DictReader(stream):
             symbol, address, size = row["symbol"], int(row["target_address"], 0), int(row["size"])
@@ -62,6 +63,8 @@ def reviewed_linkages(context, path=None):
                     raise Incomplete("reviewed runtime linkage leaves its pinned Microsoft library")
                 if row["witness_instruction"] or row["witness_mnemonic"]:
                     runtime_witnesses.append((address, int(row["witness_instruction"], 0), row["witness_mnemonic"]))
+            elif row["kind"] == "vftable":
+                vftables.append((row, publics[0]["address"]))
             elif row["kind"] in {"literal", "indexed-literal", "string-literal"}:
                 if row["kind"] != "string-literal":
                     match = re.fullmatch(r"__(?:real|xmm)@([0-9a-fA-F]+)", symbol)
@@ -131,6 +134,12 @@ def reviewed_linkages(context, path=None):
                 or len(instruction.operands) != 1 or instruction.operands[0].type != capstone.x86.X86_OP_IMM
                 or instruction.operands[0].imm != address):
             raise Incomplete("reviewed runtime lacks its fixed direct instruction witness")
+    from vtable_identity import review_vftable, VftableEvidenceError
+    for row, candidate in vftables:
+        try:
+            review_vftable(context, row, candidate, result)
+        except VftableEvidenceError as error:
+            raise Incomplete(str(error)) from error
     return result
 
 
@@ -383,7 +392,7 @@ class Context:
                  ROOT / "config/linkage-bindings.csv",
                  ROOT / "config/reference-sources.csv", ROOT / "scripts/strict_oracle.py",
                  ROOT / "scripts/oracle_fields.py", ROOT / "scripts/linked_image.py",
-                 ROOT / "scripts/pdb_types.py",
+                 ROOT / "scripts/pdb_types.py", ROOT / "scripts/vtable_identity.py",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
@@ -435,6 +444,8 @@ class Context:
             if reviewed and field["target"] != reviewed["target"]:
                 raise Incomplete("linkage differs from the independently reviewed fixed destination")
             addend = field.get("addend", 0)
+            if reviewed and reviewed["kind"] == "vftable" and (addend or field["type"] != "DIR32"):
+                raise Incomplete("reviewed vftable permits only its exact DIR32 address point")
             if addend and not field.get("local") and "storage_size" not in field:
                 addresses = {p["address"] for p in self.publics if p["symbol"] == field["symbol"]}
                 sizes = self.data_contributions.get(next(iter(addresses)), []) if len(addresses) == 1 else []

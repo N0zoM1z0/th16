@@ -433,3 +433,38 @@ shortcut handling and SoundManager::find_bgm. Evidence is
 `.analysis/string-time-runtime-audit.log` and `.analysis/reference-audit.json`.
 These are local code results; runtime callee exactness, source-origin acceptance
 and Factory Truth Kernel acceptance are not inferred.
+
+## RTTI-backed primary vftable evidence
+
+The new linkage proof identifies ThreadInf and Pbg::File's primary vftable
+address points from their full original RTTI class names and single-inheritance
+contracts. It checks complete PDB data contributions, locator prefixes, all
+virtual slots, every slot relocation, complete code ownership and previously
+fixed original function identities. The original callable extent cannot stop
+before another code pointer. Interior addresses and direct code calls to a vftable
+address point remain unsupported.
+
+Twenty-nine controls include both real table sizes, complete ThreadInf destructor
+replay, changed names/namespaces, partial or ambiguous storage, an omitted base
+array byte, missing relocation, wrong slots, absent function identities, zero
+callee extent, conflicting owners, wrong data protection, unsupported inheritance
+and misuse of the address point. A proof-module mutation also invalidates the
+Oracle identity. Tests and implementation are in `scripts/test-vtable-identities.py`
+and `scripts/vtable_identity.py`; complete formats and original addresses are
+recorded in `reviewed-linkages.md`.
+
+The final report has **614 exact, 49 mismatch and 551 incomplete** among 1214
+candidates, with 110,914 exact owned bytes. All 608 exact results from `1a32210`
+remain exact. Six complete consumers become exact: ThreadInf::~ThreadInf
+(11 bytes), LoadingThread::create (147), Arcfile::read_file (367), Pbg::File::open
+(328), Pbg::File::read_whole (246) and D3DThreadInf's scalar deleting destructor
+(41). Their full code extents and exhaustive fields are replayed; no prefix,
+vftable data or virtual callee receives separate exact credit.
+
+All 88 controls pass (29 new vftable controls and the existing 59 Oracle,
+linkage, cursor, PDB type and build-context controls). The final audit is
+`.analysis/vtable-identity-final-audit.log`, and the full retained-pass check is
+`.analysis/vtable-identity-regression-check.json`, against the committed
+`1a32210` match ledger. Game source and compiled artifacts are unchanged in
+this metadata batch. No new game build was needed. Complete code-comparison
+rules stay in force; source-origin review and Factory acceptance remain open.

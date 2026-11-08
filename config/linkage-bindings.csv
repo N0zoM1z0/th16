@@ -37,3 +37,5 @@ _strchr,0x476c60,299,runtime-function,fc9d997e03ed743f08256d5deb16421eb0f1174f0c
 __stricmp,0x47a60a,72,runtime-function,cc2d8efaaf2bb395a441f65ecd1da5ef7b43819030711a10dc03a33ff35a9c00,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
 __localtime64,0x47a36a,39,runtime-function,f91fcc9da1b445d5de93ab389b96c0542e34d7a5d62bc4c3bff6e8b808b62018,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
 ??_U@YAPAXI@Z,0x475142,9,runtime-function,2fc632fa16d745bcef2933b3c0d562c3e027159d2874f23ae4730a3b14ab0604,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,
+??_7ThreadInf@@6B@,0x491c34,4,vftable,39496dca40380219600fa23f88f4ac0a514bb36ed96fb9d651d801a0ae868946,,,docs/knowledge/reviewed-linkages.md,,
+??_7File@Pbg@@6B@,0x493768,36,vftable,af13ffc9f55e48d68e6e4f716568182e1ce7c1faab39d5bc66409c7cc41c6c44,,,docs/knowledge/reviewed-linkages.md,,

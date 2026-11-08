@@ -132,6 +132,58 @@ The base allocator and deallocator both use the process-heap global at
 `0x004A6D54`, but that observation does not create an automatic binding for the
 heap or for their error-handling callees. Unreviewed fields remain incomplete.
 
+## Primary vftable identities
+
+Two address points are independently identified through original RTTI and
+complete virtual-function contracts:
+
+| Class | Original address point | Slot bytes | Complete candidate object |
+| --- | --- | ---: | ---: |
+| `ThreadInf` | `0x00491C34` | 4 | 8 bytes, including its locator pointer |
+| `Pbg::File` | `0x00493768` | 36 | 40 bytes, including its locator pointer |
+
+These are `vftable` records in the linkage table. Their hashes cover every
+original slot byte. The preceding locator pointer and all supporting RTTI
+records are separately parsed and validated; the four-byte prefix is included
+in the complete candidate PDB storage extent, not discarded as padding.
+
+ThreadInf's sole slot is its scalar deleting destructor at `0x00402EF0`.
+Pbg::File's nine slots are open (`0x00457700`), close (`0x00457850`), read
+(`0x00457880`), write (`0x004578C0`), tell (`0x00457900`), get_size
+(`0x00457920`), seek (`0x00457940`), scalar deleting destructor (`0x004576B0`)
+and read_whole (`0x00457970`). These fixed function identities are checked
+against the original entries and candidate PDB owners; the checker does not
+select a target from the operand of the constructor being compared.
+
+The proof supports PE32 primary tables with a zero-signature, zero-offset,
+non-construction CompleteObjectLocator. It reads the entire 20-byte locator,
+16-byte class hierarchy descriptors and 28-byte base descriptors. Class names
+include their namespace. Single-inheritance graphs, base containment counts,
+the `(0, -1, 0)` non-virtual base-displacement form and attributes are checked
+across both images. Cyclic, multiple and virtual inheritance remain unsupported.
+
+Every parsed candidate RTTI record needs one complete same-start non-code PDB
+contribution. TypeDescriptor storage includes the entire header and terminated
+name. The base-class arrays have complete `4 * count + 1` contributions in this
+compiler: the extra zero byte is validated, not truncated. All pointer-table
+storage is readable and read-only, with a DIR32 relocation for its locator
+pointer and every slot. TypeDescriptor caches must be uninitialized.
+
+Every slot must point to a unique complete candidate code contribution and an
+independent original function entry, with one pre-existing fixed function
+identity. Unknown slots are incomplete. An executable pointer immediately after
+the declared original table rejects a shortened extent. Together with the
+reviewed one/nine-slot layouts and original RTTI, this bounds the supported
+original callable tables independently of their consumers.
+
+The result binds only the exact address point in a DIR32 field. Nonzero addends
+and REL32 calls to the data address are rejected. It grants no exact-data claim
+to a vftable/RTTI object and no exact-code claim to a slot's callee. Game consumers
+still require complete owner, boundary, decode and exhaustive field/byte replay.
+The new proof module is included in the Oracle input identity, so changing it
+invalidates an in-flight or retained report. These records extend independent
+linkage evidence; they do not lower the code-comparison requirements.
+
 ## Literal storage witnesses
 
 Equal payloads elsewhere do not make storage interchangeable. The following
