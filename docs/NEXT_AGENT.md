@@ -40,3 +40,11 @@ they only introduced dead doubles to influence LTCG. Recover real caller/callee
 alignment before restoring any affected exact result. Other explicitly
 non-original dead locals and arithmetic remain in the import and still need
 source review; a local byte match alone does not settle that review.
+
+The latest local checkpoint has 622 exact, 43 mismatch and 549 incomplete
+candidates from an incremental build. All 606 earlier exact results at `0170209`
+remain exact. Directory/copy/EH-vector/math runtime identities and four scalar
+witnesses account for the new complete passes; no Oracle comparison rule was
+relaxed. The unsuccessful source-order experiments have been reverted and are
+recorded in `knowledge/reference-repairs.md`. Start the next source iteration
+from the remaining full-owner differences rather than repeating these trials.

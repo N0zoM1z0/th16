@@ -18,6 +18,12 @@ The machine inputs are `config/linkage-bindings.csv`.
 | `_free` | `0x00477FB2` | 5 | The unsized-delete jump at `0x0047514B` reaches this UCRT thunk. |
 | `__free_base` | `0x0047BCB2` | 58 | The free jump at `0x00477FB2` reaches the null-checked HeapFree implementation with GetLastError and errno handling. |
 | `__malloc_base` | `0x0047BCEC` | 78 | The malloc jump at `0x00477FAD` reaches the size-checked HeapAlloc implementation with new-mode retry and errno handling. |
+| `_memcpy` | `0x00487130` | 1396 | The original reads destination/source/count from its three cdecl arguments, copies count bytes with scalar, SSE and `rep movsb` paths, handles overlap and returns the original destination. The pinned vcruntime candidate has a complete 1396-byte PDB contribution. |
+| `??_L@YGXPAXIIP6EX0@Z1@Z` | `0x00474CA8` | 79 | Independent Ghidra EH vector constructor iterator; increments the object pointer by its stride, calls the constructor through argument four with the object in ECX, tracks constructed elements for unwind, and returns with `ret 0x14`. Candidate LIBCMT contribution: 105 bytes. |
+| `??_M@YGXPAXIIP6EX0@Z@Z` | `0x00474D11` | 94 | Independent Ghidra EH vector destructor iterator; starts at array + stride * count, walks backward, calls the destructor with the object in ECX, and returns with `ret 0x10`. Candidate LIBCMT contribution: 122 bytes. |
+| `__chdir` | `0x00479A65` | 11 | The entry tail-jumps to Ghidra-identified `common_chdir<char>` at `0x00479928` (229 bytes). Its callers include both directory selections in `Supervisor::load_game_config`. The candidate public belongs to the pinned UCRT library. |
+| `__libm_sse2_cos_precise` | `0x00488300` | 440 | The SSE2 entry's fallback call at `0x004884A7` reaches `0x0048913F`, whose original instructions execute `fcos` at `0x0048915D` and `0x00489194`. The candidate PDB records the complete 440-byte UCRT contribution. |
+| `__libm_sse2_sin_precise` | `0x004884C0` | 453 | The SSE2 entry's fallback call at `0x00488674` reaches `0x0048926F`, whose original instructions execute `fsin` at `0x0048928D` and `0x004892C4`. The candidate PDB records the complete 456-byte UCRT contribution. |
 | `__libm_sse2_sqrt_precise` | `0x00488690` | 254 | Independent Ghidra identification and the complete SSE2 square-root implementation, including MXCSR/x87 environment checks and the fallback path. Its pinned UCRT candidate contribution is 256 bytes. |
 
 Every entry checks its complete target extent and candidate PDB extent. The candidate
@@ -35,6 +41,46 @@ after the final return. The `candidate_size` column records 256 rather than
 truncating that contribution. The target hash covers all 254 declared bytes.
 Tests reject either truncated extent. This entry identifies an external callee;
 its differing physical extents do not receive a callee exact-code claim.
+
+The memcpy implementation is identified from the whole copy algorithm and
+cdecl contract, not from a presumed exact Crypt caller. Its original entry
+loads source, count and destination at `0x00487132`, `0x00487136` and
+`0x0048713A`. The overlap checks select a backward path at `0x004873E4`;
+the forward `rep movsb` path at `0x0048717E` returns the original destination
+from the argument slot. Other paths implement the same byte-counted copy.
+The fixed incoming call in `zun_decrypt` is at `0x00402282`. Only `_memcpy`
+is a public at the candidate's start; no interior alias is manufactured.
+
+The vector iterators are independently named in the original Ghidra inventory.
+Their constructor/destructor direction, stride/count arguments, indirect ECX
+calls and callee stack cleanup agree with the mangled candidate contracts.
+Their complete original extents differ from the pinned candidate contributions;
+the differing sizes are explicit and do not grant exact runtime-code credit.
+The internal unwind funclets and EH records are not separately bound by these
+entries. An implicit game destructor still needs its own exception metadata
+and handler proof even after its iterator destination is known.
+
+The sine and cosine identities come from the original fallback instructions,
+not from upstream labels or operands selected to match their consumers. Both
+SSE2 entries use the table at `0x00497E10`; their index biases differ by 16
+entries, consistent with a quarter-cycle phase shift. Their environment checks
+and XMM0 double input/output contract agree with the candidate UCRT entries.
+The game wrappers at `0x00405510` and `0x004054F0` widen float input, call sine
+and cosine respectively, then narrow the result. These observations corroborate
+the fixed identities. The sine candidate's complete 456 bytes are checked
+separately from the original's 453; neither is shortened for an exact claim.
+
+The ignored context evidence is `.analysis/math-fallback-context-function.txt`
+and `.analysis/math-fallback-context-decompile.txt`; direct Capstone decode
+confirms the hardware opcodes. A bounded numeric probe was attempted but refused
+to execute because Wine's startup mappings occupied original addresses in this
+non-relocatable target. It produced no numeric evidence and is retained only in
+`.analysis/math-entry-identity.cpp` and its failure log. These bindings rely on
+the static fallback proof above.
+
+The directory-changing child is not a candidate public in this link. Its
+independent name and directory-selection callers identify the eleven-byte root;
+no public or exact claim is invented for the internal child.
 
 The five allocator entries also carry fixed incoming call/jump witnesses. The
 checker decodes the complete reviewed parent, requires the witness to start an
@@ -63,6 +109,10 @@ locations were reviewed through fixed instructions in separate target functions:
 | `__real@43000000` / 128.0f | `0x00494644` | `0x00407473`: `movss xmm3, [0x00494644]` | `anm_on_draw_masked` constructs the masked rectangle. |
 | `__real@3c000000` / 1/128 | `0x004943F4` | `0x0040E7CC`: `mulss xmm0, [0x004943F4]` | `BombAyaAInf::begin` scales the player's horizontal movement for bomb angle and speed. |
 | `__real@43e00000` / 448.0f | `0x004946B0` | `0x0040AB51`: `addss xmm7, [0x004946B0]` | `StdObject::is_culled` adds the vertical playfield extent. |
+| `__real@42c80000` / 100.0f | `0x00494638` | `0x00403379`: `mulss xmm0, [0x00494638]` | `PosVel::step` scales a coordinate before floor/division to snap it to hundredths. |
+| `__real@43600000` / 224.0f | `0x00494670` | `0x00415A2C`: `movss xmm0, [0x00494670]` | `Bullet::bounce_top` constructs the top limit as playfield midpoint minus half the bounce height. |
+| `__real@43f00000` / 480.0f | `0x004946BC` | `0x0042D27C`: `movss xmm1, [0x004946BC]` | `GameThread::~GameThread` positions the now-loading indicator at x = 480. |
+| `__real@41200000` / 10.0f | `0x004945CC` | `0x00408722`: `movss xmm6, [0x004945CC]` | `AsciiInf::draw_string` selects the small font's ten-pixel line height. |
 | `__xmm@7fffffffffffffff7fffffffffffffff` / two double sign masks | `0x00494880` | `0x0040524A`: `andps xmm0, [0x00494880]` | `zun_fabsf` clears the widened floating-point sign bit. The witness reads the entire 16-byte literal. |
 
 The loader checks each entire typed payload in both images, the fixed target

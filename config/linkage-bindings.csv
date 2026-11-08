@@ -22,3 +22,13 @@ __real@43e00000,0x4946b0,4,literal,7a851fa1703894ca74af043265c82f52e2237db147af7
 __xmm@41f00000000000000000000000000000,0x494850,16,indexed-literal,7b8d1a6d4433104f72eac25961772761e58ce663d392e3164660b3e8fb2b47f4,0x402c87,addsd,docs/knowledge/reviewed-linkages.md,,
 __xmm@7fffffffffffffff7fffffffffffffff,0x494880,16,literal,6db4845ea3835187f15ebd6bdf52f0c51684d803eb0d4ac481f48faf042421f1,0x40524a,andps,docs/knowledge/reviewed-linkages.md,,
 __libm_sse2_sqrt_precise,0x488690,254,runtime-function,d642068863b993a297358fbce7f1f09801653fd1daf9db1ea589ade5761e9ac6,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,256
+__chdir,0x479a65,11,runtime-function,1ff8d43af26721a27230d1c1a8921a1e08773423d97b1ff1c72d34d44847e948,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
+__libm_sse2_cos_precise,0x488300,440,runtime-function,380dce6a85dad98a07b72333ef7a2bc1b17c55204197f869976a274da2ed55cb,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,440
+__libm_sse2_sin_precise,0x4884c0,453,runtime-function,09a6cb557add9e9dd208cefc3fc169273cf43e32992205c185e95ad4a39763ff,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,456
+_memcpy,0x487130,1396,runtime-function,67efee71ca9dec003c0f3ae58c7c28b079b1d93bb877fe24c5ac2faddb0ff291,,,docs/knowledge/reviewed-linkages.md,libvcruntime.lib,1396
+??_L@YGXPAXIIP6EX0@Z1@Z,0x474ca8,79,runtime-function,f3266cbf89665b564eb5cf027ff39ab591c100f0fa6448b1169171aeb3eddb5f,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,105
+??_M@YGXPAXIIP6EX0@Z@Z,0x474d11,94,runtime-function,58aa71218c1f5f1243e7b539de45525d738ccf7df8fd5d0e5bf3d7b96ea3624e,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,122
+__real@42c80000,0x494638,4,literal,2238f30df488055daf5e8f362cf904e370011a172d20df193c1b7ae8e5db8e01,0x403379,mulss,docs/knowledge/reviewed-linkages.md,,
+__real@43600000,0x494670,4,literal,99c197cb0f787cc693728b3c326b30d5a8fd4e4b280ddae2c06fc3f767ad9988,0x415a2c,movss,docs/knowledge/reviewed-linkages.md,,
+__real@43f00000,0x4946bc,4,literal,89a0636b40f7f5be7beca3df1c5352427cae3f2f05cd52cdd9044e4184e072fa,0x42d27c,movss,docs/knowledge/reviewed-linkages.md,,
+__real@41200000,0x4945cc,4,literal,80c8a717ccd70c8809eb78e6a9591c003e11c721fe0ccaf62fd592abda1a5593,0x408722,movss,docs/knowledge/reviewed-linkages.md,,

@@ -195,3 +195,62 @@ controls passed. The relevant private evidence is
 `.analysis/pointer-limit-final-audit.log`, `.analysis/draw-sprite-fog-exact.json`
 and `.analysis/fabsf-exact.json`. No further cold build was used after the user
 requested incremental iteration.
+
+## Directory, copy and math linkage review
+
+The eleven-byte directory-changing UCRT root is independently identified through
+its `common_chdir<char>` child and the configuration loader's directory-selection
+paths. This makes `Supervisor::load_game_config` (799 bytes) and
+`Scorefile::Scorefile` (145 bytes) exact under complete replay.
+
+The SSE2 sine and cosine identities are independently corroborated by their
+original x87 fallback instructions, `fsin` and `fcos`. The runtime copy algorithm
+and the Ghidra-identified EH vector iterators supply three further reviewed
+identities. Their entire target and candidate extents remain mandatory; separate
+candidate sizes record the differing iterator and sine contributions. These
+records identify external callees, with no separate runtime exact-code credit.
+See `reviewed-linkages.md` for addresses, contracts and evidence. The Oracle's
+comparison and ownership rules were not changed for this batch.
+
+Four additional scalar witnesses fix the storage of 100.0f (coordinate
+quantization), 224.0f (bounce midpoint), 480.0f (loading indicator x) and 10.0f
+(small font line height). Every consumer still needs complete owner, relocation
+and byte replay. Equal payloads at other addresses are not substituted.
+
+Several bounded natural-source trials were rejected and reverted:
+
+- A Float2 length-square expression for circle/rectangle collision retained the
+  400-byte extent but worsened agreement; in-place rotation produced 403 bytes.
+- Caching shake duration and extracting the rising-shot damage configuration
+  left the respective 476/472 and 349/333 comparisons unchanged.
+- Moving the vertical fog spacing calculation after position initialization,
+  including a named origin and interval count, produced 329 bytes rather than
+  the original 326.
+- Using the cached VM for deletion produced 108 bytes rather than 112. Loading
+  the next node before the VM retained 112 bytes and the same 105 matching bytes.
+- Reversing the two angle-operand local declarations retained the same
+  142-byte contribution and 130 matching bytes.
+
+All production source from these experiments was restored before the final
+incremental rebuild. Logs include `.analysis/fog-cached-vm-build.log`,
+`.analysis/scalar-load-order-build.log` and
+`.analysis/restore-scalar-trials-build.log`. No padding locals, inline assembly,
+forced volatile accesses or partial-range exact claims were introduced.
+
+The final current-source incremental audit reports **622 exact, 43 mismatch and
+549 incomplete** among 1214 annotated candidates, totaling 119,976 exact owned
+bytes. All 606 exact results from checkpoint `0170209` remain exact; sixteen
+previously incomplete candidates become exact. New complete passes include
+Stage::load_std (414 bytes), Bullet::bounce_top/bottom (207/202),
+BulletManager::cancel_rectangle_as_bomb (283), Scorefile::load_sections (374),
+scorefile_save (624), TitleInf::update_options_sprites (3255),
+AnmManager::save_vm_tree (361) and AnmVm::copy_from (603). The two newly
+decidable mismatches retain their full mismatching bytes.
+
+Twenty-three reviewed-linkage controls and twelve complete-owner controls pass.
+The final report is `.analysis/reference-audit.json`; the audit log is
+`.analysis/runtime-literal-final-audit.log`, and the explicit baseline comparison
+is `.analysis/runtime-literal-regression-check.json`. `scripts/progress.py`
+validates report, artifact and retained-unit freshness. All builds in this batch
+were incremental. Source-origin review is still open, and no Factory acceptance
+or remote publication was performed.
