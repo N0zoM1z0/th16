@@ -75,6 +75,10 @@ def main():
             raise ValueError(f"toolchain file hash mismatch: {row['path']}")
     if not lock.get("compiler_files"):
         raise ValueError("compiler component hashes are not pinned")
+    for row in lock.get("wine_auth_files", []):
+        actual = hashlib.sha256((tc.ROOT / ".tools/wine-auth" / row["path"]).read_bytes()).hexdigest()
+        if actual != row["sha256"]:
+            raise ValueError(f"Wine authentication helper hash mismatch: {row['path']}")
     for path in [*tc.INCLUDE, *tc.LIB]:
         if not path.is_dir():
             raise FileNotFoundError(path)

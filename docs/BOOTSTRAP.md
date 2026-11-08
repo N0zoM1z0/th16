@@ -2,7 +2,7 @@
 
 ## Original target
 
-The user supplied `[th16] 东方天空璋 (汉化版+日文版).zip`. Its game files were
+The user supplied a bilingual TH16 game ZIP archive. Its game files were
 extracted into `../game_exe/`; `th16.exe` was copied to the ignored canonical
 `resources/th16.exe`. The separate `th16c.exe` is not the selected target.
 
@@ -61,4 +61,5 @@ before execution. The isolated Factory configuration exposed eleven native
 Ghidra operations and completed an entry-function query. Wrong-target and
 compiler-component mismatch checks reject altered inputs.
 
-No function exact reconstruction has started, as requested.
+This section records the initial environment-only checkpoint. Subsequent
+reference-candidate evaluation is documented separately.

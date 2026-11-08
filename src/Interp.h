@@ -1,0 +1,238 @@
+#pragma once
+
+#include <d3dx9math.h>
+
+#include "ZunAngle.h"
+#include "ZunMath.h"
+#include "ZunTimer.h"
+#include "decomp.h"
+#include "types.h"
+
+// Easing curves of ANM/ECL interpolation (the "mode" of an interpolator).
+enum InterpMode
+{
+    INTERP_LINEAR = 0,
+    INTERP_EASE_IN_2 = 1,
+    INTERP_EASE_IN_3 = 2,
+    INTERP_EASE_IN_4 = 3,
+    INTERP_EASE_OUT_2 = 4,
+    INTERP_EASE_OUT_3 = 5,
+    INTERP_EASE_OUT_4 = 6,
+    // No end: initial moves by goal every frame (a velocity).
+    INTERP_CONSTANT_VELOCITY = 7,
+    // Cubic Hermite curve from initial to goal; bezier_1 and bezier_2 are
+    // the tangents at the two ends.
+    INTERP_BEZIER = 8,
+    INTERP_EASE_IN_OUT_2 = 9,
+    INTERP_EASE_IN_OUT_3 = 10,
+    INTERP_EASE_IN_OUT_4 = 11,
+    INTERP_EASE_OUT_IN_2 = 12,
+    INTERP_EASE_OUT_IN_3 = 13,
+    INTERP_EASE_OUT_IN_4 = 14,
+    INTERP_FORCE_INITIAL = 15,
+    INTERP_FORCE_FINAL = 16,
+    // No end: initial moves by bezier_2 every frame, and bezier_2 by goal
+    // (a velocity and an acceleration).
+    INTERP_CONSTANT_ACCEL = 17,
+    INTERP_EASE_OUT_SINE = 18,
+    INTERP_EASE_IN_SINE = 19,
+    INTERP_EASE_IN_OUT_SINE = 20,
+    INTERP_EASE_OUT_IN_SINE = 21,
+    // Back up a little before moving on (the four next ones further).
+    INTERP_EASE_IN_BACK_A = 22,
+    INTERP_EASE_IN_BACK_B = 23,
+    INTERP_EASE_IN_BACK_C = 24,
+    INTERP_EASE_IN_BACK_D = 25,
+    INTERP_EASE_IN_BACK_E = 26,
+    // Overshoot the goal a little and come back.
+    INTERP_EASE_OUT_BACK_A = 27,
+    INTERP_EASE_OUT_BACK_B = 28,
+    INTERP_EASE_OUT_BACK_C = 29,
+    INTERP_EASE_OUT_BACK_D = 30,
+    INTERP_EASE_OUT_BACK_E = 31,
+};
+
+// Interpolated values: a value going from initial to goal over end_time
+// frames along the curve `method` (InterpMode), with two bezier control
+// values for INTERP_BEZIER, stepped by a timer. step() advances the timer by
+// a frame and returns the new value (also kept in current); once the time
+// is up it returns goal and sets end_time to 0, after which step() keeps
+// returning goal (initial for the two endless modes). A negative end_time
+// never ends: the timer stands still and every step applies the curve again
+// (what the endless modes are used with). Layouts from ExpHP (zInterpFloat,
+// zInterpFloat2, zInterpFloat3, zInterpInt, zInterpInt3, zInterpStrange1).
+// The constructors only construct the timer; owners clear end_time.
+struct InterpFloat
+{
+    f32 initial;
+    f32 goal;
+    f32 bezier_1;
+    f32 bezier_2;
+    f32 current;
+    ZunTimer time;
+    i32 end_time;
+    i32 method;
+
+    // Restarts the timer at frame 0.
+    DECOMP_NOINLINE void reset();
+    HARNESS_CALLED f32 step();
+
+    // Starts an interpolation from initial to goal over end_time frames
+    // (ECL's move*Time instructions).
+    __forceinline void start(i32 end_time, i32 method, f32 initial, f32 goal)
+    {
+        this->initial = initial;
+        this->end_time = end_time;
+        this->method = method;
+        bezier_1 = 0.0f;
+        bezier_2 = 0.0f;
+        this->goal = goal;
+        reset();
+    }
+};
+
+// A zero vector that the ECL radial and ellipse interpolations copy their
+// bezier values from (probes/reference-support/Opaque.cpp).
+extern D3DXVECTOR2 g_zero_vec2;
+
+// InterpFloat for 2D vectors.
+struct InterpFloat2
+{
+    D3DXVECTOR2 initial;
+    D3DXVECTOR2 goal;
+    D3DXVECTOR2 bezier_1;
+    D3DXVECTOR2 bezier_2;
+    D3DXVECTOR2 current;
+    ZunTimer time;
+    i32 end_time;
+    i32 method;
+
+    // Restarts the timer at frame 0.
+    void reset_timer();
+    HARNESS_CALLED D3DXVECTOR2 step();
+    // Starts an interpolation from initial to goal over end_time frames
+    // (ECL's moveCircleTime and moveEllipseTime). Takes the components
+    // separately: D3DXVECTOR2 locals would make LTCG align the caller's
+    // frame.
+    __forceinline void start(i32 end_time, i32 method, f32 initial_x, f32 initial_y, f32 goal_x, f32 goal_y)
+    {
+        this->end_time = end_time;
+        bezier_1.x = g_zero_vec2.x;
+        bezier_1.y = g_zero_vec2.y;
+        bezier_2.x = g_zero_vec2.x;
+        bezier_2.y = g_zero_vec2.y;
+        this->method = method;
+        initial.x = initial_x;
+        initial.y = initial_y;
+        goal.x = goal_x;
+        goal.y = goal_y;
+        reset_timer();
+    }
+    // 0x425570. A second copy of step that the enemies' radial distance
+    // interpolators use (ExpHP: InterpRadialDist::step). HARNESS_CALLED:
+    // its only caller, EnemyData::step_interpolators, realigns its frame,
+    // so LTCG knows this one need not.
+    HARNESS_CALLED D3DXVECTOR2 step_radial_dist();
+};
+
+// InterpFloat for 3D vectors.
+struct InterpFloat3
+{
+    D3DXVECTOR3 initial;
+    D3DXVECTOR3 goal;
+    D3DXVECTOR3 bezier_1;
+    D3DXVECTOR3 bezier_2;
+    D3DXVECTOR3 current;
+    ZunTimer time;
+    i32 end_time;
+    i32 method;
+
+    // 0x406200
+    void reset_timer();
+    // 0x406e10
+    D3DXVECTOR3 step();
+};
+
+// An InterpFloat whose values are angles kept in [-pi, pi] (ExpHP:
+// zInterpFloat, used for AnmVm::rotate_2d_i).
+struct InterpAngle
+{
+    ZunAngle initial;
+    ZunAngle goal;
+    ZunAngle bezier_1;
+    ZunAngle bezier_2;
+    ZunAngle current;
+    ZunTimer time;
+    i32 end_time;
+    i32 method;
+
+    // The same code as InterpFloat::reset, but a separate function.
+    void reset_time();
+    HARNESS_CALLED ZunAngle step();
+};
+
+// InterpFloat for an integer (the curves still work in floats).
+struct InterpInt
+{
+    i32 initial;
+    i32 goal;
+    i32 bezier_1;
+    i32 bezier_2;
+    i32 current;
+    ZunTimer time;
+    i32 end_time;
+    i32 method;
+
+    i32 step();
+};
+
+// InterpFloat for three integers (colors).
+struct InterpInt3
+{
+    Int3 initial;
+    Int3 goal;
+    Int3 bezier_1;
+    Int3 bezier_2;
+    Int3 current;
+    ZunTimer time;
+    i32 end_time;
+    i32 method;
+
+    HARNESS_CALLED Int3 step();
+};
+
+// A 3D interpolator with current first and a choice between one curve
+// for the whole vector and one per axis (ExpHP: zInterpStrange1). The
+// enemies' position interpolators (ECL's move instructions) use it.
+struct InterpStrange1
+{
+    D3DXVECTOR3 current;
+    D3DXVECTOR3 initial;
+    D3DXVECTOR3 goal;
+    D3DXVECTOR3 bezier_1;
+    D3DXVECTOR3 bezier_2;
+    ZunTimer time;
+    i32 end_time;
+    // With flag_1d bit 0, each axis interpolates on its own with these
+    // three methods (x, y, z); otherwise method_for_3d applies to all.
+    union
+    {
+        struct
+        {
+            i32 method_for_1d;
+            u32 move_curve_mode;
+            u32 unk_5c;
+        };
+        i32 methods_1d[3];
+    };
+    i32 method_for_3d;
+    i32 flag_1d;
+
+    void reset_timer();
+    // 0x4258b0
+    D3DXVECTOR3 step();
+};
+
+// The shared interpolation curves (InterpMode): progress (usually 0 to 1)
+// of an interpolation `time` frames into one of `end_time` frames.
+HARNESS_CALLED f32 interp_common_methods(i32 mode, f32 time, f32 end_time);

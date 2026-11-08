@@ -3,11 +3,13 @@
 Prioritize useful reconstruction and reusable knowledge with minimal workflow.
 Inspect the current worktree and `docs/NEXT_AGENT.md` before editing. Preserve
 dirty work and ignored analysis state. Write code, documentation and commit
-messages in English. Use ordinary Markdown for findings.
+messages in English. The Japanese game title is the only non-English exception
+in maintained code, comments and documentation. Use ordinary Markdown for findings.
 
-The current user request is **environment setup only**. Do not begin function
-exact reconstruction, adopt reference source, or run a matching campaign until
-the user requests it. Do not use REA in this workspace.
+The user has authorized importing the pinned reference candidates and evaluating
+them using this repository's Factory/TH10-style strict Oracle. Upstream matching
+tools, percentages and exact labels have no acceptance authority. Do not use REA
+in this workspace.
 
 ## Target and tools
 

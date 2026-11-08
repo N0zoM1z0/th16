@@ -27,6 +27,9 @@ def environment():
                CL="", _CL_="", LINK="", _LINK_="",
                WINEDLLOVERRIDES="mscoree,mshtml=", WINEDEBUG="-all",
                _MSPDBSRV_ENDPOINT_="th16-reconstruction")
+    auth = ROOT / ".tools/wine-auth/bin"
+    if auth.is_dir():
+        env["PATH"] = str(auth) + os.pathsep + env.get("PATH", os.defpath)
     return env
 
 

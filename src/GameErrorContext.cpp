@@ -1,0 +1,95 @@
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "CriticalSections.h"
+#include "GameErrorContext.h"
+
+// GLOBAL: TH16 0x4a30a8
+GameErrorContext g_GameErrorContext;
+// SYNTHETIC: TH16 0x401010
+// ??__Eg_GameErrorContext@@YAXXZ
+// SYNTHETIC: TH16 0x48ac20
+// ??__Fg_GameErrorContext@@YAXXZ
+
+// TH06's ZunMemory: an allocation registry that only exists in debug
+// builds. The release build keeps an instance whose empty destructor is
+// still registered (0x401020). Which global it really is, and where, is a
+// guess.
+struct ZunMemory
+{
+    bool registry_in_use;
+
+    ZunMemory()
+    {
+        registry_in_use = false;
+    }
+    ~ZunMemory()
+    {
+    }
+};
+
+ZunMemory g_ZunMemory;
+// SYNTHETIC: TH16 0x401020
+// ??__Eg_ZunMemory@@YAXXZ
+// SYNTHETIC: TH16 0x48ac30
+// ??__Fg_ZunMemory@@YAXXZ
+
+// Appends a formatted message to the buffer if it fits (dropping it
+// otherwise) and returns fmt.
+// FUNCTION: TH16 0x4029d0
+const char *GameErrorContext::log(const char *fmt, ...)
+{
+    char tmp[0x2000];
+    size_t tmp_size;
+    va_list args;
+
+    ENTER_CS(CS_GAME_ERROR_CONTEXT);
+    va_start(args, fmt);
+    vsprintf(tmp, fmt, args);
+
+    tmp_size = strlen(tmp);
+
+    if (this->buffer_end + tmp_size < &this->buffer[sizeof(this->buffer) - 1])
+    {
+        strcpy(this->buffer_end, tmp);
+
+        this->buffer_end += tmp_size;
+        *this->buffer_end = '\0';
+    }
+
+    va_end(args);
+    LEAVE_CS(CS_GAME_ERROR_CONTEXT);
+
+    return fmt;
+}
+
+// log() for errors: the same, with a smaller temporary buffer, and makes
+// the game show the buffer in a message box when it exits.
+// FUNCTION: TH16 0x402aa0
+const char *GameErrorContext::fatal(const char *fmt, ...)
+{
+    char tmp[0x200];
+    size_t tmp_size;
+    va_list args;
+
+    ENTER_CS(CS_GAME_ERROR_CONTEXT);
+    va_start(args, fmt);
+    vsprintf(tmp, fmt, args);
+
+    tmp_size = strlen(tmp);
+
+    if (this->buffer_end + tmp_size < &this->buffer[sizeof(this->buffer) - 1])
+    {
+        strcpy(this->buffer_end, tmp);
+
+        this->buffer_end += tmp_size;
+        *this->buffer_end = '\0';
+    }
+
+    va_end(args);
+    this->show_message_box = true;
+    LEAVE_CS(CS_GAME_ERROR_CONTEXT);
+
+    return fmt;
+}

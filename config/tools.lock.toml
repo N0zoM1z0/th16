@@ -184,3 +184,693 @@ sha256 = "18b6808e41af919eb009f5f8450d5d095e720260036e7958c5eb8b15806af732"
 [[compiler_files]]
 path = "vs/VC/Tools/MSVC/14.10.25017/lib/x86/libvcruntime.lib"
 sha256 = "016bec76f1790699257c173f8815716367bd8ccb737c897d203912766be75afd"
+
+[capstone]
+version = "5.0.7"
+distribution_version = "5.0.9"
+authority = "linked-image-field-decoder"
+python_wrapper_sha256 = "6f8a27fe069aa89a46974e189b5365d56eb5e02c2fd581d2fbfad7fbba51549f"
+x86_wrapper_sha256 = "7c3a2f434e20df6f69ced3bed07217c996379d647aeb62de9bf5d6e8b195f525"
+x86_constants_sha256 = "00dcf65aad410f95a61dacd1dadacfe11b0f19b2afbeb07d19a484d35c692c38"
+native_library_sha256 = "a0897f809e062bdb2a84a6aca71707648e1b9420949b549fe8946f612c22dc84"
+
+[wine_auth]
+version = "4.19.5-Ubuntu"
+selection = ".tools/wine-auth"
+purpose = "Wine NTLM RPC authentication for the MSVC PDB server"
+
+[[wine_auth_files]]
+path = "bin/ntlm_auth"
+sha256 = "8ba3c9f011cb15bedfb0797220ec02f0d313c3867e2c9c4510cecc0f0a6fda06"
+
+[[wine_auth_files]]
+path = "root/usr/bin/ntlm_auth"
+sha256 = "49c9215b0e64832945fc56585b1fa19b5358419adbffb7c4cae3892ff60f2600"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsamba-passdb.so.0.28.0"
+sha256 = "0f07094923dc2269af348688fe348f284e1766bde4d6a143e6397a03c050f31e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libtdb.so.1.4.10"
+sha256 = "6b9930cda5fc15a4d43bb231b8524b2c74cb7386e57d1d7c3d9cad99ab05bc82"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsamba-credentials.so.1.0.0"
+sha256 = "d69a9de8c24c16c546351027ae80ff04cb43e1e0316b35df1fc28a53431d7623"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsmbconf.so.0.0.1"
+sha256 = "e25fb3f0ea1207f0853613ec41882fd8c7f80f39651bffc45ea7fc6529b703bc"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libndr-nbt.so.0.0.1"
+sha256 = "62bf73875e3695ec0d6c6c46a76a5817d1bcd507c76b2b40661fbaf679bbafc9"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libdcerpc-server.so.0.0.1"
+sha256 = "7fefce24c914c759cc706832d17ec1c9f0ace7c3b1b450ddea8c73494819b92c"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libtevent.so.0.16.1"
+sha256 = "ab0685a2cb4ef53938a776abb9f471051585bd2bd20280febe84ca3097373d48"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libdcerpc.so.0.0.1"
+sha256 = "e349f85d2dbb6966222971b3cb857c9a3fa2694e57455bb74a28b80f478a9cce"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsamba-hostconfig.so.0.0.1"
+sha256 = "653d27fba037688b78d0ebca325bcb31f99c2f9c37f0c69fa5e23ca4b3a26ae1"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsamdb.so.0.0.1"
+sha256 = "4c70701e934e4869e1463cc0fe073463dae42627284d1f0c06ab5c72a404991d"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libdcerpc-server-core.so.0.0.1"
+sha256 = "706a486244f5cf947660f1237bd6a47ae18f40b5da50106cd64126d5165e07be"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libndr.so.3.0.1"
+sha256 = "4244d2753a46ba128a53cec9d8b3a3da158dc0c74db55bd8e342edd2d74c84cf"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsamba-errors.so.1.0.0"
+sha256 = "67d163ae4c1f88a1bf41e3a851ce501566303ad203cffffa58ba4b72c0c10e3c"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libdcerpc-binding.so.0.0.1"
+sha256 = "6ca4ea02600e8b5729024f8bf4f45a4a4edd63cc18fc9ddcb451a708650af20c"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsamba-util.so.0.0.1"
+sha256 = "15490ec660394e7281f2b965ce4b54c786db4b054773ad561e18168c6602aad5"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libsmbldap.so.2.1.0"
+sha256 = "db16286941bac1b4d6765faaba29b243944e504c9e3b4b7c3db579144bc26179"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libwbclient.so.0.16"
+sha256 = "4b89fb3488e5cae619c7f3f4bcc63fd0d7202308a54d9eb3f85d8ff8d0f448d1"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libdcerpc-samr.so.0.0.1"
+sha256 = "08b8da6946f89fa7f8fea803da67e558ac2841d7d9006457633c660a6e97f346"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libndr-krb5pac.so.0.0.1"
+sha256 = "e644921b8b6c575f075140fcec606aab0d3fa967c45fdce680022e345c18ab42"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libtalloc.so.2.4.2"
+sha256 = "5e4fb8691231a2431f5126f79c884bdc0678ef08b2c3d5f9c5017365589dbf4b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libnetapi.so.1.0.0"
+sha256 = "7ff24d484b1fb2acc433233a12eac60950ba3b6fe7359d44bfd4ef4bc7df7941"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libldb.so.2.8.0"
+sha256 = "b5cf6837ecc74694d5270616fd2b81a9d276c03f2ad1ceed18a63b11f9f04f87"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libtevent-util.so.0.0.1"
+sha256 = "db45a9a93997ae6feb4dabe49e3b1fa6af217a0a715e96d8d542538056ccd944"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/libndr-standard.so.0.0.1"
+sha256 = "0897786a8411673c40df381d3dfd9f1fad42d06b9de8e9b2455465b864a81a3e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libidmap-samba4.so.0"
+sha256 = "807f68aa64da7fd8346d3f206c105a83a766e9bedc1220b9cb350f036d29c11c"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libscavenge-dns-records-samba4.so.0"
+sha256 = "223c1aeeff6b3e886df9b5463a309feb00cf9dbf2619a5531c513d4c1dc7b5a3"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libhttp-samba4.so.0"
+sha256 = "98719979a44ce46d64da06bcce6bd4a40076eed5f40a53a72cbc0af52b3bc5fa"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libldb-tdb-int-samba4.so.0"
+sha256 = "4a9d3843dfadae6d0ac3067f0bfbd5468442cd898db07be059568c248fc4481e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsocket-blocking-samba4.so.0"
+sha256 = "4e606ce7002a9f6e66df09a26c965538e2691484ffcba72911eb85d6b5b1d8c3"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdcerpc-samba-samba4.so.0"
+sha256 = "62bed258ccc0cc7900945dbd1b4122efbb2a9f87c08972788df039ea7134c9bb"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libheimbase-samba4.so.0"
+sha256 = "761daf5cbed3ed3eec44c0920aec31234e71232a0216dd292ea887de8cd05593"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdcerpc-samba4.so.0"
+sha256 = "80747575168ed9cdb30d8cfe1facbea3dc24b40f0d0b312a04a3b3ea7ec122e5"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libgssapi-samba4.so.0"
+sha256 = "d1c472d70e6d42c416243cf142ecfb8d9a5c2b55f7690e076b2848342c19b133"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsmb-transport-samba4.so.0"
+sha256 = "7209541d0837ad6980e35d1c1a8a8fb17e8e32970f333929a0b79c0bfb9b6c9e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libMESSAGING-samba4.so.0"
+sha256 = "4f087f9a74987730e5b36cb4f10100e03a6b4a8f9c4becfa21dd6d7ad7e3bd96"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsmbd-base-samba4.so.0"
+sha256 = "218f201948e01d28bcc8c4528d8848132a55692370f9321bcd81ec37b39fbf17"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libutil-reg-samba4.so.0"
+sha256 = "6be1567fe1d06aa74bef87f7b19c854db090c0f7eb0844bfeed32721e113b877"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcli-spoolss-samba4.so.0"
+sha256 = "4d41936016923f33a736626f83200b92edf8cda324a19d0f3282d20ebb1b0723"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libauth-unix-token-samba4.so.0"
+sha256 = "fa8a22507e102aa34008e99b1a4b98a29da6274a82cb8a8b02562a5e34a8fdc9"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsamba-cluster-support-samba4.so.0"
+sha256 = "abbdbbe59dd4455afe81f7d2c48de2c8bc51989494d92ce469bde3bebc91d183"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsamba-sockets-samba4.so.0"
+sha256 = "f3a2391ad6b580efab1f05d7d29d1f52334dd8c0ea85f6e9322558bf4aade451"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcmdline-contexts-samba4.so.0"
+sha256 = "ce0eb1efea8f9a4b3eb1dfe1abd0f4b6876df36461436dab5ab5f16536983499"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libxattr-tdb-samba4.so.0"
+sha256 = "31286e5a5b40899cb9df33e8bff0091ec334f557825d26bde97a755d7c64814e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libserver-role-samba4.so.0"
+sha256 = "ac8aeb70226fc64314f1e11d4232c8df5c1b3c5e4f824495611ef5525115dfeb"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libmsrpc3-samba4.so.0"
+sha256 = "69d3af134161efdfb451b63de3d0330b63773ceeee66fd21d74f196666c30235"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdsdb-garbage-collect-tombstones-samba4.so.0"
+sha256 = "8a32b722662de34d881db7504565efe5b90558c7df9d5f72a2eab68fbb604db2"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libserver-id-db-samba4.so.0"
+sha256 = "8dd2811cee016fa21d347d3242c4cce61377bc813529c81975119f2d34a64e43"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsmbd-shim-samba4.so.0"
+sha256 = "6b767887d2999ce217dce4ea991dc81b36a5373eae49912b4bad4745762ab264"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsmbldaphelper-samba4.so.0"
+sha256 = "daa2171fca2d3788c9a555bc52ad5fb30585acae2bb06d464b4d7d10e516af18"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libgse-samba4.so.0"
+sha256 = "aa39e5961c35fe21925b04057e14f60a98adb09470b46ec5a4af2eb0e01bd37e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libkrb5samba-samba4.so.0"
+sha256 = "8f0b1a0cb3a688441e40a466d263544af97c22b73fc8c74e63c3ad5dd6b0fc1b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libgpext-samba4.so.0"
+sha256 = "992d7d0bbc46f40b25aa2057170345b416a88aa0fea1bfe03de5e9a2d5e5904d"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libroken-samba4.so.0"
+sha256 = "d001280ff24df2eb776fb038b715677629972b5a4f4ea29f4135dd8bdba9b713"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdbwrap-samba4.so.0"
+sha256 = "51ebbc738e6b22d13369ab96408253cf9b1f47ec7271d13c680d29ff60865aa5"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcli-smb-common-samba4.so.0"
+sha256 = "121645e89a635cd918b736c4bcd1b7b2950872fc0f5f6ecdc764a29e93d5f907"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcli-cldap-samba4.so.0"
+sha256 = "200d02a790948063f27555d1e99db9eb84cf9277931ac9015b0cd39fb2dca422"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libposix-eadb-samba4.so.0"
+sha256 = "1b38d8f8f68de2f019d1be5772a8ef76d004384fb06ca4429bf4de3e093a510f"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libtdb-wrap-samba4.so.0"
+sha256 = "f80b6607ebf2ec641398ceb7b16be59e47b4bbf3f19b7674b10f0457320d2dab"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcliauth-samba4.so.0"
+sha256 = "4648ca1c1aa328c046f0a14a058d4dafa6b339c16e70f976a9487a3b4234d97d"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/liblibcli-netlogon3-samba4.so.0"
+sha256 = "ca2ee64d0c00c4583a9cea04368bd7a9b0358436228031c44a8da2e7ca141c13"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libndr-samba-samba4.so.0"
+sha256 = "8e24dcb200195a286134ec79b9f28d6c9bfa5b6966095c10f52044ccebfe4b51"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libprocess-model-samba4.so.0"
+sha256 = "e6689402d5191fd71bcff80d56f0454000842362afbf9eef464cf2dc7cc33804"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/liblibcli-lsa3-samba4.so.0"
+sha256 = "00d20fc875ab3b1d05de172e548178936a54c207f0a731be14a60c9aeb5544c0"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libtalloc-report-printf-samba4.so.0"
+sha256 = "e65d4f75b7053713c912aa50712da560a72e63924a6f57d5f4251e9945d4a3ed"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libstable-sort-samba4.so.0"
+sha256 = "a65605bcb7db868f097e7898e1247445af429876af9772d1969c2c2e657eefa8"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcli-ldap-samba4.so.0"
+sha256 = "058ab95bdc03974b017f3da24527358ff7dc5bf9ab54f78d1516c79add98b595"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcmdline-samba4.so.0"
+sha256 = "0a622e52aa4f13e5a46efa2aaa94120985667e3c910813f9a6e35447a11bb9e2"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libtime-basic-samba4.so.0"
+sha256 = "c6c25808b13da6dc0e7c431408d237d32a1eedbb94138010932ce5af71ed1a74"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libldb-mdb-int-samba4.so.0"
+sha256 = "adf959d90ac6e808b7656091131fcfbd56b54f2956fcc4b866c2319dc7167508"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/liblibsmb-samba4.so.0"
+sha256 = "0630c8e1212bffbaf8429f63455d656b84d6c7a48733dc24fcee6601c3f7ff73"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libLIBWBCLIENT-OLD-samba4.so.0"
+sha256 = "7a9a12f250ef44e53764f36a3141fa9c8539433d5b43555aa0402c324aecb152"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libgenrand-samba4.so.0"
+sha256 = "840a3d1bc3d310cc5f31154709409b1a72cd83cc1eb7248962c1e7a88efee10d"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libregistry-samba4.so.0"
+sha256 = "41693a03a758daa7a523d1fbcebb98f3a02221526857c9b50a7fe1498d179315"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libpac-samba4.so.0"
+sha256 = "b3e7669bb3d6d25ee299e7789def11883977165625bd13ca2201921415902c20"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdcerpc-pkt-auth-samba4.so.0"
+sha256 = "861c930bbb8b370df80c6ef12bf61fd405a677760ad367ee3da117ef1c8d3c1d"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libad-claims-samba4.so.0"
+sha256 = "95f91451c2745eb6d2e4703212ca59547d3e6128bab24c4a41b9ef669dfef734"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libnss-info-samba4.so.0"
+sha256 = "19e7550b7845a8894b0b9c4b3af9a17e06d6971b130014f6b04bc3684ec982d3"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libldb-tdb-err-map-samba4.so.0"
+sha256 = "ac7490459babaf99b0f09d5224bd3de34d6de04d7ad871cae9f70e7ddde625ae"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsamba-security-samba4.so.0"
+sha256 = "02c17ff3430a15276162564142416ecc8858747b99280df1688f5e13859b578f"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsmbclient-raw-samba4.so.0"
+sha256 = "a51243fc138b67cd7c9640c826539b7b146d217c99920bc9621068e8fabfc0e5"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libservice-samba4.so.0"
+sha256 = "12078c22b4e5c0e3907fb2a9aa1919b86b32bcb4ed164834aa236f8777f78b43"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsamba3-util-samba4.so.0"
+sha256 = "ccd7f53dc155873ba46db81e728e895703734dc737f045177171c8242e77ee3c"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsys-rw-samba4.so.0"
+sha256 = "4e454fe4247958151a9cacc73503251db98a0b58563b3da620718a9df22d2614"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libldbsamba-samba4.so.0"
+sha256 = "8d8dd677f3b45c7268c29f8212da788ed27c14136ef8c7664f29864999eb86d1"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libMESSAGING-SEND-samba4.so.0"
+sha256 = "6684e59881021fa767eddc91739646c754f3f9d2f4d5bcf17d683c9bf0015d3e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libasn1util-samba4.so.0"
+sha256 = "214887c861e190f2d05d0418ddf3435105bd5e337e81753afa3c6830d51cb8d7"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libasn1-samba4.so.0"
+sha256 = "75bd864fc1a0bc3c01542384b6e4ba7e1a6a09230f65c2da66f5ccddf2c18b5b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libgpo-samba4.so.0"
+sha256 = "554aea4794ae7459fdc59e8100d4efdd586a9eb2b64d57d728d2d73bc17fad8b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libmessages-util-samba4.so.0"
+sha256 = "6f06799b3dd287c5d7d74c059295ffabc6d338b6222ee40695dfde8a4a999fd9"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libads-samba4.so.0"
+sha256 = "751571aa741a9374f8b1c62ba357657f3c10fb1059fbf6af5aab066d711cce49"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libreplace-samba4.so.0"
+sha256 = "89c3c918fb866af30097925dd4fef10201ae8d08605b6ea68bfc2ef9fe2d77b5"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libaddns-samba4.so.0"
+sha256 = "b6ff3659e23f46abcce43a707b2652388b4bcd91372b28868e51449cbf475dde"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libmessages-dgm-samba4.so.0"
+sha256 = "fe75b858c25035932747a8e5ca5592aa9126dada08bf463055e7158c68ce3c59"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libhx509-samba4.so.0"
+sha256 = "2b140cb6fe08149b9cbf0b84b9476130b7fce403feb381fab86adac813d2a634"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libiov-buf-samba4.so.0"
+sha256 = "53ff3ba9c81545551249efd1d30ff9ca65eab635ea3ec0514dd68d9981cda971"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libutil-tdb-samba4.so.0"
+sha256 = "48e0f668cf3461f5db657395e744d92c41fdf9028bdbd504ed0c9a62ce009864"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libnetif-samba4.so.0"
+sha256 = "c51cd8ae137068bff4e685e13640569e36dfd4dcd65a0c3fc69ff248a0a63c05"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libndr-samba4.so.0"
+sha256 = "131110068c5974b510668744563bce057385416bcf413ce29871ad96c7cad1f5"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdsdb-module-samba4.so.0"
+sha256 = "e8368c383441ad360d47f6aa3555818d697eeb2c762c9310fd9ac784b33a2d58"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libRPC-SERVER-LOOP-samba4.so.0"
+sha256 = "fd937dff23990f8b1d4222080fd0c37b8cd438acedda189e317a78e8894f0010"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libmsghdr-samba4.so.0"
+sha256 = "617cb70f3130eaf6645438792b92290343dea3147c53af32e7694dd5983fb74f"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsamdb-common-samba4.so.0"
+sha256 = "794ad59a1234363458262310f7f902b9f5e9bb7a14e3d390535be475ec2c2203"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcluster-samba4.so.0"
+sha256 = "af5a48dfeca2d228f56049bb96aa4b0d51ddebeb67fc39fce56377685918b2dc"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libkrb5-samba4.so.0"
+sha256 = "4a018035f30c1e41ad5d12d1500d4bc27243a3aed2a3033d7f58107292877ec1"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libinterfaces-samba4.so.0"
+sha256 = "9c968225f110123186eaa871e2f705caa3d01683f757ad589db811f7d074f8f0"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libtrusts-util-samba4.so.0"
+sha256 = "fd527cefeb5f46af4d4bdc67268469b6b05b0d7c872272c44f1e24c5932d5c98"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcom-err-samba4.so.0"
+sha256 = "e358f8c6d582de086c3af2967199ed2d992b68c71c2a57f5490820ecf5c2f710"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libclidns-samba4.so.0"
+sha256 = "354dde976de8b4082e26d3ef0c986e04f697e7a101825a2e1587b083c796f97e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libREG-FULL-samba4.so.0"
+sha256 = "d1eb0cbf3f09473f7b7712d60dc5f205f3cf3b817e85c9fc003617f5ecd84e6e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsecrets3-samba4.so.0"
+sha256 = "8f0920ce832d7972429192e0b627c6c2764fc9ce4b3cc26a59b01ba01754b6a2"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdb-glue-samba4.so.0"
+sha256 = "28e9e3cefd0e4aa8f954ca692f3796c85385be1e670d396dd9cf0e7d9306f13b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libhcrypto-samba4.so.0"
+sha256 = "f8d17f434bdd3b9a70a9dd6b31b5da5aa12a1a0a011d0b1d3010170b2ef8103a"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libheimntlm-samba4.so.0"
+sha256 = "72e65c3e0d005a9bb44b3961d287542eac7767309b73e8c2a9843567479db86e"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libauthn-policy-util-samba4.so.0"
+sha256 = "d16a9e441330931dfb9d0df9f8fa447b59ebf768463a2b5244365b39b116c8e9"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libnpa-tstream-samba4.so.0"
+sha256 = "9d8ffe6ed11dbf565761ee0ded6d2413ed11a8af20aeca010427adf0381806ca"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcli-nbt-samba4.so.0"
+sha256 = "8361274842485f2b138bdebc06356653a8e4b5d3cd434da12288d7accfdb71c0"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libgensec-samba4.so.0"
+sha256 = "e7fa1030bfd13ed087d97639f5310867b8b1e845b52fbf92483e09ac0af379c0"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsmbpasswdparser-samba4.so.0"
+sha256 = "793c950be9822ed8591220aa5f2f5cceff2c22f15a8fc8365055a2729ad0418b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libevents-samba4.so.0"
+sha256 = "a74e8f2bcc9d4918a3d83bdbf412581ceb0b71772ea1b0b41d3923177ff1d4df"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcli-ldap-common-samba4.so.0"
+sha256 = "32294b45b03c32b8fc6db91d74dd29621df0353933c7d872cc268483ef7473ba"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libauth4-samba4.so.0"
+sha256 = "2578b7db2b7e596cb5b099a9c9ff44ce8d3dda441c524d40051386432c5dead0"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsamba-modules-samba4.so.0"
+sha256 = "c2a3bc25adec97148075bcb09c5d94488fc1b9308f1bfc9108c3fe0edc6d3335"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libutil-setid-samba4.so.0"
+sha256 = "640daddc063f6ae2a77883eabf98893cf32f800394c7b8da123f679b60ebcfff"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libCHARSET3-samba4.so.0"
+sha256 = "607abd3b96078b00fcfabb29073dcf6e9ef709bf8564efb2f1f3cfa25ad3b1e9"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libldb-key-value-samba4.so.0"
+sha256 = "d2783a388d690048f227149d2464da39ae14ca2778487b3dfbb926c4b8cd7af5"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libflag-mapping-samba4.so.0"
+sha256 = "5b37bf761d57d72726890c71dbb6df0471ff6679860dbd04442f9b1d96a7c38a"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libsamba-debug-samba4.so.0"
+sha256 = "57e8bbf21e99d082661a897a5183ab610849aecab728037fe7e7f693ed0dbcab"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libdnsserver-common-samba4.so.0"
+sha256 = "bba62aae3e7715c0ec209572665d8d7ecda7499db6cccd3a7a4d1a2782cdc749"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libcommon-auth-samba4.so.0"
+sha256 = "46c7e10a24585c28985ef300fd657483e480e4bdc4d742a253fa6cec6b14867b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libwind-samba4.so.0"
+sha256 = "188240302299f36a133ee5f6a03366920cf3d0541cc63a2237faaabdc556198a"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libauth-samba4.so.0"
+sha256 = "d93dbb9e5292c69504e91c05382d65cbe529301c29503aed9c4e69ed82b13824"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libprinting-migrate-samba4.so.0"
+sha256 = "5f4eac614b1bc6860c5e774631ba034855fe91a4ec39f7b62d4efba7e4285dae"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/libauthkrb5-samba4.so.0"
+sha256 = "de3e94e10c49606a0120b3e1220115597e32676008dd77a2b741afc6c1ab03b9"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_16.so"
+sha256 = "b87693e725fdc53c176da1ec1ead2fc4355c6a3341ebad1ee9042c82cd97bfe8"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_14.so"
+sha256 = "85b69d1ba9eccb04768abee31c64dfe18cd6be754c0a5020118bd09f7c37ca5d"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_12.so"
+sha256 = "ed36c6f0ab94c5f069eeb673e042b5b943699b0441a5b55dd40b46b426b67ee4"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_18.so"
+sha256 = "3194c9aaa9cb338a0c5130207b6ae93846ff410d1863fbd501dd31534cf06663"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_11.so"
+sha256 = "bc101905bf16c866e6b0744cd014b72cd7722643c13b65664625b4a7726f42e6"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/bind9/dlz_bind9_10.so"
+sha256 = "aec73e3c24d9b9bd40d564b15670ca3c273c92887ffaa2021faffc45923a200b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/nss_info/hash.so"
+sha256 = "86b40fb59d5dcda3cabefe8695783daa99c3b1588d04e82ead24bf39462c2829"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/nss_info/sfu.so"
+sha256 = "355b08f9b6e269bb4c23373a9d535c51d4321cfb0e2188dd8c8ec6ca1ab4000b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/nss_info/rfc2307.so"
+sha256 = "514d69a8947ff6ee13456894d4866cfa83f51ff87a1a5be907e2f3ea1f767b40"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/nss_info/sfu20.so"
+sha256 = "7f241c9241ddb4f8741bc78563d067ab9ae961d745e9fb697ec3a6d50d406870"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/krb5/winbind_krb5_locator.so"
+sha256 = "11410af1a69daa6c7dd527efdd9d7e4bb63f423fea9adf01280d102e54188bf6"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/krb5/async_dns_krb5_locator.so"
+sha256 = "f21ac607d45cbfddd6977a668fb6f2d094202ef8c55e16ecbe4f57d3d997b058"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/process_model/standard.so"
+sha256 = "97eb7380eb1372b7035a201807c9b6efb22ff63c7587a102cf318db706885dfc"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/process_model/prefork.so"
+sha256 = "a1f8f03013eea4f84fa9d1f61cbc5bda98ff1ef906faa4b5469094deedb31a24"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/hash.so"
+sha256 = "871d4fb85bc1a457ba73280c7eaf591598d6cffb1091d9e9c9c6ad20579d2959"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/rfc2307.so"
+sha256 = "2814908ec1417b4437e6ddffdf9437e5398e68962030d995d8b2377dd5bca9e9"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/script.so"
+sha256 = "faa40ce52934890b733fffc00e666e00984a674ad06280d8d2c6a95e92cdac03"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/tdb2.so"
+sha256 = "dbe51da2406378f77b3548a1e83c465278401504c5c6a94703541c984b2cfd9d"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/ad.so"
+sha256 = "4b07341a9905a358ae4bac44bc191fd9f2f73411765df920ea2e5fcaa0a58240"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/autorid.so"
+sha256 = "5c98aeea3fdf00280362238b9989b632b20a4001fe38dd304bd670abd9bdca7b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/rid.so"
+sha256 = "e9fd6977937b81659998b32205bfd9922e9cc11c7cc22c0644c12ea730c9efb7"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/idmap/ldap.so"
+sha256 = "be13e968f64eac4b3b8f27a408f4c8a52b8d2137d9bd5da720d056d0a6694e94"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/auth/samba4.so"
+sha256 = "7a699dfd14ff729119c80be102a15ff8a83188d906b7b0de49677bc42098aebf"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/gensec/krb5.so"
+sha256 = "1bce54799b7a0aa65f6d2d30b4d2df8a9403ab85daf67d2c7acc71a43d1bbb1b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/sample.so"
+sha256 = "35eb01d55abc95135b3ea2e1bd134b939750854d67152e4fd54a4847318d4aae"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/tdb.so"
+sha256 = "f7a006bec67ba29a5018622b4a5d02bc3fabe00b30d47f7e12d0bf2c6abdf420"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/rdn_name.so"
+sha256 = "46190b57525d9391d2874f2962b1ffea7721831e6ccccf8cc1d47d206c2a1aa7"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/paged_searches.so"
+sha256 = "557ac00095017dbfc64621c2e6d71370dc66e40689fce23949a285f1fff08269"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/server_sort.so"
+sha256 = "be34b5bc2b211ee1239bc4a04e11cf1c8b426a1d31cda6e019e39ce09052a81b"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/skel.so"
+sha256 = "4d95e763e49f82fac2983d9ec36a29ca79e78ebcd9df7ca298e96a85635c4610"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/mdb.so"
+sha256 = "418f95c8be17f03af3d6d36ed7c80418be194a75eb0bbd7e9b624cec5e331ff2"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/asq.so"
+sha256 = "193584c2503e7fd35eae7e91fccc57b92e46ffcea07407284cf1252b71594c3f"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/ldb.so"
+sha256 = "b7c3f1a2351e6007422fa6ba8c8d6ae3409f98e1a1793a9194fac5ac2b61d4ad"
+
+[[wine_auth_files]]
+path = "root/usr/lib/x86_64-linux-gnu/samba/ldb/ldap.so"
+sha256 = "4e2c89cfb89ea5111fca3421c2ff7563d6e73c3f1f244eb768e269905374173c"

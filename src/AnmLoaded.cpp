@@ -1,0 +1,91 @@
+#include <string.h>
+
+#include "AnmManager.h"
+
+// FUNCTION: TH16 0x45edb0
+i32 AnmLoaded::set_sprite(AnmVm *vm, i32 sprite)
+{
+    if (anm_file == NULL)
+    {
+        return -1;
+    }
+    vm->sprite_id = sprite;
+    AnmLoadedSprite *s = &sprites[sprite];
+    vm->uv_quad_of_sprite[0].x = vm->uv_quad_of_sprite[2].x = s->uv_start.x;
+    vm->uv_quad_of_sprite[1].x = vm->uv_quad_of_sprite[3].x = s->uv_end.x;
+    vm->uv_quad_of_sprite[0].y = vm->uv_quad_of_sprite[1].y = s->uv_start.y;
+    vm->uv_quad_of_sprite[2].y = vm->uv_quad_of_sprite[3].y = s->uv_end.y;
+    vm->sprite_size.x = s->sprite_width;
+    vm->sprite_size.y = s->sprite_height;
+    D3DXMatrixIdentity(&vm->sprite_matrix);
+    D3DXMatrixIdentity(&vm->texture_matrix);
+    vm->sprite_matrix.m[0][0] = vm->sprite_size.x / 256.0f;
+    vm->sprite_matrix.m[1][1] = vm->sprite_size.y / 256.0f;
+    vm->texture_matrix.m[0][0] = vm->sprite_size.x / s->bitmap_width * s->pixel_scale.x;
+    vm->texture_matrix.m[1][1] = vm->sprite_size.y / s->bitmap_height * s->pixel_scale.y;
+    vm->world_matrix = vm->sprite_matrix;
+    return 0;
+}
+
+// FUNCTION: TH16 0x45f020
+i32 AnmLoaded::init_script_vm(AnmVm *vm, i32 script)
+{
+    if (scripts[script] == NULL)
+    {
+        memset(vm, 0, sizeof(AnmVm));
+        return -1;
+    }
+    vm->wipe();
+    vm->script_id_short = script;
+    vm->anm_loaded_index = slot_num;
+    vm->flags_lo &= ~(ANM_VM_FLIP_X | ANM_VM_FLIP_Y);
+    vm->flags_hi &= ~ANM_VM_FREEZES_WITH_WORLD;
+    vm->script_id = script;
+    vm->flags_hi |= ANM_VM_FREEZES_AFTER_FIRST_RUN;
+    vm->instr_offset = 0;
+    vm->time_in_script.reset();
+    vm->script_time.reset();
+    vm->flags_lo &= ~ANM_VM_VISIBLE;
+    return 0;
+}
+
+// A dead double, not ZUN's code: it stands in for AnmVm::run wanting an
+// aligned stack (docs/findings.md). In this plain inline helper it is a call
+// graph node of its own, so set_vm_script does not realign itself; with
+// every caller visible (HARNESS_CALLED; they are all aligned) it gets known
+// alignment and pads its frame (push ecx) like the original.
+static inline void set_vm_script_want_aligned_stack()
+{
+    double unused = 0.0;
+    (void)unused;
+}
+
+// Starts the VM on the script, or clears it if the script is missing or the
+// file is still loading.
+// FUNCTION: TH16 0x45f160
+HARNESS_CALLED void AnmLoaded::set_vm_script(AnmVm *vm, i32 script)
+{
+    set_vm_script_want_aligned_stack();
+    if (scripts[script] == NULL || load_wait != 0)
+    {
+        memset(vm, 0, sizeof(AnmVm));
+        return;
+    }
+    vm->script_id_short = script;
+    vm->anm_loaded_index = slot_num;
+    vm->flags_lo &= ~(ANM_VM_FLIP_X | ANM_VM_FLIP_Y);
+    vm->flags_hi &= ~ANM_VM_FREEZES_WITH_WORLD;
+    vm->script_id = script;
+    vm->flags_hi |= ANM_VM_FREEZES_AFTER_FIRST_RUN;
+    vm->instr_offset = 0;
+    vm->time_in_script.reset();
+    vm->script_time.reset();
+    vm->flags_lo &= ~ANM_VM_VISIBLE;
+    vm->run();
+    g_AnmManager->stat_scripts_started++;
+    if ((vm->flags_hi & (ANM_VM_FREEZES_WITH_WORLD | ANM_VM_FREEZES_AFTER_FIRST_RUN)) == ANM_VM_FREEZES_AFTER_FIRST_RUN)
+    {
+        vm->flags_hi &= ~ANM_VM_FREEZES_AFTER_FIRST_RUN;
+        vm->flags_hi |= ANM_VM_FREEZES_WITH_WORLD;
+    }
+}
