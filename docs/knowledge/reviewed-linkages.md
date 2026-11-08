@@ -13,12 +13,30 @@ The machine inputs are `config/linkage-bindings.csv`.
 | `??2@YAPAXI@Z` | `0x004749AC` | 51 | Ghidra identifies operator new; target disassembly contains allocation retry, new-handler and allocation-exception paths. |
 | `??3@YAXPAXI@Z` | `0x004749DF` | 14 | Sized scalar delete forwards its pointer to the adjacent unsized-delete entry at `0x0047514B`; the unused size argument is preserved by the call contract. |
 | `_memset` | `0x00477920` | 346 | Independent Ghidra library identification and target disassembly of the byte-fill implementation with ISA-dispatch paths. |
+| `??3@YAXPAX@Z` | `0x0047514B` | 5 | The sized-delete call at `0x004749E5` reaches this unsized-delete thunk. |
+| `_malloc` | `0x00477FA7` | 11 | The allocation call at `0x004749D3` in operator new reaches this entry. Its prologue precedes a tail jump to the base allocator. |
+| `_free` | `0x00477FB2` | 5 | The unsized-delete jump at `0x0047514B` reaches this UCRT thunk. |
+| `__free_base` | `0x0047BCB2` | 58 | The free jump at `0x00477FB2` reaches the null-checked HeapFree implementation with GetLastError and errno handling. |
+| `__malloc_base` | `0x0047BCEC` | 78 | The malloc jump at `0x00477FAD` reaches the size-checked HeapAlloc implementation with new-mode retry and errno handling. |
 
 Every entry has matching complete target and candidate PDB extents. The candidate
-PDB must name the pinned Microsoft `LIBCMT.lib` or `libvcruntime.lib`, as specified
-in the table input. The target extent hash is checked before use. These records
+PDB must name the pinned Microsoft `LIBCMT.lib`, `libvcruntime.lib` or UCRT
+`libucrt.lib`, as specified in the table input. UCRT ownership is checked against
+the separately pinned Windows SDK library path. The target extent hash is
+checked before use. These records
 establish reviewed external linkage identities; they do not grant a separate
 exact-code claim to each runtime implementation.
+
+The five allocator entries also carry fixed incoming call/jump witnesses. The
+checker decodes the complete reviewed parent, requires the witness to start an
+instruction, and requires its direct destination to equal the declared entry.
+Mutation tests reject a different call, an interior instruction byte, a missing
+parent and the wrong library. Complete five-byte free/delete thunks and the
+eleven-byte malloc thunk are independently replayed with exhaustive REL32 fields.
+
+The base allocator and deallocator both use the process-heap global at
+`0x004A6D54`, but that observation does not create an automatic binding for the
+heap or for their error-handling callees. Unreviewed fields remain incomplete.
 
 ## Literal storage witnesses
 
@@ -35,6 +53,16 @@ The loader checks each entire typed payload in both images, the fixed target
 instruction mnemonic, absolute operand, operand width and payload hash. It does
 not select a different equal-valued location for another caller. Every consumer
 still undergoes complete PDB-owner and byte/relocation replay.
+
+The decimal format literal `%d` (including its terminating NUL, three bytes) is
+bound separately to `0x00491C7C`. Its candidate public is
+`??_C@_02DPKJAMEF@?$CFd?$AA@`. The fixed push at `0x004082DD` in
+`AsciiInf::create_number` witnesses the target storage address. The checker also
+requires exactly one same-start, non-code PDB contribution of three bytes, an
+MSVC narrow-string public, a final NUL with no interior NUL, and equal complete
+payloads in both images. This avoids treating other occurrences or suffixes of
+`%d` as interchangeable. Truncating the storage proof or changing the push
+witness is rejected.
 
 ## PDB global-object ranges
 

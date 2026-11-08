@@ -148,13 +148,12 @@ void AsciiInf::create_string(Float3 *pos, const char *text)
     str->align_v = align_v;
 }
 
-// TODO: same code; the original pads the frame above the cookie ([ebp-8],
-// buffer at [ebp-0x10c]) where ours puts 8 bytes between the cookie and the
-// buffer, aligning the buffer for the other entry parity.
+// The 256-byte formatting buffer matches AsciiStr::text and keeps the /GS
+// cookie at [ebp-8], immediately above the buffer at [ebp-0x10c].
 // FUNCTION: TH16 0x408260
 void AsciiInf::create_stringf(Float3 *pos, const char *fmt, ...)
 {
-    char buf[0x104];
+    char buf[0x100];
     va_list args;
     va_start(args, fmt);
     _vsprintf_l(buf, fmt, NULL, args);
@@ -200,13 +199,10 @@ void __stdcall AsciiInf::create_number(Float3 *pos, u32 value)
 }
 
 // HARNESS_CALLED: it then gets its callers' known alignment, like the original.
-// TODO: same code; the original frame is 0x10c with the cookie at [ebp-8]
-// (4 bytes padding above it); ours, known aligned as well, is 0x114 with 8
-// bytes between the cookie and the buffer (see create_stringf).
 // FUNCTION: TH16 0x4083b0
 HARNESS_CALLED void AsciiInf::create_number_with_digit(Float3 *pos, u32 value, u32 digit)
 {
-    char buf[0x104];
+    char buf[0x100];
     AsciiInf *ascii = g_AsciiManager;
     if (value < 100)
     {

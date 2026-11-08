@@ -7,3 +7,9 @@ _memset,0x477920,346,runtime-function,3fa4feb8b1c3e56ee8bd02f9168cb50c7529bec10b
 __real@3f800000,0x4944d8,4,literal,e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c,0x402cdc,subss,docs/knowledge/reviewed-linkages.md,
 __real@3f000000,0x49449c,4,literal,d99e58435243d9fef9c88273b8d553b4fba4d0baf8009d29eae74fa99e0d9f57,0x4034d2,mulss,docs/knowledge/reviewed-linkages.md,
 __real@41800000,0x4945e0,4,literal,140efb356462f70dd1c7f1dfb10bcc07d0f14d439043fb9e9d50f4d7be71ea96,0x406564,addss,docs/knowledge/reviewed-linkages.md,
+??3@YAXPAX@Z,0x47514b,5,runtime-function,58d031c478a76bbebab180f07c06de0c43c71c91ac1a315a8e6f6556f32b3fec,0x4749e5,call,docs/knowledge/reviewed-linkages.md,LIBCMT.lib
+_malloc,0x477fa7,11,runtime-function,df2e8bb2d305dbea0706db8157ff3aed078d87125966d863ce05346ddc62c6cf,0x4749d3,call,docs/knowledge/reviewed-linkages.md,libucrt.lib
+_free,0x477fb2,5,runtime-function,e25b6288f0aa6d230135410366a42b0d7d9689b2908febb2cc9ca3ce9e209685,0x47514b,jmp,docs/knowledge/reviewed-linkages.md,libucrt.lib
+__free_base,0x47bcb2,58,runtime-function,75e45b7019fbdd361fae631ae4aaca71fab0ba3d6c4c8f14e17aad76aed92cbf,0x477fb2,jmp,docs/knowledge/reviewed-linkages.md,libucrt.lib
+__malloc_base,0x47bcec,78,runtime-function,e711c99bacb631778b9e395947941909b362708f08d7bbdb9c77d2f69cb73472,0x477fad,jmp,docs/knowledge/reviewed-linkages.md,libucrt.lib
+??_C@_02DPKJAMEF@?$CFd?$AA@,0x491c7c,3,string-literal,0b782fc3030dbdf3756f17e7adf2ce5808dfc513ca7589adeb679c7d25eaef6f,0x4082dd,push,docs/knowledge/reviewed-linkages.md,

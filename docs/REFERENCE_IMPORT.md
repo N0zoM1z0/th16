@@ -57,8 +57,11 @@ This diagnostic setting is recorded in the build profile.
 
 Function/global annotations provide explicit candidate address bindings, fixed
 independently of each compared operand. Imports are bound by DLL and import
-name; literal storage is accepted only when its complete payload has one
-independent location. Unknown or ambiguous destinations are incomplete. The
+name. Literal storage requires either a unique complete payload or an explicit
+reviewed fixed instruction witness with its full storage proof. Runtime
+identities require complete extents, pinned library ownership and reviewed
+target evidence. See [shared linkage evidence](knowledge/reviewed-linkages.md).
+Unknown or ambiguous destinations are incomplete. The
 Oracle never selects a target destination merely because it would make the
 current operand match.
 

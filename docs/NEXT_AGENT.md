@@ -4,6 +4,8 @@ The user has authorized importing the pinned reference candidates and evaluating
 them with the local Factory/TH10-style strict Oracle. Maintained code, comments
 and documentation must be English, except for the Japanese game title. Do not
 use REA.
+Do not push branches or tags, mirror this repository or publish its contents
+remotely. Local commits are allowed; only the user can revoke this restriction.
 
 - The canonical target is `resources/th16.exe`, original Japanese v1.00a.
 - The historical compiler/SDKs, shared Ghidra/JDK/Wine and game-local state are
@@ -26,4 +28,7 @@ use REA.
 See `REFERENCE_IMPORT.md` for comparison scope, limitations and commands. Preserve
 ignored reports, logs, projects, prefixes and build artifacts. Start with the
 recorded mismatch and incomplete reasons before modifying any game function.
-The recorded audit is `evidence/reference-import-20261108/README.md`.
+The original import audit is `evidence/reference-import-20261108/README.md`.
+See `knowledge/reference-repairs.md` for subsequent source fixes and unsuccessful
+experiments, and `knowledge/reviewed-linkages.md` for fixed linkage evidence.
+Run `scripts/progress.py` for the current validated result.

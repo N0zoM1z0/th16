@@ -2,6 +2,7 @@
 """Mutate fixed linkage evidence without changing the private target or artifacts."""
 import copy
 import csv
+import hashlib
 from pathlib import Path
 import tempfile
 import unittest
@@ -26,7 +27,10 @@ class ReviewedLinkageControls(unittest.TestCase):
             return reviewed_linkages(self.context, path)
 
     def test_fixed_bindings_pass(self):
-        self.assertEqual(len(self.check_rows(self.rows)), 8)
+        result = self.check_rows(self.rows)
+        self.assertEqual(len(result), len(self.rows))
+        self.assertEqual(result["@__security_check_cookie@4"]["target"], 0x47499B)
+        self.assertEqual(result["__real@3f800000"]["target"], 0x4944D8)
 
     def test_wrong_extent_hash_is_rejected(self):
         rows = copy.deepcopy(self.rows)
@@ -45,6 +49,65 @@ class ReviewedLinkageControls(unittest.TestCase):
         rows[0]["candidate_library"] = "unreviewed.lib"
         with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
             self.check_rows(rows)
+
+    def test_string_must_have_its_complete_pdb_extent(self):
+        rows = copy.deepcopy(self.rows)
+        row = next(r for r in rows if r["kind"] == "string-literal")
+        row["size"] = "2"
+        row["target_sha256"] = hashlib.sha256(b"%d").hexdigest()
+        with self.assertRaisesRegex(Incomplete, "complete NUL-terminated PDB storage"):
+            self.check_rows(rows)
+
+    def test_string_requires_a_fixed_push_of_its_address(self):
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r["kind"] == "string-literal")["witness_instruction"] = "0x4082d6"
+        with self.assertRaisesRegex(Incomplete, "instruction witness"):
+            self.check_rows(rows)
+
+    def test_string_rejects_ambiguous_pdb_storage(self):
+        context = copy.copy(self.context)
+        context.data_contributions = copy.deepcopy(context.data_contributions)
+        symbol = next(r["symbol"] for r in self.rows if r["kind"] == "string-literal")
+        address = next(p["address"] for p in context.publics if p["symbol"] == symbol)
+        context.data_contributions[address] *= 2
+        with self.assertRaisesRegex(Incomplete, "complete NUL-terminated PDB storage"):
+            reviewed_linkages(context)
+
+    def test_ucrt_cannot_claim_vcruntime_ownership(self):
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r["symbol"] == "_malloc")["candidate_library"] = "LIBCMT.lib"
+        with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
+            self.check_rows(rows)
+
+    def test_wrong_allocator_parent_instruction_is_rejected(self):
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r["symbol"] == "_malloc")["witness_instruction"] = "0x4749b4"
+        with self.assertRaisesRegex(Incomplete, "direct instruction witness"):
+            self.check_rows(rows)
+
+    def test_allocator_witness_must_start_an_instruction(self):
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r["symbol"] == "_malloc")["witness_instruction"] = "0x4749d4"
+        with self.assertRaisesRegex(Incomplete, "direct instruction witness"):
+            self.check_rows(rows)
+
+    def test_allocator_witness_requires_its_reviewed_parent(self):
+        rows = [r for r in copy.deepcopy(self.rows) if r["symbol"] != "??2@YAPAXI@Z"]
+        with self.assertRaisesRegex(Incomplete, "unique reviewed parent"):
+            self.check_rows(rows)
+
+    def test_allocator_thunks_replay_complete_owners(self):
+        context = self.context
+        for symbol, address, size, offset, child, destination in [
+            ("??3@YAXPAX@Z", 0x47514B, 5, 1, "_free", 0x477FB2),
+            ("_free", 0x477FB2, 5, 1, "__free_base", 0x47BCB2),
+            ("_malloc", 0x477FA7, 11, 7, "__malloc_base", 0x47BCEC),
+        ]:
+            with self.subTest(symbol=symbol):
+                function = next(r for r in context.linked["functions"] if r["symbol"] == symbol)
+                unit = dict(size=size, compare_size=size, target_address=address, linkages=[
+                    dict(offset=offset, type="REL32", symbol=child, target=destination)])
+                self.assertEqual(replay_owner(context.image, context.target, context.publics, function, unit)["result"], "exact")
 
     def test_security_check_complete_owner_replays(self):
         context = self.context

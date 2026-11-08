@@ -51,6 +51,9 @@ for the exact comparison scope and retained evidence. Source-origin review and
 Factory acceptance remain separate from local comparison results.
 The [recorded import audit](docs/evidence/reference-import-20261108/README.md)
 lists the complete comparisons with differences and the outstanding evidence.
+Subsequent source fixes and retained failed experiments are recorded in
+[reference repairs](docs/knowledge/reference-repairs.md). Use `scripts/progress.py`
+for current results.
 
 The selected historical tools are MSVC **19.10.25017**, linker
 **14.10.25017.0**, Windows **7.1A** SDK, UCRT **10.0.10240.0** and DirectX SDK

@@ -34,6 +34,7 @@ def reviewed_linkages(context, path=None):
     """Validate fixed, independently reviewed runtime/literal storage bindings."""
     import capstone
     result = {}
+    runtime_witnesses = []
     with (path or ROOT / "config/linkage-bindings.csv").open(newline="") as stream:
         for row in csv.DictReader(stream):
             symbol, address, size = row["symbol"], int(row["target_address"], 0), int(row["size"])
@@ -51,28 +52,57 @@ def reviewed_linkages(context, path=None):
                 if len(owners) != 1 or owners[0]["size"] != size or not target or int(target["size"]) != size:
                     raise Incomplete("reviewed runtime linkage lacks both complete function extents")
                 library = row["candidate_library"]
-                expected_owner = "Z:" + str(ROOT / ".tools/toolchain/vs/VC/Tools/MSVC/14.10.25017/lib/x86" / library)
+                library_root = (ROOT / ".tools/toolchain/sdk/Program Files/Windows Kits/10/Lib/10.0.10240.0/ucrt/x86"
+                                if library == "libucrt.lib" else ROOT / ".tools/toolchain/vs/VC/Tools/MSVC/14.10.25017/lib/x86")
+                expected_owner = "Z:" + str(library_root / library)
                 normalize = lambda value: re.sub(r"/+", "/", str(value).replace("\\", "/")).lower()
-                if library not in {"LIBCMT.lib", "libvcruntime.lib"} or normalize(owners[0]["pdb_object"]) != normalize(expected_owner):
+                if library not in {"LIBCMT.lib", "libvcruntime.lib", "libucrt.lib"} or normalize(owners[0]["pdb_object"]) != normalize(expected_owner):
                     raise Incomplete("reviewed runtime linkage leaves its pinned Microsoft library")
-            elif row["kind"] == "literal":
-                match = re.fullmatch(r"__(?:real|xmm)@([0-9a-fA-F]+)", symbol)
-                if not match or len(match[1]) != size * 2 or int(match[1], 16).to_bytes(size, "little") != payload:
-                    raise Incomplete("reviewed literal does not contain its complete typed value")
+                if row["witness_instruction"] or row["witness_mnemonic"]:
+                    runtime_witnesses.append((address, int(row["witness_instruction"], 0), row["witness_mnemonic"]))
+            elif row["kind"] in {"literal", "string-literal"}:
+                if row["kind"] == "literal":
+                    match = re.fullmatch(r"__(?:real|xmm)@([0-9a-fA-F]+)", symbol)
+                    if not match or len(match[1]) != size * 2 or int(match[1], 16).to_bytes(size, "little") != payload:
+                        raise Incomplete("reviewed literal does not contain its complete typed value")
+                elif (not symbol.startswith("??_C@_0") or payload[-1:] != b"\0" or b"\0" in payload[:-1]
+                      or context.data_contributions.get(publics[0]["address"]) != [size]):
+                    raise Incomplete("reviewed string lacks one complete NUL-terminated PDB storage extent")
                 if context.image.read_address(publics[0]["address"], size) != payload:
                     raise Incomplete("candidate literal differs from the reviewed payload")
                 witness = int(row["witness_instruction"], 0)
                 decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
                 decoder.detail = True
                 instruction = next(decoder.disasm(context.target.read_address(witness, 16), witness), None)
-                if instruction is None or instruction.mnemonic != row["witness_mnemonic"] or not any(
+                memory_witness = instruction is not None and any(
                     op.type == capstone.x86.X86_OP_MEM and not op.mem.base and not op.mem.index
                     and op.mem.disp == address and op.size == size for op in instruction.operands
-                ):
+                )
+                string_witness = (instruction is not None and instruction.mnemonic == "push"
+                                  and len(instruction.operands) == 1
+                                  and instruction.operands[0].type == capstone.x86.X86_OP_IMM
+                                  and instruction.operands[0].imm == address)
+                if (instruction is None or instruction.mnemonic != row["witness_mnemonic"]
+                        or not (string_witness if row["kind"] == "string-literal" else memory_witness)):
                     raise Incomplete("reviewed literal lacks its fixed target instruction witness")
             else:
                 raise ValueError("unsupported reviewed linkage kind")
             result[symbol] = dict(target=address, size=size, kind=row["kind"], evidence=row["evidence"])
+    for address, witness, mnemonic in runtime_witnesses:
+        parents = [r for r in result.values() if r["kind"] == "runtime-function"
+                   and r["target"] <= witness < r["target"] + r["size"]]
+        if len(parents) != 1:
+            raise Incomplete("runtime instruction witness lacks a unique reviewed parent")
+        parent = parents[0]
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        instruction = next((i for i in decoder.disasm(
+            context.target.read_address(parent["target"], parent["size"]), parent["target"])
+                            if i.address == witness), None)
+        if (instruction is None or mnemonic not in {"call", "jmp"} or instruction.mnemonic != mnemonic
+                or len(instruction.operands) != 1 or instruction.operands[0].type != capstone.x86.X86_OP_IMM
+                or instruction.operands[0].imm != address):
+            raise Incomplete("reviewed runtime lacks its fixed direct instruction witness")
     return result
 
 
