@@ -9,8 +9,9 @@ import re
 import struct
 import tomllib
 
-from linked_image import PEImage, linked_code_fields, linked_functions, map_publics, verify_capstone
+from linked_image import PEImage, linked_code_fields, linked_functions, map_publics, verify_capstone, pdb_section_contributions
 from oracle_fields import expected_data_spans, require_decode_coverage, pack_linked_value
+from pdb_types import globals_with_sizes
 
 ROOT = Path(__file__).resolve().parents[1]
 WIDTHS = {"DIR32": 4, "REL8": 1, "REL16": 2, "REL32": 4}
@@ -27,6 +28,52 @@ def digest(path):
 def source_identity():
     from build import input_identity
     return input_identity()
+
+
+def reviewed_linkages(context, path=None):
+    """Validate fixed, independently reviewed runtime/literal storage bindings."""
+    import capstone
+    result = {}
+    with (path or ROOT / "config/linkage-bindings.csv").open(newline="") as stream:
+        for row in csv.DictReader(stream):
+            symbol, address, size = row["symbol"], int(row["target_address"], 0), int(row["size"])
+            if symbol in result or size <= 0:
+                raise ValueError("duplicate or invalid reviewed linkage")
+            payload = context.target.read_address(address, size)
+            if hashlib.sha256(payload).hexdigest() != row["target_sha256"]:
+                raise Incomplete("reviewed linkage target extent hash mismatch")
+            publics = [p for p in context.publics if p["symbol"] == symbol]
+            if len(publics) != 1:
+                raise Incomplete("reviewed linkage lacks a unique candidate public")
+            if row["kind"] == "runtime-function":
+                owners = [f for f in context.linked["functions"] if f["symbol"] == symbol]
+                target = context.boundaries.get(address)
+                if len(owners) != 1 or owners[0]["size"] != size or not target or int(target["size"]) != size:
+                    raise Incomplete("reviewed runtime linkage lacks both complete function extents")
+                library = row["candidate_library"]
+                expected_owner = "Z:" + str(ROOT / ".tools/toolchain/vs/VC/Tools/MSVC/14.10.25017/lib/x86" / library)
+                normalize = lambda value: re.sub(r"/+", "/", str(value).replace("\\", "/")).lower()
+                if library not in {"LIBCMT.lib", "libvcruntime.lib"} or normalize(owners[0]["pdb_object"]) != normalize(expected_owner):
+                    raise Incomplete("reviewed runtime linkage leaves its pinned Microsoft library")
+            elif row["kind"] == "literal":
+                match = re.fullmatch(r"__(?:real|xmm)@([0-9a-fA-F]+)", symbol)
+                if not match or len(match[1]) != size * 2 or int(match[1], 16).to_bytes(size, "little") != payload:
+                    raise Incomplete("reviewed literal does not contain its complete typed value")
+                if context.image.read_address(publics[0]["address"], size) != payload:
+                    raise Incomplete("candidate literal differs from the reviewed payload")
+                witness = int(row["witness_instruction"], 0)
+                decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+                decoder.detail = True
+                instruction = next(decoder.disasm(context.target.read_address(witness, 16), witness), None)
+                if instruction is None or instruction.mnemonic != row["witness_mnemonic"] or not any(
+                    op.type == capstone.x86.X86_OP_MEM and not op.mem.base and not op.mem.index
+                    and op.mem.disp == address and op.size == size for op in instruction.operands
+                ):
+                    raise Incomplete("reviewed literal lacks its fixed target instruction witness")
+            else:
+                raise ValueError("unsupported reviewed linkage kind")
+            result[symbol] = dict(target=address, size=size, kind=row["kind"], evidence=row["evidence"])
+    return result
 
 
 def expected_fields(unit):
@@ -127,16 +174,27 @@ class Context:
             raise Incomplete("candidate lacks PE relocation evidence; link with /FIXED:NO")
         self.linked = linked_functions(self.directory / "th16.exe", self.directory / "th16.map", self.directory / "th16.pdb")
         self.publics = map_publics(self.directory / "th16.map")
+        self.typed_globals = globals_with_sizes(self.directory / "th16.pdb", self.image)
+        self.data_contributions = {}
+        for row in pdb_section_contributions(self.directory / "th16.pdb")["contributions"]:
+            if row["characteristics"] & 0x20 or not row["size"]:
+                continue
+            section = self.image.section(row["section_number"])
+            base = self.image.image_base + section.rva + row["section_offset"]
+            self.data_contributions.setdefault(base, []).append(row["size"])
         with (ROOT / "config/functions.csv").open(newline="") as stream:
             self.boundaries = {int(row["address"], 0): row for row in csv.DictReader(stream)}
+        self.reviewed_linkages = reviewed_linkages(self)
 
     def identity(self):
         files = [self.receipt_path, self.directory / "th16.exe", self.directory / "th16.map",
                  self.directory / "th16.pdb", ROOT / "resources/th16.exe",
                  self.directory / "functions.txt",
                  ROOT / "config/target.toml", ROOT / "config/tools.lock.toml",
+                 ROOT / "config/linkage-bindings.csv",
                  ROOT / "config/reference-sources.csv", ROOT / "scripts/strict_oracle.py",
                  ROOT / "scripts/oracle_fields.py", ROOT / "scripts/linked_image.py",
+                 ROOT / "scripts/pdb_types.py",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
@@ -179,6 +237,29 @@ class Context:
         if int(boundary["span_end"], 0) != unit["target_address"] + unit["compare_size"] - 1:
             raise Incomplete("target boundary has a different span end")
         self.check_boundary(unit)
+        for field in unit["linkages"]:
+            reviewed = self.reviewed_linkages.get(field.get("symbol"))
+            if reviewed and field["target"] != reviewed["target"]:
+                raise Incomplete("linkage differs from the independently reviewed fixed destination")
+            addend = field.get("addend", 0)
+            if addend and not field.get("local") and "storage_size" not in field:
+                addresses = {p["address"] for p in self.publics if p["symbol"] == field["symbol"]}
+                sizes = self.data_contributions.get(next(iter(addresses)), []) if len(addresses) == 1 else []
+                if len(sizes) != 1 or not 0 <= addend < sizes[0]:
+                    raise Incomplete("interior field lacks an explicit bounded PDB storage proof")
+            if "storage_size" not in field:
+                continue
+            addresses = {p["address"] for p in self.publics if p["symbol"] == field["symbol"]}
+            typed = [r for r in self.typed_globals if r["name"] == field["storage_name"] and r["address"] in addresses]
+            if len(typed) != 1 or typed[0]["size"] != field["storage_size"]:
+                raise Incomplete("data addend lacks its declared unique PDB type extent")
+            if not 0 <= field.get("addend", 0) < field["storage_size"]:
+                raise Incomplete("data addend leaves its typed global storage")
+            target_base = field["target"]
+            if not any(not s.characteristics & 0x20 and self.target.image_base + s.rva <= target_base
+                       and target_base + field["storage_size"] <= self.target.image_base + s.rva + max(s.raw_size, s.virtual_size)
+                       for s in self.target.sections):
+                raise Incomplete("typed target storage leaves mapped non-code data")
         result = replay_owner(self.image, self.target, self.publics, function, unit)
         return {**result, "symbol": unit["symbol"], "target_address": unit["target_address"],
                 "unit_sha256": hashlib.sha256(json.dumps(unit, sort_keys=True).encode()).hexdigest(),

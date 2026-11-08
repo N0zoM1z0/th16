@@ -1,0 +1,9 @@
+symbol,target_address,size,kind,target_sha256,witness_instruction,witness_mnemonic,evidence,candidate_library
+@__security_check_cookie@4,0x47499b,17,runtime-function,6f55cc50e9290521311b5dc56f454fc9909531ba90d06bed5c353eab3faddc9b,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib
+___report_gsfailure,0x474f5d,251,runtime-function,51cac1aed43fab7933257b2b1f527ec86c026f3c7ae83759a28b720fcc269e99,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib
+??2@YAPAXI@Z,0x4749ac,51,runtime-function,413dad4ed3d24f5f5dbed12f3c51ed67b0ac9525c7e217e985851b8b07094d2a,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib
+??3@YAXPAXI@Z,0x4749df,14,runtime-function,1798e8c445beed37f789fd5094a73912f46f9de54a85861a81f8897cc093a216,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib
+_memset,0x477920,346,runtime-function,3fa4feb8b1c3e56ee8bd02f9168cb50c7529bec10b32f93131dcf429eeddddcd,,,docs/knowledge/reviewed-linkages.md,libvcruntime.lib
+__real@3f800000,0x4944d8,4,literal,e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c,0x402cdc,subss,docs/knowledge/reviewed-linkages.md,
+__real@3f000000,0x49449c,4,literal,d99e58435243d9fef9c88273b8d553b4fba4d0baf8009d29eae74fa99e0d9f57,0x4034d2,mulss,docs/knowledge/reviewed-linkages.md,
+__real@41800000,0x4945e0,4,literal,140efb356462f70dd1c7f1dfb10bcc07d0f14d439043fb9e9d50f4d7be71ea96,0x406564,addss,docs/knowledge/reviewed-linkages.md,

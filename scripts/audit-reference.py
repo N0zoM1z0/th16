@@ -52,6 +52,8 @@ def bindings(context, functions, annotations):
 
     for original, candidate, symbol in functions:
         add(symbol, original, "source-function-annotation")
+    for symbol, row in context.reviewed_linkages.items():
+        add(symbol, row["target"], "reviewed-" + row["kind"])
     symbols = {r["symbol"] for r in context.publics}
     for row in annotations["GLOBAL"]:
         match = re.search(r"\b([A-Za-z_]\w*)\s*(?:\[[^\]]*\]\s*)*(?==|;|\()", row["declaration"])
@@ -213,6 +215,12 @@ def main():
         if row["symbol"] in fixed:
             public_by_address[row["address"]].append(row["symbol"])
     bases = sorted(public_by_address)
+    typed_owners = {}
+    for public in context.publics:
+        typed = [r for r in context.typed_globals if r["address"] == public["address"]
+                 and (public["symbol"] == "_" + r["name"] or public["symbol"].startswith("?" + r["name"] + "@@3"))]
+        if len(typed) == 1:
+            typed_owners[public["symbol"]] = typed[0]
     data_owners = defaultdict(list)
     for contribution in pdb_section_contributions(context.directory / "th16.pdb")["contributions"]:
         if contribution["characteristics"] & 0x20 or not contribution["size"]:
@@ -264,13 +272,17 @@ def main():
                         or (field["type"].startswith("REL") and destination != base)):
                     unresolved.append(dict(offset=field["offset"], candidate_target=destination))
                     continue
-                if destination != base and (len(data_owners[base]) != 1 or destination >= data_owners[base][0]):
-                    unresolved.append(dict(offset=field["offset"], candidate_target=destination,
-                                           reason="interior address lacks one bounded PDB data owner"))
-                    continue
                 name = possible[0]
+                storage = {}
+                if destination != base and (len(data_owners[base]) != 1 or destination >= data_owners[base][0]):
+                    typed = typed_owners.get(name)
+                    if typed is None or not base <= destination < base + typed["size"]:
+                        unresolved.append(dict(offset=field["offset"], candidate_target=destination,
+                                               reason="interior address lacks one bounded PDB data owner"))
+                        continue
+                    storage = dict(storage_name=typed["name"], storage_size=typed["size"])
                 unit["linkages"].append(dict(offset=field["offset"], width=field["width"], type=field["type"],
-                    symbol=name, target=fixed[name], addend=destination - base))
+                    symbol=name, target=fixed[name], addend=destination - base, **storage))
             report["size"] = size
             if unresolved:
                 report["unresolved_fields"] = unresolved
