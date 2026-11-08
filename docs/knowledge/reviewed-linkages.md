@@ -21,6 +21,11 @@ The machine inputs are `config/linkage-bindings.csv`.
 | `_memcpy` | `0x00487130` | 1396 | The original reads destination/source/count from its three cdecl arguments, copies count bytes with scalar, SSE and `rep movsb` paths, handles overlap and returns the original destination. The pinned vcruntime candidate has a complete 1396-byte PDB contribution. |
 | `??_L@YGXPAXIIP6EX0@Z1@Z` | `0x00474CA8` | 79 | Independent Ghidra EH vector constructor iterator; increments the object pointer by its stride, calls the constructor through argument four with the object in ECX, tracks constructed elements for unwind, and returns with `ret 0x14`. Candidate LIBCMT contribution: 105 bytes. |
 | `??_M@YGXPAXIIP6EX0@Z@Z` | `0x00474D11` | 94 | Independent Ghidra EH vector destructor iterator; starts at array + stride * count, walks backward, calls the destructor with the object in ECX, and returns with `ret 0x10`. Candidate LIBCMT contribution: 122 bytes. |
+| `_strrchr` | `0x00476B20` | 311 | Scalar fallback finds the NUL, then scans backward with `std`/`repne scasb` and clears DF before returning; SSE paths retain the last match. Both slash searches in `file_read_all` call this root. Pinned vcruntime contribution: 311 bytes. |
+| `_strchr` | `0x00476C60` | 299 | Scalar paths return the first matching byte or NULL at the terminator; SSE combines match/NUL masks and selects the first bit. Dialogue comma parsing calls this root. Pinned vcruntime contribution: 299 bytes. |
+| `__stricmp` | `0x0047A60A` | 72 | Independent Ghidra identification; the no-locale tail reaches `___ascii_stricmp`, folding ASCII A-Z and comparing bytes until NUL or difference. Pinned UCRT contribution: 72 bytes. |
+| `__localtime64` | `0x0047A36A` | 39 | Root obtains thread-local tm storage and calls `0x0047A0E0`. That complete 649-byte child reads both words of the time, calls `___tzset`, applies timezone/DST and fills nine tm fields. Pinned UCRT contribution: 39 bytes. |
+| `??_U@YAPAXI@Z` | `0x00475142` | 9 | Array-allocation root tail-jumps to the reviewed scalar operator new at `0x004749AC`; archive allocation computes an array size with a count cookie before calling it. Pinned LIBCMT contribution: 9 bytes. |
 | `__chdir` | `0x00479A65` | 11 | The entry tail-jumps to Ghidra-identified `common_chdir<char>` at `0x00479928` (229 bytes). Its callers include both directory selections in `Supervisor::load_game_config`. The candidate public belongs to the pinned UCRT library. |
 | `__libm_sse2_cos_precise` | `0x00488300` | 440 | The SSE2 entry's fallback call at `0x004884A7` reaches `0x0048913F`, whose original instructions execute `fcos` at `0x0048915D` and `0x00489194`. The candidate PDB records the complete 440-byte UCRT contribution. |
 | `__libm_sse2_sin_precise` | `0x004884C0` | 453 | The SSE2 entry's fallback call at `0x00488674` reaches `0x0048926F`, whose original instructions execute `fsin` at `0x0048928D` and `0x004892C4`. The candidate PDB records the complete 456-byte UCRT contribution. |
@@ -41,6 +46,40 @@ after the final return. The `candidate_size` column records 256 rather than
 truncating that contribution. The target hash covers all 254 declared bytes.
 Tests reject either truncated extent. This entry identifies an external callee;
 its differing physical extents do not receive a callee exact-code claim.
+
+The two byte-search routines are independently distinguished by their complete
+algorithms. In the reverse entry, `0x00476C36` finds the terminator and
+`0x00476C43` sets backward direction for the search; `0x00476C53` restores
+forward direction. Its SSE2 path uses the last set match bit, whereas the
+forward entry uses the first match/terminator bit and rejects a terminator
+that differs from the requested character. Neither identity comes from choosing
+a destination that would pass a consumer. Original calls `0x00402478` and
+`0x00402488` search for backslash and slash. The comma-search call at
+`0x0042A544` was decoded from its independent original owner start, rather than
+from an arbitrary instruction-interior address.
+
+The case-insensitive root's ASCII child is independently named at `0x0047A5CF`
+(59 bytes). Instructions at `0x0047A5E0` and `0x0047A5EF` test the A-Z range,
+adding 0x20 before comparing. The root retains locale dispatch and null/error
+handling; its complete extent is not reduced to this child.
+
+The time wrapper was auto-labelled `FID_conflict:common_gmtime<long>`. That label
+is not used as authority. Its actual child at `0x0047A0E0` reads both 32-bit
+words, checks the 64-bit supported range, calls `___tzset`, applies timezone
+and daylight-saving offsets, and sets `tm_isdst`. This establishes local 64-bit
+time conversion, with secure output validation. The root calls this child at
+`0x0047A37F`; its allocation/error handling converts the child's status to a tm
+pointer or NULL. The child and ASCII-comparison context are retained in
+`.analysis/time-string-runtime-context-function.txt` and
+`.analysis/time-string-runtime-context-decompile.txt`. The 649-byte child is
+not separately granted a runtime exact claim or a fabricated candidate public.
+
+The array-new entry preserves the size argument and returns through the scalar
+allocator's ABI. The original archive call at `0x00457500` allocates
+`(count + 1) * 16 + 4`, including overflow checks and the array count cookie,
+before invoking element construction. This corroborates its array-allocation
+role. Its separate fixed entry is retained, even though its implementation
+forwards to an already reviewed allocator.
 
 The memcpy implementation is identified from the whole copy algorithm and
 cdecl contract, not from a presumed exact Crypt caller. Its original entry

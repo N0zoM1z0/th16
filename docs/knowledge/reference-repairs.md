@@ -412,3 +412,24 @@ canonical units have no additional change. The final log is
 `.analysis/artificial-locals-restored-audit.log`, and the refreshed regression
 record points to the current artifacts. Four additional build-context controls
 pass, including stale-input/artifact rejection and explicit cold-build policy.
+
+## String, local-time and array allocation identities
+
+Five reviewed runtime entries now have independent role evidence and complete
+original/candidate extents: strchr, strrchr, stricmp, localtime64 and array new.
+The byte-search directions are established from their full original algorithms;
+the comparison's ASCII child is independently identified by Ghidra. The time
+wrapper's conflicting auto-label is resolved by its child's two-word time input,
+timezone and daylight-saving logic. The array allocation thunk forwards to the
+previously reviewed scalar new and is used by an array-cookie allocation path.
+Detailed addresses and contracts are in `reviewed-linkages.md`.
+
+No game source, compiler profile or Oracle comparison rule changes in this
+batch. Twenty-three reviewed-linkage controls pass. The current replay reports
+**608 exact, 49 mismatch and 557 incomplete** among 1214 candidates, with all
+600 exact results at `95bfc44` retained. New complete passes include the replay
+and high-score drawing functions, Arcfile::find_entry, make_full_path, startup
+shortcut handling and SoundManager::find_bgm. Evidence is
+`.analysis/string-time-runtime-audit.log` and `.analysis/reference-audit.json`.
+These are local code results; runtime callee exactness, source-origin acceptance
+and Factory Truth Kernel acceptance are not inferred.

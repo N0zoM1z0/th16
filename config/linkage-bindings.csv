@@ -32,3 +32,8 @@ __real@42c80000,0x494638,4,literal,2238f30df488055daf5e8f362cf904e370011a172d20d
 __real@43600000,0x494670,4,literal,99c197cb0f787cc693728b3c326b30d5a8fd4e4b280ddae2c06fc3f767ad9988,0x415a2c,movss,docs/knowledge/reviewed-linkages.md,,
 __real@43f00000,0x4946bc,4,literal,89a0636b40f7f5be7beca3df1c5352427cae3f2f05cd52cdd9044e4184e072fa,0x42d27c,movss,docs/knowledge/reviewed-linkages.md,,
 __real@41200000,0x4945cc,4,literal,80c8a717ccd70c8809eb78e6a9591c003e11c721fe0ccaf62fd592abda1a5593,0x408722,movss,docs/knowledge/reviewed-linkages.md,,
+_strrchr,0x476b20,311,runtime-function,0ca7084e8c0e7f115dd9fa4c682c4c6b1591a3cd2811bd916743f453d2036178,,,docs/knowledge/reviewed-linkages.md,libvcruntime.lib,
+_strchr,0x476c60,299,runtime-function,fc9d997e03ed743f08256d5deb16421eb0f1174f0c2ca30ac7feefa7c48d1358,,,docs/knowledge/reviewed-linkages.md,libvcruntime.lib,
+__stricmp,0x47a60a,72,runtime-function,cc2d8efaaf2bb395a441f65ecd1da5ef7b43819030711a10dc03a33ff35a9c00,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
+__localtime64,0x47a36a,39,runtime-function,f91fcc9da1b445d5de93ab389b96c0542e34d7a5d62bc4c3bff6e8b808b62018,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
+??_U@YAPAXI@Z,0x475142,9,runtime-function,2fc632fa16d745bcef2933b3c0d562c3e027159d2874f23ae4730a3b14ab0604,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,

@@ -29,7 +29,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004021A0,clear_all_keydown_states,src/Input.cpp,?clear_all_keydown_states@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00402220,zun_decrypt,src/Crypt.cpp,?zun_decrypt@@YIPAEPAEHEEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00402330,zun_encrypt,src/Crypt.cpp,?zun_encrypt@@YIPAEPAEHEEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00402440,file_read_all,src/FileSystem.cpp,?file_read_all@@YIPAEPBDPAHH@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00402440,file_read_all,src/FileSystem.cpp,?file_read_all@@YIPAEPBDPAHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00402600,file_exists,src/FileSystem.cpp,?file_exists@@YIHPBD@Z,exact,,.analysis/reference-audit.json
 0x00402680,file_write,src/FileSystem.cpp,?file_write@@YIHPBDPBXH@Z,exact,,.analysis/reference-audit.json
 0x004027C0,file_create,src/FileSystem.cpp,?file_create@@YIHPBD@Z,exact,,.analysis/reference-audit.json
@@ -452,7 +452,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00429B10,Gui::on_draw_2_callback,src/Gui.cpp,?on_draw_2_callback@Gui@@SIHPAU1@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00429B20,GuiMsgVm::GuiMsgVm,src/Gui.cpp,??0GuiMsgVm@@QAE@PAX@Z,mismatch,,.analysis/reference-audit.json
 0x00429FF0,Gui::start_dialogue,src/Gui.cpp,?start_dialogue@Gui@@QAEXH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0042A1D0,GuiMsgVm::run,src/Gui.cpp,?run@GuiMsgVm@@QAEHXZ,incomplete,13 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042A1D0,GuiMsgVm::run,src/Gui.cpp,?run@GuiMsgVm@@QAEHXZ,incomplete,9 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0042B480,GuiMsgVm::update_callout,src/Gui.cpp,?update_callout@GuiMsgVm@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0042B5F0,Gui::textbox_on_draw,src/Gui.cpp,?textbox_on_draw@Gui@@SIHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0042B610,GuiMsgVm::hide,src/Gui.cpp,?hide@GuiMsgVm@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -707,10 +707,10 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043E5F0,PauseMenu::on_tick,src/PauseMenu.cpp,?on_tick@PauseMenu@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0043E720,PauseMenu::on_tick_thunk,src/PauseMenu.cpp,?on_tick_thunk@PauseMenu@@SIHPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0043E730,PauseMenu::draw_keyboard,src/PauseMenu.cpp,?draw_keyboard@PauseMenu@@QAEXUD3DXVECTOR3@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0043E8C0,PauseMenu::draw_replay_entry,src/PauseMenu.cpp,?draw_replay_entry@PauseMenu@@QAEXHPAUD3DXVECTOR3@@PAURpyInfo@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0043E9B0,PauseMenu::draw_replay_list,src/PauseMenu.cpp,?draw_replay_list@PauseMenu@@QAEXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0043E8C0,PauseMenu::draw_replay_entry,src/PauseMenu.cpp,?draw_replay_entry@PauseMenu@@QAEXHPAUD3DXVECTOR3@@PAURpyInfo@@@Z,exact,,.analysis/reference-audit.json
+0x0043E9B0,PauseMenu::draw_replay_list,src/PauseMenu.cpp,?draw_replay_list@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043EB50,PauseMenu::draw_replay_name_entry,src/PauseMenu.cpp,?draw_replay_name_entry@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x0043EC10,PauseMenu::draw_high_scores,src/PauseMenu.cpp,?draw_high_scores@PauseMenu@@QAEXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0043EC10,PauseMenu::draw_high_scores,src/PauseMenu.cpp,?draw_high_scores@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043EDC0,PauseMenu::on_draw,src/PauseMenu.cpp,?on_draw@PauseMenu@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0043EF10,PauseMenu::on_draw_thunk,src/PauseMenu.cpp,?on_draw_thunk@PauseMenu@@SIHPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0043EF20,PauseMenu::take_snapshot,src/PauseMenu.cpp,?take_snapshot@PauseMenu@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -791,7 +791,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00448130,ReplayManager::on_tick_playback,src/ReplayManager.cpp,?on_tick_playback@ReplayManager@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004482F0,ReplayManager::draw_fps,src/ReplayManager.cpp,?draw_fps@ReplayManager@@SIHPAX@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004483B0,ReplayManager::set_end_stage,src/ReplayManager.cpp,?set_end_stage@ReplayManager@@QAEHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00448400,ReplayManager::save,src/ReplayManager.cpp,?save@ReplayManager@@QAEHPBD0HH@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00448400,ReplayManager::save,src/ReplayManager.cpp,?save@ReplayManager@@QAEHPBD0HH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00448C10,ReplayManager::read_replay_file,src/ReplayManager.cpp,?read_replay_file@ReplayManager@@QAEHPBD@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00448E20,ReplayManager::on_tick_record_thunk,src/ReplayManager.cpp,?on_tick_record_thunk@ReplayManager@@SIHPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00448E30,ReplayManager::on_tick_playback_thunk,src/ReplayManager.cpp,?on_tick_playback_thunk@ReplayManager@@SIHPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -857,14 +857,14 @@ address,name,source_file,symbol,result,reason,evidence
 0x00451560,TitleInf::load_replay_list,src/MainMenuStates.cpp,?load_replay_list@TitleInf@@SAXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00451740,TitleInf::replay_list_thread,src/MainMenu.cpp,?replay_list_thread@TitleInf@@SAIPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00451750,TitleInf::do_replay_menu,src/MainMenuStates.cpp,?do_replay_menu@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00451D50,TitleInf::on_draw__replay,src/MainMenuStates.cpp,?on_draw__replay@TitleInf@@QAEHXZ,incomplete,15 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00451D50,TitleInf::on_draw__replay,src/MainMenuStates.cpp,?on_draw__replay@TitleInf@@QAEHXZ,incomplete,13 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00452330,TitleInf::do_player_data,src/MainMenuStates.cpp,?do_player_data@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00452C30,TitleInf::draw_spell_card_page,src/MainMenuStates.cpp,?draw_spell_card_page@TitleInf@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00453030,TitleInf::on_draw__player_data,src/MainMenuStates.cpp,?on_draw__player_data@TitleInf@@QAEHXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00453030,TitleInf::on_draw__player_data,src/MainMenuStates.cpp,?on_draw__player_data@TitleInf@@QAEHXZ,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004532F0,TitleInf::do_score_name_entry,src/MainMenuStates.cpp,?do_score_name_entry@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004538B0,TitleInf::on_draw__score_name_entry,src/MainMenuStates.cpp,?on_draw__score_name_entry@TitleInf@@QAEHXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004538B0,TitleInf::on_draw__score_name_entry,src/MainMenuStates.cpp,?on_draw__score_name_entry@TitleInf@@QAEHXZ,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00453C10,TitleInf::do_replay_save,src/MainMenuStates.cpp,?do_replay_save@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004541B0,TitleInf::on_draw__replay_save,src/MainMenuStates.cpp,?on_draw__replay_save@TitleInf@@QAEHXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004541B0,TitleInf::on_draw__replay_save,src/MainMenuStates.cpp,?on_draw__replay_save@TitleInf@@QAEHXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004545A0,TitleInf::do_manual,src/MainMenuStates.cpp,?do_manual@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004546F0,TitleInf::do_music_room,src/MainMenuStates.cpp,?do_music_room@TitleInf@@QAEHXZ,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00455330,skip_line,src/MainMenu.cpp,?skip_line@@YIPADPADPAH@Z,exact,,.analysis/reference-audit.json
@@ -883,9 +883,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x00456FE0,Arcfile::open,src/Arcfile.cpp,?open@Arcfile@@QAE_NPBD@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00457060,Arcfile::close,src/Arcfile.cpp,?close@Arcfile@@QAEXXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00457120,Arcfile::read_file,src/Arcfile.cpp,?read_file@Arcfile@@QAEPAEPBDPAE@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00457290,Arcfile::find_entry,src/Arcfile.cpp,?find_entry@Arcfile@@QAEPAUArcfileEntry@@PBD@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00457290,Arcfile::find_entry,src/Arcfile.cpp,?find_entry@Arcfile@@QAEPAUArcfileEntry@@PBD@Z,exact,,.analysis/reference-audit.json
 0x004572E0,Arcfile::read_directory,src/Arcfile.cpp,?read_directory@Arcfile@@QAE_NPBD@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004574B0,Arcfile::parse_directory,src/Arcfile.cpp,?parse_directory@Arcfile@@QAEPAUArcfileEntry@@PAEHI@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004574B0,Arcfile::parse_directory,src/Arcfile.cpp,?parse_directory@Arcfile@@QAEPAUArcfileEntry@@PAEHI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00457620,Arcfile::dup_string,src/Arcfile.cpp,?dup_string@Arcfile@@SGPADPBD@Z,exact,,.analysis/reference-audit.json
 0x00457670,ArcfileEntry::~ArcfileEntry,src/Arcfile.cpp,??1ArcfileEntry@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00457690,ArcfileEntry::ArcfileEntry,src/Arcfile.cpp,??0ArcfileEntry@@QAE@XZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -899,7 +899,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00457920,Pbg::File::get_size,src/Arcfile.cpp,?get_size@File@Pbg@@UAEIXZ,exact,,.analysis/reference-audit.json
 0x00457940,Pbg::File::seek,src/Arcfile.cpp,?seek@File@Pbg@@UAE_NII@Z,exact,,.analysis/reference-audit.json
 0x00457970,Pbg::File::read_whole,src/Arcfile.cpp,?read_whole@File@Pbg@@UAEPAXI@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00457A70,make_full_path,src/Arcfile.cpp,?make_full_path@@YAXPADPBD@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00457A70,make_full_path,src/Arcfile.cpp,?make_full_path@@YAXPADPBD@Z,exact,,.analysis/reference-audit.json
 0x00457AF0,??_GIFile@Pbg@@UAEPAXI@Z,src/Arcfile.cpp,??_GIFile@Pbg@@UAEPAXI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00457B20,lzss_compress,src/Lzss.cpp,?lzss_compress@@YIPAEPAEHPAH@Z,exact,,.analysis/reference-audit.json
 0x00457F00,lzss_decompress,src/Lzss.cpp,?lzss_decompress@@YIPAEPAEH0H@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -925,7 +925,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00459830,_WinMain@16,src/WinMain.cpp,_WinMain@16,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,src/UpdateFunc.cpp,??_GUpdateFuncRegistry@@QAEPAXI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045A450,window_proc,src/GameWindow.cpp,?window_proc@@YGJPAUHWND__@@IIJ@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0045A700,GameWindow::make_dirs_and_disable_screensaver,src/GameWindow.cpp,?make_dirs_and_disable_screensaver@GameWindow@@QAEXXZ,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045A700,GameWindow::make_dirs_and_disable_screensaver,src/GameWindow.cpp,?make_dirs_and_disable_screensaver@GameWindow@@QAEXXZ,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045A8A0,GameWindow::do_frame_sleeping,src/GameWindow.cpp,?do_frame_sleeping@GameWindow@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0045A9F0,GameWindow::update_window_sleeping,src/GameWindow.cpp,?update_window_sleeping@GameWindow@@QAEXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045AC50,GameWindow::do_frame_frameskip,src/GameWindow.cpp,?do_frame_frameskip@GameWindow@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -939,9 +939,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045B530,create_d3d_device,src/WinMain.cpp,?create_d3d_device@@YAHH@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045B7D0,init_d3d,src/WinMain.cpp,?init_d3d@@YAHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0045BA80,Supervisor::reset_render_state,src/SupervisorSetup.cpp,?reset_render_state@Supervisor@@SAXXZ,exact,,.analysis/reference-audit.json
-0x0045BD70,check_startup_shortcut,src/SupervisorSetup.cpp,?check_startup_shortcut@@YAHXZ,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045BD70,check_startup_shortcut,src/SupervisorSetup.cpp,?check_startup_shortcut@@YAHXZ,exact,,.analysis/reference-audit.json
 0x0045BEF0,Supervisor::compute_exe_checksum,src/SupervisorSetup.cpp,?compute_exe_checksum@Supervisor@@SAHXZ,exact,,.analysis/reference-audit.json
-0x0045BFF0,resolve_shortcut,src/SupervisorSetup.cpp,?resolve_shortcut@@YGHPBDPADH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045BFF0,resolve_shortcut,src/SupervisorSetup.cpp,?resolve_shortcut@@YGHPBDPADH@Z,exact,,.analysis/reference-audit.json
 0x0045C110,resolution_dialog_proc,src/SupervisorSetup.cpp,?resolution_dialog_proc@@YGHPAUHWND__@@IIJ@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0045C2A0,read_resolution_dialog,src/SupervisorSetup.cpp,?read_resolution_dialog@@YAXXZ,exact,,.analysis/reference-audit.json
 0x0045C360,Supervisor::dx_direct_input_initialize,src/SupervisorSetup.cpp,?dx_direct_input_initialize@Supervisor@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -972,7 +972,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045D7E0,SoundManager::thread_load_sound_files,src/SoundManager.cpp,?thread_load_sound_files@SoundManager@@SAXPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0045D850,SoundManager::release,src/SoundManager.cpp,?release@SoundManager@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045D9D0,get_wav_chunk,src/SoundManager.cpp,?get_wav_chunk@@YGPAUtWAVEFORMATEX@@PAEPBDPAHI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0045DA30,SoundManager::find_bgm,src/SoundManager.cpp,?find_bgm@SoundManager@@QAEHPBD@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045DA30,SoundManager::find_bgm,src/SoundManager.cpp,?find_bgm@SoundManager@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
 0x0045DB10,SoundManager::open_bgm,src/SoundManager.cpp,?open_bgm@SoundManager@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
 0x0045DBF0,SoundManager::select_bgm,src/SoundManager.cpp,?select_bgm@SoundManager@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
 0x0045DC50,SoundManager::preload_bgm,src/SoundManager.cpp,?preload_bgm@SoundManager@@QAEHHPBD@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -1154,11 +1154,11 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046FFB0,AnmVm::load_from,src/AnmManagerVms.cpp,?load_from@AnmVm@@QAEXPBU1@PAH@Z,mismatch,,.analysis/reference-audit.json
 0x00470240,anm_log,src/AnmLoader.cpp,?anm_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x00470250,CSoundManager::SetPrimaryBufferFormat,src/DSUtil.cpp,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z,exact,,.analysis/reference-audit.json
-0x00470320,CSoundManager::CreateStreaming,src/DSUtil.cpp,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PBDKU_GUID@@KKPAXPAUThBgmFormat@@@Z,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00470680,CSoundManager::CreateStreamingFromMemory,src/DSUtil.cpp,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAEKPAUThBgmFormat@@KU_GUID@@KKPAX@Z,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004709B0,CSound::CSound,src/DSUtil.cpp,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAUCWaveFile@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00470320,CSoundManager::CreateStreaming,src/DSUtil.cpp,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PBDKU_GUID@@KKPAXPAUThBgmFormat@@@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00470680,CSoundManager::CreateStreamingFromMemory,src/DSUtil.cpp,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAEKPAUThBgmFormat@@KU_GUID@@KKPAX@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004709B0,CSound::CSound,src/DSUtil.cpp,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAUCWaveFile@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00470B80,??_GCSound@@UAEPAXI@Z,src/DSUtil.cpp,??_GCSound@@UAEPAXI@Z,exact,,.analysis/reference-audit.json
-0x00470BB0,CStreamingSound::recreate_buffers,src/DSUtil.cpp,?recreate_buffers@CStreamingSound@@QAEJPAUThBgmFormat@@@Z,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00470BB0,CStreamingSound::recreate_buffers,src/DSUtil.cpp,?recreate_buffers@CStreamingSound@@QAEJPAUThBgmFormat@@@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00470E10,CSound::~CSound,src/DSUtil.cpp,??1CSound@@UAE@XZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00470ED0,CSound::FillBufferWithSound,src/DSUtil.cpp,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@HK@Z,exact,,.analysis/reference-audit.json
 0x00471040,DSoundBufferRestore::restore,src/DSUtil.cpp,?restore@DSoundBufferRestore@@QAEJPAH@Z,exact,,.analysis/reference-audit.json
