@@ -396,3 +396,19 @@ checks. `scripts/progress.py` confirms current source, artifact, report and unit
 identities. This source cleanup does not change the Oracle or confer Factory
 acceptance. Do not recover the withdrawn exact labels by restoring the removed
 dead metadata; reconstruct the real dataflow, types and calling context instead.
+
+The withdrawn `InterpInt3::step` is a complete 926-byte owner with one differing
+SIB byte at offset 872: the target's final y-coordinate LEA uses `[edx + ebx]`,
+while the candidate uses `[ebx + edx]`. Reversing the outer addition to
+`initial + (goal - initial) * x`, or naming the live delta and scaled offset,
+leaves exactly the same difference. Both trials were reverted. The function
+remains mismatch; neither operand equivalence nor the old three dead locals
+grants exact credit. The ignored records are `.analysis/int3-anchor-first.json`
+and `.analysis/int3-displacement.json`.
+
+After reverting those trials, the restored source was rebuilt incrementally and
+replayed again. The same 600 exact owners and 23 withdrawals are confirmed;
+canonical units have no additional change. The final log is
+`.analysis/artificial-locals-restored-audit.log`, and the refreshed regression
+record points to the current artifacts. Four additional build-context controls
+pass, including stale-input/artifact rejection and explicit cold-build policy.
