@@ -6,6 +6,13 @@ dirty work and ignored analysis state. Write code, documentation and commit
 messages in English. The Japanese game title is the only non-English exception
 in maintained code, comments and documentation. Use ordinary Markdown for findings.
 
+## Publication restriction
+
+**Do not push this TH16 repository.** The user explicitly permits local commits
+and prohibits Git pushes. Do not push branches or tags, mirror the repository,
+or publish its contents remotely. This restriction remains in force until the
+user explicitly revokes it. Keep coherent checkpoints as local commits.
+
 The user has authorized importing the pinned reference candidates and evaluating
 them using this repository's Factory/TH10-style strict Oracle. Upstream matching
 tools, percentages and exact labels have no acceptance authority. Do not use REA
