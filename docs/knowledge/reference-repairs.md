@@ -37,7 +37,39 @@ Moving Fog's vertical-step computation after the initial position calculation
 also failed to reproduce its complete target owner. That experiment was
 reverted. These failures do not justify instruction normalization or byte masks.
 
-## Validation and remaining work
+A texture-data local in `draw_vertex_strip` and an inline VM-node initialization
+helper also left their complete byte differences unchanged. Replacing the four
+dialogue text-position setters with D3DXVECTOR3 value assignments increased the
+constructor contribution from 1223 to 1248 bytes and introduced a new unresolved
+field. These experiments were reverted.
+
+## Removing artificial alignment helpers
+
+The imported source explicitly described eight `*_want_aligned_stack` helpers
+as non-original dead-double code. Each helper only initialized an unused double
+and discarded it; its purpose was to influence MSVC's LTCG stack-alignment pass.
+All eight helpers and their calls have been removed:
+
+| Target | Affected function |
+| --- | --- |
+| `0x0040B2F0` | `Stage::interrupt_vms` |
+| `0x0040E5C0` | `AnmLoaded::create_vm` |
+| `0x00418C70` | `Fog::Fog` |
+| `0x00426160` | `AnmLoaded::create_vm_front` |
+| `0x0042C920` | `AnmLoaded::create_ui_effect` |
+| `0x0042EFB0` | `AnmLoaded::create_ui_vm` |
+| `0x00431A70` | `LaserManager::cancel_in_radius` |
+| `0x0045F160` | `AnmLoaded::set_vm_script` |
+
+The circular-cancellation traversal now keeps its saved successor inside the
+loop, as the other cancellation routines do. Removing the two dummy calls
+reduces its diagnostic contribution from 119 to 109 bytes. Its target owner
+remains 119 bytes; no boundary is shortened and the result remains unaccepted.
+Recover stack requirements from actual callers and callees before claiming a
+match. Other imported dead-local and dead-arithmetic tricks remain a separate
+source-review task; this change only removes the eight named alignment helpers.
+
+## Formatting-buffer validation
 
 The baseline before this batch is local commit `23f09b2`: 550 exact, 30 mismatch
 and 634 incomplete annotated candidates. Its ignored report is preserved under
@@ -78,3 +110,29 @@ Oracle and comparison-unit freshness. Local byte results do not establish
 source authorship or Factory Truth Kernel acceptance. Origin review remains
 open and no Factory acceptance receipt has been submitted. Keep all Git
 checkpoints local; pushing or remotely publishing this repository is prohibited.
+
+## Alignment-helper cleanup validation
+
+The subsequent clean build reports **603 exact, 40 mismatch and 571 incomplete**,
+with 110,360 exact owned bytes. Twenty-nine incomplete candidates become exact
+after six scalar bindings and the complete unsigned-conversion table proof.
+Seven previously exact results are withdrawn after removing artificial helpers:
+Stage::interrupt_vms, create_vm, create_vm_front, create_ui_effect and create_ui_vm
+now mismatch; Fog::Fog and set_vm_script lack matching complete extents. These
+are the seven directly changed functions that were previously exact. All other
+574 prior exact results remain exact. Six other incomplete candidates become
+decidable mismatches. The circular laser cancellation remains incomplete.
+
+The clean source input is
+`70c5735b1b26cb8f60a2556df77fb7c6fd5f9d12a9b6b415e8cc2eec3a636bee`;
+the linked executable is
+`49359ca8c11071475a38395950c5e5c12f4b67b865ecb85fb6e9283f14b328e0`.
+Evidence is in `.analysis/natural-source-clean-build.log` and the current audit.
+The prior report is preserved under `.analysis/baselines/93c58d3/`. Twenty-one
+reviewed-linkage controls and twelve complete-owner controls passed, including
+the indexed-table mutations described in `reviewed-linkages.md`.
+
+The user subsequently requested faster source progress: use incremental builds
+and focused complete-owner comparisons during reconstruction. Repeat a broad
+clean build at a meaningful milestone or when a dependency/cache issue requires
+it, rather than after every source batch.

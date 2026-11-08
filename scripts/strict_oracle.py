@@ -60,8 +60,8 @@ def reviewed_linkages(context, path=None):
                     raise Incomplete("reviewed runtime linkage leaves its pinned Microsoft library")
                 if row["witness_instruction"] or row["witness_mnemonic"]:
                     runtime_witnesses.append((address, int(row["witness_instruction"], 0), row["witness_mnemonic"]))
-            elif row["kind"] in {"literal", "string-literal"}:
-                if row["kind"] == "literal":
+            elif row["kind"] in {"literal", "indexed-literal", "string-literal"}:
+                if row["kind"] != "string-literal":
                     match = re.fullmatch(r"__(?:real|xmm)@([0-9a-fA-F]+)", symbol)
                     if not match or len(match[1]) != size * 2 or int(match[1], 16).to_bytes(size, "little") != payload:
                         raise Incomplete("reviewed literal does not contain its complete typed value")
@@ -82,6 +82,32 @@ def reviewed_linkages(context, path=None):
                                   and len(instruction.operands) == 1
                                   and instruction.operands[0].type == capstone.x86.X86_OP_IMM
                                   and instruction.operands[0].imm == address)
+                if row["kind"] == "indexed-literal":
+                    # The supported table is two doubles selected by a logical
+                    # right shift of a 32-bit register by 31, immediately before
+                    # the indexed read. Decode from its independent owner to
+                    # establish both instruction starts and adjacency.
+                    parents = [(base, int(r["size"])) for base, r in context.boundaries.items()
+                               if base <= witness < base + int(r["size"])]
+                    sequence = []
+                    if len(parents) == 1:
+                        base, extent = parents[0]
+                        sequence = list(decoder.disasm(context.target.read_address(base, extent), base))
+                    position = next((n for n, i in enumerate(sequence) if i.address == witness), 0)
+                    shift = sequence[position - 1] if position else None
+                    operand = instruction.operands[-1] if instruction is not None else None
+                    memory_witness = bool(
+                        size == 16 and symbol.startswith("__xmm@")
+                        and context.data_contributions.get(publics[0]["address"]) == [size]
+                        and instruction is not None and operand is not None
+                        and instruction.mnemonic == "addsd" and operand.type == capstone.x86.X86_OP_MEM
+                        and operand.size == 8 and not operand.mem.base and operand.mem.index
+                        and operand.mem.disp == address and operand.mem.scale == 8
+                        and shift is not None and shift.address + shift.size == witness
+                        and shift.mnemonic == "shr" and len(shift.operands) == 2
+                        and shift.operands[0].type == capstone.x86.X86_OP_REG
+                        and shift.operands[0].size == 4 and shift.operands[0].reg == operand.mem.index
+                        and shift.operands[1].type == capstone.x86.X86_OP_IMM and shift.operands[1].imm == 31)
                 if (instruction is None or instruction.mnemonic != row["witness_mnemonic"]
                         or not (string_witness if row["kind"] == "string-literal" else memory_witness)):
                     raise Incomplete("reviewed literal lacks its fixed target instruction witness")

@@ -48,6 +48,12 @@ reference annotations and similarity scores grant no exact credit. Keep unknown
 flags, ownership and boundaries explicit. Run only relevant checks; prose edits
 need diff review, not compiler, analyzer or receipt refreshes.
 
+Use incremental builds and focused complete-owner comparisons for reconstruction
+iterations. The user explicitly prioritizes exact source progress over repeated
+full cold builds. Reserve a clean build and broad replay for a meaningful
+milestone or a demonstrated dependency/cache problem. Keep diagnostic evidence
+and formal Factory acceptance requirements distinct.
+
 ## Reference and Factory
 
 `_reference/johnthreekay-th16` is an ignored, independently cloned reference at

@@ -73,6 +73,60 @@ class ReviewedLinkageControls(unittest.TestCase):
         with self.assertRaisesRegex(Incomplete, "complete NUL-terminated PDB storage"):
             reviewed_linkages(context)
 
+    def check_indexed_mutation(self, address, replacement):
+        context = copy.copy(self.context)
+        original = context.target
+
+        class Overlay:
+            def read_address(self, start, size):
+                data = bytearray(original.read_address(start, size))
+                for offset, byte in enumerate(replacement):
+                    if start <= address + offset < start + size:
+                        data[address + offset - start] = byte
+                return bytes(data)
+
+        context.target = Overlay()
+        with self.assertRaisesRegex(Incomplete, "instruction witness"):
+            reviewed_linkages(context)
+
+    def test_table_shift_cannot_select_four_elements(self):
+        self.check_indexed_mutation(0x402C86, b"\x1e")
+
+    def test_table_shift_must_be_logical(self):
+        self.check_indexed_mutation(0x402C85, b"\xf8")
+
+    def test_table_shift_must_define_the_index_register(self):
+        self.check_indexed_mutation(0x402C85, b"\xe9")
+
+    def test_table_index_must_match_the_shifted_register(self):
+        self.check_indexed_mutation(0x402C8B, b"\xcd")
+
+    def test_table_stride_must_match_the_double_width(self):
+        self.check_indexed_mutation(0x402C8B, b"\x85")
+
+    def test_table_witness_cannot_start_inside_an_instruction(self):
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r["kind"] == "indexed-literal")["witness_instruction"] = "0x402c88"
+        with self.assertRaisesRegex(Incomplete, "instruction witness"):
+            self.check_rows(rows)
+
+    def test_table_requires_its_full_sixteen_byte_payload(self):
+        rows = copy.deepcopy(self.rows)
+        row = next(r for r in rows if r["kind"] == "indexed-literal")
+        row["size"] = "8"
+        row["target_sha256"] = hashlib.sha256(bytes(8)).hexdigest()
+        with self.assertRaisesRegex(Incomplete, "complete typed value"):
+            self.check_rows(rows)
+
+    def test_table_requires_a_unique_complete_pdb_extent(self):
+        context = copy.copy(self.context)
+        context.data_contributions = copy.deepcopy(context.data_contributions)
+        symbol = next(r["symbol"] for r in self.rows if r["kind"] == "indexed-literal")
+        address = next(p["address"] for p in context.publics if p["symbol"] == symbol)
+        context.data_contributions[address] = [8]
+        with self.assertRaisesRegex(Incomplete, "instruction witness"):
+            reviewed_linkages(context)
+
     def test_ucrt_cannot_claim_vcruntime_ownership(self):
         rows = copy.deepcopy(self.rows)
         next(r for r in rows if r["symbol"] == "_malloc")["candidate_library"] = "LIBCMT.lib"

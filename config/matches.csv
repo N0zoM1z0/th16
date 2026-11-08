@@ -19,6 +19,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00402AA0,GameErrorContext::fatal,reference-00402aa0,local-strict-pass,196,196,196,.analysis/reference-audit.json
 0x00402B70,Rng::rand_u16,reference-00402b70,local-strict-pass,103,103,103,.analysis/reference-audit.json
 0x00402BE0,Rng::rand_u32,reference-00402be0,local-strict-pass,139,139,139,.analysis/reference-audit.json
+0x00402C70,Rng::randf_0_to_1,reference-00402c70,local-strict-pass,56,56,56,.analysis/reference-audit.json
+0x00402CF0,Rng::randf_neg_pi_to_pi,reference-00402cf0,local-strict-pass,64,64,64,.analysis/reference-audit.json
 0x00402D30,add_normalize_angle,reference-00402d30,local-strict-pass,82,82,82,.analysis/reference-audit.json
 0x00402D90,normalize_angle,reference-00402d90,local-strict-pass,71,71,71,.analysis/reference-audit.json
 0x00402DE0,MenuHelper::push,reference-00402de0,local-strict-pass,61,61,61,.analysis/reference-audit.json
@@ -73,7 +75,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040ADD0,Stage::start_std_vms,reference-0040add0,local-strict-pass,246,246,246,.analysis/reference-audit.json
 0x0040AED0,Stage::update_std_vms,reference-0040aed0,local-strict-pass,154,154,154,.analysis/reference-audit.json
 0x0040AF70,Stage::draw_layer,reference-0040af70,local-strict-pass,883,883,883,.analysis/reference-audit.json
-0x0040B2F0,Stage::interrupt_vms,reference-0040b2f0,local-strict-pass,179,179,179,.analysis/reference-audit.json
+0x0040B2F0,Stage::interrupt_vms,reference-0040b2f0,mismatch,179,179,139,.analysis/reference-audit.json
 0x0040C040,Stage::jump_to_label,reference-0040c040,local-strict-pass,141,141,141,.analysis/reference-audit.json
 0x0040C0D0,Stage::start_exit,reference-0040c0d0,local-strict-pass,315,315,315,.analysis/reference-audit.json
 0x0040C210,Stage::start_enter,reference-0040c210,local-strict-pass,110,110,110,.analysis/reference-audit.json
@@ -99,9 +101,10 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040E3C0,BombAllSubInf::cancel_bullets,reference-0040e3c0,local-strict-pass,190,190,190,.analysis/reference-audit.json
 0x0040E480,BombAllSubInf::end_at_stage_clear,reference-0040e480,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0040E490,AnmVm::world_pos,reference-0040e490,mismatch,297,297,247,.analysis/reference-audit.json
-0x0040E5C0,AnmLoaded::create_vm,reference-0040e5c0,local-strict-pass,241,241,241,.analysis/reference-audit.json
+0x0040E5C0,AnmLoaded::create_vm,reference-0040e5c0,mismatch,241,241,240,.analysis/reference-audit.json
 0x0040E6C0,EffectManager::next_index,reference-0040e6c0,local-strict-pass,110,110,110,.analysis/reference-audit.json
 0x0040E730,EffectManager::create_tracked,reference-0040e730,local-strict-pass,77,77,77,.analysis/reference-audit.json
+0x0040E780,BombAyaAInf::begin,reference-0040e780,mismatch,578,578,500,.analysis/reference-audit.json
 0x0040EBE0,BombAyaAInf::on_draw,reference-0040ebe0,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x0040EBF0,BombAyaAInf::compute_damage,reference-0040ebf0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040EC00,BombAyaAInf::end_at_stage_clear,reference-0040ec00,local-strict-pass,1,1,1,.analysis/reference-audit.json
@@ -130,6 +133,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00410470,BombMarisaSubInf::compute_damage,reference-00410470,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00410480,BombMarisaSubInf::cancel_bullets,reference-00410480,local-strict-pass,190,190,190,.analysis/reference-audit.json
 0x00410540,BombMarisaSubInf::end_at_stage_clear,reference-00410540,local-strict-pass,1,1,1,.analysis/reference-audit.json
+0x00410AE0,BombReimuAOrb::finish,reference-00410ae0,local-strict-pass,205,205,205,.analysis/reference-audit.json
+0x00410BB0,BombReimuAOrbs::finish_all,reference-00410bb0,local-strict-pass,351,351,351,.analysis/reference-audit.json
 0x00410D10,BombReimuAInf::begin,reference-00410d10,local-strict-pass,197,197,197,.analysis/reference-audit.json
 0x00410DE0,BombReimuAInf::on_tick,reference-00410de0,mismatch,1145,1145,937,.analysis/reference-audit.json
 0x00411260,BombReimuAInf::on_draw,reference-00411260,local-strict-pass,6,6,6,.analysis/reference-audit.json
@@ -150,12 +155,15 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00412A60,BulletManager::on_draw_body,reference-00412a60,local-strict-pass,490,490,490,.analysis/reference-audit.json
 0x00415790,Bullet::bounce_left,reference-00415790,local-strict-pass,309,309,309,.analysis/reference-audit.json
 0x004158D0,Bullet::bounce_right,reference-004158d0,local-strict-pass,306,306,306,.analysis/reference-audit.json
+0x00415D80,Bullet::step_ex_12,reference-00415d80,mismatch,519,519,515,.analysis/reference-audit.json
 0x004161F0,Bullet::step_ex_19,reference-004161f0,local-strict-pass,223,223,223,.analysis/reference-audit.json
 0x00416840,Bullet::cancel,reference-00416840,local-strict-pass,444,444,444,.analysis/reference-audit.json
+0x00416A00,gen_items_from_cancel,reference-00416a00,local-strict-pass,539,539,539,.analysis/reference-audit.json
 0x00416C20,BulletManager::cancel_radius,reference-00416c20,local-strict-pass,250,250,250,.analysis/reference-audit.json
 0x00416D20,BulletManager::cancel_radius_as_bomb,reference-00416d20,local-strict-pass,256,256,256,.analysis/reference-audit.json
 0x00416F40,BulletManager::clear_all,reference-00416f40,mismatch,500,500,491,.analysis/reference-audit.json
 0x00417180,InterpFloat::reset,reference-00417180,local-strict-pass,63,63,63,.analysis/reference-audit.json
+0x004171C0,InterpFloat::step,reference-004171c0,local-strict-pass,473,473,473,.analysis/reference-audit.json
 0x004173C0,anm_vm_interrupt_2,reference-004173c0,local-strict-pass,39,39,39,.analysis/reference-audit.json
 0x004173F0,AnmVm::set_pos_time,reference-004173f0,local-strict-pass,216,216,216,.analysis/reference-audit.json
 0x004174D0,AnmVm::interrupt_out_of_line,reference-004174d0,local-strict-pass,57,57,57,.analysis/reference-audit.json
@@ -166,6 +174,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004176D0,count_spells_of_difficulty,reference-004176d0,local-strict-pass,46,46,46,.analysis/reference-audit.json
 0x00417700,Spellcard::initialize,reference-00417700,local-strict-pass,131,131,131,.analysis/reference-audit.json
 0x004178A0,Spellcard::create,reference-004178a0,local-strict-pass,130,130,130,.analysis/reference-audit.json
+0x00417930,Spellcard::on_tick_body,reference-00417930,mismatch,650,650,437,.analysis/reference-audit.json
 0x004182F0,Spellcard::end,reference-004182f0,local-strict-pass,304,304,304,.analysis/reference-audit.json
 0x00418420,GameThread::enable_update_funcs,reference-00418420,local-strict-pass,23,23,23,.analysis/reference-audit.json
 0x00418440,anm_vm_interrupt_3_run,reference-00418440,local-strict-pass,45,45,45,.analysis/reference-audit.json
@@ -179,7 +188,6 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004187D0,EffectManager::initialize,reference-004187d0,local-strict-pass,241,241,241,.analysis/reference-audit.json
 0x00418A30,EffectManager::create,reference-00418a30,local-strict-pass,118,118,118,.analysis/reference-audit.json
 0x00418AF0,EffectManager::create_effect,reference-00418af0,mismatch,171,171,161,.analysis/reference-audit.json
-0x00418C70,Fog::Fog,reference-00418c70,local-strict-pass,382,382,382,.analysis/reference-audit.json
 0x00418DF0,Fog::set_rect,reference-00418df0,mismatch,326,326,320,.analysis/reference-audit.json
 0x00418F40,Fog::update_vms,reference-00418f40,local-strict-pass,149,149,149,.analysis/reference-audit.json
 0x00418FE0,AnmLoaded::create_ui_vm_at_origin,reference-00418fe0,local-strict-pass,193,193,193,.analysis/reference-audit.json
@@ -233,6 +241,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00425240,EnemyManager::find_closest,reference-00425240,local-strict-pass,135,135,135,.analysis/reference-audit.json
 0x00425410,ecl_ext_damage_anm_hurtbox,reference-00425410,mismatch,285,285,253,.analysis/reference-audit.json
 0x00425530,InterpFloat2::reset_timer,reference-00425530,local-strict-pass,63,63,63,.analysis/reference-audit.json
+0x00425570,InterpFloat2::step_radial_dist,reference-00425570,mismatch,757,757,740,.analysis/reference-audit.json
 0x00425870,InterpStrange1::reset_timer,reference-00425870,local-strict-pass,63,63,63,.analysis/reference-audit.json
 0x00425D80,ZunList<void>::append,reference-00425d80,local-strict-pass,65,65,65,.analysis/reference-audit.json
 0x00425DD0,AnmVm::fade_alpha2,reference-00425dd0,local-strict-pass,159,159,159,.analysis/reference-audit.json
@@ -240,7 +249,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00425F10,AnmVm::fade_rgb1,reference-00425f10,local-strict-pass,259,259,259,.analysis/reference-audit.json
 0x00426020,AnmVm::scale_to,reference-00426020,local-strict-pass,170,170,170,.analysis/reference-audit.json
 0x004260D0,PosVel::set_ellipse_angle,reference-004260d0,local-strict-pass,136,136,136,.analysis/reference-audit.json
-0x00426160,AnmLoaded::create_vm_front,reference-00426160,local-strict-pass,224,224,224,.analysis/reference-audit.json
+0x00426160,AnmLoaded::create_vm_front,reference-00426160,mismatch,224,224,223,.analysis/reference-audit.json
 0x00426780,Gui::show_lights_out,reference-00426780,local-strict-pass,191,191,191,.analysis/reference-audit.json
 0x00426840,Spellcard::decode_time_code,reference-00426840,local-strict-pass,127,127,127,.analysis/reference-audit.json
 0x004268C0,Gui::Gui,reference-004268c0,local-strict-pass,569,569,569,.analysis/reference-audit.json
@@ -249,6 +258,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00427970,Gui::release_msg,reference-00427970,local-strict-pass,167,167,167,.analysis/reference-audit.json
 0x00427CA0,Gui::create,reference-00427ca0,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x00429B20,GuiMsgVm::GuiMsgVm,reference-00429b20,mismatch,1223,1223,1080,.analysis/reference-audit.json
+0x0042B480,GuiMsgVm::update_callout,reference-0042b480,local-strict-pass,356,356,356,.analysis/reference-audit.json
 0x0042B610,GuiMsgVm::hide,reference-0042b610,local-strict-pass,514,514,514,.analysis/reference-audit.json
 0x0042B820,GuiMsgVm::show,reference-0042b820,local-strict-pass,514,514,514,.analysis/reference-audit.json
 0x0042BA30,GuiMsgVm::set_textbox,reference-0042ba30,local-strict-pass,242,242,242,.analysis/reference-audit.json
@@ -266,7 +276,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042C890,anm_vm_interrupt_4_run,reference-0042c890,local-strict-pass,45,45,45,.analysis/reference-audit.json
 0x0042C8C0,anm_vm_interrupt_4,reference-0042c8c0,local-strict-pass,39,39,39,.analysis/reference-audit.json
 0x0042C8F0,anm_vm_interrupt_5,reference-0042c8f0,local-strict-pass,39,39,39,.analysis/reference-audit.json
-0x0042C920,AnmLoaded::create_ui_effect,reference-0042c920,local-strict-pass,202,202,202,.analysis/reference-audit.json
+0x0042C920,AnmLoaded::create_ui_effect,reference-0042c920,mismatch,202,202,201,.analysis/reference-audit.json
 0x0042C9F0,debug_log,reference-0042c9f0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0042CA00,EnemyManager::reset_for_stage,reference-0042ca00,local-strict-pass,127,127,127,.analysis/reference-audit.json
 0x0042CA80,Player::withdraw_options,reference-0042ca80,local-strict-pass,123,123,123,.analysis/reference-audit.json
@@ -283,7 +293,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042E810,HelpManual::initialize,reference-0042e810,local-strict-pass,243,243,243,.analysis/reference-audit.json
 0x0042EA30,HelpManual::create,reference-0042ea30,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x0042EA80,HelpManual::destroy,reference-0042ea80,local-strict-pass,34,34,34,.analysis/reference-audit.json
-0x0042EFB0,AnmLoaded::create_ui_vm,reference-0042efb0,local-strict-pass,217,217,217,.analysis/reference-audit.json
+0x0042EFB0,AnmLoaded::create_ui_vm,reference-0042efb0,mismatch,217,217,216,.analysis/reference-audit.json
 0x0042F090,BombInf::is_active_before,reference-0042f090,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x0042F1A0,Item::Item,reference-0042f1a0,local-strict-pass,50,50,50,.analysis/reference-audit.json
 0x0042F1E0,Item::~Item,reference-0042f1e0,local-strict-pass,120,120,120,.analysis/reference-audit.json
@@ -329,10 +339,11 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004316B0,LaserManager::on_tick_callback,reference-004316b0,local-strict-pass,102,102,102,.analysis/reference-audit.json
 0x00431950,LaserManager::cancel_in_rectangle,reference-00431950,mismatch,142,142,66,.analysis/reference-audit.json
 0x004319E0,LaserManager::cancel_all,reference-004319e0,local-strict-pass,137,137,137,.analysis/reference-audit.json
-0x00431A70,LaserManager::cancel_in_radius,reference-00431a70,mismatch,119,119,114,.analysis/reference-audit.json
 0x00431AF0,LaserManager::clear_all,reference-00431af0,local-strict-pass,55,55,55,.analysis/reference-audit.json
 0x00433850,LaserLineInf::on_destroy,reference-00433850,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00434F70,LaserLineInf::touches_circle,reference-00434f70,local-strict-pass,219,219,219,.analysis/reference-audit.json
+0x00435610,LaserInfiniteInf::check_graze_or_kill,reference-00435610,local-strict-pass,400,400,400,.analysis/reference-audit.json
+0x004357A0,LaserInfiniteInf::on_draw,reference-004357a0,local-strict-pass,205,205,205,.analysis/reference-audit.json
 0x00435870,LaserInfiniteInf::on_destroy,reference-00435870,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00436EF0,LaserInfiniteInf::touches_circle,reference-00436ef0,local-strict-pass,219,219,219,.analysis/reference-audit.json
 0x00437760,LaserCurveInf::on_destroy,reference-00437760,local-strict-pass,98,98,98,.analysis/reference-audit.json
@@ -368,8 +379,12 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043C630,Supervisor::end_stage_load_anms,reference-0043c630,local-strict-pass,103,103,103,.analysis/reference-audit.json
 0x0043C6A0,Supervisor::abort_stage_load_anms,reference-0043c6a0,local-strict-pass,103,103,103,.analysis/reference-audit.json
 0x0043C710,Supervisor::swap_transform_matrices,reference-0043c710,local-strict-pass,106,106,106,.analysis/reference-audit.json
+0x0043C940,camera_apply_3d,reference-0043c940,local-strict-pass,463,463,463,.analysis/reference-audit.json
+0x0043CB10,Supervisor::setup_cameras,reference-0043cb10,local-strict-pass,761,761,761,.analysis/reference-audit.json
+0x0043D140,Supervisor::on_draw_01,reference-0043d140,local-strict-pass,432,432,432,.analysis/reference-audit.json
 0x0043D400,Supervisor::on_draw_0e,reference-0043d400,local-strict-pass,153,153,153,.analysis/reference-audit.json
 0x0043D5A0,Supervisor::on_draw_19,reference-0043d5a0,local-strict-pass,153,153,153,.analysis/reference-audit.json
+0x0043D6F0,Supervisor::on_draw_2b,reference-0043d6f0,local-strict-pass,202,202,202,.analysis/reference-audit.json
 0x0043D8B0,Supervisor::create_fog_vm,reference-0043d8b0,local-strict-pass,186,186,186,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,reference-0043dc30,local-strict-pass,89,89,89,.analysis/reference-audit.json
 0x0043DCC0,Supervisor::release_dinput,reference-0043dcc0,local-strict-pass,25,25,25,.analysis/reference-audit.json
@@ -392,6 +407,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043E5A0,PauseMenu::create,reference-0043e5a0,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x0043E5F0,PauseMenu::on_tick,reference-0043e5f0,local-strict-pass,299,299,299,.analysis/reference-audit.json
 0x0043EDC0,PauseMenu::on_draw,reference-0043edc0,local-strict-pass,324,324,324,.analysis/reference-audit.json
+0x0043F500,open_stage_end_menu,reference-0043f500,local-strict-pass,415,415,415,.analysis/reference-audit.json
 0x0043F6A0,PauseMenu::leave_paused,reference-0043f6a0,local-strict-pass,148,148,148,.analysis/reference-audit.json
 0x0043F740,PauseMenu::leave_game_over,reference-0043f740,local-strict-pass,74,74,74,.analysis/reference-audit.json
 0x0043F790,PauseMenu::leave_stage_end,reference-0043f790,local-strict-pass,74,74,74,.analysis/reference-audit.json
@@ -401,6 +417,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00440C60,AnmManager::queue_screen_copy,reference-00440c60,local-strict-pass,100,100,100,.analysis/reference-audit.json
 0x00440D50,Player::set_shoot_key_short_timer,reference-00440d50,local-strict-pass,97,97,97,.analysis/reference-audit.json
 0x00440DC0,Player::start_stage_options,reference-00440dc0,local-strict-pass,120,120,120,.analysis/reference-audit.json
+0x00440E40,Player::set_position,reference-00440e40,local-strict-pass,123,123,123,.analysis/reference-audit.json
 0x00440EC0,PlayerInner::PlayerInner,reference-00440ec0,local-strict-pass,235,235,235,.analysis/reference-audit.json
 0x00441740,Player::reset,reference-00441740,local-strict-pass,770,770,770,.analysis/reference-audit.json
 0x00441C60,Player::create,reference-00441c60,local-strict-pass,132,132,132,.analysis/reference-audit.json
@@ -411,6 +428,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00444070,Player::recover_from_hit,reference-00444070,local-strict-pass,100,100,100,.analysis/reference-audit.json
 0x004449B0,Player::create_damage_source,reference-004449b0,local-strict-pass,362,362,362,.analysis/reference-audit.json
 0x00444B20,Player::create_rect_damage_source,reference-00444b20,local-strict-pass,461,461,461,.analysis/reference-audit.json
+0x00444E10,PlayerBullet::create,reference-00444e10,local-strict-pass,1357,1357,1357,.analysis/reference-audit.json
 0x00445360,Player::shoot_one_bullet,reference-00445360,local-strict-pass,264,264,264,.analysis/reference-audit.json
 0x00445470,Player::do_shooting,reference-00445470,local-strict-pass,352,352,352,.analysis/reference-audit.json
 0x004455D0,Player::tick_shooting_state,reference-004455d0,local-strict-pass,246,246,246,.analysis/reference-audit.json
@@ -418,6 +436,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00445E20,PlayerBullet::hit,reference-00445e20,local-strict-pass,170,170,170,.analysis/reference-audit.json
 0x004460C0,sht_on_hit_spark_back,reference-004460c0,local-strict-pass,314,314,314,.analysis/reference-audit.json
 0x00446E20,sht_on_hit_burst_rising,reference-00446e20,mismatch,349,349,333,.analysis/reference-audit.json
+0x00446F80,sht_on_hit_burst,reference-00446f80,local-strict-pass,339,339,339,.analysis/reference-audit.json
 0x004470F0,sht_on_tick_sideways,reference-004470f0,local-strict-pass,375,375,375,.analysis/reference-audit.json
 0x00447270,sht_on_hit_spark,reference-00447270,local-strict-pass,163,163,163,.analysis/reference-audit.json
 0x00447320,sht_on_hit_spark_grow,reference-00447320,local-strict-pass,296,296,296,.analysis/reference-audit.json
@@ -425,6 +444,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00447550,AnmVm::set_scale_interp,reference-00447550,local-strict-pass,158,158,158,.analysis/reference-audit.json
 0x004475F0,ZunAngle::operator*,reference-004475f0,local-strict-pass,92,92,92,.analysis/reference-audit.json
 0x00447650,ZunAngle::operator+,reference-00447650,local-strict-pass,95,95,95,.analysis/reference-audit.json
+0x004476D0,Player::set_position_subpixel,reference-004476d0,mismatch,130,130,111,.analysis/reference-audit.json
 0x00447760,ReplayManager::initialize,reference-00447760,local-strict-pass,1309,1309,1309,.analysis/reference-audit.json
 0x00447FB0,ReplayManager::destroy,reference-00447fb0,local-strict-pass,28,28,28,.analysis/reference-audit.json
 0x00448EB0,ReplayManager::begin_stage,reference-00448eb0,local-strict-pass,383,383,383,.analysis/reference-audit.json
@@ -500,6 +520,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0045CBA0,ScreenEffect::on_draw_arcade,reference-0045cba0,local-strict-pass,43,43,43,.analysis/reference-audit.json
 0x0045CCC0,ScreenEffect::on_draw_arcade_2,reference-0045ccc0,local-strict-pass,112,112,112,.analysis/reference-audit.json
 0x0045CD30,ScreenEffect::on_tick_shake,reference-0045cd30,mismatch,476,476,472,.analysis/reference-audit.json
+0x0045CF10,ScreenEffect::on_tick_shake_with_ramp,reference-0045cf10,local-strict-pass,537,537,537,.analysis/reference-audit.json
 0x0045D130,ScreenEffect::on_cleanup,reference-0045d130,local-strict-pass,27,27,27,.analysis/reference-audit.json
 0x0045D150,ScreenEffect::create,reference-0045d150,local-strict-pass,75,75,75,.analysis/reference-audit.json
 0x0045D360,ScreenEffect::~ScreenEffect,reference-0045d360,local-strict-pass,176,176,176,.analysis/reference-audit.json
@@ -515,9 +536,13 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0045EDA0,sound_debug_log,reference-0045eda0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0045EDB0,AnmLoaded::set_sprite,reference-0045edb0,local-strict-pass,619,619,619,.analysis/reference-audit.json
 0x0045F020,AnmLoaded::init_script_vm,reference-0045f020,local-strict-pass,308,308,308,.analysis/reference-audit.json
-0x0045F160,AnmLoaded::set_vm_script,reference-0045f160,local-strict-pass,365,365,365,.analysis/reference-audit.json
+0x004630F0,AnmVm::step_velocities,reference-004630f0,local-strict-pass,502,502,502,.analysis/reference-audit.json
 0x00463B30,AnmVm::step_interpolators,reference-00463b30,local-strict-pass,517,517,517,.analysis/reference-audit.json
+0x00463D40,InterpFloat2::step,reference-00463d40,mismatch,757,757,740,.analysis/reference-audit.json
 0x00464040,InterpAngle::reset_time,reference-00464040,local-strict-pass,63,63,63,.analysis/reference-audit.json
+0x00464080,InterpAngle::step,reference-00464080,local-strict-pass,813,813,813,.analysis/reference-audit.json
+0x004643B0,InterpInt::step,reference-004643b0,local-strict-pass,480,480,480,.analysis/reference-audit.json
+0x00464590,InterpInt3::step,reference-00464590,local-strict-pass,926,926,926,.analysis/reference-audit.json
 0x00464960,AnmVm::set_uv_scale_time,reference-00464960,local-strict-pass,158,158,158,.analysis/reference-audit.json
 0x00464A00,AnmVm::set_scale_2_time,reference-00464a00,local-strict-pass,158,158,158,.analysis/reference-audit.json
 0x00464AA0,AnmVm::set_alpha2_time,reference-00464aa0,local-strict-pass,156,156,156,.analysis/reference-audit.json
@@ -539,6 +564,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046A390,??0RenderVertexXyzDiffuseTex@@QAE@XZ,reference-0046a390,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0046B770,AnmFastVm::AnmFastVm,reference-0046b770,local-strict-pass,22,22,22,.analysis/reference-audit.json
 0x0046B790,AnmFastVm::~AnmFastVm,reference-0046b790,local-strict-pass,61,61,61,.analysis/reference-audit.json
+0x0046B900,AnmManager::setup_vertex_buffer,reference-0046b900,local-strict-pass,1985,1985,1985,.analysis/reference-audit.json
+0x0046C920,AnmManager::load_texture_from_file,reference-0046c920,local-strict-pass,572,572,572,.analysis/reference-audit.json
 0x0046CD30,AnmManager::create_empty_texture,reference-0046cd30,local-strict-pass,72,72,72,.analysis/reference-audit.json
 0x0046CD80,AnmManager::create_render_target,reference-0046cd80,local-strict-pass,68,68,68,.analysis/reference-audit.json
 0x0046CF80,AnmManager::do_preload_anm,reference-0046cf80,local-strict-pass,157,157,157,.analysis/reference-audit.json
@@ -597,11 +624,16 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004717E0,CWaveFile::open_file,reference-004717e0,local-strict-pass,185,185,185,.analysis/reference-audit.json
 0x004718A0,CWaveFile::open_bgm,reference-004718a0,local-strict-pass,143,143,143,.analysis/reference-audit.json
 0x00471930,CWaveFile::ResetFile,reference-00471930,local-strict-pass,244,244,244,.analysis/reference-audit.json
+0x00471C90,CStreamingSound::seek,reference-00471c90,local-strict-pass,241,241,241,.analysis/reference-audit.json
 0x00471D90,dsutil_debug_log,reference-00471d90,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00471DA0,ecl_log,reference-00471da0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00473BC0,SptInf::run_ecl,reference-00473bc0,local-strict-pass,197,197,197,.analysis/reference-audit.json
+0x00473D40,EclRunContext::get_float_arg,reference-00473d40,local-strict-pass,244,244,244,.analysis/reference-audit.json
+0x00473EF0,EclRunContext::get_float_arg_given_value,reference-00473ef0,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00473FE0,EclRunContext::pop_int_arg,reference-00473fe0,local-strict-pass,171,171,171,.analysis/reference-audit.json
+0x00474090,EclRunContext::pop_float_arg,reference-00474090,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00474180,EclRunContext::pop_int_arg_given_value,reference-00474180,local-strict-pass,179,179,179,.analysis/reference-audit.json
+0x00474240,EclRunContext::pop_float_arg_given_value,reference-00474240,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00474330,EclRunContext::get_int_arg_ptr,reference-00474330,mismatch,98,98,97,.analysis/reference-audit.json
 0x00474430,SptInf::create_async,reference-00474430,local-strict-pass,176,176,176,.analysis/reference-audit.json
 0x004744E0,SptInf::lookup_async,reference-004744e0,local-strict-pass,39,39,39,.analysis/reference-audit.json

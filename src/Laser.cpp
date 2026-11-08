@@ -827,36 +827,22 @@ i32 LaserManager::cancel_all()
     return 0;
 }
 
-// A dead double, not ZUN's code: it stands in for a callee wanting an aligned
-// stack (docs/findings.md). In this plain inline helper it is a call graph
-// node of its own, so cancel_in_radius pads its frame (toward the original's
-// 8-byte sub esp) without realigning.
-static inline void cancel_in_radius_want_aligned_stack()
-{
-    double unused_double = 0.0;
-    (void)unused_double;
-}
-
-// TODO: edi is pushed before the empty-list test; the original pushes it after.
+// TODO: recover the original stack-alignment context without artificial locals.
 // FUNCTION: TH16 0x431a70
 HARNESS_CALLED i32 LaserManager::cancel_in_radius(Float3 *pos, f32 radius, i32 mode, i32 skip_invuln)
 {
-    // Called twice: one call's wish is not enough to pad the frame.
-    cancel_in_radius_want_aligned_stack();
-    cancel_in_radius_want_aligned_stack();
     LaserManager *mgr = g_LaserManager;
     LaserDataInf *laser = mgr->list_head.next;
-    LaserDataInf *next;
     i32 count = 0;
     mgr->cancel_pos = *pos;
-    for (; laser != NULL; laser = next)
+    while (laser != NULL)
     {
-        next = laser->next;
-        if (laser->state == LASER_STATE_CANCELLED)
+        LaserDataInf *next = laser->next;
+        if (laser->state != LASER_STATE_CANCELLED)
         {
-            continue;
+            count += laser->cancel_as_bomb_circle(pos, radius, mode, skip_invuln);
         }
-        count += laser->cancel_as_bomb_circle(pos, radius, mode, skip_invuln);
+        laser = next;
     }
     return count;
 }

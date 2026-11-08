@@ -13,3 +13,10 @@ _free,0x477fb2,5,runtime-function,e25b6288f0aa6d230135410366a42b0d7d9689b2908feb
 __free_base,0x47bcb2,58,runtime-function,75e45b7019fbdd361fae631ae4aaca71fab0ba3d6c4c8f14e17aad76aed92cbf,0x477fb2,jmp,docs/knowledge/reviewed-linkages.md,libucrt.lib
 __malloc_base,0x47bcec,78,runtime-function,e711c99bacb631778b9e395947941909b362708f08d7bbdb9c77d2f69cb73472,0x477fad,jmp,docs/knowledge/reviewed-linkages.md,libucrt.lib
 ??_C@_02DPKJAMEF@?$CFd?$AA@,0x491c7c,3,string-literal,0b782fc3030dbdf3756f17e7adf2ce5808dfc513ca7589adeb679c7d25eaef6f,0x4082dd,push,docs/knowledge/reviewed-linkages.md,
+__real@00000000,0x4943c0,4,literal,df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119,0x403199,addss,docs/knowledge/reviewed-linkages.md,
+__real@40000000,0x494558,4,literal,d88c86f15bbea365d658ad95a81d45367c465f7af6f7264fb077f01747ddc77d,0x4034e1,movss,docs/knowledge/reviewed-linkages.md,
+__real@40400000,0x494584,4,literal,ea2845900b5856c9bf354b1aa9761b5aa6888e5ed61738fe9579ca42bc0f6054,0x40703c,movss,docs/knowledge/reviewed-linkages.md,
+__real@43000000,0x494644,4,literal,ad286c64373644140ff927b256b8415467b5d27645ff997010b15519d022631b,0x407473,movss,docs/knowledge/reviewed-linkages.md,
+__real@3c000000,0x4943f4,4,literal,4082763076bdaee3a85e52eb5893169d45d057397616251e0e699e6403238e66,0x40e7cc,mulss,docs/knowledge/reviewed-linkages.md,
+__real@43e00000,0x4946b0,4,literal,7a851fa1703894ca74af043265c82f52e2237db147af77c83af2d23cc29ffdd7,0x40ab51,addss,docs/knowledge/reviewed-linkages.md,
+__xmm@41f00000000000000000000000000000,0x494850,16,indexed-literal,7b8d1a6d4433104f72eac25961772761e58ce663d392e3164660b3e8fb2b47f4,0x402c87,addsd,docs/knowledge/reviewed-linkages.md,

@@ -32,3 +32,9 @@ The original import audit is `evidence/reference-import-20261108/README.md`.
 See `knowledge/reference-repairs.md` for subsequent source fixes and unsuccessful
 experiments, and `knowledge/reviewed-linkages.md` for fixed linkage evidence.
 Run `scripts/progress.py` for the current validated result.
+
+The eight imported `*_want_aligned_stack` helpers have been removed because
+they only introduced dead doubles to influence LTCG. Recover real caller/callee
+alignment before restoring any affected exact result. Other explicitly
+non-original dead locals and arithmetic remain in the import and still need
+source review; a local byte match alone does not settle that review.

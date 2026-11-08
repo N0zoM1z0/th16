@@ -40,7 +40,7 @@ heap or for their error-handling callees. Unreviewed fields remain incomplete.
 
 ## Literal storage witnesses
 
-Equal payloads elsewhere do not make storage interchangeable. These three
+Equal payloads elsewhere do not make storage interchangeable. The following
 locations were reviewed through fixed instructions in separate target functions:
 
 | Symbol / value | Storage | Instruction witness | Source meaning |
@@ -48,6 +48,12 @@ locations were reviewed through fixed instructions in separate target functions:
 | `__real@3f800000` / 1.0f | `0x004944D8` | `0x00402CDC`: `subss xmm0, [0x004944D8]` | `Rng::randf_neg_1_to_1` subtracts 1.0f after scaling its random integer. |
 | `__real@3f000000` / 0.5f | `0x0049449C` | `0x004034D2`: `mulss xmm3, [0x0049449C]` | The interpolation helper applies the half-scale term of its in/out curves. |
 | `__real@41800000` / 16.0f | `0x004945E0` | `0x00406564`: `addss xmm0, [0x004945E0]` | The jagged-line initializer adds the 16-pixel vertical offset. |
+| `__real@00000000` / 0.0f | `0x004943C0` | `0x00403199`: `addss xmm0, [0x004943C0]` | PosVel's polar-position update adds the helper's zero z component. |
+| `__real@40000000` / 2.0f | `0x00494558` | `0x004034E1`: `movss xmm1, [0x00494558]` | The quadratic interpolation curve loads its 2.0 term. |
+| `__real@40400000` / 3.0f | `0x00494584` | `0x0040703C`: `movss xmm0, [0x00494584]` | `InterpFloat3::step` loads the cubic interpolation coefficient. |
+| `__real@43000000` / 128.0f | `0x00494644` | `0x00407473`: `movss xmm3, [0x00494644]` | `anm_on_draw_masked` constructs the masked rectangle. |
+| `__real@3c000000` / 1/128 | `0x004943F4` | `0x0040E7CC`: `mulss xmm0, [0x004943F4]` | `BombAyaAInf::begin` scales the player's horizontal movement for bomb angle and speed. |
+| `__real@43e00000` / 448.0f | `0x004946B0` | `0x0040AB51`: `addss xmm7, [0x004946B0]` | `StdObject::is_culled` adds the vertical playfield extent. |
 
 The loader checks each entire typed payload in both images, the fixed target
 instruction mnemonic, absolute operand, operand width and payload hash. It does
@@ -63,6 +69,23 @@ MSVC narrow-string public, a final NUL with no interior NUL, and equal complete
 payloads in both images. This avoids treating other occurrences or suffixes of
 `%d` as interchangeable. Truncating the storage proof or changing the push
 witness is rejected.
+
+The unsigned-conversion table is bound at `0x00494850`:
+the two doubles are 0.0 and 4294967296.0. In `Rng::randf_0_to_1`, the fixed
+instruction at `0x00402C87` reads one eight-byte element with `eax * 8` after
+`shr eax, 31`. The candidate symbol is
+`__xmm@41f00000000000000000000000000000`. Its `indexed-literal` proof requires
+the complete encoded 16-byte value in both images and one complete candidate
+PDB storage contribution. The checker decodes from the unique independent
+target owner, requires a preceding adjacent 32-bit logical shift by 31 into the
+same index register, an eight-byte operand, an eight-byte stride and no base
+register. Thus either possible index selects exactly one complete double in
+the declared storage. The supported operation is specifically `addsd`.
+
+Mutation tests reject a shift by 30 (four possible elements), arithmetic shift,
+different shifted/index registers, four-byte stride, an instruction-interior
+witness, a truncated value and an incomplete PDB storage contribution. This
+adds a bounded table proof; it does not make arbitrary indexed operands eligible.
 
 ## PDB global-object ranges
 
