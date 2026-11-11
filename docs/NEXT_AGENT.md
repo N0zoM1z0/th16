@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after bounded Anm dispatch/helper review and a circle source trial.
+Updated 2026-11-11 after complete special-vertices scope review and a countdown source trial.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -19,13 +19,20 @@ This file describes current state; the repair log records historical batches.
 ## Verified checkpoint
 
 The current report has **790 exact, 61 mismatch and 364 incomplete** among
-1215 annotated candidates, covering 126,050 exact owned bytes. All 788 exact
-results at `192edc9` remain exact and all 849 previous units are unchanged.
-Two complete AnmVmRun private helpers add 71 exact bytes and two units, for
-851 total. Their original call paths now cross explicitly reviewed bounded
-byte-remap dispatches. The tables receive no exact credit; the parent functions
-remain incomplete and need full owned-data scope review. See
-[Anm private dispatch review](knowledge/anm-private-dispatch.md).
+1215 annotated candidates, covering 126,050 exact owned bytes. The latest
+original-only review corrects `AnmVm::update_special_vertices` from a 2,068-byte
+code context to its complete **2,101-byte code/table owner**. Its full candidate
+is 2,097 bytes and remains incomplete. A guarded countdown source trial does
+not reproduce the original and is restored. No new exact credit is claimed;
+all 790 exact results and all 851 units at `0baaf5f` remain unchanged. See
+[the complete special-vertices scope](knowledge/special-vertices-scope.md).
+
+The preceding private-helper batch establishes two complete AnmVmRun helpers,
+adding 71 exact bytes and two units. Their original paths cross explicitly
+reviewed bounded byte-remap dispatches; tables receive no exact credit. See
+[Anm private dispatch review](knowledge/anm-private-dispatch.md). The complete
+special-vertices scope review now supersedes that batch's partial parent
+context. The main interpreter's full owned-data scope remains unresolved.
 
 The preceding eight-helper review reports 788 exact, 61 mismatch and 366
 incomplete. Eight further original helper entries and their complete private
@@ -111,14 +118,19 @@ in the strict Oracle and audit. Default public ownership, unreviewed static
 names and EH profiles retain their refusal behavior. All whole private bytes,
 producer identity, annotation identity, original witness paths and absence of
 linked fields/relocations are required. Game source, compiler/linker profiles
-are unchanged. The latest batch extends the private set to thirteen records
-and adds one complete 39-byte XY-output profile and a bounded original-witness dispatch
-profile. Arbitrary indirect traversal, generic private names and parent-owned
-data comparison remain refused. A natural circle angle-advance source trial
-is rejected and restored, with full scopes retained. Current outputs are
-freshly rebuilt from the restored source; all 192 dependency stamps validate.
-See `.analysis/primitive-source-restored-check.json`. No clean build or archived
-output substitution is used.
+are unchanged. The preceding batch extends the private set to thirteen records
+and adds a complete 39-byte XY-output profile and an original-witness dispatch
+profile.
+The latest batch extends primary switch ownership with an explicitly reviewed
+complete trailing byte map. It requires the full original hash, all candidate
+slots/address relocations and every map byte. Private witness review now checks
+the complete reviewed parent payload before decoding its code portion. The
+parent's complete candidate/original extent mismatch remains refused.
+Arbitrary indirect traversal and generic private names remain refused.
+The guarded vertex countdown trial is rejected and restored. Current outputs
+are freshly rebuilt from the restored source; all 192 dependency stamps
+validate. See `.analysis/special-vertices-restored-check.json`. No clean build
+or archived output substitution is used.
 
 An ordinary out-of-line UpdateFunc constructor was built incrementally as a
 source-context experiment. It removes redundant initialization stores and
@@ -151,10 +163,12 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **143 controls across seven relevant suites**:
-private identities (31), strict Oracle (14), reviewed linkages (26), focused audit
-(3), primary switch ownership (19), constructor EH (25) and empty EH (25).
-Logs use `.analysis/anm-private-dispatch-{controls,oracle-controls,linkage-controls,focused-controls,switch-controls,constructor-eh-controls,empty-eh-controls}.log`.
+The current batch passes **156 controls across seven relevant suites**:
+private identities (33), strict Oracle (14), reviewed linkages (26), focused audit
+(3), primary switch ownership (30), constructor EH (25) and empty EH (25).
+Logs use `.analysis/special-vertices-{static-controls,oracle-controls,linkage-controls,focused-controls,switch-controls,constructor-eh-controls,empty-eh-controls}.log`.
+The preceding bounded-dispatch batch passed 143 controls across seven suites;
+its logs use `.analysis/anm-private-dispatch-*controls.log`.
 The preceding eight-helper batch passed 38 controls across three suites.
 The preceding private-ownership milestone passes 114 controls across six suites:
 private identities (21), strict Oracle (14), reviewed linkages (26), focused audit (3),
@@ -183,11 +197,13 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/anm-private-dispatch-full-audit.log` and
-`.analysis/anm-private-dispatch-regression-check.json`. The current incremental
-build log is `.analysis/primitive-source-restored-build.log`. The rejected circle
-trial is `.analysis/circle-angle-advance-build.log`; full source diagnostics are
-`.analysis/circle-angle-source-trials.json`. The rejected
+are `.analysis/special-vertices-full-audit.log` and
+`.analysis/special-vertices-regression-check.json`. The original-only full parent
+reproducer and evidence are `.analysis/review-special-vertices-scope.py` and
+`.analysis/special-vertices-original-scope.json`. The current incremental build
+log is `.analysis/special-vertices-restored-build.log`. Complete candidate source
+trial scopes are `.analysis/special-vertices-source-trial.json`. The preceding
+circle trial evidence is `.analysis/circle-angle-source-trials.json`. The rejected
 source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
 
 ```sh
@@ -263,18 +279,27 @@ no interior/addend, public alias, generic fallback or tail transfer is permitted
 Consumed source/name metadata is fingerprinted. Existing wrappers remain source
 context hypotheses. No game source or assembly change is retained.
 
-The ordinary AnmVmRun helper at `0x00464D60` and XY helper at `0x00464930` now
-have original paths through two completely hashed bounded byte-remap tables
-and pass their entire 32/39-byte owners. See
-[the dispatch review](knowledge/anm-private-dispatch.md). The parent at
-`0x004632F0` has a 2,068-byte inventoried code context plus reviewed 16/17-byte
-witness tables, while its candidate contribution is 2,097 bytes including data.
-Do not interpret this as a proven whole-source difference or resize the target
-to the candidate. Review the complete original code/data owner and preserve all
-bytes before attempting a parent comparison. The main interpreter remains
-incomplete with eight unbound fields and additional owned-data scope questions.
-These witness proofs grant neither parent nor table exact credit. Other
-private wrappers still require independent entry/path and producer reviews.
+The ordinary AnmVmRun helper at `0x00464D60` and XY helper at `0x00464930`
+pass their entire 32/39-byte private owners. The parent at `0x004632F0` now has
+a complete independent scope: 2,068 bytes of code, a 16-byte target table and a
+17-byte remap table, for **2,101 bytes through `0x00463B24`**. Eleven INT3 bytes
+separate it from the next independent entry. See
+[the complete scope review](knowledge/special-vertices-scope.md). Its candidate
+owns 2,062 code bytes, two alignment bytes and the 33 table bytes, for 2,097
+bytes. This four-byte whole-owner difference is now established independently;
+do not trim or resize either owner to make it compare. The complete original
+remap profile does not grant the parent or tables any exact credit.
+
+A guarded do/while countdown now tests the original's positive-entry and
+nonzero-backedge structure. It changes register allocation but leaves the full
+candidate at 2,097 bytes and is rejected. Source is restored byte for byte and
+freshly rebuilt. Full sources, outputs and diagnostic scopes are retained in
+`.analysis/special-vertices-{baseline,countdown-artifacts}/` and
+`.analysis/special-vertices-source-trial.json`. Do not repeat this context or
+force scheduling, spills or registers. The main interpreter remains incomplete
+with eight unbound fields and additional owned-data scope questions. Other
+private wrappers still need independent original entry/path and producer
+reviews.
 
 A natural circle source trial splitting angle advancement from normalization
 leaves its complete result at 514/588 matching bytes and is restored. Full

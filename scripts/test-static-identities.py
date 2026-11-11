@@ -31,7 +31,8 @@ class StaticIdentityControls(unittest.TestCase):
         for name,row in cls.records['functions'].items():
             if 'witness_dispatch' in row:
                 parent = row['witness_parent']
-                raw = cls.context.target.read_address(parent,int(cls.context.boundaries[parent]['size']))
+                size = cls.context.switch_owners.get(parent,{}).get('code_size',int(cls.context.boundaries[parent]['size']))
+                raw = cls.context.target.read_address(parent,size)
                 cls.dispatch_instructions[name] = {i.address:i for i in decoder.disasm(raw,parent)}
 
     def review(self, records=None, context=None):
@@ -253,7 +254,7 @@ class StaticIdentityControls(unittest.TestCase):
         context = self.dispatch_context(mutations or {})
         row = self.records['functions'][name]
         parent = row['witness_parent']
-        size = int(context.boundaries[parent]['size'])
+        size = context.switch_owners.get(parent,{}).get('code_size',int(context.boundaries[parent]['size']))
         by = self.dispatch_instructions[name]
         if any(parent <= a < parent+size for a in (mutations or {})):
             decoder = capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_32)
@@ -330,8 +331,23 @@ class StaticIdentityControls(unittest.TestCase):
             context.target.read_address(0x463b14,17)).hexdigest()
         proof = self.check_dispatch(records['functions']['anm']['witness_dispatch'],{0x463b14:3})
         self.assertNotIn(0x463333,proof['mapped_targets'])
-        with self.assertRaisesRegex(static.StaticEvidenceError,'entry path'):
+        with self.assertRaises(static.StaticEvidenceError):
             self.review(records,context)
+
+    def test_reviewed_parent_cannot_omit_its_owned_tables(self):
+        for size in (2068,2097,2100,2102):
+            context = copy.copy(self.context)
+            context.boundaries = copy.deepcopy(self.context.boundaries)
+            context.boundaries[0x4632f0]['size'] = str(size)
+            with self.subTest(size=size),self.assertRaisesRegex(static.StaticEvidenceError,'complete reviewed switch owner'):
+                self.review(context=context)
+
+    def test_reviewed_parent_requires_every_table_byte(self):
+        for at in range(0x463b04,0x463b25):
+            before = self.context.target.read_address(at,1)[0]
+            context = self.dispatch_context({at:before^1})
+            with self.subTest(address=hex(at)),self.assertRaises(static.StaticEvidenceError):
+                self.review(context=context)
 
     def test_xy_profile_requires_every_original_and_candidate_byte(self):
         for which in ('image','target'):

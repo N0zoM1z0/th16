@@ -8,6 +8,7 @@ import capstone
 
 from eh_identity import private_owner, EHEvidenceError
 from linked_image import map_statics, pdb_section_contributions, linked_code_fields
+from switch_ownership import inspect_switch
 
 
 class StaticEvidenceError(ValueError):
@@ -122,6 +123,15 @@ def review_functions(context, path):
         parent, witness = row['witness_parent'], row['witness']
         require(parent in context.boundaries, 'private witness lacks original parent')
         raw = context.target.read_address(parent,int(context.boundaries[parent]['size']))
+        if parent in context.switch_owners:
+            record = context.switch_owners[parent]
+            try:
+                _, _, complete = inspect_switch(context.target,parent,record)
+            except ValueError as error:
+                raise StaticEvidenceError('private witness parent switch: '+str(error)) from error
+            require(raw == complete and hashlib.sha256(complete).hexdigest() == record['target_sha256'],
+                    'private witness parent lacks its complete reviewed switch owner')
+            raw = complete[:record['code_size']]
         require(hashlib.sha256(raw).hexdigest() == row['parent_sha256'], 'private witness parent hash differs')
         ins = list(decoder.disasm(raw,parent))
         require(sum(i.size for i in ins) == len(raw), 'private witness parent does not completely decode')

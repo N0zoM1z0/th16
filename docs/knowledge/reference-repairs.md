@@ -1245,3 +1245,51 @@ Evidence is `.analysis/anm-private-dispatch-original-scopes.json`,
 `.analysis/circle-angle-advance-focused.json` and
 `.analysis/primitive-source-restored-build.log`. Source-origin review remains
 open; Factory acceptance remains unsubmitted. Nothing is published.
+
+## Complete special-vertices scope and countdown trial
+
+Original-only bounded CFG traversal establishes the complete owner at
+`0x004632F0`: 2,068 bytes of code, a 16-byte target table and a 17-byte byte-remap
+table, ending at `0x00463B24`. All 501 decoded instructions are reachable. The
+following 11 INT3 bytes belong to alignment before the next independent entry.
+The inventory now records the entire **2,101-byte** owner, superseding its
+preceding code-only context. See
+[the scope review](special-vertices-scope.md).
+
+An explicit primary switch profile now verifies both complete tables, the
+unsigned adjacent same-index remap, owned case starts, guard bypass rejection,
+all candidate table/address relocations and the full original hash. Every map
+byte remains in the primary extent and is never masked or normalized. Private
+helper witness review checks this complete parent payload before decoding its
+code portion. Other indirect dispatches and generic private identities retain
+their refusal behavior.
+
+The complete candidate is 2,097 bytes: 2,062 bytes of code, two alignment bytes
+and 33 table bytes. A natural guarded do/while countdown expresses the
+original loops' positive-entry checks and nonzero decrement backedges. The
+trial changes register allocation but does not change that complete extent;
+it is rejected and source restored. No shortened comparison or partial credit
+is accepted. Current source and full build-input identity equal the baseline,
+all artifact hashes match the fresh incremental receipt, and all 192 dependency
+stamps validate. No clean build or archived outputs are substituted.
+
+Full strict replay retains **790 exact, 61 mismatch and 364 incomplete**, with
+126,050 exact primary bytes. All 790 preceding exact results and all 851 prior
+units remain unchanged; this batch claims no additional exact credit. All 156
+controls across seven relevant suites pass. New controls include every map
+byte, case slots, signed or mismatched indices, guard bypass, omitted/expanded
+remap records, whole parent hashes/extents and missing/extra/crossing map or
+target relocations. The structural fixture grants no candidate PDB identity;
+the real candidate's extent refusal is separately checked.
+
+Evidence is `.analysis/review-special-vertices-scope.py`,
+`.analysis/special-vertices-original-scope.json`,
+`.analysis/special-vertices-full-audit.log`,
+`.analysis/special-vertices-regression-check.json`,
+`.analysis/special-vertices-source-trial.json`,
+`.analysis/special-vertices-restored-check.json` and
+`.analysis/special-vertices-{static-controls,oracle-controls,linkage-controls,focused-controls,switch-controls,constructor-eh-controls,empty-eh-controls}.log`.
+Baseline and trial source/output sets are under
+`.analysis/special-vertices-{baseline,countdown-artifacts}/`. Source-origin
+review remains open; Factory acceptance remains unsubmitted. Nothing is
+published.

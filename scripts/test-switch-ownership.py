@@ -3,11 +3,12 @@
 import copy
 import hashlib
 import struct
+import tempfile
 import tomllib
 import unittest
 
 from strict_oracle import Context, Incomplete, ROOT
-from switch_ownership import inspect_switch, validate_switch_owner
+from switch_ownership import inspect_switch, validate_switch_owner, load_switch_owners, switch_owner_size
 
 
 class ImageOverlay:
@@ -151,12 +152,17 @@ class SwitchOwnershipControls(unittest.TestCase):
     def test_complete_replay_keeps_code_padding_and_every_slot(self):
         units = tomllib.loads((ROOT / "config/match-units.toml").read_text())["units"]
         for address, record in self.context.switch_owners.items():
+            if f"reference-{address:08x}" not in units:
+                # The newly reviewed original remap owner has a different
+                # complete candidate extent; its refusal is checked below.
+                self.assertEqual(address, 0x4632f0)
+                continue
             unit = units[f"reference-{address:08x}"]
             result = self.context.compare(unit)
             self.assertIn(result["result"], {"exact", "mismatch"})
-            self.assertEqual(result["compared_size"], record["table_offset"] + record["case_count"] * 4)
+            self.assertEqual(result["compared_size"], switch_owner_size(record))
             offsets = {r["offset"] for r in result["linkages"] if r["type"] == "DIR32"}
-            self.assertTrue(set(range(record["table_offset"], unit["size"], 4)) <= offsets)
+            self.assertTrue(set(range(record["table_offset"], record["table_offset"] + record["case_count"] * 4, 4)) <= offsets)
         for address, offset, byte in [(0x468C00, 0, 0x53), (0x4015A0, 235, 0xCC)]:
             with self.subTest(address=hex(address), offset=offset):
                 unit = units[f"reference-{address:08x}"]
@@ -196,6 +202,132 @@ class SwitchOwnershipControls(unittest.TestCase):
         for path in ["scripts/switch_ownership.py", "config/switch-owners.toml"]:
             with self.subTest(path=path):
                 self.assertEqual(self.context.before[path], hashlib.sha256((ROOT / path).read_bytes()).hexdigest())
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.context.finish()
+
+
+class RemappedSwitchOwnershipControls(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.context = Context()
+        cls.base = 0x4632f0
+        cls.record = cls.context.switch_owners[cls.base]
+        cls.size = switch_owner_size(cls.record)
+        cls.unit = dict(target_address=cls.base,candidate_address=cls.base,
+                        size=cls.size,compare_size=cls.size)
+        # This original-byte fixture exercises only the structural validator.
+        # It supplies no candidate PDB owner and cannot earn primary credit.
+        cls.relocations = {cls.base+56,cls.base+63,*range(cls.base+2068,cls.base+2084,4)}
+        cls.fixture = copy.copy(cls.context)
+        cls.fixture.image = ImageOverlay(cls.context.target,added_relocations=cls.relocations)
+
+    def inspect(self, changes=None, record=None):
+        return inspect_switch(ImageOverlay(self.context.target,changes),self.base,record or self.record)
+
+    def validate(self, image):
+        context = copy.copy(self.fixture)
+        context.image = image
+        return validate_switch_owner(context,self.unit,self.record)
+
+    def test_complete_original_includes_both_tables(self):
+        instructions,dispatch,payload = self.inspect()
+        self.assertEqual(sum(i.size for i in instructions),2068)
+        self.assertEqual(dispatch.address,self.base+60)
+        self.assertEqual(len(payload),2101)
+        self.assertEqual(len(payload[2084:]),17)
+        self.assertEqual(hashlib.sha256(payload).hexdigest(),self.record['target_sha256'])
+        self.assertEqual(int(self.context.boundaries[self.base]['size']),len(payload))
+
+    def test_structural_fixture_requires_all_entry_and_address_relocations(self):
+        validate_switch_owner(self.fixture,self.unit,self.record)
+        self.fixture.check_boundary(self.unit)
+        for at in self.relocations:
+            image = ImageOverlay(self.fixture.image,removed_relocations=[at])
+            with self.subTest(address=hex(at)),self.assertRaisesRegex(ValueError,'relocation'):
+                self.validate(image)
+
+    def test_real_candidate_extent_cannot_be_trimmed_or_expanded(self):
+        symbol = '?update_special_vertices@AnmVm@@QAEXXZ'
+        function = next(f for f in self.context.linked['functions'] if f['symbol']==symbol)
+        size = function['size']
+        self.assertNotEqual(size,self.size)
+        unit = dict(artifact_kind='linked-pe',source='src/AnmVmRun.cpp',object='AnmVmRun.obj',
+                    symbol=symbol,candidate_address=int(function['address'],0),target_address=self.base,
+                    size=size,compare_size=size,profile=self.context.receipt['compiler_profile'],
+                    link_profile=self.context.receipt['linker_profile'],linkages=[])
+        with self.assertRaisesRegex(Incomplete,'complete candidate owner'):
+            self.context.compare(unit)
+        for value in (2068,2097,2100,2102):
+            with self.subTest(size=value),self.assertRaisesRegex(ValueError,'complete code and table'):
+                validate_switch_owner(self.fixture,dict(self.unit,size=value,compare_size=value),self.record)
+
+    def test_every_remap_byte_has_its_exact_reviewed_value(self):
+        for offset,value in enumerate(self.record['remap_values'],2084):
+            with self.subTest(offset=offset),self.assertRaisesRegex(ValueError,'complete reviewed byte map'):
+                self.inspect({self.base+offset:value^1})
+
+    def test_guard_and_remap_cannot_use_signed_or_different_indices(self):
+        for offset,value in [(0x2e,17),(0x30,0x8f),(0x37,0x81),(0x3e,0x8d)]:
+            with self.subTest(offset=offset),self.assertRaises(ValueError):
+                self.inspect({self.base+offset:value})
+
+    def test_remap_cannot_skip_or_address_an_interior_byte_map(self):
+        changes = {self.base+0x38+i:b for i,b in enumerate(struct.pack('<I',self.base+2085))}
+        with self.assertRaisesRegex(ValueError,'bounded byte index'):
+            self.inspect(changes)
+        record = dict(self.record,dispatch_offset=0x35)
+        with self.assertRaisesRegex(ValueError,'unsigned default branch'):
+            self.inspect(record=record)
+
+    def test_target_slots_cannot_escape_enter_interiors_or_bypass_the_guard(self):
+        for offset in (0x2f,0x35,0x3c,0x44,2068,2101):
+            changes = {self.base+2068+i:b for i,b in enumerate(struct.pack('<I',self.base+offset))}
+            with self.subTest(target=offset),self.assertRaises(ValueError):
+                self.inspect(changes)
+        # A direct edge into the remap also bypasses its bound.
+        with self.assertRaisesRegex(ValueError,'unguarded incoming edge'):
+            self.inspect({self.base:0xeb,self.base+1:0x33})
+
+    def test_every_target_slot_retains_its_reviewed_case_mapping(self):
+        for index,offset in enumerate(self.record['case_offsets']):
+            other = 0x43 if offset != 0x43 else 0x80b
+            changes = {self.base+2068+index*4+i:b for i,b in enumerate(struct.pack('<I',self.base+other))}
+            with self.subTest(index=index),self.assertRaisesRegex(ValueError,'reviewed case mapping'):
+                self.inspect(changes)
+
+    def test_map_bytes_cannot_hide_extra_or_crossing_relocations(self):
+        for offset in (2067,2069,2083,2084,2100):
+            image = ImageOverlay(self.fixture.image,added_relocations=[self.base+offset])
+            with self.subTest(offset=offset),self.assertRaisesRegex(ValueError,'complete entry relocations'):
+                self.validate(image)
+
+    def test_original_whole_owner_hash_remains_required(self):
+        context = copy.copy(self.fixture)
+        context.target = ImageOverlay(context.target,{self.base:0x57})
+        with self.assertRaisesRegex(ValueError,'extent hash mismatch'):
+            validate_switch_owner(context,self.unit,self.record)
+
+    def test_loader_refuses_partial_or_expanded_remap_records(self):
+        original = (ROOT/'config/switch-owners.toml').read_text()
+        invalid = [original.replace('remap_offset = 2084','remap_offset = 2085'),
+                   original.replace('remap_offset = 2084\n',''),
+                   original.replace('3, 2, 2]','3, 2, 4]'),
+                   original.replace('3, 2, 2]','3, 2, 2, 2]')]
+        # A length change must disagree with the original CMP even if the
+        # configuration describes a contiguous map with valid byte values.
+        with tempfile.TemporaryDirectory(dir=ROOT/'.analysis') as directory:
+            path = ROOT / directory / 'switch.toml'
+            for text in invalid[:3]:
+                self.assertNotEqual(text,original)
+                path.write_text(text)
+                with self.assertRaises(ValueError):
+                    load_switch_owners(path)
+            path.write_text(invalid[3])
+            record = load_switch_owners(path)[self.base]
+            with self.assertRaisesRegex(ValueError,'unsigned index bound'):
+                self.inspect(record=record)
 
     @classmethod
     def tearDownClass(cls):

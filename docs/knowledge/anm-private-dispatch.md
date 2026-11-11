@@ -66,14 +66,14 @@ Map index zero reaches the ordinary helper's witness. In the main interpreter,
 map index 131 reaches `0x00460663` and then the XY helper's witness. The retained
 paths include each guard and dispatch and contain no trap instruction.
 
-This is original witness evidence for the two complete helper owners. The
-460 table bytes receive no exact credit, and neither parent receives a complete
-comparison from this proof. The original inventory describes code contexts of
-2,068 and 13,109 bytes; the parents' full owned-data scopes still need review.
-In particular, the special-vertices candidate owns 2,097 bytes including data.
-Its refusal against the current 2,068-byte inventory context must not be called
-a proven source extent difference. Do not trim the candidate or change the
-original boundary to its size. `AnmVm::run` still has eight unbound fields.
+This batch establishes original witness evidence for the two complete helper
+owners. The 460 table bytes receive no exact credit, and neither parent receives
+a complete comparison from this proof. At this checkpoint, the original
+inventory describes code contexts of 2,068 and 13,109 bytes. The subsequent
+[complete special-vertices scope review](special-vertices-scope.md) establishes
+that parent's entire 2,101-byte code/table owner and supersedes the 2,068-byte
+context. Its candidate remains 2,097 bytes and incomplete. The main interpreter
+still needs complete owned-data review and has eight unbound fields.
 
 ## Rejected circle source context
 
