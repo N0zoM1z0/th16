@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the PosVel wave-addition source batch.
+Updated 2026-11-11 after the manager callback entry/scope review.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,15 +18,19 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **635 exact, 52 mismatch and 528 incomplete** among
-1215 annotated candidates, covering 114,388 exact owned bytes. All 635 exact
-results at `b1ea1e8` remain exact. This source batch improves the complete
-700-byte `PosVel::step` comparison from 684 matching bytes to 696, leaving
-four differences and granting no new exact credit. The preceding EH review
-established complete passes for the 70-byte `ItemManagerInner::~ItemManagerInner`
-and 73-byte `StageInner::~StageInner` through their complete private EH handlers,
-descriptors and runtime entries. See [EH ownership evidence](knowledge/eh-handlers.md).
-The handlers and runtime binding receive no additional primary exact credit.
+The current report has **642 exact, 52 mismatch and 521 incomplete** among
+1215 annotated candidates, covering 114,622 exact owned bytes. All 635 exact
+results at `16eca1e` remain exact. Seven Bullet, Effect and Item manager callbacks
+now pass after original-only entry and complete-scope review, adding 234 bytes.
+See [manager callback evidence](knowledge/manager-callbacks.md). Their scopes
+come from original registrations and complete dense control flow, not candidate
+sizes. The previous PosVel source improvement remains a 696/700-byte mismatch.
+
+The preceding EH review established complete passes for the 70-byte
+`ItemManagerInner::~ItemManagerInner` and 73-byte `StageInner::~StageInner`.
+Their complete private graphs remain checked; see
+[EH ownership evidence](knowledge/eh-handlers.md). Auxiliary handlers and runtime
+bindings receive no additional primary exact credit.
 
 The preceding batch established six passes with complete bounded switch tables
 and a seventh masked-effect initialization pass using its reviewed `240.0f`
@@ -38,22 +42,21 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. The game-source change
-in this batch is the direct `pos = offset + center` vector addition in the
-PosVel wave branch. The indexed circle construction and drift-center update
-are retained. Other circle/vector forms, Fog position/step declaration changes
-and an explicit Supervisor loop return were restored. Earlier VM traversal,
-render-limit and shake-timer trials were also restored. WinMain's
-earlier natural cleanup remains; its complete 2919-byte extent still mismatches.
+cache and non-LTCG symbol-discovery cache are retained. This batch changes no
+game C++ source and requires no rebuild: it adds seven independently reviewed
+original inventory rows and distinguishes missing original boundaries from
+genuine extent differences. PosVel retains its direct wave vector addition and
+indexed circle/drift-center forms. Other recent source trials were restored;
+read the repair log before repeating them. WinMain's earlier natural cleanup
+remains; its complete 2919-byte extent still mismatches.
 
-The current batch passes 19 switch-ownership and 12 strict-Oracle controls;
-logs are `.analysis/wave-switch-controls.log` and
-`.analysis/wave-oracle-controls.log`. The preceding EH checkpoint passed all
-138 controls across nine suites. Its complete private graph bytes, disassembly
-and ownership remain in `.analysis/eh-reviewed-graph-evidence.json`.
-The current full audit and retained-pass comparison are
-`.analysis/wave-source-final-audit.log` and
-`.analysis/wave-source-regression-check.json`.
+The current batch passes all **140 controls across nine suites**, including
+two new missing-boundary/extent diagnostic controls. Logs use
+`.analysis/callback-*-controls.log`. Original callback scope derivation and
+disassembly are in `.analysis/reviewed-manager-callbacks.json`; the original-only
+reproducer is `.analysis/review-manager-callbacks.py`. The current full audit and
+retained-pass comparison are `.analysis/callback-boundary-full-audit.log` and
+`.analysis/callback-boundary-regression-check.json`.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -110,10 +113,19 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 528 incomplete candidates comprise 237 with unresolved fields, 243 with
-candidate/target extent differences, 40 without a same-start contribution,
-six with source-object ownership differences and two requiring reviewed switch
-or owned-data extents. Start from their recorded reasons.
+The 521 incomplete candidates comprise 237 with unresolved fields, **124 missing
+independently reviewed original boundaries**, 112 genuine candidate/target extent
+differences, 40 without a same-start contribution, six with source-object
+ownership differences and two requiring reviewed switch or owned-data extents.
+The earlier combined extent reason hid missing inventory rows; the Oracle now
+distinguishes these two refusal cases. Start from their recorded reasons.
+
+More missing callback entries have original instruction witnesses in previously
+exact initializers. `.analysis/callback-entry-inventory.json` records 35 such
+references, including duplicates and the seven now reviewed. This is a discovery
+index only. Establish each role, all reachable paths, complete scope, padding
+and absence of conflicting owners independently before adding a ledger row.
+Do not import every annotation or copy candidate sizes into the original ledger.
 
 The eight imported alignment helpers and 86 explicitly artificial standalone
 locals were removed. The latter cleanup withdrew 23 earlier exact results;

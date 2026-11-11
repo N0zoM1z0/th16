@@ -828,3 +828,38 @@ is `.analysis/wave-source-final-build.log`,
 `.analysis/wave-switch-controls.log` and `.analysis/wave-oracle-controls.log`.
 `scripts/progress.py` verifies source, artifact, report and retained-unit
 freshness. Source-origin review and Factory acceptance remain open.
+
+## Original manager callback scopes
+
+The next review starts from `16eca1e`. The old combined extent-difference
+diagnostic also covered missing original inventory entries. An original-only
+registration and control-flow investigation establishes seven complete callback
+scopes: two BulletManager callbacks, two EffectManager callbacks and three
+ItemManager callbacks. The scope derivation reads no candidate artifacts or
+candidate sizes. See [manager callback evidence](manager-callbacks.md) for
+registration instructions, parent hashes, every original extent and behavior.
+
+The seven existing C++ candidates all pass complete same-start PDB owner and
+byte/relocation replay after those original scopes are fixed. No game source
+or build profile changes, so the current incremental artifacts are reused.
+The original Ghidra inventory is preserved. Seven native-review rows and seven
+unknown/review origin rows are added with explicit evidence provenance.
+
+The Oracle now reports missing independently reviewed original boundaries
+separately from actual extent differences. Both remain refusals. Two controls
+exercise the distinction without changing any acceptance condition.
+
+The full replay retains all 635 prior exact results and adds seven complete
+owners, totaling **642 exact, 52 mismatch and 521 incomplete**, with 114,622
+exact owned bytes among 1215 annotated candidates. The incomplete groups now
+include 124 missing original boundaries and 112 genuine extent differences;
+previously both used the same reason. All 140 controls pass across nine suites.
+The target verifier confirms the canonical executable identity.
+
+Evidence is `.analysis/reviewed-manager-callbacks.json`,
+`.analysis/manager-callbacks-focused.json`,
+`.analysis/callback-boundary-full-audit.log`,
+`.analysis/callback-boundary-regression-check.json` and
+`.analysis/callback-*-controls.log`. Source-origin review and Factory acceptance
+remain open. No compiler rebuild, analyzer mutation or remote publication is
+needed for this review.

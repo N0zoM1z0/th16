@@ -4,7 +4,7 @@ import copy
 import struct
 import unittest
 
-from strict_oracle import Context, Incomplete, replay_owner
+from strict_oracle import Context, Incomplete, ROOT, replay_owner
 
 
 class Image:
@@ -113,6 +113,30 @@ class CompleteOwnerReplay(unittest.TestCase):
         context.boundaries = {self.target_start - 8: dict(span_end=hex(self.target_start + 1))}
         with self.assertRaisesRegex(Incomplete, "overlaps"):
             context.check_boundary(self.unit)
+
+    def boundary_context(self):
+        context = Context.__new__(Context)
+        context.directory = ROOT / "build/reference-candidate"
+        context.receipt = dict(compiler_profile=["/GL"], linker_profile=["/LTCG"])
+        unit = dict(self.unit, source="src/Rng.cpp", object="Rng.obj", symbol="_Fixture",
+                    artifact_kind="linked-pe", profile=["/GL"], link_profile=["/LTCG"],
+                    candidate_address=self.start)
+        function = dict(self.function, symbol="_Fixture",
+                        pdb_object="Z:" + str(context.directory / "obj/src/Rng.obj"))
+        context.linked = dict(functions=[function])
+        context.boundaries = {}
+        return context, unit
+
+    def test_missing_original_boundary_is_distinct_from_an_extent_difference(self):
+        context, unit = self.boundary_context()
+        with self.assertRaisesRegex(Incomplete, "lacks an independently reviewed function boundary"):
+            context.compare(unit)
+
+    def test_real_extent_difference_still_refuses_comparison(self):
+        context, unit = self.boundary_context()
+        context.boundaries[self.target_start] = dict(size=12)
+        with self.assertRaisesRegex(Incomplete, "complete candidate owner differs"):
+            context.compare(unit)
 
 
 if __name__ == "__main__":

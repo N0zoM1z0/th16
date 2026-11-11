@@ -164,6 +164,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00411A30,BulletManager::initialize,reference-00411a30,local-strict-pass,315,315,315,.analysis/reference-audit.json
 0x00412670,Bullet::release,reference-00412670,local-strict-pass,487,487,487,.analysis/reference-audit.json
 0x00412A60,BulletManager::on_draw_body,reference-00412a60,local-strict-pass,490,490,490,.analysis/reference-audit.json
+0x00412C50,BulletManager::on_tick_callback,reference-00412c50,local-strict-pass,38,38,38,.analysis/reference-audit.json
+0x00412C80,BulletManager::on_draw_callback,reference-00412c80,local-strict-pass,33,33,33,.analysis/reference-audit.json
 0x00415790,Bullet::bounce_left,reference-00415790,local-strict-pass,309,309,309,.analysis/reference-audit.json
 0x004158D0,Bullet::bounce_right,reference-004158d0,local-strict-pass,306,306,306,.analysis/reference-audit.json
 0x00415A10,Bullet::bounce_top,reference-00415a10,local-strict-pass,207,207,207,.analysis/reference-audit.json
@@ -201,6 +203,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00418790,preload_bullet_and_effect_anm,reference-00418790,local-strict-pass,57,57,57,.analysis/reference-audit.json
 0x004187D0,EffectManager::initialize,reference-004187d0,local-strict-pass,241,241,241,.analysis/reference-audit.json
 0x00418A30,EffectManager::create,reference-00418a30,local-strict-pass,118,118,118,.analysis/reference-audit.json
+0x00418AB0,EffectManager::on_tick_callback,reference-00418ab0,local-strict-pass,47,47,47,.analysis/reference-audit.json
+0x00418AE0,EffectManager::on_draw_callback,reference-00418ae0,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x00418AF0,EffectManager::create_effect,reference-00418af0,mismatch,171,171,161,.analysis/reference-audit.json
 0x00418DF0,Fog::set_rect,reference-00418df0,mismatch,326,326,320,.analysis/reference-audit.json
 0x00418F40,Fog::update_vms,reference-00418f40,local-strict-pass,149,149,149,.analysis/reference-audit.json
@@ -312,6 +316,9 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042F260,ItemManager::initialize,reference-0042f260,local-strict-pass,106,106,106,.analysis/reference-audit.json
 0x00430620,Item::collect_point,reference-00430620,mismatch,384,384,383,.analysis/reference-audit.json
 0x004307A0,ItemManager::on_draw_body,reference-004307a0,local-strict-pass,329,329,329,.analysis/reference-audit.json
+0x004308F0,ItemManager::on_tick_callback,reference-004308f0,local-strict-pass,46,46,46,.analysis/reference-audit.json
+0x00430920,ItemManager::on_draw_1_callback,reference-00430920,local-strict-pass,32,32,32,.analysis/reference-audit.json
+0x00430940,ItemManager::on_draw_2_callback,reference-00430940,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x00430C90,Item::init_anm,reference-00430c90,local-strict-pass,125,125,125,.analysis/reference-audit.json
 0x00430D10,Item::spawn_effect,reference-00430d10,local-strict-pass,122,122,122,.analysis/reference-audit.json
 0x00430D90,Item::release,reference-00430d90,local-strict-pass,44,44,44,.analysis/reference-audit.json

@@ -236,6 +236,8 @@ address,name,module,source_file,notes
 0x00412670,Bullet::release,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00412860,BulletManager::on_tick_body,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00412A60,BulletManager::on_draw_body,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00412C50,BulletManager::on_tick_callback,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00412C80,BulletManager::on_draw_callback,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00412CB0,BulletManager::shoot_one,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00413860,Bullet::run_ex,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00414DA0,BulletManager::shoot_bullets,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -291,6 +293,8 @@ address,name,module,source_file,notes
 0x004187D0,EffectManager::initialize,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004188D0,EffectManager::~EffectManager,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418A30,EffectManager::create,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00418AB0,EffectManager::on_tick_callback,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00418AE0,EffectManager::on_draw_callback,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418AF0,EffectManager::create_effect,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418BA0,EffectManager::create_ui_effect,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418C70,Fog::Fog,Fog,src/Fog.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -466,6 +470,9 @@ address,name,module,source_file,notes
 0x004304A0,Item::collect_big_power,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430620,Item::collect_point,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004307A0,ItemManager::on_draw_body,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004308F0,ItemManager::on_tick_callback,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00430920,ItemManager::on_draw_1_callback,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00430940,ItemManager::on_draw_2_callback,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430960,ItemManager::spawn_item,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430C90,Item::init_anm,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430D10,Item::spawn_effect,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.

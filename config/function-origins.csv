@@ -236,6 +236,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00412670,unknown,,review,unknown,ghidra-initial-import
 0x00412860,unknown,,review,unknown,ghidra-initial-import
 0x00412A60,unknown,,review,unknown,ghidra-initial-import
+0x00412C50,unknown,BulletManager,review,unknown,docs/knowledge/manager-callbacks.md
+0x00412C80,unknown,BulletManager,review,unknown,docs/knowledge/manager-callbacks.md
 0x00412CB0,unknown,,review,unknown,ghidra-initial-import
 0x00413860,unknown,,review,unknown,ghidra-initial-import
 0x00414DA0,unknown,,review,unknown,ghidra-initial-import
@@ -291,6 +293,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x004187D0,unknown,,review,unknown,ghidra-initial-import
 0x004188D0,unknown,,review,unknown,ghidra-initial-import
 0x00418A30,unknown,,review,unknown,ghidra-initial-import
+0x00418AB0,unknown,EffectManager,review,unknown,docs/knowledge/manager-callbacks.md
+0x00418AE0,unknown,EffectManager,review,unknown,docs/knowledge/manager-callbacks.md
 0x00418AF0,unknown,,review,unknown,ghidra-initial-import
 0x00418BA0,unknown,,review,unknown,ghidra-initial-import
 0x00418C70,unknown,,review,unknown,ghidra-initial-import
@@ -466,6 +470,9 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x004304A0,unknown,,review,unknown,ghidra-initial-import
 0x00430620,unknown,,review,unknown,ghidra-initial-import
 0x004307A0,unknown,,review,unknown,ghidra-initial-import
+0x004308F0,unknown,Item,review,unknown,docs/knowledge/manager-callbacks.md
+0x00430920,unknown,Item,review,unknown,docs/knowledge/manager-callbacks.md
+0x00430940,unknown,Item,review,unknown,docs/knowledge/manager-callbacks.md
 0x00430960,unknown,,review,unknown,ghidra-initial-import
 0x00430C90,unknown,,review,unknown,ghidra-initial-import
 0x00430D10,unknown,,review,unknown,ghidra-initial-import

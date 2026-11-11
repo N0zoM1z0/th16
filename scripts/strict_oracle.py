@@ -446,7 +446,9 @@ class Context:
         if normalized(function["pdb_object"]) != normalized(expected_object):
             raise Incomplete("PDB source object path differs from the selected producer")
         boundary = self.boundaries.get(unit["target_address"])
-        if not boundary or int(boundary["size"]) != unit["compare_size"]:
+        if boundary is None:
+            raise Incomplete("original target lacks an independently reviewed function boundary")
+        if int(boundary["size"]) != unit["compare_size"]:
             raise Incomplete("complete candidate owner differs from the independent target boundary")
         if int(boundary["span_end"], 0) != unit["target_address"] + unit["compare_size"] - 1:
             raise Incomplete("target boundary has a different span end")
