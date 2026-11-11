@@ -1137,7 +1137,8 @@ void PauseMenu::tick_open()
                     sprintf(path, "th16_%.2d.rpy", item_menu.next_selection + 1);
                     ReplayManager::destroy(replays[item_menu.next_selection]);
                     g_ReplayManager->save(path, name, 0, 1);
-                    replays[item_menu.next_selection] = ReplayManager::create_from_file(path);
+                    const i32 replay_slot = item_menu.next_selection;
+                    replays[replay_slot] = ReplayManager::create_from_file(path);
                     set_substate(PAUSE_SUB_REPLAY_SLOT_SELECT);
                     strcpy(g_Scorefile->last_replay_name, name);
                     g_SoundManager.play_sound_centered(SE_OK00, 0);

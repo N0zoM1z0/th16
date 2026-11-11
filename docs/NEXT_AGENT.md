@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after complete stage-table and current-time identity reviews.
+Updated 2026-11-11 after the replay-slot snapshot source improvement.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,9 +18,19 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **809 exact, 61 mismatch and 345 incomplete** among
-1215 annotated candidates, covering 141,487 exact owned bytes. Complete original
-stage-table and current-time identities resolve four existing candidates:
+The current report remains **809 exact, 61 mismatch and 345 incomplete** among
+1215 annotated candidates, covering 141,487 exact owned bytes and 870 units.
+PauseMenu::tick_open now snapshots the selected replay slot before creating its
+replacement, recovering the original index-read order and replay-name copy
+path. Both whole owners remain 4,676 bytes. Full diagnostic replay improves
+from 3,345 to 4,067 matching bytes, but three original case offsets still differ;
+no exact credit is granted. Only this owner changes among 1,719 complete linked
+owners. All previous exact results and all 870 units remain retained. Two
+ordinary exit-form trials are rejected. See
+[the replay-slot source review](knowledge/pause-replay-slot.md).
+
+The preceding identity review established complete original stage-table and
+current-time identities and resolved four existing candidates:
 stage_clear (896), Supervisor::switch_gamemodes (815), ScorefileChara::insert_score
 (246) and ReplayManager::set_end_stage (78). These add 2,035 primary exact bytes.
 All 805 preceding exact results and all 866 units remain identical; four new
@@ -141,7 +151,10 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. The preceding callback
+cache and non-LTCG symbol-discovery cache are retained. The current source
+change is one used replay-slot local in PauseMenu.cpp. It is freshly rebuilt,
+and all 192 dependency stamps validate. See
+`.analysis/pause-open-retained-build-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -151,24 +164,24 @@ in the strict Oracle and audit. Default public ownership, unreviewed static
 names and EH profiles retain their refusal behavior. All whole private bytes,
 producer identity, annotation identity, original witness paths and absence of
 linked fields/relocations are required. Game source, compiler/linker profiles
-are unchanged. The preceding batch extends the private set to thirteen records
-and adds a complete 39-byte XY-output profile and an original-witness dispatch
+were unchanged in that batch. The preceding batch extends the private set to
+thirteen records and adds a complete 39-byte XY-output profile and an original-witness dispatch
 profile.
 The preceding batches extend primary switch ownership with an explicit complete
 trailing byte map and fully decoded NOP/INT3 alignment. The audit uses the
 existing raw trailing-data contract for undecoded map suffixes; declarations
 never mask or normalize bytes. The preceding batch adds 37 direct-table records
-under existing rules. The current batch adds nine explicit compound records
+under existing rules. The compound batch adds nine explicit compound records
 and a complete multi-dispatch verifier, with cross-register remaps, bounded
 maps longer than 256 entries, cross-table guard protection and exhaustive data
-relocations. Raw replay and field normalization are unchanged. No game source
-change is retained in this batch. Every whole table, source-qualified complete
-PDB owner and exhaustive relocation/
-binding contract remains required. Unreviewed indirect edges remain refused.
-Two natural interpolation source trials are rejected and restored. Current
-outputs are freshly rebuilt from baseline source, and all 192 dependency
-stamps validate. See `.analysis/interp-methods-restored-check.json`. No clean
-build or archived-output substitution is used.
+relocations. Raw replay and field normalization are unchanged. That ownership
+batch retained no game source change. Every whole table, source-qualified
+complete PDB owner and exhaustive relocation/binding contract remains required. Unreviewed indirect edges remain refused.
+Two earlier interpolation source trials were rejected and restored. That
+checkpoint freshly rebuilt baseline source and validated all 192 dependency
+stamps; see `.analysis/interp-methods-restored-check.json`. Current outputs
+include the retained PauseMenu slot snapshot. No clean build or archived-output
+substitution is used.
 
 An ordinary out-of-line UpdateFunc constructor was built incrementally as a
 source-context experiment. It removes redundant initialization stores and
@@ -205,7 +218,9 @@ The current batch passes **207 controls across nine relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
 (26), focused audit (3), constructor EH (25) and empty EH (25). Logs use
-`.analysis/stage-time-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+`.analysis/pause-open-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding stage/time batch also passed 207 controls across nine suites;
+its logs use `.analysis/stage-time-*controls.log`.
 The preceding compound batch passed 187 controls across eight suites;
 its logs use `.analysis/compound-owner-*controls.log`.
 The preceding direct-table batch passed 166 controls across seven suites;
@@ -244,8 +259,11 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/stage-time-full-audit.log` and
-`.analysis/stage-time-regression-check.json`. Original identity and consumer
+are `.analysis/pause-open-full-audit.log` and
+`.analysis/pause-open-regression-check.json`. Source trials, whole payloads and
+all actual linked fields are in `.analysis/pause-open-source-trials.json`;
+retained case/instruction layout is `.analysis/pause-open-retained-layout.json`.
+The preceding original identity and consumer
 scope evidence is `.analysis/stage-time-original-identities.json` and
 `.analysis/stage-time-consumer-scopes.json`, reproduced by
 `.analysis/review-stage-time-originals.py` and
@@ -256,7 +274,10 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-trial evidence are `.analysis/interp-methods-restored-build.log`,
+source-trial evidence is `.analysis/pause-open-retained-build.log`,
+`.analysis/pause-open-retained-build-check.json` and
+`.analysis/pause-open-source-trials.json`. The preceding interpolation evidence
+remains `.analysis/interp-methods-restored-build.log`,
 `.analysis/interp-methods-restored-check.json` and
 `.analysis/interp-methods-source-trials.json`. Earlier countdown/circle contexts
 remain in `.analysis/special-vertices-source-trial.json`,
@@ -401,9 +422,16 @@ pause/title flows, window_proc and draw_vm now have complete scope records.
 The two exact candidates are retained. Supervisor now passes after complete
 stage-table binding. Pause has no unbound fields left but retains a complete
 4,676-byte case-map refusal: slots 7/9 start at 1,420 rather than 1,392, slot 10
-at 1,988 rather than 1,982, and slot 11 at 3,206 rather than 3,207. Its second
-five-slot table matches. See `.analysis/pause-open-case-layout.json`; do not
-alter original offsets or scopes to hide this difference. Other candidates
+at 1,988 rather than 1,982. Slot 11 now matches 3,207 after explicitly saving
+the replay slot before the factory call; the complete replay-name-save path
+also recovers its original copy loop. Its second five-slot table matches.
+See `.analysis/pause-open-retained-layout.json` and
+[the source review](knowledge/pause-replay-slot.md). The complete diagnostic
+replay improves from 3,345/4,676 to 4,067/4,676, with all 306 fields processed,
+but the original profile still refuses it. Resume-to-switch-exit and
+quit-shortcut early-return forms produce no code improvement and are rejected.
+Do not repeat these forms or force registers, base/index encodings, case offsets
+or layout to hide the remaining differences. Other candidates
 have different whole extents, with STD exposing two
 unbound fields first. Ascii drawing at `0x00408A89` needs memory-bound/reload
 alias evidence; the large enemy ECL dispatch at `0x0041DD51` has an interposed

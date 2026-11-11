@@ -1460,3 +1460,44 @@ witness and both runtime extents/library ownership. Evidence is
 `.analysis/stage-time-baseline/` are retained. Build inputs and artifact
 identities are unchanged. Source-origin review remains open and Factory
 acceptance remains unsubmitted. Nothing is published.
+
+## Replay-slot snapshot source improvement
+
+PauseMenu::tick_open now explicitly saves item_menu.next_selection immediately
+before creating the replacement replay and stores the result through that
+saved slot. The original reads its slot into ESI at `0x004403F6`, calls the
+factory at `0x004403FD` and stores through the saved index at `0x00440406`.
+The used local recovers this ordering, releases the name-buffer register and
+restores the replay-save path's original name-copy loop. It also restores the
+next case offset to 3,207 from 3,206. See
+[the source review](pause-replay-slot.md).
+
+Both original and candidate owners remain 4,676 bytes, including all code,
+alignment and 22 target slots. Whole diagnostic replay with all 306 linked
+fields improves from 3,345 matching bytes to 4,067. The strict Oracle still
+refuses three original case offsets, so **no exact credit is added**. Canonical
+results remain **809 exact, 61 mismatch and 345 incomplete**, with 141,487 exact
+primary bytes and 870 unchanged retained units. All preceding exact results
+remain retained. Only tick_open changes among 1,719 complete source-qualified
+linked owners; its entry and full extent are unchanged.
+
+A resume branch exiting the outer switch instead of returning changes no
+complete generated owner. An early return in the quit shortcut, after adding
+the slot snapshot, also changes no complete generated owner. Both exit forms
+are rejected; only the meaningful slot snapshot is retained. Do not repeat
+these forms or force registers, SIB encodings, padding or shared-tail layout.
+No verifier, target scope or normalization rule changes.
+
+All 207 existing controls pass across nine suites. The retained source is
+freshly built incrementally; artifact hashes match its receipt and all 192
+dependency stamps validate. No archived output substitution or clean build is
+used. Full sources/outputs are retained under
+`.analysis/pause-open-{source-baseline,switch-exit-artifacts,selected-slot-artifacts,quit-return-artifacts}/`.
+Evidence is `.analysis/pause-open-source-trials.json`,
+`.analysis/pause-open-retained-layout.json`,
+`.analysis/pause-open-complete-owner-delta.json`,
+`.analysis/pause-open-retained-build-check.json`,
+`.analysis/pause-open-full-audit.log`,
+`.analysis/pause-open-regression-check.json` and
+`.analysis/pause-open-<suite>-controls.log`. Source-origin review remains open;
+Factory acceptance remains unsubmitted. Nothing is published.
