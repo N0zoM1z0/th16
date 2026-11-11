@@ -1116,3 +1116,44 @@ Evidence is `.analysis/review-table-entry-scopes.py`,
 `.analysis/piercing-{element-pointer,array-base}-artifacts/`. Source-origin
 review remains open; Factory acceptance remains unsubmitted. Nothing is
 published.
+
+## Complete private sincos helper ownership
+
+Three existing imported private helpers now have explicit whole-owner proofs:
+gather at `0x00406470`, bullet at `0x00417510` and laser at `0x0043AD00`.
+Each original entry is established through a decoded call and a trap-free
+path from its inventoried parent. Each complete 32-byte linear owner performs
+x87 sincos and radius multiplication, then returns with eight stack bytes
+removed. The complete candidate contribution, exact private MAP name, full
+producer object/module, absence of interior names and all relocation/decode
+requirements are checked. See [private sincos ownership](static-sincos-ownership.md).
+
+An explicit reviewed private profile supplies primary ownership and exact
+direct CALL identity. The helpers remain private; public selection, unreviewed
+static entries and EH profiles retain their previous refusal behavior. No game
+source, compiler/linker profile or attested build artifact changes. The review
+introduces no emitted instructions, truncated extent or comparison mask.
+
+Complete replay reports **779 exact, 58 mismatch and 378 incomplete**, covering
+125,082 exact primary bytes. Twelve complete exact owners add 4,470 bytes.
+All 767 prior exact results and all 820 prior units remain unchanged. Five
+previously incomplete laser owners now compare as complete mismatches; none
+receives exact credit. Seventeen new complete units give 837 total. Fifteen
+other callers now expose genuine complete-owner extent differences.
+
+All 114 controls pass across six suites, including 21 new private-identity
+controls with every original/candidate helper byte mutated, partial/expanded
+extents, foreign producers, MAP collisions/interiors, original witnesses,
+explicit private selection, extra/crossing relocations and tail-jump rejection.
+Both a private primary and its public caller also replay through the normal
+retained-unit command. Freshness checks pass.
+
+Evidence is `.analysis/static-sincos-original-scopes.json`,
+`.analysis/static-sincos-initial-focused.json`,
+`.analysis/static-sincos-full-audit.log`,
+`.analysis/static-sincos-regression-check.json`,
+`.analysis/static-sincos-{controls,oracle-controls,linkage-controls,focused-controls}.log`
+and `.analysis/static-sincos-{constructor,empty}-eh-controls.log`.
+The preceding report, units and inventory are retained under
+`.analysis/static-sincos-baseline/`. Source-origin review remains open and
+Factory acceptance remains unsubmitted. Nothing is published.

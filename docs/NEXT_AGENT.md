@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after callback-table/startup entry review and piercing-source trials.
+Updated 2026-11-11 after complete private sincos helper ownership review.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,9 +18,17 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **767 exact, 53 mismatch and 395 incomplete** among
-1215 annotated candidates, covering 120,612 exact owned bytes. All 744 exact
-results at `ed9833c` remain exact. The latest original-only review establishes
+The current report has **779 exact, 58 mismatch and 378 incomplete** among
+1215 annotated candidates, covering 125,082 exact owned bytes. All 767 exact
+results at `effbba5` remain exact. Three explicitly reviewed complete 32-byte
+private helpers now have qualified source/MAP/PDB identities. Their callers
+retain exact whole-entry CALL bindings without public-symbol promotion.
+Twelve complete exact owners add 4,470 bytes; five formerly incomplete owners
+become complete mismatches. All 820 preceding units remain unchanged, with
+17 new complete units, for 837 total. See
+[private sincos ownership](knowledge/static-sincos-ownership.md).
+
+The preceding original-only review establishes
 24 callback-table/startup owners, including the Camera entry and the global
 initializer which calls it. Twenty-two complete owners pass. The independently
 reviewed `300.0f` binding also resolves Stage::load_data's final field, allowing
@@ -81,10 +89,14 @@ The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
-aggregate profile. This batch changes original boundary/origin inventories,
-adds one fixed literal binding and its negative control, and regenerates
-comparison ledgers. Game source, compiler/linker profiles and Oracle
-implementation are unchanged.
+aggregate profile. The preceding callback-table batch adds a fixed literal
+binding. The current batch adds `scripts/static_identity.py` and
+`config/static-functions.toml`, with explicit private primary/callee selection
+in the strict Oracle and audit. Default public ownership, unreviewed static
+names and EH profiles retain their refusal behavior. All whole private bytes,
+producer identity, annotation identity, original witness paths and absence of
+linked fields/relocations are required. Game source, compiler/linker profiles
+and the attested incremental outputs are unchanged; no rebuild is needed.
 
 An ordinary out-of-line UpdateFunc constructor was built incrementally as a
 source-context experiment. It removes redundant initialization stores and
@@ -117,8 +129,12 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **43 controls across three relevant suites**: reviewed
-linkages, strict Oracle and focused audit. Logs use
+The current batch passes **114 controls across six relevant suites**: private
+identities (21), strict Oracle (14), reviewed linkages (26), focused audit (3),
+constructor EH (25) and empty EH (25). Logs use
+`.analysis/static-sincos-{controls,oracle-controls,linkage-controls,focused-controls}.log`
+and `.analysis/static-sincos-{constructor,empty}-eh-controls.log`. The preceding
+callback-table batch passes 43 controls; its logs use
 `.analysis/table-entry-{linkage,oracle,focused}-controls.log`. The preceding
 runtime entry batch passed 17 controls; its logs use
 `.analysis/runtime-entry-{oracle,focused}-controls.log`. The manager wrapper
@@ -134,10 +150,12 @@ reproducer and scopes are `.analysis/review-manager-wrapper-scopes.py` and
 `.analysis/reviewed-manager-wrapper-scopes.json`. The preceding original-only
 runtime derivation is `.analysis/review-runtime-entry-scopes.py` and
 `.analysis/reviewed-runtime-entry-scopes.json`. The latest original-only
-derivation is `.analysis/review-table-entry-scopes.py` and
-`.analysis/reviewed-table-entry-scopes.json`. Current replay and retained-pass
-evidence are `.analysis/table-entry-full-audit.log` and
-`.analysis/table-entry-regression-check.json`. The current incremental build
+table derivation is `.analysis/review-table-entry-scopes.py` and
+`.analysis/reviewed-table-entry-scopes.json`. The current original-only private
+scope evidence is `.analysis/static-sincos-original-scopes.json`; the maintained
+verifier rechecks the full originals and paths. Current replay and retained-pass
+evidence are `.analysis/static-sincos-full-audit.log` and
+`.analysis/static-sincos-regression-check.json`. The current incremental build
 log is `.analysis/piercing-restored-build.log`; the older baseline is
 `.analysis/record-input-cleanup-build.log`. The rejected
 source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
@@ -197,14 +215,35 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 395 incomplete candidates comprise 234 with unresolved fields, 113 genuine
-candidate/target extent differences, 40 without a same-start contribution,
+The 378 incomplete candidates comprise 205 with unresolved fields, 128 genuine
+candidate/target extent differences, 37 without a same-start contribution,
 six with source-object ownership differences and two requiring reviewed switch
 or owned-data extents. None is currently refused specifically for a missing
 original boundary. Other missing evidence can precede boundary checks; this
 does not prove every annotation already has a complete original scope review.
 The earlier combined extent reason hid missing inventory rows; the Oracle now
 distinguishes these two refusal cases. Start from their recorded reasons.
+
+The new private profile covers gather `0x00406470`, bullet `0x00417510` and
+laser `0x0043AD00` only. It requires the full 32-byte x87 sincos/scale body,
+source-qualified private MAP name, unique complete PDB producer and exact
+annotation/witness identities. Primary units and direct CALL fields opt in
+explicitly with `reviewed_static`; no interior/addend, public alias, generic
+static fallback or tail transfer is permitted. The consumed source/name
+inventory metadata is fingerprinted. Existing sincos wrappers remain source
+context hypotheses; no game source or assembly was changed by this review.
+
+Other wrappers listed in build/reference-candidate/functions.txt still require
+independent original entry/path and complete producer reviews. The AnmVmRun
+helper at `0x00464D60` has calls within `update_special_vertices`, but the
+initial direct-branch path search does not reach its first call: its dispatch
+needs original review. Do not silently follow arbitrary indirect jumps.
+The new full 412-byte LaserLine/LaserCurve angle units each differ in 11 bytes
+at +0x33..+0x3D, where a float load and argument push have different order.
+Their unit names are reference-00432c20 and reference-004392c0. The curve angle
+acceleration unit reference-00439460 differs in 14 bytes around +0x83..+0x90.
+These are useful source-context targets; preserve complete extents and avoid
+forcing instruction order. Two other newly retained laser owners also mismatch.
 
 The complete AnmManager constructor is now a retained 5,054/5,071-byte mismatch.
 Its EH profile checks both whole 136/76-byte contributions; the handler remains

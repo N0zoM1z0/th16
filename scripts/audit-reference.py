@@ -54,6 +54,8 @@ def bindings(context, functions, annotations):
         add(symbol, original, "source-function-annotation")
     for symbol, row in context.reviewed_linkages.items():
         add(symbol, row["target"], "reviewed-" + row["kind"])
+    for row in context.static_functions.values():
+        add(row["symbol"], row["target"], "reviewed-complete-private-function")
     symbols = {r["symbol"] for r in context.publics}
     for row in annotations["GLOBAL"]:
         match = re.search(r"\b([A-Za-z_]\w*)\s*(?:\[[^\]]*\]\s*)*(?==|;|\()", row["declaration"])
@@ -255,6 +257,13 @@ def main():
             _, address, symbol = choices[0]
             report.update(symbol=symbol, candidate_address=address)
             owners = owned[(address, symbol)]
+            static = [(name,p) for name,p in context.static_functions.items()
+                      if (p["target"],p["candidate"],p["symbol"],p["source"]) ==
+                      (original,address,symbol,declarations[0]["source"])]
+            if static:
+                if owners or len(static) != 1:
+                    raise Incomplete("reviewed static owner is ambiguous")
+                owners = [static[0][1]["function"]]
             if len(owners) != 1:
                 raise Incomplete("symbol lacks one complete same-start PDB contribution")
             function = owners[0]
@@ -265,6 +274,8 @@ def main():
                     "candidate_address": address, "target_address": original, "size": size,
                     "compare_size": size, "profile": context.receipt["compiler_profile"],
                     "link_profile": context.receipt["linker_profile"], "linkages": []}
+            if static:
+                unit["reviewed_static"] = static[0][0]
             fields = linked_code_fields(context.image, context.publics, address, size)
             unresolved = []
             for field in fields["fields"]:
@@ -284,6 +295,14 @@ def main():
                 if address <= destination < address + size:
                     unit["linkages"].append(dict(offset=field["offset"], width=field["width"], type=field["type"],
                         local=True, symbol="<local>", target=original + destination - address))
+                    continue
+                private = [(name,p) for name,p in context.static_functions.items() if p["candidate"] == destination]
+                if private and field["type"] == "REL32" and field["width"] == 4 and field["instruction"] == "call":
+                    if len(private) != 1:
+                        raise Incomplete("private callee is ambiguous")
+                    name, proof = private[0]
+                    unit["linkages"].append(dict(offset=field["offset"],width=4,type="REL32",
+                        symbol=proof["symbol"],target=proof["target"],addend=0,reviewed_static=name))
                     continue
                 index = bisect.bisect_right(bases, destination) - 1
                 if index < 0:

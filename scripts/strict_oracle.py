@@ -294,7 +294,7 @@ def pointer_limit(context, function, field, linkages):
                 storage_name=anchor["storage_name"], storage_size=extent, pointer_limit=True)
 
 
-def replay_owner(image, target, publics, function, unit, *, eh_handlers=None):
+def replay_owner(image, target, publics, function, unit, *, eh_handlers=None, static_functions=None):
     """Compare every owned byte, permitting only enumerated, bound fields."""
     candidate_address = int(function["address"], 0)
     target_address = unit["target_address"]
@@ -331,6 +331,14 @@ def replay_owner(image, target, publics, function, unit, *, eh_handlers=None):
             try:
                 validate_field(eh_handlers or {}, unit, field, base)
             except EHEvidenceError as error:
+                raise Incomplete(str(error)) from error
+        elif "reviewed_static" in field:
+            from static_identity import validate_field as validate_static_field, StaticEvidenceError
+            if item["instruction"] != "call":
+                raise Incomplete("reviewed private callee requires a direct CALL")
+            try:
+                validate_static_field(static_functions or {}, field, base)
+            except StaticEvidenceError as error:
                 raise Incomplete(str(error)) from error
         elif field.get("local", False):
             if not candidate_address <= base < candidate_address + size:
@@ -398,6 +406,12 @@ class Context:
         except EHEvidenceError as error:
             raise Incomplete(str(error)) from error
 
+        from static_identity import review_functions, StaticEvidenceError
+        try:
+            self.static_functions = review_functions(self, ROOT / "config/static-functions.toml")
+        except StaticEvidenceError as error:
+            raise Incomplete(str(error)) from error
+
     def identity(self):
         files = [self.receipt_path, self.directory / "th16.exe", self.directory / "th16.map",
                  self.directory / "th16.pdb", ROOT / "resources/th16.exe",
@@ -409,10 +423,11 @@ class Context:
                  ROOT / "scripts/pdb_types.py", ROOT / "scripts/vtable_identity.py",
                  ROOT / "scripts/switch_ownership.py", ROOT / "config/switch-owners.toml",
                  ROOT / "scripts/eh_identity.py", ROOT / "config/eh-handlers.toml",
+                 ROOT / "scripts/static_identity.py", ROOT / "config/static-functions.toml",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
-            boundaries = [{key: row[key] for key in ("address", "size", "span_end")}
+            boundaries = [{key: row[key] for key in ("address", "size", "span_end", "current_name", "source_file")}
                           for row in csv.DictReader(stream)]
         result["config/functions.csv#boundaries"] = hashlib.sha256(
             json.dumps(boundaries, sort_keys=True).encode()).hexdigest()
@@ -434,6 +449,15 @@ class Context:
             raise Incomplete("unit profile differs from the attested cold build")
         matches = [r for r in self.linked["functions"] if r["symbol"] == unit["symbol"]
                    and int(r["address"], 0) == unit["candidate_address"]]
+        if "reviewed_static" in unit:
+            proof = self.static_functions.get(unit["reviewed_static"])
+            if (proof is None or proof["source"] != unit["source"] or proof["symbol"] != unit["symbol"]
+                    or proof["candidate"] != unit["candidate_address"]
+                    or proof["target"] != unit["target_address"] or proof["size"] != unit["size"]):
+                raise Incomplete("primary private owner differs from its reviewed identity")
+            if matches:
+                raise Incomplete("reviewed private primary collides with a public owner")
+            matches = [proof["function"]]
         if len(matches) != 1:
             raise Incomplete("symbol lacks one complete same-start PDB owner")
         function = matches[0]
@@ -483,7 +507,7 @@ class Context:
                        for s in self.target.sections):
                 raise Incomplete("typed target storage leaves mapped non-code data")
         result = replay_owner(self.image, self.target, self.publics, function, unit,
-                              eh_handlers=self.eh_handlers)
+                              eh_handlers=self.eh_handlers, static_functions=self.static_functions)
         if any("eh_handler" in field for field in unit["linkages"]):
             result["auxiliary_eh_owners"] = [self.eh_handlers[(unit["source"], unit["symbol"])]]
         return {**result, "symbol": unit["symbol"], "target_address": unit["target_address"],

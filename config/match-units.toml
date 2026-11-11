@@ -1265,6 +1265,22 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-00406470]
+artifact_kind = "linked-pe"
+source = "src/AnmVmCallbacks.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?gather_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+object = "AnmVmCallbacks.obj"
+candidate_address = 4252464
+target_address = 4220016
+size = 32
+compare_size = 32
+reviewed_static = "gather"
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+]
+
 [units.reference-00406490]
 artifact_kind = "linked-pe"
 source = "src/ZunTimer.cpp"
@@ -3806,6 +3822,31 @@ linkages = [
   { offset = 27, width = 4, type = "REL32", symbol = "?on_draw_body@BulletManager@@QAEHXZ", target = 4270688, addend = 0 },
 ]
 
+[units.reference-004153e0]
+artifact_kind = "linked-pe"
+source = "src/BulletManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_ex_03@Bullet@@QAEHXZ"
+object = "BulletManager.obj"
+candidate_address = 4320000
+target_address = 4281312
+size = 387
+compare_size = 387
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 43, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 51, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "__real@40c90fdb", target = 4801976, addend = 0 },
+  { offset = 101, width = 4, type = "DIR32", symbol = "__real@c0490fdb", target = 4802356, addend = 0 },
+  { offset = 206, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 246, width = 4, type = "REL32", symbol = "?bullet_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4289808, addend = 0, reviewed_static = "bullet" },
+  { offset = 278, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 305, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 315, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 366, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+]
+
 [units.reference-00415790]
 artifact_kind = "linked-pe"
 source = "src/BulletManager.cpp"
@@ -3892,6 +3933,33 @@ linkages = [
   { offset = 105, width = 4, type = "DIR32", symbol = "__real@40c90fdb", target = 4801976, addend = 0 },
   { offset = 133, width = 4, type = "DIR32", symbol = "__real@c0490fdb", target = 4802356, addend = 0 },
   { offset = 165, width = 4, type = "DIR32", symbol = "__real@43e00000", target = 4802224, addend = 0 },
+]
+
+[units.reference-00415bb0]
+artifact_kind = "linked-pe"
+source = "src/BulletManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_ex_06@Bullet@@QAEHXZ"
+object = "BulletManager.obj"
+candidate_address = 4319312
+target_address = 4283312
+size = 454
+compare_size = 454
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "DIR32", symbol = "?g_BulletManager@@3PAUBulletManager@@A", target = 4877740, addend = 0 },
+  { offset = 12, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 20, width = 4, type = "DIR32", symbol = "__real@43600000", target = 4802160, addend = 0 },
+  { offset = 68, width = 4, type = "DIR32", symbol = "__real@bf000000", target = 4802332, addend = 0 },
+  { offset = 166, width = 4, type = "DIR32", symbol = "__real@bf000000", target = 4802332, addend = 0 },
+  { offset = 257, width = 4, type = "REL32", symbol = "?bounce_top@Bullet@@QAEHXZ", target = 4282896, addend = 0 },
+  { offset = 278, width = 4, type = "REL32", symbol = "?bounce_bottom@Bullet@@QAEHXZ", target = 4283104, addend = 0 },
+  { offset = 299, width = 4, type = "REL32", symbol = "?bounce_right@Bullet@@QAEHXZ", target = 4282576, addend = 0 },
+  { offset = 320, width = 4, type = "REL32", symbol = "?bounce_left@Bullet@@QAEHXZ", target = 4282256, addend = 0 },
+  { offset = 340, width = 4, type = "DIR32", symbol = "__real@c4778000", target = 4802424, addend = 0 },
+  { offset = 391, width = 4, type = "REL32", symbol = "?bullet_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4289808, addend = 0, reviewed_static = "bullet" },
+  { offset = 419, width = 4, type = "REL32", symbol = "?play_sound_centered@SoundManager@@QAEXHH@Z", target = 4579664, addend = 0 },
 ]
 
 [units.reference-00415d80]
@@ -4192,6 +4260,22 @@ profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
   { offset = 19, width = 4, type = "DIR32", symbol = "?g_anm_on_switch_funcs@@3QBQ6IHPAUAnmVm@@H@ZB", target = 4791052, addend = 0 },
+]
+
+[units.reference-00417510]
+artifact_kind = "linked-pe"
+source = "src/BulletManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?bullet_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+object = "BulletManager.obj"
+candidate_address = 4303680
+target_address = 4289808
+size = 32
+compare_size = 32
+reviewed_static = "bullet"
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
 ]
 
 [units.reference-00417530]
@@ -7795,6 +7879,22 @@ linkages = [
   { offset = 65, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
 ]
 
+[units.reference-00431050]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_point@LaserLineInf@@UAEXMPAUD3DXVECTOR3@@@Z"
+object = "Laser.obj"
+candidate_address = 4465568
+target_address = 4395088
+size = 84
+compare_size = 84
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 33, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+]
+
 [units.reference-004310b0]
 artifact_kind = "linked-pe"
 source = "src/Laser.cpp"
@@ -7853,6 +7953,54 @@ profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
   { offset = 42, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+]
+
+[units.reference-004311f0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_point@LaserCurveInf@@UAEXMPAUD3DXVECTOR3@@@Z"
+object = "Laser.obj"
+candidate_address = 4465888
+target_address = 4395504
+size = 84
+compare_size = 84
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 33, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+]
+
+[units.reference-00431250]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_point@LaserInfiniteInf@@UAEXMPAUD3DXVECTOR3@@@Z"
+object = "Laser.obj"
+candidate_address = 4465984
+target_address = 4395600
+size = 84
+compare_size = 84
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 33, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+]
+
+[units.reference-004312b0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_point@LaserBeamInf@@UAEXMPAUD3DXVECTOR3@@@Z"
+object = "Laser.obj"
+candidate_address = 4466080
+target_address = 4395696
+size = 84
+compare_size = 84
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 33, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
 ]
 
 [units.reference-00431310]
@@ -8101,6 +8249,104 @@ linkages = [
   { offset = 46, width = 4, type = "DIR32", symbol = "?g_bullet_types@@3PAUBulletTypeInfo@@A", target = 4846304, addend = 4, storage_name = "g_bullet_types", storage_size = 12144 },
 ]
 
+[units.reference-00432620]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_ex_bounce@LaserLineInf@@UAEHXZ"
+object = "Laser.obj"
+candidate_address = 4469296
+target_address = 4400672
+size = 1534
+compare_size = 1534
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 38, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 69, width = 4, type = "DIR32", symbol = "__real@c3400000", target = 4802412, addend = 0 },
+  { offset = 114, width = 4, type = "DIR32", symbol = "__real@43e00000", target = 4802224, addend = 0 },
+  { offset = 130, width = 4, type = "DIR32", symbol = "__real@43400000", target = 4802144, addend = 0 },
+  { offset = 176, width = 4, type = "DIR32", symbol = "__real@c3800000", target = 4802416, addend = 0 },
+  { offset = 271, width = 4, type = "REL32", symbol = "?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z", target = 4210368, addend = 0 },
+  { offset = 283, width = 4, type = "DIR32", symbol = "__xmm@80000000800000008000000080000000", target = 4802704, addend = 0 },
+  { offset = 289, width = 4, type = "DIR32", symbol = "?g_LaserManager@@3PAULaserManager@@A", target = 4878048, addend = 0 },
+  { offset = 379, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 392, width = 4, type = "REL32", symbol = "??0LaserLineInf@@QAE@XZ", target = 4395312, addend = 0 },
+  { offset = 482, width = 4, type = "DIR32", symbol = "__real@c3800000", target = 4802416, addend = 0 },
+  { offset = 490, width = 4, type = "DIR32", symbol = "__real@43e00000", target = 4802224, addend = 0 },
+  { offset = 603, width = 4, type = "REL32", symbol = "?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z", target = 4210368, addend = 0 },
+  { offset = 615, width = 4, type = "DIR32", symbol = "__xmm@80000000800000008000000080000000", target = 4802704, addend = 0 },
+  { offset = 621, width = 4, type = "DIR32", symbol = "?g_LaserManager@@3PAULaserManager@@A", target = 4878048, addend = 0 },
+  { offset = 715, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 728, width = 4, type = "REL32", symbol = "??0LaserLineInf@@QAE@XZ", target = 4395312, addend = 0 },
+  { offset = 855, width = 4, type = "DIR32", symbol = "__real@c3400000", target = 4802412, addend = 0 },
+  { offset = 948, width = 4, type = "REL32", symbol = "?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z", target = 4210368, addend = 0 },
+  { offset = 960, width = 4, type = "DIR32", symbol = "__xmm@80000000800000008000000080000000", target = 4802704, addend = 0 },
+  { offset = 968, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 983, width = 4, type = "REL32", symbol = "?normalize_angle@@YQMM@Z", target = 4205968, addend = 0 },
+  { offset = 989, width = 4, type = "DIR32", symbol = "?g_LaserManager@@3PAULaserManager@@A", target = 4878048, addend = 0 },
+  { offset = 1069, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 1082, width = 4, type = "REL32", symbol = "??0LaserLineInf@@QAE@XZ", target = 4395312, addend = 0 },
+  { offset = 1199, width = 4, type = "DIR32", symbol = "__real@43400000", target = 4802144, addend = 0 },
+  { offset = 1236, width = 4, type = "DIR32", symbol = "__real@c3400000", target = 4802412, addend = 0 },
+  { offset = 1297, width = 4, type = "REL32", symbol = "?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z", target = 4210368, addend = 0 },
+  { offset = 1309, width = 4, type = "DIR32", symbol = "__xmm@80000000800000008000000080000000", target = 4802704, addend = 0 },
+  { offset = 1317, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 1332, width = 4, type = "REL32", symbol = "?normalize_angle@@YQMM@Z", target = 4205968, addend = 0 },
+  { offset = 1338, width = 4, type = "DIR32", symbol = "?g_LaserManager@@3PAULaserManager@@A", target = 4878048, addend = 0 },
+  { offset = 1418, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 1431, width = 4, type = "REL32", symbol = "??0LaserLineInf@@QAE@XZ", target = 4395312, addend = 0 },
+  { offset = 1511, width = 4, type = "REL32", symbol = "?play_sound_centered@SoundManager@@QAEXHH@Z", target = 4579664, addend = 0 },
+]
+
+[units.reference-00432c20]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_ex_angle@LaserLineInf@@UAEHXZ"
+object = "Laser.obj"
+candidate_address = 4470832
+target_address = 4402208
+size = 412
+compare_size = 412
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 34, width = 4, type = "REL32", symbol = "?play_sound_centered@SoundManager@@QAEXHH@Z", target = 4579664, addend = 0 },
+  { offset = 196, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 269, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 301, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 328, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 338, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 390, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+]
+
+[units.reference-00433720]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw@LaserLineInf@@UAEHXZ"
+object = "Laser.obj"
+candidate_address = 4468272
+target_address = 4405024
+size = 292
+compare_size = 292
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 4, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 14, width = 4, type = "DIR32", symbol = "__real@40c90fdb", target = 4801976, addend = 0 },
+  { offset = 46, width = 4, type = "DIR32", symbol = "__real@3fc90fdb", target = 4801844, addend = 0 },
+  { offset = 85, width = 4, type = "DIR32", symbol = "__real@c0490fdb", target = 4802356, addend = 0 },
+  { offset = 115, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 139, width = 4, type = "REL32", symbol = "?draw_vm@AnmManager@@QAEHPAUAnmVm@@@Z", target = 4621456, addend = 0 },
+  { offset = 174, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 222, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 227, width = 4, type = "REL32", symbol = "?draw_vm@AnmManager@@QAEHPAUAnmVm@@@Z", target = 4621456, addend = 0 },
+  { offset = 258, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 284, width = 4, type = "REL32", symbol = "?draw_vm@AnmManager@@QAEHPAUAnmVm@@@Z", target = 4621456, addend = 0 },
+]
+
 [units.reference-00433850]
 artifact_kind = "linked-pe"
 source = "src/LaserLine.cpp"
@@ -8206,6 +8452,35 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-00436c70]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?cancel@LaserInfiniteInf@@UAEHHH@Z"
+object = "Laser.obj"
+candidate_address = 4472352
+target_address = 4418672
+size = 633
+compare_size = 633
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 37, width = 4, type = "DIR32", symbol = "__real@41000000", target = 4801984, addend = 0 },
+  { offset = 74, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 141, width = 4, type = "DIR32", symbol = "__real@41800000", target = 4802016, addend = 0 },
+  { offset = 236, width = 4, type = "DIR32", symbol = "__real@c3400000", target = 4802412, addend = 0 },
+  { offset = 247, width = 4, type = "DIR32", symbol = "__real@41800000", target = 4802016, addend = 0 },
+  { offset = 267, width = 4, type = "DIR32", symbol = "__real@43400000", target = 4802144, addend = 0 },
+  { offset = 294, width = 4, type = "DIR32", symbol = "__real@41800000", target = 4802016, addend = 0 },
+  { offset = 314, width = 4, type = "DIR32", symbol = "__real@43e00000", target = 4802224, addend = 0 },
+  { offset = 462, width = 4, type = "DIR32", symbol = "?g_BulletManager@@3PAUBulletManager@@A", target = 4877740, addend = 0 },
+  { offset = 474, width = 4, type = "REL32", symbol = "?create_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@MHH@Z", target = 4253120, addend = 0 },
+  { offset = 484, width = 4, type = "REL32", symbol = "?gen_items_from_cancel@@YAXPAUD3DXVECTOR3@@H@Z", target = 4286976, addend = 0 },
+  { offset = 507, width = 4, type = "DIR32", symbol = "__real@41800000", target = 4802016, addend = 0 },
+  { offset = 564, width = 4, type = "DIR32", symbol = "__real@41000000", target = 4801984, addend = 0 },
+  { offset = 595, width = 4, type = "DIR32", symbol = "__real@41800000", target = 4802016, addend = 0 },
+]
+
 [units.reference-00436ef0]
 artifact_kind = "linked-pe"
 source = "src/LaserInfinite.cpp"
@@ -8226,6 +8501,45 @@ linkages = [
   { offset = 189, width = 4, type = "DIR32", symbol = "__real@bf000000", target = 4802332, addend = 0 },
 ]
 
+[units.reference-004370a0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?initialize@LaserCurveInf@@UAEHPAX@Z"
+object = "Laser.obj"
+candidate_address = 4487952
+target_address = 4419744
+size = 1726
+compare_size = 1726
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 77, width = 4, type = "REL32", symbol = "?wipe@AnmVm@@QAEXXZ", target = 4231408, addend = 0 },
+  { offset = 89, width = 4, type = "DIR32", symbol = "?g_LaserManager@@3PAULaserManager@@A", target = 4878048, addend = 0 },
+  { offset = 135, width = 4, type = "REL32", symbol = "?set_vm_script@AnmLoaded@@QAEXPAUAnmVm@@H@Z", target = 4583776, addend = 0 },
+  { offset = 152, width = 4, type = "DIR32", symbol = "?g_anm_on_switch_funcs@@3QBQ6IHPAUAnmVm@@H@ZB", target = 4791052, addend = 0 },
+  { offset = 178, width = 4, type = "REL32", symbol = "?run@AnmVm@@QAEHXZ", target = 4585856, addend = 0 },
+  { offset = 190, width = 4, type = "DIR32", symbol = "?g_LaserManager@@3PAULaserManager@@A", target = 4878048, addend = 0 },
+  { offset = 276, width = 4, type = "REL32", symbol = "?copy_vm@AnmLoaded@@QAEXPAUAnmVm@@H@Z", target = 4225824, addend = 0 },
+  { offset = 303, width = 4, type = "REL32", symbol = "?run@AnmVm@@QAEHXZ", target = 4585856, addend = 0 },
+  { offset = 320, width = 4, type = "DIR32", symbol = "?g_anm_on_switch_funcs@@3QBQ6IHPAUAnmVm@@H@ZB", target = 4791052, addend = 0 },
+  { offset = 346, width = 4, type = "REL32", symbol = "?run@AnmVm@@QAEHXZ", target = 4585856, addend = 0 },
+  { offset = 434, width = 4, type = "REL32", symbol = "_malloc", target = 4685735, addend = 0 },
+  { offset = 458, width = 4, type = "REL32", symbol = "_malloc", target = 4685735, addend = 0 },
+  { offset = 540, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 663, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 726, width = 4, type = "DIR32", symbol = "?g_zero_vec@@3UD3DXVECTOR3@@A", target = 5086660, addend = 0 },
+  { offset = 737, width = 4, type = "DIR32", symbol = "?g_zero_vec@@3UD3DXVECTOR3@@A", target = 5086660, addend = 8, storage_name = "g_zero_vec", storage_size = 12 },
+  { offset = 984, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 1148, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 1178, width = 4, type = "DIR32", symbol = "__real@40c90fdb", target = 4801976, addend = 0 },
+  { offset = 1205, width = 4, type = "DIR32", symbol = "__real@c0490fdb", target = 4802356, addend = 0 },
+  { offset = 1269, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 1494, width = 4, type = "REL32", symbol = "?get_state@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM1M@Z", target = 4423392, addend = 0 },
+  { offset = 1528, width = 4, type = "REL32", symbol = "?step_back@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM10MMM@Z", target = 4424560, addend = 0 },
+  { offset = 1649, width = 4, type = "REL32", symbol = "?play_sound_at_position@SoundManager@@QAEXHM@Z", target = 4579824, addend = 0 },
+]
+
 [units.reference-00437760]
 artifact_kind = "linked-pe"
 source = "src/LaserCurve.cpp"
@@ -8242,6 +8556,88 @@ linkages = [
   { offset = 22, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
   { offset = 48, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
   { offset = 77, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+]
+
+[units.reference-00438750]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw@LaserCurveInf@@UAEHXZ"
+object = "Laser.obj"
+candidate_address = 4489680
+target_address = 4425552
+size = 1371
+compare_size = 1371
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 47, width = 4, type = "DIR32", symbol = "__real@3fc90fdb", target = 4801844, addend = 0 },
+  { offset = 55, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 63, width = 4, type = "DIR32", symbol = "__real@40c90fdb", target = 4801976, addend = 0 },
+  { offset = 71, width = 4, type = "DIR32", symbol = "__real@c0490fdb", target = 4802356, addend = 0 },
+  { offset = 79, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 412, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 523, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 556, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 608, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8304, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 627, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8284, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 972, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 1083, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 1117, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 1135, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+  { offset = 1181, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8304, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 1202, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8284, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 1275, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 1296, width = 4, type = "REL32", symbol = "?draw_vertex_strip@AnmManager@@QAEHPAUAnmVm@@PAURenderVertex144@@H@Z", target = 4620784, addend = 0 },
+  { offset = 1340, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 1358, width = 4, type = "REL32", symbol = "?draw_vm@AnmManager@@QAEHPAUAnmVm@@@Z", target = 4621456, addend = 0 },
+]
+
+[units.reference-004392c0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_ex_angle@LaserCurveInf@@UAEHXZ"
+object = "Laser.obj"
+candidate_address = 4471248
+target_address = 4428480
+size = 412
+compare_size = 412
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 34, width = 4, type = "REL32", symbol = "?play_sound_centered@SoundManager@@QAEXHH@Z", target = 4579664, addend = 0 },
+  { offset = 196, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 269, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 301, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 328, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 338, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 390, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+]
+
+[units.reference-00439460]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_ex_angle_accel@LaserCurveInf@@UAEHXZ"
+object = "Laser.obj"
+candidate_address = 4468960
+target_address = 4428896
+size = 323
+compare_size = 323
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 43, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 51, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "__real@40c90fdb", target = 4801976, addend = 0 },
+  { offset = 101, width = 4, type = "DIR32", symbol = "__real@c0490fdb", target = 4802356, addend = 0 },
+  { offset = 152, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 178, width = 4, type = "REL32", symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4435200, addend = 0, reviewed_static = "laser" },
+  { offset = 210, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 237, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 247, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 302, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
 ]
 
 [units.reference-0043a2f0]
@@ -8471,6 +8867,22 @@ linkages = [
   { offset = 34, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
   { offset = 54, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
   { offset = 64, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+]
+
+[units.reference-0043ad00]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+object = "Laser.obj"
+candidate_address = 4464864
+target_address = 4435200
+size = 32
+compare_size = 32
+reviewed_static = "laser"
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
 ]
 
 [units.reference-0043ad60]

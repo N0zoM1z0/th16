@@ -1,0 +1,32 @@
+[functions.gather]
+profile = "x87-sincos-scale-v1"
+source = "src/AnmVmCallbacks.cpp"
+symbol = "?gather_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x406470
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x405700
+witness = 0x405775
+parent_sha256 = "77e438a7a54422e73466dfe8dd68323ea3ad82782589cc4c4b7c9bc74da04361"
+
+[functions.bullet]
+profile = "x87-sincos-scale-v1"
+source = "src/BulletManager.cpp"
+symbol = "?bullet_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x417510
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x412cb0
+witness = 0x412f9a
+parent_sha256 = "d8826e8a2a2f8c0a8cf3c6b5c5c4575d0ca20a607d87602314fd59d7ee82935c"
+
+[functions.laser]
+profile = "x87-sincos-scale-v1"
+source = "src/Laser.cpp"
+symbol = "?laser_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x43ad00
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x431050
+witness = 0x431070
+parent_sha256 = "a65914987136a458734e493a0d1010f6a9da7ee87a63908083f48fa0619eccc3"
