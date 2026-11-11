@@ -131,16 +131,20 @@ def write_units(units, target_hash):
     for name, unit in units.items():
         lines.append("[units." + name + "]")
         for key, value in unit.items():
-            if key in {"linkages", "profile", "link_profile"}:
+            if key in {"linkages", "data_spans", "profile", "link_profile"}:
                 continue
             lines.append(key + " = " + (json.dumps(value) if isinstance(value, str) else str(value)))
         for key in ["profile", "link_profile"]:
             lines.append(key + " = " + json.dumps(unit[key]))
-        lines.append("linkages = [")
-        for field in unit["linkages"]:
-            values = [k + " = " + (json.dumps(v) if isinstance(v, str) else str(v).lower()) for k, v in field.items()]
-            lines.append("  { " + ", ".join(values) + " },")
-        lines += ["]", ""]
+        for key in ["data_spans", "linkages"]:
+            if key not in unit:
+                continue
+            lines.append(key + " = [")
+            for field in unit[key]:
+                values = [k + " = " + (json.dumps(v) if isinstance(v, str) else str(v).lower()) for k, v in field.items()]
+                lines.append("  { " + ", ".join(values) + " },")
+            lines.append("]")
+        lines.append("")
     (ROOT / "config/match-units.toml").write_text("\n".join(lines) + "\n")
 
 
@@ -277,6 +281,14 @@ def main():
             if static:
                 unit["reviewed_static"] = static[0][0]
             fields = linked_code_fields(context.image, context.publics, address, size)
+            record = context.switch_owners.get(original)
+            if (record and "remap_values" in record and not fields["normalization_complete"]
+                    and size == record["remap_offset"] + len(record["remap_values"])):
+                # Classify only the undecoded suffix of a reviewed complete
+                # byte map. These bytes are still compared raw by replay_owner;
+                # Context.compare checks both complete tables before replay.
+                start = max(record["remap_offset"], fields["decoded_bytes"])
+                unit["data_spans"] = [dict(offset=start,width=size-start)]
             unresolved = []
             for field in fields["fields"]:
                 destination = int(field["candidate_target"])

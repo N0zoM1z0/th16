@@ -7,7 +7,7 @@ import tempfile
 import tomllib
 import unittest
 
-from strict_oracle import Context, Incomplete, ROOT
+from strict_oracle import Context, Incomplete, ROOT, replay_owner
 from switch_ownership import inspect_switch, validate_switch_owner, load_switch_owners, switch_owner_size
 
 
@@ -155,7 +155,7 @@ class SwitchOwnershipControls(unittest.TestCase):
             if f"reference-{address:08x}" not in units:
                 # The newly reviewed original remap owner has a different
                 # complete candidate extent; its refusal is checked below.
-                self.assertEqual(address, 0x4632f0)
+                self.assertIn(address, {0x4632f0,0x431fe0,0x438cb0,0x46c0d0,0x472030})
                 continue
             unit = units[f"reference-{address:08x}"]
             result = self.context.compare(unit)
@@ -328,6 +328,105 @@ class RemappedSwitchOwnershipControls(unittest.TestCase):
             record = load_switch_owners(path)[self.base]
             with self.assertRaisesRegex(ValueError,'unsigned index bound'):
                 self.inspect(record=record)
+
+    def test_further_complete_remap_owners_replay_every_byte(self):
+        units = tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        for address,size in [(0x41aa70,876),(0x423f80,391),(0x424c10,549),
+                             (0x45f610,364),(0x45f780,272),(0x45f890,170)]:
+            with self.subTest(address=hex(address)):
+                unit = units[f'reference-{address:08x}']
+                record = self.context.switch_owners[address]
+                result = self.context.compare(unit)
+                self.assertEqual(result['result'],'exact')
+                self.assertEqual(result['compared_size'],size)
+                map_bytes = set(range(record['remap_offset'],size))
+                field_bytes = {b for f in result['linkages'] for b in range(f['offset'],f['offset']+f['width'])}
+                self.assertFalse(map_bytes & field_bytes)
+                self.assertEqual(result['data_spans'],unit.get('data_spans',[]))
+                for span in result['data_spans']:
+                    self.assertGreaterEqual(span['offset'],record['remap_offset'])
+                    self.assertEqual(span['offset']+span['width'],size)
+
+    def test_every_further_remap_byte_is_required_on_both_sides(self):
+        units = tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        for address in (0x41aa70,0x423f80,0x424c10,0x45f610,0x45f780,0x45f890):
+            unit = units[f'reference-{address:08x}'];record = self.context.switch_owners[address]
+            for side in ('target','image'):
+                base = address if side=='target' else unit['candidate_address']
+                for offset,value in enumerate(record['remap_values'],record['remap_offset']):
+                    context = copy.copy(self.context)
+                    setattr(context,side,ImageOverlay(getattr(context,side),{base+offset:value^1}))
+                    with self.subTest(address=hex(address),side=side,offset=offset),self.assertRaises(Incomplete):
+                        context.compare(unit)
+
+    def test_multibyte_table_alignment_is_decoded_and_compared(self):
+        units = tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        for address,length in [(0x41aa70,3),(0x45f610,2)]:
+            record = self.context.switch_owners[address];unit = units[f'reference-{address:08x}']
+            self.assertEqual(record['table_offset']-record['code_size'],length)
+            changes = {unit['candidate_address']+record['code_size']+i:0x90 for i in range(length)}
+            context = copy.copy(self.context);context.image = ImageOverlay(context.image,changes)
+            # Another valid NOP encoding is still a full-byte mismatch.
+            result = context.compare(unit)
+            self.assertEqual(result['result'],'mismatch')
+            self.assertEqual(result['compared_size'],switch_owner_size(record))
+            for raw in (b'\xc3'+b'\x90'*(length-1),b'\x0f'*length):
+                image = ImageOverlay(self.context.target,{address+record['code_size']+i:b for i,b in enumerate(raw)})
+                with self.assertRaisesRegex(ValueError,'alignment padding'):
+                    inspect_switch(image,address,record)
+
+    def test_further_original_scopes_do_not_resize_different_candidates(self):
+        annotations = [line.split() for line in (self.context.directory/'functions.txt').read_text().splitlines()]
+        for address,size in [(0x431fe0,1588),(0x438cb0,1548),(0x46c0d0,2014),(0x472030,7046)]:
+            _,candidate,symbol = next(r for r in annotations if int(r[0],0)==address)
+            function = next(f for f in self.context.linked['functions'] if f['symbol']==symbol and int(f['address'],0)==int(candidate,0))
+            source = self.context.boundaries[address]['source_file']
+            unit = dict(artifact_kind='linked-pe',source=source,object=source.rsplit('/',1)[1].replace('.cpp','.obj'),
+                        symbol=symbol,candidate_address=int(candidate,0),target_address=address,
+                        size=function['size'],compare_size=function['size'],profile=self.context.receipt['compiler_profile'],
+                        link_profile=self.context.receipt['linker_profile'],linkages=[])
+            self.assertEqual(switch_owner_size(self.context.switch_owners[address]),size)
+            self.assertNotEqual(unit['size'],size)
+            with self.subTest(address=hex(address)),self.assertRaisesRegex(Incomplete,'complete candidate owner'):
+                self.context.compare(unit)
+
+    def test_selector_data_coverage_does_not_mask_raw_comparison(self):
+        units = tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        unit = units['reference-00423f80']
+        normal = self.context.compare(unit)
+        self.assertTrue(normal['data_spans'])
+        self.assertLess(normal['decoded_bytes']+15,unit['size']-1)
+        at = unit['candidate_address']+unit['size']-1
+        before = self.context.image.read_address(at,1)[0]
+        image = ImageOverlay(self.context.image,{at:before^1})
+        function = next(f for f in self.context.linked['functions'] if f['symbol']==unit['symbol'])
+        # Isolate raw replay from the preceding structural map check, using
+        # the real complete candidate PDB owner and exhaustive unit fields.
+        result = replay_owner(image,self.context.target,self.context.publics,function,unit,
+                              eh_handlers=self.context.eh_handlers,static_functions=self.context.static_functions)
+        self.assertEqual(result['result'],'mismatch')
+        self.assertEqual(result['compared_size'],391)
+        self.assertEqual(result['matched_bytes'],390)
+        context = copy.copy(self.context);context.image = image
+        with self.assertRaises(Incomplete):
+            context.compare(unit)
+
+    def test_selector_coverage_cannot_be_omitted_shortened_or_overlap_code(self):
+        units = tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        for address in (0x41aa70,0x423f80,0x424c10,0x45f610,0x45f780):
+            original = units[f'reference-{address:08x}']
+            self.assertTrue(original['data_spans'])
+            for change in ('omit','shorten','expand'):
+                unit = copy.deepcopy(original)
+                if change=='omit':
+                    del unit['data_spans']
+                elif change=='shorten':
+                    unit['data_spans'][0]['width'] -= 1
+                else:
+                    unit['data_spans'][0]['offset'] -= 1
+                    unit['data_spans'][0]['width'] += 1
+                with self.subTest(address=hex(address),change=change),self.assertRaises((Incomplete,ValueError)):
+                    self.context.compare(unit)
 
     @classmethod
     def tearDownClass(cls):

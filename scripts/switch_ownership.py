@@ -39,11 +39,14 @@ def inspect_switch(image, address, record):
     code_size, count = record["code_size"], record["case_count"]
     size = switch_owner_size(record)
     payload = image.read_address(address, size)
-    if (address + record["table_offset"]) % 4 or any(
-            byte not in {0x90, 0xCC} for byte in payload[code_size:record["table_offset"]]):
-        raise ValueError("switch table lacks its reviewed alignment padding")
     decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     decoder.detail = True
+    alignment = payload[code_size:record["table_offset"]]
+    padding = list(decoder.disasm(alignment, address + code_size))
+    if ((address + record["table_offset"]) % 4
+            or sum(i.size for i in padding) != len(alignment)
+            or any(i.mnemonic not in {"nop", "int3"} for i in padding)):
+        raise ValueError("switch table lacks its reviewed alignment padding")
     instructions = list(decoder.disasm(payload[:code_size], address))
     if sum(i.size for i in instructions) != code_size:
         raise ValueError("switch code is not completely decoded")

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after complete special-vertices scope review and a countdown source trial.
+Updated 2026-11-11 after ten further complete remap scopes and a collision source trial.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,13 +18,19 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **790 exact, 61 mismatch and 364 incomplete** among
-1215 annotated candidates, covering 126,050 exact owned bytes. The latest
-original-only review corrects `AnmVm::update_special_vertices` from a 2,068-byte
-code context to its complete **2,101-byte code/table owner**. Its full candidate
-is 2,097 bytes and remains incomplete. A guarded countdown source trial does
-not reproduce the original and is restored. No new exact credit is claimed;
-all 790 exact results and all 851 units at `0baaf5f` remain unchanged. See
+The current report has **796 exact, 61 mismatch and 358 incomplete** among
+1215 annotated candidates, covering 128,672 exact owned bytes. Ten further
+original bounded-remap owners now include all code, alignment, targets and byte
+maps. Six existing C++ candidates pass their complete independent scopes,
+adding 2,622 primary bytes. All 790 exact results and all 851 units at `6af1a3b`
+remain unchanged; six new units give 857 total. The four different candidates
+retain their refusals. See
+[further complete remap scopes](knowledge/remapped-owner-scopes.md).
+
+The preceding special-vertices review corrects its 2,068-byte code context to
+a complete 2,101-byte code/table owner. Its candidate is 2,097 bytes and remains
+incomplete. A guarded countdown trial is rejected and restored. That batch
+adds no exact credit. See
 [the complete special-vertices scope](knowledge/special-vertices-scope.md).
 
 The preceding private-helper batch establishes two complete AnmVmRun helpers,
@@ -121,16 +127,19 @@ linked fields/relocations are required. Game source, compiler/linker profiles
 are unchanged. The preceding batch extends the private set to thirteen records
 and adds a complete 39-byte XY-output profile and an original-witness dispatch
 profile.
-The latest batch extends primary switch ownership with an explicitly reviewed
-complete trailing byte map. It requires the full original hash, all candidate
-slots/address relocations and every map byte. Private witness review now checks
-the complete reviewed parent payload before decoding its code portion. The
-parent's complete candidate/original extent mismatch remains refused.
-Arbitrary indirect traversal and generic private names remain refused.
-The guarded vertex countdown trial is rejected and restored. Current outputs
-are freshly rebuilt from the restored source; all 192 dependency stamps
-validate. See `.analysis/special-vertices-restored-check.json`. No clean build
-or archived output substitution is used.
+The preceding batch extends primary switch ownership with an explicitly
+reviewed complete trailing byte map. The latest batch adds ten records under
+that profile. Alignment is now fully decoded as NOP/INT3 instructions, including
+original two/three-byte NOPs; every alignment byte remains compared. The audit
+uses the existing raw trailing-data contract for undecoded map suffixes and
+serializes them into the units. These declarations never mask or normalize map
+bytes. Both whole tables, complete source-qualified PDB extents and exhaustive
+relocations/bindings remain required. Generic private names and unreviewed
+indirect dispatches remain refused. No source or compiler/linker change is
+retained. The collision matrix-product source trial is rejected and restored;
+current outputs are freshly rebuilt from baseline source and all 192 dependency
+stamps validate. See `.analysis/circle-rect-restored-check.json`. No clean build
+or archived-output substitution is used.
 
 An ordinary out-of-line UpdateFunc constructor was built incrementally as a
 source-context experiment. It removes redundant initialization stores and
@@ -163,10 +172,12 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **156 controls across seven relevant suites**:
+The current batch passes **162 controls across seven relevant suites**:
 private identities (33), strict Oracle (14), reviewed linkages (26), focused audit
-(3), primary switch ownership (30), constructor EH (25) and empty EH (25).
-Logs use `.analysis/special-vertices-{static-controls,oracle-controls,linkage-controls,focused-controls,switch-controls,constructor-eh-controls,empty-eh-controls}.log`.
+(3), primary switch ownership (36), constructor EH (25) and empty EH (25).
+Logs use `.analysis/remapped-owner-{static,oracle,linkage,focused,switch,constructor-eh,empty-eh}-controls.log`.
+The preceding special-vertices batch passed 156 controls across seven suites;
+its logs use `.analysis/special-vertices-*controls.log`.
 The preceding bounded-dispatch batch passed 143 controls across seven suites;
 its logs use `.analysis/anm-private-dispatch-*controls.log`.
 The preceding eight-helper batch passed 38 controls across three suites.
@@ -197,14 +208,17 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/special-vertices-full-audit.log` and
-`.analysis/special-vertices-regression-check.json`. The original-only full parent
-reproducer and evidence are `.analysis/review-special-vertices-scope.py` and
+are `.analysis/remapped-owner-full-audit.log` and
+`.analysis/remapped-owner-regression-check.json`. The original-only reproducer
+and full scopes are `.analysis/review-remapped-owner-scopes.py` and
+`.analysis/remapped-owner-original-scopes.json`. The preceding special-vertices
+reproducer/evidence remain `.analysis/review-special-vertices-scope.py` and
 `.analysis/special-vertices-original-scope.json`. The current incremental build
-log is `.analysis/special-vertices-restored-build.log`. Complete candidate source
-trial scopes are `.analysis/special-vertices-source-trial.json`. The preceding
-circle trial evidence is `.analysis/circle-angle-source-trials.json`. The rejected
-source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
+log is `.analysis/circle-rect-restored-build.log`; complete rejected source
+trial owners are `.analysis/circle-rect-source-trial.json`. The preceding
+countdown and circle source trials remain in
+`.analysis/special-vertices-source-trial.json` and
+`.analysis/circle-angle-source-trials.json`.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -261,7 +275,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 364 incomplete candidates comprise 197 with unresolved fields, 132
+The 358 incomplete candidates comprise 197 with unresolved fields, 126
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences and two requiring
 reviewed switch or owned-data extents. The extent category includes original
@@ -300,6 +314,23 @@ force scheduling, spills or registers. The main interpreter remains incomplete
 with eight unbound fields and additional owned-data scope questions. Other
 private wrappers still need independent original entry/path and producer
 reviews.
+
+Ten further original remap scopes are now independently complete. The enemy
+allocator, both EnemyInf global-pointer getters and AnmVm integer/value pointer
+getters pass all code, both tables and alignment, totaling 2,622 bytes. See
+[the new scopes](knowledge/remapped-owner-scopes.md). LaserLineInf::run_ex
+remains 1,748 against 1,588 bytes; LaserCurveInf::run_ex is 1,720 against 1,548;
+texture conversion is 1,822 against 2,014. EclRunContext::ecl_run is 7,462 against
+7,046 and still exposes three unbound fields first. Do not resize these roots
+to the candidates. Original complete scope review and candidate exact acceptance
+remain separate requirements.
+
+The circle/rectangle collision trial reverses rotation multiplication operands
+into matrix-coefficient-first form. It leaves the full owner at 243/400 matching
+bytes and is rejected. Full original and baseline/trial/restored candidate
+owners are in `.analysis/circle-rect-source-trial.json`; complete source/output
+sets are `.analysis/circle-rect-{source-baseline,matrix-products-artifacts}/`.
+Do not repeat this context or force operand registers.
 
 A natural circle source trial splitting angle advancement from normalization
 leaves its complete result at 514/588 matching bytes and is restored. Full
@@ -367,8 +398,8 @@ The LZSS deletion row at `0x00458370` is now 84 bytes through `0x004583C3`.
 The independently reached tail helpers at `0x004583D0` and `0x00458430` own
 83 and 121 bytes. All 313 bytes in the superseded Ghidra region are accounted
 for by those owners and 25 INT3 bytes. Do not restore the overlapping aggregate.
-Three bounded parent switches are used only to establish witness paths in the
-latest review. They do not have accepted complete comparison-owner profiles.
+The earlier runtime-entry review uses three bounded parent switches only for
+witness paths. Those proofs alone grant no complete primary comparison credit.
 
 The eight imported alignment helpers and 86 explicitly artificial standalone
 locals were removed. The latter cleanup withdrew 23 earlier exact results;
@@ -376,11 +407,13 @@ all 600 passes after cleanup remain exact. Recover real types and calling
 context rather than restoring the artificial inputs. Other compiler-context
 helpers, forced accesses and type hypotheses still need source review.
 
-The eight reviewed bounded switch scopes are complete. `PosVel::step` and
-`anm_masked_effect_on_switch` still mismatch, with four and 45 differing bytes
-respectively; neither receives exact credit.
-The two remaining unreviewed indirect dispatches have different evidence needs.
-Do not generalize the single-table proof to multiple or unbounded tables.
+Nineteen reviewed bounded switch scopes now include all owned code and data:
+eight direct-table owners and eleven byte-remap owners. Fourteen have complete
+comparison units. The original special-vertices, line/curve run_ex, texture
+conversion and ECL interpreter owners still lack complete candidate comparisons.
+`PosVel::step` and `anm_masked_effect_on_switch` remain complete mismatches with
+four and 45 differing bytes. Two other indirect dispatches still need their own
+scope review. Do not generalize these profiles to multiple or unbounded tables.
 Read the final repair-log section before retrying PosVel vector-expression
 variants, VM deletion aliases, precomputed render limits or shake timer helpers.
 The circle constructor has now been simplified in isolation: this regresses

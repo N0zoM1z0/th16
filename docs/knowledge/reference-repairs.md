@@ -1293,3 +1293,50 @@ Baseline and trial source/output sets are under
 `.analysis/special-vertices-{baseline,countdown-artifacts}/`. Source-origin
 review remains open; Factory acceptance remains unsubmitted. Nothing is
 published.
+
+## Further complete remapped-switch scopes
+
+Original-only traversal establishes ten more complete code/alignment/target/map
+owners. The enemy allocator, EnemyInf integer/float global-pointer getters and
+AnmVm integer/value-pointer getters pass their complete 876, 391, 549, 364, 272
+and 170-byte scopes. These add **2,622 exact primary bytes**. Full replay reports
+**796 exact, 61 mismatch and 358 incomplete**, covering 128,672 exact primary
+bytes. All 790 preceding exact results and all 851 prior units remain unchanged;
+six new complete units give 857 total. See
+[further remap scopes](remapped-owner-scopes.md).
+
+The four other complete original scopes remain refused: line/curve run_ex,
+texture conversion and the ECL interpreter. Original scope derivation does not
+read candidate sizes or artifacts, and all ten original patterns are retained,
+including those whose candidates differ. No target is resized to a candidate.
+
+The verifier now fully decodes original multi-byte NOP alignment intervals;
+only NOP/INT3 padding is allowed, and all bytes remain compared. For five
+otherwise complete candidates whose byte-map suffix cannot decode as x86,
+the audit records and serializes the existing Oracle raw trailing-data coverage
+declaration. All code, both tables and every map byte remain within the full
+primary extent. No byte is masked or normalized by the coverage declaration.
+The full map profile and all table/address relocations are still required.
+A control isolates raw replay on the real 391-byte PDB owner and verifies that
+changing an undecoded selector byte gives a full 390/391 mismatch. Missing,
+shortened or overlapping declarations are rejected. Neither raw replay nor
+`oracle_fields.py` changes.
+
+A natural circle/rectangle collision source trial reverses rotation product
+operands into matrix-coefficient-first form. It leaves the complete result at
+243/400 matching bytes and is rejected. Source is restored byte for byte and
+freshly rebuilt; full input identity equals baseline, all artifact hashes match
+the receipt and all 192 dependency stamps validate. No clean build, archived
+output substitution or forced instruction allocation is used.
+
+All 162 controls pass across seven relevant suites. Evidence is
+`.analysis/review-remapped-owner-scopes.py`,
+`.analysis/remapped-owner-original-scopes.json`,
+`.analysis/remapped-owner-full-audit.log`,
+`.analysis/remapped-owner-regression-check.json`,
+`.analysis/remapped-owner-{switch,static,oracle,linkage,focused,constructor-eh,empty-eh}-controls.log`,
+`.analysis/circle-rect-source-trial.json` and
+`.analysis/circle-rect-restored-check.json`. Source and complete output sets
+remain under `.analysis/circle-rect-{source-baseline,matrix-products-artifacts}/`.
+Source-origin review remains open, Factory acceptance remains unsubmitted and
+nothing is published.
