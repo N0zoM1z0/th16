@@ -63,6 +63,26 @@ class ReviewedLinkageControls(unittest.TestCase):
                 with self.assertRaises(Incomplete):
                     self.check_rows(rows)
 
+    def test_fixed_numeric_literals_require_their_own_complete_typed_reads(self):
+        for symbol, witness, duplicate, size in [
+                ("__real@41a00000", 0x4549a9, 0x4917e8, 4),
+                ("__real@4020000000000000", 0x454b8f, 0x494bc8, 8),
+                ("__real@42200000", 0x454bfb, 0x4917f0, 4),
+                ("__real@42480000", 0x405abc, 0x4917f4, 4),
+                ("__real@42700000", 0x40c534, 0x491ec8, 4),
+                ("__real@41f00000", 0x42640c, 0x4917ec, 4),
+                ("__real@40200000", 0x443a56, 0x49457c, 4)]:
+            mutations = [("witness_instruction", hex(witness + 1)),
+                         ("witness_instruction", "0x454970"),
+                         ("witness_mnemonic", "subss"), ("size", str(size * 2)),
+                         ("target_address", hex(duplicate))]
+            for field, value in mutations:
+                with self.subTest(symbol=symbol, field=field, value=value):
+                    rows = copy.deepcopy(self.rows)
+                    next(r for r in rows if r["symbol"] == symbol)[field] = value
+                    with self.assertRaises(Incomplete):
+                        self.check_rows(rows)
+
     def test_wrong_runtime_library_is_rejected(self):
         rows = copy.deepcopy(self.rows)
         rows[0]["candidate_library"] = "unreviewed.lib"

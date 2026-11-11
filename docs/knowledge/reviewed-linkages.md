@@ -9,6 +9,10 @@ The subsequent [stage/time review](stage-time-identities.md) adds the complete
 identity. Table initialization and every string/relocation are independently
 checked; no generic mutable-data binding is enabled.
 
+The subsequent [numeric storage review](menu-literal-identities.md) adds seven
+fixed typed literal witnesses for values with duplicate original payloads. It
+also records complete consumer outcomes and rejected music-room source trials.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

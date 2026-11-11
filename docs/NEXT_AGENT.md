@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the replay-slot snapshot source improvement.
+Updated 2026-11-11 after seven fixed numeric identities and music-room source trials.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,20 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report remains **809 exact, 61 mismatch and 345 incomplete** among
-1215 annotated candidates, covering 141,487 exact owned bytes and 870 units.
+The current report has **811 exact, 63 mismatch and 341 incomplete** among
+1215 annotated candidates, covering 143,208 exact owned bytes and 874 units.
+Seven fixed numeric identities resolve complete EnemyData::update_fog (1,547)
+and FpsCounter::draw (174) passes, adding 1,721 primary exact bytes. Player's
+complete 258-byte circle check and the complete 3,136-byte music-room owner
+become mismatches with 181/3,133 matching bytes. All 809 preceding exact
+results and all 870 preceding units remain retained; four new units give 874
+total. Three ordinary music-room initialization contexts are rejected and
+source is restored byte for byte and freshly rebuilt. No game source or
+verifier change is retained in this batch. See
+[fixed numeric identities and music-room trials](knowledge/menu-literal-identities.md).
+
+The preceding replay-slot checkpoint reported 809 exact, 61 mismatch and 345
+incomplete, covering 141,487 exact owned bytes and 870 units.
 PauseMenu::tick_open now snapshots the selected replay slot before creating its
 replacement, recovering the original index-read order and replay-name copy
 path. Both whole owners remain 4,676 bytes. Full diagnostic replay improves
@@ -151,10 +163,13 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. The current source
-change is one used replay-slot local in PauseMenu.cpp. It is freshly rebuilt,
-and all 192 dependency stamps validate. See
-`.analysis/pause-open-retained-build-check.json`. The preceding callback
+cache and non-LTCG symbol-discovery cache are retained. The retained source
+change is one used replay-slot local in PauseMenu.cpp. The latest music-room
+trials are restored byte for byte and source input identity equals that
+checkpoint. All 1,719 complete linked owner entries/extents/payloads remain
+unchanged, current artifacts match their fresh incremental receipt and all
+192 dependency stamps validate. See
+`.analysis/menu-literal-restored-context-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -214,11 +229,13 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **207 controls across nine relevant suites**:
+The current batch passes **208 controls across nine relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
-(26), focused audit (3), constructor EH (25) and empty EH (25). Logs use
-`.analysis/pause-open-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+(27), focused audit (3), constructor EH (25) and empty EH (25). Logs use
+`.analysis/menu-literal-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding replay-slot batch passed 207 controls across nine suites;
+its logs use `.analysis/pause-open-*controls.log`.
 The preceding stage/time batch also passed 207 controls across nine suites;
 its logs use `.analysis/stage-time-*controls.log`.
 The preceding compound batch passed 187 controls across eight suites;
@@ -259,9 +276,16 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/pause-open-full-audit.log` and
-`.analysis/pause-open-regression-check.json`. Source trials, whole payloads and
-all actual linked fields are in `.analysis/pause-open-source-trials.json`;
+are `.analysis/menu-literal-full-audit.log` and
+`.analysis/menu-literal-regression-check.json`. Original identities and scopes
+are `.analysis/menu-literal-original-identities.json`,
+`.analysis/additional-literal-original-identities.json` and
+`.analysis/enemy-fog-original-scope.json`, with original-only reproducers named
+`review-menu-literal-originals.py`, `review-additional-literal-originals.py` and
+`review-enemy-fog-original-scope.py` beneath `.analysis/`. Music-room trials and
+all complete payloads/fields are in `.analysis/music-room-source-trials.json`.
+The preceding replay-slot source trials, whole payloads and all actual linked
+fields remain in `.analysis/pause-open-source-trials.json`;
 retained case/instruction layout is `.analysis/pause-open-retained-layout.json`.
 The preceding original identity and consumer
 scope evidence is `.analysis/stage-time-original-identities.json` and
@@ -274,7 +298,10 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-trial evidence is `.analysis/pause-open-retained-build.log`,
+source-trial evidence is `.analysis/music-room-restored-build.log`,
+`.analysis/menu-literal-restored-context-check.json` and
+`.analysis/music-room-source-trials.json`. The preceding replay-slot evidence
+remains `.analysis/pause-open-retained-build.log`,
 `.analysis/pause-open-retained-build-check.json` and
 `.analysis/pause-open-source-trials.json`. The preceding interpolation evidence
 remains `.analysis/interp-methods-restored-build.log`,
@@ -339,7 +366,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 345 incomplete candidates comprise 186 with unresolved fields, 122
+The 341 incomplete candidates comprise 179 with unresolved fields, 125
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.
@@ -399,8 +426,26 @@ float-variable getter and 876-byte render-state setup all pass. See
 [the new direct scopes](knowledge/direct-owner-scopes.md). Twenty-five reviewed
 candidates have different whole extents; four equal-size candidates lacked
 bindings at that checkpoint. Stage_clear now passes after the complete stage-table
-review. BombInf::create (nine), EndingScriptVm::run (six) and
-TitleInf::do_music_room (seven) remain unresolved.
+review. BombInf::create (nine) and EndingScriptVm::run (six) remain unresolved.
+Music-room bindings now resolve, exposing a complete 3,133/3,136 mismatch.
+Its only differences are zero-store displacement bytes at +0x174, +0x17C and
++0x184: the candidate initializes position X/Y before the loop index, while
+the original initializes the index first. Declaring the used counter earlier
+retains the same mismatch; assigning one zero Float3 gives a 3,152-byte owner;
+initializing X/Y per comment line gives 3,105/3,136. All three contexts are
+rejected and source is restored. See
+[the review](knowledge/menu-literal-identities.md) and
+`.analysis/music-room-source-trials.json`. Do not repeat these contexts or
+force stores/registers to recover the order.
+
+Seven newly reviewed typed numeric bindings include the music-room values
+20.0f/8.0/40.0f and further 50.0f/60.0f/30.0f/2.5f. Original dense witness
+owners and all duplicate read-only copies are retained; only a fixed original
+typed read selects storage. Complete enemy fog and FPS drawing pass; the
+complete player circle check remains 181/258. Gather's complete original is
+1,973 bytes against 1,993, and stage fog is 2,156 against 2,172. The sound
+thread exposes an extent refusal after its last field resolves. Other callers
+retain unresolved fields. No scope or field-normalization rule changes.
 
 The original interp_common_methods at `0x004033F0` now owns 1,692 bytes:
 1,566 code, two alignment bytes and 31 table slots. Its baseline candidate is
@@ -432,8 +477,8 @@ but the original profile still refuses it. Resume-to-switch-exit and
 quit-shortcut early-return forms produce no code improvement and are rejected.
 Do not repeat these forms or force registers, base/index encodings, case offsets
 or layout to hide the remaining differences. Other candidates
-have different whole extents, with STD exposing two
-unbound fields first. Ascii drawing at `0x00408A89` needs memory-bound/reload
+have different whole extents, with STD now exposing one
+unbound field first. Ascii drawing at `0x00408A89` needs memory-bound/reload
 alias evidence; the large enemy ECL dispatch at `0x0041DD51` has an interposed
 frame store. Both remain unreviewed. Locators and reasons are in
 `.analysis/compound-owner-original-scopes.json`. Do not infer a full owner
@@ -522,9 +567,10 @@ context rather than restoring the artificial inputs. Other compiler-context
 helpers, forced accesses and type hypotheses still need source review.
 
 Sixty-five reviewed bounded switch scopes include complete code and owned data:
-45 direct-table, eleven byte-remap and nine compound owners. Twenty-five have
-complete retained comparison units (23 exact and two mismatch). The remaining
-40 original reviews grant no candidate credit.
+45 direct-table, eleven byte-remap and nine compound owners. Twenty-six have
+complete retained comparison units (23 exact and three mismatch). The remaining
+39 original reviews grant no candidate credit. Music-room's full owner is now
+a complete mismatch.
 `PosVel::step` and `anm_masked_effect_on_switch` remain complete mismatches with
 four and 45 differing bytes. Two candidates are refused specifically for
 unreviewed indirect dispatches; additional unresolved graphs can be hidden

@@ -1501,3 +1501,53 @@ Evidence is `.analysis/pause-open-source-trials.json`,
 `.analysis/pause-open-regression-check.json` and
 `.analysis/pause-open-<suite>-controls.log`. Source-origin review remains open;
 Factory acceptance remains unsubmitted. Nothing is published.
+
+## Further fixed numeric identities and music-room source contexts
+
+Seven original-only typed read witnesses establish fixed identities for single
+20, 40, 50, 60, 30 and 2.5 values and double 8. Every payload has duplicate
+original read-only copies; no address is selected to make a consumer pass.
+The original witness owners, full values, instruction starts and all following
+padding are reviewed independently of candidate extents. The existing literal
+profile is unchanged. See [the numeric review](menu-literal-identities.md).
+
+Complete EnemyData::update_fog (1,547 bytes) and FpsCounter::draw (174) pass,
+adding **1,721 exact primary bytes**. Player::check_hit_circle becomes a complete
+181/258 mismatch; TitleInf::do_music_room becomes a complete 3,133/3,136 mismatch,
+including its alignment and four target slots. Canonical replay reports
+**811 exact, 63 mismatch and 341 incomplete**, covering 143,208 exact primary
+bytes. All 809 preceding exact results and all 870 previous units remain
+retained; four new complete units give 874 total. Neither mismatch receives
+exact credit. Three further candidates now expose extent refusals; other
+callers retain unresolved fields.
+
+The music-room difference is three zero-store displacement bytes: the original
+initializes its loop index before position X/Y, and the candidate reverses that
+order. Three ordinary source contexts are rejected. Declaring the used counter
+before the position stores leaves 3,133/3,136. A single zero-Float3 assignment
+gives a 3,152-byte owner and is refused. Initializing X/Y per comment line gives
+3,105/3,136. Actual candidate table operands locate the vector trial's changed
+data extent; the original scope stays 3,136. Do not repeat these contexts or
+force stores/registers. No dead local, padding helper, mask or shortened scope
+is introduced.
+
+Baseline MainMenuStates.cpp is restored byte for byte and freshly rebuilt.
+Source input identity equals the preceding checkpoint, all 1,719 complete
+linked source-qualified owners retain their entries/extents/raw hashes, every
+artifact matches its current receipt and all 192 dependency stamps validate.
+The preceding PauseMenu source improvement is preserved. No clean build or
+archived-output substitution is used; no game source change is retained here.
+
+All 208 controls pass across nine suites. The new linkage control checks all
+seven values against instruction-interior/different witnesses, changed
+mnemonics, expanded extents and duplicate original storage. Evidence is
+`.analysis/menu-literal-original-identities.json`,
+`.analysis/additional-literal-original-identities.json`,
+`.analysis/enemy-fog-original-scope.json`,
+`.analysis/music-room-source-trials.json`,
+`.analysis/menu-literal-restored-context-check.json`,
+`.analysis/menu-literal-full-audit.log`,
+`.analysis/menu-literal-regression-check.json` and
+`.analysis/menu-literal-<suite>-controls.log`. Original-only reproducers and full
+source/output sets are retained locally. Source-origin review remains open;
+Factory acceptance remains unsubmitted. Nothing is published.
