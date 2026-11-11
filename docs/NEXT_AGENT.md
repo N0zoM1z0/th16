@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the complete AnmManager constructor EH aggregate review.
+Updated 2026-11-11 after the manager wrapper review and constructor-context trial.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,9 +18,15 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **709 exact, 53 mismatch and 453 incomplete** among
-1215 annotated candidates, covering 117,308 exact owned bytes. All 709 exact
-results at `0f46eaf` remain exact. The original AnmManager constructor independently
+The current report has **730 exact, 53 mismatch and 432 incomplete** among
+1215 annotated candidates, covering 117,912 exact owned bytes. All 709 exact
+results at `f89675d` remain exact. The latest original-only review establishes
+20 registered manager callbacks and one Ascii drawing helper reached by a
+registered callback's tail transfer. All 21 complete owners pass, adding
+604 bytes. See [manager wrapper scopes](knowledge/manager-wrapper-scopes.md).
+All 762 previous comparison units remain identical, alongside 21 new units.
+
+The original AnmManager constructor independently
 establishes 39 draw registrations and two tick registrations. All 41 complete
 callbacks pass, adding 1,182 bytes. See
 [AnmManager callback evidence](knowledge/anm-callback-scopes.md). The constructor
@@ -33,8 +39,7 @@ state edges, frame dependencies and cleanup/runtime entries checked. Its entire
 5,071-byte primary owner now compares as a mismatch, with 5,054 matching bytes
 and 17 differences in one UpdateFunc constructor store-order interval. See
 [the aggregate review](knowledge/anm-constructor-eh.md). No new exact credit
-is granted. All 761 earlier comparison units remain unchanged, alongside one
-new complete constructor mismatch unit.
+is granted by the EH review. Its complete constructor mismatch unit is retained.
 
 The preceding 26 passes, including the 442-byte Replay playback body, remain
 exact; see [registered callbacks](knowledge/registered-callbacks.md). The seven
@@ -60,8 +65,22 @@ acceptance receipts have been submitted.
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
-This batch extends the EH verifier with one explicitly reviewed aggregate
-profile; it changes no game source or compiler profile and needs no rebuild.
+The preceding batch extended the EH verifier with one explicitly reviewed
+aggregate profile. This batch changes original boundary/origin inventories
+and generated comparison ledgers, with no retained game source, compiler
+profile, Oracle or binding-rule changes.
+
+An ordinary out-of-line UpdateFunc constructor was built incrementally as a
+source-context experiment. It removes redundant initialization stores and
+changes eight complete linked owner extents, including create_func 106 to 77
+bytes and AnmManager 5071 to 4046. It does not reproduce the original. Trial
+sources and complete outputs are retained under
+`.analysis/updatefunc-ordinary-out-of-line-artifacts/`. Baseline sources and
+attested outputs were restored after checking the full source-input identity
+and every artifact hash; see `.analysis/updatefunc-context-restore-check.json`.
+The current receipt remains the baseline incremental receipt. Trial object
+caches are preserved; 104 affected dependency stamps will invalidate normally
+at the next incremental build. Do not force cache reuse or run a clean build.
 The preceding Replay local cleanup remains: its ordinary recorded-input local
 produces a complete 281-byte candidate against the 337-byte original. The body
 is incomplete. Do not restore forced accesses to imitate its unexplained spill.
@@ -70,16 +89,21 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **92 controls across five relevant suites**: constructor
-EH, empty EH, strict Oracle, reviewed linkage and focused audit. Logs use
+The current batch passes **17 controls across two relevant suites**: strict
+Oracle and focused audit. Logs use
+`.analysis/manager-wrapper-{oracle,focused}-controls.log`. The preceding EH
+checkpoint passed 92 controls across five suites; its logs use
 `.analysis/anm-constructor-{eh,empty-eh,oracle,linkage,focused}-controls.log`.
 The earlier full control checkpoint passed 140 controls across nine suites.
 Original scope derivation and disassembly are in
 `.analysis/reviewed-anm-layer-scopes.json`; its original-only
-reproducer is `.analysis/review-anm-layer-scopes.py`. The current full replay and
-retained-pass evidence are `.analysis/anm-constructor-eh-full-audit.log` and
-`.analysis/anm-constructor-eh-regression-check.json`. The unchanged incremental
-build log remains `.analysis/record-input-cleanup-build.log`.
+reproducer is `.analysis/review-anm-layer-scopes.py`. The latest original-only
+reproducer and scopes are `.analysis/review-manager-wrapper-scopes.py` and
+`.analysis/reviewed-manager-wrapper-scopes.json`. Current replay and retained-pass
+evidence are `.analysis/manager-wrapper-full-audit.log` and
+`.analysis/manager-wrapper-regression-check.json`. The baseline incremental
+build log remains `.analysis/record-input-cleanup-build.log`; the rejected
+source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -136,7 +160,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 453 incomplete candidates comprise 236 with unresolved fields, **56 missing
+The 432 incomplete candidates comprise 236 with unresolved fields, **35 missing
 independently reviewed original boundaries**, 113 genuine candidate/target extent
 differences, 40 without a same-start contribution, six with source-object
 ownership differences and two requiring reviewed switch or owned-data extents.
@@ -154,13 +178,17 @@ constructor remain a source/context hypothesis. Recover that context rather
 than special-casing one registration or forcing the instruction order. Other
 nonempty EH graphs still need independent complete-owner review; do not
 generalize this explicit profile to arbitrary tables or interior symbols.
+Moving an ordinary constructor definition to UpdateFunc.cpp alone has now
+been tested and rejected against complete owners; do not repeat that trial.
 
 The 35 original references in `.analysis/callback-entry-inventory.json` have
 reviewed roots. A second discovery index,
 `.analysis/missing-entry-reference-discovery.json`, records 84 instruction
-references to 74 formerly missing entries. The 41 AnmManager entries are now
-reviewed; 33 other referenced roots remain unreviewed and 23 of the remaining
-56 entries lack such a witness. These references were discovered through
+references to 74 formerly missing entries. The 41 AnmManager entries and 20
+further registered callbacks are now reviewed. The latest review also derives
+the Ascii drawing helper from its registered caller's tail transfer. Thirteen
+referenced roots remain unreviewed and 22 of the remaining 35 entries lack a
+witness in that initial index. These references were discovered through
 original inventory bodies and are discovery evidence only. Their parent paths,
 entry roles and complete control-flow/owner scopes still need review.
 Establish each role, all reachable paths, complete scope, padding and absence

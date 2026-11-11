@@ -168,7 +168,7 @@ Oracle, reviewed linkage and focused audit. Retained ignored evidence includes:
 - `.analysis/anm-constructor-{eh,empty-eh,oracle,linkage,focused}-controls.log`:
   passing control logs.
 
-The strict report now has **709 exact, 53 mismatch and 453 incomplete**, with
+This EH checkpoint's report has **709 exact, 53 mismatch and 453 incomplete**, with
 the same 117,308 exact primary bytes. All 709 earlier exact results and all
 761 earlier complete comparison units are retained unchanged. One new complete
 constructor mismatch unit is retained. No rebuild or analyzer mutation is

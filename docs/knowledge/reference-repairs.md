@@ -993,3 +993,52 @@ Retained evidence includes `.analysis/anm-constructor-eh-focused.json`,
 logs. The preceding original-first investigation and its reproducer are
 preserved. Source-origin review and Factory acceptance remain open. Nothing
 is published.
+
+## Manager wrapper scopes and ordinary constructor context
+
+The next 2026-11-11 batch reviews 20 further original registry callbacks and
+the Ascii drawing helper reached through one registered callback's tail.
+All 21 complete owners pass, adding 604 exact primary bytes. The original-only
+proof retains actual witness paths from nine inventoried parent entries,
+record/priority argument flow, all callback branches and exits, complete owner
+bytes, nonoverlap and INT3 padding. Four Ascii device calls have exact-site
+receiver/slot/operand reviews. No indirect-jump allowance or static device
+callee binding is added. See [manager wrapper scopes](manager-wrapper-scopes.md).
+
+The broad replay reports **730 exact, 53 mismatch and 432 incomplete**, with
+117,912 exact primary bytes. All 709 exact results at `f89675d` and all 762
+previous comparison units remain unchanged. The 21 additions reduce missing
+original boundaries from 56 to 35. All 17 relevant strict-Oracle and
+focused-audit controls pass. Maintained source, compiler profile, Oracle and
+binding rules are unchanged; pending source-origin review remains explicit.
+
+This batch also tests the unresolved UpdateFunc constructor context. Removing
+volatile-this accesses and moving the ordinary constructor into UpdateFunc.cpp
+builds successfully with the unchanged historical profiles. It changes eight
+complete linked owner extents: create_func 106 to 77 bytes, Effect initialization
+241 to 212, Ending 593 to 570, Enemy 459 to 430, GUI 258 to 229, HelpManual
+243 to 214, ReplayManager 1309 to 1193 and AnmManager 5071 to 4046. Redundant
+initialization writes disappear. The strict EH profile correctly refuses the
+changed complete AnmManager parent. This source-placement hypothesis is
+rejected; no acceptance credit or source special case is introduced.
+
+The complete trial outputs, receipt and both modified source files are retained
+under `.analysis/updatefunc-ordinary-out-of-line-artifacts/`; baseline
+counterparts are `.analysis/updatefunc-context-baseline/`. After restoring the
+baseline source, its full input hash and all artifact hashes were checked
+before restoring the attested PE/MAP/PDB/function map and receipt. The receipt
+remains incremental. Trial object caches are retained, with 104 dependency
+stamps correctly identifying the restored header as an input change. The next
+incremental build will recompile those dependencies normally; no clean build
+or forced cache reuse is needed.
+
+Evidence is `.analysis/reviewed-manager-wrapper-scopes.json`, its reproducer
+`.analysis/review-manager-wrapper-scopes.py`,
+`.analysis/manager-wrapper-focused.json`,
+`.analysis/manager-wrapper-full-audit.log`,
+`.analysis/manager-wrapper-regression-check.json`,
+`.analysis/manager-wrapper-{oracle,focused}-controls.log`,
+`.analysis/updatefunc-ordinary-out-of-line-build.log`,
+`.analysis/updatefunc-ordinary-out-of-line-owner-differences.json` and
+`.analysis/updatefunc-context-restore-check.json`. Source-origin review and
+Factory acceptance remain open. Nothing is published.

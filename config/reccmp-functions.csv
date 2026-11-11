@@ -98,6 +98,9 @@ address,name,module,source_file,notes
 0x00407CB0,AsciiInf::initialize,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00407E00,AsciiInf::~AsciiInf,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00408070,AsciiInf::on_tick_callback,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00408090,AsciiInf::on_draw_1_callback,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004080A0,AsciiInf::on_draw_2_callback,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004080B0,AsciiInf::on_draw_3_callback,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00408140,AsciiInf::create_string,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00408260,AsciiInf::create_stringf,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004082B0,AsciiInf::create_number,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -105,6 +108,7 @@ address,name,module,source_file,notes
 0x004084F0,AsciiInf::create_debug_stringf,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00408560,AsciiInf::draw_group,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00408650,AsciiInf::draw_string,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00408EF0,AsciiInf::draw_group_1,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00408FB0,AsciiInf::tick,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00409030,AsciiInf::get_size,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00409040,AnmVm::set_sprite_uvs,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -123,6 +127,9 @@ address,name,module,source_file,notes
 0x00409E50,Stage::on_tick,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00409F90,Stage::on_draw_03,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040A410,Stage::on_draw_06,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0040A7A0,Stage::on_tick_callback,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0040A7B0,Stage::on_draw_03_callback,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0040A7C0,Stage::on_draw_06_callback,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040A7D0,StdObject::is_culled,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040AC30,Stage::load_std,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040ADD0,Stage::start_std_vms,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -311,6 +318,8 @@ address,name,module,source_file,notes
 0x00419640,Ending::create,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004196A0,Ending::destroy,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004196C0,Ending::on_tick_body,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004197A0,Ending::on_tick_callback,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004197B0,Ending::on_draw_callback,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004197C0,EndingScriptVm::EndingScriptVm,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004199F0,EndingScriptVm::run,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0041A360,AsciiInf::hide_now_loading,Ending,src/Ending.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -345,6 +354,8 @@ address,name,module,source_file,notes
 0x0041B1A0,EnemyManager::~EnemyManager,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0041B340,EnemyManager::create,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0041B3D0,EnemyManager::update,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0041B4F0,EnemyManager::on_tick_callback,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0041B530,EnemyManager::on_draw_callback,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0041B540,EnemyRef::get,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0041B580,EnemyInf::EnemyInf,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0041BA10,EnemyInf::~EnemyInf,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -394,6 +405,7 @@ address,name,module,source_file,notes
 0x00426280,??_GFpsCounter@@QAEPAXI@Z,FpsCounter,src/FpsCounter.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004262F0,FpsCounter::update,FpsCounter,src/FpsCounter.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004263E0,FpsCounter::draw,FpsCounter,src/FpsCounter.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00426490,FpsCounter::on_draw_callback,FpsCounter,src/FpsCounter.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004264A0,GuiMsgVm::~GuiMsgVm,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00426780,Gui::show_lights_out,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00426840,Spellcard::decode_time_code,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -408,6 +420,9 @@ address,name,module,source_file,notes
 0x00427CA0,Gui::create,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00427CF0,Gui::on_tick_body,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00428E70,Gui::on_draw_2_body,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00429AF0,Gui::on_tick_callback,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00429B00,Gui::on_draw_1_callback,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00429B10,Gui::on_draw_2_callback,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00429B20,GuiMsgVm::GuiMsgVm,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00429FF0,Gui::start_dialogue,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042A1D0,GuiMsgVm::run,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -445,6 +460,8 @@ address,name,module,source_file,notes
 0x0042D700,GameThread::create,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042D780,GameThread::destroy,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042D7B0,GameThread::on_tick_body,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042DB70,GameThread::on_tick_callback,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042DB80,GameThread::on_draw_callback,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042DBC0,GameThread::update_play_time,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042DC50,GameThread::begin_stage,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042DEE0,GameThread::finish_stage_transition,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -690,6 +707,8 @@ address,name,module,source_file,notes
 0x00441CF0,Player::move,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00442380,Player::update_options,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00442560,Player::on_tick_body,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00443720,Player::on_tick_callback,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00443730,Player::on_draw_callback,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00443790,Player::read_sht_file,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00443840,Player::angle_to_player,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004438C0,Player::check_hit_rect,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -780,6 +799,8 @@ address,name,module,source_file,notes
 0x0044AF50,TitleInf::destroy,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044AF80,TitleInf::on_tick,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044B530,TitleInf::on_draw,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0044B5D0,TitleInf::on_tick_thunk,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0044B5E0,TitleInf::on_draw_thunk,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044B5F0,TitleInf::do_title_screen,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044C570,TitleInf::do_options,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044C8C0,TitleInf::update_options_cursor,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.

@@ -98,6 +98,9 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00407CB0,unknown,,review,unknown,ghidra-initial-import
 0x00407E00,unknown,,review,unknown,ghidra-initial-import
 0x00408070,unknown,,review,unknown,ghidra-initial-import
+0x00408090,unknown,AsciiManager,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x004080A0,unknown,AsciiManager,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x004080B0,unknown,AsciiManager,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x00408140,unknown,,review,unknown,ghidra-initial-import
 0x00408260,unknown,,review,unknown,ghidra-initial-import
 0x004082B0,unknown,,review,unknown,ghidra-initial-import
@@ -105,6 +108,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x004084F0,unknown,,review,unknown,ghidra-initial-import
 0x00408560,unknown,,review,unknown,ghidra-initial-import
 0x00408650,unknown,,review,unknown,ghidra-initial-import
+0x00408EF0,unknown,AsciiManager,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x00408FB0,unknown,,review,unknown,ghidra-initial-import
 0x00409030,unknown,,review,unknown,ghidra-initial-import
 0x00409040,unknown,,review,unknown,ghidra-initial-import
@@ -123,6 +127,9 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00409E50,unknown,,review,unknown,ghidra-initial-import
 0x00409F90,unknown,,review,unknown,ghidra-initial-import
 0x0040A410,unknown,,review,unknown,ghidra-initial-import
+0x0040A7A0,unknown,Stage,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x0040A7B0,unknown,Stage,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x0040A7C0,unknown,Stage,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x0040A7D0,unknown,,review,unknown,ghidra-initial-import
 0x0040AC30,unknown,,review,unknown,ghidra-initial-import
 0x0040ADD0,unknown,,review,unknown,ghidra-initial-import
@@ -311,6 +318,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00419640,unknown,,review,unknown,ghidra-initial-import
 0x004196A0,unknown,,review,unknown,ghidra-initial-import
 0x004196C0,unknown,,review,unknown,ghidra-initial-import
+0x004197A0,unknown,Ending,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x004197B0,unknown,Ending,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x004197C0,unknown,,review,unknown,ghidra-initial-import
 0x004199F0,unknown,,review,unknown,ghidra-initial-import
 0x0041A360,unknown,,review,unknown,ghidra-initial-import
@@ -345,6 +354,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0041B1A0,unknown,,review,unknown,ghidra-initial-import
 0x0041B340,unknown,,review,unknown,ghidra-initial-import
 0x0041B3D0,unknown,,review,unknown,ghidra-initial-import
+0x0041B4F0,unknown,Enemy,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x0041B530,unknown,Enemy,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x0041B540,unknown,,review,unknown,ghidra-initial-import
 0x0041B580,unknown,,review,unknown,ghidra-initial-import
 0x0041BA10,unknown,,review,unknown,ghidra-initial-import
@@ -394,6 +405,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00426280,unknown,,review,unknown,ghidra-initial-import
 0x004262F0,unknown,,review,unknown,ghidra-initial-import
 0x004263E0,unknown,,review,unknown,ghidra-initial-import
+0x00426490,unknown,FpsCounter,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x004264A0,unknown,,review,unknown,ghidra-initial-import
 0x00426780,unknown,,review,unknown,ghidra-initial-import
 0x00426840,unknown,,review,unknown,ghidra-initial-import
@@ -408,6 +420,9 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00427CA0,unknown,,review,unknown,ghidra-initial-import
 0x00427CF0,unknown,,review,unknown,ghidra-initial-import
 0x00428E70,unknown,,review,unknown,ghidra-initial-import
+0x00429AF0,unknown,Gui,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x00429B00,unknown,Gui,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x00429B10,unknown,Gui,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x00429B20,unknown,,review,unknown,ghidra-initial-import
 0x00429FF0,unknown,,review,unknown,ghidra-initial-import
 0x0042A1D0,unknown,,review,unknown,ghidra-initial-import
@@ -445,6 +460,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0042D700,unknown,,review,unknown,ghidra-initial-import
 0x0042D780,unknown,,review,unknown,ghidra-initial-import
 0x0042D7B0,unknown,,review,unknown,ghidra-initial-import
+0x0042DB70,unknown,GameThread,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x0042DB80,unknown,GameThread,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x0042DBC0,unknown,,review,unknown,ghidra-initial-import
 0x0042DC50,unknown,,review,unknown,ghidra-initial-import
 0x0042DEE0,unknown,,review,unknown,ghidra-initial-import
@@ -690,6 +707,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00441CF0,unknown,,review,unknown,ghidra-initial-import
 0x00442380,unknown,,review,unknown,ghidra-initial-import
 0x00442560,unknown,,review,unknown,ghidra-initial-import
+0x00443720,unknown,Player,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x00443730,unknown,Player,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x00443790,unknown,,review,unknown,ghidra-initial-import
 0x00443840,unknown,,review,unknown,ghidra-initial-import
 0x004438C0,unknown,,review,unknown,ghidra-initial-import
@@ -780,6 +799,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0044AF50,unknown,,review,unknown,ghidra-initial-import
 0x0044AF80,unknown,,review,unknown,ghidra-initial-import
 0x0044B530,unknown,,review,unknown,ghidra-initial-import
+0x0044B5D0,unknown,MainMenu,review,unknown,docs/knowledge/manager-wrapper-scopes.md
+0x0044B5E0,unknown,MainMenu,review,unknown,docs/knowledge/manager-wrapper-scopes.md
 0x0044B5F0,unknown,,review,unknown,ghidra-initial-import
 0x0044C570,unknown,,review,unknown,ghidra-initial-import
 0x0044C8C0,unknown,,review,unknown,ghidra-initial-import

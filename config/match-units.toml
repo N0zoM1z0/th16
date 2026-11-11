@@ -1458,6 +1458,68 @@ linkages = [
   { offset = 4, width = 4, type = "REL32", symbol = "?tick@AsciiInf@@QAEXXZ", target = 4231088, addend = 0 },
 ]
 
+[units.reference-00408090]
+artifact_kind = "linked-pe"
+source = "src/AsciiManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_1_callback@AsciiInf@@SIHPAX@Z"
+object = "AsciiManager.obj"
+candidate_address = 4284336
+target_address = 4227216
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?draw_group@AsciiInf@@QAEHH@Z", target = 4228448, addend = 0 },
+]
+
+[units.reference-004080a0]
+artifact_kind = "linked-pe"
+source = "src/AsciiManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_2_callback@AsciiInf@@SIHPAX@Z"
+object = "AsciiManager.obj"
+candidate_address = 4284352
+target_address = 4227232
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?draw_group_1@AsciiInf@@QAEHXZ", target = 4230896, addend = 0 },
+]
+
+[units.reference-004080b0]
+artifact_kind = "linked-pe"
+source = "src/AsciiManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_3_callback@AsciiInf@@SIHPAX@Z"
+object = "AsciiManager.obj"
+candidate_address = 4284368
+target_address = 4227248
+size = 134
+compare_size = 134
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 20, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 56, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 65, width = 4, type = "REL32", symbol = "?draw_group@AsciiInf@@QAEHH@Z", target = 4228448, addend = 0 },
+  { offset = 70, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 78, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 82, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 87, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 93, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 99, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 123, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+]
+
 [units.reference-00408140]
 artifact_kind = "linked-pe"
 source = "src/AsciiManager.cpp"
@@ -1596,6 +1658,40 @@ linkages = [
   { offset = 192, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
   { offset = 197, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
   { offset = 218, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+]
+
+[units.reference-00408ef0]
+artifact_kind = "linked-pe"
+source = "src/AsciiManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?draw_group_1@AsciiInf@@QAEHXZ"
+object = "AsciiManager.obj"
+candidate_address = 4287120
+target_address = 4230896
+size = 187
+compare_size = 187
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 20, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 52, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 58, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 67, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 98, width = 4, type = "REL32", symbol = "?draw_group@AsciiInf@@QAEHH@Z", target = 4228448, addend = 0 },
+  { offset = 104, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 119, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 124, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 130, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 134, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 139, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 145, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 150, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 172, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
 ]
 
 [units.reference-00409030]
@@ -1798,6 +1894,54 @@ linkages = [
   { offset = 861, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
   { offset = 866, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
   { offset = 874, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2572, storage_name = "g_Supervisor", storage_size = 2624 },
+]
+
+[units.reference-0040a7a0]
+artifact_kind = "linked-pe"
+source = "src/Stage.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_callback@Stage@@SIHPAX@Z"
+object = "Stage.obj"
+candidate_address = 4630960
+target_address = 4237216
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?on_tick@Stage@@QAEHXZ", target = 4234832, addend = 0 },
+]
+
+[units.reference-0040a7b0]
+artifact_kind = "linked-pe"
+source = "src/Stage.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_03_callback@Stage@@SIHPAX@Z"
+object = "Stage.obj"
+candidate_address = 4637776
+target_address = 4237232
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?on_draw_03@Stage@@QAEHXZ", target = 4235152, addend = 0 },
+]
+
+[units.reference-0040a7c0]
+artifact_kind = "linked-pe"
+source = "src/Stage.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_06_callback@Stage@@SIHPAX@Z"
+object = "Stage.obj"
+candidate_address = 4637792
+target_address = 4237248
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "REL32", symbol = "?on_draw_06@Stage@@QAEHXZ", target = 4236304, addend = 0 },
 ]
 
 [units.reference-0040ac30]
@@ -4529,6 +4673,37 @@ linkages = [
   { offset = 207, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1780, storage_name = "g_Supervisor", storage_size = 2624 },
 ]
 
+[units.reference-004197a0]
+artifact_kind = "linked-pe"
+source = "src/Ending.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_callback@Ending@@SIHPAU1@@Z"
+object = "Ending.obj"
+candidate_address = 4354464
+target_address = 4298656
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?on_tick_body@Ending@@QAEHXZ", target = 4298432, addend = 0 },
+]
+
+[units.reference-004197b0]
+artifact_kind = "linked-pe"
+source = "src/Ending.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_callback@Ending@@SIHPAU1@@Z"
+object = "Ending.obj"
+candidate_address = 4354480
+target_address = 4298672
+size = 6
+compare_size = 6
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+]
+
 [units.reference-0041a360]
 artifact_kind = "linked-pe"
 source = "src/Ending.cpp"
@@ -4954,6 +5129,38 @@ linkages = [
   { offset = 154, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
   { offset = 196, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
   { offset = 223, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+]
+
+[units.reference-0041b4f0]
+artifact_kind = "linked-pe"
+source = "src/Enemy.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_callback@EnemyManager@@SIHPAU1@@Z"
+object = "Enemy.obj"
+candidate_address = 4361824
+target_address = 4306160
+size = 55
+compare_size = 55
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 4, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 51, width = 4, type = "REL32", symbol = "?update@EnemyManager@@QAEHXZ", target = 4305872, addend = 0 },
+]
+
+[units.reference-0041b530]
+artifact_kind = "linked-pe"
+source = "src/Enemy.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_callback@EnemyManager@@SIHPAU1@@Z"
+object = "Enemy.obj"
+candidate_address = 4361888
+target_address = 4306224
+size = 6
+compare_size = 6
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
 ]
 
 [units.reference-0041b540]
@@ -5511,6 +5718,22 @@ linkages = [
   { offset = 210, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 345, storage_name = "g_CriticalSections", storage_size = 352 },
 ]
 
+[units.reference-00426490]
+artifact_kind = "linked-pe"
+source = "src/FpsCounter.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_callback@FpsCounter@@SIHPAU1@@Z"
+object = "FpsCounter.obj"
+candidate_address = 4406096
+target_address = 4351120
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?draw@FpsCounter@@QAEHXZ", target = 4350944, addend = 0 },
+]
+
 [units.reference-00426840]
 artifact_kind = "linked-pe"
 source = "src/Spellcard.cpp"
@@ -5635,6 +5858,53 @@ linkages = [
   { offset = 33, width = 4, type = "REL32", symbol = "?initialize@Gui@@QAEHXZ", target = 4352768, addend = 0 },
   { offset = 48, width = 4, type = "REL32", symbol = "??1Gui@@QAE@XZ", target = 4356640, addend = 0 },
   { offset = 59, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+]
+
+[units.reference-00429af0]
+artifact_kind = "linked-pe"
+source = "src/Gui.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_callback@Gui@@SIHPAU1@@Z"
+object = "Gui.obj"
+candidate_address = 4421552
+target_address = 4365040
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "REL32", symbol = "?on_tick_body@Gui@@QAEHXZ", target = 4357360, addend = 0 },
+]
+
+[units.reference-00429b00]
+artifact_kind = "linked-pe"
+source = "src/Gui.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_1_callback@Gui@@SIHPAU1@@Z"
+object = "Gui.obj"
+candidate_address = 4421568
+target_address = 4365056
+size = 6
+compare_size = 6
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+]
+
+[units.reference-00429b10]
+artifact_kind = "linked-pe"
+source = "src/Gui.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_2_callback@Gui@@SIHPAU1@@Z"
+object = "Gui.obj"
+candidate_address = 4421584
+target_address = 4365072
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?on_draw_2_body@Gui@@QAEHXZ", target = 4361840, addend = 0 },
 ]
 
 [units.reference-00429b20]
@@ -6238,6 +6508,38 @@ linkages = [
   { offset = 910, width = 4, type = "DIR32", symbol = "?g_cancel_screen_effects@@3HA", target = 4984640, addend = 0 },
   { offset = 920, width = 4, type = "DIR32", symbol = "?g_cancel_screen_effects@@3HA", target = 4984640, addend = 0 },
   { offset = 929, width = 4, type = "REL32", symbol = "??EZunTimer@@QAEXH@Z", target = 4219280, addend = 0 },
+]
+
+[units.reference-0042db70]
+artifact_kind = "linked-pe"
+source = "src/GameThread.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_callback@GameThread@@SIHPAU1@@Z"
+object = "GameThread.obj"
+candidate_address = 4406720
+target_address = 4381552
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?on_tick_body@GameThread@@QAEHXZ", target = 4380592, addend = 0 },
+]
+
+[units.reference-0042db80]
+artifact_kind = "linked-pe"
+source = "src/GameThread.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_callback@GameThread@@SIHPAU1@@Z"
+object = "GameThread.obj"
+candidate_address = 4406736
+target_address = 4381568
+size = 51
+compare_size = 51
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
 ]
 
 [units.reference-0042dee0]
@@ -9840,6 +10142,39 @@ linkages = [
   { offset = 111, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
+[units.reference-00443720]
+artifact_kind = "linked-pe"
+source = "src/Player.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_callback@Player@@SIHPAU1@@Z"
+object = "Player.obj"
+candidate_address = 4575424
+target_address = 4470560
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "REL32", symbol = "?on_tick_body@Player@@QAEHXZ", target = 4466016, addend = 0 },
+]
+
+[units.reference-00443730]
+artifact_kind = "linked-pe"
+source = "src/Player.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_callback@Player@@SIHPAU1@@Z"
+object = "Player.obj"
+candidate_address = 4575440
+target_address = 4470576
+size = 82
+compare_size = 82
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 65, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 71, width = 4, type = "REL32", symbol = "?draw_vm@AnmManager@@QAEHPAUAnmVm@@@Z", target = 4621456, addend = 0 },
+]
+
 [units.reference-00443790]
 artifact_kind = "linked-pe"
 source = "src/Player.cpp"
@@ -11254,6 +11589,38 @@ linkages = [
   { offset = 144, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4502931 },
   { offset = 148, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4502926 },
   { offset = 152, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4502926 },
+]
+
+[units.reference-0044b5d0]
+artifact_kind = "linked-pe"
+source = "src/MainMenu.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_thunk@TitleInf@@SIHPAX@Z"
+object = "MainMenu.obj"
+candidate_address = 4512128
+target_address = 4502992
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?on_tick@TitleInf@@QAEHXZ", target = 4501376, addend = 0 },
+]
+
+[units.reference-0044b5e0]
+artifact_kind = "linked-pe"
+source = "src/MainMenu.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_thunk@TitleInf@@SIHPAX@Z"
+object = "MainMenu.obj"
+candidate_address = 4512144
+target_address = 4503008
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?on_draw@TitleInf@@QAEHXZ", target = 4502832, addend = 0 },
 ]
 
 [units.reference-0044c8c0]
