@@ -30,3 +30,91 @@ sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
 witness_parent = 0x431050
 witness = 0x431070
 parent_sha256 = "a65914987136a458734e493a0d1010f6a9da7ee87a63908083f48fa0619eccc3"
+
+[functions.jagged_line]
+profile = "x87-sincos-scale-v1"
+source = "src/AnmVmCallbacks.cpp"
+symbol = "?jagged_line_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x406cc0
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x406690
+witness = 0x406719
+parent_sha256 = "93b92a31ffa8dd248d2d5298ebded0c227d4b3b1659e86c41ba734095b0a5c28"
+
+[functions.cirno]
+profile = "x87-sincos-scale-v1"
+source = "src/BombMain.cpp"
+symbol = "?cirno_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x40f570
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x40f240
+witness = 0x40f385
+parent_sha256 = "0ddd2296b795b656082cc6393e753a671dbd62ebe7d1a298ef92d13ebb0db45d"
+
+[functions.marisa]
+profile = "x87-sincos-scale-v1"
+source = "src/BombMain.cpp"
+symbol = "?marisa_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x410130
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x40fb00
+witness = 0x40fc76
+parent_sha256 = "7e5bafa829abeb0f049367547dbc89d3b0e10e21a5e1590241e4815b0a84a3c5"
+
+[functions.bullet_secondary]
+profile = "x87-sincos-scale-v1"
+source = "src/BulletManager.cpp"
+symbol = "?bullet_sincosmul_2@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x4173a0
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x4162d0
+witness = 0x41642e
+parent_sha256 = "edf53f25364881c4123314bfd4588d6a572654278a9908733d7359202fe28b69"
+
+[functions.item]
+profile = "x87-sincos-scale-v1"
+source = "src/Item.cpp"
+symbol = "?item_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x430df0
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x42f4e0
+witness = 0x42fc95
+parent_sha256 = "748116a342b7542de7a666e23d043e8a1a7a2b6f020e672eabe2d205ff41fce0"
+
+[functions.player]
+profile = "x87-sincos-scale-v1"
+source = "src/PlayerShot.cpp"
+symbol = "?player_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x4476b0
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x446260
+witness = 0x446642
+parent_sha256 = "c8b73f88d9b651300b1480b7b231e66963d22ac1cddd9edce9215c854e773466"
+
+[functions.primitive]
+profile = "x87-sincos-scale-v1"
+source = "src/AnmPrimitives.cpp"
+symbol = "?primitive_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x469e00
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x469640
+witness = 0x469705
+parent_sha256 = "61d9d4d75e6547668382f5a2282a6a0ba151c98579143adea24531ebdf1784e9"
+
+[functions.fan]
+profile = "x87-sincos-scale-v1"
+source = "src/AnmRender.cpp"
+symbol = "?fan_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x46a350
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x469e20
+witness = 0x469f71
+parent_sha256 = "f4683b0c50b10b6b2356a910dba176ae2751a9dcccee70084809c588b4cb7ddb"

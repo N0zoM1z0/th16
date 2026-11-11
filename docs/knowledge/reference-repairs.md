@@ -1157,3 +1157,50 @@ and `.analysis/static-sincos-{constructor,empty}-eh-controls.log`.
 The preceding report, units and inventory are retained under
 `.analysis/static-sincos-baseline/`. Source-origin review remains open and
 Factory acceptance remains unsubmitted. Nothing is published.
+
+## Further sincos scopes and laser angle trials
+
+Eight more original private helper entries now have independent call witnesses,
+trap-free parent paths and complete linear 32-byte scopes. Their complete
+candidate MAP/PDB producers pass the existing sincos/scale profile. Eight
+explicit records extend the reviewed set to eleven; no verifier rule changes.
+The different ellipse body and helpers lacking proved dispatch paths remain
+unreviewed. See [further scopes and laser trials](further-sincos-scopes.md).
+
+All eight helpers and the complete 641-byte fan initializer pass, adding nine
+exact owners and 897 primary bytes. Three formerly incomplete primitive/fan
+callers now compare as complete mismatches. Full replay reports **788 exact,
+61 mismatch and 366 incomplete**, with 125,979 exact primary bytes. All 779
+previous exact results and all 837 previous units remain unchanged; 12 complete
+units are added, for 849 total. All 38 relevant controls pass: private identity,
+strict Oracle and focused audit. Source-origin review remains open and Factory
+acceptance remains unsubmitted.
+
+Two natural laser source contexts are independently built and rejected.
+Folding the completed-round increment into the completion condition leaves
+both angle owners at 412 bytes but increases differences from 11 to 91.
+Computing next length before committing both angle/length fields produces a
+315-byte acceleration candidate against the complete 323-byte original. No
+partial comparison or similarity credit is accepted. The original operation
+at angle-step +0x33 is a memory increment, correcting the preceding handoff's
+description as an argument push.
+
+Baseline Laser.cpp is restored byte for byte and rebuilt incrementally. Its
+full input identity equals the preceding baseline, all artifact hashes match
+the fresh receipt, and all 192 dependency stamps validate. Neither source trial
+is retained in game code. Complete source/output sets, all nine baseline/trial
+owners, and strict outcomes are preserved. No clean build or archived-output
+substitution is used.
+
+Evidence is `.analysis/remaining-sincos-original-discovery.json`,
+`.analysis/additional-sincos-original-scopes.json`,
+`.analysis/additional-sincos-full-audit.log`,
+`.analysis/additional-sincos-regression-check.json`,
+`.analysis/additional-sincos-{controls,oracle-controls,focused-controls}.log`,
+`.analysis/laser-angle-{completion,next-values}-focused.json`,
+`.analysis/laser-angle-source-trials.json`,
+`.analysis/laser-angle-restored-check.json` and
+`.analysis/laser-angle-restored-build.log`. Trial sources and full outputs are
+under `.analysis/laser-angle-{completion,next-values}-artifacts/`; preceding
+source, report and units are under `.analysis/laser-angle-baseline/`.
+Nothing is published.

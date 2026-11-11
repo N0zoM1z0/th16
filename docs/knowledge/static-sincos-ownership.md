@@ -1,5 +1,8 @@
 # Complete private sincos helper ownership
 
+This records checkpoint `afe236d`. See [further scopes and laser trials](further-sincos-scopes.md)
+for the later eight records and current results.
+
 The 2026-11-11 review establishes three complete private helper identities and
 uses them to compare their callers without promoting private names to publics.
 Full replay reports **779 exact, 58 mismatch and 378 incomplete** candidates,

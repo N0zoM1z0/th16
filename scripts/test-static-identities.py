@@ -58,7 +58,7 @@ class StaticIdentityControls(unittest.TestCase):
             linkages=[dict(offset=33,width=4,type='REL32',symbol=p['symbol'],target=p['target'],addend=0,reviewed_static='laser')])
 
     def test_complete_owners_and_caller_pass(self):
-        self.assertEqual(set(self.review()),{'gather','bullet','laser'})
+        self.assertEqual(set(self.review()),set(self.records['functions']))
         for name in self.context.static_functions:
             self.assertEqual(self.context.compare(self.unit(name))['result'],'exact')
         self.assertEqual(self.context.compare(self.caller())['result'],'exact')

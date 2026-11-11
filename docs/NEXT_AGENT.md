@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after complete private sincos helper ownership review.
+Updated 2026-11-11 after eight further private helper reviews and laser angle trials.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,9 +18,16 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **779 exact, 58 mismatch and 378 incomplete** among
-1215 annotated candidates, covering 125,082 exact owned bytes. All 767 exact
-results at `effbba5` remain exact. Three explicitly reviewed complete 32-byte
+The current report has **788 exact, 61 mismatch and 366 incomplete** among
+1215 annotated candidates, covering 125,979 exact owned bytes. All 779 exact
+results at `afe236d` remain exact. Eight further original helper entries and
+their complete private PDB owners now pass the existing profile. Those helpers
+and the complete 641-byte fan initializer add nine exact owners and 897 bytes.
+Three formerly incomplete callers become complete mismatches. All 837 prior
+units remain unchanged, with 12 new units, for 849 total. See
+[further scopes and laser trials](knowledge/further-sincos-scopes.md).
+
+The preceding review establishes three explicitly reviewed complete 32-byte
 private helpers now have qualified source/MAP/PDB identities. Their callers
 retain exact whole-entry CALL bindings without public-symbol promotion.
 Twelve complete exact owners add 4,470 bytes; five formerly incomplete owners
@@ -90,13 +97,18 @@ cache and non-LTCG symbol-discovery cache are retained. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
-binding. The current batch adds `scripts/static_identity.py` and
+binding. The preceding private-ownership batch adds `scripts/static_identity.py` and
 `config/static-functions.toml`, with explicit private primary/callee selection
 in the strict Oracle and audit. Default public ownership, unreviewed static
 names and EH profiles retain their refusal behavior. All whole private bytes,
 producer identity, annotation identity, original witness paths and absence of
 linked fields/relocations are required. Game source, compiler/linker profiles
-and the attested incremental outputs are unchanged; no rebuild is needed.
+are unchanged. The latest batch adds eight explicit records under the same
+profile and extends its positive test inventory. Two natural Laser.cpp source
+trials are rejected and restored. Current outputs are freshly rebuilt from the
+restored source, and all 192 dependency stamps validate. See
+`.analysis/laser-angle-restored-check.json`; no clean build or archived-output
+substitution is used.
 
 An ordinary out-of-line UpdateFunc constructor was built incrementally as a
 source-context experiment. It removes redundant initialization stores and
@@ -107,10 +119,10 @@ sources and complete outputs are retained under
 attested outputs were restored after checking the full source-input identity
 and every artifact hash; see `.analysis/updatefunc-context-restore-check.json`.
 That checkpoint retained the baseline incremental receipt and invalidated 104
-trial dependency stamps naturally. The current batch has now rebuilt those
+trial dependency stamps naturally. The earlier piercing-source batch rebuilt those
 dependencies incrementally, tried two PlayerShot source contexts and rebuilt
-the restored source. The current artifacts and receipt are freshly produced;
-all 192 object dependency stamps are valid. See
+the restored source. Those artifacts and receipt were freshly produced;
+all 192 object dependency stamps validated at that checkpoint. See
 `.analysis/piercing-restored-cache-check.json`. No archived outputs were
 substituted and no clean build was run.
 
@@ -129,8 +141,11 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **114 controls across six relevant suites**: private
-identities (21), strict Oracle (14), reviewed linkages (26), focused audit (3),
+The current batch passes **38 controls across three relevant suites**: private
+identities (21), strict Oracle (14) and focused audit (3). Logs use
+`.analysis/additional-sincos-{controls,oracle-controls,focused-controls}.log`.
+The preceding private-ownership milestone passes 114 controls across six suites:
+private identities (21), strict Oracle (14), reviewed linkages (26), focused audit (3),
 constructor EH (25) and empty EH (25). Logs use
 `.analysis/static-sincos-{controls,oracle-controls,linkage-controls,focused-controls}.log`
 and `.analysis/static-sincos-{constructor,empty}-eh-controls.log`. The preceding
@@ -152,11 +167,12 @@ runtime derivation is `.analysis/review-runtime-entry-scopes.py` and
 `.analysis/reviewed-runtime-entry-scopes.json`. The latest original-only
 table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/reviewed-table-entry-scopes.json`. The current original-only private
-scope evidence is `.analysis/static-sincos-original-scopes.json`; the maintained
+scope evidence includes `.analysis/static-sincos-original-scopes.json` and
+`.analysis/additional-sincos-original-scopes.json`; the maintained
 verifier rechecks the full originals and paths. Current replay and retained-pass
-evidence are `.analysis/static-sincos-full-audit.log` and
-`.analysis/static-sincos-regression-check.json`. The current incremental build
-log is `.analysis/piercing-restored-build.log`; the older baseline is
+evidence are `.analysis/additional-sincos-full-audit.log` and
+`.analysis/additional-sincos-regression-check.json`. The current incremental build
+log is `.analysis/laser-angle-restored-build.log`; the older baseline is
 `.analysis/record-input-cleanup-build.log`. The rejected
 source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
 
@@ -215,8 +231,8 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 378 incomplete candidates comprise 205 with unresolved fields, 128 genuine
-candidate/target extent differences, 37 without a same-start contribution,
+The 366 incomplete candidates comprise 198 with unresolved fields, 131 genuine
+candidate/target extent differences, 29 without a same-start contribution,
 six with source-object ownership differences and two requiring reviewed switch
 or owned-data extents. None is currently refused specifically for a missing
 original boundary. Other missing evidence can precede boundary checks; this
@@ -224,14 +240,17 @@ does not prove every annotation already has a complete original scope review.
 The earlier combined extent reason hid missing inventory rows; the Oracle now
 distinguishes these two refusal cases. Start from their recorded reasons.
 
-The new private profile covers gather `0x00406470`, bullet `0x00417510` and
-laser `0x0043AD00` only. It requires the full 32-byte x87 sincos/scale body,
+The private profile now has eleven explicit records: the preceding gather,
+bullet and laser entries plus jagged-line, Cirno, Marisa, secondary bullet,
+item, player, primitive and fan helpers. The complete entry/call list is in
+[the latest scope review](knowledge/further-sincos-scopes.md). It requires the
+full 32-byte x87 sincos/scale body,
 source-qualified private MAP name, unique complete PDB producer and exact
 annotation/witness identities. Primary units and direct CALL fields opt in
 explicitly with `reviewed_static`; no interior/addend, public alias, generic
 static fallback or tail transfer is permitted. The consumed source/name
 inventory metadata is fingerprinted. Existing sincos wrappers remain source
-context hypotheses; no game source or assembly was changed by this review.
+context hypotheses. No game source or assembly change is retained.
 
 Other wrappers listed in build/reference-candidate/functions.txt still require
 independent original entry/path and complete producer reviews. The AnmVmRun
@@ -239,11 +258,24 @@ helper at `0x00464D60` has calls within `update_special_vertices`, but the
 initial direct-branch path search does not reach its first call: its dispatch
 needs original review. Do not silently follow arbitrary indirect jumps.
 The new full 412-byte LaserLine/LaserCurve angle units each differ in 11 bytes
-at +0x33..+0x3D, where a float load and argument push have different order.
+at +0x33..+0x3D, where a float load and completed-round memory increment have
+different order. This is an INC, not an argument push.
 Their unit names are reference-00432c20 and reference-004392c0. The curve angle
 acceleration unit reference-00439460 differs in 14 bytes around +0x83..+0x90.
 These are useful source-context targets; preserve complete extents and avoid
 forcing instruction order. Two other newly retained laser owners also mismatch.
+
+Two natural laser contexts have now been tested and rejected. Folding the
+completed-round increment into the final condition retains each full 412-byte
+owner but increases its differences from 11 to 91. Computing next length
+before committing angle/length changes the curve acceleration candidate from
+323 to 315 bytes; it remains incomplete. Both sources and complete outputs
+are retained under `.analysis/laser-angle-{completion,next-values}-artifacts/`,
+with `.analysis/laser-angle-source-trials.json` and focused reports. Baseline
+source is restored byte for byte and freshly rebuilt; its full input identity,
+all artifact hashes and all 192 dependency stamps validate in
+`.analysis/laser-angle-restored-check.json`. Do not repeat these contexts or
+force ordering, spills or registers.
 
 The complete AnmManager constructor is now a retained 5,054/5,071-byte mismatch.
 Its EH profile checks both whole 136/76-byte contributions; the handler remains
