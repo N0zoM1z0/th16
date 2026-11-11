@@ -150,6 +150,7 @@ address,name,module,source_file,notes
 0x0040D600,BombInf::initialize,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D710,BombInf::~BombInf,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D890,BombInf::create,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0040DA60,BombInf::on_tick_callback,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040DA70,BombInf::on_draw_callback,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040DA90,BombInf::destroy_all,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040DB20,BombInf::activate,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -279,6 +280,8 @@ address,name,module,source_file,notes
 0x00417930,Spellcard::on_tick_body,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00417BC0,Spellcard::measure_real_time,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00417D70,Spellcard::on_draw_body,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00417EE0,Spellcard::on_tick_callback,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00417EF0,Spellcard::on_draw_callback,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00417F00,Spellcard::start,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004182F0,Spellcard::end,Spellcard,src/Spellcard.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418420,GameThread::enable_update_funcs,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -437,6 +440,7 @@ address,name,module,source_file,notes
 0x0042CA80,Player::withdraw_options,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042CB00,LaserManager::destroy_all,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042CB60,GameThread::thread_start,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042D1F0,GameThread::thread_start_callback,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042D200,GameThread::~GameThread,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042D700,GameThread::create,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042D780,GameThread::destroy,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -450,11 +454,15 @@ address,name,module,source_file,notes
 0x0042E590,Globals::reset_for_new_game,Globals,src/Globals.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042E630,ConfigData::set_defaults,GameThread,src/GameThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042E6A0,HelpManual::HelpManual,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042E760,help_manual_load_anm,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042E7C0,help_manual_read_file,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042E810,HelpManual::initialize,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042E910,HelpManual::~HelpManual,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042EA30,HelpManual::create,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042EA80,HelpManual::destroy,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042EAB0,HelpManual::on_tick_body,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042EF90,HelpManual::on_tick_callback,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042EFA0,HelpManual::on_draw_callback,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042EFB0,AnmLoaded::create_ui_vm,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042F090,BombInf::is_active_before,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042F0B0,ItemManager::ItemManager,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -519,6 +527,7 @@ address,name,module,source_file,notes
 0x004314A0,LaserManager::create,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431510,LaserManager::on_tick_body,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004316B0,LaserManager::on_tick_callback,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00431720,LaserManager::on_draw_callback,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431760,LaserManager::allocate_new_laser,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431860,LaserInfiniteInf::LaserInfiniteInf,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004318C0,LaserBeamInf::LaserBeamInf,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -587,6 +596,8 @@ address,name,module,source_file,notes
 0x0043B1F0,LoadingThread::create,LoadingThread,src/LoadingThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043B290,LoadingThread::on_tick,LoadingThread,src/LoadingThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043B300,LoadingThread::on_draw,LoadingThread,src/LoadingThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043B3B0,LoadingThread::on_tick_thunk,LoadingThread,src/LoadingThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043B3C0,LoadingThread::on_draw_thunk,LoadingThread,src/LoadingThread.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043B3D0,Supervisor::on_tick,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043B480,Supervisor::open_data_files,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043B520,Supervisor::on_registration,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -616,7 +627,11 @@ address,name,module,source_file,notes
 0x0043D140,Supervisor::on_draw_01,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D400,Supervisor::on_draw_0e,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D5A0,Supervisor::on_draw_19,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043D640,Supervisor::on_draw_2c,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D6F0,Supervisor::on_draw_2b,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043D7C0,Supervisor::on_draw_39,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043D820,Supervisor::on_draw_38,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043D870,Supervisor::on_draw_55,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D8B0,Supervisor::create_fog_vm,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D970,Supervisor::setup_special_anms,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043DC30,Supervisor::release_surfaces,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -642,12 +657,14 @@ address,name,module,source_file,notes
 0x0043E4C0,PauseMenu::~PauseMenu,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043E5A0,PauseMenu::create,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043E5F0,PauseMenu::on_tick,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043E720,PauseMenu::on_tick_thunk,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043E730,PauseMenu::draw_keyboard,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043E8C0,PauseMenu::draw_replay_entry,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043E9B0,PauseMenu::draw_replay_list,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043EB50,PauseMenu::draw_replay_name_entry,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043EC10,PauseMenu::draw_high_scores,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043EDC0,PauseMenu::on_draw,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043EF10,PauseMenu::on_draw_thunk,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043EF20,PauseMenu::take_snapshot,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043F0F0,PauseMenu::open,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043F240,open_replay_end_menu,PauseMenu,src/PauseMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -713,10 +730,16 @@ address,name,module,source_file,notes
 0x00447E20,ReplayManager::create,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00447EF0,ReplayManager::create_from_file,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00447FB0,ReplayManager::destroy,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00447FD0,ReplayManager::on_tick_record,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00448130,ReplayManager::on_tick_playback,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004482F0,ReplayManager::draw_fps,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004483B0,ReplayManager::set_end_stage,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00448400,ReplayManager::save,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00448C10,ReplayManager::read_replay_file,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00448E20,ReplayManager::on_tick_record_thunk,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00448E30,ReplayManager::on_tick_playback_thunk,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00448E40,ReplayManager::on_tick_fast_forward,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00448E90,ReplayManager::on_draw_fps,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00448EB0,ReplayManager::begin_stage,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00449030,ReplayManager::start_stage,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00449120,clear_input_state,ReplayManager,src/ReplayManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -735,6 +758,8 @@ address,name,module,source_file,notes
 0x00449E50,PopupManager::create,PopupManager,src/PopupManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00449EA0,PopupManager::on_tick,PopupManager,src/PopupManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044A000,PopupManager::on_draw,PopupManager,src/PopupManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0044A440,PopupManager::on_tick_thunk,PopupManager,src/PopupManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0044A450,PopupManager::on_draw_thunk,PopupManager,src/PopupManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044A460,PopupManager::generate_small_score_popup,PopupManager,src/PopupManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044A550,TitleInf::get_size,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044A560,TitleInf::set_state,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -748,6 +773,7 @@ address,name,module,source_file,notes
 0x0044A8E0,Scorefile::all_cleared,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044A930,Scorefile::unlock_all,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044A9F0,TitleInf::TitleInf,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0044ABC0,TitleInf::thread_start,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044AC70,TitleInf::initialize,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044AD20,TitleInf::~TitleInf,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0044AEE0,TitleInf::create,MainMenu,src/MainMenu.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -859,6 +885,7 @@ address,name,module,source_file,notes
 0x0045C5E0,Supervisor::init_input,SupervisorSetup,src/SupervisorSetup.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045C690,screen_effect_draw_rect,ScreenEffect,src/ScreenEffect.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045C860,ScreenEffect::on_draw_viewport,ScreenEffect,src/ScreenEffect.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0045C900,ScreenEffect::on_tick_fade_out,ScreenEffect,src/ScreenEffect.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045C990,ScreenEffect::on_draw_screen,ScreenEffect,src/ScreenEffect.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045CB50,ScreenEffect::on_draw_screen_2,ScreenEffect,src/ScreenEffect.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045CBA0,ScreenEffect::on_draw_arcade,ScreenEffect,src/ScreenEffect.cpp,Reference candidate; local comparison is separate from Factory acceptance.

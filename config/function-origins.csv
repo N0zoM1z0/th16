@@ -150,6 +150,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0040D600,unknown,,review,unknown,ghidra-initial-import
 0x0040D710,unknown,,review,unknown,ghidra-initial-import
 0x0040D890,unknown,,review,unknown,ghidra-initial-import
+0x0040DA60,unknown,Bomb,review,unknown,docs/knowledge/registered-callbacks.md
 0x0040DA70,unknown,,review,unknown,ghidra-initial-import
 0x0040DA90,unknown,,review,unknown,ghidra-initial-import
 0x0040DB20,unknown,,review,unknown,ghidra-initial-import
@@ -279,6 +280,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00417930,unknown,,review,unknown,ghidra-initial-import
 0x00417BC0,unknown,,review,unknown,ghidra-initial-import
 0x00417D70,unknown,,review,unknown,ghidra-initial-import
+0x00417EE0,unknown,Spellcard,review,unknown,docs/knowledge/registered-callbacks.md
+0x00417EF0,unknown,Spellcard,review,unknown,docs/knowledge/registered-callbacks.md
 0x00417F00,unknown,,review,unknown,ghidra-initial-import
 0x004182F0,unknown,,review,unknown,ghidra-initial-import
 0x00418420,unknown,,review,unknown,ghidra-initial-import
@@ -437,6 +440,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0042CA80,unknown,,review,unknown,ghidra-initial-import
 0x0042CB00,unknown,,review,unknown,ghidra-initial-import
 0x0042CB60,unknown,,review,unknown,ghidra-initial-import
+0x0042D1F0,unknown,GameThread,review,unknown,docs/knowledge/registered-callbacks.md
 0x0042D200,unknown,,review,unknown,ghidra-initial-import
 0x0042D700,unknown,,review,unknown,ghidra-initial-import
 0x0042D780,unknown,,review,unknown,ghidra-initial-import
@@ -450,11 +454,15 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0042E590,unknown,,review,unknown,ghidra-initial-import
 0x0042E630,unknown,,review,unknown,ghidra-initial-import
 0x0042E6A0,unknown,,review,unknown,ghidra-initial-import
+0x0042E760,unknown,HelpManual,review,unknown,docs/knowledge/registered-callbacks.md
+0x0042E7C0,unknown,HelpManual,review,unknown,docs/knowledge/registered-callbacks.md
 0x0042E810,unknown,,review,unknown,ghidra-initial-import
 0x0042E910,unknown,,review,unknown,ghidra-initial-import
 0x0042EA30,unknown,,review,unknown,ghidra-initial-import
 0x0042EA80,unknown,,review,unknown,ghidra-initial-import
 0x0042EAB0,unknown,,review,unknown,ghidra-initial-import
+0x0042EF90,unknown,HelpManual,review,unknown,docs/knowledge/registered-callbacks.md
+0x0042EFA0,unknown,HelpManual,review,unknown,docs/knowledge/registered-callbacks.md
 0x0042EFB0,unknown,,review,unknown,ghidra-initial-import
 0x0042F090,unknown,,review,unknown,ghidra-initial-import
 0x0042F0B0,unknown,,review,unknown,ghidra-initial-import
@@ -519,6 +527,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x004314A0,unknown,,review,unknown,ghidra-initial-import
 0x00431510,unknown,,review,unknown,ghidra-initial-import
 0x004316B0,unknown,,review,unknown,ghidra-initial-import
+0x00431720,unknown,Laser,review,unknown,docs/knowledge/registered-callbacks.md
 0x00431760,unknown,,review,unknown,ghidra-initial-import
 0x00431860,unknown,,review,unknown,ghidra-initial-import
 0x004318C0,unknown,,review,unknown,ghidra-initial-import
@@ -587,6 +596,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0043B1F0,unknown,,review,unknown,ghidra-initial-import
 0x0043B290,unknown,,review,unknown,ghidra-initial-import
 0x0043B300,unknown,,review,unknown,ghidra-initial-import
+0x0043B3B0,unknown,LoadingThread,review,unknown,docs/knowledge/registered-callbacks.md
+0x0043B3C0,unknown,LoadingThread,review,unknown,docs/knowledge/registered-callbacks.md
 0x0043B3D0,unknown,,review,unknown,ghidra-initial-import
 0x0043B480,unknown,,review,unknown,ghidra-initial-import
 0x0043B520,unknown,,review,unknown,ghidra-initial-import
@@ -616,7 +627,11 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0043D140,unknown,,review,unknown,ghidra-initial-import
 0x0043D400,unknown,,review,unknown,ghidra-initial-import
 0x0043D5A0,unknown,,review,unknown,ghidra-initial-import
+0x0043D640,unknown,Supervisor,review,unknown,docs/knowledge/registered-callbacks.md
 0x0043D6F0,unknown,,review,unknown,ghidra-initial-import
+0x0043D7C0,unknown,Supervisor,review,unknown,docs/knowledge/registered-callbacks.md
+0x0043D820,unknown,Supervisor,review,unknown,docs/knowledge/registered-callbacks.md
+0x0043D870,unknown,Supervisor,review,unknown,docs/knowledge/registered-callbacks.md
 0x0043D8B0,unknown,,review,unknown,ghidra-initial-import
 0x0043D970,unknown,,review,unknown,ghidra-initial-import
 0x0043DC30,unknown,,review,unknown,ghidra-initial-import
@@ -642,12 +657,14 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0043E4C0,unknown,,review,unknown,ghidra-initial-import
 0x0043E5A0,unknown,,review,unknown,ghidra-initial-import
 0x0043E5F0,unknown,,review,unknown,ghidra-initial-import
+0x0043E720,unknown,PauseMenu,review,unknown,docs/knowledge/registered-callbacks.md
 0x0043E730,unknown,,review,unknown,ghidra-initial-import
 0x0043E8C0,unknown,,review,unknown,ghidra-initial-import
 0x0043E9B0,unknown,,review,unknown,ghidra-initial-import
 0x0043EB50,unknown,,review,unknown,ghidra-initial-import
 0x0043EC10,unknown,,review,unknown,ghidra-initial-import
 0x0043EDC0,unknown,,review,unknown,ghidra-initial-import
+0x0043EF10,unknown,PauseMenu,review,unknown,docs/knowledge/registered-callbacks.md
 0x0043EF20,unknown,,review,unknown,ghidra-initial-import
 0x0043F0F0,unknown,,review,unknown,ghidra-initial-import
 0x0043F240,unknown,,review,unknown,ghidra-initial-import
@@ -713,10 +730,16 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00447E20,unknown,,review,unknown,ghidra-initial-import
 0x00447EF0,unknown,,review,unknown,ghidra-initial-import
 0x00447FB0,unknown,,review,unknown,ghidra-initial-import
+0x00447FD0,unknown,ReplayManager,review,unknown,docs/knowledge/registered-callbacks.md
+0x00448130,unknown,ReplayManager,review,unknown,docs/knowledge/registered-callbacks.md
 0x004482F0,unknown,,review,unknown,ghidra-initial-import
 0x004483B0,unknown,,review,unknown,ghidra-initial-import
 0x00448400,unknown,,review,unknown,ghidra-initial-import
 0x00448C10,unknown,,review,unknown,ghidra-initial-import
+0x00448E20,unknown,ReplayManager,review,unknown,docs/knowledge/registered-callbacks.md
+0x00448E30,unknown,ReplayManager,review,unknown,docs/knowledge/registered-callbacks.md
+0x00448E40,unknown,ReplayManager,review,unknown,docs/knowledge/registered-callbacks.md
+0x00448E90,unknown,ReplayManager,review,unknown,docs/knowledge/registered-callbacks.md
 0x00448EB0,unknown,,review,unknown,ghidra-initial-import
 0x00449030,unknown,,review,unknown,ghidra-initial-import
 0x00449120,unknown,,review,unknown,ghidra-initial-import
@@ -735,6 +758,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00449E50,unknown,,review,unknown,ghidra-initial-import
 0x00449EA0,unknown,,review,unknown,ghidra-initial-import
 0x0044A000,unknown,,review,unknown,ghidra-initial-import
+0x0044A440,unknown,PopupManager,review,unknown,docs/knowledge/registered-callbacks.md
+0x0044A450,unknown,PopupManager,review,unknown,docs/knowledge/registered-callbacks.md
 0x0044A460,unknown,,review,unknown,ghidra-initial-import
 0x0044A550,unknown,,review,unknown,ghidra-initial-import
 0x0044A560,unknown,,review,unknown,ghidra-initial-import
@@ -748,6 +773,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0044A8E0,unknown,,review,unknown,ghidra-initial-import
 0x0044A930,unknown,,review,unknown,ghidra-initial-import
 0x0044A9F0,unknown,,review,unknown,ghidra-initial-import
+0x0044ABC0,unknown,MainMenu,review,unknown,docs/knowledge/registered-callbacks.md
 0x0044AC70,unknown,,review,unknown,ghidra-initial-import
 0x0044AD20,unknown,,review,unknown,ghidra-initial-import
 0x0044AEE0,unknown,,review,unknown,ghidra-initial-import
@@ -859,6 +885,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0045C5E0,unknown,,review,unknown,ghidra-initial-import
 0x0045C690,unknown,,review,unknown,ghidra-initial-import
 0x0045C860,unknown,,review,unknown,ghidra-initial-import
+0x0045C900,unknown,ScreenEffect,review,unknown,docs/knowledge/registered-callbacks.md
 0x0045C990,unknown,,review,unknown,ghidra-initial-import
 0x0045CB50,unknown,,review,unknown,ghidra-initial-import
 0x0045CBA0,unknown,,review,unknown,ghidra-initial-import

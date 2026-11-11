@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the manager callback entry/scope review.
+Updated 2026-11-11 after the registered callback closure and Replay local cleanup.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,13 +18,16 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **642 exact, 52 mismatch and 521 incomplete** among
-1215 annotated candidates, covering 114,622 exact owned bytes. All 635 exact
-results at `16eca1e` remain exact. Seven Bullet, Effect and Item manager callbacks
-now pass after original-only entry and complete-scope review, adding 234 bytes.
-See [manager callback evidence](knowledge/manager-callbacks.md). Their scopes
-come from original registrations and complete dense control flow, not candidate
-sizes. The previous PosVel source improvement remains a 696/700-byte mismatch.
+The current report has **668 exact, 52 mismatch and 495 incomplete** among
+1215 annotated candidates, covering 116,126 exact owned bytes. All 642 exact
+results at `b32d469` remain exact. The next 27 original-only scope reviews yield
+26 complete passes, adding 1,504 bytes. These include the 442-byte Replay playback
+body, four Supervisor draw callbacks, Title thread startup and fade-out.
+See [registered callback evidence](knowledge/registered-callbacks.md). The
+preceding seven Bullet, Effect and Item callbacks remain exact; see
+[manager callback evidence](knowledge/manager-callbacks.md). No candidate sizes
+or artifacts enter the original scope derivation. The previous PosVel source
+improvement remains a 696/700-byte mismatch.
 
 The preceding EH review established complete passes for the 70-byte
 `ItemManagerInner::~ItemManagerInner` and 73-byte `StageInner::~StageInner`.
@@ -42,21 +45,28 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. This batch changes no
-game C++ source and requires no rebuild: it adds seven independently reviewed
-original inventory rows and distinguishes missing original boundaries from
-genuine extent differences. PosVel retains its direct wave vector addition and
-indexed circle/drift-center forms. Other recent source trials were restored;
-read the repair log before repeating them. WinMain's earlier natural cleanup
-remains; its complete 2919-byte extent still mismatches.
+cache and non-LTCG symbol-discovery cache are retained. This batch adds 27
+original inventory rows and removes an unsupported `volatile` qualifier from
+the recorded-input local in `ReplayManager::on_tick_record`. An incremental
+build and full replay retain every prior exact result. The record body remains
+incomplete: the complete
+281-byte candidate differs from the independently reviewed 337-byte original.
+Do not restore forced accesses to imitate its unexplained original stack spill.
+PosVel retains its direct wave vector addition and indexed circle/drift-center
+forms. Other recent source trials were restored; read the repair log before
+repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
+extent still mismatches.
 
-The current batch passes all **140 controls across nine suites**, including
-two new missing-boundary/extent diagnostic controls. Logs use
-`.analysis/callback-*-controls.log`. Original callback scope derivation and
-disassembly are in `.analysis/reviewed-manager-callbacks.json`; the original-only
-reproducer is `.analysis/review-manager-callbacks.py`. The current full audit and
-retained-pass comparison are `.analysis/callback-boundary-full-audit.log` and
-`.analysis/callback-boundary-regression-check.json`.
+The current batch passes **21 controls across three relevant suites**: build
+context, focused audit and strict Oracle. Logs use
+`.analysis/registered-{build,focused,oracle}-controls.log`. The previous checkpoint
+passed all 140 controls across nine suites; no Oracle or binding implementation
+changes in this batch. Original scope derivation and disassembly are in
+`.analysis/reviewed-registered-callbacks.json`; its original-only reproducer is
+`.analysis/review-registered-callbacks.py`. The current build, full audit and
+retained-pass evidence are `.analysis/record-input-cleanup-build.log`,
+`.analysis/registered-callback-full-audit.log` and
+`.analysis/registered-callback-regression-check.json`.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -113,19 +123,23 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 521 incomplete candidates comprise 237 with unresolved fields, **124 missing
-independently reviewed original boundaries**, 112 genuine candidate/target extent
+The 495 incomplete candidates comprise 237 with unresolved fields, **97 missing
+independently reviewed original boundaries**, 113 genuine candidate/target extent
 differences, 40 without a same-start contribution, six with source-object
 ownership differences and two requiring reviewed switch or owned-data extents.
 The earlier combined extent reason hid missing inventory rows; the Oracle now
 distinguishes these two refusal cases. Start from their recorded reasons.
 
-More missing callback entries have original instruction witnesses in previously
-exact initializers. `.analysis/callback-entry-inventory.json` records 35 such
-references, including duplicates and the seven now reviewed. This is a discovery
-index only. Establish each role, all reachable paths, complete scope, padding
-and absence of conflicting owners independently before adding a ledger row.
-Do not import every annotation or copy candidate sizes into the original ledger.
+The 35 original references in `.analysis/callback-entry-inventory.json`, including
+duplicates, now have reviewed root scopes. Their investigation also establishes
+the second HelpManual worker and the two Replay body scopes. The remaining 97
+missing boundaries need their own independent original witnesses and complete
+control-flow/owner review; the discovery index is not acceptance authority.
+Establish each role, all reachable paths, complete scope, padding and absence
+of conflicting owners before adding a row. Do not import every annotation or
+copy candidate sizes into the original ledger. Indirect calls in the reviewed
+callbacks have individually recorded operands and ordinary continuations; this
+does not authorize indirect jumps or grant callee exact credit.
 
 The eight imported alignment helpers and 86 explicitly artificial standalone
 locals were removed. The latter cleanup withdrew 23 earlier exact results;

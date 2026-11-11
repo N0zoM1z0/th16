@@ -863,3 +863,45 @@ Evidence is `.analysis/reviewed-manager-callbacks.json`,
 `.analysis/callback-*-controls.log`. Source-origin review and Factory acceptance
 remain open. No compiler rebuild, analyzer mutation or remote publication is
 needed for this review.
+
+## Registered callback closure and recorded-input cleanup
+
+Starting from `b32d469`, the remaining 24 registered roots in the original-only
+callback discovery index are reviewed. Their original relationships establish
+three more entries: a second HelpManual worker and two Replay callback bodies.
+All 27 complete scopes are derived from original instruction witnesses and
+closed dense control flow, with no candidate sizes or artifacts as inputs.
+See [registered callback evidence](registered-callbacks.md) for every scope,
+hash, registration witness and the individually reviewed indirect call sites.
+The Ghidra inventory is preserved; native-review provenance and unknown/review
+source-origin rows are explicit.
+
+The initial focused audit passes 26 complete owners totaling 1,504 bytes,
+including Replay playback's complete 442-byte body. Replay record's complete
+original scope is 337 bytes; its 298-byte candidate initially fails the extent
+check. Its unsupported `volatile` recorded-input local explicitly stood in for
+an unexplained original stack spill. Remove that artificial qualifier and its
+upstream-percentage comment, retaining the ordinary input-selection/recording
+logic. The incremental build yields a 281-byte candidate; it remains incomplete
+and receives no new exact credit. Original frame alignment and local lifetime
+still require source/type/context evidence. Do not restore forced accesses to
+imitate those bytes.
+
+The final full audit retains all 642 previous exact results and adds the 26
+complete passes: **668 exact, 52 mismatch and 495 incomplete**, totaling 116,126
+exact owned bytes among 1215 annotated candidates. The missing-boundary group
+falls from 124 to 97; the actual extent-difference group grows from 112 to 113
+because record's original boundary is now known. All 21 relevant controls pass
+across the build-context, focused-audit and strict-Oracle suites. No Oracle or
+binding implementation changes, cold build or analyzer mutation is needed.
+
+Evidence is `.analysis/reviewed-registered-callbacks.json`,
+`.analysis/registered-callback-focused.json`,
+`.analysis/record-input-cleanup-build.log`,
+`.analysis/registered-callback-cleanup-focused.json`,
+`.analysis/registered-callback-full-audit.log`,
+`.analysis/registered-callback-regression-check.json` and
+`.analysis/registered-{build,focused,oracle}-controls.log`. The original-only
+reproducer is `.analysis/review-registered-callbacks.py`; all review roots are
+excluded from its input boundary basis before re-deriving their scopes.
+Source-origin review and Factory acceptance remain open. Nothing is published.

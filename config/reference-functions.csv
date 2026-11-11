@@ -178,7 +178,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040D600,BombInf::initialize,src/Bomb.cpp,?initialize@BombInf@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0040D710,BombInf::~BombInf,src/Bomb.cpp,??1BombInf@@QAE@XZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0040D890,BombInf::create,src/Bomb.cpp,?create@BombInf@@SAPAV1@XZ,incomplete,9 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0040DA60,BombInf::on_tick_callback,src/Bomb.cpp,?on_tick_callback@BombInf@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0040DA60,BombInf::on_tick_callback,src/Bomb.cpp,?on_tick_callback@BombInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0040DA70,BombInf::on_draw_callback,src/Bomb.cpp,?on_draw_callback@BombInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0040DA90,BombInf::destroy_all,src/Bomb.cpp,?destroy_all@BombInf@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0040DB20,BombInf::activate,src/Bomb.cpp,?activate@BombInf@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -309,8 +309,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x00417930,Spellcard::on_tick_body,src/Spellcard.cpp,?on_tick_body@Spellcard@@QAEHXZ,mismatch,,.analysis/reference-audit.json
 0x00417BC0,Spellcard::measure_real_time,src/Spellcard.cpp,?measure_real_time@Spellcard@@SAXXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00417D70,Spellcard::on_draw_body,src/Spellcard.cpp,?on_draw_body@Spellcard@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00417EE0,Spellcard::on_tick_callback,src/Spellcard.cpp,?on_tick_callback@Spellcard@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x00417EF0,Spellcard::on_draw_callback,src/Spellcard.cpp,?on_draw_callback@Spellcard@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x00417EE0,Spellcard::on_tick_callback,src/Spellcard.cpp,?on_tick_callback@Spellcard@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x00417EF0,Spellcard::on_draw_callback,src/Spellcard.cpp,?on_draw_callback@Spellcard@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00417F00,Spellcard::start,src/Spellcard.cpp,?start@Spellcard@@QAEXHPBDHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004182F0,Spellcard::end,src/Spellcard.cpp,?end@Spellcard@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00418420,GameThread::enable_update_funcs,src/GameThread.cpp,?enable_update_funcs@GameThread@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -483,7 +483,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042CA80,Player::withdraw_options,src/Player.cpp,?withdraw_options@Player@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042CB00,LaserManager::destroy_all,src/Laser.cpp,?destroy_all@LaserManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042CB60,GameThread::thread_start,src/GameThread.cpp,?thread_start@GameThread@@SAHXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0042D1F0,GameThread::thread_start_callback,src/GameThread.cpp,?thread_start_callback@GameThread@@SAXXZ,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0042D1F0,GameThread::thread_start_callback,src/GameThread.cpp,?thread_start_callback@GameThread@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0042D200,GameThread::~GameThread,src/GameThread.cpp,??1GameThread@@QAE@XZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0042D700,GameThread::create,src/GameThread.cpp,?create@GameThread@@SAPAU1@H@Z,exact,,.analysis/reference-audit.json
 0x0042D780,GameThread::destroy,src/GameThread.cpp,?destroy@GameThread@@SAXXZ,exact,,.analysis/reference-audit.json
@@ -499,15 +499,15 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042E590,Globals::reset_for_new_game,src/Globals.cpp,?reset_for_new_game@Globals@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042E630,ConfigData::set_defaults,src/GameThread.cpp,?set_defaults@ConfigData@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042E6A0,HelpManual::HelpManual,src/HelpManual.cpp,??0HelpManual@@QAE@XZ,exact,,.analysis/reference-audit.json
-0x0042E760,help_manual_load_anm,src/HelpManual.cpp,?help_manual_load_anm@@YAXXZ,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0042E7C0,help_manual_read_file,src/HelpManual.cpp,?help_manual_read_file@@YAXXZ,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0042E760,help_manual_load_anm,src/HelpManual.cpp,?help_manual_load_anm@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0042E7C0,help_manual_read_file,src/HelpManual.cpp,?help_manual_read_file@@YAXXZ,exact,,.analysis/reference-audit.json
 0x0042E810,HelpManual::initialize,src/HelpManual.cpp,?initialize@HelpManual@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0042E910,HelpManual::~HelpManual,src/HelpManual.cpp,??1HelpManual@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0042EA30,HelpManual::create,src/HelpManual.cpp,?create@HelpManual@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x0042EA80,HelpManual::destroy,src/HelpManual.cpp,?destroy@HelpManual@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0042EAB0,HelpManual::on_tick_body,src/HelpManual.cpp,?on_tick_body@HelpManual@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0042EF90,HelpManual::on_tick_callback,src/HelpManual.cpp,?on_tick_callback@HelpManual@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0042EFA0,HelpManual::on_draw_callback,src/HelpManual.cpp,?on_draw_callback@HelpManual@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0042EF90,HelpManual::on_tick_callback,src/HelpManual.cpp,?on_tick_callback@HelpManual@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0042EFA0,HelpManual::on_draw_callback,src/HelpManual.cpp,?on_draw_callback@HelpManual@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0042EFB0,AnmLoaded::create_ui_vm,src/HelpManual.cpp,?create_ui_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@H@Z,mismatch,,.analysis/reference-audit.json
 0x0042F090,BombInf::is_active_before,src/Bomb.cpp,?is_active_before@BombInf@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0042F0B0,ItemManager::ItemManager,src/Item.cpp,??0ItemManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -572,7 +572,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004314A0,LaserManager::create,src/Laser.cpp,?create@LaserManager@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x00431510,LaserManager::on_tick_body,src/Laser.cpp,?on_tick_body@LaserManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004316B0,LaserManager::on_tick_callback,src/Laser.cpp,?on_tick_callback@LaserManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
-0x00431720,LaserManager::on_draw_callback,src/Laser.cpp,?on_draw_callback@LaserManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x00431720,LaserManager::on_draw_callback,src/Laser.cpp,?on_draw_callback@LaserManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00431760,LaserManager::allocate_new_laser,src/Laser.cpp,?allocate_new_laser@LaserManager@@QAEHHPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00431860,LaserInfiniteInf::LaserInfiniteInf,src/Laser.cpp,??0LaserInfiniteInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x004318C0,LaserBeamInf::LaserBeamInf,src/Laser.cpp,??0LaserBeamInf@@QAE@XZ,exact,,.analysis/reference-audit.json
@@ -643,8 +643,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043B1F0,LoadingThread::create,src/LoadingThread.cpp,?create@LoadingThread@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x0043B290,LoadingThread::on_tick,src/LoadingThread.cpp,?on_tick@LoadingThread@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0043B300,LoadingThread::on_draw,src/LoadingThread.cpp,?on_draw@LoadingThread@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0043B3B0,LoadingThread::on_tick_thunk,src/LoadingThread.cpp,?on_tick_thunk@LoadingThread@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0043B3C0,LoadingThread::on_draw_thunk,src/LoadingThread.cpp,?on_draw_thunk@LoadingThread@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0043B3B0,LoadingThread::on_tick_thunk,src/LoadingThread.cpp,?on_tick_thunk@LoadingThread@@SIHPAX@Z,exact,,.analysis/reference-audit.json
+0x0043B3C0,LoadingThread::on_draw_thunk,src/LoadingThread.cpp,?on_draw_thunk@LoadingThread@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043B3D0,Supervisor::on_tick,src/Supervisor.cpp,?on_tick@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043B480,Supervisor::open_data_files,src/Supervisor.cpp,?open_data_files@Supervisor@@SAHXZ,exact,,.analysis/reference-audit.json
 0x0043B520,Supervisor::on_registration,src/Supervisor.cpp,?on_registration@Supervisor@@SIHPAX@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -676,11 +676,11 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043D400,Supervisor::on_draw_0e,src/Supervisor.cpp,?on_draw_0e@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D4A0,Supervisor::on_draw_1a,src/Supervisor.cpp,?on_draw_1a@Supervisor@@SIHPAX@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0043D5A0,Supervisor::on_draw_19,src/Supervisor.cpp,?on_draw_19@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
-0x0043D640,Supervisor::on_draw_2c,src/Supervisor.cpp,?on_draw_2c@Supervisor@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0043D640,Supervisor::on_draw_2c,src/Supervisor.cpp,?on_draw_2c@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D6F0,Supervisor::on_draw_2b,src/Supervisor.cpp,?on_draw_2b@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
-0x0043D7C0,Supervisor::on_draw_39,src/Supervisor.cpp,?on_draw_39@Supervisor@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0043D820,Supervisor::on_draw_38,src/Supervisor.cpp,?on_draw_38@Supervisor@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0043D870,Supervisor::on_draw_55,src/Supervisor.cpp,?on_draw_55@Supervisor@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0043D7C0,Supervisor::on_draw_39,src/Supervisor.cpp,?on_draw_39@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
+0x0043D820,Supervisor::on_draw_38,src/Supervisor.cpp,?on_draw_38@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
+0x0043D870,Supervisor::on_draw_55,src/Supervisor.cpp,?on_draw_55@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D8B0,Supervisor::create_fog_vm,src/Supervisor.cpp,?create_fog_vm@Supervisor@@QAE?AUAnmId@@HH@Z,mismatch,,.analysis/reference-audit.json
 0x0043D970,Supervisor::setup_special_anms,src/Supervisor.cpp,?setup_special_anms@Supervisor@@QAEXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,src/Supervisor.cpp,?release_surfaces@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -706,14 +706,14 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043E4C0,PauseMenu::~PauseMenu,src/PauseMenu.cpp,??1PauseMenu@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0043E5A0,PauseMenu::create,src/PauseMenu.cpp,?create@PauseMenu@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x0043E5F0,PauseMenu::on_tick,src/PauseMenu.cpp,?on_tick@PauseMenu@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0043E720,PauseMenu::on_tick_thunk,src/PauseMenu.cpp,?on_tick_thunk@PauseMenu@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0043E720,PauseMenu::on_tick_thunk,src/PauseMenu.cpp,?on_tick_thunk@PauseMenu@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043E730,PauseMenu::draw_keyboard,src/PauseMenu.cpp,?draw_keyboard@PauseMenu@@QAEXUD3DXVECTOR3@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0043E8C0,PauseMenu::draw_replay_entry,src/PauseMenu.cpp,?draw_replay_entry@PauseMenu@@QAEXHPAUD3DXVECTOR3@@PAURpyInfo@@@Z,exact,,.analysis/reference-audit.json
 0x0043E9B0,PauseMenu::draw_replay_list,src/PauseMenu.cpp,?draw_replay_list@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043EB50,PauseMenu::draw_replay_name_entry,src/PauseMenu.cpp,?draw_replay_name_entry@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043EC10,PauseMenu::draw_high_scores,src/PauseMenu.cpp,?draw_high_scores@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043EDC0,PauseMenu::on_draw,src/PauseMenu.cpp,?on_draw@PauseMenu@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0043EF10,PauseMenu::on_draw_thunk,src/PauseMenu.cpp,?on_draw_thunk@PauseMenu@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0043EF10,PauseMenu::on_draw_thunk,src/PauseMenu.cpp,?on_draw_thunk@PauseMenu@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043EF20,PauseMenu::take_snapshot,src/PauseMenu.cpp,?take_snapshot@PauseMenu@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0043F0F0,PauseMenu::open,src/PauseMenu.cpp,?open@PauseMenu@@QAEXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0043F240,open_replay_end_menu,src/PauseMenu.cpp,?open_replay_end_menu@@YAXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -788,16 +788,16 @@ address,name,source_file,symbol,result,reason,evidence
 0x00447E20,ReplayManager::create,src/ReplayManager.cpp,?create@ReplayManager@@SAPAU1@H@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00447EF0,ReplayManager::create_from_file,src/ReplayManager.cpp,?create_from_file@ReplayManager@@SAPAU1@PBD@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00447FB0,ReplayManager::destroy,src/ReplayManager.cpp,?destroy@ReplayManager@@SAXPAU1@@Z,exact,,.analysis/reference-audit.json
-0x00447FD0,ReplayManager::on_tick_record,src/ReplayManager.cpp,?on_tick_record@ReplayManager@@QAEHXZ,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x00448130,ReplayManager::on_tick_playback,src/ReplayManager.cpp,?on_tick_playback@ReplayManager@@QAEHXZ,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x00447FD0,ReplayManager::on_tick_record,src/ReplayManager.cpp,?on_tick_record@ReplayManager@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00448130,ReplayManager::on_tick_playback,src/ReplayManager.cpp,?on_tick_playback@ReplayManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004482F0,ReplayManager::draw_fps,src/ReplayManager.cpp,?draw_fps@ReplayManager@@SIHPAX@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004483B0,ReplayManager::set_end_stage,src/ReplayManager.cpp,?set_end_stage@ReplayManager@@QAEHH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00448400,ReplayManager::save,src/ReplayManager.cpp,?save@ReplayManager@@QAEHPBD0HH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00448C10,ReplayManager::read_replay_file,src/ReplayManager.cpp,?read_replay_file@ReplayManager@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
-0x00448E20,ReplayManager::on_tick_record_thunk,src/ReplayManager.cpp,?on_tick_record_thunk@ReplayManager@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x00448E30,ReplayManager::on_tick_playback_thunk,src/ReplayManager.cpp,?on_tick_playback_thunk@ReplayManager@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x00448E40,ReplayManager::on_tick_fast_forward,src/ReplayManager.cpp,?on_tick_fast_forward@ReplayManager@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x00448E90,ReplayManager::on_draw_fps,src/ReplayManager.cpp,?on_draw_fps@ReplayManager@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x00448E20,ReplayManager::on_tick_record_thunk,src/ReplayManager.cpp,?on_tick_record_thunk@ReplayManager@@SIHPAX@Z,exact,,.analysis/reference-audit.json
+0x00448E30,ReplayManager::on_tick_playback_thunk,src/ReplayManager.cpp,?on_tick_playback_thunk@ReplayManager@@SIHPAX@Z,exact,,.analysis/reference-audit.json
+0x00448E40,ReplayManager::on_tick_fast_forward,src/ReplayManager.cpp,?on_tick_fast_forward@ReplayManager@@SIHPAX@Z,exact,,.analysis/reference-audit.json
+0x00448E90,ReplayManager::on_draw_fps,src/ReplayManager.cpp,?on_draw_fps@ReplayManager@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x00448EB0,ReplayManager::begin_stage,src/ReplayManager.cpp,?begin_stage@ReplayManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00449030,ReplayManager::start_stage,src/ReplayManager.cpp,?start_stage@ReplayManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00449120,clear_input_state,src/ReplayManager.cpp,?clear_input_state@@YAXXZ,exact,,.analysis/reference-audit.json
@@ -818,8 +818,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x00449E50,PopupManager::create,src/PopupManager.cpp,?create@PopupManager@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x00449EA0,PopupManager::on_tick,src/PopupManager.cpp,?on_tick@PopupManager@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0044A000,PopupManager::on_draw,src/PopupManager.cpp,?on_draw@PopupManager@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0044A440,PopupManager::on_tick_thunk,src/PopupManager.cpp,?on_tick_thunk@PopupManager@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0044A450,PopupManager::on_draw_thunk,src/PopupManager.cpp,?on_draw_thunk@PopupManager@@SIHPAX@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0044A440,PopupManager::on_tick_thunk,src/PopupManager.cpp,?on_tick_thunk@PopupManager@@SIHPAX@Z,exact,,.analysis/reference-audit.json
+0x0044A450,PopupManager::on_draw_thunk,src/PopupManager.cpp,?on_draw_thunk@PopupManager@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0044A460,PopupManager::generate_small_score_popup,src/PopupManager.cpp,?generate_small_score_popup@PopupManager@@QAEXPAUD3DXVECTOR3@@HK@Z,exact,,.analysis/reference-audit.json
 0x0044A550,TitleInf::get_size,src/MainMenu.cpp,?get_size@TitleInf@@UAEIXZ,exact,,.analysis/reference-audit.json
 0x0044A560,TitleInf::set_state,src/MainMenu.cpp,?set_state@TitleInf@@QAEXH@Z,exact,,.analysis/reference-audit.json
@@ -833,7 +833,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0044A8E0,Scorefile::all_cleared,src/MainMenu.cpp,?all_cleared@Scorefile@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0044A930,Scorefile::unlock_all,src/MainMenu.cpp,?unlock_all@Scorefile@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0044A9F0,TitleInf::TitleInf,src/MainMenu.cpp,??0TitleInf@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0044ABC0,TitleInf::thread_start,src/MainMenu.cpp,?thread_start@TitleInf@@SGIXZ,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0044ABC0,TitleInf::thread_start,src/MainMenu.cpp,?thread_start@TitleInf@@SGIXZ,exact,,.analysis/reference-audit.json
 0x0044AC70,TitleInf::initialize,src/MainMenu.cpp,?initialize@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0044AD20,TitleInf::~TitleInf,src/MainMenu.cpp,??1TitleInf@@QAE@XZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0044AEE0,TitleInf::create,src/MainMenu.cpp,?create@TitleInf@@SAPAV1@XZ,exact,,.analysis/reference-audit.json
@@ -952,7 +952,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045C630,ScreenEffect::on_tick_fade_in,src/ScreenEffect.cpp,?on_tick_fade_in@ScreenEffect@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
 0x0045C690,screen_effect_draw_rect,src/ScreenEffect.cpp,?screen_effect_draw_rect@@YAXPAUZunRect@@K@Z,exact,,.analysis/reference-audit.json
 0x0045C860,ScreenEffect::on_draw_viewport,src/ScreenEffect.cpp,?on_draw_viewport@ScreenEffect@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
-0x0045C900,ScreenEffect::on_tick_fade_out,src/ScreenEffect.cpp,?on_tick_fade_out@ScreenEffect@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0045C900,ScreenEffect::on_tick_fade_out,src/ScreenEffect.cpp,?on_tick_fade_out@ScreenEffect@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0045C990,ScreenEffect::on_draw_screen,src/ScreenEffect.cpp,?on_draw_screen@ScreenEffect@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0045C9E0,ScreenEffect::on_tick_flash,src/ScreenEffect.cpp,?on_tick_flash@ScreenEffect@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
 0x0045CAC0,ScreenEffect::on_tick_hold,src/ScreenEffect.cpp,?on_tick_hold@ScreenEffect@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
