@@ -1591,3 +1591,54 @@ Evidence is `.analysis/replay-literal-original-identities.json`,
 fingerprints equal the preceding checkpoint; no compile, analyzer, receipt
 refresh or cleanup occurs. Source-origin review remains open and Factory
 acceptance remains unsubmitted. Nothing is published.
+
+## Player update and circle-check source contexts
+
+Complete instruction alignment of the 4,540-byte original Player update and
+4,508-byte candidate locates several independent differences: item-drop
+power/address handling, two timer-decrement identity multiplies, afterimage
+mode-word handling and scaled collision-box scheduling. The missing timer
+multiplies are the existing unresolved ZunTimer context, not new permission to
+insert forced operations. Bitfield/type and alias explanations remain open.
+See [Player source contexts](player-context-trials.md).
+
+Four natural source contexts are built incrementally and rejected. A used
+position pointer for coordinate reads and item creation produces a complete
+4,504-byte update; limiting it to item creation gives 4,508. Both retain
+whole-extent/case-map differences. Float2 circle displacement gives 261 bytes
+against the complete 258-byte original. Combining equivalent dialogue and
+non-graze invalid-state rejection remains a complete 190/258 mismatch against
+baseline 181/258. It does not recover original load/shared-return layout and
+is not retained for nine matching bytes. Do not repeat these four forms or
+force registers, stack offsets, branches or arithmetic identities.
+
+The Float2 context also changes Bullet::check_player_collision from 449 to
+460 bytes. Its original now has an independent complete 448-byte scope proof,
+with 130 reachable instructions and a contiguous next entry. Full original and
+candidate payloads/fields/relocations are recorded in
+`.analysis/player-secondary-original-scope.json`; both candidates retain extent
+refusals. This cross-translation-unit inlining effect is included in the review.
+
+Baseline Player.cpp is restored byte for byte and freshly rebuilt. No game
+source or exact credit is retained. Canonical results remain **815 exact,
+63 mismatch and 337 incomplete**, covering 145,004 exact primary bytes and
+878 unchanged retained units. All previous comparison results remain retained.
+Every complete source-qualified linked owner (1,719) retains its entry, full
+extent and raw payload hash. Current artifacts match their incremental receipt,
+source input identity equals baseline and all 192 dependency stamps validate.
+No clean build or archived-output substitution is used.
+
+All 209 existing controls pass across nine suites. Complete original/trial
+payloads, PDB producers, every linked field/relocation, actual table/case layouts,
+source/artifact identities, strict reports and all changed complete owners are
+retained in `.analysis/player-context-source-trials.json`. Full source/output
+sets remain under `.analysis/player-tick-source-baseline/`,
+`.analysis/player-tick-{drop-pointer,call-origin}-artifacts/` and
+`.analysis/player-circle-{vector2,combined-guard}-artifacts/`. Evidence also
+includes `.analysis/player-tick-baseline-layout.json`,
+`.analysis/player-context-restored-check.json`,
+`.analysis/player-context-full-audit.log`,
+`.analysis/player-context-regression-check.json` and
+`.analysis/player-context-<suite>-controls.log`. Diagnostic alignment has no
+acceptance authority. Source-origin review remains open; Factory acceptance
+remains unsubmitted. Nothing is published.

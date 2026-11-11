@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after replay FPS and further numeric identity reviews.
+Updated 2026-11-11 after four rejected Player source contexts and fresh restoration.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,18 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **815 exact, 63 mismatch and 337 incomplete** among
+The current report remains **815 exact, 63 mismatch and 337 incomplete** among
 1215 annotated candidates, covering 145,004 exact owned bytes and 878 units.
+Four natural Player source contexts are rejected and source is restored byte
+for byte and freshly rebuilt. Used item-origin pointers give 4,504/4,508-byte
+update candidates against 4,540. A Float2 displacement gives a 261-byte circle
+check against 258; a combined rejection guard remains a 190/258 mismatch.
+No source change or exact credit is retained. Every prior comparison result
+and unit is retained. See
+[Player source-context findings](knowledge/player-context-trials.md).
+
+The preceding replay/numeric checkpoint reported 815 exact, 63 mismatch and
+337 incomplete, covering 145,004 exact owned bytes and 878 units.
 Fixed 176.0f/512.0f identities and the complete replay FPS format resolve four
 existing whole candidates: Cirno update (585), Cirno cancellation (174), Marisa
 update (857) and replay FPS drawing (180). These add 1,796 primary exact bytes.
@@ -175,12 +185,12 @@ acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The retained source
-change is one used replay-slot local in PauseMenu.cpp. The latest music-room
-trials are restored byte for byte and source input identity equals that
-checkpoint. All 1,719 complete linked owner entries/extents/payloads remain
+change is one used replay-slot local in PauseMenu.cpp. The latest Player
+trials are restored byte for byte and source input identity equals the baseline
+checkpoint, including that retained PauseMenu change. All 1,719 complete linked owner entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/menu-literal-restored-context-check.json`. The preceding callback
+`.analysis/player-context-restored-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -244,7 +254,9 @@ The current batch passes **209 controls across nine relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
 (28), focused audit (3), constructor EH (25) and empty EH (25). Logs use
-`.analysis/replay-literal-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+`.analysis/player-context-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding replay/numeric batch also passed 209 controls across nine suites;
+its logs use `.analysis/replay-literal-*controls.log`.
 The preceding numeric batch passed 208 controls across nine suites;
 its logs use `.analysis/menu-literal-*controls.log`.
 The preceding replay-slot batch passed 207 controls across nine suites;
@@ -289,8 +301,14 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/replay-literal-full-audit.log` and
-`.analysis/replay-literal-regression-check.json`. Latest original identities and
+are `.analysis/player-context-full-audit.log` and
+`.analysis/player-context-regression-check.json`. Full source/payload/field
+trial evidence is `.analysis/player-context-source-trials.json`, reproduced by
+`.analysis/review-player-context-trials.py`. Complete instruction alignment is
+in `.analysis/player-tick-baseline-layout.json` and
+`.analysis/player-tick-{drop-pointer,call-origin}-layout.json`; its diagnostic
+reproducer `.analysis/review-player-tick-layout.py` grants no exact credit.
+The preceding original identities and
 complete scopes are `.analysis/replay-literal-original-identities.json` and
 `.analysis/bomb-update-original-scopes.json`, reproduced by
 `.analysis/review-replay-literal-originals.py` and
@@ -315,7 +333,10 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-trial evidence is `.analysis/music-room-restored-build.log`,
+source-trial evidence is `.analysis/player-context-restored-build.log`,
+`.analysis/player-context-restored-check.json` and
+`.analysis/player-context-source-trials.json`. The preceding music-room evidence
+remains `.analysis/music-room-restored-build.log`,
 `.analysis/menu-literal-restored-context-check.json` and
 `.analysis/music-room-source-trials.json`. The preceding replay-slot evidence
 remains `.analysis/pause-open-retained-build.log`,
@@ -473,6 +494,25 @@ exposes an extent refusal; masked Anm drawing, Reimu orb update and GUI drawing
 retain one/three/eight unresolved fields. The remaining STD destination is
 private exception-handling code, requiring its own complete frame/metadata
 review. See [the identity review](knowledge/replay-literal-identities.md).
+
+The full Player update differs in the item-drop pointer/power path, two
+inlined timer decrements, afterimage mode-word handling and scaled box
+scheduling. Four source contexts are now excluded. A used pointer for both
+coordinate reads and item creation gives 4,504 bytes; limiting it to item
+creation gives 4,508. Both fail the independent 4,540-byte owner. A Float2
+circle displacement gives 261 against 258. Combining equivalent dialogue and
+non-graze state guards gives 190/258, still a complete mismatch, and is rejected.
+The Float2 context also expands the separate Bullet::check_player_collision
+caller from 449 to 460 bytes. Its original is now independently complete at
+448 bytes: 130 reachable instructions and a contiguous next entry. Full
+caller evidence is `.analysis/player-secondary-original-scope.json`;
+restoration returns the caller to 449. No prefix receives credit.
+Baseline source is freshly restored with all 1,719 complete linked owner
+entries/extents/payloads and all 192 dependency stamps checked. See
+[Player source contexts](knowledge/player-context-trials.md). Do not repeat
+these forms, retain a change for one matching stack slot, force timer identity
+multiplications, or normalize registers/branch placement. The underlying type,
+alias and timer context remains open.
 
 The original interp_common_methods at `0x004033F0` now owns 1,692 bytes:
 1,566 code, two alignment bytes and 31 table slots. Its baseline candidate is
