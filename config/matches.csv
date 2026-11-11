@@ -32,7 +32,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00402F30,ThreadInf::join_if_running,reference-00402f30,local-strict-pass,126,126,126,.analysis/reference-audit.json
 0x00402FB0,ThreadInf::restart,reference-00402fb0,local-strict-pass,61,61,61,.analysis/reference-audit.json
 0x00402FF0,PosVel::update_secondary_fields,reference-00402ff0,local-strict-pass,276,276,276,.analysis/reference-audit.json
-0x00403110,PosVel::step,reference-00403110,mismatch,700,700,684,.analysis/reference-audit.json
+0x00403110,PosVel::step,reference-00403110,mismatch,700,700,696,.analysis/reference-audit.json
 0x004033D0,PosVel::step_from_center,reference-004033d0,local-strict-pass,29,29,29,.analysis/reference-audit.json
 0x00403A90,collision_test_points_in_rect,reference-00403a90,mismatch,661,661,651,.analysis/reference-audit.json
 0x00403D30,collision_test_circle_rect,reference-00403d30,mismatch,400,400,243,.analysis/reference-audit.json

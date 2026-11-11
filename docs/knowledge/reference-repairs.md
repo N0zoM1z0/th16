@@ -757,3 +757,74 @@ controls pass across nine suites, including 25 EH mutations. Evidence is
 `.analysis/eh-regression-check.json` and `.analysis/eh-*-controls.log`.
 Source-origin review remains open and Factory acceptance is not submitted.
 The repository has not been pushed or published.
+
+## PosVel wave addition and isolated source trials
+
+The next source batch starts from `b1ea1e8`. In the wave branch of
+`PosVel::step` at `0x00403110`, the indexed three-component constructor is
+replaced with the direct vector expression `pos = offset + center`. Together
+with the existing indexed circle construction and indexed drift-center update,
+this improves the complete 700-byte comparison from 684 matching bytes to 696.
+The wave-position load/add scheduling now agrees with the original. This is a
+natural D3DX vector addition; no helper, unused local, profile or Oracle rule
+is introduced.
+
+The complete owner still mismatches. Its only four differing bytes are at
+offsets `0x73`, `0x74`, `0x7D` and `0x7E`, in the circle branch. The original
+loads `offset.x` into XMM2 and then adds `velocity.x`; the candidate loads
+`velocity.x` and adds `offset.x`. No register or operand normalization is
+permitted. The full 700 bytes still include the alignment byte and all five
+jump-table slots; all 30 linkage fields are enumerated and replayed. There is
+no prefix-only credit.
+
+The previously missing isolated circle experiment is now complete. Replacing
+only the indexed circle constructor with `pos = velocity + offset`, while
+retaining the indexed wave construction, produces 667 matching bytes rather
+than 684. The circle's first-component difference remains, and the wave branch
+also changes. This demonstrates that a local source expression can affect
+another branch's code generation in this owner. Do not discard the indexed
+circle construction based only on its own first difference.
+
+All PosVel trials compare the complete original owner. Extent differences are
+refusals, not shortened byte comparisons:
+
+| Trial | Candidate bytes | Complete result |
+| --- | ---: | --- |
+| Circle `velocity + offset`, indexed wave | 700 | Mismatch; 667 matching bytes |
+| Circle `offset += velocity; pos = offset`, indexed wave | 732 | Incomplete |
+| Circle `offset + velocity`, indexed wave | 700 | Mismatch; 667 matching bytes |
+| Indexed circle, wave `offset + center` | 700 | Mismatch; 696 matching bytes; retained |
+| Indexed circle, wave `pos = offset; pos += center` | 716 | Incomplete |
+| Circle `offset + velocity`, wave `offset + center` | 700 | Mismatch; 671 matching bytes |
+| Circle `velocity + offset`, wave `offset + center` | 700 | Mismatch; 671 matching bytes |
+| Circle `D3DXVec3Add`, wave `offset + center` | 732 | Incomplete |
+
+Two bounded Fog trials and one return-path trial were also restored. Moving
+the vertical grid-step declaration after the position initialization makes
+`Fog::set_rect` 329 bytes rather than the independent 326. Constructing the
+position vector directly in that form restores 326 bytes but matches only 220,
+versus the baseline's 320. Adding an explicit return after the large-strip loop
+in `Supervisor::create_fog_vm` retains 186 bytes but matches 167, versus the
+baseline's 183. None improves its complete owner. The improved PosVel form
+remains 696/700 in both Fog trial builds.
+
+The retained source change is only the wave-position expression in
+`src/PosVel.cpp`. The diagnostic summaries and source snapshots are
+`.analysis/posvel-circle-only.json`, `.analysis/posvel-bounded-trials.json`,
+`.analysis/posvel-circle-wave-trials.json`, `.analysis/fog-source-trials.json`,
+`.analysis/posvel-wave-offset-sum.cpp` and the per-trial build/audit reports.
+The earlier [component-arithmetic trials](#posvel-component-arithmetic-and-bounded-scheduling-trials)
+remain relevant to the indexed drift-center update and rejected combined forms.
+
+The final incremental build and full audit reproduce the 696/700-byte mismatch
+and retain all 635 exact results from `b1ea1e8`. Totals remain **635 exact,
+52 mismatch and 528 incomplete**, with 114,388 exact owned bytes. Nineteen
+switch-ownership and twelve strict-Oracle controls pass. Current-state evidence
+is `.analysis/wave-source-final-build.log`,
+`.analysis/wave-source-final-focused.json`,
+`.analysis/wave-source-final-owner-diff.txt`,
+`.analysis/wave-source-final-audit.log`,
+`.analysis/wave-source-regression-check.json`,
+`.analysis/wave-switch-controls.log` and `.analysis/wave-oracle-controls.log`.
+`scripts/progress.py` verifies source, artifact, report and retained-unit
+freshness. Source-origin review and Factory acceptance remain open.

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the complete empty-EH3 graph review.
+Updated 2026-11-11 after the PosVel wave-addition source batch.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -19,10 +19,12 @@ This file describes current state; the repair log records historical batches.
 ## Verified checkpoint
 
 The current report has **635 exact, 52 mismatch and 528 incomplete** among
-1215 annotated candidates, covering 114,388 exact owned bytes. All 633 exact
-results at `3807d54` remain exact. The complete 70-byte
-`ItemManagerInner::~ItemManagerInner` and 73-byte `StageInner::~StageInner`
-now pass after independent review of their complete private EH handlers,
+1215 annotated candidates, covering 114,388 exact owned bytes. All 635 exact
+results at `b1ea1e8` remain exact. This source batch improves the complete
+700-byte `PosVel::step` comparison from 684 matching bytes to 696, leaving
+four differences and granting no new exact credit. The preceding EH review
+established complete passes for the 70-byte `ItemManagerInner::~ItemManagerInner`
+and 73-byte `StageInner::~StageInner` through their complete private EH handlers,
 descriptors and runtime entries. See [EH ownership evidence](knowledge/eh-handlers.md).
 The handlers and runtime binding receive no additional primary exact credit.
 
@@ -37,18 +39,21 @@ acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The game-source change
-in this batch is the compiler-generated ItemManagerInner destructor annotation;
-its implementation still follows naturally from its members. The preceding
-PosVel component-arithmetic improvement remains a 684/700-byte mismatch.
-VM traversal, render-limit and shake-timer trials were restored. WinMain's
+in this batch is the direct `pos = offset + center` vector addition in the
+PosVel wave branch. The indexed circle construction and drift-center update
+are retained. Other circle/vector forms, Fog position/step declaration changes
+and an explicit Supervisor loop return were restored. Earlier VM traversal,
+render-limit and shake-timer trials were also restored. WinMain's
 earlier natural cleanup remains; its complete 2919-byte extent still mismatches.
 
-The current batch passes all **138 controls across nine suites**, including
-25 new EH mutation controls and all 113 existing controls. Logs use
-`.analysis/eh-*-controls.log`. Complete private graph bytes, disassembly and
-ownership are in `.analysis/eh-reviewed-graph-evidence.json`. The current full
-audit and retained-pass comparison are `.analysis/eh-full-audit.log` and
-`.analysis/eh-regression-check.json`.
+The current batch passes 19 switch-ownership and 12 strict-Oracle controls;
+logs are `.analysis/wave-switch-controls.log` and
+`.analysis/wave-oracle-controls.log`. The preceding EH checkpoint passed all
+138 controls across nine suites. Its complete private graph bytes, disassembly
+and ownership remain in `.analysis/eh-reviewed-graph-evidence.json`.
+The current full audit and retained-pass comparison are
+`.analysis/wave-source-final-audit.log` and
+`.analysis/wave-source-regression-check.json`.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -117,21 +122,24 @@ context rather than restoring the artificial inputs. Other compiler-context
 helpers, forced accesses and type hypotheses still need source review.
 
 The eight reviewed bounded switch scopes are complete. `PosVel::step` and
-`anm_masked_effect_on_switch` still mismatch, with 16 and 45 differing bytes
+`anm_masked_effect_on_switch` still mismatch, with four and 45 differing bytes
 respectively; neither receives exact credit.
 The two remaining unreviewed indirect dispatches have different evidence needs.
 Do not generalize the single-table proof to multiple or unbounded tables.
 Read the final repair-log section before retrying PosVel vector-expression
 variants, VM deletion aliases, precomputed render limits or shake timer helpers.
-The circle constructor was not simplified in isolation, so its effect on other
-branches remains an open causal question.
+The circle constructor has now been simplified in isolation: this regresses
+the complete owner and also changes wave scheduling. The current 696/700 result
+retains the indexed circle form. Remaining circle
+operand order needs better source/type/context evidence; do not normalize it.
 
 The two reviewed empty-EH3 graphs are complete. Their selectors require the
 exact parent-derived private MAP names, full source-object PDB ownership and
 complete 27/36-byte handler/descriptor extents. Do not extend this proof to
 nonempty unwind/try tables or another handler shape. Identical metadata from
 another parent is explicitly rejected. Continue from unresolved-field reasons
-or isolate the still-untested PosVel circle-constructor change.
+or the remaining source/type differences; the isolated PosVel circle trial is
+complete and rejected.
 
 `draw_line` is a complete 569-byte pass. `world_pos` has a GS-cookie/extent
 difference. Int3 interpolation at `0x00464590` differs in one SIB byte. Float2

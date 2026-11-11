@@ -74,7 +74,7 @@ void PosVel::step()
         Float3 offset;
         from_polar(&offset, normalize_angle(side.value), zun_sinf(wave_angle.value) * radial_dist * g_game_speed);
         offset.z = 0.0f;
-        pos = Float3(offset[0] + center[0], offset[1] + center[1], offset[2] + center[2]);
+        pos = offset + center;
         angle = zun_atan2f(pos.y - prev.y, pos.x - prev.x);
         break;
     }
