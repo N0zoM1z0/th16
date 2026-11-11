@@ -997,22 +997,22 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045F780,AnmVm::get_float_var_ptr,src/AnmVmRun.cpp,?get_float_var_ptr@AnmVm@@QAEPAMPAM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0045F890,AnmVm::get_int_var_ptr,src/AnmVmRun.cpp,?get_int_var_ptr@AnmVm@@QAEPAHPAH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0045F940,divide_vec2_by_640_480,src/AnmVmRun.cpp,?divide_vec2_by_640_480@@YIXPAUD3DXVECTOR2@@0@Z,exact,,.analysis/reference-audit.json
-0x0045F980,AnmVm::run,src/AnmVmRun.cpp,?run@AnmVm@@QAEHXZ,incomplete,11 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045F980,AnmVm::run,src/AnmVmRun.cpp,?run@AnmVm@@QAEHXZ,incomplete,8 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004630F0,AnmVm::step_velocities,src/AnmVmRun.cpp,?step_velocities@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x004632F0,AnmVm::update_special_vertices,src/AnmVmRun.cpp,?update_special_vertices@AnmVm@@QAEXXZ,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004632F0,AnmVm::update_special_vertices,src/AnmVmRun.cpp,?update_special_vertices@AnmVm@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00463B30,AnmVm::step_interpolators,src/AnmVmRun.cpp,?step_interpolators@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00463D40,InterpFloat2::step,src/Interp.cpp,?step@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ,mismatch,,.analysis/reference-audit.json
 0x00464040,InterpAngle::reset_time,src/Interp.cpp,?reset_time@InterpAngle@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00464080,InterpAngle::step,src/Interp.cpp,?step@InterpAngle@@QAE?AUZunAngle@@XZ,mismatch,,.analysis/reference-audit.json
 0x004643B0,InterpInt::step,src/Interp.cpp,?step@InterpInt@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00464590,InterpInt3::step,src/Interp.cpp,?step@InterpInt3@@QAE?AUInt3@@XZ,mismatch,,.analysis/reference-audit.json
-0x00464930,anm_sincosmul_xy,src/AnmVmRun.cpp,?anm_sincosmul_xy@@YIXPAM0MM@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
+0x00464930,anm_sincosmul_xy,src/AnmVmRun.cpp,?anm_sincosmul_xy@@YIXPAM0MM@Z,exact,,.analysis/reference-audit.json
 0x00464960,AnmVm::set_uv_scale_time,src/AnmVmRun.cpp,?set_uv_scale_time@AnmVm@@QAEXHHPAUD3DXVECTOR2@@0@Z,exact,,.analysis/reference-audit.json
 0x00464A00,AnmVm::set_scale_2_time,src/AnmVmRun.cpp,?set_scale_2_time@AnmVm@@QAEXHHPAUD3DXVECTOR2@@0@Z,exact,,.analysis/reference-audit.json
 0x00464AA0,AnmVm::set_alpha2_time,src/AnmVmRun.cpp,?set_alpha2_time@AnmVm@@QAEXHHEE@Z,exact,,.analysis/reference-audit.json
 0x00464B40,AnmVm::set_rgb2_time,src/AnmVmRun.cpp,?set_rgb2_time@AnmVm@@QAEXHHPATZunColor@@0@Z,exact,,.analysis/reference-audit.json
 0x00464C60,AnmVm::set_rgb1_time,src/AnmVmRun.cpp,?set_rgb1_time@AnmVm@@QAEXHHPATZunColor@@0@Z,exact,,.analysis/reference-audit.json
-0x00464D60,anm_sincosmul,src/AnmVmRun.cpp,?anm_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
+0x00464D60,anm_sincosmul,src/AnmVmRun.cpp,?anm_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
 0x00464D80,ZunTimer::set_from,src/ZunTimer.cpp,?set_from@ZunTimer@@QAEXU1@@Z,exact,,.analysis/reference-audit.json
 0x00464DD0,AnmVm::get_total_rotation,src/AnmVmRun.cpp,?get_total_rotation@AnmVm@@QAEPAUD3DXVECTOR3@@XZ,exact,,.analysis/reference-audit.json
 0x00464F10,AnmManager::setup_render_state_for_vm,src/AnmRender.cpp,?setup_render_state_for_vm@AnmManager@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

@@ -1,6 +1,7 @@
 """Explicit complete private-function identities; no public-symbol promotion."""
 from collections import deque
 import hashlib
+import struct
 import tomllib
 
 import capstone
@@ -14,11 +15,62 @@ class StaticEvidenceError(ValueError):
 
 
 SINCOS_SCALE = bytes.fromhex('558bec51894dfc8b45fcd94508d9fbd84d0cd918d84d0cd958048be55dc20800')
+SINCOS_SCALE_XY = bytes.fromhex('558bec83ec088955f8894dfc8b45fcd94508d9fbd84d0cd918d84d0c8b45f8d9188be55dc20800')
+PROFILES = {'x87-sincos-scale-v1': SINCOS_SCALE, 'x87-sincos-scale-xy-v1': SINCOS_SCALE_XY}
 
 
 def require(condition, message):
     if not condition:
         raise StaticEvidenceError(message)
+
+
+def witness_dispatch(context, spec, by):
+    """Review one bounded byte-remap edge for original witness paths only."""
+    require(set(spec) == {'profile','guard','branch','remap','dispatch','map_address','map_count',
+                         'map_sha256','targets_address','targets_count','targets_sha256'},
+            'unsupported private witness dispatch fields')
+    require(spec['profile'] == 'bounded-byte-remap-v1', 'unreviewed private witness dispatch profile')
+    sites = [spec[k] for k in ('guard','branch','remap','dispatch')]
+    require(all(type(a) is int and a in by for a in sites), 'witness dispatch is not at instruction starts')
+    guard, branch, remap, jump = [by[a] for a in sites]
+    require(guard.mnemonic == 'cmp' and len(guard.operands) == 2
+            and guard.operands[0].type == capstone.x86.X86_OP_REG and guard.operands[0].size == 4
+            and guard.operands[1].type == capstone.x86.X86_OP_IMM, 'witness dispatch lacks an index bound')
+    register = guard.operands[0].reg
+    require(type(spec['map_count']) is int and 0 < spec['map_count'] <= 256
+            and guard.operands[1].imm == spec['map_count']-1, 'witness dispatch map extent differs from bound')
+    require(branch.mnemonic == 'ja' and branch.operands[0].type == capstone.x86.X86_OP_IMM
+            and branch.operands[0].imm in by, 'witness dispatch requires an owned unsigned default')
+    require(all(a.address+a.size == b.address for a,b in zip((guard,branch,remap),(branch,remap,jump))),
+            'witness dispatch guard/remap sequence is not adjacent')
+    require(remap.mnemonic == 'movzx' and remap.operands[0].type == capstone.x86.X86_OP_REG
+            and remap.operands[0].reg == register and remap.operands[0].size == 4
+            and remap.operands[1].type == capstone.x86.X86_OP_MEM and remap.operands[1].size == 1
+            and remap.operands[1].mem.base == register and not remap.operands[1].mem.index
+            and remap.operands[1].mem.disp == spec['map_address'], 'witness dispatch remap index differs')
+    require(jump.mnemonic == 'jmp' and jump.operands[0].type == capstone.x86.X86_OP_MEM
+            and jump.operands[0].size == 4 and not jump.operands[0].mem.base
+            and jump.operands[0].mem.index == register and jump.operands[0].mem.scale == 4
+            and jump.operands[0].mem.disp == spec['targets_address'], 'witness dispatch target index differs')
+    mapper = context.target.read_address(spec['map_address'],spec['map_count'])
+    require(hashlib.sha256(mapper).hexdigest() == spec['map_sha256'], 'witness dispatch complete map hash differs')
+    require(type(spec['targets_count']) is int and spec['targets_count'] == max(mapper)+1,
+            'witness dispatch target extent differs from mapped index range')
+    raw = context.target.read_address(spec['targets_address'],spec['targets_count']*4)
+    require(hashlib.sha256(raw).hexdigest() == spec['targets_sha256'], 'witness dispatch complete targets hash differs')
+    targets = struct.unpack('<'+'I'*spec['targets_count'],raw)
+    require(set(targets) <= set(by), 'witness dispatch target is not an owned instruction start')
+    code_end = max(a+i.size for a,i in by.items())
+    m0,m1 = spec['map_address'],spec['map_address']+len(mapper)
+    t0,t1 = spec['targets_address'],spec['targets_address']+len(raw)
+    require(m0 >= code_end and t0 >= code_end and (m1 <= t0 or t1 <= m0),
+            'witness dispatch data overlaps code or another table')
+    forbidden = set(range(branch.address,jump.address+jump.size))
+    require(not set(targets)&forbidden and not any(
+        i.group(capstone.CS_GRP_JUMP) and i.operands[0].type == capstone.x86.X86_OP_IMM
+        and i.operands[0].imm in forbidden for i in by.values()), 'witness dispatch guard can be bypassed')
+    return dict(at=jump.address,guard=guard.address,mapper=list(mapper),targets=list(targets),
+                mapped_targets=sorted({targets[v] for v in mapper}))
 
 
 def review_functions(context, path):
@@ -32,14 +84,15 @@ def review_functions(context, path):
     result = {}
     identities = set()
     for name, row in records['functions'].items():
-        require(set(row) == {'profile','source','symbol','target','size','sha256',
+        require(set(row)-{'witness_dispatch'} == {'profile','source','symbol','target','size','sha256',
                              'witness_parent','witness','parent_sha256'}, 'unsupported private-function fields')
         source = row['source']
         require(isinstance(source,str) and source.startswith('src/') and source.endswith('.cpp')
                 and '\\' not in source and ':' not in source
                 and all(p not in ('','.','..') for p in source.split('/')),
                 'private producer requires a canonical maintained source path')
-        require(row['profile'] == 'x87-sincos-scale-v1' and row['size'] == len(SINCOS_SCALE),
+        payload = PROFILES.get(row['profile'])
+        require(payload is not None and row['size'] == len(payload),
                 'unreviewed private-function profile or complete extent')
         target, size = row['target'], row['size']
         require(type(target) is int and type(size) is int, 'private-function extent must be integral')
@@ -47,8 +100,8 @@ def review_functions(context, path):
         require(boundary is not None and int(boundary['size']) == size
                 and int(boundary['span_end'],0) == target+size-1, 'private function lacks its whole original boundary')
         require(boundary['source_file'] == row['source'], 'private original source identity differs')
-        require(context.target.read_address(target,size) == SINCOS_SCALE
-                and hashlib.sha256(SINCOS_SCALE).hexdigest() == row['sha256'], 'private original profile bytes differ')
+        require(context.target.read_address(target,size) == payload
+                and hashlib.sha256(payload).hexdigest() == row['sha256'], 'private original profile bytes differ')
         require(not any(a < target+size and target <= int(r['span_end'],0)
                         for a,r in context.boundaries.items() if a != target), 'private original owner overlaps')
         next_entry = min(a for a in context.boundaries if a > target)
@@ -60,7 +113,7 @@ def review_functions(context, path):
             raise StaticEvidenceError(str(error)) from error
         require([r for r in annotations if int(r[0],0) == target] ==
                 [[hex(target),hex(owner['address']),row['symbol']]], 'private annotation identity differs')
-        require(context.image.read_address(owner['address'],size) == SINCOS_SCALE,
+        require(context.image.read_address(owner['address'],size) == payload,
                 'complete private candidate profile bytes differ')
         require(not any(a < owner['address']+size and owner['address'] < a+4
                         for a in context.image.base_relocations()), 'private profile has unreviewed PE relocations')
@@ -73,6 +126,7 @@ def review_functions(context, path):
         ins = list(decoder.disasm(raw,parent))
         require(sum(i.size for i in ins) == len(raw), 'private witness parent does not completely decode')
         by = {i.address:i for i in ins}
+        dispatch = witness_dispatch(context,row['witness_dispatch'],by) if 'witness_dispatch' in row else None
         require(witness in by, 'private witness is not an original instruction start')
         call = by[witness]
         require(call.mnemonic == 'call' and call.operands[0].type == capstone.x86.X86_OP_IMM
@@ -87,6 +141,11 @@ def review_functions(context, path):
             destinations = []
             if i.group(capstone.CS_GRP_JUMP):
                 if i.operands[0].type != capstone.x86.X86_OP_IMM:
+                    if dispatch and a == dispatch['at']:
+                        for dest in dispatch['mapped_targets']:
+                            if dest not in previous:
+                                previous[dest] = a
+                                queue.append(dest)
                     continue
                 destinations.append(i.operands[0].imm & 0xffffffff)
                 if i.mnemonic != 'jmp':
@@ -109,6 +168,8 @@ def review_functions(context, path):
             require(by[a].mnemonic not in ('int3','ud2','hlt'), 'private witness path crosses a trap')
             path_to_call.append(a)
             a = previous[a]
+        if dispatch and dispatch['at'] in path_to_call:
+            require(dispatch['guard'] in path_to_call, 'private witness path bypasses its dispatch guard')
         identity = (row['source'],row['symbol'])
         require(identity not in identities and target not in {r['target'] for r in result.values()},
                 'duplicate private-function identity')
@@ -118,6 +179,8 @@ def review_functions(context, path):
                         pdb_module_index=owner['module_index'])
         result[name] = dict(**row,candidate=owner['address'],function=function,
                             witness_path=list(reversed(path_to_call)))
+        if dispatch:
+            result[name]['dispatch_proof'] = dispatch
     return result
 
 

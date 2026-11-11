@@ -695,11 +695,13 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00464080,InterpAngle::step,reference-00464080,mismatch,813,813,812,.analysis/reference-audit.json
 0x004643B0,InterpInt::step,reference-004643b0,local-strict-pass,480,480,480,.analysis/reference-audit.json
 0x00464590,InterpInt3::step,reference-00464590,mismatch,926,926,925,.analysis/reference-audit.json
+0x00464930,anm_sincosmul_xy,reference-00464930,local-strict-pass,39,39,39,.analysis/reference-audit.json
 0x00464960,AnmVm::set_uv_scale_time,reference-00464960,local-strict-pass,158,158,158,.analysis/reference-audit.json
 0x00464A00,AnmVm::set_scale_2_time,reference-00464a00,local-strict-pass,158,158,158,.analysis/reference-audit.json
 0x00464AA0,AnmVm::set_alpha2_time,reference-00464aa0,local-strict-pass,156,156,156,.analysis/reference-audit.json
 0x00464B40,AnmVm::set_rgb2_time,reference-00464b40,local-strict-pass,274,274,274,.analysis/reference-audit.json
 0x00464C60,AnmVm::set_rgb1_time,reference-00464c60,local-strict-pass,252,252,252,.analysis/reference-audit.json
+0x00464D60,anm_sincosmul,reference-00464d60,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x00464D80,ZunTimer::set_from,reference-00464d80,local-strict-pass,68,68,68,.analysis/reference-audit.json
 0x00464DD0,AnmVm::get_total_rotation,reference-00464dd0,local-strict-pass,305,305,305,.analysis/reference-audit.json
 0x00465A30,AnmManager::reset_vertex_buffers,reference-00465a30,local-strict-pass,70,70,70,.analysis/reference-audit.json

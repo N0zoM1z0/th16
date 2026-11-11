@@ -1204,3 +1204,44 @@ Evidence is `.analysis/remaining-sincos-original-discovery.json`,
 under `.analysis/laser-angle-{completion,next-values}-artifacts/`; preceding
 source, report and units are under `.analysis/laser-angle-baseline/`.
 Nothing is published.
+
+## Anm bounded dispatch and circle angle trial
+
+Original-only review establishes two AnmVmRun private helper call paths through
+explicitly bounded byte-remap dispatches. The ordinary 32-byte helper at
+`0x00464D60` and separate-output 39-byte helper at `0x00464930` both pass their
+complete source-qualified private PDB owners. Full replay reports **790 exact,
+61 mismatch and 364 incomplete**, with 126,050 exact primary bytes. All 788
+previous exact results and all 849 previous units are retained unchanged;
+two new complete units add 71 exact bytes. See
+[Anm private dispatch review](anm-private-dispatch.md).
+
+The verifier hashes all 460 original table bytes, checks unsigned bounds and
+adjacent same-index remapping, and traverses only mapped owned instruction
+starts. Other indirect jumps remain stops. The new XY profile requires every
+byte of the complete different ABI. No public identity is manufactured and no
+parent or table comparison credit is granted. The original parent inventory
+contains code contexts, so the special-vertices extent refusal is not proof of
+a genuine whole-source size difference. Complete parent code/data review is
+still required. The main interpreter retains eight unresolved fields.
+
+A natural source trial splits circle angle advancement from wrap normalization.
+It builds incrementally but leaves the complete result at 514/588 matching
+bytes. The trial is rejected and restored byte for byte. Full original and
+baseline/trial candidate scopes are retained in
+`.analysis/circle-angle-source-trials.json`, with complete output sets under
+`.analysis/{primitive-source-baseline,circle-angle-advance-artifacts}/`.
+Fresh restored outputs match the baseline input identity, all four artifact
+hashes match their receipt, and all 192 dependency stamps validate; see
+`.analysis/primitive-source-restored-check.json`. No clean build, archived-output
+substitution or forced scheduling is used.
+
+All 143 controls across seven relevant suites pass, including complete map,
+target and XY-body byte mutations, guard bypass and unused-slot rejection.
+Evidence is `.analysis/anm-private-dispatch-original-scopes.json`,
+`.analysis/anm-private-dispatch-full-audit.log`,
+`.analysis/anm-private-dispatch-regression-check.json`,
+`.analysis/anm-private-dispatch-{controls,oracle-controls,linkage-controls,focused-controls,switch-controls,constructor-eh-controls,empty-eh-controls}.log`,
+`.analysis/circle-angle-advance-focused.json` and
+`.analysis/primitive-source-restored-build.log`. Source-origin review remains
+open; Factory acceptance remains unsubmitted. Nothing is published.

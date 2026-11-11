@@ -991,13 +991,13 @@ address,size,span_end,state,evidence
 0x00464080,813,0x004643AC,strict-compared,.analysis/reference-audit.json
 0x004643B0,480,0x0046458F,strict-compared,.analysis/reference-audit.json
 0x00464590,926,0x0046492D,strict-compared,.analysis/reference-audit.json
-0x00464930,39,0x00464956,provisional,.analysis/reference-audit.json
+0x00464930,39,0x00464956,strict-compared,.analysis/reference-audit.json
 0x00464960,158,0x004649FD,strict-compared,.analysis/reference-audit.json
 0x00464A00,158,0x00464A9D,strict-compared,.analysis/reference-audit.json
 0x00464AA0,156,0x00464B3B,strict-compared,.analysis/reference-audit.json
 0x00464B40,274,0x00464C51,strict-compared,.analysis/reference-audit.json
 0x00464C60,252,0x00464D5B,strict-compared,.analysis/reference-audit.json
-0x00464D60,32,0x00464D7F,provisional,.analysis/reference-audit.json
+0x00464D60,32,0x00464D7F,strict-compared,.analysis/reference-audit.json
 0x00464D80,68,0x00464DC3,strict-compared,.analysis/reference-audit.json
 0x00464DD0,305,0x00464F00,strict-compared,.analysis/reference-audit.json
 0x00464F10,836,0x00465253,provisional,.analysis/reference-audit.json

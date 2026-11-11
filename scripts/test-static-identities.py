@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """Reject partial, foreign or ambiguous private-function ownership and edges."""
 import copy
+import hashlib
+import json
+import struct
 import tempfile
 from pathlib import Path
 import tomllib
 import unittest
 from unittest.mock import patch
+
+import capstone
 
 import static_identity as static
 from strict_oracle import Context, Incomplete, ROOT
@@ -20,6 +25,14 @@ class StaticIdentityControls(unittest.TestCase):
         cls.records = tomllib.loads(cls.path.read_text())
         cls.statics = map_statics(cls.context.directory / 'th16.map')
         cls.pdb = pdb_section_contributions(cls.context.directory / 'th16.pdb')
+        decoder = capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_32)
+        decoder.detail = True
+        cls.dispatch_instructions = {}
+        for name,row in cls.records['functions'].items():
+            if 'witness_dispatch' in row:
+                parent = row['witness_parent']
+                raw = cls.context.target.read_address(parent,int(cls.context.boundaries[parent]['size']))
+                cls.dispatch_instructions[name] = {i.address:i for i in decoder.disasm(raw,parent)}
 
     def review(self, records=None, context=None):
         if records is None:
@@ -28,7 +41,12 @@ class StaticIdentityControls(unittest.TestCase):
         for name,row in records['functions'].items():
             lines.append('[functions.'+name+']')
             for k,v in row.items():
-                lines.append(k+' = '+(repr(v).replace("'",'"') if isinstance(v,str) else str(v)))
+                if not isinstance(v,dict):
+                    lines.append(k+' = '+json.dumps(v))
+            for k,v in row.items():
+                if isinstance(v,dict):
+                    lines.append('[functions.'+name+'.'+k+']')
+                    lines.extend(key+' = '+json.dumps(value) for key,value in v.items())
         with tempfile.TemporaryDirectory(dir=ROOT / '.analysis') as d:
             p = Path(d)/'proof.toml'
             p.write_text('\n'.join(lines))
@@ -215,6 +233,130 @@ class StaticIdentityControls(unittest.TestCase):
         context.image = Overlay()
         with self.assertRaisesRegex(Incomplete,'direct CALL'):
             context.compare(u)
+
+    def dispatch_context(self, mutations):
+        context = copy.copy(self.context)
+        original = context.target
+        class Overlay:
+            def __getattr__(self,key):
+                return getattr(original,key)
+            def read_address(self,a,size):
+                raw = bytearray(original.read_address(a,size))
+                for at,value in mutations.items():
+                    if a <= at < a+size:
+                        raw[at-a] = value
+                return bytes(raw)
+        context.target = Overlay()
+        return context
+
+    def check_dispatch(self, spec=None, mutations=None, name='anm'):
+        context = self.dispatch_context(mutations or {})
+        row = self.records['functions'][name]
+        parent = row['witness_parent']
+        size = int(context.boundaries[parent]['size'])
+        by = self.dispatch_instructions[name]
+        if any(parent <= a < parent+size for a in (mutations or {})):
+            decoder = capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_32)
+            decoder.detail = True
+            by = {i.address:i for i in decoder.disasm(context.target.read_address(parent,size),parent)}
+        return static.witness_dispatch(context,spec or row['witness_dispatch'],by)
+
+    def test_bounded_dispatch_proves_the_annotated_call_path(self):
+        p = self.context.static_functions['anm']
+        self.assertIn(0x46331c,p['witness_path'])
+        self.assertIn(0x46332c,p['witness_path'])
+        self.assertIn(0x463333,p['witness_path'])
+        self.assertEqual(len(self.check_dispatch()['mapper']),17)
+        self.assertEqual(len(self.check_dispatch()['targets']),4)
+        xy = self.context.static_functions['anm_xy']
+        self.assertIn(0x45fbe3,xy['witness_path'])
+        self.assertIn(0x45fbf5,xy['witness_path'])
+        self.assertEqual(len(self.check_dispatch(name='anm_xy')['mapper']),215)
+        self.assertEqual(len(self.check_dispatch(name='anm_xy')['targets']),53)
+
+    def test_dispatch_cannot_be_omitted_or_replaced_by_generic_edges(self):
+        records = copy.deepcopy(self.records)
+        del records['functions']['anm']['witness_dispatch']
+        with self.assertRaisesRegex(static.StaticEvidenceError,'entry path'):
+            self.review(records)
+        spec = copy.deepcopy(self.records['functions']['anm']['witness_dispatch'])
+        spec['profile'] = 'arbitrary-indirect-jump'
+        with self.assertRaises(static.StaticEvidenceError):
+            self.check_dispatch(spec)
+
+    def test_dispatch_requires_exact_complete_table_counts(self):
+        for key,values in [('map_count',(16,18)),('targets_count',(3,5))]:
+            for value in values:
+                spec = copy.deepcopy(self.records['functions']['anm']['witness_dispatch'])
+                spec[key] = value
+                with self.assertRaises(static.StaticEvidenceError):
+                    self.check_dispatch(spec)
+
+    def test_every_mapper_and_target_byte_is_retained(self):
+        for name,start,size in [('anm',0x463b14,17),('anm',0x463b04,16),
+                               ('anm_xy',0x462d8c,215),('anm_xy',0x462cb8,212)]:
+            for offset in range(size):
+                at = start+offset
+                before = self.context.target.read_address(at,1)[0]
+                with self.subTest(address=hex(at)),self.assertRaises(static.StaticEvidenceError):
+                    self.check_dispatch(mutations={at:before^1},name=name)
+
+    def test_dispatch_requires_unsigned_guard_and_consistent_index(self):
+        for mutations in ({0x463320:0x8f},{0x463327:0x81},{0x46332e:0x8d}):
+            with self.assertRaises(static.StaticEvidenceError):
+                self.check_dispatch(mutations=mutations)
+
+    def test_dispatch_sites_must_be_adjacent_instruction_starts(self):
+        for key,value in [('guard',0x46331d),('remap',0x46332c),('dispatch',0x46332d)]:
+            spec = copy.deepcopy(self.records['functions']['anm']['witness_dispatch'])
+            spec[key] = value
+            with self.assertRaises(static.StaticEvidenceError):
+                self.check_dispatch(spec)
+
+    def test_dispatch_cannot_target_an_interior_or_bypass_its_guard(self):
+        for target in (0x463334,0x46331f):
+            spec = copy.deepcopy(self.records['functions']['anm']['witness_dispatch'])
+            replacement = struct.pack('<I',target)
+            mutations = {0x463b04+i:b for i,b in enumerate(replacement)}
+            context = self.dispatch_context(mutations)
+            spec['targets_sha256'] = hashlib.sha256(context.target.read_address(0x463b04,16)).hexdigest()
+            with self.assertRaises(static.StaticEvidenceError):
+                self.check_dispatch(spec,mutations)
+
+    def test_unmapped_destination_does_not_establish_reachability(self):
+        context = self.dispatch_context({0x463b14:3})
+        records = copy.deepcopy(self.records)
+        records['functions']['anm']['witness_dispatch']['map_sha256'] = hashlib.sha256(
+            context.target.read_address(0x463b14,17)).hexdigest()
+        proof = self.check_dispatch(records['functions']['anm']['witness_dispatch'],{0x463b14:3})
+        self.assertNotIn(0x463333,proof['mapped_targets'])
+        with self.assertRaisesRegex(static.StaticEvidenceError,'entry path'):
+            self.review(records,context)
+
+    def test_xy_profile_requires_every_original_and_candidate_byte(self):
+        for which in ('image','target'):
+            context = copy.copy(self.context)
+            original = getattr(context,which)
+            base = self.context.static_functions['anm_xy']['candidate' if which=='image' else 'target']
+            for offset in range(39):
+                class Overlay:
+                    def __getattr__(self,key):
+                        return getattr(original,key)
+                    def read_address(self,a,size):
+                        raw = bytearray(original.read_address(a,size))
+                        if a <= base+offset < a+size:
+                            raw[base+offset-a] ^= 1
+                        return bytes(raw)
+                setattr(context,which,Overlay())
+                with self.subTest(which=which,offset=offset),self.assertRaises(static.StaticEvidenceError):
+                    self.review(context=context)
+
+    def test_xy_profile_cannot_change_extent_or_use_the_vector_abi(self):
+        for key,value in [('size',38),('size',40),('profile','x87-sincos-scale-v1')]:
+            records = copy.deepcopy(self.records)
+            records['functions']['anm_xy'][key] = value
+            with self.assertRaises(static.StaticEvidenceError):
+                self.review(records)
 
 
 if __name__=='__main__':

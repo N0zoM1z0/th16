@@ -118,3 +118,51 @@ sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
 witness_parent = 0x469e20
 witness = 0x469f71
 parent_sha256 = "f4683b0c50b10b6b2356a910dba176ae2751a9dcccee70084809c588b4cb7ddb"
+
+[functions.anm]
+profile = "x87-sincos-scale-v1"
+source = "src/AnmVmRun.cpp"
+symbol = "?anm_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x464d60
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x4632f0
+witness = 0x46348b
+parent_sha256 = "2a0c967e52db3c3470ea68664fa3f08021e8f0f24a2fa530ad0437c5d54cdd62"
+
+[functions.anm.witness_dispatch]
+profile = "bounded-byte-remap-v1"
+guard = 0x46331c
+branch = 0x46331f
+remap = 0x463325
+dispatch = 0x46332c
+map_address = 0x463b14
+map_count = 17
+map_sha256 = "b9e6aff5f4592006d9dd509343afeebda05c68fc199c7f693b158bd69a1c0fa8"
+targets_address = 0x463b04
+targets_count = 4
+targets_sha256 = "18b55cf314b36555f562b1e8f34535515377e8df44dd510e064d8005c58ec134"
+
+[functions.anm_xy]
+profile = "x87-sincos-scale-xy-v1"
+source = "src/AnmVmRun.cpp"
+symbol = "?anm_sincosmul_xy@@YIXPAM0MM@Z"
+target = 0x464930
+size = 39
+sha256 = "6f9b2dd8ba501b10bc70abe71546610cc9d8c8f624051f3e5566c6500cbe79e6"
+witness_parent = 0x45f980
+witness = 0x4606dc
+parent_sha256 = "38356d14ba8079c19056f38aa9ce3a118dca347e37f47d5921ecfbf2e57bfa8c"
+
+[functions.anm_xy.witness_dispatch]
+profile = "bounded-byte-remap-v1"
+guard = 0x45fbe3
+branch = 0x45fbe8
+remap = 0x45fbee
+dispatch = 0x45fbf5
+map_address = 0x462d8c
+map_count = 215
+map_sha256 = "dd0b8e98fa0fb2c82caf89294ebbe84d24dd62825ae44008002b261f711179b3"
+targets_address = 0x462cb8
+targets_count = 53
+targets_sha256 = "9b45fb4f20c3af34a4b5ab3a0fbdf64e7d3e47c309fa6e8b22d4615d10a6cdd3"

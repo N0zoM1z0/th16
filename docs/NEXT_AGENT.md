@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after eight further private helper reviews and laser angle trials.
+Updated 2026-11-11 after bounded Anm dispatch/helper review and a circle source trial.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,13 +18,21 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **788 exact, 61 mismatch and 366 incomplete** among
-1215 annotated candidates, covering 125,979 exact owned bytes. All 779 exact
-results at `afe236d` remain exact. Eight further original helper entries and
-their complete private PDB owners now pass the existing profile. Those helpers
-and the complete 641-byte fan initializer add nine exact owners and 897 bytes.
-Three formerly incomplete callers become complete mismatches. All 837 prior
-units remain unchanged, with 12 new units, for 849 total. See
+The current report has **790 exact, 61 mismatch and 364 incomplete** among
+1215 annotated candidates, covering 126,050 exact owned bytes. All 788 exact
+results at `192edc9` remain exact and all 849 previous units are unchanged.
+Two complete AnmVmRun private helpers add 71 exact bytes and two units, for
+851 total. Their original call paths now cross explicitly reviewed bounded
+byte-remap dispatches. The tables receive no exact credit; the parent functions
+remain incomplete and need full owned-data scope review. See
+[Anm private dispatch review](knowledge/anm-private-dispatch.md).
+
+The preceding eight-helper review reports 788 exact, 61 mismatch and 366
+incomplete. Eight further original helper entries and their complete private
+PDB owners pass the existing profile. Those helpers and the complete 641-byte
+fan initializer add nine exact owners and 897 bytes. Three formerly incomplete
+callers become complete mismatches. All 837 preceding units remain unchanged,
+with 12 new units, for 849 total. See
 [further scopes and laser trials](knowledge/further-sincos-scopes.md).
 
 The preceding review establishes three explicitly reviewed complete 32-byte
@@ -103,12 +111,14 @@ in the strict Oracle and audit. Default public ownership, unreviewed static
 names and EH profiles retain their refusal behavior. All whole private bytes,
 producer identity, annotation identity, original witness paths and absence of
 linked fields/relocations are required. Game source, compiler/linker profiles
-are unchanged. The latest batch adds eight explicit records under the same
-profile and extends its positive test inventory. Two natural Laser.cpp source
-trials are rejected and restored. Current outputs are freshly rebuilt from the
-restored source, and all 192 dependency stamps validate. See
-`.analysis/laser-angle-restored-check.json`; no clean build or archived-output
-substitution is used.
+are unchanged. The latest batch extends the private set to thirteen records
+and adds one complete 39-byte XY-output profile and a bounded original-witness dispatch
+profile. Arbitrary indirect traversal, generic private names and parent-owned
+data comparison remain refused. A natural circle angle-advance source trial
+is rejected and restored, with full scopes retained. Current outputs are
+freshly rebuilt from the restored source; all 192 dependency stamps validate.
+See `.analysis/primitive-source-restored-check.json`. No clean build or archived
+output substitution is used.
 
 An ordinary out-of-line UpdateFunc constructor was built incrementally as a
 source-context experiment. It removes redundant initialization stores and
@@ -141,9 +151,11 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **38 controls across three relevant suites**: private
-identities (21), strict Oracle (14) and focused audit (3). Logs use
-`.analysis/additional-sincos-{controls,oracle-controls,focused-controls}.log`.
+The current batch passes **143 controls across seven relevant suites**:
+private identities (31), strict Oracle (14), reviewed linkages (26), focused audit
+(3), primary switch ownership (19), constructor EH (25) and empty EH (25).
+Logs use `.analysis/anm-private-dispatch-{controls,oracle-controls,linkage-controls,focused-controls,switch-controls,constructor-eh-controls,empty-eh-controls}.log`.
+The preceding eight-helper batch passed 38 controls across three suites.
 The preceding private-ownership milestone passes 114 controls across six suites:
 private identities (21), strict Oracle (14), reviewed linkages (26), focused audit (3),
 constructor EH (25) and empty EH (25). Logs use
@@ -166,14 +178,16 @@ reproducer and scopes are `.analysis/review-manager-wrapper-scopes.py` and
 runtime derivation is `.analysis/review-runtime-entry-scopes.py` and
 `.analysis/reviewed-runtime-entry-scopes.json`. The latest original-only
 table derivation is `.analysis/review-table-entry-scopes.py` and
-`.analysis/reviewed-table-entry-scopes.json`. The current original-only private
-scope evidence includes `.analysis/static-sincos-original-scopes.json` and
-`.analysis/additional-sincos-original-scopes.json`; the maintained
-verifier rechecks the full originals and paths. Current replay and retained-pass
-evidence are `.analysis/additional-sincos-full-audit.log` and
-`.analysis/additional-sincos-regression-check.json`. The current incremental build
-log is `.analysis/laser-angle-restored-build.log`; the older baseline is
-`.analysis/record-input-cleanup-build.log`. The rejected
+`.analysis/reviewed-table-entry-scopes.json`. Original-only private scope evidence includes
+`.analysis/static-sincos-original-scopes.json`,
+`.analysis/additional-sincos-original-scopes.json` and
+`.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
+rechecks the full originals and paths. Current replay and retained-pass evidence
+are `.analysis/anm-private-dispatch-full-audit.log` and
+`.analysis/anm-private-dispatch-regression-check.json`. The current incremental
+build log is `.analysis/primitive-source-restored-build.log`. The rejected circle
+trial is `.analysis/circle-angle-advance-build.log`; full source diagnostics are
+`.analysis/circle-angle-source-trials.json`. The rejected
 source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
 
 ```sh
@@ -231,32 +245,43 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 366 incomplete candidates comprise 198 with unresolved fields, 131 genuine
-candidate/target extent differences, 29 without a same-start contribution,
-six with source-object ownership differences and two requiring reviewed switch
-or owned-data extents. None is currently refused specifically for a missing
-original boundary. Other missing evidence can precede boundary checks; this
-does not prove every annotation already has a complete original scope review.
-The earlier combined extent reason hid missing inventory rows; the Oracle now
-distinguishes these two refusal cases. Start from their recorded reasons.
+The 364 incomplete candidates comprise 197 with unresolved fields, 132
+candidate/original-inventory extent refusals, 27 without a same-start
+contribution, six with source-object ownership differences and two requiring
+reviewed switch or owned-data extents. The extent category includes original
+code contexts with unreviewed owned data; it does not establish a genuine
+source-size difference in every case. None is currently refused specifically
+for a missing original boundary. Other evidence can precede boundary checks;
+this does not prove every annotation has a complete original scope review.
 
-The private profile now has eleven explicit records: the preceding gather,
-bullet and laser entries plus jagged-line, Cirno, Marisa, secondary bullet,
-item, player, primitive and fan helpers. The complete entry/call list is in
-[the latest scope review](knowledge/further-sincos-scopes.md). It requires the
-full 32-byte x87 sincos/scale body,
-source-qualified private MAP name, unique complete PDB producer and exact
-annotation/witness identities. Primary units and direct CALL fields opt in
-explicitly with `reviewed_static`; no interior/addend, public alias, generic
-static fallback or tail transfer is permitted. The consumed source/name
-inventory metadata is fingerprinted. Existing sincos wrappers remain source
+The private profile now has thirteen explicit records: the preceding eleven
+32-byte helpers plus the ordinary AnmVmRun helper and its different complete
+39-byte XY-output body. It requires full profile bytes, source-qualified private
+MAP names, unique complete PDB producers and exact annotation/witness identities.
+Primary units and direct CALL fields opt in explicitly with `reviewed_static`;
+no interior/addend, public alias, generic fallback or tail transfer is permitted.
+Consumed source/name metadata is fingerprinted. Existing wrappers remain source
 context hypotheses. No game source or assembly change is retained.
 
-Other wrappers listed in build/reference-candidate/functions.txt still require
-independent original entry/path and complete producer reviews. The AnmVmRun
-helper at `0x00464D60` has calls within `update_special_vertices`, but the
-initial direct-branch path search does not reach its first call: its dispatch
-needs original review. Do not silently follow arbitrary indirect jumps.
+The ordinary AnmVmRun helper at `0x00464D60` and XY helper at `0x00464930` now
+have original paths through two completely hashed bounded byte-remap tables
+and pass their entire 32/39-byte owners. See
+[the dispatch review](knowledge/anm-private-dispatch.md). The parent at
+`0x004632F0` has a 2,068-byte inventoried code context plus reviewed 16/17-byte
+witness tables, while its candidate contribution is 2,097 bytes including data.
+Do not interpret this as a proven whole-source difference or resize the target
+to the candidate. Review the complete original code/data owner and preserve all
+bytes before attempting a parent comparison. The main interpreter remains
+incomplete with eight unbound fields and additional owned-data scope questions.
+These witness proofs grant neither parent nor table exact credit. Other
+private wrappers still require independent entry/path and producer reviews.
+
+A natural circle source trial splitting angle advancement from normalization
+leaves its complete result at 514/588 matching bytes and is restored. Full
+baseline/trial scopes and outputs are retained; do not repeat that context or
+force scheduling. Ring remains 428/558 and fan tick 583/639. The function at
+`0x00469890` is triangle-fan drawing (349/355), not a circle outline.
+
 The new full 412-byte LaserLine/LaserCurve angle units each differ in 11 bytes
 at +0x33..+0x3D, where a float load and completed-round memory increment have
 different order. This is an INC, not an argument push.
