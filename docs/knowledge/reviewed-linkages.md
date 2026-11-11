@@ -30,6 +30,8 @@ The machine inputs are `config/linkage-bindings.csv`.
 | `__libm_sse2_cos_precise` | `0x00488300` | 440 | The SSE2 entry's fallback call at `0x004884A7` reaches `0x0048913F`, whose original instructions execute `fcos` at `0x0048915D` and `0x00489194`. The candidate PDB records the complete 440-byte UCRT contribution. |
 | `__libm_sse2_sin_precise` | `0x004884C0` | 453 | The SSE2 entry's fallback call at `0x00488674` reaches `0x0048926F`, whose original instructions execute `fsin` at `0x0048928D` and `0x004892C4`. The candidate PDB records the complete 456-byte UCRT contribution. |
 | `__libm_sse2_sqrt_precise` | `0x00488690` | 254 | Independent Ghidra identification and the complete SSE2 square-root implementation, including MXCSR/x87 environment checks and the fallback path. Its pinned UCRT candidate contribution is 256 bytes. |
+| `__chkstk` | `0x00487100` | 45 | Ghidra independently identifies `__alloca_probe`. The complete routine takes the allocation size in EAX, touches each descending 4096-byte stack page, moves ESP and preserves the return address. Candidate `LIBCMT:chkstk.obj` has same-start `__chkstk` and `__alloca_probe` aliases in one complete 45-byte contribution. |
+| `__beginthreadex` | `0x0047952B` | 133 | Independent Ghidra identification; validates the user entry, allocates a CRT thread context, calls the imported `CreateThread` with a CRT startup wrapper, copies out the thread ID and releases context ownership on success. Pinned UCRT `thread.obj` contribution: 133 bytes. |
 
 Every entry checks its complete target extent and candidate PDB extent. The candidate
 PDB must name the pinned Microsoft `LIBCMT.lib`, `libvcruntime.lib` or UCRT
@@ -38,6 +40,35 @@ the separately pinned Windows SDK library path. The target extent hash is
 checked before use. These records
 establish reviewed external linkage identities; they do not grant a separate
 exact-code claim to each runtime implementation.
+
+The stack-probe entry subtracts the EAX allocation request from the incoming
+stack position, saturating underflow to zero. The loop at `0x00487124` descends
+by `0x1000` and touches each page with `test [eax], eax`. At `0x0048711C` it
+exchanges ESP with the computed destination, transfers the saved return address
+and returns on the allocated stack. This distinguishes the entry from the
+separately bounded 8-byte and 16-byte alignment wrappers at `0x00487026` and
+`0x00487010`. The two candidate aliases share the same start; neither is an
+interior entry. Their single PDB contribution and the original independent
+boundary both cover all 45 bytes. The original large-frame prologue at
+`0x004029D3` requests `0x2008` bytes and calls the entry at `0x004029D8`, which
+corroborates the EAX allocation contract.
+
+The thread entry calls the original PE import `KERNEL32!CreateThread` through
+IAT slot `0x0048B0E4` at `0x00479574`. Its six arguments include the CRT wrapper
+at `0x0047934B` and a context produced from the user's entry and argument by
+`0x00479456`. A null user entry sets errno to `0x16`; failed thread creation
+retrieves `GetLastError` through IAT slot `0x0048B08C` and releases the context.
+On success it writes the thread ID through argument six and transfers context
+ownership to the new thread. The original Ghidra name corroborates this full
+ABI and control flow. Internal context helpers and the startup wrapper are not
+assigned candidate bindings by this entry.
+
+The original `floor` root at `0x00488A00` remains unbound. Its independent
+Ghidra extent is 2991 bytes, including distant fallback code and other runtime
+entries, while the candidate `floor_pentium4.obj` contribution is 253 bytes.
+The apparent fast-path return at `0x00488AFC` does not establish a complete
+253-byte original boundary: the root branches to `0x004894F6`. Do not truncate
+the original extent or infer a replacement boundary from the candidate.
 
 The square-root helper has separately recorded target and candidate sizes. Both
 complete extents are mandatory: the original independent function is 254 bytes,

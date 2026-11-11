@@ -528,3 +528,70 @@ terminators, unique module/library provenance, matching function publics and
 full partition of the entire parent contribution, with negative controls.
 It must not broaden primary game-function ownership, accept an arbitrary
 interior public, truncate the parent, or credit an external callee as exact.
+
+## Stack probing, thread startup and bounded source trials
+
+The 2026-11-11 batch independently reviews `__chkstk` and `__beginthreadex`.
+Their complete original boundaries are 45 and 133 bytes; both candidate
+contributions have the same respective sizes and belong to pinned Microsoft
+libraries. The stack-probe algorithm and the thread entry's imported
+`CreateThread`, error path and ownership transfer establish their roles.
+See [reviewed linkages](reviewed-linkages.md). No comparison-rule change or
+external-callee exact credit is used. The questionable 2991-byte original
+`floor` extent remains unbound, including its distant fallback path.
+
+The final incremental audit reports **626 exact, 49 mismatch and 539
+incomplete**, totaling 112,605 exact owned bytes. All 620 exact results from
+`e75fbd0` remain exact. The six newly complete passes are:
+
+| Target | Function | Complete bytes |
+| --- | --- | ---: |
+| `0x004029D0` | `GameErrorContext::log` | 193 |
+| `0x00402FB0` | `ThreadInf::restart` | 61 |
+| `0x0043AF60` | `LoadingThread::initialize` | 125 |
+| `0x0043C5B0` | `Supervisor::start_thread` | 126 |
+| `0x00448C10` | `ReplayManager::read_replay_file` | 524 |
+| `0x0044AEE0` | `TitleInf::create` | 110 |
+
+Resolving the stack-probe field also exposes `WinMain`'s unequal complete
+extent. It remains incomplete; the change in recorded reason grants no credit.
+
+The source trials below were rejected and fully restored before the final
+incremental build. They grant no source-code improvement or exact credit:
+
+- `AnmVm::load_from`: using the original source parameter throughout, a separate
+  byte pointer after the VM and a block-local consumed count produces 637 bytes
+  rather than 650. Keeping the VM alias and advancing the source parameter, but
+  moving the count into the callback block, retains 650 bytes with seven
+  differences. The count then uses the original argument slot at `[ebp+8]`, but
+  the callback-index address moves from `[ebp-8]` to `[ebp+12]`, shrinking the
+  frame from 28 to 24 bytes and moving the timer snapshots. An explicit const
+  reference to the source callback-index field gives exactly the same result.
+  The restored baseline still has just the three count-slot differences.
+- `InterpFloat3::step`: using `tick()`, velocity-first acceleration addition
+  and scalar-left cubic vector products together produces 902 bytes rather
+  than 906. The scaled timer path still adds current time into the speed's
+  register; the original loads current time into XMM0 and adds the speed.
+  The two-dimensional interpolation repair cannot simply be carried over.
+- `BulletManager::clear_all`: a named velocity delta followed by indexed
+  component additions retains 500 bytes, but changes instruction scheduling
+  and the exhaustive linkage offsets. The source form that helped the line
+  renderer does not recover this half-step owner.
+
+Private evidence includes `.analysis/load-from-natural.json`,
+`.analysis/load-from-inner-scope.json`,
+`.analysis/load-from-index-reference.json`,
+`.analysis/interp3-timer-vector.json` and
+`.analysis/bullet-half-step-index.json`. Extent/manifest refusals are diagnostic
+results, not complete byte comparisons. The final restored-source build log is
+`.analysis/source-trials-restored-build.log`.
+
+The final runtime context, audit and retained-pass comparison are
+`.analysis/stack-thread-runtime-context.json`,
+`.analysis/stack-thread-linkage-audit.log` and
+`.analysis/stack-thread-regression-check.json`. All 24 reviewed-linkage and
+12 strict-Oracle controls pass, including truncated original/candidate extents
+and swapped library ownership for the new entries. Independent focused replay
+of the complete error logger and thread restart passes. `scripts/progress.py`
+confirms source, artifact, report and retained-unit freshness. Source-origin
+review and Factory acceptance remain open; no repository contents were pushed.

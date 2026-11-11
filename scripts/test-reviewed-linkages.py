@@ -51,18 +51,34 @@ class ReviewedLinkageControls(unittest.TestCase):
             self.check_rows(rows)
 
     def test_runtime_identity_requires_the_full_candidate_extent(self):
-        rows = copy.deepcopy(self.rows)
-        next(r for r in rows if r["symbol"] == "__libm_sse2_sqrt_precise")["candidate_size"] = "254"
-        with self.assertRaisesRegex(Incomplete, "complete function extents"):
-            self.check_rows(rows)
+        for symbol, truncated_size in [("__libm_sse2_sqrt_precise", 254),
+                                       ("__chkstk", 44), ("__beginthreadex", 132)]:
+            with self.subTest(symbol=symbol):
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == symbol)["candidate_size"] = str(truncated_size)
+                with self.assertRaisesRegex(Incomplete, "complete function extents"):
+                    self.check_rows(rows)
 
     def test_runtime_identity_requires_the_full_target_extent(self):
-        rows = copy.deepcopy(self.rows)
-        row = next(r for r in rows if r["symbol"] == "__libm_sse2_sqrt_precise")
-        row["size"] = "253"
-        row["target_sha256"] = hashlib.sha256(self.context.target.read_address(0x488690, 253)).hexdigest()
-        with self.assertRaisesRegex(Incomplete, "complete function extents"):
-            self.check_rows(rows)
+        for symbol in ["__libm_sse2_sqrt_precise", "__chkstk", "__beginthreadex"]:
+            with self.subTest(symbol=symbol):
+                rows = copy.deepcopy(self.rows)
+                row = next(r for r in rows if r["symbol"] == symbol)
+                size = int(row["size"]) - 1
+                row["size"] = str(size)
+                row["target_sha256"] = hashlib.sha256(
+                    self.context.target.read_address(int(row["target_address"], 0), size)).hexdigest()
+                with self.assertRaisesRegex(Incomplete, "complete function extents"):
+                    self.check_rows(rows)
+
+    def test_stack_probe_and_thread_entries_require_their_own_libraries(self):
+        for symbol, wrong_library in [("__chkstk", "libucrt.lib"),
+                                      ("__beginthreadex", "LIBCMT.lib")]:
+            with self.subTest(symbol=symbol):
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == symbol)["candidate_library"] = wrong_library
+                with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
+                    self.check_rows(rows)
 
     def test_string_must_have_its_complete_pdb_extent(self):
         rows = copy.deepcopy(self.rows)

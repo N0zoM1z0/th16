@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-08 after local checkpoint `a928c07` and handoff cleanup.
+Updated 2026-11-11 after the stack-probe/thread-linkage batch.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,10 +18,12 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **620 exact, 49 mismatch and 545 incomplete** among
-1214 annotated candidates, covering 111,466 exact owned bytes. All 614 exact
-results at `c1b5ada` remain exact. The last six gains are complete laser
-constructors and a clone consumer after reviewing all five 26-slot vftables.
+The current report has **626 exact, 49 mismatch and 539 incomplete** among
+1214 annotated candidates, covering 112,605 exact owned bytes. All 620 exact
+results at `e75fbd0` remain exact. The last six gains follow independent review
+of the complete `__chkstk` and `__beginthreadex` runtime entries: the error
+logger, thread restart, loading-thread initialization, Supervisor thread startup,
+replay-file reader and title creation.
 
 These are local code-comparison results. Source-origin review remains open;
 `config/implemented.csv` has no implemented entries. Factory registration is
@@ -33,10 +35,16 @@ cache and non-LTCG symbol-discovery cache are retained. Handoff cleanup changed
 no maintained game C++ or Oracle comparison code. The unvalidated atan2 draft
 was withdrawn before handoff, so it grants no binding or exact credit.
 
-Handoff verification passed all 89 controls across the six existing test suites
+The previous handoff passed all 89 controls across the six existing test suites
 (strict Oracle, reviewed linkages, pointer limits, PDB types, build context and
 vftable identities). The log is `.analysis/handoff-controls.log`. Toolchain
 component hashes and report freshness also passed; no game build was needed.
+The current batch passes 24 reviewed-linkage and 12 strict-Oracle controls,
+plus focused complete replay of the error logger and thread restart. Evidence
+is `.analysis/stack-thread-linkage-controls.log`,
+`.analysis/stack-thread-oracle-controls.log` and
+`.analysis/stack-thread-regression-check.json`. Source trials were restored
+before the final incremental rebuild; the maintained game C++ is unchanged.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -83,7 +91,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 545 incomplete candidates comprise 247 with unresolved fields, 250 with
+The 539 incomplete candidates comprise 240 with unresolved fields, 251 with
 candidate/target extent differences, 40 without a same-start contribution,
 six with source-object ownership differences and two requiring reviewed switch
 or owned-data extents. Start from their recorded reasons.
@@ -99,6 +107,13 @@ difference. Int3 interpolation at `0x00464590` differs in one SIB byte. Float2
 interpolation, points-in-rectangle and ECL argument-pointer trials also remain
 unresolved. Read [reference-repairs.md](knowledge/reference-repairs.md) before
 repeating their failed expression, temporary-variable or helper variants.
+
+The latest bounded trials also reject source/count-scope changes in
+`AnmVm::load_from`, carrying the Float2 timer/vector repair into Float3, and
+indexed scalar additions in the bullet cancellation half step. See the final
+repair-log section before repeating them. The original `floor` root has a
+2991-byte Ghidra extent with a distant fallback, not the candidate's 253-byte
+contribution; it remains unbound.
 
 `__CIatan2` is a promising evidence investigation, not an accepted runtime
 binding. Its two explicit MASM procedure records share one complete 20-byte
