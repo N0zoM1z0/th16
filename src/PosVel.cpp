@@ -45,7 +45,7 @@ void PosVel::step()
         Float3 offset;
         from_polar(&offset, angle.value, radial_dist);
         offset.z = 0.0f;
-        pos = velocity + offset;
+        pos = Float3(offset[0] + velocity[0], offset[1] + velocity[1], offset[2] + velocity[2]);
         break;
     }
     case POSVEL_MODE_ELLIPSE:
@@ -65,13 +65,16 @@ void PosVel::step()
     case POSVEL_MODE_WAVE:
     {
         Float3 prev = pos;
-        center += velocity;
+        // Advance the drift center before adding the planar displacement.
+        center[0] = velocity[0] + center[0];
+        center[1] = velocity[1] + center[1];
+        center[2] = velocity[2] + center[2];
         ZunAngle side;
         side.value = wrap_angle(ellipse_angle.value + ZUN_PI / 2);
         Float3 offset;
         from_polar(&offset, normalize_angle(side.value), zun_sinf(wave_angle.value) * radial_dist * g_game_speed);
         offset.z = 0.0f;
-        pos = center + offset;
+        pos = Float3(offset[0] + center[0], offset[1] + center[1], offset[2] + center[2]);
         angle = zun_atan2f(pos.y - prev.y, pos.x - prev.x);
         break;
     }

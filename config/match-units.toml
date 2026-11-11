@@ -807,7 +807,7 @@ linkages = [
   { offset = 494, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
   { offset = 509, width = 4, type = "REL32", symbol = "?normalize_angle@@YQMM@Z", target = 4205968, addend = 0 },
   { offset = 523, width = 4, type = "REL32", symbol = "?from_polar@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4216016, addend = 0 },
-  { offset = 551, width = 4, type = "DIR32", symbol = "__real@00000000", target = 4801472, addend = 0 },
+  { offset = 556, width = 4, type = "DIR32", symbol = "__real@00000000", target = 4801472, addend = 0 },
   { offset = 598, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
   { offset = 609, width = 4, type = "REL32", symbol = "??4ZunAngle@@QAEAAU0@M@Z", target = 4215936, addend = 0 },
   { offset = 621, width = 4, type = "DIR32", symbol = "__real@42c80000", target = 4802104, addend = 0 },

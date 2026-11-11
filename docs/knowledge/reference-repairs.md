@@ -663,3 +663,73 @@ The final audit and regression record are
 `.analysis/bounded-switch-regression-check.json`. `scripts/progress.py` confirms
 source, artifacts, report and unit freshness. Source-origin review and formal
 Factory acceptance remain open. No outputs were cleaned and nothing was pushed.
+
+## PosVel component arithmetic and bounded scheduling trials
+
+The next source batch starts from `bbfaf02`. Its complete `PosVel::step` owner
+at `0x00403110` has 700 bytes, including alignment and its five-slot jump table.
+The baseline strict replay matches 669 bytes and differs in 31. Indexed
+component addition for the wave center and explicit indexed vector construction
+for the circle/wave positions retains the full 700-byte scope and matches 684
+bytes, leaving 16 differences. This is source progress within a mismatching
+owner; it grants no new exact function or prefix credit. No Oracle, boundary,
+binding, compile-profile or harness change is involved.
+
+The wave-center update now follows the original scalar load/add order. The
+remaining differences occur at the circle's first component addition and the
+wave-position vector's load/add scheduling. The ellipse branch is unchanged.
+The reviewed table structure and every table relocation still participate in
+complete-owner comparison.
+
+The following trials were rejected. Candidate extent differences are refusals,
+not byte comparisons against shortened original ranges:
+
+| Trial | Candidate bytes | Complete result |
+| --- | ---: | --- |
+| Swap binary vector operands; assign a vector sum to the center | 704 | Incomplete |
+| Accumulate into offset vectors before copying to position | 732 | Incomplete |
+| Accumulate only the circle's x component; use mixed wave operand order | 724 | Incomplete |
+| Rebuild a planar vector from x/y and zero z before vector addition | 700 | Mismatch; 671 matching bytes |
+| Mix indexed x with named y/z members in wave construction | 700 | Mismatch; 667 matching bytes |
+
+Reverting just the circle constructor was not tested in isolation: the trial
+also changed `ScreenEffect::on_tick_shake` to the regular timer helper. That
+combined build did not retain the 684-byte result. Do not infer that a source
+expression is dispensable merely because its own branch's initial diagnostic
+looks unchanged; evaluate the whole owner and isolate any causal claim.
+
+The regular shake timer produces 474 bytes rather than the independent 476-byte
+original. Its original helper is restored. A named precomputed limit in
+`draw_triangle_fan` retains 355 bytes with the same six scheduling differences;
+it is also restored. The VM deletion alias and next-first traversal trials
+repeat earlier rejected observations (108 bytes, or 112 with 105 matching
+bytes). Both are restored; see the earlier runtime/literal section before
+repeating these paths again.
+
+Private evidence includes `.analysis/posvel-step-baseline.json`,
+`.analysis/posvel-step-indexed.json`,
+`.analysis/posvel-step-indexed-owner-diff.txt`,
+`.analysis/posvel-step-order.json`,
+`.analysis/posvel-step-accumulation.json`,
+`.analysis/posvel-step-mixed.json`,
+`.analysis/posvel-planar-construction.json`,
+`.analysis/posvel-mixed-access.json`,
+`.analysis/posvel-shake-timer.json`,
+`.analysis/triangle-fan-limit.json` and
+`.analysis/disable-vms-next-first.json`. The indexed source snapshot is
+`.analysis/posvel-step-indexed.cpp`; the final source adds only an explanatory
+comment to that form. All other maintained game sources are restored.
+
+The final incremental build and full audit reproduce the 684/700-byte mismatch.
+All 633 exact results from `bbfaf02` remain exact; totals stay **633 exact,
+52 mismatch and 529 incomplete**, with 114,245 exact owned bytes. The complete
+linkage manifest records the zero-literal field's changed candidate offset;
+no relocation is omitted or masked. Nineteen switch-ownership and twelve
+strict-Oracle controls pass. `scripts/progress.py` confirms current sources,
+artifacts, report and retained units. Final evidence is
+`.analysis/posvel-source-final-build.log`,
+`.analysis/posvel-source-final-audit.log`,
+`.analysis/posvel-source-regression-check.json`,
+`.analysis/posvel-switch-controls.log` and `.analysis/posvel-oracle-controls.log`.
+Source-origin review and Factory acceptance remain open. No clean build,
+artifact cleanup, remote publication or Oracle-rule change was needed.
