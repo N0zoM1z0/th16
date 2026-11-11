@@ -13,6 +13,10 @@ The subsequent [numeric storage review](menu-literal-identities.md) adds seven
 fixed typed literal witnesses for values with duplicate original payloads. It
 also records complete consumer outcomes and rejected music-room source trials.
 
+The subsequent [replay/numeric review](replay-literal-identities.md) adds fixed
+176.0f/512.0f reads and a complete `%3d` format with an original PUSH witness.
+It preserves refusals for private exception-handling code and differing owners.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after seven fixed numeric identities and music-room source trials.
+Updated 2026-11-11 after replay FPS and further numeric identity reviews.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,19 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **811 exact, 63 mismatch and 341 incomplete** among
-1215 annotated candidates, covering 143,208 exact owned bytes and 874 units.
+The current report has **815 exact, 63 mismatch and 337 incomplete** among
+1215 annotated candidates, covering 145,004 exact owned bytes and 878 units.
+Fixed 176.0f/512.0f identities and the complete replay FPS format resolve four
+existing whole candidates: Cirno update (585), Cirno cancellation (174), Marisa
+update (857) and replay FPS drawing (180). These add 1,796 primary exact bytes.
+All 811 preceding exact results, 63 mismatches and all 874 units remain
+identical; four new units give 878 total. The player body retains its complete
+4,540-versus-4,508 extent difference. No game source, verifier or build artifact
+change occurs. See
+[replay/numeric identities](knowledge/replay-literal-identities.md).
+
+The preceding numeric checkpoint reported 811 exact, 63 mismatch and 341
+incomplete, covering 143,208 exact owned bytes and 874 units.
 Seven fixed numeric identities resolve complete EnemyData::update_fog (1,547)
 and FpsCounter::draw (174) passes, adding 1,721 primary exact bytes. Player's
 complete 258-byte circle check and the complete 3,136-byte music-room owner
@@ -229,11 +240,13 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **208 controls across nine relevant suites**:
+The current batch passes **209 controls across nine relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
-(27), focused audit (3), constructor EH (25) and empty EH (25). Logs use
-`.analysis/menu-literal-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+(28), focused audit (3), constructor EH (25) and empty EH (25). Logs use
+`.analysis/replay-literal-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding numeric batch passed 208 controls across nine suites;
+its logs use `.analysis/menu-literal-*controls.log`.
 The preceding replay-slot batch passed 207 controls across nine suites;
 its logs use `.analysis/pause-open-*controls.log`.
 The preceding stage/time batch also passed 207 controls across nine suites;
@@ -276,8 +289,12 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/menu-literal-full-audit.log` and
-`.analysis/menu-literal-regression-check.json`. Original identities and scopes
+are `.analysis/replay-literal-full-audit.log` and
+`.analysis/replay-literal-regression-check.json`. Latest original identities and
+complete scopes are `.analysis/replay-literal-original-identities.json` and
+`.analysis/bomb-update-original-scopes.json`, reproduced by
+`.analysis/review-replay-literal-originals.py` and
+`.analysis/review-bomb-update-original-scopes.py`. Earlier numeric identities and scopes
 are `.analysis/menu-literal-original-identities.json`,
 `.analysis/additional-literal-original-identities.json` and
 `.analysis/enemy-fog-original-scope.json`, with original-only reproducers named
@@ -366,7 +383,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 341 incomplete candidates comprise 179 with unresolved fields, 125
+The 337 incomplete candidates comprise 173 with unresolved fields, 127
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.
@@ -446,6 +463,16 @@ complete player circle check remains 181/258. Gather's complete original is
 1,973 bytes against 1,993, and stage fog is 2,156 against 2,172. The sound
 thread exposes an extent refusal after its last field resolves. Other callers
 retain unresolved fields. No scope or field-normalization rule changes.
+
+The subsequent fixed 176.0f/512.0f values and complete `%3d` format add full
+Cirno update/cancellation, Marisa update and replay FPS passes. The original
+player update's complete switch profile remains 4,540 bytes (4,519 code,
+one alignment byte and five targets), against a 4,508-byte candidate. All
+fields now bind and the extent refusal remains. The player laser tick also
+exposes an extent refusal; masked Anm drawing, Reimu orb update and GUI drawing
+retain one/three/eight unresolved fields. The remaining STD destination is
+private exception-handling code, requiring its own complete frame/metadata
+review. See [the identity review](knowledge/replay-literal-identities.md).
 
 The original interp_common_methods at `0x004033F0` now owns 1,692 bytes:
 1,566 code, two alignment bytes and 31 table slots. Its baseline candidate is

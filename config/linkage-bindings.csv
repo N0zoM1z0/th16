@@ -58,3 +58,6 @@ __real@42480000,0x494610,4,literal,0c05e73c2748cbfd2e38c0afaf9cb594f78e14fefa3c2
 __real@42700000,0x494620,4,literal,fb7614b89815f3ebaaba34a1cbd1fe490c839c39571d6a45e3a3cff5fcb1383c,0x40c534,movss,docs/knowledge/menu-literal-identities.md,,
 __real@41f00000,0x4945f8,4,literal,409303c5035263c102682239f8d654e7e194daae6235aff347c036576a261d96,0x42640c,movss,docs/knowledge/menu-literal-identities.md,,
 __real@40200000,0x494570,4,literal,072e3304b03423a4767d28c5fed09f81d5190ff60a3d078c6c1350eeb8bee28b,0x443a56,divss,docs/knowledge/menu-literal-identities.md,,
+__real@43300000,0x494654,4,literal,50f4e0028ec4d68df83f3147e3cf3fc16306cc5091d9a15f796a87c09ad26e65,0x40f501,addss,docs/knowledge/replay-literal-identities.md,,
+__real@44000000,0x4946c0,4,literal,03a88c8867b3fbcfeefc3270af46afbeb74a27e12cad758e188154cb4aa923dc,0x442649,mulss,docs/knowledge/replay-literal-identities.md,,
+??_C@_03GOOLIKIF@?$CF3d?$AA@,0x492218,4,string-literal,fdff86fdfd2ee0a6929f1857e805d2e8a002e20dec2ec7620aea137409fa4048,0x44837a,push,docs/knowledge/replay-literal-identities.md,,

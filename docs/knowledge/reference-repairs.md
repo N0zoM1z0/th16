@@ -1551,3 +1551,43 @@ mnemonics, expanded extents and duplicate original storage. Evidence is
 `.analysis/menu-literal-<suite>-controls.log`. Original-only reproducers and full
 source/output sets are retained locally. Source-origin review remains open;
 Factory acceptance remains unsubmitted. Nothing is published.
+
+## Replay FPS and further numeric identities
+
+Three original-only witnesses establish single 176/512 identities and the
+complete `%3d` format. All payloads have duplicate original read-only copies;
+typed direct reads and the fixed original PUSH select storage. The complete
+174-byte Cirno cancellation and 180-byte replay FPS witness owners are checked,
+as is the previously reviewed complete 4,540-byte player switch owner. The
+585/857-byte Cirno/Marisa update entries also have independent dense original
+CFG and following-padding reviews. No candidate size enters these derivations.
+See [the review](replay-literal-identities.md).
+
+Four existing complete candidates now pass: Cirno update (585), Cirno
+cancellation (174), Marisa update (857) and replay FPS drawing (180). These add
+**1,796 exact primary bytes**. Full replay reports **815 exact, 63 mismatch
+and 337 incomplete**, covering 145,004 exact primary bytes. All 811 preceding
+exact results, all 63 complete mismatches and all 874 previous units remain
+identical; four new units give 878 total. The player body retains its complete
+4,540-versus-4,508 difference; player laser tick exposes another extent refusal.
+Other callers retain unresolved fields. The remaining STD destination is private
+exception-handling code and receives no inferred runtime/literal identity.
+
+All 209 controls pass across nine suites. Numeric refusal controls cover the
+two new values, and the complete FPS string control rejects wrong/interior
+PUSHes, a changed mnemonic, duplicate original storage, a missing terminator
+and shortened/ambiguous PDB contributions. Existing literal/string profiles,
+source-qualified PDB ownership, whole replay and relocation rules are unchanged.
+No game source, verifier, build artifact or compiler profile changes.
+
+Evidence is `.analysis/replay-literal-original-identities.json`,
+`.analysis/bomb-update-original-scopes.json`,
+`.analysis/replay-literal-focused.json`,
+`.analysis/replay-literal-other-focused.json`,
+`.analysis/replay-literal-full-audit.log`,
+`.analysis/replay-literal-regression-check.json` and
+`.analysis/replay-literal-<suite>-controls.log`. Original-only reproducers and
+`.analysis/replay-literal-baseline/` are retained. Build input/artifact
+fingerprints equal the preceding checkpoint; no compile, analyzer, receipt
+refresh or cleanup occurs. Source-origin review remains open and Factory
+acceptance remains unsubmitted. Nothing is published.

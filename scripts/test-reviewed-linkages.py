@@ -71,7 +71,9 @@ class ReviewedLinkageControls(unittest.TestCase):
                 ("__real@42480000", 0x405abc, 0x4917f4, 4),
                 ("__real@42700000", 0x40c534, 0x491ec8, 4),
                 ("__real@41f00000", 0x42640c, 0x4917ec, 4),
-                ("__real@40200000", 0x443a56, 0x49457c, 4)]:
+                ("__real@40200000", 0x443a56, 0x49457c, 4),
+                ("__real@43300000", 0x40f501, 0x490254, 4),
+                ("__real@44000000", 0x442649, 0x494868, 4)]:
             mutations = [("witness_instruction", hex(witness + 1)),
                          ("witness_instruction", "0x454970"),
                          ("witness_mnemonic", "subss"), ("size", str(size * 2)),
@@ -82,6 +84,31 @@ class ReviewedLinkageControls(unittest.TestCase):
                     next(r for r in rows if r["symbol"] == symbol)[field] = value
                     with self.assertRaises(Incomplete):
                         self.check_rows(rows)
+
+    def test_replay_fps_format_requires_its_complete_storage_and_fixed_push(self):
+        symbol = "??_C@_03GOOLIKIF@?$CF3d?$AA@"
+        candidate = next(p["address"] for p in self.context.publics if p["symbol"] == symbol)
+        self.assertEqual(self.context.data_contributions[candidate], [4])
+        self.assertEqual(self.context.image.read_address(candidate, 4), b"%3d\0")
+        for key, value in [("witness_instruction", "0x44837b"),
+                           ("witness_instruction", "0x448379"),
+                           ("witness_mnemonic", "lea"),
+                           ("target_address", "0x492a06")]:
+            rows = copy.deepcopy(self.rows)
+            next(r for r in rows if r["symbol"] == symbol)[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(Incomplete):
+                self.check_rows(rows)
+        rows = copy.deepcopy(self.rows)
+        shortened = next(r for r in rows if r["symbol"] == symbol)
+        shortened.update(size="3", target_sha256=hashlib.sha256(b"%3d").hexdigest())
+        with self.assertRaisesRegex(Incomplete, "complete NUL-terminated PDB storage"):
+            self.check_rows(rows)
+        for sizes in ([3], [4, 4]):
+            context = copy.copy(self.context)
+            context.data_contributions = dict(context.data_contributions)
+            context.data_contributions[candidate] = sizes
+            with self.subTest(sizes=sizes), self.assertRaisesRegex(Incomplete, "complete NUL-terminated PDB storage"):
+                reviewed_linkages(context)
 
     def test_wrong_runtime_library_is_rejected(self):
         rows = copy.deepcopy(self.rows)

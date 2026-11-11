@@ -144,9 +144,11 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040EFA0,BombAyaSubInf::cancel_bullets,reference-0040efa0,local-strict-pass,190,190,190,.analysis/reference-audit.json
 0x0040F060,BombAyaSubInf::end_at_stage_clear,reference-0040f060,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0040F070,BombCirnoAInf::begin,reference-0040f070,local-strict-pass,450,450,450,.analysis/reference-audit.json
+0x0040F240,BombCirnoAInf::on_tick,reference-0040f240,local-strict-pass,585,585,585,.analysis/reference-audit.json
 0x0040F490,BombCirnoAInf::on_draw,reference-0040f490,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x0040F4A0,BombCirnoAInf::compute_damage,reference-0040f4a0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040F4B0,BombCirnoAInf::end_at_stage_clear,reference-0040f4b0,local-strict-pass,1,1,1,.analysis/reference-audit.json
+0x0040F4C0,BombCirnoAInf::cancel_bullets,reference-0040f4c0,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x0040F570,cirno_sincosmul,reference-0040f570,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x0040F7D0,BombCirnoSubInf::on_tick,reference-0040f7d0,local-strict-pass,102,102,102,.analysis/reference-audit.json
 0x0040F840,BombCirnoSubInf::on_draw,reference-0040f840,local-strict-pass,6,6,6,.analysis/reference-audit.json
@@ -154,6 +156,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040F860,BombCirnoSubInf::cancel_bullets,reference-0040f860,local-strict-pass,190,190,190,.analysis/reference-audit.json
 0x0040F920,BombCirnoSubInf::end_at_stage_clear,reference-0040f920,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0040F930,BombMarisaAInf::begin,reference-0040f930,local-strict-pass,463,463,463,.analysis/reference-audit.json
+0x0040FB00,BombMarisaAInf::on_tick,reference-0040fb00,local-strict-pass,857,857,857,.analysis/reference-audit.json
 0x0040FE60,BombMarisaAInf::on_draw,reference-0040fe60,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x0040FE70,BombMarisaAInf::compute_damage,reference-0040fe70,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x004100F0,BombMarisaAInf::end_at_stage_clear,reference-004100f0,local-strict-pass,1,1,1,.analysis/reference-audit.json
@@ -570,6 +573,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00447760,ReplayManager::initialize,reference-00447760,local-strict-pass,1309,1309,1309,.analysis/reference-audit.json
 0x00447FB0,ReplayManager::destroy,reference-00447fb0,local-strict-pass,28,28,28,.analysis/reference-audit.json
 0x00448130,ReplayManager::on_tick_playback,reference-00448130,local-strict-pass,442,442,442,.analysis/reference-audit.json
+0x004482F0,ReplayManager::draw_fps,reference-004482f0,local-strict-pass,180,180,180,.analysis/reference-audit.json
 0x004483B0,ReplayManager::set_end_stage,reference-004483b0,local-strict-pass,78,78,78,.analysis/reference-audit.json
 0x00448C10,ReplayManager::read_replay_file,reference-00448c10,local-strict-pass,524,524,524,.analysis/reference-audit.json
 0x00448E20,ReplayManager::on_tick_record_thunk,reference-00448e20,local-strict-pass,5,5,5,.analysis/reference-audit.json
