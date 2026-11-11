@@ -14742,6 +14742,718 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-0046dd90]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_05_layer_00@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211632
+target_address = 4644240
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dda0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_07_layer_01@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211648
+target_address = 4644256
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046ddb0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_09_layer_02@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211664
+target_address = 4644272
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046ddc0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_0b_layer_04@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211680
+target_address = 4644288
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046ddd0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_0a_layer_03@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212160
+target_address = 4644304
+size = 130
+compare_size = 130
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1468, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 10, width = 4, type = "REL32", symbol = "?camera_update_2d@@YGXPAUCamera@@@Z", target = 4441984, addend = 0 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1468, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 21, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 25, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1468, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 30, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 36, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 41, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 62, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2572, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 69, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 81, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 86, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 91, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 99, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2572, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 123, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046de60]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_0d_layer_05@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211696
+target_address = 4644448
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046de70]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_10_layer_06@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211712
+target_address = 4644464
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046de80]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_12_layer_07@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211728
+target_address = 4644480
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046de90]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_14_layer_08@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211744
+target_address = 4644496
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dea0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_15_layer_09@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211760
+target_address = 4644512
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046deb0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_16_layer_10@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211776
+target_address = 4644528
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dec0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_18_layer_11@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211792
+target_address = 4644544
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046ded0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_1c_layer_13@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211808
+target_address = 4644560
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dee0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_1f_layer_14@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211824
+target_address = 4644576
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046def0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_20_layer_15@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211840
+target_address = 4644592
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df00]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_22_layer_16@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211856
+target_address = 4644608
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df10]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_24_layer_17@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211872
+target_address = 4644624
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df20]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_27_layer_18@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211888
+target_address = 4644640
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df30]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_1b_layer_12@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211904
+target_address = 4644656
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df40]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_2a_layer_19@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211920
+target_address = 4644672
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df50]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_2e_layer_21@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211936
+target_address = 4644688
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df60]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_34_layer_22@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211952
+target_address = 4644704
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df70]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_36_layer_23@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211968
+target_address = 4644720
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df80]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_4f_layer_30@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4211984
+target_address = 4644736
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046df90]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_52_layer_31@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212000
+target_address = 4644752
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dfa0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_4d_layer_29@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212016
+target_address = 4644768
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dfb0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_3d_layer_26@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212032
+target_address = 4644784
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dfc0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_3e_layer_27@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212048
+target_address = 4644800
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dfd0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_3b_layer_25@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212064
+target_address = 4644816
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dfe0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_3c_layer_37@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212080
+target_address = 4644832
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046dff0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_3f_layer_38@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212096
+target_address = 4644848
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046e000]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_4e_layer_40@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212112
+target_address = 4644864
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046e010]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_50_layer_41@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212128
+target_address = 4644880
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046e020]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_53_layer_42@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212144
+target_address = 4644896
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046e030]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_2d_layer_20@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212304
+target_address = 4644912
+size = 149
+compare_size = 149
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 868, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 868, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 20, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 52, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2576, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 71, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 76, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 81, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 89, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2576, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 110, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 115, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 120, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 142, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046e0d0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_3a_layer_24@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212464
+target_address = 4645072
+size = 174
+compare_size = 174
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 20, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 52, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2576, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 71, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 76, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 81, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 89, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2576, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 110, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 115, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 120, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 138, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 167, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046e180]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_40_layer_28@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212640
+target_address = 4645248
+size = 134
+compare_size = 134
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 20, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 56, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 65, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+  { offset = 70, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 78, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 82, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 87, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 93, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 99, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 123, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+]
+
+[units.reference-0046e210]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_37_layer_36@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212784
+target_address = 4645392
+size = 149
+compare_size = 149
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 20, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 52, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2576, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 71, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 76, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 81, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 89, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2576, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 110, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 115, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 120, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 142, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+]
+
+[units.reference-0046e2b0]
+artifact_kind = "linked-pe"
+source = "src/AnmLayers.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw_41_layer_39@AnmManager@@SIHPAU1@@Z"
+object = "AnmLayers.obj"
+candidate_address = 4212944
+target_address = 4645552
+size = 134
+compare_size = 134
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 568, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 20, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 56, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 65, width = 4, type = "REL32", symbol = "?render_layer@AnmManager@@QAEHH@Z", target = 4646736, addend = 0 },
+  { offset = 70, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 78, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 82, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1168, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 87, width = 4, type = "REL32", symbol = "?swap_transform_matrices@Supervisor@@QAEXPAUCamera@@@Z", target = 4441872, addend = 0 },
+  { offset = 93, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 99, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1768, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 123, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1772, storage_name = "g_Supervisor", storage_size = 2624 },
+]
+
 [units.reference-0046e340]
 artifact_kind = "linked-pe"
 source = "src/AnmManagerVms.cpp"
@@ -14813,6 +15525,39 @@ compare_size = 173
 profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
+]
+
+[units.reference-0046e710]
+artifact_kind = "linked-pe"
+source = "src/AnmManagerVms.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_21_world@AnmManager@@SIHPAU1@@Z"
+object = "AnmManagerVms.obj"
+candidate_address = 4225472
+target_address = 4646672
+size = 43
+compare_size = 43
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 39, width = 4, type = "REL32", symbol = "?tick_world@AnmManager@@SIHPAU1@@Z", target = 4645696, addend = 0 },
+]
+
+[units.reference-0046e740]
+artifact_kind = "linked-pe"
+source = "src/AnmManagerVms.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_09_ui@AnmManager@@SIHPAU1@@Z"
+object = "AnmManagerVms.obj"
+candidate_address = 4225520
+target_address = 4646720
+size = 5
+compare_size = 5
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?tick_ui@AnmManager@@SIHPAU1@@Z", target = 4646032, addend = 0 },
 ]
 
 [units.reference-0046e750]

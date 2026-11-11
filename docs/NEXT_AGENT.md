@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the registered callback closure and Replay local cleanup.
+Updated 2026-11-11 after the complete AnmManager callback scope review.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,16 +18,20 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **668 exact, 52 mismatch and 495 incomplete** among
-1215 annotated candidates, covering 116,126 exact owned bytes. All 642 exact
-results at `b32d469` remain exact. The next 27 original-only scope reviews yield
-26 complete passes, adding 1,504 bytes. These include the 442-byte Replay playback
-body, four Supervisor draw callbacks, Title thread startup and fade-out.
-See [registered callback evidence](knowledge/registered-callbacks.md). The
-preceding seven Bullet, Effect and Item callbacks remain exact; see
-[manager callback evidence](knowledge/manager-callbacks.md). No candidate sizes
-or artifacts enter the original scope derivation. The previous PosVel source
-improvement remains a 696/700-byte mismatch.
+The current report has **709 exact, 52 mismatch and 454 incomplete** among
+1215 annotated candidates, covering 117,308 exact owned bytes. All 668 exact
+results at `efb48b8` remain exact. The original AnmManager constructor independently
+establishes 39 draw registrations and two tick registrations. All 41 complete
+callbacks pass, adding 1,182 bytes. See
+[AnmManager callback evidence](knowledge/anm-callback-scopes.md). The constructor
+entry also has an original WinMain direct-call witness. Neither candidate sizes
+nor artifacts enter the original callback scope derivation.
+
+The preceding 26 passes, including the 442-byte Replay playback body, remain
+exact; see [registered callbacks](knowledge/registered-callbacks.md). The seven
+earlier Bullet, Effect and Item callbacks also remain exact; see
+[manager callbacks](knowledge/manager-callbacks.md). PosVel remains a 696/700-byte
+mismatch after its earlier source improvement.
 
 The preceding EH review established complete passes for the 70-byte
 `ItemManagerInner::~ItemManagerInner` and 73-byte `StageInner::~StageInner`.
@@ -45,28 +49,27 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. This batch adds 27
-original inventory rows and removes an unsupported `volatile` qualifier from
-the recorded-input local in `ReplayManager::on_tick_record`. An incremental
-build and full replay retain every prior exact result. The record body remains
-incomplete: the complete
-281-byte candidate differs from the independently reviewed 337-byte original.
-Do not restore forced accesses to imitate its unexplained original stack spill.
+cache and non-LTCG symbol-discovery cache are retained. This batch adds 41
+original inventory rows and unknown/review source-origin rows. No game source,
+compiler profile, Oracle or binding implementation changes; no rebuild is needed.
+All 720 prior comparison units are unchanged, alongside 41 new complete units.
+The preceding Replay local cleanup remains: its ordinary recorded-input local
+produces a complete 281-byte candidate against the 337-byte original. The body
+is incomplete. Do not restore forced accesses to imitate its unexplained spill.
 PosVel retains its direct wave vector addition and indexed circle/drift-center
 forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **21 controls across three relevant suites**: build
-context, focused audit and strict Oracle. Logs use
-`.analysis/registered-{build,focused,oracle}-controls.log`. The previous checkpoint
-passed all 140 controls across nine suites; no Oracle or binding implementation
-changes in this batch. Original scope derivation and disassembly are in
-`.analysis/reviewed-registered-callbacks.json`; its original-only reproducer is
-`.analysis/review-registered-callbacks.py`. The current build, full audit and
-retained-pass evidence are `.analysis/record-input-cleanup-build.log`,
-`.analysis/registered-callback-full-audit.log` and
-`.analysis/registered-callback-regression-check.json`.
+The current batch passes **17 controls across two relevant suites**: focused
+audit and strict Oracle. Logs use
+`.analysis/anm-layer-{focused,oracle}-controls.log`. The earlier full control
+checkpoint passed 140 controls across nine suites. Original scope derivation
+and disassembly are in `.analysis/reviewed-anm-layer-scopes.json`; its original-only
+reproducer is `.analysis/review-anm-layer-scopes.py`. The current full replay and
+retained-pass evidence are `.analysis/anm-layer-boundary-full-audit.log` and
+`.analysis/anm-layer-boundary-regression-check.json`. The unchanged incremental
+build log remains `.analysis/record-input-cleanup-build.log`.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -123,18 +126,33 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 495 incomplete candidates comprise 237 with unresolved fields, **97 missing
+The 454 incomplete candidates comprise 237 with unresolved fields, **56 missing
 independently reviewed original boundaries**, 113 genuine candidate/target extent
 differences, 40 without a same-start contribution, six with source-object
 ownership differences and two requiring reviewed switch or owned-data extents.
 The earlier combined extent reason hid missing inventory rows; the Oracle now
 distinguishes these two refusal cases. Start from their recorded reasons.
 
-The 35 original references in `.analysis/callback-entry-inventory.json`, including
-duplicates, now have reviewed root scopes. Their investigation also establishes
-the second HelpManual worker and the two Replay body scopes. The remaining 97
-missing boundaries need their own independent original witnesses and complete
-control-flow/owner review; the discovery index is not acceptance authority.
+The 5,071-byte AnmManager constructor has one unresolved handler field. Its
+nonempty EH graph is investigated in
+[AnmManager callback evidence](knowledge/anm-callback-scopes.md#constructor-eh-investigation-remains-separate)
+and `.analysis/anm-constructor-eh-investigation.json`. Five unwind actions and
+the handler share one complete 136-byte candidate code contribution; FuncInfo
+and its five-state unwind map share one complete 76-byte metadata contribution.
+The 27-byte handler is an interior entry, not a standalone PDB owner. Review
+both whole contributions, all permitted internal symbols, original inventory
+subscopes, relocations, state edges, frame dependencies and runtime entries
+before extending the Oracle.
+The existing empty-EH3 proof remains unchanged and does not accept this graph.
+
+The 35 original references in `.analysis/callback-entry-inventory.json` have
+reviewed roots. A second discovery index,
+`.analysis/missing-entry-reference-discovery.json`, records 84 instruction
+references to 74 formerly missing entries. The 41 AnmManager entries are now
+reviewed; 33 other referenced roots remain unreviewed and 23 of the remaining
+56 entries lack such a witness. These references were discovered through
+original inventory bodies and are discovery evidence only. Their parent paths,
+entry roles and complete control-flow/owner scopes still need review.
 Establish each role, all reachable paths, complete scope, padding and absence
 of conflicting owners before adding a row. Do not import every annotation or
 copy candidate sizes into the original ledger. Indirect calls in the reviewed

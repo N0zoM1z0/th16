@@ -1073,50 +1073,50 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046D990,AnmManager::draw_text,src/AnmText.cpp,?draw_text@AnmManager@@QAAXPAUAnmVm@@KHHHHPBDZZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0046DAB0,AnmManager::draw_text_right,src/AnmText.cpp,?draw_text_right@AnmManager@@QAAXPAUAnmVm@@KKHHPBDZZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0046DC20,AnmManager::draw_text_centered,src/AnmText.cpp,?draw_text_centered@AnmManager@@QAAXPAUAnmVm@@KKHHPBDZZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0046DD90,AnmManager::on_draw_05_layer_00,src/AnmLayers.cpp,?on_draw_05_layer_00@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DDA0,AnmManager::on_draw_07_layer_01,src/AnmLayers.cpp,?on_draw_07_layer_01@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DDB0,AnmManager::on_draw_09_layer_02,src/AnmLayers.cpp,?on_draw_09_layer_02@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DDC0,AnmManager::on_draw_0b_layer_04,src/AnmLayers.cpp,?on_draw_0b_layer_04@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DDD0,AnmManager::on_draw_0a_layer_03,src/AnmLayers.cpp,?on_draw_0a_layer_03@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DE60,AnmManager::on_draw_0d_layer_05,src/AnmLayers.cpp,?on_draw_0d_layer_05@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DE70,AnmManager::on_draw_10_layer_06,src/AnmLayers.cpp,?on_draw_10_layer_06@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DE80,AnmManager::on_draw_12_layer_07,src/AnmLayers.cpp,?on_draw_12_layer_07@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DE90,AnmManager::on_draw_14_layer_08,src/AnmLayers.cpp,?on_draw_14_layer_08@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DEA0,AnmManager::on_draw_15_layer_09,src/AnmLayers.cpp,?on_draw_15_layer_09@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DEB0,AnmManager::on_draw_16_layer_10,src/AnmLayers.cpp,?on_draw_16_layer_10@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DEC0,AnmManager::on_draw_18_layer_11,src/AnmLayers.cpp,?on_draw_18_layer_11@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DED0,AnmManager::on_draw_1c_layer_13,src/AnmLayers.cpp,?on_draw_1c_layer_13@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DEE0,AnmManager::on_draw_1f_layer_14,src/AnmLayers.cpp,?on_draw_1f_layer_14@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DEF0,AnmManager::on_draw_20_layer_15,src/AnmLayers.cpp,?on_draw_20_layer_15@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF00,AnmManager::on_draw_22_layer_16,src/AnmLayers.cpp,?on_draw_22_layer_16@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF10,AnmManager::on_draw_24_layer_17,src/AnmLayers.cpp,?on_draw_24_layer_17@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF20,AnmManager::on_draw_27_layer_18,src/AnmLayers.cpp,?on_draw_27_layer_18@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF30,AnmManager::on_draw_1b_layer_12,src/AnmLayers.cpp,?on_draw_1b_layer_12@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF40,AnmManager::on_draw_2a_layer_19,src/AnmLayers.cpp,?on_draw_2a_layer_19@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF50,AnmManager::on_draw_2e_layer_21,src/AnmLayers.cpp,?on_draw_2e_layer_21@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF60,AnmManager::on_draw_34_layer_22,src/AnmLayers.cpp,?on_draw_34_layer_22@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF70,AnmManager::on_draw_36_layer_23,src/AnmLayers.cpp,?on_draw_36_layer_23@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF80,AnmManager::on_draw_4f_layer_30,src/AnmLayers.cpp,?on_draw_4f_layer_30@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DF90,AnmManager::on_draw_52_layer_31,src/AnmLayers.cpp,?on_draw_52_layer_31@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DFA0,AnmManager::on_draw_4d_layer_29,src/AnmLayers.cpp,?on_draw_4d_layer_29@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DFB0,AnmManager::on_draw_3d_layer_26,src/AnmLayers.cpp,?on_draw_3d_layer_26@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DFC0,AnmManager::on_draw_3e_layer_27,src/AnmLayers.cpp,?on_draw_3e_layer_27@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DFD0,AnmManager::on_draw_3b_layer_25,src/AnmLayers.cpp,?on_draw_3b_layer_25@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DFE0,AnmManager::on_draw_3c_layer_37,src/AnmLayers.cpp,?on_draw_3c_layer_37@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046DFF0,AnmManager::on_draw_3f_layer_38,src/AnmLayers.cpp,?on_draw_3f_layer_38@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E000,AnmManager::on_draw_4e_layer_40,src/AnmLayers.cpp,?on_draw_4e_layer_40@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E010,AnmManager::on_draw_50_layer_41,src/AnmLayers.cpp,?on_draw_50_layer_41@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E020,AnmManager::on_draw_53_layer_42,src/AnmLayers.cpp,?on_draw_53_layer_42@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E030,AnmManager::on_draw_2d_layer_20,src/AnmLayers.cpp,?on_draw_2d_layer_20@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E0D0,AnmManager::on_draw_3a_layer_24,src/AnmLayers.cpp,?on_draw_3a_layer_24@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E180,AnmManager::on_draw_40_layer_28,src/AnmLayers.cpp,?on_draw_40_layer_28@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E210,AnmManager::on_draw_37_layer_36,src/AnmLayers.cpp,?on_draw_37_layer_36@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E2B0,AnmManager::on_draw_41_layer_39,src/AnmLayers.cpp,?on_draw_41_layer_39@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0046DD90,AnmManager::on_draw_05_layer_00,src/AnmLayers.cpp,?on_draw_05_layer_00@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DDA0,AnmManager::on_draw_07_layer_01,src/AnmLayers.cpp,?on_draw_07_layer_01@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DDB0,AnmManager::on_draw_09_layer_02,src/AnmLayers.cpp,?on_draw_09_layer_02@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DDC0,AnmManager::on_draw_0b_layer_04,src/AnmLayers.cpp,?on_draw_0b_layer_04@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DDD0,AnmManager::on_draw_0a_layer_03,src/AnmLayers.cpp,?on_draw_0a_layer_03@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DE60,AnmManager::on_draw_0d_layer_05,src/AnmLayers.cpp,?on_draw_0d_layer_05@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DE70,AnmManager::on_draw_10_layer_06,src/AnmLayers.cpp,?on_draw_10_layer_06@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DE80,AnmManager::on_draw_12_layer_07,src/AnmLayers.cpp,?on_draw_12_layer_07@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DE90,AnmManager::on_draw_14_layer_08,src/AnmLayers.cpp,?on_draw_14_layer_08@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DEA0,AnmManager::on_draw_15_layer_09,src/AnmLayers.cpp,?on_draw_15_layer_09@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DEB0,AnmManager::on_draw_16_layer_10,src/AnmLayers.cpp,?on_draw_16_layer_10@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DEC0,AnmManager::on_draw_18_layer_11,src/AnmLayers.cpp,?on_draw_18_layer_11@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DED0,AnmManager::on_draw_1c_layer_13,src/AnmLayers.cpp,?on_draw_1c_layer_13@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DEE0,AnmManager::on_draw_1f_layer_14,src/AnmLayers.cpp,?on_draw_1f_layer_14@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DEF0,AnmManager::on_draw_20_layer_15,src/AnmLayers.cpp,?on_draw_20_layer_15@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF00,AnmManager::on_draw_22_layer_16,src/AnmLayers.cpp,?on_draw_22_layer_16@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF10,AnmManager::on_draw_24_layer_17,src/AnmLayers.cpp,?on_draw_24_layer_17@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF20,AnmManager::on_draw_27_layer_18,src/AnmLayers.cpp,?on_draw_27_layer_18@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF30,AnmManager::on_draw_1b_layer_12,src/AnmLayers.cpp,?on_draw_1b_layer_12@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF40,AnmManager::on_draw_2a_layer_19,src/AnmLayers.cpp,?on_draw_2a_layer_19@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF50,AnmManager::on_draw_2e_layer_21,src/AnmLayers.cpp,?on_draw_2e_layer_21@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF60,AnmManager::on_draw_34_layer_22,src/AnmLayers.cpp,?on_draw_34_layer_22@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF70,AnmManager::on_draw_36_layer_23,src/AnmLayers.cpp,?on_draw_36_layer_23@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF80,AnmManager::on_draw_4f_layer_30,src/AnmLayers.cpp,?on_draw_4f_layer_30@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DF90,AnmManager::on_draw_52_layer_31,src/AnmLayers.cpp,?on_draw_52_layer_31@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DFA0,AnmManager::on_draw_4d_layer_29,src/AnmLayers.cpp,?on_draw_4d_layer_29@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DFB0,AnmManager::on_draw_3d_layer_26,src/AnmLayers.cpp,?on_draw_3d_layer_26@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DFC0,AnmManager::on_draw_3e_layer_27,src/AnmLayers.cpp,?on_draw_3e_layer_27@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DFD0,AnmManager::on_draw_3b_layer_25,src/AnmLayers.cpp,?on_draw_3b_layer_25@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DFE0,AnmManager::on_draw_3c_layer_37,src/AnmLayers.cpp,?on_draw_3c_layer_37@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046DFF0,AnmManager::on_draw_3f_layer_38,src/AnmLayers.cpp,?on_draw_3f_layer_38@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E000,AnmManager::on_draw_4e_layer_40,src/AnmLayers.cpp,?on_draw_4e_layer_40@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E010,AnmManager::on_draw_50_layer_41,src/AnmLayers.cpp,?on_draw_50_layer_41@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E020,AnmManager::on_draw_53_layer_42,src/AnmLayers.cpp,?on_draw_53_layer_42@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E030,AnmManager::on_draw_2d_layer_20,src/AnmLayers.cpp,?on_draw_2d_layer_20@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E0D0,AnmManager::on_draw_3a_layer_24,src/AnmLayers.cpp,?on_draw_3a_layer_24@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E180,AnmManager::on_draw_40_layer_28,src/AnmLayers.cpp,?on_draw_40_layer_28@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E210,AnmManager::on_draw_37_layer_36,src/AnmLayers.cpp,?on_draw_37_layer_36@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E2B0,AnmManager::on_draw_41_layer_39,src/AnmLayers.cpp,?on_draw_41_layer_39@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0046E340,AnmManager::tick_world,src/AnmManagerVms.cpp,?tick_world@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0046E490,AnmManager::tick_ui,src/AnmManagerVms.cpp,?tick_ui@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0046E660,AnmManager::remove_tree,src/AnmManagerVms.cpp,?remove_tree@AnmManager@@QAEXPAUAnmVm@@PAU?$ZunList@UAnmVm@@@@@Z,exact,,.analysis/reference-audit.json
-0x0046E710,AnmManager::on_tick_21_world,src/AnmManagerVms.cpp,?on_tick_21_world@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
-0x0046E740,AnmManager::on_tick_09_ui,src/AnmManagerVms.cpp,?on_tick_09_ui@AnmManager@@SIHPAU1@@Z,incomplete,original target lacks an independently reviewed function boundary,.analysis/reference-audit.json
+0x0046E710,AnmManager::on_tick_21_world,src/AnmManagerVms.cpp,?on_tick_21_world@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
+0x0046E740,AnmManager::on_tick_09_ui,src/AnmManagerVms.cpp,?on_tick_09_ui@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0046E750,AnmManager::render_layer,src/AnmLayers.cpp,?render_layer@AnmManager@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0046E7D0,AnmManager::insert_in_world_list_back,src/AnmManagerVms.cpp,?insert_in_world_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
 0x0046E890,AnmManager::insert_in_world_list_front,src/AnmManagerVms.cpp,?insert_in_world_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json

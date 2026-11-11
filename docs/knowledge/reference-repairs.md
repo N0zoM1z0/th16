@@ -905,3 +905,52 @@ Evidence is `.analysis/reviewed-registered-callbacks.json`,
 reproducer is `.analysis/review-registered-callbacks.py`; all review roots are
 excluded from its input boundary basis before re-deriving their scopes.
 Source-origin review and Factory acceptance remain open. Nothing is published.
+
+## AnmManager registry callbacks and constructor EH investigation
+
+Starting from `efb48b8`, an original-only review derives all 41 callback roots
+from the 5,071-byte AnmManager constructor, rather than using annotation sizes.
+Original WinMain directly calls the constructor at `0x00459E70`. Every normal
+constructor instruction and registration witness is reachable from its entry.
+Each registration block establishes its callback field, manager argument,
+cleared registration/cleanup callbacks, registry kind and priority.
+
+All 39 draw callbacks and both tick callbacks have independently reviewed
+complete dense scopes. Thirty-three draw callbacks are complete eight-byte
+push/call/return owners; six include camera and device state transitions.
+Fifteen individually reviewed virtual calls have ordinary continuations.
+Every gap to the next independent entry is INT3 alignment, and no new scope
+overlaps an existing owner. Candidate artifacts and sizes are absent from the
+scope derivation. See [AnmManager callback scopes](anm-callback-scopes.md).
+
+All 41 existing C++ candidates pass unchanged complete-owner and relocation
+replay, adding 1,182 exact primary bytes. The full audit retains all 668 prior
+exact results and reports **709 exact, 52 mismatch and 454 incomplete**, with
+117,308 exact owned bytes among 1215 annotated candidates. All 720 prior
+comparison units remain identical. Missing independently reviewed original
+boundaries fall from 97 to 56. All 17 relevant focused-audit and strict-Oracle
+controls pass. No game source, compiler profile, Oracle or binding implementation
+changes, rebuild or analyzer mutation is needed.
+
+The constructor remains incomplete on its offset-six private handler field.
+An independent native investigation finds five unwind states, a complete
+136-byte action/handler code bundle and a complete 76-byte FuncInfo/unwind-map
+bundle. Candidate PDB ownership aggregates all five actions and the handler in
+one contribution, and both metadata symbols in another. The 27-byte handler is
+an interior entry and cannot be passed to the existing standalone-owner proof.
+The current empty-EH3 validator intentionally remains unchanged. Supporting
+this graph requires complete aggregate ownership, interior-symbol, relocation,
+state-map, frame and runtime evidence with corresponding refusal controls.
+No constructor or auxiliary exact credit is granted by this investigation.
+
+Retained evidence is `.analysis/reviewed-anm-layer-scopes.json`,
+`.analysis/anm-layer-scope-focused.json`,
+`.analysis/anm-layer-boundary-full-audit.log`,
+`.analysis/anm-layer-boundary-regression-check.json`,
+`.analysis/anm-layer-{focused,oracle}-controls.log` and
+`.analysis/anm-constructor-eh-investigation.json`. The original-only callback
+reproducer is `.analysis/review-anm-layer-scopes.py`. A broader discovery index,
+`.analysis/missing-entry-reference-discovery.json`, records 84 original instruction
+references to 74 formerly missing roots; it is not acceptance evidence for the
+33 referenced entries outside the current 41-entry review. Source-origin review
+and Factory acceptance remain open. Nothing is published.

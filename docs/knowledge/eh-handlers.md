@@ -127,6 +127,10 @@ symbol list or the audit's global binding map. Nonempty unwind/try tables and
 other handler shapes remain unsupported. Configuration and verifier source are
 part of the Oracle input fingerprint.
 
+The later [AnmManager constructor investigation](anm-callback-scopes.md#constructor-eh-investigation-remains-separate)
+records a five-state nonempty graph with aggregated code and metadata PDB owners.
+It is diagnostic evidence only and is not accepted by this empty-EH3 proof.
+
 The 25 controls in `scripts/test-eh-identities.py` cover both positive complete
 parent replays, all target hashes, PDB ownership and extent failures, MAP
 ambiguity, section permissions, handler instructions, identical foreign
