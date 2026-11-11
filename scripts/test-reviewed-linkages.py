@@ -53,6 +53,16 @@ class ReviewedLinkageControls(unittest.TestCase):
                 with self.assertRaises(Incomplete):
                     self.check_rows(rows)
 
+    def test_gather_timer_literal_requires_its_own_typed_read(self):
+        for field, value in [("witness_instruction", "0x405f6f"),
+                             ("witness_instruction", "0x405f68"),
+                             ("witness_mnemonic", "addss"), ("size", "8")]:
+            with self.subTest(field=field, value=value):
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == "__real@43960000")[field] = value
+                with self.assertRaises(Incomplete):
+                    self.check_rows(rows)
+
     def test_wrong_runtime_library_is_rejected(self):
         rows = copy.deepcopy(self.rows)
         rows[0]["candidate_library"] = "unreviewed.lib"

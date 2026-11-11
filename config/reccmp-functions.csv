@@ -1,4 +1,5 @@
 address,name,module,source_file,notes
+0x00401030,??__Eg_Supervisor@@YAXXZ,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00401280,UpdateFuncRegistry::UpdateFuncRegistry,UpdateFunc,src/UpdateFunc.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00401300,UpdateFuncRegistry::register_on_tick,UpdateFunc,src/UpdateFunc.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004013B0,UpdateFuncRegistry::register_on_draw,UpdateFunc,src/UpdateFunc.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -67,6 +68,9 @@ address,name,module,source_file,notes
 0x00405640,CriticalSections::leave,CriticalSections,src/CriticalSections.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405670,anm_gather_effect_init,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405700,anm_gather_effect_on_tick,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00405EC0,anm_gather_effect_on_draw,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00405ED0,anm_gather_effect_on_destroy,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00405F20,anm_gather_effect_on_switch,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405FA0,anm_gather_effect_on_copy,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00406040,anm_gather_effect_on_serialize,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00406190,ZunTimer::operator++,ZunTimer,src/ZunTimer.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -81,6 +85,8 @@ address,name,module,source_file,notes
 0x00406510,anm_jagged_line_blue_init,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00406690,anm_jagged_line_on_tick,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00406860,anm_jagged_line_on_draw,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00406910,anm_jagged_line_on_destroy,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00406920,anm_jagged_line_on_switch,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00406930,anm_jagged_line_gray_init,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00406A70,AnmVm::transform_coords,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00406C40,AnmVm::get_own_transformed_pos,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -91,6 +97,7 @@ address,name,module,source_file,notes
 0x004071A0,anm_masked_effect_init,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00407330,anm_masked_effect_on_tick,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004073A0,anm_on_draw_masked,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004078F0,anm_masked_effect_on_destroy,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00407900,anm_masked_effect_on_switch,AnmVmCallbacks,src/AnmVmCallbacks.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00407A50,AnmVm::wipe_suffix,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00407B20,AnmLoaded::copy_vm,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -147,6 +154,7 @@ address,name,module,source_file,notes
 0x0040D400,CameraSky::CameraSky,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D460,AnmLoaded::copy_vm_and_run,AnmManager,src/AnmManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D490,ZunTimer::operator--,ZunTimer,src/ZunTimer.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0040D510,Camera::Camera,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D520,BombInf::begin,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D530,BombInf::on_tick,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D540,BombInf::on_draw,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -269,6 +277,7 @@ address,name,module,source_file,notes
 0x00416D20,BulletManager::cancel_radius_as_bomb,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00416E20,BulletManager::cancel_rectangle_as_bomb,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00416F40,BulletManager::clear_all,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00417140,bullet_map_sprite,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00417180,InterpFloat::reset,Interp,src/Interp.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004171C0,InterpFloat::step,Interp,src/Interp.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004173A0,bullet_sincosmul_2,BulletManager,src/BulletManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -307,6 +316,7 @@ address,name,module,source_file,notes
 0x00418AE0,EffectManager::on_draw_callback,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418AF0,EffectManager::create_effect,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418BA0,EffectManager::create_ui_effect,EffectManager,src/EffectManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00418C60,anm_effect_4_on_draw,Fog,src/Fog.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418C70,Fog::Fog,Fog,src/Fog.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418DF0,Fog::set_rect,Fog,src/Fog.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00418F40,Fog::update_vms,Fog,src/Fog.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -389,6 +399,9 @@ address,name,module,source_file,notes
 0x00425200,EnemyData::get_float_arg,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00425220,EnemyData::get_float_arg_ptr,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00425240,EnemyManager::find_closest,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004252D0,ecl_funcset_cancel_near_player,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004253B0,ecl_funcset_zero_power,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004253F0,ecl_ext_damage_stored,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00425410,ecl_ext_damage_anm_hurtbox,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00425530,InterpFloat2::reset_timer,Interp,src/Interp.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00425570,InterpFloat2::step_radial_dist,Interp,src/Interp.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -428,6 +441,7 @@ address,name,module,source_file,notes
 0x00429FF0,Gui::start_dialogue,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042A1D0,GuiMsgVm::run,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042B480,GuiMsgVm::update_callout,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042B5F0,Gui::textbox_on_draw,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042B610,GuiMsgVm::hide,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042B820,GuiMsgVm::show,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042BA30,GuiMsgVm::set_textbox,Gui,src/Gui.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -555,6 +569,7 @@ address,name,module,source_file,notes
 0x00431A70,LaserManager::cancel_in_radius,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431AF0,LaserManager::clear_all,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431B30,LaserLineInf::initialize,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00431FA0,LaserLineInf::on_sprite_set,LaserLine,src/LaserLine.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431FE0,LaserLineInf::run_ex,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00432620,LaserLineInf::step_ex_bounce,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00432C20,LaserLineInf::step_ex_angle,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -596,6 +611,7 @@ address,name,module,source_file,notes
 0x0043A2F0,LaserCurveInf::cancel_as_bomb_circle,LaserCurve,src/LaserCurve.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043A620,LaserCurveInf::cancel,LaserCurve,src/LaserCurve.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043A760,LaserCurveInf::touches_circle,LaserCurve,src/LaserCurve.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043A840,LaserCurveInf::on_sprite_set,LaserCurve,src/LaserCurve.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043A860,LaserBeamInf::initialize,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043AC00,LaserBeamInf::on_tick,LaserBeam,src/LaserBeam.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043AC10,LaserBeamInf::on_draw,LaserBeam,src/LaserBeam.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -730,15 +746,22 @@ address,name,module,source_file,notes
 0x00445A30,Player::compute_damage_to_enemy,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00445D40,damage_source_on_hit_bullet,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00445E20,PlayerBullet::hit,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00445ED0,sht_on_init_homing,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00445EE0,sht_on_tick_homing,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004460C0,sht_on_hit_spark_back,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00446200,sht_on_init_laser,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00446260,sht_on_tick_laser,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00446870,sht_on_hit_laser,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00446E00,sht_on_tick_accelerate,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00446E20,sht_on_hit_burst_rising,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00446F80,sht_on_hit_burst,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004470E0,sht_on_init_sideways,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004470F0,sht_on_tick_sideways,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00447270,sht_on_hit_spark,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00447320,sht_on_hit_spark_grow,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00447450,sht_on_init_piercing,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00447480,sht_on_tick_accelerate_slow,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004474A0,damage_source_on_hit_piercing,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004474D0,sht_on_init_spread,PlayerShot,src/PlayerShot.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00447550,AnmVm::set_scale_interp,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004475F0,ZunAngle::operator*,ZunAngle,src/ZunAngle.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -1006,6 +1029,7 @@ address,name,module,source_file,notes
 0x00469E00,primitive_sincosmul,AnmPrimitives,src/AnmPrimitives.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00469E20,anm_fan_init,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0046A0B0,anm_on_tick_fan,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0046A330,anm_on_draw_fan,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0046A350,fan_sincosmul,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0046A370,??0RenderVertexXyzrhwTex@@QAE@XZ,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0046A380,??0RenderVertex144@@QAE@XZ,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.

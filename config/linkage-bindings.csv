@@ -48,3 +48,4 @@ __chkstk,0x487100,45,runtime-function,782928de1aa03e19ef7fb5ac4d77ba42a57644ad87
 __beginthreadex,0x47952b,133,runtime-function,0b5c9820b3255e34441b18a919831c7326c1cdb591c9ccecfa1dcc2a4d91c8f6,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
 __real@43700000,0x494678,4,literal,7860020e90116183228640760ff7502f4df0088992b456e3f0d7b44c9950db7e,0x4079c6,movss,docs/knowledge/switch-ownership.md,,
 ___CxxFrameHandler3,0x475d37,54,runtime-function,21fe2a7f37efbf61d3db3eb3a8717d0d67da0bb83b178064e1b3064249338b88,,,docs/knowledge/eh-handlers.md,libvcruntime.lib,
+__real@43960000,0x49468c,4,literal,bfdc115a065d54c11547d050bc55134b079bc62fcb88bff853d2fad5f136b711,0x405f67,mulss,docs/knowledge/table-entry-scopes.md,,

@@ -1,4 +1,5 @@
 address,origin,subsystem,disposition,confidence,evidence_id
+0x00401030,unknown,Supervisor,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00401280,unknown,,review,unknown,ghidra-initial-import
 0x00401300,unknown,,review,unknown,ghidra-initial-import
 0x004013B0,unknown,,review,unknown,ghidra-initial-import
@@ -67,6 +68,9 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00405640,unknown,,review,unknown,ghidra-initial-import
 0x00405670,unknown,,review,unknown,ghidra-initial-import
 0x00405700,unknown,,review,unknown,ghidra-initial-import
+0x00405EC0,unknown,AnmVmCallbacks,review,unknown,docs/knowledge/table-entry-scopes.md
+0x00405ED0,unknown,AnmVmCallbacks,review,unknown,docs/knowledge/table-entry-scopes.md
+0x00405F20,unknown,AnmVmCallbacks,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00405FA0,unknown,,review,unknown,ghidra-initial-import
 0x00406040,unknown,,review,unknown,ghidra-initial-import
 0x00406190,unknown,,review,unknown,ghidra-initial-import
@@ -81,6 +85,8 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00406510,unknown,,review,unknown,ghidra-initial-import
 0x00406690,unknown,,review,unknown,ghidra-initial-import
 0x00406860,unknown,,review,unknown,ghidra-initial-import
+0x00406910,unknown,AnmVmCallbacks,review,unknown,docs/knowledge/table-entry-scopes.md
+0x00406920,unknown,AnmVmCallbacks,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00406930,unknown,,review,unknown,ghidra-initial-import
 0x00406A70,unknown,,review,unknown,ghidra-initial-import
 0x00406C40,unknown,,review,unknown,ghidra-initial-import
@@ -91,6 +97,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x004071A0,unknown,,review,unknown,ghidra-initial-import
 0x00407330,unknown,,review,unknown,ghidra-initial-import
 0x004073A0,unknown,,review,unknown,ghidra-initial-import
+0x004078F0,unknown,AnmVmCallbacks,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00407900,unknown,,review,unknown,ghidra-initial-import
 0x00407A50,unknown,,review,unknown,ghidra-initial-import
 0x00407B20,unknown,,review,unknown,ghidra-initial-import
@@ -147,6 +154,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0040D400,unknown,,review,unknown,ghidra-initial-import
 0x0040D460,unknown,,review,unknown,ghidra-initial-import
 0x0040D490,unknown,,review,unknown,ghidra-initial-import
+0x0040D510,unknown,Supervisor,review,unknown,docs/knowledge/table-entry-scopes.md
 0x0040D520,unknown,,review,unknown,ghidra-initial-import
 0x0040D530,unknown,,review,unknown,ghidra-initial-import
 0x0040D540,unknown,,review,unknown,ghidra-initial-import
@@ -269,6 +277,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00416D20,unknown,,review,unknown,ghidra-initial-import
 0x00416E20,unknown,,review,unknown,ghidra-initial-import
 0x00416F40,unknown,,review,unknown,ghidra-initial-import
+0x00417140,unknown,BulletManager,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00417180,unknown,,review,unknown,ghidra-initial-import
 0x004171C0,unknown,,review,unknown,ghidra-initial-import
 0x004173A0,unknown,,review,unknown,ghidra-initial-import
@@ -307,6 +316,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00418AE0,unknown,EffectManager,review,unknown,docs/knowledge/manager-callbacks.md
 0x00418AF0,unknown,,review,unknown,ghidra-initial-import
 0x00418BA0,unknown,,review,unknown,ghidra-initial-import
+0x00418C60,unknown,Fog,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00418C70,unknown,,review,unknown,ghidra-initial-import
 0x00418DF0,unknown,,review,unknown,ghidra-initial-import
 0x00418F40,unknown,,review,unknown,ghidra-initial-import
@@ -389,6 +399,9 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00425200,unknown,,review,unknown,ghidra-initial-import
 0x00425220,unknown,,review,unknown,ghidra-initial-import
 0x00425240,unknown,,review,unknown,ghidra-initial-import
+0x004252D0,unknown,Enemy,review,unknown,docs/knowledge/table-entry-scopes.md
+0x004253B0,unknown,Enemy,review,unknown,docs/knowledge/table-entry-scopes.md
+0x004253F0,unknown,Enemy,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00425410,unknown,,review,unknown,ghidra-initial-import
 0x00425530,unknown,,review,unknown,ghidra-initial-import
 0x00425570,unknown,,review,unknown,ghidra-initial-import
@@ -428,6 +441,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00429FF0,unknown,,review,unknown,ghidra-initial-import
 0x0042A1D0,unknown,,review,unknown,ghidra-initial-import
 0x0042B480,unknown,,review,unknown,ghidra-initial-import
+0x0042B5F0,unknown,Gui,review,unknown,docs/knowledge/table-entry-scopes.md
 0x0042B610,unknown,,review,unknown,ghidra-initial-import
 0x0042B820,unknown,,review,unknown,ghidra-initial-import
 0x0042BA30,unknown,,review,unknown,ghidra-initial-import
@@ -555,6 +569,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00431A70,unknown,,review,unknown,ghidra-initial-import
 0x00431AF0,unknown,,review,unknown,ghidra-initial-import
 0x00431B30,unknown,,review,unknown,ghidra-initial-import
+0x00431FA0,unknown,LaserLine,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00431FE0,unknown,,review,unknown,ghidra-initial-import
 0x00432620,unknown,,review,unknown,ghidra-initial-import
 0x00432C20,unknown,,review,unknown,ghidra-initial-import
@@ -596,6 +611,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x0043A2F0,unknown,,review,unknown,ghidra-initial-import
 0x0043A620,unknown,,review,unknown,ghidra-initial-import
 0x0043A760,unknown,,review,unknown,ghidra-initial-import
+0x0043A840,unknown,LaserCurve,review,unknown,docs/knowledge/table-entry-scopes.md
 0x0043A860,unknown,,review,unknown,ghidra-initial-import
 0x0043AC00,unknown,,review,unknown,ghidra-initial-import
 0x0043AC10,unknown,,review,unknown,ghidra-initial-import
@@ -730,15 +746,22 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00445A30,unknown,,review,unknown,ghidra-initial-import
 0x00445D40,unknown,,review,unknown,ghidra-initial-import
 0x00445E20,unknown,,review,unknown,ghidra-initial-import
+0x00445ED0,unknown,PlayerShot,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00445EE0,unknown,,review,unknown,ghidra-initial-import
 0x004460C0,unknown,,review,unknown,ghidra-initial-import
+0x00446200,unknown,PlayerShot,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00446260,unknown,,review,unknown,ghidra-initial-import
 0x00446870,unknown,,review,unknown,ghidra-initial-import
+0x00446E00,unknown,PlayerShot,review,unknown,docs/knowledge/table-entry-scopes.md
 0x00446E20,unknown,,review,unknown,ghidra-initial-import
 0x00446F80,unknown,,review,unknown,ghidra-initial-import
+0x004470E0,unknown,PlayerShot,review,unknown,docs/knowledge/table-entry-scopes.md
 0x004470F0,unknown,,review,unknown,ghidra-initial-import
 0x00447270,unknown,,review,unknown,ghidra-initial-import
 0x00447320,unknown,,review,unknown,ghidra-initial-import
+0x00447450,unknown,PlayerShot,review,unknown,docs/knowledge/table-entry-scopes.md
+0x00447480,unknown,PlayerShot,review,unknown,docs/knowledge/table-entry-scopes.md
+0x004474A0,unknown,PlayerShot,review,unknown,docs/knowledge/table-entry-scopes.md
 0x004474D0,unknown,,review,unknown,ghidra-initial-import
 0x00447550,unknown,,review,unknown,ghidra-initial-import
 0x004475F0,unknown,,review,unknown,ghidra-initial-import
@@ -1006,6 +1029,7 @@ address,origin,subsystem,disposition,confidence,evidence_id
 0x00469E00,unknown,,review,unknown,ghidra-initial-import
 0x00469E20,unknown,,review,unknown,ghidra-initial-import
 0x0046A0B0,unknown,,review,unknown,ghidra-initial-import
+0x0046A330,unknown,AnmRender,review,unknown,docs/knowledge/table-entry-scopes.md
 0x0046A350,unknown,,review,unknown,ghidra-initial-import
 0x0046A370,unknown,,review,unknown,ghidra-initial-import
 0x0046A380,unknown,,review,unknown,ghidra-initial-import

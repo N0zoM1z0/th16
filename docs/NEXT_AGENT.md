@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the runtime callback and LZSS scope review.
+Updated 2026-11-11 after callback-table/startup entry review and piercing-source trials.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,9 +18,17 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **744 exact, 53 mismatch and 418 incomplete** among
-1215 annotated candidates, covering 119,217 exact owned bytes. All 730 exact
-results at `8b9128d` remain exact. The latest original-only review establishes
+The current report has **767 exact, 53 mismatch and 395 incomplete** among
+1215 annotated candidates, covering 120,612 exact owned bytes. All 744 exact
+results at `ed9833c` remain exact. The latest original-only review establishes
+24 callback-table/startup owners, including the Camera entry and the global
+initializer which calls it. Twenty-two complete owners pass. The independently
+reviewed `300.0f` binding also resolves Stage::load_data's final field, allowing
+its complete 473-byte owner to pass. These 23 additions cover 1,395 primary
+bytes. All 797 preceding comparison units remain identical, alongside 23 new
+units, for 820 total. See [table entry scopes](knowledge/table-entry-scopes.md).
+
+The preceding original-only review establishes
 13 missing runtime callback/helper entries and partitions the unreviewed
 313-byte LZSS aggregate into three complete owners plus all 25 INT3 bytes.
 All 14 complete owners pass, adding 1,305 bytes. See
@@ -73,9 +81,10 @@ The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
-aggregate profile. This batch changes original boundary/origin inventories
-and generated comparison ledgers, with no retained game source, compiler
-profile, Oracle or binding-rule changes.
+aggregate profile. This batch changes original boundary/origin inventories,
+adds one fixed literal binding and its negative control, and regenerates
+comparison ledgers. Game source, compiler/linker profiles and Oracle
+implementation are unchanged.
 
 An ordinary out-of-line UpdateFunc constructor was built incrementally as a
 source-context experiment. It removes redundant initialization stores and
@@ -85,9 +94,21 @@ sources and complete outputs are retained under
 `.analysis/updatefunc-ordinary-out-of-line-artifacts/`. Baseline sources and
 attested outputs were restored after checking the full source-input identity
 and every artifact hash; see `.analysis/updatefunc-context-restore-check.json`.
-The current receipt remains the baseline incremental receipt. Trial object
-caches are preserved; 104 affected dependency stamps will invalidate normally
-at the next incremental build. Do not force cache reuse or run a clean build.
+That checkpoint retained the baseline incremental receipt and invalidated 104
+trial dependency stamps naturally. The current batch has now rebuilt those
+dependencies incrementally, tried two PlayerShot source contexts and rebuilt
+the restored source. The current artifacts and receipt are freshly produced;
+all 192 object dependency stamps are valid. See
+`.analysis/piercing-restored-cache-check.json`. No archived outputs were
+substituted and no clean build was run.
+
+The piercing hit callback at `0x004474A0` has a complete 39-byte original and
+40-byte baseline candidate. An element pointer gives 37 bytes; a bullet-array
+base pointer gives 41 bytes. Both natural contexts fail complete-owner
+comparison and are restored. Their full outputs, source and instructions are
+retained under `.analysis/piercing-{element-pointer,array-base}-artifacts/` and
+`.analysis/piercing-source-context-trials.json`. Do not repeat these trials or
+force registers/accesses to reproduce the original operand allocation.
 The preceding Replay local cleanup remains: its ordinary recorded-input local
 produces a complete 281-byte candidate against the 337-byte original. The body
 is incomplete. Do not restore forced accesses to imitate its unexplained spill.
@@ -96,8 +117,10 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **17 controls across two relevant suites**: strict
-Oracle and focused audit. Logs use
+The current batch passes **43 controls across three relevant suites**: reviewed
+linkages, strict Oracle and focused audit. Logs use
+`.analysis/table-entry-{linkage,oracle,focused}-controls.log`. The preceding
+runtime entry batch passed 17 controls; its logs use
 `.analysis/runtime-entry-{oracle,focused}-controls.log`. The manager wrapper
 checkpoint's corresponding logs use
 `.analysis/manager-wrapper-{oracle,focused}-controls.log`. The preceding EH
@@ -108,12 +131,15 @@ Original scope derivation and disassembly are in
 `.analysis/reviewed-anm-layer-scopes.json`; its original-only
 reproducer is `.analysis/review-anm-layer-scopes.py`. The manager wrapper
 reproducer and scopes are `.analysis/review-manager-wrapper-scopes.py` and
-`.analysis/reviewed-manager-wrapper-scopes.json`. The latest original-only
-derivation is `.analysis/review-runtime-entry-scopes.py` and
-`.analysis/reviewed-runtime-entry-scopes.json`. Current replay and retained-pass
-evidence are `.analysis/runtime-entry-full-audit.log` and
-`.analysis/runtime-entry-regression-check.json`. The baseline incremental
-build log remains `.analysis/record-input-cleanup-build.log`; the rejected
+`.analysis/reviewed-manager-wrapper-scopes.json`. The preceding original-only
+runtime derivation is `.analysis/review-runtime-entry-scopes.py` and
+`.analysis/reviewed-runtime-entry-scopes.json`. The latest original-only
+derivation is `.analysis/review-table-entry-scopes.py` and
+`.analysis/reviewed-table-entry-scopes.json`. Current replay and retained-pass
+evidence are `.analysis/table-entry-full-audit.log` and
+`.analysis/table-entry-regression-check.json`. The current incremental build
+log is `.analysis/piercing-restored-build.log`; the older baseline is
+`.analysis/record-input-cleanup-build.log`. The rejected
 source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
 
 ```sh
@@ -171,10 +197,12 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 418 incomplete candidates comprise 236 with unresolved fields, **22 missing
-independently reviewed original boundaries**, 112 genuine candidate/target extent
-differences, 40 without a same-start contribution, six with source-object
-ownership differences and two requiring reviewed switch or owned-data extents.
+The 395 incomplete candidates comprise 234 with unresolved fields, 113 genuine
+candidate/target extent differences, 40 without a same-start contribution,
+six with source-object ownership differences and two requiring reviewed switch
+or owned-data extents. None is currently refused specifically for a missing
+original boundary. Other missing evidence can precede boundary checks; this
+does not prove every annotation already has a complete original scope review.
 The earlier combined extent reason hid missing inventory rows; the Oracle now
 distinguishes these two refusal cases. Start from their recorded reasons.
 
@@ -201,21 +229,18 @@ the Ascii drawing helper from its registered caller's tail transfer. The latest
 review establishes the other 13 referenced roots through worker creation,
 array constructor/destructor iteration, registry insertion and LZSS tail
 transfers. All 74 roots in that discovery index now have reviewed scopes.
-The remaining 22 missing entries lack witnesses in that initial instruction
-index. They include callback-table entries, sprite callbacks and the Camera
-constructor. A fresh byte-occurrence discovery in
-`.analysis/missing-entry-pointer-discovery.json` locates 21 of these entries
-in original `.rdata` near `0x00490EB8`, `0x004917BC`, `0x004919AC` and
-`0x00491B18`. These are untyped discovery locators, not accepted function-pointer
-tables or entry witnesses. The original PE has no base-relocation directory;
-do not describe these occurrences as relocation evidence. Camera has no
-four-byte pointer occurrence in the original sections. Establish each table's
-type, count and original caller/dispatch context before reviewing entry roles
-and complete control-flow/owner scopes. Establish all reachable paths, padding
-and absence of conflicting owners before adding a row. Do not import every annotation or
-copy candidate sizes into the original ledger. Indirect calls in the reviewed
-callbacks have individually recorded operands and ordinary continuations; this
-does not authorize indirect jumps or grant callee exact credit.
+The 21 data-address locators in `.analysis/missing-entry-pointer-discovery.json`
+now have reviewed original callback-cell roles and complete scopes. The review
+also derives the gather switch entry at `0x00405F20`, which had been hidden
+behind an unresolved-field refusal. Camera has an original relative-call
+witness at `0x004010B8`; the caller is reached through the complete bounded
+16-cell CRT initializer interval. Its complete 194-byte original scope is also
+reviewed, but its candidate still lacks a complete same-start PDB contribution.
+The original PE has no base-relocation directory; raw occurrences are not
+relocation evidence. Event callback cell windows do not prove complete global
+array extents or arbitrary selector validity. No table data exact credit or
+generic indirect-jump allowance is added. Continue from unresolved fields and
+source/context differences, retaining all unknown ownership and bounds.
 
 The LZSS deletion row at `0x00458370` is now 84 bytes through `0x004583C3`.
 The independently reached tail helpers at `0x004583D0` and `0x00458430` own

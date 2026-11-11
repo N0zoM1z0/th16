@@ -1071,3 +1071,48 @@ Evidence is `.analysis/review-runtime-entry-scopes.py`,
 The preceding inventories, report and units are retained under
 `.analysis/runtime-entry-baseline/`. Source-origin review remains open;
 Factory acceptance remains unsubmitted and nothing is published.
+
+## Callback-table and startup entries
+
+The original-only review follows the remaining 21 data-address discoveries
+through actual indexed callback use and producer/consumer field flow. It also
+derives the gather switch entry and the Camera constructor's original caller.
+The original PE entry reaches a bounded 16-cell CRT initializer interval;
+one cell establishes the complete 194-byte supervisor initializer, whose
+four-element loop calls the three-byte Camera entry. All 24 scopes are derived
+before candidate comparison. Event-table cell windows retain unknown total
+array bounds and receive no table data exact credit. See
+[table entry scopes](table-entry-scopes.md).
+
+The newly reviewed gather switch reads a complete `300.0f` at `0x0049468C`.
+A fixed typed literal binding resolves that callback and the final unknown
+field in Stage::load_data. Twenty-two newly reviewed owners and the complete
+473-byte Stage body pass. Full replay reports **767 exact, 53 mismatch and
+395 incomplete**, covering 120,612 exact primary bytes. All 744 previous exact
+results and 797 previous comparison units remain unchanged; 23 exact owners
+and 1,395 bytes are added, for 820 complete units. All 43 controls pass across
+reviewed linkages, strict Oracle and focused audit, including four negative
+mutations for the new literal's witness and width.
+
+The piercing hit callback still has a 39-byte original and a 40-byte candidate.
+Two natural source trials fail complete-owner comparison: an element pointer
+gives 37 bytes; an array base pointer gives 41. Both source/output sets and
+complete disassembly are retained. The preceding source is restored byte for
+byte and rebuilt incrementally. The old 104 invalid header dependency stamps
+are refreshed naturally; all 192 current stamps validate. Current artifacts
+come from the fresh restored-source build, with its complete input identity
+equal to the baseline. No archived outputs are substituted. No game source,
+compiler/linker profile or Oracle implementation change is retained.
+
+Evidence is `.analysis/review-table-entry-scopes.py`,
+`.analysis/reviewed-table-entry-scopes.json`,
+`.analysis/table-entry-original-review.log`,
+`.analysis/table-entry-full-audit.log`,
+`.analysis/table-entry-regression-check.json`,
+`.analysis/table-entry-{linkage,oracle,focused}-controls.log`,
+`.analysis/piercing-source-context-trials.json`,
+`.analysis/piercing-restored-cache-check.json` and
+`.analysis/piercing-restored-build.log`. Trial outputs are retained under
+`.analysis/piercing-{element-pointer,array-base}-artifacts/`. Source-origin
+review remains open; Factory acceptance remains unsubmitted. Nothing is
+published.
