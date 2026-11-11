@@ -229,3 +229,410 @@ remap_offset = 6952
 remap_values = [0, 1, 66, 66, 66, 66, 66, 66, 66, 66, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0, 14, 15, 66, 66, 66, 66, 66, 0, 0, 66, 66, 66, 66, 66, 66, 66, 66, 16, 17, 18, 19, 20, 21, 66, 66, 66, 66, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
 target_sha256 = "bd5771b962232fb3ccda37e8609a507ad321801a646b9112d9f1bd98ea4227b2"
 evidence = "docs/knowledge/remapped-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4033f0
+code_size = 1566
+table_offset = 1568
+case_count = 31
+guard_offset = 40
+dispatch_offset = 45
+case_offsets = [52, 93, 145, 63, 108, 164, 56, 56, 205, 361, 542, 282, 449, 638, 59, 21, 56, 713, 749, 808, 913, 1056, 1099, 1142, 1185, 1228, 1271, 1330, 1389, 1448, 1507]
+target_sha256 = "662065b1d97e4367c33d85b4773cba2e8da96826b699e2c0807d568ce09b450c"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x40d890
+code_size = 443
+table_offset = 444
+case_count = 4
+guard_offset = 176
+dispatch_offset = 185
+case_offsets = [228, 261, 192, 294]
+target_sha256 = "3db5936dae384bba1a21f6ab77a95b65253c3b547c0def37d7e8bcc38b75f7f2"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x411e70
+code_size = 1570
+table_offset = 1572
+case_count = 5
+guard_offset = 244
+dispatch_offset = 253
+case_offsets = [420, 260, 880, 1206, 905]
+target_sha256 = "051ed27398e6c59940b649b3a14a5ad58176686e3a918d113d841b8619401f72"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x415570
+code_size = 504
+table_offset = 504
+case_count = 7
+guard_offset = 50
+dispatch_offset = 55
+case_offsets = [62, 83, 108, 108, 108, 62, 83]
+target_sha256 = "1382b4da2aff1c8624ad035f4b88424383ad9f33254a251791f84470112a2602"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4199f0
+code_size = 2254
+table_offset = 2256
+case_count = 18
+guard_offset = 65
+dispatch_offset = 74
+case_offsets = [2029, 2009, 2009, 81, 403, 457, 660, 2038, 831, 1030, 1056, 1176, 1252, 1580, 1783, 922, 956, 993]
+target_sha256 = "8c04e21116b7343b4428674868c9efc33fc0c64b76537a4686591e82f73dd950"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4233a0
+code_size = 1047
+table_offset = 1048
+case_count = 19
+guard_offset = 149
+dispatch_offset = 158
+case_offsets = [165, 1040, 1040, 1040, 1040, 1040, 438, 522, 631, 660, 200, 332, 727, 756, 823, 1040, 266, 970, 1001]
+target_sha256 = "4ccf48d686372a882d646ead2a82c20adbe37212200dec7552c586dc2adf6e80"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x423810
+code_size = 1507
+table_offset = 1508
+case_count = 98
+guard_offset = 17
+dispatch_offset = 26
+case_offsets = [33, 54, 1499, 106, 120, 134, 148, 162, 176, 190, 209, 1499, 228, 80, 240, 1081, 1093, 1105, 1117, 1129, 1143, 1157, 1171, 106, 120, 134, 148, 162, 176, 256, 270, 315, 329, 343, 357, 190, 209, 371, 392, 413, 437, 448, 284, 759, 1499, 1499, 459, 471, 488, 506, 524, 542, 556, 570, 584, 612, 629, 770, 797, 824, 851, 878, 907, 936, 965, 1185, 1199, 1213, 1227, 700, 717, 1499, 1499, 728, 1241, 1255, 1269, 1283, 1297, 1313, 1329, 1345, 1361, 1377, 1393, 1409, 1425, 1499, 1499, 994, 1040, 1069, 601, 1437, 1448, 1466, 1477, 1488]
+target_sha256 = "83cfadf0af95c131020649e1df0c7053250fbacc7c110312c348e1e4234736ae"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x424110
+code_size = 2413
+table_offset = 2416
+case_count = 98
+guard_offset = 17
+dispatch_offset = 26
+case_offsets = [33, 88, 120, 142, 154, 166, 178, 190, 202, 214, 231, 248, 276, 104, 288, 321, 341, 361, 381, 401, 413, 425, 437, 142, 154, 166, 178, 190, 202, 1052, 1064, 1113, 1125, 1137, 1149, 214, 231, 1161, 1214, 2405, 1267, 1287, 1076, 1307, 1315, 1343, 1371, 1391, 1449, 1507, 1565, 1623, 1645, 1667, 1689, 1741, 1774, 497, 553, 609, 665, 721, 774, 827, 880, 449, 461, 473, 485, 1851, 1902, 2405, 2405, 1922, 2047, 2069, 2091, 2113, 2135, 2149, 2163, 2177, 2191, 2205, 2219, 2233, 2247, 2405, 2405, 933, 999, 2001, 1714, 2293, 2313, 2365, 2405, 2385]
+target_sha256 = "57e24c5ef868befd1eb74f5d770718e0b0c171fdff17c252f126fdf0e58a502b"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x42a1d0
+code_size = 4633
+table_offset = 4636
+case_count = 36
+guard_offset = 218
+dispatch_offset = 227
+case_offsets = [4132, 1937, 2020, 4021, 2365, 2387, 2433, 2522, 2737, 3144, 3570, 3638, 3805, 3594, 3614, 246, 348, 495, 1877, 3820, 3868, 3932, 3939, 2325, 2340, 2148, 234, 3973, 450, 3985, 4021, 2090, 2971, 2493, 2518, 4008]
+target_sha256 = "55cbb45fa073260809e34de8364736e5e295b50634fcfc066c2f4739bbf48d9d"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x42e150
+code_size = 880
+table_offset = 880
+case_count = 4
+guard_offset = 312
+dispatch_offset = 317
+case_offsets = [324, 324, 324, 324]
+target_sha256 = "a221ca1f83393f3c9f4a7683f63e31e6f11bc59b87f00fd7fe901f29751e6041"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x42eab0
+code_size = 1213
+table_offset = 1216
+case_count = 6
+guard_offset = 104
+dispatch_offset = 113
+case_offsets = [120, 249, 1093, 569, 717, 801]
+target_sha256 = "ed76c5d0f568904adcfea6495ca3374b68f6a9029e915d3d6a80760a053feaeb"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x42f4e0
+code_size = 3033
+table_offset = 3036
+case_count = 16
+guard_offset = 2221
+dispatch_offset = 2230
+case_offsets = [2249, 2273, 2261, 2493, 2285, 2327, 2338, 2237, 2349, 2349, 2349, 2349, 2349, 2349, 2493, 2424]
+target_sha256 = "e567448f3f2f6c47d8f710d9979f09e799144ea6ee96a549342bccc8fbfcf3ce"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x431760
+code_size = 236
+table_offset = 236
+case_count = 4
+guard_offset = 63
+dispatch_offset = 72
+case_offsets = [79, 104, 154, 129]
+target_sha256 = "bb07da02b552b3b4b572baf497dfc34d80139a13f065a6db28b7d91706466bad"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4352f0
+code_size = 784
+table_offset = 784
+case_count = 4
+guard_offset = 410
+dispatch_offset = 419
+case_offsets = [500, 426, 463, 528]
+target_sha256 = "b373ff307ba31ca58bebeaa787e02ae769779e23164f8837649d86629912a6e2"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x442560
+code_size = 4519
+table_offset = 4520
+case_count = 5
+guard_offset = 51
+dispatch_offset = 60
+case_offsets = [67, 329, 439, 1192, 418]
+target_sha256 = "ae6d4cc94e5109ab59d87ca7d1f082519d1e7b77c00bc727db6443c19789e067"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x44af80
+code_size = 1368
+table_offset = 1368
+case_count = 21
+guard_offset = 484
+dispatch_offset = 493
+case_offsets = [500, 719, 1099, 1081, 1090, 1069, 1127, 1136, 1145, 1120, 1190, 883, 1120, 1154, 625, 1208, 1199, 979, 1163, 1172, 1181]
+target_sha256 = "ac1d6af93a7069cfadc95a8597d6220247872aa73d9d25511004ef94e9e5f70d"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x44c570
+code_size = 815
+table_offset = 816
+case_count = 5
+guard_offset = 16
+dispatch_offset = 25
+case_offsets = [32, 92, 166, 804, 741]
+target_sha256 = "e2f1e020a728f276bbf270d4e66ded1fb444b3f0277a2bd0ccfb14b1f0ee0bfb"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x44e930
+code_size = 789
+table_offset = 792
+case_count = 5
+guard_offset = 16
+dispatch_offset = 25
+case_offsets = [32, 160, 234, 778, 754]
+target_sha256 = "e9cdce6ea444f4188c8bb6119f07621de2e7b31dfdd1b48c833f1526acf6171b"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x44fe20
+code_size = 1159
+table_offset = 1160
+case_count = 5
+guard_offset = 37
+dispatch_offset = 46
+case_offsets = [53, 531, 564, 860, 981]
+target_sha256 = "b062e9196b5e420e46915dbcc5725edc0776db8d525b42bb1930cd71fef3cffd"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4502c0
+code_size = 2073
+table_offset = 2076
+case_count = 5
+guard_offset = 43
+dispatch_offset = 52
+case_offsets = [59, 1363, 1396, 1808, 1987]
+target_sha256 = "e84871d526e9615061a200b4c4bbe35dedca2f0812c8384dd04966b8b4169bd8"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x450af0
+code_size = 1000
+table_offset = 1000
+case_count = 5
+guard_offset = 39
+dispatch_offset = 48
+case_offsets = [55, 264, 297, 594, 924]
+target_sha256 = "b62a23eef568177c52bc18e9fc2724fd1f18b0ad990ade9ad0515ce852fdb6db"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x450ef0
+code_size = 1211
+table_offset = 1212
+case_count = 5
+guard_offset = 16
+dispatch_offset = 25
+case_offsets = [32, 112, 147, 988, 1149]
+target_sha256 = "0c5acb2b3ced0ea10804d1daf04f3cc7c643aa282c17e05dbc84d9b160afdd63"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x451750
+code_size = 1507
+table_offset = 1508
+case_count = 6
+guard_offset = 16
+dispatch_offset = 25
+case_offsets = [32, 309, 342, 994, 786, 1310]
+target_sha256 = "52a17376d7524fe228ff30b30d8cb97a975196266f7ebbd9da0ac2dbcc65cab4"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x452330
+code_size = 2287
+table_offset = 2288
+case_count = 4
+guard_offset = 15
+dispatch_offset = 24
+case_offsets = [31, 537, 571, 2203]
+target_sha256 = "867aac4ca88b4767b1e4d758f37eeecedde95642e7e832b9ec0982ecd418cbf5"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4532f0
+code_size = 1443
+table_offset = 1444
+case_count = 4
+guard_offset = 15
+dispatch_offset = 24
+case_offsets = [31, 581, 615, 1225]
+target_sha256 = "e5a769d4b02c7b5aa75ee350c26e00c3ff4d442ae3532cc6239be7d1c14d188d"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x453c10
+code_size = 1412
+table_offset = 1412
+case_count = 5
+guard_offset = 31
+dispatch_offset = 40
+case_offsets = [47, 251, 278, 619, 1196]
+target_sha256 = "c8a9c78eb8869fe97ca80c3f0ba8d3756a77eaa5949a8e117521c2219c1c09ec"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4546f0
+code_size = 3118
+table_offset = 3120
+case_count = 4
+guard_offset = 20
+dispatch_offset = 29
+case_offsets = [36, 1514, 1715, 3017]
+target_sha256 = "cf12839b5fd5e23f085a9df29b88f27e4472e07350ee6a76291736e370b049ff"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x4553d0
+code_size = 933
+table_offset = 936
+case_count = 5
+guard_offset = 16
+dispatch_offset = 25
+case_offsets = [32, 389, 493, 724, 804]
+target_sha256 = "91ad080e77e4c4091eda2927a9d322672c19d9531454c8221488edc9fcdea1f6"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x455900
+code_size = 1074
+table_offset = 1076
+case_count = 5
+guard_offset = 63
+dispatch_offset = 72
+case_offsets = [79, 392, 453, 711, 838]
+target_sha256 = "2474bcf2f5812542984423a34bf6964e892fd97635b776a202fa4c0c97440642"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x455d50
+code_size = 753
+table_offset = 756
+case_count = 5
+guard_offset = 16
+dispatch_offset = 25
+case_offsets = [32, 108, 175, 411, 670]
+target_sha256 = "531d382c0e04bf476406313b3b60aeddc2a14175f44f6b3cf029e3cbd95816ee"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x456a20
+code_size = 789
+table_offset = 792
+case_count = 5
+guard_offset = 16
+dispatch_offset = 25
+case_offsets = [32, 139, 172, 401, 729]
+target_sha256 = "df012aa8511dddcc5e8683b2f8365f264dcc8367eb1e735a23c00ae634a2b9ca"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x459240
+code_size = 831
+table_offset = 832
+case_count = 9
+guard_offset = 42
+dispatch_offset = 47
+case_offsets = [62, 78, 70, 86, 94, 110, 102, 118, 54]
+target_sha256 = "03be011ed3e463f1aea0ed4d906e7f4d0d2ba49cbf77c2d94140dda4a46e674e"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x45c110
+code_size = 371
+table_offset = 372
+case_count = 6
+guard_offset = 147
+dispatch_offset = 152
+case_offsets = [159, 195, 231, 179, 215, 251]
+target_sha256 = "5d3e713ddf0b2ff6950fe7fde355c2b4c9a17cf7b5cff333b523937cf97b257b"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x45e330
+code_size = 1390
+table_offset = 1392
+case_count = 9
+guard_offset = 96
+dispatch_offset = 105
+case_offsets = [138, 192, 607, 509, 646, 695, 730, 112, 765]
+target_sha256 = "70680c7d7a86c294bd9fcbc3842f086a82dd2390d2d509da8b33e4b791443450"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x45f2d0
+code_size = 679
+table_offset = 680
+case_count = 36
+guard_offset = 13
+dispatch_offset = 22
+case_offsets = [29, 44, 59, 74, 89, 101, 113, 125, 173, 188, 279, 203, 241, 317, 326, 335, 385, 405, 425, 445, 457, 469, 520, 344, 353, 362, 371, 481, 493, 505, 634, 558, 596, 137, 149, 161]
+target_sha256 = "0507aaeaf6c0623842f7bdd8e81adcf1d9b4ba91d575c8c4d80a58ca329ce484"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x464f10
+code_size = 836
+table_offset = 836
+case_count = 10
+guard_offset = 81
+dispatch_offset = 90
+case_offsets = [97, 140, 183, 226, 287, 373, 330, 413, 453, 493]
+target_sha256 = "12c7bdcc71beb66c1b47ce295eebd48dee6f741d9a40e98195d45c0750dcc138"
+evidence = "docs/knowledge/direct-owner-scopes.md"
+
+[[switch_owners]]
+target_address = 0x467410
+code_size = 2256
+table_offset = 2256
+case_count = 6
+guard_offset = 387
+dispatch_offset = 396
+case_offsets = [403, 539, 675, 811, 903, 1036]
+target_sha256 = "586358417683b8813bd6770b747b0ce60eca270a6750dfd4988034c7886e98fc"
+evidence = "docs/knowledge/direct-owner-scopes.md"

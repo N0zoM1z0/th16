@@ -153,9 +153,15 @@ class SwitchOwnershipControls(unittest.TestCase):
         units = tomllib.loads((ROOT / "config/match-units.toml").read_text())["units"]
         for address, record in self.context.switch_owners.items():
             if f"reference-{address:08x}" not in units:
-                # The newly reviewed original remap owner has a different
-                # complete candidate extent; its refusal is checked below.
-                self.assertIn(address, {0x4632f0,0x431fe0,0x438cb0,0x46c0d0,0x472030})
+                annotations = [r.split() for r in (self.context.directory/'functions.txt').read_text().splitlines()]
+                _,candidate,symbol = next(r for r in annotations if int(r[0],0)==address)
+                function = next(f for f in self.context.linked['functions']
+                                if f['symbol']==symbol and int(f['address'],0)==int(candidate,0))
+                # Original-only ownership does not imply a candidate pass.
+                # Equal-size exceptions retain specific unresolved fields or
+                # the independently reviewed interpolation case-map mismatch.
+                self.assertTrue(function['size'] != switch_owner_size(record)
+                                or address in {0x4033f0,0x40d890,0x4199f0,0x42e150,0x4546f0})
                 continue
             unit = units[f"reference-{address:08x}"]
             result = self.context.compare(unit)
@@ -202,6 +208,54 @@ class SwitchOwnershipControls(unittest.TestCase):
         for path in ["scripts/switch_ownership.py", "config/switch-owners.toml"]:
             with self.subTest(path=path):
                 self.assertEqual(self.context.before[path], hashlib.sha256((ROOT / path).read_bytes()).hexdigest())
+
+    def test_further_direct_table_owners_pass_their_complete_scopes(self):
+        units = tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        for address,size in [(0x415570,532),(0x423810,1900),(0x424110,2808),
+                             (0x459240,868),(0x45c110,396),(0x45f2d0,824),(0x464f10,876)]:
+            with self.subTest(address=hex(address)):
+                result = self.context.compare(units[f'reference-{address:08x}'])
+                self.assertEqual(result['result'],'exact')
+                self.assertEqual(result['compared_size'],size)
+
+    def test_every_enemy_value_getter_case_requires_its_relocation(self):
+        units = tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        for address in (0x423810,0x424110):
+            unit = units[f'reference-{address:08x}'];record = self.context.switch_owners[address]
+            self.assertEqual(record['case_count'],98)
+            for n in range(98):
+                at = unit['candidate_address']+record['table_offset']+4*n
+                context = copy.copy(self.context)
+                context.image = ImageOverlay(context.image,removed_relocations=[at])
+                with self.subTest(address=hex(address),slot=n),self.assertRaisesRegex(Incomplete,'entry relocations'):
+                    context.compare(unit)
+
+    def test_direct_original_reviews_do_not_resize_different_candidates(self):
+        annotations = [r.split() for r in (self.context.directory/'functions.txt').read_text().splitlines()]
+        checked = 0
+        for address,record in self.context.switch_owners.items():
+            if record['evidence']!='docs/knowledge/direct-owner-scopes.md':
+                continue
+            _,candidate,symbol = next(r for r in annotations if int(r[0],0)==address)
+            function = next(f for f in self.context.linked['functions']
+                            if f['symbol']==symbol and int(f['address'],0)==int(candidate,0))
+            if function['size']==switch_owner_size(record):
+                continue
+            source = self.context.boundaries[address]['source_file']
+            unit = dict(artifact_kind='linked-pe',source=source,object=source.rsplit('/',1)[1].replace('.cpp','.obj'),
+                        symbol=symbol,candidate_address=int(candidate,0),target_address=address,
+                        size=function['size'],compare_size=function['size'],profile=self.context.receipt['compiler_profile'],
+                        link_profile=self.context.receipt['linker_profile'],linkages=[])
+            with self.subTest(address=hex(address)),self.assertRaisesRegex(Incomplete,'complete candidate owner'):
+                self.context.compare(unit)
+            checked += 1
+        self.assertEqual(checked,25)
+
+    def test_additional_or_multiple_dispatches_have_no_single_table_record(self):
+        for address in (0x408650,0x40b3b0,0x412cb0,0x413860,0x41dcb0,
+                        0x43ce10,0x43f980,0x44b5f0,0x45a450,0x468490):
+            with self.subTest(address=hex(address)):
+                self.assertNotIn(address,self.context.switch_owners)
 
     @classmethod
     def tearDownClass(cls):

@@ -3895,6 +3895,39 @@ linkages = [
   { offset = 366, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
 ]
 
+[units.reference-00415570]
+artifact_kind = "linked-pe"
+source = "src/BulletManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_ex_04@Bullet@@QAEHXZ"
+object = "BulletManager.obj"
+candidate_address = 4320400
+target_address = 4281712
+size = 532
+compare_size = 532
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 34, width = 4, type = "REL32", symbol = "?play_sound_centered@SoundManager@@QAEXHH@Z", target = 4579664, addend = 0 },
+  { offset = 58, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4282216 },
+  { offset = 77, width = 4, type = "REL32", symbol = "??YZunAngle@@QAEAAU0@M@Z", target = 4215840, addend = 0 },
+  { offset = 91, width = 4, type = "REL32", symbol = "?angle_to_player@Player@@QAEMPAUD3DXVECTOR3@@@Z", target = 4470848, addend = 0 },
+  { offset = 123, width = 4, type = "REL32", symbol = "??4ZunAngle@@QAEAAU0@M@Z", target = 4215936, addend = 0 },
+  { offset = 275, width = 4, type = "REL32", symbol = "?bullet_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4289808, addend = 0, reviewed_static = "bullet" },
+  { offset = 357, width = 4, type = "REL32", symbol = "?bullet_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4289808, addend = 0, reviewed_static = "bullet" },
+  { offset = 389, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 416, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 426, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 482, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+  { offset = 504, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4281774 },
+  { offset = 508, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4281795 },
+  { offset = 512, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4281820 },
+  { offset = 516, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4281820 },
+  { offset = 520, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4281820 },
+  { offset = 524, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4281774 },
+  { offset = 528, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4281795 },
+]
+
 [units.reference-00415790]
 artifact_kind = "linked-pe"
 source = "src/BulletManager.cpp"
@@ -5752,6 +5785,178 @@ linkages = [
   { offset = 297, width = 4, type = "REL32", symbol = "?hide_tree@AnmVm@@QAEXXZ", target = 4649904, addend = 0 },
 ]
 
+[units.reference-00423810]
+artifact_kind = "linked-pe"
+source = "src/Enemy.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_int_global@EnemyInf@@UAEHH@Z"
+object = "Enemy.obj"
+candidate_address = 4372272
+target_address = 4339728
+size = 1900
+compare_size = 1900
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 29, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341236 },
+  { offset = 34, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 39, width = 4, type = "REL32", symbol = "?rand_u32@Rng@@QAEIXZ", target = 4205536, addend = 0 },
+  { offset = 55, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 60, width = 4, type = "REL32", symbol = "?randf_0_to_1@Rng@@QAEMXZ", target = 4205680, addend = 0 },
+  { offset = 81, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 86, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 191, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 210, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 301, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 374, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 395, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 420, width = 4, type = "REL32", symbol = "?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ", target = 4649696, addend = 0 },
+  { offset = 438, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 44, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 449, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 475, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 492, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 510, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 528, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 543, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 557, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 571, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 585, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 602, width = 4, type = "REL32", symbol = "?get_enemy_count@EnemyManager@@QAEHXZ", target = 4303040, addend = 0 },
+  { offset = 613, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 619, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 630, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 682, width = 4, type = "REL32", symbol = "__libm_sse2_sqrt_precise", target = 4753040, addend = 0 },
+  { offset = 701, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 718, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 84, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 729, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 748, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1792, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 773, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 800, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 827, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 854, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 881, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 910, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 939, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 968, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 997, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 1026, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 1043, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 1242, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1256, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1270, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1284, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1298, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1314, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1330, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1346, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1362, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1378, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1394, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1410, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1438, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 56, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1467, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 8, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1478, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 60, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1489, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 28, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1508, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339761 },
+  { offset = 1512, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339782 },
+  { offset = 1516, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1520, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339834 },
+  { offset = 1524, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339848 },
+  { offset = 1528, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339862 },
+  { offset = 1532, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339876 },
+  { offset = 1536, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339890 },
+  { offset = 1540, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339904 },
+  { offset = 1544, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339918 },
+  { offset = 1548, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339937 },
+  { offset = 1552, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1556, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339956 },
+  { offset = 1560, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339808 },
+  { offset = 1564, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339968 },
+  { offset = 1568, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340809 },
+  { offset = 1572, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340821 },
+  { offset = 1576, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340833 },
+  { offset = 1580, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340845 },
+  { offset = 1584, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340857 },
+  { offset = 1588, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340871 },
+  { offset = 1592, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340885 },
+  { offset = 1596, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340899 },
+  { offset = 1600, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339834 },
+  { offset = 1604, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339848 },
+  { offset = 1608, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339862 },
+  { offset = 1612, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339876 },
+  { offset = 1616, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339890 },
+  { offset = 1620, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339904 },
+  { offset = 1624, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339984 },
+  { offset = 1628, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339998 },
+  { offset = 1632, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340043 },
+  { offset = 1636, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340057 },
+  { offset = 1640, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340071 },
+  { offset = 1644, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340085 },
+  { offset = 1648, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339918 },
+  { offset = 1652, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339937 },
+  { offset = 1656, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340099 },
+  { offset = 1660, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340120 },
+  { offset = 1664, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340141 },
+  { offset = 1668, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340165 },
+  { offset = 1672, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340176 },
+  { offset = 1676, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340012 },
+  { offset = 1680, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340487 },
+  { offset = 1684, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1688, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1692, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340187 },
+  { offset = 1696, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340199 },
+  { offset = 1700, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340216 },
+  { offset = 1704, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340234 },
+  { offset = 1708, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340252 },
+  { offset = 1712, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340270 },
+  { offset = 1716, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340284 },
+  { offset = 1720, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340298 },
+  { offset = 1724, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340312 },
+  { offset = 1728, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340340 },
+  { offset = 1732, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340357 },
+  { offset = 1736, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340498 },
+  { offset = 1740, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340525 },
+  { offset = 1744, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340552 },
+  { offset = 1748, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340579 },
+  { offset = 1752, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340606 },
+  { offset = 1756, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340635 },
+  { offset = 1760, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340664 },
+  { offset = 1764, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340693 },
+  { offset = 1768, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340913 },
+  { offset = 1772, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340927 },
+  { offset = 1776, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340941 },
+  { offset = 1780, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340955 },
+  { offset = 1784, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340428 },
+  { offset = 1788, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340445 },
+  { offset = 1792, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1796, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1800, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340456 },
+  { offset = 1804, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340969 },
+  { offset = 1808, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340983 },
+  { offset = 1812, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340997 },
+  { offset = 1816, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341011 },
+  { offset = 1820, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341025 },
+  { offset = 1824, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341041 },
+  { offset = 1828, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341057 },
+  { offset = 1832, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341073 },
+  { offset = 1836, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341089 },
+  { offset = 1840, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341105 },
+  { offset = 1844, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341121 },
+  { offset = 1848, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341137 },
+  { offset = 1852, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341153 },
+  { offset = 1856, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1860, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341227 },
+  { offset = 1864, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340722 },
+  { offset = 1868, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340768 },
+  { offset = 1872, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340797 },
+  { offset = 1876, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4340329 },
+  { offset = 1880, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341165 },
+  { offset = 1884, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341176 },
+  { offset = 1888, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341194 },
+  { offset = 1892, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341205 },
+  { offset = 1896, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341216 },
+]
+
 [units.reference-00423f80]
 artifact_kind = "linked-pe"
 source = "src/Enemy.cpp"
@@ -5797,6 +6002,192 @@ linkages = [
   { offset = 316, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341862 },
   { offset = 320, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341875 },
   { offset = 324, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4341888 },
+]
+
+[units.reference-00424110]
+artifact_kind = "linked-pe"
+source = "src/Enemy.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_float_global@EnemyInf@@UAEMH@Z"
+object = "Enemy.obj"
+candidate_address = 4374176
+target_address = 4342032
+size = 2808
+compare_size = 2808
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 29, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344448 },
+  { offset = 34, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 39, width = 4, type = "REL32", symbol = "?rand_u32@Rng@@QAEIXZ", target = 4205536, addend = 0 },
+  { offset = 64, width = 4, type = "DIR32", symbol = "__xmm@41f00000000000000000000000000000", target = 4802640, addend = 0 },
+  { offset = 89, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 94, width = 4, type = "REL32", symbol = "?randf_0_to_1@Rng@@QAEMXZ", target = 4205680, addend = 0 },
+  { offset = 105, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 110, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 121, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 126, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 132, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
+  { offset = 215, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 232, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 256, width = 4, type = "REL32", symbol = "?angle_to_player@Player@@QAEMPAUD3DXVECTOR3@@@Z", target = 4470848, addend = 0 },
+  { offset = 500, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 556, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 612, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 668, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 724, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 777, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 830, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 883, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 936, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 961, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 1002, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 1093, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 1164, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 1217, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
+  { offset = 1269, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 44, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1289, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1323, width = 4, type = "REL32", symbol = "?angle_to_player@Player@@QAEMPAUD3DXVECTOR3@@@Z", target = 4470848, addend = 0 },
+  { offset = 1351, width = 4, type = "REL32", symbol = "?angle_to_player@Player@@QAEMPAUD3DXVECTOR3@@@Z", target = 4470848, addend = 0 },
+  { offset = 1395, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1413, width = 4, type = "DIR32", symbol = "__real@00000000", target = 4801472, addend = 0 },
+  { offset = 1453, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1471, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+  { offset = 1511, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1529, width = 4, type = "DIR32", symbol = "__real@40000000", target = 4801880, addend = 0 },
+  { offset = 1569, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1587, width = 4, type = "DIR32", symbol = "__real@40400000", target = 4801924, addend = 0 },
+  { offset = 1624, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1646, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1668, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1690, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1715, width = 4, type = "REL32", symbol = "?get_enemy_count@EnemyManager@@QAEHXZ", target = 4303040, addend = 0 },
+  { offset = 1742, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1748, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1775, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 1827, width = 4, type = "REL32", symbol = "__libm_sse2_sqrt_precise", target = 4753040, addend = 0 },
+  { offset = 1852, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 1878, width = 4, type = "DIR32", symbol = "__xmm@41f00000000000000000000000000000", target = 4802640, addend = 0 },
+  { offset = 1904, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 84, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 1923, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 1948, width = 4, type = "DIR32", symbol = "__real@00000000", target = 4801472, addend = 0 },
+  { offset = 1960, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1792, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 2023, width = 4, type = "DIR32", symbol = "__xmm@41f00000000000000000000000000000", target = 4802640, addend = 0 },
+  { offset = 2048, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2070, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2092, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2114, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2136, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2150, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2164, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2178, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2192, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2206, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2220, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2234, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 2269, width = 4, type = "DIR32", symbol = "__xmm@41f00000000000000000000000000000", target = 4802640, addend = 0 },
+  { offset = 2295, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 56, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 2341, width = 4, type = "DIR32", symbol = "__xmm@41f00000000000000000000000000000", target = 4802640, addend = 0 },
+  { offset = 2367, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 8, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 2387, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 28, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 2416, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342065 },
+  { offset = 2420, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342120 },
+  { offset = 2424, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342152 },
+  { offset = 2428, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342174 },
+  { offset = 2432, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342186 },
+  { offset = 2436, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342198 },
+  { offset = 2440, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342210 },
+  { offset = 2444, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342222 },
+  { offset = 2448, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342234 },
+  { offset = 2452, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342246 },
+  { offset = 2456, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342263 },
+  { offset = 2460, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342280 },
+  { offset = 2464, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342308 },
+  { offset = 2468, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342136 },
+  { offset = 2472, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342320 },
+  { offset = 2476, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342353 },
+  { offset = 2480, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342373 },
+  { offset = 2484, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342393 },
+  { offset = 2488, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342413 },
+  { offset = 2492, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342433 },
+  { offset = 2496, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342445 },
+  { offset = 2500, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342457 },
+  { offset = 2504, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342469 },
+  { offset = 2508, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342174 },
+  { offset = 2512, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342186 },
+  { offset = 2516, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342198 },
+  { offset = 2520, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342210 },
+  { offset = 2524, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342222 },
+  { offset = 2528, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342234 },
+  { offset = 2532, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343084 },
+  { offset = 2536, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343096 },
+  { offset = 2540, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343145 },
+  { offset = 2544, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343157 },
+  { offset = 2548, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343169 },
+  { offset = 2552, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343181 },
+  { offset = 2556, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342246 },
+  { offset = 2560, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342263 },
+  { offset = 2564, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343193 },
+  { offset = 2568, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343246 },
+  { offset = 2572, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344437 },
+  { offset = 2576, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343299 },
+  { offset = 2580, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343319 },
+  { offset = 2584, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343108 },
+  { offset = 2588, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343339 },
+  { offset = 2592, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343347 },
+  { offset = 2596, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343375 },
+  { offset = 2600, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343403 },
+  { offset = 2604, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343423 },
+  { offset = 2608, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343481 },
+  { offset = 2612, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343539 },
+  { offset = 2616, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343597 },
+  { offset = 2620, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343655 },
+  { offset = 2624, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343677 },
+  { offset = 2628, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343699 },
+  { offset = 2632, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343721 },
+  { offset = 2636, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343773 },
+  { offset = 2640, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343806 },
+  { offset = 2644, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342529 },
+  { offset = 2648, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342585 },
+  { offset = 2652, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342641 },
+  { offset = 2656, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342697 },
+  { offset = 2660, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342753 },
+  { offset = 2664, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342806 },
+  { offset = 2668, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342859 },
+  { offset = 2672, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342912 },
+  { offset = 2676, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342481 },
+  { offset = 2680, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342493 },
+  { offset = 2684, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342505 },
+  { offset = 2688, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342517 },
+  { offset = 2692, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343883 },
+  { offset = 2696, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343934 },
+  { offset = 2700, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344437 },
+  { offset = 2704, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344437 },
+  { offset = 2708, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343954 },
+  { offset = 2712, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344079 },
+  { offset = 2716, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344101 },
+  { offset = 2720, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344123 },
+  { offset = 2724, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344145 },
+  { offset = 2728, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344167 },
+  { offset = 2732, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344181 },
+  { offset = 2736, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344195 },
+  { offset = 2740, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344209 },
+  { offset = 2744, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344223 },
+  { offset = 2748, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344237 },
+  { offset = 2752, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344251 },
+  { offset = 2756, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344265 },
+  { offset = 2760, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344279 },
+  { offset = 2764, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344437 },
+  { offset = 2768, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344437 },
+  { offset = 2772, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4342965 },
+  { offset = 2776, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343031 },
+  { offset = 2780, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344033 },
+  { offset = 2784, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4343746 },
+  { offset = 2788, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344325 },
+  { offset = 2792, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344345 },
+  { offset = 2796, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344397 },
+  { offset = 2800, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344437 },
+  { offset = 2804, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4344417 },
 ]
 
 [units.reference-00424c10]
@@ -14004,6 +14395,72 @@ linkages = [
   { offset = 18, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 16, storage_name = "g_TextHelper", storage_size = 36 },
 ]
 
+[units.reference-00459240]
+artifact_kind = "linked-pe"
+source = "src/TextHelper.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?draw_text@@YGXPAUtagRECT@@HHKKPBDPAUIDirect3DTexture9@@HHH@Z"
+object = "TextHelper.obj"
+candidate_address = 4662032
+target_address = 4559424
+size = 868
+compare_size = 868
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 50, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4560256 },
+  { offset = 56, width = 4, type = "DIR32", symbol = "?g_text_font_8@@3PAUHFONT__@@A", target = 5110024, addend = 0 },
+  { offset = 64, width = 4, type = "DIR32", symbol = "?g_text_font_0@@3PAUHFONT__@@A", target = 5110028, addend = 0 },
+  { offset = 72, width = 4, type = "DIR32", symbol = "?g_text_font_2@@3PAUHFONT__@@A", target = 5110036, addend = 0 },
+  { offset = 80, width = 4, type = "DIR32", symbol = "?g_text_font_1@@3PAUHFONT__@@A", target = 5110032, addend = 0 },
+  { offset = 88, width = 4, type = "DIR32", symbol = "?g_text_font_3@@3PAUHFONT__@@A", target = 5110040, addend = 0 },
+  { offset = 96, width = 4, type = "DIR32", symbol = "?g_text_font_4@@3PAUHFONT__@@A", target = 5110044, addend = 0 },
+  { offset = 104, width = 4, type = "DIR32", symbol = "?g_text_font_6@@3PAUHFONT__@@A", target = 5110052, addend = 0 },
+  { offset = 112, width = 4, type = "DIR32", symbol = "?g_text_font_5@@3PAUHFONT__@@A", target = 5110048, addend = 0 },
+  { offset = 120, width = 4, type = "DIR32", symbol = "?g_text_font_7@@3PAUHFONT__@@A", target = 5110056, addend = 0 },
+  { offset = 128, width = 4, type = "DIR32", symbol = "?g_text_font_default@@3PAUHFONT__@@A", target = 5110020, addend = 0 },
+  { offset = 134, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 12, storage_name = "g_TextHelper", storage_size = 36 },
+  { offset = 142, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 32, storage_name = "g_TextHelper", storage_size = 36 },
+  { offset = 147, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 153, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 20, storage_name = "g_TextHelper", storage_size = 36 },
+  { offset = 164, width = 4, type = "DIR32", symbol = "__imp__SelectObject@8", target = 4763700, addend = 0 },
+  { offset = 197, width = 4, type = "REL32", symbol = "?invert_alpha@TextHelper@@QAE_NHH@Z", target = 4557952, addend = 0 },
+  { offset = 206, width = 4, type = "DIR32", symbol = "__imp__SetBkMode@8", target = 4763684, addend = 0 },
+  { offset = 247, width = 4, type = "DIR32", symbol = "__imp__SetTextColor@8", target = 4763680, addend = 0 },
+  { offset = 263, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 293, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 313, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 328, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 403, width = 4, type = "DIR32", symbol = "__imp__SetTextColor@8", target = 4763680, addend = 0 },
+  { offset = 454, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 472, width = 4, type = "DIR32", symbol = "__imp__SetTextColor@8", target = 4763680, addend = 0 },
+  { offset = 520, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 536, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 551, width = 4, type = "DIR32", symbol = "__imp__TextOutA@20", target = 4763672, addend = 0 },
+  { offset = 572, width = 4, type = "DIR32", symbol = "__imp__SetTextColor@8", target = 4763680, addend = 0 },
+  { offset = 612, width = 4, type = "DIR32", symbol = "__imp__SetTextColor@8", target = 4763680, addend = 0 },
+  { offset = 630, width = 4, type = "DIR32", symbol = "__imp__SelectObject@8", target = 4763700, addend = 0 },
+  { offset = 643, width = 4, type = "REL32", symbol = "?invert_alpha@TextHelper@@QAE_NHH@Z", target = 4557952, addend = 0 },
+  { offset = 649, width = 4, type = "REL32", symbol = "?blur_alpha@TextHelper@@QAE_NH@Z", target = 4557552, addend = 0 },
+  { offset = 655, width = 4, type = "REL32", symbol = "?bleed_color@TextHelper@@QAE_NH@Z", target = 4556592, addend = 0 },
+  { offset = 708, width = 4, type = "DIR32", symbol = "?g_meiryo_available@@3HA", target = 4878124, addend = 0 },
+  { offset = 771, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 16, storage_name = "g_TextHelper", storage_size = 36 },
+  { offset = 777, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 0 },
+  { offset = 783, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 32, storage_name = "g_TextHelper", storage_size = 36 },
+  { offset = 795, width = 4, type = "DIR32", symbol = "__imp__D3DXLoadSurfaceFromMemory@40", target = 4764300, addend = 0 },
+  { offset = 821, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+  { offset = 832, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559486 },
+  { offset = 836, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559502 },
+  { offset = 840, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559494 },
+  { offset = 844, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559510 },
+  { offset = 848, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559518 },
+  { offset = 852, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559534 },
+  { offset = 856, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559526 },
+  { offset = 860, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559542 },
+  { offset = 864, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4559478 },
+]
+
 [units.reference-004595b0]
 artifact_kind = "linked-pe"
 source = "src/GameWindow.cpp"
@@ -14672,6 +15129,45 @@ linkages = [
   { offset = 220, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
   { offset = 253, width = 4, type = "DIR32", symbol = "__imp__CoUninitialize@0", target = 4764332, addend = 0 },
   { offset = 268, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+]
+
+[units.reference-0045c110]
+artifact_kind = "linked-pe"
+source = "src/SupervisorSetup.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?resolution_dialog_proc@@YGHPAUHWND__@@IIJ@Z"
+object = "SupervisorSetup.obj"
+candidate_address = 4656736
+target_address = 4571408
+size = 396
+compare_size = 396
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 9, width = 4, type = "DIR32", symbol = "__imp__DestroyWindow@4", target = 4764132, addend = 0 },
+  { offset = 53, width = 4, type = "REL32", symbol = "?read_resolution_dialog@@YAXXZ", target = 4571808, addend = 0 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 4, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 65, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8252, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 79, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 4, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 90, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 508, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 102, width = 4, type = "DIR32", symbol = "__imp__GetDlgItem@8", target = 4764200, addend = 0 },
+  { offset = 109, width = 4, type = "DIR32", symbol = "__imp__SendMessageA@16", target = 4764184, addend = 0 },
+  { offset = 136, width = 4, type = "DIR32", symbol = "__imp__GetDlgItem@8", target = 4764200, addend = 0 },
+  { offset = 143, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 499, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 155, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4571780 },
+  { offset = 266, width = 4, type = "DIR32", symbol = "__imp__GetDlgItem@8", target = 4764200, addend = 0 },
+  { offset = 277, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8252, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 293, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8252, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 306, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 4, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 312, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8252, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 344, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8252, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 353, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 4, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 372, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4571567 },
+  { offset = 376, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4571603 },
+  { offset = 380, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4571639 },
+  { offset = 384, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4571587 },
+  { offset = 388, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4571623 },
+  { offset = 392, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4571659 },
 ]
 
 [units.reference-0045c2a0]
@@ -15558,6 +16054,83 @@ linkages = [
   { offset = 56, width = 4, type = "REL32", symbol = "?wipe@AnmVm@@QAEXXZ", target = 4231408, addend = 0 },
 ]
 
+[units.reference-0045f2d0]
+artifact_kind = "linked-pe"
+source = "src/AnmVmRun.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_float_var@AnmVm@@QAEMM@Z"
+object = "AnmVmRun.obj"
+candidate_address = 4258624
+target_address = 4584144
+size = 824
+compare_size = 824
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 25, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584824 },
+  { offset = 212, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 0 },
+  { offset = 222, width = 4, type = "REL32", symbol = "?randf_0_to_1@Rng@@QAEMXZ", target = 4205680, addend = 0 },
+  { offset = 250, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 0 },
+  { offset = 260, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 288, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 0 },
+  { offset = 298, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 372, width = 4, type = "REL32", symbol = "?get_total_rotation@AnmVm@@QAEPAUD3DXVECTOR3@@XZ", target = 4607440, addend = 0 },
+  { offset = 389, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1528, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 397, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1468, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 409, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1532, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 417, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1472, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 429, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1536, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 437, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1476, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 449, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1504, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 461, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1508, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 473, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1512, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 521, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 0 },
+  { offset = 526, width = 4, type = "REL32", symbol = "?rand_u32@Rng@@QAEIXZ", target = 4205536, addend = 0 },
+  { offset = 546, width = 4, type = "DIR32", symbol = "__xmm@41f00000000000000000000000000000", target = 4802640, addend = 0 },
+  { offset = 567, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 577, width = 4, type = "REL32", symbol = "?randf_0_to_1@Rng@@QAEMXZ", target = 4205680, addend = 0 },
+  { offset = 605, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 615, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 643, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 653, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 680, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584173 },
+  { offset = 684, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584188 },
+  { offset = 688, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584203 },
+  { offset = 692, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584218 },
+  { offset = 696, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584233 },
+  { offset = 700, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584245 },
+  { offset = 704, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584257 },
+  { offset = 708, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584269 },
+  { offset = 712, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584317 },
+  { offset = 716, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584332 },
+  { offset = 720, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584423 },
+  { offset = 724, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584347 },
+  { offset = 728, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584385 },
+  { offset = 732, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584461 },
+  { offset = 736, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584470 },
+  { offset = 740, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584479 },
+  { offset = 744, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584529 },
+  { offset = 748, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584549 },
+  { offset = 752, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584569 },
+  { offset = 756, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584589 },
+  { offset = 760, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584601 },
+  { offset = 764, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584613 },
+  { offset = 768, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584664 },
+  { offset = 772, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584488 },
+  { offset = 776, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584497 },
+  { offset = 780, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584506 },
+  { offset = 784, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584515 },
+  { offset = 788, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584625 },
+  { offset = 792, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584637 },
+  { offset = 796, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584649 },
+  { offset = 800, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584778 },
+  { offset = 804, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584702 },
+  { offset = 808, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584740 },
+  { offset = 812, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584281 },
+  { offset = 816, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584293 },
+  { offset = 820, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4584305 },
+]
+
 [units.reference-0045f610]
 artifact_kind = "linked-pe"
 source = "src/AnmVmRun.cpp"
@@ -15982,6 +16555,63 @@ linkages = [
   { offset = 64, width = 4, type = "DIR32", symbol = "__real@40490fdb", target = 4801928, addend = 0 },
   { offset = 74, width = 4, type = "DIR32", symbol = "__real@40c90fdb", target = 4801976, addend = 0 },
   { offset = 151, width = 4, type = "DIR32", symbol = "__real@c0490fdb", target = 4802356, addend = 0 },
+]
+
+[units.reference-00464f10]
+artifact_kind = "linked-pe"
+source = "src/AnmRender.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?setup_render_state_for_vm@AnmManager@@QAEXPAUAnmVm@@@Z"
+object = "AnmRender.obj"
+candidate_address = 4234288
+target_address = 4607760
+size = 876
+compare_size = 876
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 35, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 57, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 93, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4608596 },
+  { offset = 98, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 116, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 141, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 159, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 184, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 202, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 227, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 245, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 263, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 288, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 306, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 331, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 349, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 374, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 392, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 414, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 432, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 454, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 472, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 494, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 512, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 532, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 573, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 595, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 636, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 673, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 720, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 757, width = 4, type = "REL32", symbol = "?flush_sprites@AnmManager@@QAEXXZ", target = 4610688, addend = 0 },
+  { offset = 807, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 8, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 836, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4607857 },
+  { offset = 840, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4607900 },
+  { offset = 844, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4607943 },
+  { offset = 848, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4607986 },
+  { offset = 852, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4608047 },
+  { offset = 856, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4608133 },
+  { offset = 860, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4608090 },
+  { offset = 864, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4608173 },
+  { offset = 868, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4608213 },
+  { offset = 872, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4608253 },
 ]
 
 [units.reference-00465a30]

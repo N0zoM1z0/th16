@@ -55,7 +55,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00402FF0,PosVel::update_secondary_fields,src/PosVel.cpp,?update_secondary_fields@PosVel@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00403110,PosVel::step,src/PosVel.cpp,?step@PosVel@@QAEXXZ,mismatch,,.analysis/reference-audit.json
 0x004033D0,PosVel::step_from_center,src/PosVel.cpp,?step_from_center@PosVel@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x004033F0,interp_common_methods,src/Interp.cpp,?interp_common_methods@@YAMHMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x004033F0,interp_common_methods,src/Interp.cpp,?interp_common_methods@@YAMHMM@Z,incomplete,reviewed switch ownership: switch table differs from the reviewed case mapping,.analysis/reference-audit.json
 0x00403A90,collision_test_points_in_rect,src/Collision.cpp,?collision_test_points_in_rect@@YGHMMMMMPAUD3DXVECTOR2@@@Z,mismatch,,.analysis/reference-audit.json
 0x00403D30,collision_test_circle_rect,src/Collision.cpp,?collision_test_circle_rect@@YGHMMMMMMMM@Z,mismatch,,.analysis/reference-audit.json
 0x00403EC0,collision_segment_intersection,src/Collision.cpp,?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -274,7 +274,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00414FB0,Bullet::step_ex_02,src/BulletManager.cpp,?step_ex_02@Bullet@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004151E0,Bullet::step_ex_21,src/BulletManager.cpp,?step_ex_21@Bullet@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004153E0,Bullet::step_ex_03,src/BulletManager.cpp,?step_ex_03@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x00415570,Bullet::step_ex_04,src/BulletManager.cpp,?step_ex_04@Bullet@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00415570,Bullet::step_ex_04,src/BulletManager.cpp,?step_ex_04@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00415790,Bullet::bounce_left,src/BulletManager.cpp,?bounce_left@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004158D0,Bullet::bounce_right,src/BulletManager.cpp,?bounce_right@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00415A10,Bullet::bounce_top,src/BulletManager.cpp,?bounce_top@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -399,9 +399,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x00423050,EnemyData::ecl_enm_create,src/Enemy.cpp,?ecl_enm_create@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00423260,EnemyData::ecl_anm_set_sprite,src/Enemy.cpp,?ecl_anm_set_sprite@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004233A0,EnemyData::ecl_anm_vm_instr,src/Enemy.cpp,?ecl_anm_vm_instr@EnemyData@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00423810,EnemyInf::get_int_global,src/Enemy.cpp,?get_int_global@EnemyInf@@UAEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00423810,EnemyInf::get_int_global,src/Enemy.cpp,?get_int_global@EnemyInf@@UAEHH@Z,exact,,.analysis/reference-audit.json
 0x00423F80,EnemyInf::get_int_global_ptr,src/Enemy.cpp,?get_int_global_ptr@EnemyInf@@UAEPAHH@Z,exact,,.analysis/reference-audit.json
-0x00424110,EnemyInf::get_float_global,src/Enemy.cpp,?get_float_global@EnemyInf@@UAEMH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00424110,EnemyInf::get_float_global,src/Enemy.cpp,?get_float_global@EnemyInf@@UAEMH@Z,exact,,.analysis/reference-audit.json
 0x00424C10,EnemyInf::get_float_global_ptr,src/Enemy.cpp,?get_float_global_ptr@EnemyInf@@UAEPAMH@Z,exact,,.analysis/reference-audit.json
 0x00424E40,EnemyInf::set_interrupt,src/Enemy.cpp,?set_interrupt@EnemyInf@@QAEXHHPBD@Z,exact,,.analysis/reference-audit.json
 0x00424EB0,EnemyInf::set_timeout,src/Enemy.cpp,?set_timeout@EnemyInf@@QAEXHPBD@Z,exact,,.analysis/reference-audit.json
@@ -918,7 +918,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00458C80,TextHelper::invert_alpha,src/TextHelper.cpp,?invert_alpha@TextHelper@@QAE_NHH@Z,exact,,.analysis/reference-audit.json
 0x00458D60,find_meiryo,src/TextHelper.cpp,?find_meiryo@@YGHPBUtagLOGFONTA@@PBUtagTEXTMETRICA@@KJ@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
 0x00458DB0,create_fonts,src/TextHelper.cpp,?create_fonts@@YAXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00459240,draw_text,src/TextHelper.cpp,?draw_text@@YGXPAUtagRECT@@HHKKPBDPAUIDirect3DTexture9@@HHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00459240,draw_text,src/TextHelper.cpp,?draw_text@@YGXPAUtagRECT@@HHKKPBDPAUIDirect3DTexture9@@HHH@Z,exact,,.analysis/reference-audit.json
 0x004595B0,window_debug_log,src/GameWindow.cpp,?window_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x004595C0,AnmManager::release_textures,src/AnmTextures.cpp,?release_textures@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,src/AnmTextures.cpp,?create_d3d_textures_for_loaded_anms@AnmManager@@QAEXXZ,mismatch,,.analysis/reference-audit.json
@@ -943,7 +943,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045BD70,check_startup_shortcut,src/SupervisorSetup.cpp,?check_startup_shortcut@@YAHXZ,exact,,.analysis/reference-audit.json
 0x0045BEF0,Supervisor::compute_exe_checksum,src/SupervisorSetup.cpp,?compute_exe_checksum@Supervisor@@SAHXZ,exact,,.analysis/reference-audit.json
 0x0045BFF0,resolve_shortcut,src/SupervisorSetup.cpp,?resolve_shortcut@@YGHPBDPADH@Z,exact,,.analysis/reference-audit.json
-0x0045C110,resolution_dialog_proc,src/SupervisorSetup.cpp,?resolution_dialog_proc@@YGHPAUHWND__@@IIJ@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0045C110,resolution_dialog_proc,src/SupervisorSetup.cpp,?resolution_dialog_proc@@YGHPAUHWND__@@IIJ@Z,exact,,.analysis/reference-audit.json
 0x0045C2A0,read_resolution_dialog,src/SupervisorSetup.cpp,?read_resolution_dialog@@YAXXZ,exact,,.analysis/reference-audit.json
 0x0045C360,Supervisor::dx_direct_input_initialize,src/SupervisorSetup.cpp,?dx_direct_input_initialize@Supervisor@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0045C500,enum_game_controllers,src/SupervisorSetup.cpp,?enum_game_controllers@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z,exact,,.analysis/reference-audit.json
@@ -992,7 +992,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045EDB0,AnmLoaded::set_sprite,src/AnmLoaded.cpp,?set_sprite@AnmLoaded@@QAEHPAUAnmVm@@H@Z,exact,,.analysis/reference-audit.json
 0x0045F020,AnmLoaded::init_script_vm,src/AnmLoaded.cpp,?init_script_vm@AnmLoaded@@QAEHPAUAnmVm@@H@Z,exact,,.analysis/reference-audit.json
 0x0045F160,AnmLoaded::set_vm_script,src/AnmLoaded.cpp,?set_vm_script@AnmLoaded@@QAEXPAUAnmVm@@H@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0045F2D0,AnmVm::get_float_var,src/AnmVmRun.cpp,?get_float_var@AnmVm@@QAEMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0045F2D0,AnmVm::get_float_var,src/AnmVmRun.cpp,?get_float_var@AnmVm@@QAEMM@Z,exact,,.analysis/reference-audit.json
 0x0045F610,AnmVm::get_int_var,src/AnmVmRun.cpp,?get_int_var@AnmVm@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0045F780,AnmVm::get_float_var_ptr,src/AnmVmRun.cpp,?get_float_var_ptr@AnmVm@@QAEPAMPAM@Z,exact,,.analysis/reference-audit.json
 0x0045F890,AnmVm::get_int_var_ptr,src/AnmVmRun.cpp,?get_int_var_ptr@AnmVm@@QAEPAHPAH@Z,exact,,.analysis/reference-audit.json
@@ -1015,7 +1015,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00464D60,anm_sincosmul,src/AnmVmRun.cpp,?anm_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
 0x00464D80,ZunTimer::set_from,src/ZunTimer.cpp,?set_from@ZunTimer@@QAEXU1@@Z,exact,,.analysis/reference-audit.json
 0x00464DD0,AnmVm::get_total_rotation,src/AnmVmRun.cpp,?get_total_rotation@AnmVm@@QAEPAUD3DXVECTOR3@@XZ,exact,,.analysis/reference-audit.json
-0x00464F10,AnmManager::setup_render_state_for_vm,src/AnmRender.cpp,?setup_render_state_for_vm@AnmManager@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00464F10,AnmManager::setup_render_state_for_vm,src/AnmRender.cpp,?setup_render_state_for_vm@AnmManager@@QAEXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00465280,AnmManager::render_sprite_2d,src/AnmDraw.cpp,?render_sprite_2d@AnmManager@@QAEHPAUAnmVm@@H@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00465A30,AnmManager::reset_vertex_buffers,src/AnmRender.cpp,?reset_vertex_buffers@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00465A80,AnmManager::flush_sprites,src/AnmRender.cpp,?flush_sprites@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json

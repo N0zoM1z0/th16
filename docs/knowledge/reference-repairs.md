@@ -1340,3 +1340,49 @@ All 162 controls pass across seven relevant suites. Evidence is
 remain under `.analysis/circle-rect-{source-baseline,matrix-products-artifacts}/`.
 Source-origin review remains open, Factory acceptance remains unsubmitted and
 nothing is published.
+
+## Further complete direct-table scopes and interpolation source trials
+
+Original-only bounded traversal establishes 37 further complete direct-table
+owners, accounting for all code, alignment, target slots and following INT3
+padding. No candidate artifact or size enters the derivation. Seven existing
+candidates pass: Bullet::step_ex_04, both EnemyInf global-value getters,
+draw_text, resolution_dialog_proc, AnmVm::get_float_var and render-state setup.
+Their complete 532, 1,900, 2,808, 868, 396, 824 and 876-byte owners add **8,204
+exact primary bytes**. Full replay reports **803 exact, 61 mismatch and 351
+incomplete**, covering 136,876 exact primary bytes. All 796 preceding exact
+results and all 857 previous units remain unchanged; seven new units give 864
+total. See [complete direct-table scopes](direct-owner-scopes.md).
+
+Twenty-five other reviewed candidates retain their different full extents.
+Four equal-size candidates still lack independent fields, and the complete
+1,692-byte interpolation curve owner retains its reviewed case-map refusal.
+Ten additional/multiple-dispatch roots are explicitly excluded, without partial
+profiles or inferred ownership. Existing verifier rules, raw replay, source/
+PDB ownership and every table/address relocation remain required. No game
+source or verifier change is retained.
+
+Two natural interpolation source contexts are built and rejected. A shared
+quadratic scaling return plus direct sine returns retains 1,692 bytes but
+changes case starts without reproducing the original mapping. Separate reflected
+coordinate assignments plus constant-first sine addition gives 1,696 bytes.
+Diagnostic case mappings use the candidate's actual table operand after this
+extent change. Neither shortened scopes nor relocation addends hide the layout
+differences. Baseline source is restored byte for byte and freshly rebuilt;
+input identity equals baseline, all artifact hashes match their receipt and
+all 192 dependency stamps validate. No clean build, archived-output substitution,
+dead locals, forced registers, assembly or padding is used.
+
+All 166 controls pass across seven suites. New controls replay all seven full
+owners, remove each of the two enemy getters' 98 table relocations, retain
+25 whole-extent refusals and keep ten unsupported graph roots unreviewed.
+Evidence is `.analysis/review-direct-owner-scopes.py`,
+`.analysis/direct-owner-original-scopes.json`,
+`.analysis/direct-owner-full-audit.log`,
+`.analysis/direct-owner-regression-check.json`,
+`.analysis/direct-owner-{switch,static,oracle,linkage,focused,constructor-eh,empty-eh}-controls.log`,
+`.analysis/interp-methods-source-trials.json` and
+`.analysis/interp-methods-restored-check.json`. Full sources and outputs are
+retained under `.analysis/interp-methods-{source-baseline,return-flow-artifacts,reflected-curve-artifacts}/`.
+Source-origin review remains open; Factory acceptance remains unsubmitted.
+Nothing is published.
