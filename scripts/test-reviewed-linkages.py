@@ -44,6 +44,15 @@ class ReviewedLinkageControls(unittest.TestCase):
         with self.assertRaisesRegex(Incomplete, "instruction witness"):
             self.check_rows(rows)
 
+    def test_screen_center_literal_requires_its_own_typed_read(self):
+        for field, value in [("witness_instruction", "0x4079ce"),
+                             ("witness_mnemonic", "movaps"), ("size", "8")]:
+            with self.subTest(field=field):
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == "__real@43700000")[field] = value
+                with self.assertRaises(Incomplete):
+                    self.check_rows(rows)
+
     def test_wrong_runtime_library_is_rejected(self):
         rows = copy.deepcopy(self.rows)
         rows[0]["candidate_library"] = "unreviewed.lib"

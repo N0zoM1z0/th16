@@ -11,6 +11,7 @@ import tomllib
 
 from linked_image import PEImage, linked_code_fields, linked_functions, map_publics, verify_capstone, pdb_section_contributions
 from oracle_fields import expected_data_spans, require_decode_coverage, pack_linked_value
+from switch_ownership import load_switch_owners, validate_switch_owner
 from pdb_types import globals_with_sizes
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -382,6 +383,7 @@ class Context:
             self.data_contributions.setdefault(base, []).append(row["size"])
         with (ROOT / "config/functions.csv").open(newline="") as stream:
             self.boundaries = {int(row["address"], 0): row for row in csv.DictReader(stream)}
+        self.switch_owners = load_switch_owners(ROOT / "config/switch-owners.toml")
         self.reviewed_linkages = reviewed_linkages(self)
 
     def identity(self):
@@ -393,6 +395,7 @@ class Context:
                  ROOT / "config/reference-sources.csv", ROOT / "scripts/strict_oracle.py",
                  ROOT / "scripts/oracle_fields.py", ROOT / "scripts/linked_image.py",
                  ROOT / "scripts/pdb_types.py", ROOT / "scripts/vtable_identity.py",
+                 ROOT / "scripts/switch_ownership.py", ROOT / "config/switch-owners.toml",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
@@ -479,8 +482,17 @@ class Context:
         decoder.detail = True
         start, size = unit["target_address"], unit["compare_size"]
         end = start + size
-        instructions = list(decoder.disasm(self.target.read_address(start, size), start))
-        if not instructions or sum(i.size for i in instructions) != size:
+        reviewed_dispatch = None
+        record = self.switch_owners.get(start)
+        if record:
+            try:
+                instructions, reviewed_dispatch = validate_switch_owner(self, unit, record)
+            except ValueError as error:
+                raise Incomplete(f"reviewed switch ownership: {error}") from error
+        else:
+            instructions = list(decoder.disasm(self.target.read_address(start, size), start))
+        code_size = record["code_size"] if record else size
+        if not instructions or sum(i.size for i in instructions) != code_size:
             raise Incomplete("target owner needs explicit trailing-data coverage")
         starts = {i.address for i in instructions}
         if any(address != start and address < end and int(row["span_end"], 0) >= start
@@ -493,7 +505,7 @@ class Context:
                     destination = operand.imm & 0xFFFFFFFF
                     if start <= destination < end and destination not in starts:
                         raise Incomplete("target branch enters the middle of an instruction")
-                elif instruction.address + instruction.size != end:
+                elif instruction.address != reviewed_dispatch and instruction.address + instruction.size != end:
                     raise Incomplete("indirect jump requires reviewed switch/owned-data extents")
         if instructions[-1].mnemonic not in {"ret", "retf", "jmp", "int3", "ud2"}:
             raise Incomplete("target extent ends in unreviewed fallthrough or non-returning code")

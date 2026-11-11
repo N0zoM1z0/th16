@@ -108,6 +108,7 @@ class CompleteOwnerReplay(unittest.TestCase):
 
     def test_overlapping_target_owner_is_incomplete(self):
         context = Context.__new__(Context)
+        context.switch_owners = {}
         context.target = self.target
         context.boundaries = {self.target_start - 8: dict(span_end=hex(self.target_start + 1))}
         with self.assertRaisesRegex(Incomplete, "overlaps"):

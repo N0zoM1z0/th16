@@ -46,3 +46,4 @@ __localtime64,0x47a36a,39,runtime-function,f91fcc9da1b445d5de93ab389b96c0542e34d
 ??_7LaserBeamInf@@6B@,0x49234c,104,vftable,d20f15e65fee836581d5eec451f0fc0a3050dcfc81986a4875317301bff5f4ab,,,docs/knowledge/reviewed-linkages.md,,
 __chkstk,0x487100,45,runtime-function,782928de1aa03e19ef7fb5ac4d77ba42a57644ad873dcf0ebb78c8ec6c5e5151,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,
 __beginthreadex,0x47952b,133,runtime-function,0b5c9820b3255e34441b18a919831c7326c1cdb591c9ccecfa1dcc2a4d91c8f6,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
+__real@43700000,0x494678,4,literal,7860020e90116183228640760ff7502f4df0088992b456e3f0d7b44c9950db7e,0x4079c6,movss,docs/knowledge/switch-ownership.md,,

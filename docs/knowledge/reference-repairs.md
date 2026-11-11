@@ -595,3 +595,71 @@ and swapped library ownership for the new entries. Independent focused replay
 of the complete error logger and thread restart passes. `scripts/progress.py`
 confirms source, artifact, report and retained-unit freshness. Source-origin
 review and Factory acceptance remain open; no repository contents were pushed.
+
+## Bounded switch ownership and natural WinMain cleanup
+
+The next 2026-11-11 batch reviews eight original bounded dispatches and their
+complete trailing tables. See [switch ownership](switch-ownership.md) for
+original bounds, hashes, all slot mappings and the conservative proof contract.
+The final incremental audit reports **633 exact, 52 mismatch and 529 incomplete**,
+with 114,245 exact owned bytes. All 626 exact results at `544cd9a` remain exact.
+The seven gains add 1,640 exact bytes:
+
+| Target | Function | Complete bytes |
+| --- | --- | ---: |
+| `0x00401460` | `UpdateFuncRegistry::run_all_on_tick` | 308 |
+| `0x004015A0` | `UpdateFuncRegistry::run_all_on_draw` | 260 |
+| `0x00402FF0` | `PosVel::update_secondary_fields` | 276 |
+| `0x004071A0` | `anm_masked_effect_init` | 396 |
+| `0x0040DA90` | `BombInf::destroy_all` | 144 |
+| `0x0044B530` | `TitleInf::on_draw` | 156 |
+| `0x00468C00` | `AnmVm::write_sprite_corners` | 100 |
+
+Six gains follow restored whole-owner scope, including every table relocation;
+the initialization gain follows the independently witnessed `240.0f` binding.
+`PosVel::step` remains a complete 700-byte mismatch. The masked-effect switch
+callback remains a complete 336-byte mismatch, with 45 differing bytes after
+that literal is bound. Correct ownership and binding expose differences and
+grant no exact credit by themselves.
+
+WinMain's earlier 2918-byte candidate was not a one-byte reconstruction problem.
+Removing the explicitly artificial `volatile` result variable, preserving the
+original current/previous input-store order, and using the original countdown
+cleanup loop produces a natural 2919-byte candidate. The complete original
+extent also has 2919 bytes, but 900 bytes differ after exhaustive linkage replay.
+The cleanup is retained without exact credit; register allocation, message-loop
+scheduling and other control-flow differences remain open. Diagnostic evidence
+includes `.analysis/winmain-initial-owner-diff.txt`,
+`.analysis/winmain-natural-countdown-owner-diff.txt` and
+`.analysis/sound-unpause-winmain-loop.json`.
+
+Rejected source trials were restored before the final build:
+
+- Reordering the floating additions in `CSound::Unpause` retains a 107-byte
+  candidate against 103 original bytes. Naming the pause-duration intermediate
+  makes it 116 bytes. Neither trial solves floating operation scheduling.
+- Replacing the masked-effect callback's chained vector assignment with three
+  component-wise assignment chains produces 364 bytes instead of 336. It is
+  refused before byte comparison. The restored vector expression retains the
+  known load order and zero-store scheduling differences.
+
+Evidence is `.analysis/sound-unpause-swapped-diff.txt`,
+`.analysis/sound-unpause-duration-build.log`,
+`.analysis/masked-switch-components.json` and
+`.analysis/masked-switch-owner-diff.txt`. The final build log is
+`.analysis/switch-batch-final-build.log`.
+
+`scripts/audit-reference.py --address ADDRESS --json .analysis/NAME.json` now
+supports repeatable focused full-owner diagnostics without replacing canonical
+reports or ledgers. Independent bindings still use all annotations. Three
+controls verify deduplication, full comparison, forbidden canonical writes and
+unannotated-address refusal. The switch proof has 19 controls, and the new
+literal adds one reviewed-linkage control with three negative cases. All 113
+controls across the eight suites pass. The existing strict-Oracle overlap test
+fixture now explicitly supplies an empty switch-review map.
+
+The final audit and regression record are
+`.analysis/bounded-switch-full-audit.log` and
+`.analysis/bounded-switch-regression-check.json`. `scripts/progress.py` confirms
+source, artifacts, report and unit freshness. Source-origin review and formal
+Factory acceptance remain open. No outputs were cleaned and nothing was pushed.

@@ -426,9 +426,7 @@ static inline void stop_sound_threads()
 // changed) starts over from creating Direct3D. On exit it saves th16.cfg
 // and log.txt and restores the screen saver settings.
 // WinMain has C linkage, so it is annotated by its linker symbol.
-// TODO: 92%; the original keeps result in ecx as well as its stack slot
-// (ours reloads it), does not pad the loop heads with nops, and lays out
-// some blocks in another order.
+// TODO: reconcile the complete owner, including loop and call scheduling.
 // SYNTHETIC: TH16 0x459830 SYMBOL
 // _WinMain@16
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR command_line, int show)
@@ -437,10 +435,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR command_li
     BYTE keys[256];
     char path[0x1000];
     HINSTANCE instance_copy = instance;
-    // The original keeps result in a stack slot; volatile stands in for
-    // whatever spilled it there, and leaves edi free for PeekMessageA's
-    // address as in the original.
-    i32 volatile result = 0;
+    i32 result = 0;
     g_GameWindow.instance = instance;
     timeBeginPeriod(1);
     // Counted down: the original then reuses the counter's final 0 in edi.
@@ -483,8 +478,9 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR command_li
         {
             InputManager *hw = (InputManager *)&g_hardware_input;
             u32 input = g_Supervisor.read_joypad(0);
-            hw->prev = hw->cur;
+            u32 previous_input = hw->cur;
             hw->cur = input;
+            hw->prev = previous_input;
             hw->detect_holds_and_repeats();
             if (PeekMessageA(&msg, NULL, 0, 0, PM_REMOVE))
             {
@@ -792,9 +788,11 @@ shutdown:
         operator delete(g_unk_4a6d90, sizeof(WinMainUnk));
     }
     g_CriticalSections.enabled = false;
-    for (i32 i = 0; i < CS_COUNT; i++)
+    cs = g_CriticalSections.cs;
+    for (i32 i = CS_COUNT; i != 0; i--)
     {
-        DeleteCriticalSection(&g_CriticalSections.cs[i]);
+        DeleteCriticalSection(cs);
+        cs++;
     }
     return 0;
 }

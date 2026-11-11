@@ -197,7 +197,16 @@ def write_ledgers(reports, context):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write-units", action="store_true", help="retain independently bound, complete comparison units")
+    parser.add_argument("--address", action="append", type=lambda value: int(value, 0),
+                        help="compare only this original function address; repeat for a focused batch")
+    parser.add_argument("--json", type=Path, help="write a separate diagnostic report beneath .analysis/")
     args = parser.parse_args()
+    if args.address and (not args.json or args.write_units):
+        parser.error("--address requires --json and cannot update canonical units or ledgers")
+    if args.json and (args.write_units
+                      or not args.json.resolve().is_relative_to((ROOT / ".analysis").resolve())
+                      or args.json.resolve() == (ROOT / ".analysis/reference-audit.json").resolve()):
+        parser.error("--json must name a separate .analysis/ report and cannot be used with --write-units")
     context = Context()
     functions = [(int(a, 16), int(b, 16), symbol) for a, b, symbol in
                  (line.split() for line in (context.directory / "functions.txt").read_text().splitlines())]
@@ -206,6 +215,11 @@ def main():
     for kind in ["FUNCTION", "SYNTHETIC", "LIBRARY"]:
         for row in annotations[kind]:
             by_address[row["address"]].append(row)
+    if args.address:
+        missing = set(args.address) - by_address.keys()
+        if missing:
+            parser.error("unannotated original addresses: " + ", ".join(hex(a) for a in sorted(missing)))
+        by_address = {a: by_address[a] for a in sorted(set(args.address))}
     by_original = defaultdict(list)
     for row in functions:
         by_original[row[0]].append(row)
@@ -305,13 +319,13 @@ def main():
               "input_identity": context.before, "build_receipt": context.receipt,
               "bindings": [{"symbol": s, "target_address": a, "basis": provenance[s]} for s, a in sorted(fixed.items())],
               "functions": reports, "factory_acceptance": "not-submitted"}
-    path = ROOT / ".analysis/reference-audit.json"
+    path = args.json or ROOT / ".analysis/reference-audit.json"
     path.write_text(json.dumps(output, indent=2) + "\n")
     if args.write_units:
         write_units(units, context.manifest["target"]["sha256"])
         write_ledgers(reports, context)
     print(json.dumps(dict(counts), sort_keys=True))
-    print(f"Compared {len(reports)} annotated candidates; full report: {path.relative_to(ROOT)}")
+    print(f"Compared {len(reports)} annotated candidates; report: {path}")
 
 
 if __name__ == "__main__":

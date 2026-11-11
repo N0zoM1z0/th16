@@ -1,0 +1,88 @@
+# Original ownership is established from the bounded dispatch and all case slots.
+[[switch_owners]]
+target_address = 0x00468c00
+code_size = 84
+table_offset = 84
+case_count = 4
+guard_offset = 0x12
+dispatch_offset = 0x17
+case_offsets = [0x39, 0x1e, 0x39, 0x39]
+target_sha256 = "443733fe2dca808f50b895d58c3573305b2e44ec11f88269da34bfe5a30d0697"
+evidence = "docs/knowledge/switch-ownership.md"
+
+[[switch_owners]]
+target_address = 0x401460
+code_size = 272
+table_offset = 272
+case_count = 9
+guard_offset = 0x98
+dispatch_offset = 0x9d
+case_offsets = [0xb2, 0xc8, 0xa4, 0xe1, 0xdd, 0xe8, 0x23, 0xbc, 0xdd]
+target_sha256 = "19c407b8de4abdf319734dbc32a811269f28963b84e3dbf826de05e64ffe4dc4"
+evidence = "docs/knowledge/switch-ownership.md"
+
+[[switch_owners]]
+target_address = 0x4015a0
+code_size = 235
+table_offset = 236
+case_count = 6
+guard_offset = 0x8e
+dispatch_offset = 0x93
+case_offsets = [0xad, 0xa0, 0x9a, 0xbe, 0xba, 0xc5]
+target_sha256 = "086b2f6ccddd1f78b795fe0152f9dc62761c66b825557c329bff15b551bbc6ff"
+evidence = "docs/knowledge/switch-ownership.md"
+
+[[switch_owners]]
+target_address = 0x402ff0
+code_size = 255
+table_offset = 256
+case_count = 5
+guard_offset = 0x9
+dispatch_offset = 0x12
+case_offsets = [0x19, 0xfd, 0x43, 0x43, 0xb9]
+target_sha256 = "ee1d94abc5dfed4a0f2513aa925c6e45af7c7dca6dc2be3e0021d16c9a74b915"
+evidence = "docs/knowledge/switch-ownership.md"
+
+[[switch_owners]]
+target_address = 0x403110
+code_size = 679
+table_offset = 680
+case_count = 5
+guard_offset = 0x10
+dispatch_offset = 0x19
+case_offsets = [0x20, 0x265, 0x50, 0xa8, 0x142]
+target_sha256 = "afb8bcd264a1dd32dae21d3959009f4bf2a4dae6cdb88c7106804c8bfcf97703"
+evidence = "docs/knowledge/switch-ownership.md"
+
+[[switch_owners]]
+target_address = 0x407900
+code_size = 296
+table_offset = 296
+case_count = 10
+guard_offset = 0xe
+dispatch_offset = 0x17
+case_offsets = [0x1e, 0x121, 0x121, 0x121, 0x121, 0x121, 0x63, 0x6f, 0x92, 0xa5]
+target_sha256 = "0fae8a98776373e88e3f60d24762df9060ab736ff416ea12b77ad0c474899230"
+evidence = "docs/knowledge/switch-ownership.md"
+
+[[switch_owners]]
+target_address = 0x40da90
+code_size = 127
+table_offset = 128
+case_count = 4
+guard_offset = 0x44
+dispatch_offset = 0x49
+case_offsets = [0x50, 0x50, 0x50, 0x50]
+target_sha256 = "0a1535475fd447af1f8d4526a7ff9b5f5b11a5cc72d5d92cebb5416c96a40260"
+evidence = "docs/knowledge/switch-ownership.md"
+
+[[switch_owners]]
+target_address = 0x44b530
+code_size = 108
+table_offset = 108
+case_count = 12
+guard_offset = 0xc
+dispatch_offset = 0x11
+case_offsets = [0x50, 0x63, 0x26, 0x18, 0x63, 0x63, 0x34, 0x42, 0x63, 0x63, 0x5e, 0x5e]
+target_sha256 = "8433b53fad0718e8c6cc2205b9f74a17765adadba3cb27b0615e45738f5f8929"
+evidence = "docs/knowledge/switch-ownership.md"

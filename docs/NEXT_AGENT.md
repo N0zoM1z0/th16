@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the stack-probe/thread-linkage batch.
+Updated 2026-11-11 after the bounded-switch ownership batch.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,12 +18,12 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **626 exact, 49 mismatch and 539 incomplete** among
-1214 annotated candidates, covering 112,605 exact owned bytes. All 620 exact
-results at `e75fbd0` remain exact. The last six gains follow independent review
-of the complete `__chkstk` and `__beginthreadex` runtime entries: the error
-logger, thread restart, loading-thread initialization, Supervisor thread startup,
-replay-file reader and title creation.
+The current report has **633 exact, 52 mismatch and 529 incomplete** among
+1214 annotated candidates, covering 114,245 exact owned bytes. All 626 exact
+results at `544cd9a` remain exact. Six newly complete passes include their
+previously omitted bounded switch tables; a seventh, masked-effect
+initialization, passes after independent review of its `240.0f` literal.
+See [switch ownership evidence](knowledge/switch-ownership.md).
 
 These are local code-comparison results. Source-origin review remains open;
 `config/implemented.csv` has no implemented entries. Factory registration is
@@ -31,20 +31,19 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. Handoff cleanup changed
-no maintained game C++ or Oracle comparison code. The unvalidated atan2 draft
-was withdrawn before handoff, so it grants no binding or exact credit.
+cache and non-LTCG symbol-discovery cache are retained. WinMain now uses an
+ordinary result variable, the original input-store order and a countdown
+critical-section cleanup loop. Its complete 2919-byte extent still mismatches;
+this source cleanup grants no exact credit. Sound and masked-effect expression
+trials were restored before the final build.
 
-The previous handoff passed all 89 controls across the six existing test suites
-(strict Oracle, reviewed linkages, pointer limits, PDB types, build context and
-vftable identities). The log is `.analysis/handoff-controls.log`. Toolchain
-component hashes and report freshness also passed; no game build was needed.
-The current batch passes 24 reviewed-linkage and 12 strict-Oracle controls,
-plus focused complete replay of the error logger and thread restart. Evidence
-is `.analysis/stack-thread-linkage-controls.log`,
-`.analysis/stack-thread-oracle-controls.log` and
-`.analysis/stack-thread-regression-check.json`. Source trials were restored
-before the final incremental rebuild; the maintained game C++ is unchanged.
+All **113 controls** pass across the eight suites: strict Oracle, reviewed
+linkages, pointer limits, PDB types, build context, vftable identities, switch
+ownership and focused audit. Logs are `.analysis/switch-batch-*-controls.log`,
+`.analysis/switch-ownership-controls.log` and
+`.analysis/focused-audit-controls.log`. Full replay and the retained-pass
+comparison are `.analysis/bounded-switch-full-audit.log` and
+`.analysis/bounded-switch-regression-check.json`.
 
 ```sh
 .venv/bin/python scripts/progress.py
@@ -76,8 +75,18 @@ For a source iteration:
 .venv/bin/python scripts/compare-linked-function.py reference-00408260
 ```
 
-Choose a retained unit relevant to the change. A changed source or header makes
-the previous audit stale; after a coherent batch, regenerate units and results:
+Choose a retained unit relevant to the change. For an annotated owner with no
+retained unit, or after an extent/linkage change, run a focused diagnostic:
+
+```sh
+.venv/bin/python scripts/audit-reference.py --address 0x407900 --json .analysis/masked-switch-focused.json
+```
+
+Repeat `--address` for a bounded batch. This retains all independent symbol
+bindings and compares full owners, while writing only a separate ignored
+report. It cannot update canonical reports, units or ledgers. A changed source
+or header makes the previous audit stale; after a coherent batch, regenerate
+units and results:
 
 ```sh
 .venv/bin/python scripts/audit-reference.py --write-units
@@ -91,7 +100,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 539 incomplete candidates comprise 240 with unresolved fields, 251 with
+The 529 incomplete candidates comprise 238 with unresolved fields, 243 with
 candidate/target extent differences, 40 without a same-start contribution,
 six with source-object ownership differences and two requiring reviewed switch
 or owned-data extents. Start from their recorded reasons.
@@ -101,6 +110,11 @@ locals were removed. The latter cleanup withdrew 23 earlier exact results;
 all 600 passes after cleanup remain exact. Recover real types and calling
 context rather than restoring the artificial inputs. Other compiler-context
 helpers, forced accesses and type hypotheses still need source review.
+
+The eight reviewed bounded switch scopes are complete. `PosVel::step` and
+`anm_masked_effect_on_switch` still mismatch; neither receives exact credit.
+The two remaining unreviewed indirect dispatches have different evidence needs.
+Do not generalize the single-table proof to multiple or unbounded tables.
 
 `draw_line` is a complete 569-byte pass. `world_pos` has a GS-cookie/extent
 difference. Int3 interpolation at `0x00464590` differs in one SIB byte. Float2

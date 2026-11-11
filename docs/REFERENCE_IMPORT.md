@@ -35,6 +35,16 @@ hashes and records whether the full output graph was cleaned.
 Use incremental builds for source iterations. Reserve `--clean` and a broad
 replay for a meaningful milestone or a demonstrated dependency/cache problem.
 Focused comparison reuses the current build and checks its input identity.
+For an annotated owner without a retained unit, use a separate diagnostic:
+
+```sh
+.venv/bin/python scripts/audit-reference.py --address 0x407900 --json .analysis/masked-switch-focused.json
+```
+
+Repeat `--address` for a focused batch. All independent bindings remain available;
+each selected candidate still requires a complete owner. Focused output cannot
+replace the canonical report, units or ledgers. Refresh those with a full audit
+after a coherent milestone.
 
 ## Independent Oracle
 
@@ -71,6 +81,13 @@ or their callees.
 Unknown or ambiguous destinations are incomplete. The
 Oracle never selects a target destination merely because it would make the
 current operand match.
+
+Reviewed bounded switches include their entire inline absolute-address table
+and alignment bytes. The original unsigned guard, indexed dispatch and all
+case slots establish the full scope; the candidate requires every table and
+dispatch relocation. Full byte replay includes all of those bytes. Other
+indirect dispatches remain incomplete. See
+[bounded switch evidence](knowledge/switch-ownership.md).
 
 `exact` means the complete declared owner passed this local strict byte
 comparison. `mismatch` means that complete comparison found a difference.
