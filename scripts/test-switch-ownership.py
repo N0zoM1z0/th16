@@ -161,14 +161,15 @@ class SwitchOwnershipControls(unittest.TestCase):
                 # Equal-size exceptions retain specific unresolved fields or
                 # the independently reviewed interpolation case-map mismatch.
                 self.assertTrue(function['size'] != switch_owner_size(record)
-                                or address in {0x4033f0,0x40d890,0x4199f0,0x42e150,0x4546f0})
+                                or address in {0x4033f0,0x40d890,0x4199f0,0x42e150,0x4546f0,0x43ce10,0x43f980})
                 continue
             unit = units[f"reference-{address:08x}"]
             result = self.context.compare(unit)
             self.assertIn(result["result"], {"exact", "mismatch"})
             self.assertEqual(result["compared_size"], switch_owner_size(record))
             offsets = {r["offset"] for r in result["linkages"] if r["type"] == "DIR32"}
-            self.assertTrue(set(range(record["table_offset"], record["table_offset"] + record["case_count"] * 4, 4)) <= offsets)
+            for dispatch in record.get("dispatches",[record]):
+                self.assertTrue(set(range(dispatch["table_offset"], dispatch["table_offset"] + dispatch["case_count"] * 4, 4)) <= offsets)
         for address, offset, byte in [(0x468C00, 0, 0x53), (0x4015A0, 235, 0xCC)]:
             with self.subTest(address=hex(address), offset=offset):
                 unit = units[f"reference-{address:08x}"]
@@ -255,7 +256,8 @@ class SwitchOwnershipControls(unittest.TestCase):
         for address in (0x408650,0x40b3b0,0x412cb0,0x413860,0x41dcb0,
                         0x43ce10,0x43f980,0x44b5f0,0x45a450,0x468490):
             with self.subTest(address=hex(address)):
-                self.assertNotIn(address,self.context.switch_owners)
+                record = self.context.switch_owners.get(address)
+                self.assertTrue(record is None or record.get('profile')=='compound-bounded-v1')
 
     @classmethod
     def tearDownClass(cls):

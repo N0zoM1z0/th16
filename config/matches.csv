@@ -649,6 +649,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,reference-00459640,mismatch,190,190,181,.analysis/reference-audit.json
 0x00459700,AnmManager::take_screenshots,reference-00459700,local-strict-pass,293,293,293,.analysis/reference-audit.json
 0x00459830,_WinMain@16,reference-00459830,mismatch,2919,2919,900,.analysis/reference-audit.json
+0x0045A450,window_proc,reference-0045a450,local-strict-pass,680,680,680,.analysis/reference-audit.json
 0x0045A8A0,GameWindow::do_frame_sleeping,reference-0045a8a0,local-strict-pass,336,336,336,.analysis/reference-audit.json
 0x0045ADF0,GameWindow::present,reference-0045adf0,local-strict-pass,115,115,115,.analysis/reference-audit.json
 0x0045AE70,GameWindow::do_frame,reference-0045ae70,local-strict-pass,269,269,269,.analysis/reference-audit.json
@@ -724,6 +725,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00467200,AnmManager::draw_sprite_fog,reference-00467200,local-strict-pass,522,522,522,.analysis/reference-audit.json
 0x004681F0,AnmManager::draw_vertex_strip,reference-004681f0,mismatch,339,339,316,.analysis/reference-audit.json
 0x00468350,AnmManager::draw_vertex_fan,reference-00468350,mismatch,313,313,309,.analysis/reference-audit.json
+0x00468490,AnmManager::draw_vm,reference-00468490,local-strict-pass,1896,1896,1896,.analysis/reference-audit.json
 0x00468C00,AnmVm::write_sprite_corners,reference-00468c00,local-strict-pass,100,100,100,.analysis/reference-audit.json
 0x00469330,AnmManager::draw_line,reference-00469330,local-strict-pass,569,569,569,.analysis/reference-audit.json
 0x00469570,AnmManager::draw_rect_bordered,reference-00469570,local-strict-pass,194,194,194,.analysis/reference-audit.json

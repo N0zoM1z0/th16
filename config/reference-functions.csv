@@ -925,7 +925,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00459700,AnmManager::take_screenshots,src/AnmTextures.cpp,?take_screenshots@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00459830,_WinMain@16,src/WinMain.cpp,_WinMain@16,mismatch,,.analysis/reference-audit.json
 0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,src/UpdateFunc.cpp,??_GUpdateFuncRegistry@@QAEPAXI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0045A450,window_proc,src/GameWindow.cpp,?window_proc@@YGJPAUHWND__@@IIJ@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0045A450,window_proc,src/GameWindow.cpp,?window_proc@@YGJPAUHWND__@@IIJ@Z,exact,,.analysis/reference-audit.json
 0x0045A700,GameWindow::make_dirs_and_disable_screensaver,src/GameWindow.cpp,?make_dirs_and_disable_screensaver@GameWindow@@QAEXXZ,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045A8A0,GameWindow::do_frame_sleeping,src/GameWindow.cpp,?do_frame_sleeping@GameWindow@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0045A9F0,GameWindow::update_window_sleeping,src/GameWindow.cpp,?update_window_sleeping@GameWindow@@QAEXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -1031,7 +1031,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00467D00,AnmManager::draw_3d_vertex_strip,src/AnmDraw.cpp,?draw_3d_vertex_strip@AnmManager@@QAEHPAUAnmVm@@PAURenderVertexXyzDiffuseTex@@H@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004681F0,AnmManager::draw_vertex_strip,src/AnmRender.cpp,?draw_vertex_strip@AnmManager@@QAEHPAUAnmVm@@PAURenderVertex144@@H@Z,mismatch,,.analysis/reference-audit.json
 0x00468350,AnmManager::draw_vertex_fan,src/AnmRender.cpp,?draw_vertex_fan@AnmManager@@QAEHPAUAnmVm@@PAURenderVertex144@@H@Z,mismatch,,.analysis/reference-audit.json
-0x00468490,AnmManager::draw_vm,src/AnmDraw.cpp,?draw_vm@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00468490,AnmManager::draw_vm,src/AnmDraw.cpp,?draw_vm@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00468C00,AnmVm::write_sprite_corners,src/AnmRender.cpp,?write_sprite_corners@AnmVm@@QAEXPAUD3DXVECTOR3@@@Z,exact,,.analysis/reference-audit.json
 0x00468C70,AnmManager::draw_rect,src/AnmPrimitives.cpp,?draw_rect@AnmManager@@QAEHMMMMMKKHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00468FC0,AnmManager::draw_rect_outline,src/AnmPrimitives.cpp,?draw_rect_outline@AnmManager@@QAEHMMMMMKKHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

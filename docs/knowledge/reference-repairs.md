@@ -1386,3 +1386,36 @@ Evidence is `.analysis/review-direct-owner-scopes.py`,
 retained under `.analysis/interp-methods-{source-baseline,return-flow-artifacts,reflected-curve-artifacts}/`.
 Source-origin review remains open; Factory acceptance remains unsubmitted.
 Nothing is published.
+
+## Complete compound switch ownership
+
+Original-only traversal establishes nine complete owners with 20 target tables
+and six byte maps. Eight supersede earlier multiple-dispatch exclusions; the
+ninth is the main Anm interpreter. Existing window_proc and AnmManager::draw_vm
+candidates pass their complete 680/1,896-byte owners, adding **2,576 exact
+primary bytes**. Full replay reports **805 exact, 61 mismatch and 349 incomplete**,
+covering 139,452 exact primary bytes. All 803 preceding exact results and all
+864 previous units remain identical; two new units give 866 total. Every other
+audit result is unchanged. See [compound scopes](compound-owner-scopes.md).
+
+The new explicit compound profile checks all dispatch sites, owned code/data,
+case mappings, bounded byte maps, cross-table guard bypasses and exhaustive
+relocations. Supervisor's ECX-to-EAX remap and the interpreter's 313-entry input
+map have separate structural controls. The original interpreter now owns
+14,177 bytes against its 14,141-byte candidate; it still exposes eight unbound
+fields first. Seven reviewed originals receive no candidate credit. Ascii's
+memory-bound/reload flow and the large enemy ECL body's interposed frame store
+remain unreviewed. No partial profile, mask, raw replay or field-normalization
+change is introduced. No game source change, rebuild or cleanup occurs.
+
+All 187 controls pass across eight suites. Evidence is
+`.analysis/review-compound-owner-scopes.py`,
+`.analysis/compound-owner-original-scopes.json`,
+`.analysis/compound-owner-focused.json`,
+`.analysis/compound-owner-full-audit.log`,
+`.analysis/compound-owner-regression-check.json` and
+`.analysis/compound-owner-<suite>-controls.log`, with suite names matching
+`scripts/test-<suite>.py`. The preceding report, units and original inventory
+remain in `.analysis/compound-owner-baseline/`. Build inputs and artifacts are
+unchanged. Source-origin review remains open; Factory acceptance remains
+unsubmitted. Nothing is published.

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after 37 further direct-table scopes and two interpolation source trials.
+Updated 2026-11-11 after nine complete compound switch scope reviews.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,18 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **803 exact, 61 mismatch and 351 incomplete** among
-1215 annotated candidates, covering 136,876 exact owned bytes. Thirty-seven
+The current report has **805 exact, 61 mismatch and 349 incomplete** among
+1215 annotated candidates, covering 139,452 exact owned bytes. Nine compound
+switch originals now include every dispatch, target table, byte map and
+alignment interval. Existing window_proc and AnmManager::draw_vm candidates
+pass their full 680/1,896-byte owners, adding 2,576 primary bytes. All 803
+preceding exact results and all 864 units remain identical; two new units give
+866 total. Seven other complete originals receive no candidate credit. Ascii
+drawing and the large enemy ECL body retain unreviewed nonadjacent guards. See
+[complete compound ownership](knowledge/compound-owner-scopes.md).
+
+The preceding direct-table checkpoint reported 803 exact, 61 mismatch and 351
+incomplete. Thirty-seven
 further original direct-table scopes now include all code, alignment and target
 slots. Seven existing C++ candidates pass their complete independent scopes,
 adding 8,204 primary bytes. All 796 exact results and all 857 units at `6e55a25`
@@ -44,7 +54,8 @@ adding 71 exact bytes and two units. Their original paths cross explicitly
 reviewed bounded byte-remap dispatches; tables receive no exact credit. See
 [Anm private dispatch review](knowledge/anm-private-dispatch.md). The complete
 special-vertices scope review now supersedes that batch's partial parent
-context. The main interpreter's full owned-data scope remains unresolved.
+context. The compound review also establishes the main interpreter's complete
+14,177-byte original; its 14,141-byte candidate remains incomplete.
 
 The preceding eight-helper review reports 788 exact, 61 mismatch and 366
 incomplete. Eight further original helper entries and their complete private
@@ -136,9 +147,13 @@ profile.
 The preceding batches extend primary switch ownership with an explicit complete
 trailing byte map and fully decoded NOP/INT3 alignment. The audit uses the
 existing raw trailing-data contract for undecoded map suffixes; declarations
-never mask or normalize bytes. The latest batch adds 37 direct-table records
-under existing rules, with no verifier or game source change retained. Every
-whole table, source-qualified complete PDB owner and exhaustive relocation/
+never mask or normalize bytes. The preceding batch adds 37 direct-table records
+under existing rules. The current batch adds nine explicit compound records
+and a complete multi-dispatch verifier, with cross-register remaps, bounded
+maps longer than 256 entries, cross-table guard protection and exhaustive data
+relocations. Raw replay and field normalization are unchanged. No game source
+change is retained in this batch. Every whole table, source-qualified complete
+PDB owner and exhaustive relocation/
 binding contract remains required. Unreviewed indirect edges remain refused.
 Two natural interpolation source trials are rejected and restored. Current
 outputs are freshly rebuilt from baseline source, and all 192 dependency
@@ -176,10 +191,13 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **166 controls across seven relevant suites**:
-private identities (33), strict Oracle (14), reviewed linkages (26), focused audit
-(3), primary switch ownership (40), constructor EH (25) and empty EH (25).
-Logs use `.analysis/direct-owner-{static,oracle,linkage,focused,switch,constructor-eh,empty-eh}-controls.log`.
+The current batch passes **187 controls across eight relevant suites**:
+compound switch ownership (21), primary switch ownership (40), private identities
+(33), strict Oracle (14), reviewed linkages (26), focused audit (3), constructor
+EH (25) and empty EH (25). Logs use
+`.analysis/compound-owner-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding direct-table batch passed 166 controls across seven suites;
+its logs use `.analysis/direct-owner-*controls.log`.
 The preceding remap batch passed 162 controls across seven suites;
 its logs use `.analysis/remapped-owner-*controls.log`.
 The preceding special-vertices batch passed 156 controls across seven suites;
@@ -214,9 +232,11 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/direct-owner-full-audit.log` and
-`.analysis/direct-owner-regression-check.json`. The original-only reproducer
-and full scopes/refusals are `.analysis/review-direct-owner-scopes.py` and
+are `.analysis/compound-owner-full-audit.log` and
+`.analysis/compound-owner-regression-check.json`. The original-only reproducer
+and complete layouts/refusals are `.analysis/review-compound-owner-scopes.py`
+and `.analysis/compound-owner-original-scopes.json`. The preceding direct-table
+evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
@@ -282,7 +302,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 351 incomplete candidates comprise 197 with unresolved fields, 118
+The 349 incomplete candidates comprise 197 with unresolved fields, 116
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and one with a reviewed case-map mismatch.
@@ -318,8 +338,10 @@ candidate at 2,097 bytes and is rejected. Source is restored byte for byte and
 freshly rebuilt. Full sources, outputs and diagnostic scopes are retained in
 `.analysis/special-vertices-{baseline,countdown-artifacts}/` and
 `.analysis/special-vertices-source-trial.json`. Do not repeat this context or
-force scheduling, spills or registers. The main interpreter remains incomplete
-with eight unbound fields and additional owned-data scope questions. Other
+force scheduling, spills or registers. The main interpreter's complete original
+now owns 14,177 bytes, including two target tables and 215/313-byte maps. Its
+14,141-byte candidate differs by 36 bytes and still exposes eight unbound fields
+first. See [the compound review](knowledge/compound-owner-scopes.md). Other
 private wrappers still need independent original entry/path and producer
 reviews.
 
@@ -356,12 +378,16 @@ receipts and source are retained under
 and `.analysis/interp-methods-source-trials.json`. Do not repeat these contexts
 or force allocation.
 
-The original-only scan explicitly refuses ten additional/multiple-dispatch
-roots, including Ascii drawing, STD, bullet shooting/run_ex, the large enemy
-ECL body, supervisor switching, pause/title flows, window_proc and draw_vm.
-Their locators/reasons are in `.analysis/direct-owner-original-scopes.json`.
-Do not infer a full owner from one table or traverse unreviewed indirect edges;
-distinguish terminal transfers from case dispatches in any further review.
+The compound review supersedes eight of the preceding ten multiple-dispatch
+exclusions. Original STD, bullet shooting/run_ex, supervisor switching,
+pause/title flows, window_proc and draw_vm now have complete scope records.
+The two exact candidates are retained; Supervisor/Pause still lack three/one
+bindings. Other candidates have different whole extents, with STD exposing two
+unbound fields first. Ascii drawing at `0x00408A89` needs memory-bound/reload
+alias evidence; the large enemy ECL dispatch at `0x0041DD51` has an interposed
+frame store. Both remain unreviewed. Locators and reasons are in
+`.analysis/compound-owner-original-scopes.json`. Do not infer a full owner
+from one table or traverse undeclared indirect edges.
 
 The circle/rectangle collision trial reverses rotation multiplication operands
 into matrix-coefficient-first form. It leaves the full owner at 243/400 matching
@@ -445,14 +471,16 @@ all 600 passes after cleanup remain exact. Recover real types and calling
 context rather than restoring the artificial inputs. Other compiler-context
 helpers, forced accesses and type hypotheses still need source review.
 
-Fifty-six reviewed bounded switch scopes include complete code and owned data:
-45 direct-table and eleven byte-remap owners. Twenty-one have complete retained
-comparison units. The remaining 35 original reviews grant no candidate credit.
+Sixty-five reviewed bounded switch scopes include complete code and owned data:
+45 direct-table, eleven byte-remap and nine compound owners. Twenty-three have
+complete retained comparison units (21 exact and two mismatch). The remaining
+42 original reviews grant no candidate credit.
 `PosVel::step` and `anm_masked_effect_on_switch` remain complete mismatches with
 four and 45 differing bytes. Two candidates are refused specifically for
 unreviewed indirect dispatches; additional unresolved graphs can be hidden
-behind earlier field or extent checks. Do not generalize these profiles to
-multiple or unbounded tables.
+behind earlier field or extent checks. Multiple dispatches require an explicit
+complete compound record. Nonadjacent/memory bounds and undeclared or unbounded
+tables remain refused.
 Read the final repair-log section before retrying PosVel vector-expression
 variants, VM deletion aliases, precomputed render limits or shake timer helpers.
 The circle constructor has now been simplified in isolation: this regresses

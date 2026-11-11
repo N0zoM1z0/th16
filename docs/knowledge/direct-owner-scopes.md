@@ -85,8 +85,13 @@ Ten other discovered roots are excluded from this single-table batch:
 | `0x0045A450` window_proc | Additional indirect jump at `0x0045A480` |
 | `0x00468490` AnmManager::draw_vm | Additional indirect jump at `0x004684FD` |
 
-These entries require separate complete compound ownership reviews. Locating
-one table does not prove the whole parent or permit arbitrary indirect
+The subsequent [compound ownership review](compound-owner-scopes.md)
+supersedes eight of these exclusions and additionally establishes the main Anm
+interpreter's full scope. Ascii drawing and the large enemy ECL body remain
+unreviewed because their bounds are nonadjacent to the dispatch sequence.
+
+At that checkpoint, these entries required separate complete compound ownership
+reviews. Locating one table does not prove the whole parent or permit arbitrary indirect
 traversal. The reproducer records each refusal explicitly and does not add
 partial primary profiles for these roots.
 

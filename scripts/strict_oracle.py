@@ -534,6 +534,7 @@ class Context:
         else:
             instructions = list(decoder.disasm(self.target.read_address(start, size), start))
         code_size = record["code_size"] if record else size
+        reviewed_dispatches = reviewed_dispatch if isinstance(reviewed_dispatch,set) else {reviewed_dispatch}
         if not instructions or sum(i.size for i in instructions) != code_size:
             raise Incomplete("target owner needs explicit trailing-data coverage")
         starts = {i.address for i in instructions}
@@ -547,7 +548,7 @@ class Context:
                     destination = operand.imm & 0xFFFFFFFF
                     if start <= destination < end and destination not in starts:
                         raise Incomplete("target branch enters the middle of an instruction")
-                elif instruction.address != reviewed_dispatch and instruction.address + instruction.size != end:
+                elif instruction.address not in reviewed_dispatches and instruction.address + instruction.size != end:
                     raise Incomplete("indirect jump requires reviewed switch/owned-data extents")
         if instructions[-1].mnemonic not in {"ret", "retf", "jmp", "int3", "ud2"}:
             raise Incomplete("target extent ends in unreviewed fallthrough or non-returning code")
