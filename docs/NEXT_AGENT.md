@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the manager wrapper review and constructor-context trial.
+Updated 2026-11-11 after the runtime callback and LZSS scope review.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,9 +18,16 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **730 exact, 53 mismatch and 432 incomplete** among
-1215 annotated candidates, covering 117,912 exact owned bytes. All 709 exact
-results at `f89675d` remain exact. The latest original-only review establishes
+The current report has **744 exact, 53 mismatch and 418 incomplete** among
+1215 annotated candidates, covering 119,217 exact owned bytes. All 730 exact
+results at `8b9128d` remain exact. The latest original-only review establishes
+13 missing runtime callback/helper entries and partitions the unreviewed
+313-byte LZSS aggregate into three complete owners plus all 25 INT3 bytes.
+All 14 complete owners pass, adding 1,305 bytes. See
+[runtime entry scopes](knowledge/runtime-entry-scopes.md). All 783 preceding
+comparison units remain identical, alongside 14 new units, for 797 total.
+
+The preceding original-only review establishes
 20 registered manager callbacks and one Ascii drawing helper reached by a
 registered callback's tail transfer. All 21 complete owners pass, adding
 604 bytes. See [manager wrapper scopes](knowledge/manager-wrapper-scopes.md).
@@ -91,17 +98,21 @@ extent still mismatches.
 
 The current batch passes **17 controls across two relevant suites**: strict
 Oracle and focused audit. Logs use
+`.analysis/runtime-entry-{oracle,focused}-controls.log`. The manager wrapper
+checkpoint's corresponding logs use
 `.analysis/manager-wrapper-{oracle,focused}-controls.log`. The preceding EH
 checkpoint passed 92 controls across five suites; its logs use
 `.analysis/anm-constructor-{eh,empty-eh,oracle,linkage,focused}-controls.log`.
 The earlier full control checkpoint passed 140 controls across nine suites.
 Original scope derivation and disassembly are in
 `.analysis/reviewed-anm-layer-scopes.json`; its original-only
-reproducer is `.analysis/review-anm-layer-scopes.py`. The latest original-only
+reproducer is `.analysis/review-anm-layer-scopes.py`. The manager wrapper
 reproducer and scopes are `.analysis/review-manager-wrapper-scopes.py` and
-`.analysis/reviewed-manager-wrapper-scopes.json`. Current replay and retained-pass
-evidence are `.analysis/manager-wrapper-full-audit.log` and
-`.analysis/manager-wrapper-regression-check.json`. The baseline incremental
+`.analysis/reviewed-manager-wrapper-scopes.json`. The latest original-only
+derivation is `.analysis/review-runtime-entry-scopes.py` and
+`.analysis/reviewed-runtime-entry-scopes.json`. Current replay and retained-pass
+evidence are `.analysis/runtime-entry-full-audit.log` and
+`.analysis/runtime-entry-regression-check.json`. The baseline incremental
 build log remains `.analysis/record-input-cleanup-build.log`; the rejected
 source trial is `.analysis/updatefunc-ordinary-out-of-line-build.log`.
 
@@ -160,8 +171,8 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 432 incomplete candidates comprise 236 with unresolved fields, **35 missing
-independently reviewed original boundaries**, 113 genuine candidate/target extent
+The 418 incomplete candidates comprise 236 with unresolved fields, **22 missing
+independently reviewed original boundaries**, 112 genuine candidate/target extent
 differences, 40 without a same-start contribution, six with source-object
 ownership differences and two requiring reviewed switch or owned-data extents.
 The earlier combined extent reason hid missing inventory rows; the Oracle now
@@ -185,17 +196,33 @@ The 35 original references in `.analysis/callback-entry-inventory.json` have
 reviewed roots. A second discovery index,
 `.analysis/missing-entry-reference-discovery.json`, records 84 instruction
 references to 74 formerly missing entries. The 41 AnmManager entries and 20
-further registered callbacks are now reviewed. The latest review also derives
-the Ascii drawing helper from its registered caller's tail transfer. Thirteen
-referenced roots remain unreviewed and 22 of the remaining 35 entries lack a
-witness in that initial index. These references were discovered through
-original inventory bodies and are discovery evidence only. Their parent paths,
-entry roles and complete control-flow/owner scopes still need review.
-Establish each role, all reachable paths, complete scope, padding and absence
-of conflicting owners before adding a row. Do not import every annotation or
+further registered callbacks are now reviewed. That review also derives
+the Ascii drawing helper from its registered caller's tail transfer. The latest
+review establishes the other 13 referenced roots through worker creation,
+array constructor/destructor iteration, registry insertion and LZSS tail
+transfers. All 74 roots in that discovery index now have reviewed scopes.
+The remaining 22 missing entries lack witnesses in that initial instruction
+index. They include callback-table entries, sprite callbacks and the Camera
+constructor. A fresh byte-occurrence discovery in
+`.analysis/missing-entry-pointer-discovery.json` locates 21 of these entries
+in original `.rdata` near `0x00490EB8`, `0x004917BC`, `0x004919AC` and
+`0x00491B18`. These are untyped discovery locators, not accepted function-pointer
+tables or entry witnesses. The original PE has no base-relocation directory;
+do not describe these occurrences as relocation evidence. Camera has no
+four-byte pointer occurrence in the original sections. Establish each table's
+type, count and original caller/dispatch context before reviewing entry roles
+and complete control-flow/owner scopes. Establish all reachable paths, padding
+and absence of conflicting owners before adding a row. Do not import every annotation or
 copy candidate sizes into the original ledger. Indirect calls in the reviewed
 callbacks have individually recorded operands and ordinary continuations; this
 does not authorize indirect jumps or grant callee exact credit.
+
+The LZSS deletion row at `0x00458370` is now 84 bytes through `0x004583C3`.
+The independently reached tail helpers at `0x004583D0` and `0x00458430` own
+83 and 121 bytes. All 313 bytes in the superseded Ghidra region are accounted
+for by those owners and 25 INT3 bytes. Do not restore the overlapping aggregate.
+Three bounded parent switches are used only to establish witness paths in the
+latest review. They do not have accepted complete comparison-owner profiles.
 
 The eight imported alignment helpers and 86 explicitly artificial standalone
 locals were removed. The latter cleanup withdrew 23 earlier exact results;

@@ -1042,3 +1042,32 @@ Evidence is `.analysis/reviewed-manager-wrapper-scopes.json`, its reproducer
 `.analysis/updatefunc-ordinary-out-of-line-owner-differences.json` and
 `.analysis/updatefunc-context-restore-check.json`. Source-origin review and
 Factory acceptance remain open. Nothing is published.
+
+## Runtime callback and LZSS scopes
+
+The original-only review establishes the 13 remaining roots in the earlier
+instruction-reference discovery through thread creation, vector construction
+and destruction, registry insertion and LZSS tail transfers. It also replaces
+the unreviewed 313-byte Ghidra LZSS deletion aggregate with three independent
+owners of 84, 83 and 121 bytes, accounting for every intervening INT3 byte.
+All 14 complete annotated owners pass, adding 1,305 primary exact bytes. See
+[runtime entry scopes](runtime-entry-scopes.md) for the original witnesses,
+runtime argument roles, parent paths, switch-path limits and complete scopes.
+
+Full replay reports **744 exact, 53 mismatch and 418 incomplete**, with 119,217
+exact primary bytes. All 730 preceding exact results and all 783 previous
+comparison units remain unchanged; 14 complete units are added. Missing
+original boundaries fall to 22 and genuine extent differences to 112. Strict
+Oracle and focused audit controls pass all 17 checks. No game source, compiler
+profile, Oracle implementation, binding rule or attested build output changes.
+
+Evidence is `.analysis/review-runtime-entry-scopes.py`,
+`.analysis/reviewed-runtime-entry-scopes.json`,
+`.analysis/runtime-entry-original-review.log`,
+`.analysis/runtime-entry-focused.json`,
+`.analysis/runtime-entry-full-audit.log`,
+`.analysis/runtime-entry-regression-check.json` and
+`.analysis/runtime-entry-{oracle,focused}-controls.log`.
+The preceding inventories, report and units are retained under
+`.analysis/runtime-entry-baseline/`. Source-origin review remains open;
+Factory acceptance remains unsubmitted and nothing is published.

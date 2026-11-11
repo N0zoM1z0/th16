@@ -4704,6 +4704,25 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-0041a310]
+artifact_kind = "linked-pe"
+source = "src/Ending.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?ending_load_anm@@YAHXZ"
+object = "Ending.obj"
+candidate_address = 4355984
+target_address = 4301584
+size = 77
+compare_size = 77
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "DIR32", symbol = "?g_Ending@@3PAUEnding@@A", target = 4877756, addend = 0 },
+  { offset = 23, width = 4, type = "REL32", symbol = "?preload_anm@AnmManager@@SGPAUAnmLoaded@@HPBD@Z", target = 4640800, addend = 0 },
+  { offset = 48, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 59, width = 4, type = "REL32", symbol = "?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z", target = 4649136, addend = 0 },
+]
+
 [units.reference-0041a360]
 artifact_kind = "linked-pe"
 source = "src/Ending.cpp"
@@ -11058,6 +11077,36 @@ linkages = [
   { offset = 93, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
+[units.reference-004492e0]
+artifact_kind = "linked-pe"
+source = "src/ReplayManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0ReplayStageData@@QAE@XZ"
+object = "ReplayManager.obj"
+candidate_address = 4603888
+target_address = 4494048
+size = 53
+compare_size = 53
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+]
+
+[units.reference-00449320]
+artifact_kind = "linked-pe"
+source = "src/ReplayManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??1ReplayStageData@@QAE@XZ"
+object = "ReplayManager.obj"
+candidate_address = 4603952
+target_address = 4494112
+size = 41
+compare_size = 41
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+]
+
 [units.reference-00449350]
 artifact_kind = "linked-pe"
 source = "src/ReplayManager.cpp"
@@ -12221,6 +12270,22 @@ linkages = [
   { offset = 350, width = 4, type = "DIR32", symbol = "__real@41900000", target = 4802020, addend = 0 },
 ]
 
+[units.reference-00451740]
+artifact_kind = "linked-pe"
+source = "src/MainMenu.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?replay_list_thread@TitleInf@@SAIPAX@Z"
+object = "MainMenu.obj"
+candidate_address = 4527376
+target_address = 4527936
+size = 8
+compare_size = 8
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "REL32", symbol = "?load_replay_list@TitleInf@@SAXXZ", target = 4527456, addend = 0 },
+]
+
 [units.reference-004545a0]
 artifact_kind = "linked-pe"
 source = "src/MainMenuStates.cpp"
@@ -12422,6 +12487,21 @@ profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
   { offset = 11, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+]
+
+[units.reference-00457690]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0ArcfileEntry@@QAE@XZ"
+object = "Arcfile.obj"
+candidate_address = 4279184
+target_address = 4552336
+size = 9
+compare_size = 9
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
 ]
 
 [units.reference-004576a0]
@@ -12708,6 +12788,80 @@ linkages = [
   { offset = 529, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
   { offset = 537, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
   { offset = 548, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
+]
+
+[units.reference-00458370]
+artifact_kind = "linked-pe"
+source = "src/Lzss.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?lzss_delete_string@@YIXH@Z"
+object = "Lzss.obj"
+candidate_address = 4507680
+target_address = 4555632
+size = 84
+compare_size = 84
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 9, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 19, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 30, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 36, width = 4, type = "REL32", symbol = "?lzss_contract_node@@YIXHH@Z", target = 4555728, addend = 0 },
+  { offset = 43, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 52, width = 4, type = "REL32", symbol = "?lzss_contract_node@@YIXHH@Z", target = 4555728, addend = 0 },
+  { offset = 58, width = 4, type = "REL32", symbol = "?lzss_find_next_node@@YIHH@Z", target = 4555952, addend = 0 },
+  { offset = 78, width = 4, type = "REL32", symbol = "?lzss_replace_node@@YIXHH@Z", target = 4555824, addend = 0 },
+]
+
+[units.reference-004583d0]
+artifact_kind = "linked-pe"
+source = "src/Lzss.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?lzss_contract_node@@YIXHH@Z"
+object = "Lzss.obj"
+candidate_address = 4507392
+target_address = 4555728
+size = 83
+compare_size = 83
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 8, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 18, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 25, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 35, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 44, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 51, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 65, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 72, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+]
+
+[units.reference-00458430]
+artifact_kind = "linked-pe"
+source = "src/Lzss.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?lzss_replace_node@@YIXHH@Z"
+object = "Lzss.obj"
+candidate_address = 4507488
+target_address = 4555824
+size = 121
+compare_size = 121
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 17, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 35, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 44, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 56, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 63, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 70, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 77, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 4, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 87, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 94, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 8, storage_name = "g_lzss_tree", storage_size = 98316 },
+  { offset = 104, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
+  { offset = 111, width = 4, type = "DIR32", symbol = "?g_lzss_tree@@3PAULzssTreeNode@@A", target = 4878128, addend = 0 },
 ]
 
 [units.reference-004584b0]
@@ -13631,6 +13785,24 @@ linkages = [
   { offset = 69, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1840, storage_name = "g_Supervisor", storage_size = 2624 },
 ]
 
+[units.reference-0045c630]
+artifact_kind = "linked-pe"
+source = "src/ScreenEffect.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_fade_in@ScreenEffect@@SIHPAU1@@Z"
+object = "ScreenEffect.obj"
+candidate_address = 4613216
+target_address = 4572720
+size = 90
+compare_size = 90
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "DIR32", symbol = "?g_cancel_screen_effects@@3HA", target = 4984640, addend = 0 },
+  { offset = 26, width = 4, type = "DIR32", symbol = "__real@437f0000", target = 4802172, addend = 0 },
+  { offset = 80, width = 4, type = "REL32", symbol = "??EZunTimer@@QAEXH@Z", target = 4219280, addend = 0 },
+]
+
 [units.reference-0045c690]
 artifact_kind = "linked-pe"
 source = "src/ScreenEffect.cpp"
@@ -13727,6 +13899,47 @@ linkages = [
   { offset = 65, width = 4, type = "REL32", symbol = "?screen_effect_draw_rect@@YAXPAUZunRect@@K@Z", target = 4572816, addend = 0 },
 ]
 
+[units.reference-0045c9e0]
+artifact_kind = "linked-pe"
+source = "src/ScreenEffect.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_flash@ScreenEffect@@SIHPAU1@@Z"
+object = "ScreenEffect.obj"
+candidate_address = 4613696
+target_address = 4573664
+size = 214
+compare_size = 214
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 29, width = 4, type = "DIR32", symbol = "__real@43000000", target = 4802116, addend = 0 },
+  { offset = 77, width = 4, type = "DIR32", symbol = "__real@43000000", target = 4802116, addend = 0 },
+  { offset = 85, width = 4, type = "DIR32", symbol = "__real@3e000000", target = 4801608, addend = 0 },
+  { offset = 117, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 138, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 148, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 190, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+]
+
+[units.reference-0045cac0]
+artifact_kind = "linked-pe"
+source = "src/ScreenEffect.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_hold@ScreenEffect@@SIHPAU1@@Z"
+object = "ScreenEffect.obj"
+candidate_address = 4613920
+target_address = 4573888
+size = 131
+compare_size = 131
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 40, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 61, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 71, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 113, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+]
+
 [units.reference-0045cb50]
 artifact_kind = "linked-pe"
 source = "src/ScreenEffect.cpp"
@@ -13760,6 +13973,28 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
   { offset = 12, width = 4, type = "DIR32", symbol = "__xmm@43e80000440000004180000043000000", target = 4802656, addend = 0 },
   { offset = 30, width = 4, type = "REL32", symbol = "?screen_effect_draw_rect@@YAXPAUZunRect@@K@Z", target = 4572816, addend = 0 },
+]
+
+[units.reference-0045cbd0]
+artifact_kind = "linked-pe"
+source = "src/ScreenEffect.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick_pulse@ScreenEffect@@SIHPAU1@@Z"
+object = "ScreenEffect.obj"
+candidate_address = 4614192
+target_address = 4574160
+size = 231
+compare_size = 231
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "DIR32", symbol = "?g_cancel_screen_effects@@3HA", target = 4984640, addend = 0 },
+  { offset = 49, width = 4, type = "DIR32", symbol = "__xmm@41f00000000000000000000000000000", target = 4802640, addend = 0 },
+  { offset = 115, width = 4, type = "REL32", symbol = "?set_value@ZunTimer@@QAEXH@Z", target = 4220048, addend = 0 },
+  { offset = 138, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 159, width = 4, type = "DIR32", symbol = "__real@3f7d70a4", target = 4801748, addend = 0 },
+  { offset = 169, width = 4, type = "DIR32", symbol = "__real@3f8147ae", target = 4801768, addend = 0 },
+  { offset = 212, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
 ]
 
 [units.reference-0045ccc0]
@@ -13979,6 +14214,54 @@ linkages = [
   { offset = 139, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22136, storage_name = "g_SoundManager", storage_size = 22168 },
   { offset = 148, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22132, storage_name = "g_SoundManager", storage_size = 22168 },
   { offset = 158, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22136, storage_name = "g_SoundManager", storage_size = 22168 },
+]
+
+[units.reference-0045d4d0]
+artifact_kind = "linked-pe"
+source = "src/SoundManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?thread_init@SoundManager@@SAXPAX@Z"
+object = "SoundManager.obj"
+candidate_address = 4617008
+target_address = 4576464
+size = 57
+compare_size = 57
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 2, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22148, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 7, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 0 },
+  { offset = 12, width = 4, type = "REL32", symbol = "?initialize@SoundManager@@QAEHPAUHWND__@@@Z", target = 4576528, addend = 0 },
+  { offset = 18, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22144, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 28, width = 4, type = "DIR32", symbol = "__imp__Sleep@4", target = 4763808, addend = 0 },
+  { offset = 38, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22144, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 48, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22152, storage_name = "g_SoundManager", storage_size = 22168 },
+]
+
+[units.reference-0045d7e0]
+artifact_kind = "linked-pe"
+source = "src/SoundManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?thread_load_sound_files@SoundManager@@SAXPAX@Z"
+object = "SoundManager.obj"
+candidate_address = 4617792
+target_address = 4577248
+size = 106
+compare_size = 106
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 5, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22144, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 15, width = 4, type = "DIR32", symbol = "?g_sound_file_names@@3QBQBDB", target = 4790784, addend = 0 },
+  { offset = 24, width = 4, type = "REL32", symbol = "?file_read_all@@YIPAEPBDPAHH@Z", target = 4203584, addend = 0 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 8660, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 47, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22144, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 56, width = 4, type = "DIR32", symbol = "__imp__Sleep@4", target = 4763808, addend = 0 },
+  { offset = 70, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22144, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 82, width = 4, type = "DIR32", symbol = "?g_sound_file_names@@3QBQBDB", target = 4790784, addend = 0 },
+  { offset = 87, width = 4, type = "DIR32", symbol = "??_C@_0DH@FPNCNHFM@error?5?3?5Sound?5?$IDt?$ID?$EA?$IDC?$ID?$IL?$IC?$KK?$JD?G?$IC?$NN?$IN?$JO?$IC?$NP@", target = 4800740, addend = 0 },
+  { offset = 92, width = 4, type = "DIR32", symbol = "?g_GameErrorContext@@3UGameErrorContext@@A", target = 4862120, addend = 0 },
+  { offset = 97, width = 4, type = "REL32", symbol = "?log@GameErrorContext@@QAAPBDPBDZZ", target = 4205008, addend = 0 },
 ]
 
 [units.reference-0045da30]
