@@ -350,6 +350,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042DB70,GameThread::on_tick_callback,reference-0042db70,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0042DB80,GameThread::on_draw_callback,reference-0042db80,local-strict-pass,51,51,51,.analysis/reference-audit.json
 0x0042DEE0,GameThread::finish_stage_transition,reference-0042dee0,mismatch,623,623,622,.analysis/reference-audit.json
+0x0042E150,stage_clear,reference-0042e150,local-strict-pass,896,896,896,.analysis/reference-audit.json
 0x0042E4D0,SoundManager::pause_sounds,reference-0042e4d0,local-strict-pass,76,76,76,.analysis/reference-audit.json
 0x0042E520,Globals::reset_224,reference-0042e520,local-strict-pass,101,101,101,.analysis/reference-audit.json
 0x0042E590,Globals::reset_for_new_game,reference-0042e590,local-strict-pass,145,145,145,.analysis/reference-audit.json
@@ -482,6 +483,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043C710,Supervisor::swap_transform_matrices,reference-0043c710,local-strict-pass,106,106,106,.analysis/reference-audit.json
 0x0043C940,camera_apply_3d,reference-0043c940,local-strict-pass,463,463,463,.analysis/reference-audit.json
 0x0043CB10,Supervisor::setup_cameras,reference-0043cb10,local-strict-pass,761,761,761,.analysis/reference-audit.json
+0x0043CE10,Supervisor::switch_gamemodes,reference-0043ce10,local-strict-pass,815,815,815,.analysis/reference-audit.json
 0x0043D140,Supervisor::on_draw_01,reference-0043d140,local-strict-pass,432,432,432,.analysis/reference-audit.json
 0x0043D400,Supervisor::on_draw_0e,reference-0043d400,local-strict-pass,153,153,153,.analysis/reference-audit.json
 0x0043D5A0,Supervisor::on_draw_19,reference-0043d5a0,local-strict-pass,153,153,153,.analysis/reference-audit.json
@@ -504,6 +506,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043DFF0,Globals::collect_bomb_fragment,reference-0043dff0,local-strict-pass,131,131,131,.analysis/reference-audit.json
 0x0043E150,PauseMenu::set_state,reference-0043e150,local-strict-pass,172,172,172,.analysis/reference-audit.json
 0x0043E200,PauseMenu::set_substate,reference-0043e200,local-strict-pass,78,78,78,.analysis/reference-audit.json
+0x0043E250,ScorefileChara::insert_score,reference-0043e250,local-strict-pass,246,246,246,.analysis/reference-audit.json
 0x0043E350,PauseMenu::PauseMenu,reference-0043e350,local-strict-pass,154,154,154,.analysis/reference-audit.json
 0x0043E3F0,PauseMenu::initialize,reference-0043e3f0,local-strict-pass,193,193,193,.analysis/reference-audit.json
 0x0043E4C0,PauseMenu::~PauseMenu,reference-0043e4c0,local-strict-pass,224,224,224,.analysis/reference-audit.json
@@ -564,6 +567,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00447760,ReplayManager::initialize,reference-00447760,local-strict-pass,1309,1309,1309,.analysis/reference-audit.json
 0x00447FB0,ReplayManager::destroy,reference-00447fb0,local-strict-pass,28,28,28,.analysis/reference-audit.json
 0x00448130,ReplayManager::on_tick_playback,reference-00448130,local-strict-pass,442,442,442,.analysis/reference-audit.json
+0x004483B0,ReplayManager::set_end_stage,reference-004483b0,local-strict-pass,78,78,78,.analysis/reference-audit.json
 0x00448C10,ReplayManager::read_replay_file,reference-00448c10,local-strict-pass,524,524,524,.analysis/reference-audit.json
 0x00448E20,ReplayManager::on_tick_record_thunk,reference-00448e20,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00448E30,ReplayManager::on_tick_playback_thunk,reference-00448e30,local-strict-pass,5,5,5,.analysis/reference-audit.json

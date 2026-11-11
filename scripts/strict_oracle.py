@@ -32,6 +32,93 @@ def source_identity():
     return input_identity()
 
 
+def review_stage_table(context, row, candidate):
+    """Review the complete eight-row stage table, including every pointee."""
+    import struct
+    import capstone
+
+    address, size = int(row["target_address"], 0), int(row["size"])
+    if (row["symbol"] != "?g_stage_table@@3PAUStageData@@A" or size != 8 * 212
+            or row["candidate_library"] or row.get("candidate_size")
+            or row["witness_mnemonic"] != "imul-add"):
+        raise Incomplete("stage table lacks its explicit complete profile")
+
+    def storage(image, base, length, writable):
+        sections = [s for s in image.sections
+                    if image.image_base + s.rva <= base
+                    and base + length <= image.image_base + s.rva + s.raw_size]
+        if (len(sections) != 1 or sections[0].characteristics & 0x20000000
+                or not sections[0].characteristics & 0x40000000
+                or bool(sections[0].characteristics & 0x80000000) != writable):
+            raise Incomplete("stage table leaves its complete data storage")
+        return sections[0]
+
+    storage(context.target, address, size, True)
+    storage(context.image, candidate, size, True)
+    typed = [g for g in context.typed_globals if g["name"] == "g_stage_table"]
+    if (len(typed) != 1 or typed[0]["address"] != candidate or typed[0]["size"] != size
+            or context.data_contributions.get(candidate) != [size]):
+        raise Incomplete("stage table lacks one complete typed PDB owner")
+    contributions = pdb_section_contributions(context.directory / "th16.pdb")["contributions"]
+    owners = [c for c in contributions
+              if context.image.image_base + context.image.section(c["section_number"]).rva
+              + c["section_offset"] == candidate and c["size"] == size]
+    expected = "Z:" + str(context.directory / "obj/probes/reference-support/Opaque.obj")
+    normalize = lambda value: re.sub(r"/+", "/", str(value).replace("\\", "/")).lower()
+    if len(owners) != 1 or normalize(owners[0]["object"]) != normalize(expected):
+        raise Incomplete("stage table differs from its declared PDB source owner")
+
+    pointer_offsets = {n * 212 + offset for n in range(8) for offset in range(4, 40, 4)}
+    relocations = {a for a in context.image.base_relocations()
+                   if a < candidate + size and a + 4 > candidate}
+    if relocations != {candidate + offset for offset in pointer_offsets}:
+        raise Incomplete("stage table lacks exhaustive pointer relocations")
+    original = context.target.read_address(address, size)
+    linked = context.image.read_address(candidate, size)
+    for offset in range(0, size, 4):
+        left, right = original[offset:offset + 4], linked[offset:offset + 4]
+        if offset not in pointer_offsets:
+            if left != right:
+                raise Incomplete("stage table differs in an original scalar field")
+            continue
+        target_pointer, candidate_pointer = struct.unpack("<I", left)[0], struct.unpack("<I", right)[0]
+        section = storage(context.target, target_pointer, 1, False)
+        available = min(64, context.target.image_base + section.rva + section.raw_size - target_pointer)
+        data = context.target.read_address(target_pointer, available)
+        if b"\0" not in data:
+            raise Incomplete("stage table string lacks its complete terminator")
+        payload = data[:data.index(0) + 1]
+        storage(context.image, candidate_pointer, len(payload), False)
+        if (context.data_contributions.get(candidate_pointer) != [len(payload)]
+                or context.image.read_address(candidate_pointer, len(payload)) != payload):
+            raise Incomplete("stage table string lacks its complete original PDB payload")
+
+    # Prove an independently reviewed original indexed use from instruction starts.
+    witness = int(row["witness_instruction"], 0)
+    parents = [(a, r) for a, r in context.boundaries.items()
+               if a <= witness < a + int(r["size"])]
+    if len(parents) != 1:
+        raise Incomplete("stage table witness lacks one original owner")
+    base, parent = parents[0]
+    extent = context.switch_owners.get(base, {}).get("code_size", int(parent["size"]))
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    decoder.detail = True
+    sequence = list(decoder.disasm(context.target.read_address(base, extent), base))
+    position = next((n for n, i in enumerate(sequence) if i.address == witness), None)
+    if position is None or position + 1 >= len(sequence):
+        raise Incomplete("stage table witness is not an owned instruction start")
+    multiply, add = sequence[position:position + 2]
+    x86 = capstone.x86
+    if (multiply.mnemonic != "imul" or len(multiply.operands) != 3
+            or any(op.type != x86.X86_OP_REG or op.size != 4 for op in multiply.operands[:2])
+            or multiply.operands[2].type != x86.X86_OP_IMM or multiply.operands[2].imm != 212
+            or add.address != multiply.address + multiply.size or add.mnemonic != "add"
+            or len(add.operands) != 2 or add.operands[0].type != x86.X86_OP_REG
+            or add.operands[0].reg != multiply.operands[0].reg
+            or add.operands[1].type != x86.X86_OP_IMM or add.operands[1].imm != address):
+        raise Incomplete("stage table lacks its indexed original stride witness")
+
+
 def reviewed_linkages(context, path=None):
     """Validate fixed, independently reviewed runtime/literal storage bindings."""
     import capstone
@@ -67,6 +154,8 @@ def reviewed_linkages(context, path=None):
                     runtime_witnesses.append((address, int(row["witness_instruction"], 0), row["witness_mnemonic"]))
             elif row["kind"] == "vftable":
                 vftables.append((row, publics[0]["address"]))
+            elif row["kind"] == "stage-table-v1":
+                review_stage_table(context, row, publics[0]["address"])
             elif row["kind"] in {"literal", "indexed-literal", "string-literal"}:
                 if row["kind"] != "string-literal":
                     match = re.fullmatch(r"__(?:real|xmm)@([0-9a-fA-F]+)", symbol)

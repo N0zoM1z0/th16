@@ -1419,3 +1419,44 @@ All 187 controls pass across eight suites. Evidence is
 remain in `.analysis/compound-owner-baseline/`. Build inputs and artifacts are
 unchanged. Source-origin review remains open; Factory acceptance remains
 unsubmitted. Nothing is published.
+
+## Complete stage-table and current-time identities
+
+An original-only scan identifies one complete eight-row, 1,696-byte stage table
+at `0x004A22D0`. Its 212-byte stride, all 352 scalar DWORDs, all 72 complete
+string pointees and the independent indexed Supervisor witness are reviewed.
+The explicit stage-table profile requires one complete typed/source PDB owner,
+matching scalar/pointee contents and exhaustive pointer relocations. It grants
+no generic mutable-data fallback. The existing imported non-LTCG support context
+remains a source-context hypothesis.
+
+The 66-byte current-time root at `0x0047A09E` is independently identified through
+its 64-bit return/output contract, complete time-conversion child and original
+GetSystemTimeAsFileTime import path. Both complete extents and the pinned UCRT
+producer remain required. These two bindings resolve four existing whole
+candidates: stage_clear (896 bytes), Supervisor::switch_gamemodes (815),
+ScorefileChara::insert_score (246) and ReplayManager::set_end_stage (78).
+They add **2,035 exact primary bytes**. Full replay reports **809 exact,
+61 mismatch and 345 incomplete**, covering 141,487 primary exact bytes. All
+805 preceding exact results and all 866 previous units remain identical; four
+new units give 870 total. See [stage/time identities](stage-time-identities.md).
+
+PauseMenu::tick_open remains incomplete after its final binding resolves: its
+complete 4,676-byte candidate has four different first-table case offsets.
+The original offsets are preserved. Six menu candidates now expose extent
+refusals and TitleInf::on_tick still lacks one field. No table/runtime primary
+credit, raw replay change, game source edit, rebuild or cleanup occurs.
+
+All 207 controls pass across nine suites. Twenty new controls check every
+scalar DWORD on both sides, every table relocation, every distinct candidate
+string byte/terminator, complete source/typed PDB ownership, fixed stride
+witness and both runtime extents/library ownership. Evidence is
+`.analysis/stage-time-original-identities.json`,
+`.analysis/stage-time-consumer-scopes.json`,
+`.analysis/pause-open-case-layout.json`,
+`.analysis/stage-time-full-audit.log`,
+`.analysis/stage-time-regression-check.json` and
+`.analysis/stage-time-<suite>-controls.log`. Original-only reproducers and
+`.analysis/stage-time-baseline/` are retained. Build inputs and artifact
+identities are unchanged. Source-origin review remains open and Factory
+acceptance remains unsubmitted. Nothing is published.

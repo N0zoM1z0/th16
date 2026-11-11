@@ -4,6 +4,11 @@ These bindings apply to the original Japanese TH16 v1.00a target with SHA-256
 `c11776019f083978e66027e7394dafb1fb9543afca986f28049a49417e341929`.
 The machine inputs are `config/linkage-bindings.csv`.
 
+The subsequent [stage/time review](stage-time-identities.md) adds the complete
+66-byte current-time entry and an explicit complete 1,696-byte stage-table
+identity. Table initialization and every string/relocation are independently
+checked; no generic mutable-data binding is enabled.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

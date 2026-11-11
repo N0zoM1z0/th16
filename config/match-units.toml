@@ -7543,6 +7543,91 @@ linkages = [
   { offset = 539, width = 4, type = "REL32", symbol = "?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z", target = 4649136, addend = 0 },
 ]
 
+[units.reference-0042e150]
+artifact_kind = "linked-pe"
+source = "src/GameThread.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?stage_clear@@YAHXZ"
+object = "GameThread.obj"
+candidate_address = 4412288
+target_address = 4383056
+size = 896
+compare_size = 896
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 1116, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 20, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 29, width = 4, type = "REL32", symbol = "?show_stage_clear_bonus@Gui@@SAXXZ", target = 4374640, addend = 0 },
+  { offset = 34, width = 4, type = "REL32", symbol = "?withdraw_options@Player@@QAEXXZ", target = 4377216, addend = 0 },
+  { offset = 40, width = 4, type = "DIR32", symbol = "?g_MainBomb@@3PAVBombInf@@A", target = 4877736, addend = 0 },
+  { offset = 57, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 1116, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 77, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 91, width = 4, type = "REL32", symbol = "?open_replay_end_menu@@YAXXZ", target = 4452928, addend = 0 },
+  { offset = 105, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 115, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 121, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 133, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 56, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 152, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 32, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 180, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 1116, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 202, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 208, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 219, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 225, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 241, width = 4, type = "REL32", symbol = "?open_stage_end_menu@@YAXXZ", target = 4453632, addend = 0 },
+  { offset = 255, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 269, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 301, width = 4, type = "REL32", symbol = "?update_play_time@GameThread@@SAXXZ", target = 4381632, addend = 0 },
+  { offset = 306, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 320, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4383936 },
+  { offset = 326, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 100, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 331, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 112, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 348, width = 4, type = "REL32", symbol = "?add_to_score@Globals@@QAEXH@Z", target = 4448384, addend = 0 },
+  { offset = 353, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 364, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 383, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 389, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 395, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 401, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 441, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 447, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 453, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 459, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 40, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 475, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 532, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 545, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 100, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 550, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 112, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 567, width = 4, type = "REL32", symbol = "?add_to_score@Globals@@QAEXH@Z", target = 4448384, addend = 0 },
+  { offset = 572, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 583, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 597, width = 4, type = "REL32", symbol = "?open_replay_end_menu@@YAXXZ", target = 4452928, addend = 0 },
+  { offset = 607, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 613, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 621, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 627, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 650, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 676, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 682, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 688, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 694, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 40, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 706, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 742, width = 4, type = "REL32", symbol = "?update_play_time@GameThread@@SAXXZ", target = 4381632, addend = 0 },
+  { offset = 775, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 789, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 795, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 806, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 816, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 830, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 836, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1780, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 852, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 863, width = 4, type = "DIR32", symbol = "?g_stage_table@@3PAUStageData@@A", target = 4858576, addend = 0 },
+  { offset = 868, width = 4, type = "DIR32", symbol = "?g_stage_data@@3PAUStageData@@A", target = 4878104, addend = 0 },
+  { offset = 880, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4383380 },
+  { offset = 884, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4383380 },
+  { offset = 888, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4383380 },
+  { offset = 892, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4383380 },
+]
+
 [units.reference-0042e4d0]
 artifact_kind = "linked-pe"
 source = "src/SoundManager.cpp"
@@ -10348,6 +10433,96 @@ linkages = [
   { offset = 753, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8300, storage_name = "g_GameWindow", storage_size = 8420 },
 ]
 
+[units.reference-0043ce10]
+artifact_kind = "linked-pe"
+source = "src/Supervisor.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?switch_gamemodes@Supervisor@@QAEHXZ"
+object = "Supervisor.obj"
+candidate_address = 4647568
+target_address = 4443664
+size = 815
+compare_size = 815
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 23, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 31, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 120, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 37, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 43, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 341, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 83, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444368 },
+  { offset = 98, width = 4, type = "REL32", symbol = "?create@LoadingThread@@SAPAU1@XZ", target = 4436464, addend = 0 },
+  { offset = 123, width = 4, type = "REL32", symbol = "?destroy_game_objects@Supervisor@@SAXXZ", target = 4438352, addend = 0 },
+  { offset = 130, width = 4, type = "REL32", symbol = "?leave@CriticalSections@@QAEXH@Z", target = 4216384, addend = 0 },
+  { offset = 150, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444464 },
+  { offset = 157, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444448 },
+  { offset = 162, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 167, width = 4, type = "REL32", symbol = "?create@TitleInf@@SAPAV1@XZ", target = 4501216, addend = 0 },
+  { offset = 185, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 193, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 120, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 199, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 205, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 341, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 217, width = 4, type = "REL32", symbol = "?destroy@Ending@@SAXXZ", target = 4298400, addend = 0 },
+  { offset = 239, width = 4, type = "REL32", symbol = "?destroy@Ending@@SAXXZ", target = 4298400, addend = 0 },
+  { offset = 246, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 262, width = 4, type = "DIR32", symbol = "?g_title_return_point@@3HA", target = 4878108, addend = 0 },
+  { offset = 278, width = 4, type = "REL32", symbol = "?destroy@TitleInf@@SAXXZ", target = 4501328, addend = 0 },
+  { offset = 295, width = 4, type = "REL32", symbol = "?create@GameThread@@SAPAU1@H@Z", target = 4380416, addend = 0 },
+  { offset = 310, width = 4, type = "REL32", symbol = "?destroy@TitleInf@@SAXXZ", target = 4501328, addend = 0 },
+  { offset = 340, width = 4, type = "REL32", symbol = "?create@GameThread@@SAPAU1@H@Z", target = 4380416, addend = 0 },
+  { offset = 350, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 377, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 394, width = 4, type = "REL32", symbol = "?create@GameThread@@SAPAU1@H@Z", target = 4380416, addend = 0 },
+  { offset = 405, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 442, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 4, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 447, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 458, width = 4, type = "DIR32", symbol = "?g_stage_table@@3PAUStageData@@A", target = 4858576, addend = 0 },
+  { offset = 463, width = 4, type = "DIR32", symbol = "?g_stage_data@@3PAUStageData@@A", target = 4878104, addend = 0 },
+  { offset = 468, width = 4, type = "REL32", symbol = "?create@GameThread@@SAPAU1@H@Z", target = 4380416, addend = 0 },
+  { offset = 478, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 518, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 4, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 523, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 534, width = 4, type = "DIR32", symbol = "?g_stage_table@@3PAUStageData@@A", target = 4858576, addend = 0 },
+  { offset = 539, width = 4, type = "DIR32", symbol = "?g_stage_data@@3PAUStageData@@A", target = 4878104, addend = 0 },
+  { offset = 544, width = 4, type = "REL32", symbol = "?create@GameThread@@SAPAU1@H@Z", target = 4380416, addend = 0 },
+  { offset = 554, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 591, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 4, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 596, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 607, width = 4, type = "DIR32", symbol = "?g_stage_table@@3PAUStageData@@A", target = 4858576, addend = 0 },
+  { offset = 612, width = 4, type = "DIR32", symbol = "?g_stage_data@@3PAUStageData@@A", target = 4878104, addend = 0 },
+  { offset = 617, width = 4, type = "REL32", symbol = "?create@GameThread@@SAPAU1@H@Z", target = 4380416, addend = 0 },
+  { offset = 627, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 654, width = 4, type = "REL32", symbol = "?create@GameThread@@SAPAU1@H@Z", target = 4380416, addend = 0 },
+  { offset = 669, width = 4, type = "REL32", symbol = "?destroy@GameThread@@SAXXZ", target = 4380544, addend = 0 },
+  { offset = 674, width = 4, type = "REL32", symbol = "?create@Ending@@SAPAU1@XZ", target = 4298304, addend = 0 },
+  { offset = 684, width = 4, type = "REL32", symbol = "?destroy_game_objects@Supervisor@@SAXXZ", target = 4438352, addend = 0 },
+  { offset = 691, width = 4, type = "REL32", symbol = "?leave@CriticalSections@@QAEXH@Z", target = 4216384, addend = 0 },
+  { offset = 704, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443751 },
+  { offset = 708, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+  { offset = 712, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+  { offset = 716, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443786 },
+  { offset = 720, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443805 },
+  { offset = 724, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+  { offset = 728, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+  { offset = 732, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443936 },
+  { offset = 736, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+  { offset = 740, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+  { offset = 744, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444068 },
+  { offset = 748, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444141 },
+  { offset = 752, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444013 },
+  { offset = 756, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443968 },
+  { offset = 760, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444290 },
+  { offset = 764, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444327 },
+  { offset = 768, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443887 },
+  { offset = 772, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444347 },
+  { offset = 776, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+  { offset = 780, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4444217 },
+  { offset = 784, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443830 },
+  { offset = 788, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443825 },
+  { offset = 792, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443880 },
+  { offset = 796, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4443835 },
+]
+
 [units.reference-0043d140]
 artifact_kind = "linked-pe"
 source = "src/Supervisor.cpp"
@@ -10848,6 +11023,33 @@ compare_size = 78
 profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
+]
+
+[units.reference-0043e250]
+artifact_kind = "linked-pe"
+source = "src/PauseMenu.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?insert_score@ScorefileChara@@QAEHXZ"
+object = "PauseMenu.obj"
+candidate_address = 4562192
+target_address = 4448848
+size = 246
+compare_size = 246
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 24, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 32, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 117, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 124, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 32, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 136, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 40, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 146, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 158, width = 4, type = "REL32", symbol = "__time64", target = 4694174, addend = 0 },
+  { offset = 166, width = 4, type = "DIR32", symbol = "??_C@_08GGFKNFHG@?5?5?5?5?5?5?5?5?$AA@", target = 4794408, addend = 0 },
+  { offset = 175, width = 4, type = "DIR32", symbol = "?g_FpsCounter@@3PAUFpsCounter@@A", target = 4877768, addend = 0 },
+  { offset = 187, width = 4, type = "DIR32", symbol = "??_C@_08GGFKNFHG@?5?5?5?5?5?5?5?5?$AA@", target = 4794408, addend = 8 },
+  { offset = 210, width = 4, type = "DIR32", symbol = "__real@42c80000", target = 4802104, addend = 0 },
+  { offset = 233, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 28, storage_name = "g_Globals", storage_size = 1120 },
 ]
 
 [units.reference-0043e350]
@@ -12245,6 +12447,24 @@ linkages = [
   { offset = 401, width = 4, type = "DIR32", symbol = "?g_input@@3TInputGlobals@@A", target = 4870320, addend = 536, storage_name = "g_input", storage_size = 564 },
   { offset = 411, width = 4, type = "DIR32", symbol = "?g_input@@3TInputGlobals@@A", target = 4870320, addend = 548, storage_name = "g_input", storage_size = 564 },
   { offset = 421, width = 4, type = "DIR32", symbol = "?g_input@@3TInputGlobals@@A", target = 4870320, addend = 552, storage_name = "g_input", storage_size = 564 },
+]
+
+[units.reference-004483b0]
+artifact_kind = "linked-pe"
+source = "src/ReplayManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?set_end_stage@ReplayManager@@QAEHH@Z"
+object = "ReplayManager.obj"
+candidate_address = 4605376
+target_address = 4490160
+size = 78
+compare_size = 78
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "?g_ReplayManager@@3PAUReplayManager@@A", target = 4878088, addend = 0 },
+  { offset = 19, width = 4, type = "REL32", symbol = "__time64", target = 4694174, addend = 0 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
 ]
 
 [units.reference-00448c10]

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after nine complete compound switch scope reviews.
+Updated 2026-11-11 after complete stage-table and current-time identity reviews.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,18 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **805 exact, 61 mismatch and 349 incomplete** among
-1215 annotated candidates, covering 139,452 exact owned bytes. Nine compound
+The current report has **809 exact, 61 mismatch and 345 incomplete** among
+1215 annotated candidates, covering 141,487 exact owned bytes. Complete original
+stage-table and current-time identities resolve four existing candidates:
+stage_clear (896), Supervisor::switch_gamemodes (815), ScorefileChara::insert_score
+(246) and ReplayManager::set_end_stage (78). These add 2,035 primary exact bytes.
+All 805 preceding exact results and all 866 units remain identical; four new
+units give 870 total. PauseMenu::tick_open now exposes its reviewed case-map
+mismatch, and six menu candidates retain whole-extent refusals. See
+[stage/time identities](knowledge/stage-time-identities.md).
+
+The preceding compound checkpoint reported 805 exact, 61 mismatch and 349 incomplete.
+Nine compound
 switch originals now include every dispatch, target table, byte map and
 alignment interval. Existing window_proc and AnmManager::draw_vm candidates
 pass their full 680/1,896-byte owners, adding 2,576 primary bytes. All 803
@@ -191,11 +201,13 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **187 controls across eight relevant suites**:
-compound switch ownership (21), primary switch ownership (40), private identities
-(33), strict Oracle (14), reviewed linkages (26), focused audit (3), constructor
-EH (25) and empty EH (25). Logs use
-`.analysis/compound-owner-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The current batch passes **207 controls across nine relevant suites**:
+stage/time identities (20), compound switch ownership (21), primary switch
+ownership (40), private identities (33), strict Oracle (14), reviewed linkages
+(26), focused audit (3), constructor EH (25) and empty EH (25). Logs use
+`.analysis/stage-time-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding compound batch passed 187 controls across eight suites;
+its logs use `.analysis/compound-owner-*controls.log`.
 The preceding direct-table batch passed 166 controls across seven suites;
 its logs use `.analysis/direct-owner-*controls.log`.
 The preceding remap batch passed 162 controls across seven suites;
@@ -232,9 +244,13 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/compound-owner-full-audit.log` and
-`.analysis/compound-owner-regression-check.json`. The original-only reproducer
-and complete layouts/refusals are `.analysis/review-compound-owner-scopes.py`
+are `.analysis/stage-time-full-audit.log` and
+`.analysis/stage-time-regression-check.json`. Original identity and consumer
+scope evidence is `.analysis/stage-time-original-identities.json` and
+`.analysis/stage-time-consumer-scopes.json`, reproduced by
+`.analysis/review-stage-time-originals.py` and
+`.analysis/review-stage-time-consumer-scopes.py`. The preceding original-only
+reproducer and complete layouts/refusals are `.analysis/review-compound-owner-scopes.py`
 and `.analysis/compound-owner-original-scopes.json`. The preceding direct-table
 evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
@@ -302,10 +318,10 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 349 incomplete candidates comprise 197 with unresolved fields, 116
+The 345 incomplete candidates comprise 186 with unresolved fields, 122
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
-reviewed switch or owned-data extents and one with a reviewed case-map mismatch.
+reviewed switch or owned-data extents and two with reviewed case-map mismatches.
 The extent category includes original code contexts with unreviewed owned data;
 it does not establish a genuine
 source-size difference in every case. None is currently refused specifically
@@ -360,9 +376,10 @@ The full 532-byte Bullet::step_ex_04, 1,900/2,808-byte EnemyInf integer/float
 global getters, 868-byte draw_text, 396-byte resolution dialog, 824-byte AnmVm
 float-variable getter and 876-byte render-state setup all pass. See
 [the new direct scopes](knowledge/direct-owner-scopes.md). Twenty-five reviewed
-candidates have different whole extents; four equal-size candidates still lack
-bindings: BombInf::create (nine), EndingScriptVm::run (six), stage_clear (one)
-and TitleInf::do_music_room (seven).
+candidates have different whole extents; four equal-size candidates lacked
+bindings at that checkpoint. Stage_clear now passes after the complete stage-table
+review. BombInf::create (nine), EndingScriptVm::run (six) and
+TitleInf::do_music_room (seven) remain unresolved.
 
 The original interp_common_methods at `0x004033F0` now owns 1,692 bytes:
 1,566 code, two alignment bytes and 31 table slots. Its baseline candidate is
@@ -381,8 +398,13 @@ or force allocation.
 The compound review supersedes eight of the preceding ten multiple-dispatch
 exclusions. Original STD, bullet shooting/run_ex, supervisor switching,
 pause/title flows, window_proc and draw_vm now have complete scope records.
-The two exact candidates are retained; Supervisor/Pause still lack three/one
-bindings. Other candidates have different whole extents, with STD exposing two
+The two exact candidates are retained. Supervisor now passes after complete
+stage-table binding. Pause has no unbound fields left but retains a complete
+4,676-byte case-map refusal: slots 7/9 start at 1,420 rather than 1,392, slot 10
+at 1,988 rather than 1,982, and slot 11 at 3,206 rather than 3,207. Its second
+five-slot table matches. See `.analysis/pause-open-case-layout.json`; do not
+alter original offsets or scopes to hide this difference. Other candidates
+have different whole extents, with STD exposing two
 unbound fields first. Ascii drawing at `0x00408A89` needs memory-bound/reload
 alias evidence; the large enemy ECL dispatch at `0x0041DD51` has an interposed
 frame store. Both remain unreviewed. Locators and reasons are in
@@ -472,9 +494,9 @@ context rather than restoring the artificial inputs. Other compiler-context
 helpers, forced accesses and type hypotheses still need source review.
 
 Sixty-five reviewed bounded switch scopes include complete code and owned data:
-45 direct-table, eleven byte-remap and nine compound owners. Twenty-three have
-complete retained comparison units (21 exact and two mismatch). The remaining
-42 original reviews grant no candidate credit.
+45 direct-table, eleven byte-remap and nine compound owners. Twenty-five have
+complete retained comparison units (23 exact and two mismatch). The remaining
+40 original reviews grant no candidate credit.
 `PosVel::step` and `anm_masked_effect_on_switch` remain complete mismatches with
 four and 45 differing bytes. Two candidates are refused specifically for
 unreviewed indirect dispatches; additional unresolved graphs can be hidden
