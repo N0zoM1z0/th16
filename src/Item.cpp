@@ -20,6 +20,10 @@
 // GLOBAL: TH16 0x4a6ddc
 ItemManager *g_ItemManager;
 
+// Destroys all 0x1258 Items through the compiler's array destructor iterator.
+// SYNTHETIC: TH16 0x42f150 SYMBOL
+// ??1ItemManagerInner@@QAE@XZ
+
 // GLOBAL: TH16 0x4917f8
 const i32 g_item_anm_scripts[17][2] = {
     {-1, -1}, {112, 134}, {113, 135}, {114, 136}, {115, 137}, {116, 138},

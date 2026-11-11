@@ -80,6 +80,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004093B0,AnmVm::~AnmVm,reference-004093b0,local-strict-pass,61,61,61,.analysis/reference-audit.json
 0x004093F0,AnmVm::AnmVm,reference-004093f0,local-strict-pass,149,149,149,.analysis/reference-audit.json
 0x00409490,StageInner::set_sky_interp,reference-00409490,local-strict-pass,191,191,191,.analysis/reference-audit.json
+0x00409770,StageInner::~StageInner,reference-00409770,local-strict-pass,73,73,73,.analysis/reference-audit.json
 0x0040A410,Stage::on_draw_06,reference-0040a410,local-strict-pass,907,907,907,.analysis/reference-audit.json
 0x0040AC30,Stage::load_std,reference-0040ac30,local-strict-pass,414,414,414,.analysis/reference-audit.json
 0x0040ADD0,Stage::start_std_vms,reference-0040add0,local-strict-pass,246,246,246,.analysis/reference-audit.json
@@ -305,6 +306,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042EA80,HelpManual::destroy,reference-0042ea80,local-strict-pass,34,34,34,.analysis/reference-audit.json
 0x0042EFB0,AnmLoaded::create_ui_vm,reference-0042efb0,mismatch,217,217,165,.analysis/reference-audit.json
 0x0042F090,BombInf::is_active_before,reference-0042f090,local-strict-pass,32,32,32,.analysis/reference-audit.json
+0x0042F150,??1ItemManagerInner@@QAE@XZ,reference-0042f150,local-strict-pass,70,70,70,.analysis/reference-audit.json
 0x0042F1A0,Item::Item,reference-0042f1a0,local-strict-pass,50,50,50,.analysis/reference-audit.json
 0x0042F1E0,Item::~Item,reference-0042f1e0,local-strict-pass,120,120,120,.analysis/reference-audit.json
 0x0042F260,ItemManager::initialize,reference-0042f260,local-strict-pass,106,106,106,.analysis/reference-audit.json

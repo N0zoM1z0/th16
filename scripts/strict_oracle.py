@@ -12,6 +12,7 @@ import tomllib
 from linked_image import PEImage, linked_code_fields, linked_functions, map_publics, verify_capstone, pdb_section_contributions
 from oracle_fields import expected_data_spans, require_decode_coverage, pack_linked_value
 from switch_ownership import load_switch_owners, validate_switch_owner
+from eh_identity import review_handlers, validate_field, EHEvidenceError
 from pdb_types import globals_with_sizes
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -293,7 +294,7 @@ def pointer_limit(context, function, field, linkages):
                 storage_name=anchor["storage_name"], storage_size=extent, pointer_limit=True)
 
 
-def replay_owner(image, target, publics, function, unit):
+def replay_owner(image, target, publics, function, unit, *, eh_handlers=None):
     """Compare every owned byte, permitting only enumerated, bound fields."""
     candidate_address = int(function["address"], 0)
     target_address = unit["target_address"]
@@ -324,7 +325,14 @@ def replay_owner(image, target, publics, function, unit):
     for field in expected:
         item = observed[key(field)]
         base = int(item["candidate_target"]) - field["addend"]
-        if field.get("local", False):
+        if "eh_handler" in field:
+            if candidate_address != unit["candidate_address"] or function["symbol"] != unit["symbol"]:
+                raise Incomplete("EH field does not belong to the actual candidate parent")
+            try:
+                validate_field(eh_handlers or {}, unit, field, base)
+            except EHEvidenceError as error:
+                raise Incomplete(str(error)) from error
+        elif field.get("local", False):
             if not candidate_address <= base < candidate_address + size:
                 raise Incomplete("local field leaves its candidate owner")
             if not target_address <= field["target"] < target_address + size:
@@ -385,6 +393,10 @@ class Context:
             self.boundaries = {int(row["address"], 0): row for row in csv.DictReader(stream)}
         self.switch_owners = load_switch_owners(ROOT / "config/switch-owners.toml")
         self.reviewed_linkages = reviewed_linkages(self)
+        try:
+            self.eh_handlers = review_handlers(self, ROOT / "config/eh-handlers.toml")
+        except EHEvidenceError as error:
+            raise Incomplete(str(error)) from error
 
     def identity(self):
         files = [self.receipt_path, self.directory / "th16.exe", self.directory / "th16.map",
@@ -396,6 +408,7 @@ class Context:
                  ROOT / "scripts/oracle_fields.py", ROOT / "scripts/linked_image.py",
                  ROOT / "scripts/pdb_types.py", ROOT / "scripts/vtable_identity.py",
                  ROOT / "scripts/switch_ownership.py", ROOT / "config/switch-owners.toml",
+                 ROOT / "scripts/eh_identity.py", ROOT / "config/eh-handlers.toml",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
@@ -467,7 +480,10 @@ class Context:
                        and target_base + field["storage_size"] <= self.target.image_base + s.rva + max(s.raw_size, s.virtual_size)
                        for s in self.target.sections):
                 raise Incomplete("typed target storage leaves mapped non-code data")
-        result = replay_owner(self.image, self.target, self.publics, function, unit)
+        result = replay_owner(self.image, self.target, self.publics, function, unit,
+                              eh_handlers=self.eh_handlers)
+        if any("eh_handler" in field for field in unit["linkages"]):
+            result["auxiliary_eh_owners"] = [self.eh_handlers[(unit["source"], unit["symbol"])]]
         return {**result, "symbol": unit["symbol"], "target_address": unit["target_address"],
                 "unit_sha256": hashlib.sha256(json.dumps(unit, sort_keys=True).encode()).hexdigest(),
                 "extent_source": function["extent_source"], "pdb_object": function["pdb_object"],

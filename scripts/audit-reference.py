@@ -269,6 +269,14 @@ def main():
             unresolved = []
             for field in fields["fields"]:
                 destination = int(field["candidate_target"])
+                eh = context.eh_handlers.get((unit["source"], symbol))
+                if (eh and original == eh["parent_target"] and address == eh["parent_candidate"]
+                        and size == eh["parent_size"] and field["offset"] == 6
+                        and field["width"] == 4 and field["type"] == "DIR32"
+                        and destination == eh["handler"]["address"]):
+                    from eh_identity import handler_field
+                    unit["linkages"].append(handler_field(eh))
+                    continue
                 limit = pointer_limit(context, function, field, unit["linkages"])
                 if limit is not None:
                     unit["linkages"].append(dict(offset=field["offset"], width=field["width"], type=field["type"], **limit))

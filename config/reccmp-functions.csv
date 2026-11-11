@@ -454,6 +454,7 @@ address,name,module,source_file,notes
 0x0042EFB0,AnmLoaded::create_ui_vm,HelpManual,src/HelpManual.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042F090,BombInf::is_active_before,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042F0B0,ItemManager::ItemManager,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0042F150,??1ItemManagerInner@@QAE@XZ,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042F1A0,Item::Item,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042F1E0,Item::~Item,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0042F260,ItemManager::initialize,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.

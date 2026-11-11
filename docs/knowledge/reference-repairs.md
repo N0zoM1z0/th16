@@ -733,3 +733,27 @@ artifacts, report and retained units. Final evidence is
 `.analysis/posvel-switch-controls.log` and `.analysis/posvel-oracle-controls.log`.
 Source-origin review and Factory acceptance remain open. No clean build,
 artifact cleanup, remote publication or Oracle-rule change was needed.
+
+## Complete empty-EH3 destructor graphs
+
+The next bounded evidence batch reviews `ItemManagerInner::~ItemManagerInner`
+at `0x0042F150` and `StageInner::~StageInner` at `0x00409770`. Their complete
+70/73-byte bodies now pass after the full 27-byte private handlers, full
+36-byte empty FuncInfo descriptors, parent registration edges and runtime
+entry identities are checked. The Item destructor receives a synthetic symbol
+annotation; no handler implementation or padding source is introduced.
+
+See [EH ownership evidence](eh-handlers.md) for the original role witnesses,
+qualified private MAP/PDB ownership, complete hashes, runtime source and refusal
+conditions. These auxiliary owners are linkage evidence only. Nonempty tables,
+other handler shapes and arbitrary private symbols remain unbound.
+
+An incremental build and broad replay retain all 633 prior exact results and
+add these two complete parents: **635 exact, 52 mismatch and 528 incomplete**
+among 1215 annotated candidates, with 114,388 exact primary bytes. All 137
+controls pass across nine suites, including 25 EH mutations. Evidence is
+`.analysis/eh-incremental-build.log`, `.analysis/eh-reviewed-graph-evidence.json`,
+`.analysis/eh-focused.json`, `.analysis/eh-full-audit.log`,
+`.analysis/eh-regression-check.json` and `.analysis/eh-*-controls.log`.
+Source-origin review remains open and Factory acceptance is not submitted.
+The repository has not been pushed or published.

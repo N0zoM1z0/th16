@@ -1,0 +1,31 @@
+schema_version = 1
+
+[[handlers]]
+source = "src/Item.cpp"
+parent_symbol = "??1ItemManagerInner@@QAE@XZ"
+parent_target = 0x42f150
+parent_size = 70
+parent_sha256 = "993289394e086dd01896eca5c08eccb2dca8ecbdf6014ef362c185d6a9c44aac"
+target = 0x48a7e0
+size = 27
+target_sha256 = "e03d01d5cecad966a9a11c4716f27df608d5e92af03d7fd6792a4a6dd57d22ce"
+func_info_target = 0x49b388
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/eh-handlers.md"
+
+[[handlers]]
+source = "src/Stage.cpp"
+parent_symbol = "??1StageInner@@QAE@XZ"
+parent_target = 0x409770
+parent_size = 73
+parent_sha256 = "a4e6da4122c22036be3d33def12225963bce4b6002aa5d962175ed1696c3ca64"
+target = 0x48a430
+size = 27
+target_sha256 = "d78b03f3e940b2ddfe1453f9321a5a25c3dd451a8268f8f8e1b7f2a464c76b6e"
+func_info_target = 0x49afec
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/eh-handlers.md"
