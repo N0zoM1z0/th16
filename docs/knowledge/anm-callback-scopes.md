@@ -159,10 +159,13 @@ Complete original scope SHA-256 values:
 
 ## Constructor EH investigation remains separate
 
-The constructor itself still lacks one independently accepted handler binding
-at parent offset six and receives no new exact credit. Its original GS handler
+At this callback checkpoint, the constructor lacked one independently accepted
+handler binding at parent offset six and received no new exact credit. The
+subsequent [complete aggregate review](anm-constructor-eh.md) binds that graph
+and establishes a full 5,054/5,071-byte mismatch. The investigation below records
+the original evidence that led to that separate profile. Its original GS handler
 uses cookie displacement `-0x18` and a nonempty FuncInfo with five unwind
-states and flags `0x1`. The existing empty-EH3 proof supports neither shape.
+states and flags `0x1`. The default empty-EH3 proof supports neither shape.
 
 Original FuncInfo at `0x0049B654` is 36 bytes followed immediately by a complete
 40-byte unwind map at `0x0049B678`. The entries unwind states 0 through 4 to
@@ -187,16 +190,17 @@ and one complete 76-byte metadata contribution in `AnmRender.obj`. All five
 `__unwindfunclet$` symbols and the handler share the code contribution; the
 FuncInfo and unwind-table symbols share the metadata contribution. The handler
 is therefore an interior entry, and its 27 bytes cannot be selected as a
-standalone complete PDB owner. Supporting this graph requires reviewing both
+standalone complete PDB owner. Supporting this graph required reviewing both
 whole contributions, every permitted interior symbol, state transition,
 relocation, action destination, parent frame dependency and runtime binding.
 Do not reuse the empty-descriptor selector or shorten either owner. The
-investigation is diagnostic only; no such binding is added here.
+investigation was diagnostic only; the subsequent binding is documented in
+the separate aggregate review linked above.
 
 ## Replay and retained evidence
 
-The full replay retains all 668 exact results at `efb48b8`, totaling **709 exact,
-52 mismatch and 454 incomplete**, with 117,308 exact primary bytes among 1215
+The callback batch's full replay retains all 668 exact results at `efb48b8`,
+totaling **709 exact, 52 mismatch and 454 incomplete**, with 117,308 exact primary bytes among 1215
 annotated candidates. Missing original boundaries fall from 97 to 56. All 720
 prior comparison units remain identical, alongside 41 new complete units.
 All 17 relevant focused-audit and strict-Oracle controls pass.

@@ -16,6 +16,45 @@ eh_flags = 5
 evidence = "docs/knowledge/eh-handlers.md"
 
 [[handlers]]
+profile = "anm-manager-constructor-v1"
+source = "src/AnmRender.cpp"
+parent_symbol = "??0AnmManager@@QAE@XZ"
+parent_target = 0x46a3a0
+parent_size = 5071
+parent_sha256 = "91f810dee2b3445e0e0e8b1dbc9750bc9aeb3ed0fa06e2ad5702ec6e970e9d1f"
+target = 0x48ab0d
+code_target = 0x48aaa0
+size = 136
+target_sha256 = "5a98fd7a383032180c4bdc87c95fc48e8ffa88dac2cdef8928f1d17193f62ad3"
+func_info_target = 0x49b654
+func_info_size = 76
+func_info_sha256 = "e3da070b0ed9eb2ce2fc3a7a1d713135264e2b42a71d31b8d2f7a0e0409a2e3c"
+eh_flags = 1
+cookie_target = 0x49ea4c
+evidence = "docs/knowledge/anm-constructor-eh.md"
+
+[[handlers.cleanup_entries]]
+source = "src/Thread.cpp"
+symbol = "??1ThreadInf@@UAE@XZ"
+target = 0x402f20
+size = 11
+sha256 = "3cee6875cfb34f549211c87fc53857659432a90bd67fd6ed68120e538a3bd532"
+
+[[handlers.cleanup_entries]]
+source = "src/AnmManagerVms.cpp"
+symbol = "??1AnmFastVm@@QAE@XZ"
+target = 0x46b790
+size = 61
+sha256 = "60c016b737e8fba67e159bba69e2f8f7afa473208b8a80ef5386390e5755a24a"
+
+[[handlers.cleanup_entries]]
+source = "src/AnmVm.cpp"
+symbol = "??1AnmVm@@QAE@XZ"
+target = 0x4093b0
+size = 61
+sha256 = "ada23e43e00af329b558d03f154a34add1b959d207d3da93ccb6edb77cb07aa8"
+
+[[handlers]]
 source = "src/Stage.cpp"
 parent_symbol = "??1StageInner@@QAE@XZ"
 parent_target = 0x409770

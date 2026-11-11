@@ -954,3 +954,42 @@ reproducer is `.analysis/review-anm-layer-scopes.py`. A broader discovery index,
 references to 74 formerly missing roots; it is not acceptance evidence for the
 33 referenced entries outside the current 41-entry review. Source-origin review
 and Factory acceptance remain open. Nothing is published.
+
+## Complete AnmManager constructor EH aggregate
+
+The next 2026-11-11 batch completes the preceding nonempty-EH investigation.
+An explicit `anm-manager-constructor-v1` profile independently checks the whole
+136-byte action/handler contribution and whole 76-byte FuncInfo/unwind-map
+contribution. It requires all eight private names at their reviewed offsets,
+complete source-qualified PDB ownership, original action inventory agreement,
+every relocation, the five-state chain, cleanup/runtime entry roles and the
+parent frame/cookie dependencies. See [the aggregate review](anm-constructor-eh.md).
+The default empty-EH3 profile keeps its strict standalone-owner behavior.
+
+The constructor now receives a complete comparison over all 5,071 bytes and
+164 primary linkages. Its result is **mismatch: 5,054 matching bytes, 17
+differences**. The difference occupies an 18-byte interval at parent
+`+0xABE..+0xACF`, preceding draw priority `0x24` for layer 17: the original
+clears the function and registration fields before clearing flag bit zero;
+the candidate clears the flag first. The existing volatile-this constructor
+remains a source/context hypothesis, not an established original source form.
+No source special case, forced instruction ordering, mask or shortened owner
+is introduced. No game source, compiler profile, build graph or analyzer is
+changed, and no new exact credit is granted.
+
+The broad replay reports **709 exact, 53 mismatch and 453 incomplete**, with
+117,308 exact primary bytes. All 709 exact results at `0f46eaf` remain exact;
+all 761 previous comparison units remain identical, alongside the new complete
+constructor mismatch unit. The only primary status transition is this
+constructor's incomplete-to-mismatch result. All 92 relevant controls pass
+across five suites, including 25 new aggregate controls with every auxiliary
+candidate byte mutated individually and the 25 existing empty-EH3 controls.
+
+Retained evidence includes `.analysis/anm-constructor-eh-focused.json`,
+`.analysis/anm-constructor-eh-full-audit.log`,
+`.analysis/anm-constructor-eh-regression-check.json`,
+`.analysis/anm-eh-baseline-audit.json` and the
+`.analysis/anm-constructor-{eh,empty-eh,oracle,linkage,focused}-controls.log`
+logs. The preceding original-first investigation and its reproducer are
+preserved. Source-origin review and Factory acceptance remain open. Nothing
+is published.

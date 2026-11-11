@@ -117,19 +117,23 @@ check entry is covered by its existing reviewed binding.
 
 ## Oracle limits and controls
 
-`scripts/eh_identity.py` supports only explicitly reviewed empty EH3 descriptors
-and this complete 27-byte GS handler. The two records are parent/source scoped.
+The default profile in `scripts/eh_identity.py` supports only explicitly
+reviewed empty EH3 descriptors and this complete 27-byte GS handler. These two
+records are parent/source scoped.
 The manifest field must exactly equal the reviewed offset-six DIR32 binding,
 with zero addend and `eh_handler = true`. It cannot substitute a local, an
 interior pointer, another parent, another source, a storage override, or an
 arbitrary private symbol. Static owners are never inserted into the public
-symbol list or the audit's global binding map. Nonempty unwind/try tables and
-other handler shapes remain unsupported. Configuration and verifier source are
-part of the Oracle input fingerprint.
+symbol list or the audit's global binding map. Other descriptor or handler
+shapes are not accepted by this default profile. Configuration and verifier
+source are part of the Oracle input fingerprint.
 
-The later [AnmManager constructor investigation](anm-callback-scopes.md#constructor-eh-investigation-remains-separate)
-records a five-state nonempty graph with aggregated code and metadata PDB owners.
-It is diagnostic evidence only and is not accepted by this empty-EH3 proof.
+The later [AnmManager constructor review](anm-constructor-eh.md) adds a separate,
+explicit five-state profile with complete 136-byte code and 76-byte metadata
+PDB owners. The empty-EH3 profile retains its standalone-owner restrictions;
+it does not accept that aggregate. The complete constructor now compares as a
+5,054/5,071-byte mismatch, with no additional exact credit. No generic nonempty
+unwind, try-block or interior-entry support is implied.
 
 The 25 controls in `scripts/test-eh-identities.py` cover both positive complete
 parent replays, all target hashes, PDB ownership and extent failures, MAP

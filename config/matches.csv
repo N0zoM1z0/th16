@@ -636,6 +636,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046A370,??0RenderVertexXyzrhwTex@@QAE@XZ,reference-0046a370,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0046A380,??0RenderVertex144@@QAE@XZ,reference-0046a380,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0046A390,??0RenderVertexXyzDiffuseTex@@QAE@XZ,reference-0046a390,local-strict-pass,3,3,3,.analysis/reference-audit.json
+0x0046A3A0,AnmManager::AnmManager,reference-0046a3a0,mismatch,5071,5071,5054,.analysis/reference-audit.json
 0x0046B770,AnmFastVm::AnmFastVm,reference-0046b770,local-strict-pass,22,22,22,.analysis/reference-audit.json
 0x0046B790,AnmFastVm::~AnmFastVm,reference-0046b790,local-strict-pass,61,61,61,.analysis/reference-audit.json
 0x0046B900,AnmManager::setup_vertex_buffer,reference-0046b900,local-strict-pass,1985,1985,1985,.analysis/reference-audit.json

@@ -83,6 +83,8 @@ class EHIdentityControls(unittest.TestCase):
 
     def test_both_complete_parent_owners_pass(self):
         for proof in self.context.eh_handlers.values():
+            if proof.get("profile"):
+                continue
             with self.subTest(parent=proof["parent_symbol"]):
                 _, unit = self.unit(proof)
                 result = self.context.compare(unit)
@@ -180,7 +182,8 @@ class EHIdentityControls(unittest.TestCase):
                 self.review(context=self.mutate("image", address + offset, bytes([value])))
 
     def test_identical_descriptor_of_another_parent_is_rejected(self):
-        other = next(p for p in self.context.eh_handlers.values() if p is not self.proof)
+        other = next(p for p in self.context.eh_handlers.values()
+                     if p is not self.proof and not p.get("profile"))
         address = self.proof["handler"]["address"] + 18
         self.assertEqual(self.context.image.read_address(other["descriptor"]["address"], 36),
                          self.context.image.read_address(self.proof["descriptor"]["address"], 36))

@@ -1,4 +1,4 @@
-"""Review the complete, empty x86 EH3 graphs of explicitly named parents."""
+"""Review complete, parent-scoped x86 EH3 graphs with explicit owner profiles."""
 from __future__ import annotations
 
 import hashlib
@@ -6,7 +6,7 @@ from pathlib import Path
 import struct
 import tomllib
 
-from linked_image import map_statics, pdb_section_contributions, _object_path
+from linked_image import map_statics, pdb_section_contributions, linked_code_fields, _object_path
 
 
 class EHEvidenceError(ValueError):
@@ -31,7 +31,7 @@ def check_relocations(image, address, size, offsets):
     require(observed == offsets, "EH owner has missing, extra or crossing PE relocations")
 
 
-def private_owner(context, statics, pdb, symbol, source, size, code):
+def private_owner(context, statics, pdb, symbol, source, size, code, *, internal_symbols=None):
     """Join a private name to one complete contribution in its producer object."""
     expected = context.directory / "obj" / Path(source).with_suffix(".obj")
     basename = expected.name.lower()
@@ -62,7 +62,23 @@ def private_owner(context, statics, pdb, symbol, source, size, code):
                 "EH owner overlaps another PDB contribution")
     names = [r for r in context.publics + statics if r["section_number"] == section_number
              and offset <= r["section_offset"] < offset + size]
-    require(names == [selected], "EH owner has a colliding or interior MAP symbol")
+    if internal_symbols is None:
+        require(names == [selected], "EH owner has a colliding or interior MAP symbol")
+    else:
+        observed = sorted((r["symbol"], r["section_offset"] - offset) for r in names)
+        require(observed == sorted(internal_symbols.items()),
+                "EH aggregate has missing, duplicate, colliding or unreviewed interior MAP symbols")
+        require(all(r in statics and r not in context.publics for r in names),
+                "EH aggregate internal entries must remain private MAP statics")
+        for row in names:
+            producer = str(row["object"]).replace("\\", "/")
+            require(producer.rsplit("/", 1)[-1].lower() == basename
+                    and (not any(c in producer for c in ("/", ":"))
+                         or _object_path(row["object"]) == _object_path(expected)),
+                    "EH aggregate internal MAP entry leaves its source producer object")
+            require(row["address"] == selected["address"] + internal_symbols[row["symbol"]]
+                    and ("f" in row["flags"]) == code,
+                    "EH aggregate internal MAP entry has wrong VA or code/data role")
     section = context.image.section(section_number)
     for characteristics in (section.characteristics, contribution["characteristics"]):
         required = 0x60000020 if code else 0x40000040
@@ -94,6 +110,9 @@ def inspect_parent(image, address, handler):
 
 
 def review_handler(context, record, statics, pdb):
+    if record.get("profile") == "anm-manager-constructor-v1":
+        return review_anm_constructor(context, record, statics, pdb)
+    require("profile" not in record, "unsupported EH owner profile")
     root = Path(__file__).resolve().parents[1]
     source, symbol = record["source"], record["parent_symbol"]
     path = root / source
@@ -154,6 +173,209 @@ def review_handler(context, record, statics, pdb):
                 parent_candidate=candidate_parent, target=target, handler=handler,
                 func_info_target=info, descriptor=descriptor, eh_flags=record["eh_flags"],
                 evidence=record["evidence"])
+
+
+def complete_game_entry(context, source, symbol, target, size, target_hash):
+    """Bind a reviewed original role to a complete source-qualified public owner."""
+    root = Path(__file__).resolve().parents[1]
+    path = root / source
+    require(path.is_file() and path.suffix == ".cpp"
+            and path.resolve().is_relative_to(root / "src")
+            and path.relative_to(root).as_posix() == source,
+            "EH game entry source is not canonical game code")
+    boundary = context.boundaries.get(target)
+    require(boundary and int(boundary["size"]) == size
+            and int(boundary["span_end"], 0) == target + size - 1,
+            "EH game entry lacks its complete original boundary")
+    extent_hash(context.target, target, size, target_hash)
+    owners = [f for f in context.linked["functions"] if f["symbol"] == symbol]
+    require(len(owners) == 1 and owners[0]["size"] == size,
+            "EH game entry lacks one complete candidate PDB owner")
+    owner = owners[0]
+    expected = context.directory / "obj" / Path(source).with_suffix(".obj")
+    require(_object_path(owner["pdb_object"]) == _object_path(expected),
+            "EH game entry leaves its source producer object")
+    address = int(owner["address"], 0)
+    publics = [p for p in context.publics if p["symbol"] == symbol]
+    require(len(publics) == 1 and publics[0]["address"] == address,
+            "EH game entry lacks one matching public entry")
+    return owner, address
+
+
+def target_owner_section(context, address, size, code):
+    sections = [s for s in context.target.sections
+                if context.target.image_base + s.rva <= address
+                and address + size <= context.target.image_base + s.rva + s.raw_size]
+    require(len(sections) == 1, "EH aggregate target leaves one mapped raw section")
+    required, forbidden = (0x60000020, 0x80000000) if code else (0x40000040, 0xA0000020)
+    flags = sections[0].characteristics
+    require(flags & required == required and not flags & forbidden,
+            "EH aggregate target has wrong section permissions")
+
+
+def inspect_constructor_frame(image, parent, size, handler, cookie):
+    """Check the saved this, GS slot and all EH-sensitive frame uses in the parent."""
+    import capstone
+    expected = (bytes.fromhex("558bec6aff68") + struct.pack("<I", handler)
+                + bytes.fromhex("64a1000000005083ec08535657a1") + struct.pack("<I", cookie)
+                + bytes.fromhex("33c5508d45f464a3000000008bf9897dec"))
+    require(image.read_address(parent, len(expected)) == expected,
+            "EH constructor frame registration, cookie or saved this differs")
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    decoder.detail = True
+    instructions = list(decoder.disasm(image.read_address(parent, size), parent))
+    require(sum(i.size for i in instructions) == size,
+            "EH constructor frame scan does not decode the complete parent")
+    states = [(i.address - parent, bytes(i.bytes)) for i in instructions
+              if any(op.type == capstone.x86.X86_OP_MEM
+                     and op.mem.base == capstone.x86.X86_REG_EBP and op.mem.disp == -4
+                     for op in i.operands)]
+    require(states == [(0x69, bytes.fromhex("c745fc00000000")),
+                       (0x90, bytes.fromhex("c645fc01")),
+                       (0xbc, bytes.fromhex("c645fc03")),
+                       (0xcd, bytes.fromhex("c645fc04"))],
+            "EH constructor parent states differ from the reviewed initialization sequence")
+    uses = []
+    for instruction in instructions:
+        reads, writes = instruction.regs_access()
+        frame = capstone.x86.X86_REG_EBP in reads + writes or any(
+            op.type == capstone.x86.X86_OP_MEM and op.mem.segment == capstone.x86.X86_REG_FS
+            for op in instruction.operands)
+        if frame:
+            uses.append((instruction.address - parent, bytes(instruction.bytes)))
+    return uses
+
+
+def load_config_cookie(image):
+    # IMAGE_LOAD_CONFIG_DIRECTORY32.SecurityCookie is the DWORD at offset 60.
+    require(len(image.directories) > 10 and image.directories[10][1] >= 64,
+            "EH constructor lacks a complete PE32 load-config cookie field")
+    address = image.image_base + image.directories[10][0]
+    return struct.unpack("<I", image.read_address(address + 60, 4))[0]
+
+
+def review_anm_constructor(context, record, statics, pdb):
+    """One reviewed five-state graph; both entire PDB contributions are required."""
+    source, symbol = record["source"], record["parent_symbol"]
+    require(source == "src/AnmRender.cpp" and symbol == "??0AnmManager@@QAE@XZ"
+            and record["parent_size"] == 5071 and record["size"] == 136
+            and record["func_info_size"] == 76 and record["eh_flags"] == 1,
+            "EH constructor profile requires its complete 5071/136/76-byte owners")
+    parent, size = record["parent_target"], record["parent_size"]
+    code, info, handler = record["code_target"], record["func_info_target"], record["target"]
+    require(handler == code + 109, "EH constructor handler is not its reviewed interior entry")
+    owner, candidate_parent = complete_game_entry(
+        context, source, symbol, parent, size, record["parent_sha256"])
+    raw_code = extent_hash(context.target, code, 136, record["target_sha256"])
+    metadata = extent_hash(context.target, info, 76, record["func_info_sha256"])
+    target_owner_section(context, code, 136, True)
+    target_owner_section(context, info, 76, False)
+    offsets = [0, 8, 38, 68, 82, 109]
+    scopes = {code + start: stop - start for start, stop in zip(offsets, offsets[1:] + [136])}
+    overlaps = {base: r for base, r in context.boundaries.items()
+                if base < code + 136 and code <= int(r["span_end"], 0)}
+    require(set(overlaps) == set(scopes) - {handler}
+            and all(int(r["size"]) == scopes[base]
+                    and int(r["span_end"], 0) == base + scopes[base] - 1
+                    for base, r in overlaps.items()),
+            "EH constructor aggregate conflicts with its complete original unwind subscopes")
+    require(not any(base < info + 76 and info <= int(r["span_end"], 0)
+                    for base, r in context.boundaries.items()),
+            "EH constructor metadata overlaps an original function")
+    code_names = {"__unwindfunclet$" + symbol + "$" + str(i): offset
+                  for i, offset in enumerate(offsets[:-1])}
+    code_names["__ehhandler$" + symbol] = 109
+    data_names = {"__ehfuncinfo$" + symbol: 0, "__unwindtable$" + symbol: 36}
+    code_owner = private_owner(context, statics, pdb, "__unwindfunclet$" + symbol + "$0",
+                               source, 136, True, internal_symbols=code_names)
+    descriptor = private_owner(context, statics, pdb, "__ehfuncinfo$" + symbol,
+                               source, 76, False, internal_symbols=data_names)
+    require(code_owner["module_index"] == descriptor["module_index"] == owner["pdb_module_index"],
+            "EH constructor aggregate leaves its parent PDB module")
+    candidate_code, candidate_info = code_owner["address"], descriptor["address"]
+    code_owner["internal_symbols"] = code_names
+    descriptor["internal_symbols"] = data_names
+    runtime = {}
+    for name in ("??_M@YGXPAXIIP6EX0@Z@Z", "@__security_check_cookie@4", "___CxxFrameHandler3"):
+        binding = context.reviewed_linkages.get(name, {})
+        publics = [p for p in context.publics if p["symbol"] == name]
+        require(binding.get("kind") == "runtime-function" and len(publics) == 1,
+                "EH constructor runtime lacks its independent complete binding")
+        runtime[name] = (binding["target"], publics[0]["address"])
+    expected_callees = [("src/Thread.cpp", "??1ThreadInf@@UAE@XZ", 11),
+                        ("src/AnmManagerVms.cpp", "??1AnmFastVm@@QAE@XZ", 61),
+                        ("src/AnmVm.cpp", "??1AnmVm@@QAE@XZ", 61)]
+    require([(r["source"], r["symbol"], r["size"]) for r in record["cleanup_entries"]] == expected_callees,
+            "EH constructor cleanup entries differ from the reviewed destructor roles")
+    cleanup = {}
+    for entry in record["cleanup_entries"]:
+        _, address = complete_game_entry(context, entry["source"], entry["symbol"], entry["target"],
+                                         entry["size"], entry["sha256"])
+        cleanup[entry["symbol"]] = (entry["target"], address)
+    # Every byte outside these proven fields is compared literally. Field offsets
+    # describe complete instruction operands, not masks or arbitrary local labels.
+    destinations = {4: cleanup[expected_callees[0][1]], 9: cleanup[expected_callees[1][1]],
+                    33: runtime["??_M@YGXPAXIIP6EX0@Z@Z"], 39: cleanup[expected_callees[1][1]],
+                    63: runtime["??_M@YGXPAXIIP6EX0@Z@Z"], 78: cleanup[expected_callees[2][1]],
+                    83: cleanup[expected_callees[2][1]], 104: runtime["??_M@YGXPAXIIP6EX0@Z@Z"],
+                    122: runtime["@__security_check_cookie@4"], 127: (info, candidate_info),
+                    132: runtime["___CxxFrameHandler3"]}
+    absolute = [9, 39, 83, 127]
+    # Serialize the reviewed instructions, including saved-this displacements,
+    # array counts/strides/object offsets, GS displacement and every terminator.
+    template = bytes.fromhex(
+        "8b4dece900000000"
+        "680000000068ff1f000068140600008b45ec05ec00000050e800000000c3"
+        "680000000068ff1f000068140600008b45ec05f07ac20050e800000000c3"
+        "8b4dec81c1acf58401e900000000"
+        "68000000006a2b68fc0500008b45ec0530fcc60150e800000000c3"
+        "8b5424088d420c8b4ae833c8e800000000b800000000e900000000")
+    original_code, expected_code = bytearray(template), bytearray(template)
+    for offset, (original, candidate) in destinations.items():
+        observed = struct.unpack_from("<I", raw_code, offset)[0]
+        if offset not in absolute:
+            observed = (observed + code + offset + 4) & 0xFFFFFFFF
+            candidate = (candidate - candidate_code - offset - 4) & 0xFFFFFFFF
+        require(observed == original, "EH constructor original edge has an unreviewed destination")
+        original_value = original if offset in absolute else (original - code - offset - 4) & 0xFFFFFFFF
+        struct.pack_into("<I", original_code, offset, original_value)
+        struct.pack_into("<I", expected_code, offset, candidate)
+    require(raw_code == bytes(original_code), "EH constructor original action/handler instructions differ")
+    check_relocations(context.image, candidate_code, 136, absolute)
+    fields = linked_code_fields(context.image, context.publics, candidate_code, 136)
+    require(fields["decoded_bytes"] == 136 and fields["normalization_complete"]
+            and [(f["offset"], f["width"], f["type"]) for f in fields["fields"]]
+            == [(p, 4, "DIR32" if p in absolute else "REL32") for p in sorted(destinations)],
+            "EH constructor aggregate has an unreviewed instruction field")
+    require(context.image.read_address(candidate_code, 136) == bytes(expected_code),
+            "EH constructor complete action/handler code differs")
+
+    def descriptor_bytes(base, actions):
+        return (struct.pack("<9I", 0x19930522, 5, base + 36, 0, 0, 0, 0, 0, 1)
+                + b"".join(struct.pack("<iI", state - 1, actions + offset)
+                           for state, offset in enumerate(offsets[:-1])))
+    require(metadata == descriptor_bytes(info, code),
+            "EH constructor original state map is not the complete reviewed chain")
+    check_relocations(context.image, candidate_info, 76, [8, 40, 48, 56, 64, 72])
+    require(context.image.read_address(candidate_info, 76) == descriptor_bytes(candidate_info, candidate_code),
+            "EH constructor complete metadata or state/action map differs")
+    cookies = [p for p in context.publics if p["symbol"] == "___security_cookie"]
+    require(len(cookies) == 1 and cookies[0]["object"] == "LIBCMT:gs_cookie.obj",
+            "EH constructor cookie lacks its unique pinned runtime storage role")
+    require(record["cookie_target"] == load_config_cookie(context.target)
+            and cookies[0]["address"] == load_config_cookie(context.image),
+            "EH constructor cookie differs from the PE load-config identity")
+    frame = inspect_constructor_frame(context.target, parent, size, handler, record["cookie_target"])
+    candidate_frame = inspect_constructor_frame(context.image, candidate_parent, size,
+                                                 candidate_code + 109, cookies[0]["address"])
+    require(frame == candidate_frame, "EH constructor EH-sensitive frame uses differ")
+    check_relocations(context.image, candidate_parent, 45, [6, 24])
+    return dict(source=source, parent_symbol=symbol, parent_target=parent, parent_size=size,
+                parent_candidate=candidate_parent, target=handler, profile=record["profile"],
+                handler=dict(symbol="__ehhandler$" + symbol, address=candidate_code + 109,
+                             owner_offset=109, owner_symbol=code_owner["symbol"]),
+                code_target=code, code_owner=code_owner, func_info_target=info, descriptor=descriptor,
+                cleanup_entries=record["cleanup_entries"], eh_flags=1, evidence=record["evidence"])
 
 
 def review_handlers(context, path):

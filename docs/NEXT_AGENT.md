@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after the complete AnmManager callback scope review.
+Updated 2026-11-11 after the complete AnmManager constructor EH aggregate review.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,14 +18,23 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report has **709 exact, 52 mismatch and 454 incomplete** among
-1215 annotated candidates, covering 117,308 exact owned bytes. All 668 exact
-results at `efb48b8` remain exact. The original AnmManager constructor independently
+The current report has **709 exact, 53 mismatch and 453 incomplete** among
+1215 annotated candidates, covering 117,308 exact owned bytes. All 709 exact
+results at `0f46eaf` remain exact. The original AnmManager constructor independently
 establishes 39 draw registrations and two tick registrations. All 41 complete
 callbacks pass, adding 1,182 bytes. See
 [AnmManager callback evidence](knowledge/anm-callback-scopes.md). The constructor
 entry also has an original WinMain direct-call witness. Neither candidate sizes
 nor artifacts enter the original callback scope derivation.
+
+The constructor's nonempty EH graph now has an explicit complete-owner profile:
+136 code bytes and 76 metadata bytes, with all interior names, relocations,
+state edges, frame dependencies and cleanup/runtime entries checked. Its entire
+5,071-byte primary owner now compares as a mismatch, with 5,054 matching bytes
+and 17 differences in one UpdateFunc constructor store-order interval. See
+[the aggregate review](knowledge/anm-constructor-eh.md). No new exact credit
+is granted. All 761 earlier comparison units remain unchanged, alongside one
+new complete constructor mismatch unit.
 
 The preceding 26 passes, including the 442-byte Replay playback body, remain
 exact; see [registered callbacks](knowledge/registered-callbacks.md). The seven
@@ -49,10 +58,10 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. This batch adds 41
-original inventory rows and unknown/review source-origin rows. No game source,
-compiler profile, Oracle or binding implementation changes; no rebuild is needed.
-All 720 prior comparison units are unchanged, alongside 41 new complete units.
+cache and non-LTCG symbol-discovery cache are retained. The preceding callback
+batch added 41 original inventory rows and unknown/review source-origin rows.
+This batch extends the EH verifier with one explicitly reviewed aggregate
+profile; it changes no game source or compiler profile and needs no rebuild.
 The preceding Replay local cleanup remains: its ordinary recorded-input local
 produces a complete 281-byte candidate against the 337-byte original. The body
 is incomplete. Do not restore forced accesses to imitate its unexplained spill.
@@ -61,14 +70,15 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **17 controls across two relevant suites**: focused
-audit and strict Oracle. Logs use
-`.analysis/anm-layer-{focused,oracle}-controls.log`. The earlier full control
-checkpoint passed 140 controls across nine suites. Original scope derivation
-and disassembly are in `.analysis/reviewed-anm-layer-scopes.json`; its original-only
+The current batch passes **92 controls across five relevant suites**: constructor
+EH, empty EH, strict Oracle, reviewed linkage and focused audit. Logs use
+`.analysis/anm-constructor-{eh,empty-eh,oracle,linkage,focused}-controls.log`.
+The earlier full control checkpoint passed 140 controls across nine suites.
+Original scope derivation and disassembly are in
+`.analysis/reviewed-anm-layer-scopes.json`; its original-only
 reproducer is `.analysis/review-anm-layer-scopes.py`. The current full replay and
-retained-pass evidence are `.analysis/anm-layer-boundary-full-audit.log` and
-`.analysis/anm-layer-boundary-regression-check.json`. The unchanged incremental
+retained-pass evidence are `.analysis/anm-constructor-eh-full-audit.log` and
+`.analysis/anm-constructor-eh-regression-check.json`. The unchanged incremental
 build log remains `.analysis/record-input-cleanup-build.log`.
 
 ```sh
@@ -126,24 +136,24 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 454 incomplete candidates comprise 237 with unresolved fields, **56 missing
+The 453 incomplete candidates comprise 236 with unresolved fields, **56 missing
 independently reviewed original boundaries**, 113 genuine candidate/target extent
 differences, 40 without a same-start contribution, six with source-object
 ownership differences and two requiring reviewed switch or owned-data extents.
 The earlier combined extent reason hid missing inventory rows; the Oracle now
 distinguishes these two refusal cases. Start from their recorded reasons.
 
-The 5,071-byte AnmManager constructor has one unresolved handler field. Its
-nonempty EH graph is investigated in
-[AnmManager callback evidence](knowledge/anm-callback-scopes.md#constructor-eh-investigation-remains-separate)
-and `.analysis/anm-constructor-eh-investigation.json`. Five unwind actions and
-the handler share one complete 136-byte candidate code contribution; FuncInfo
-and its five-state unwind map share one complete 76-byte metadata contribution.
-The 27-byte handler is an interior entry, not a standalone PDB owner. Review
-both whole contributions, all permitted internal symbols, original inventory
-subscopes, relocations, state edges, frame dependencies and runtime entries
-before extending the Oracle.
-The existing empty-EH3 proof remains unchanged and does not accept this graph.
+The complete AnmManager constructor is now a retained 5,054/5,071-byte mismatch.
+Its EH profile checks both whole 136/76-byte contributions; the handler remains
+an explicitly scoped interior entry rather than a standalone PDB owner. See
+[the aggregate review](knowledge/anm-constructor-eh.md). Its 17 differing bytes
+are within `+0xABE..+0xACF`: the original clears two callback fields before flag
+bit zero, whereas the candidate clears the flag first. All 164 primary linkages
+are compared. The retained volatile-this accesses in the shared UpdateFunc
+constructor remain a source/context hypothesis. Recover that context rather
+than special-casing one registration or forcing the instruction order. Other
+nonempty EH graphs still need independent complete-owner review; do not
+generalize this explicit profile to arbitrary tables or interior symbols.
 
 The 35 original references in `.analysis/callback-entry-inventory.json` have
 reviewed roots. A second discovery index,
