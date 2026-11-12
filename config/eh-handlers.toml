@@ -505,3 +505,37 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/sound-eh-vftables.md"
+
+[[handlers]]
+profile = "aligned-audio-allocation-v1"
+source = "src/DSUtil.cpp"
+parent_symbol = "?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PBDKU_GUID@@KKPAXPAUThBgmFormat@@@Z"
+parent_target = 0x470320
+parent_size = 856
+parent_sha256 = "a5984dbc0e40c2bfb51417fcd2ab75e817e71f8592019aa959c86e917b449f8e"
+target = 0x48ab62
+code_target = 0x48ab50
+size = 58
+target_sha256 = "5b193bf2d2e7280cd39964a818740c20384e80d0eb0633bee80f746b815705f9"
+func_info_target = 0x49b6c4
+func_info_size = 44
+func_info_sha256 = "f5cb8911e72bea6a9f5902bad7a5f905b7fa427c497ea45bb8f04c6c3dcb93a4"
+eh_flags = 1
+evidence = "docs/knowledge/audio-isa-aligned-eh.md"
+
+[[handlers]]
+profile = "aligned-audio-allocation-v1"
+source = "src/DSUtil.cpp"
+parent_symbol = "?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAEKPAUThBgmFormat@@KU_GUID@@KKPAX@Z"
+parent_target = 0x470680
+parent_size = 809
+parent_sha256 = "dc99a08573c97a8898eee227cdb611ffd81a4ab8565b47863283aedf6148cfe0"
+target = 0x48aba2
+code_target = 0x48ab90
+size = 58
+target_sha256 = "14a91403f0f16f2cac0b06ddbef4742c472f5869464a06babd8a7c669ea4d0c1"
+func_info_target = 0x49b6f0
+func_info_size = 44
+func_info_sha256 = "0394e37c11989fc4d6797aecae76d356b816e6cf20781c4650538603b1f609a3"
+eh_flags = 1
+evidence = "docs/knowledge/audio-isa-aligned-eh.md"

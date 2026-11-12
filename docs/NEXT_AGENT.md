@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete rand and audio-vector identities.
+Updated 2026-11-12 after complete ISA storage and aligned audio EH identities.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,7 +18,31 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **877 exact, 65 mismatch and 273 incomplete** among
+The current report is **879 exact, 65 mismatch and 271 incomplete** among
+1215 annotated candidates, covering 167,046 exact owned bytes and 944 units.
+CSoundManager::CreateStreaming (856 bytes) and CreateStreamingFromMemory
+(809) pass their complete owners. An independent twelve-instruction normal
+startup witness identifies the complete 415-byte original ISA initializer.
+Its complete candidate LIBCMT producer owns code, the full eight-byte virtual
+ISA/favor aggregate and a four-byte initialized enable mask. The full feature
+import thunk, all sixteen initializer fields and all fifteen relocations agree.
+Only the exact ISA DIR32 address point is bound; no literal-zero or standalone
+four-byte owner is inferred. Two fixed audio EH graphs require complete
+58-byte private code and 44-byte metadata aggregates, dual cookies, sixteen-byte
+stack alignment, full allocation lifetime and RET 44/48. Their handler field
+is explicitly offset 25; older profiles retain offset six. All preceding 877
+exact results, 65 complete mismatches and 942 units remain identical, as do all
+other incomplete records. No game source or compiler artifact changes and no
+build occurs; all 1,719 complete linked owners and 192 dependency stamps validate.
+See [the complete review](knowledge/audio-isa-aligned-eh.md).
+
+The remaining DSUtil candidates are SetVolume at 0x004711F0 and Unpause at
+0x00471380, with candidate extents 116/107 against complete originals 114/103.
+The bounded inventory is `.analysis/isa-aligned-next-audio-inventory.json`. Continue with natural source/type/calling context and complete-owner
+comparison. The ISA profile admits no other global or interior address;
+other aligned EH graphs require separate independent review.
+
+The preceding rand/vector report was **877 exact, 65 mismatch and 273 incomplete** among
 1215 annotated candidates, covering 165,381 exact owned bytes and 942 units.
 CSound::GetFreeBuffer passes its entire 110-byte owner after independently
 binding the complete 33-byte CRT rand entry. Its PTD getter, state offset 24,
@@ -31,15 +55,6 @@ incomplete records are unchanged. No game source, admission-rule or compiler
 artifact change occurs and no build is needed. All 1,719 complete linked
 function records and 192 dependency stamps validate. See
 [the rand/vector review](knowledge/audio-rand-vector-identities.md).
-
-The two audio initialization owners retain private EH and mutable ISA fields.
-Original ISA storage is 0x004A65FC; candidate ___isa_available is 0x004A67EC,
-in virtual zero-fill storage with an eight-byte candidate PDB contribution.
-Do not infer a standalone four-byte owner or bind it as literal zero.
-Candidate ___isa_available_init is a complete 415-byte owner at 0x0047548B;
-its original identity/startup witness and complete field/storage roles remain
-open. The next inventory is `.analysis/audio-isa-next-inventory.json`.
-Both nonstandard audio EH graphs also need complete independent review.
 
 The preceding sound-table report was **876 exact, 65 mismatch and 274 incomplete** among
 1215 annotated candidates, covering 165,271 exact owned bytes and 941 units.
@@ -576,7 +591,20 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **60 controls across three relevant suites**:
+The current batch passes **363 controls across fifteen relevant suites**:
+ISA storage (16), aligned audio EH (21), reviewed linkages (43), strict Oracle
+(14), focused audit (3), saved-register EH (56), vftables (33), single-state EH
+(16), terminate EH (23), array EH (18), member EH (25), allocation EH (23),
+legacy EH (25), AnmManager constructor EH (25) and runtime interiors (22).
+New controls cover every complete initializer/action/handler/descriptor byte,
+startup reachability, full eight-byte zero-fill storage, pinned producers,
+actual imports, both cookies, complete frame/lifetime/RET behavior and all
+relocation footprints. An unrelated body mutation still fails primary replay.
+Logs use `.analysis/isa-aligned-<suite>-controls.log`; the summary is
+`.analysis/isa-aligned-controls-summary.json`. Complete regression retention is
+`.analysis/isa-aligned-regression-check.json`.
+
+The preceding rand/vector batch passed **60 controls across three relevant suites**:
 reviewed linkages (43), strict Oracle (14) and focused audit (3). New cases
 require both complete rand extents and its pinned UCRT producer, the actual
 original vector read, full typed width and the entire candidate payload.

@@ -294,7 +294,7 @@ def main():
                 destination = int(field["candidate_target"])
                 eh = context.eh_handlers.get((unit["source"], symbol))
                 if (eh and original == eh["parent_target"] and address == eh["parent_candidate"]
-                        and size == eh["parent_size"] and field["offset"] == 6
+                        and size == eh["parent_size"] and field["offset"] == eh.get("handler_field_offset", 6)
                         and field["width"] == 4 and field["type"] == "DIR32"
                         and destination == eh["handler"]["address"]):
                     from eh_identity import handler_field

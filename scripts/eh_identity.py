@@ -169,6 +169,9 @@ def inspect_saved_register_frame(image, address, size, handler, *,
 
 
 def review_handler(context, record, statics, pdb):
+    if record.get("profile") == "aligned-audio-allocation-v1":
+        from eh_aligned_audio import review_aligned_audio
+        return review_aligned_audio(context, record, statics, pdb)
     if record.get("profile") in ("two-state-terminate-v1", "single-state-terminate-v1"):
         from eh_terminate import review_terminate
         return review_terminate(context, record, statics, pdb)
@@ -530,7 +533,7 @@ def review_handlers(context, path):
 
 
 def handler_field(proof):
-    return dict(offset=6, width=4, type="DIR32", symbol=proof["handler"]["symbol"],
+    return dict(offset=proof.get("handler_field_offset", 6), width=4, type="DIR32", symbol=proof["handler"]["symbol"],
                 target=proof["target"], addend=0, eh_handler=True)
 
 

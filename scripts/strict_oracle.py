@@ -520,6 +520,14 @@ class Context:
             self.boundaries = {int(row["address"], 0): row for row in csv.DictReader(stream)}
         self.switch_owners = load_switch_owners(ROOT / "config/switch-owners.toml")
         self.reviewed_linkages = reviewed_linkages(self)
+        from runtime_isa import review_isa, RuntimeEvidenceError
+        try:
+            isa_entries, self.runtime_globals = review_isa(self, ROOT / "config/runtime-globals.toml")
+            if set(isa_entries) & self.reviewed_linkages.keys():
+                raise Incomplete("ISA identity duplicates an ordinary linkage")
+            self.reviewed_linkages.update(isa_entries)
+        except RuntimeEvidenceError as error:
+            raise Incomplete(str(error)) from error
         from runtime_identity import review_runtime_interiors, RuntimeEvidenceError
         try:
             runtime_entries, self.runtime_interiors = review_runtime_interiors(self, ROOT / "config/runtime-interiors.toml")
@@ -552,10 +560,12 @@ class Context:
                  ROOT / "scripts/eh_identity.py", ROOT / "config/eh-handlers.toml",
                  ROOT / "scripts/eh_member_constructor.py",
                  ROOT / "scripts/eh_allocation.py",
+                 ROOT / "scripts/eh_aligned_audio.py",
                  ROOT / "scripts/eh_array_constructor.py",
                  ROOT / "scripts/eh_terminate.py",
                  ROOT / "scripts/static_identity.py", ROOT / "config/static-functions.toml",
                  ROOT / "scripts/runtime_identity.py", ROOT / "config/runtime-interiors.toml",
+                 ROOT / "scripts/runtime_isa.py", ROOT / "config/runtime-globals.toml",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
@@ -624,6 +634,12 @@ class Context:
                 except RuntimeEvidenceError as error:
                     raise Incomplete(str(error)) from error
             addend = field.get("addend", 0)
+            if reviewed and reviewed["kind"] == "runtime-global-isa-v1":
+                from runtime_isa import validate_isa_field, RuntimeEvidenceError
+                try:
+                    validate_isa_field(field, reviewed)
+                except RuntimeEvidenceError as error:
+                    raise Incomplete(str(error)) from error
             if reviewed and reviewed["kind"] == "vftable" and (addend or field["type"] != "DIR32"):
                 raise Incomplete("reviewed vftable permits only its exact DIR32 address point")
             if addend and not field.get("local") and "storage_size" not in field:

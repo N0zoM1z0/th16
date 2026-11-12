@@ -2417,3 +2417,41 @@ See [the full review](audio-rand-vector-identities.md),
 `.analysis/rand-audio-caller-scopes.json`,
 `.analysis/rand-audio-regression-check.json` and
 `.analysis/audio-isa-next-inventory.json`.
+
+## Complete ISA storage and aligned audio initialization EH
+
+The complete CreateStreaming (856 bytes) and CreateStreamingFromMemory
+(809) owners now pass all 1,665 primary bytes. An independent twelve-instruction
+startup witness reaches the original 415-byte CPU initializer, whose complete
+candidate producer owns exactly the code, eight-byte virtual ISA/favor aggregate
+and four-byte initialized enable mask. All sixteen code fields, fifteen
+relocations and the complete imported feature thunk agree. Only the exact ISA
+DIR32 address point is bound; mutable zero-fill storage is never literal zero
+or an invented four-byte complete owner.
+
+Both private audio EH graphs own 58 code bytes and 44 metadata bytes. Their
+fixed profile requires the eighteen-byte sized-delete action, forty-byte
+dual-cookie handler, original/candidate metadata layouts, sixteen-byte aligned
+parent frames, saved allocation/state lifetimes and full RET 44/48 restoration.
+All private source/object/PDB ownership and runtime dependencies are complete.
+Only this profile uses handler field offset 25; preceding profiles retain six.
+No auxiliary graph receives primary exact credit.
+
+Canonical replay reports 879 exact, 65 mismatch and 271 incomplete among 1,215
+annotations, covering 167,046 primary exact bytes and 944 units. All preceding
+877 exact results, 65 complete mismatches and 942 units remain identical;
+every other incomplete record is also identical. Three hundred sixty-three
+controls pass across fifteen suites. No game source or compiler artifact
+changes and no build occurs; all 1,719 complete linked function records and
+192 dependency stamps validate. Source input remains
+`356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f`.
+See [the full review](audio-isa-aligned-eh.md),
+`.analysis/isa-aligned-graph-proof.json`,
+`.analysis/isa-aligned-artifact-check.json` and
+`.analysis/isa-aligned-regression-check.json`.
+
+Only DSUtil SetVolume (0x004711F0) and Unpause (0x00471380) remain incomplete;
+their candidate extents differ from the independent originals. Continue with
+natural source/type/calling context, preserving whole-owner comparison and
+the current incremental build graph. Other ISA globals, arbitrary address
+addends and unrelated aligned EH graphs remain unbound.

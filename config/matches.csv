@@ -902,6 +902,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046FFB0,AnmVm::load_from,reference-0046ffb0,mismatch,650,650,647,.analysis/reference-audit.json
 0x00470240,anm_log,reference-00470240,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00470250,CSoundManager::SetPrimaryBufferFormat,reference-00470250,local-strict-pass,208,208,208,.analysis/reference-audit.json
+0x00470320,CSoundManager::CreateStreaming,reference-00470320,local-strict-pass,856,856,856,.analysis/reference-audit.json
+0x00470680,CSoundManager::CreateStreamingFromMemory,reference-00470680,local-strict-pass,809,809,809,.analysis/reference-audit.json
 0x004709B0,CSound::CSound,reference-004709b0,local-strict-pass,463,463,463,.analysis/reference-audit.json
 0x00470B80,??_GCSound@@UAEPAXI@Z,reference-00470b80,local-strict-pass,38,38,38,.analysis/reference-audit.json
 0x00470BB0,CStreamingSound::recreate_buffers,reference-00470bb0,local-strict-pass,605,605,605,.analysis/reference-audit.json

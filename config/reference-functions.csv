@@ -1155,8 +1155,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046FFB0,AnmVm::load_from,src/AnmManagerVms.cpp,?load_from@AnmVm@@QAEXPBU1@PAH@Z,mismatch,,.analysis/reference-audit.json
 0x00470240,anm_log,src/AnmLoader.cpp,?anm_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x00470250,CSoundManager::SetPrimaryBufferFormat,src/DSUtil.cpp,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z,exact,,.analysis/reference-audit.json
-0x00470320,CSoundManager::CreateStreaming,src/DSUtil.cpp,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PBDKU_GUID@@KKPAXPAUThBgmFormat@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00470680,CSoundManager::CreateStreamingFromMemory,src/DSUtil.cpp,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAEKPAUThBgmFormat@@KU_GUID@@KKPAX@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00470320,CSoundManager::CreateStreaming,src/DSUtil.cpp,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PBDKU_GUID@@KKPAXPAUThBgmFormat@@@Z,exact,,.analysis/reference-audit.json
+0x00470680,CSoundManager::CreateStreamingFromMemory,src/DSUtil.cpp,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAEKPAUThBgmFormat@@KU_GUID@@KKPAX@Z,exact,,.analysis/reference-audit.json
 0x004709B0,CSound::CSound,src/DSUtil.cpp,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAUCWaveFile@@@Z,exact,,.analysis/reference-audit.json
 0x00470B80,??_GCSound@@UAEPAXI@Z,src/DSUtil.cpp,??_GCSound@@UAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x00470BB0,CStreamingSound::recreate_buffers,src/DSUtil.cpp,?recreate_buffers@CStreamingSound@@QAEJPAUThBgmFormat@@@Z,exact,,.analysis/reference-audit.json

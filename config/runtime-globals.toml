@@ -1,0 +1,10 @@
+[isa]
+profile = "msvc-x86-isa-storage-v1"
+initializer_target = 0x00475430
+initializer_size = 415
+initializer_sha256 = "cba51da149c7585eb2b8a18b014a0132a461f12328c407c8ebce3de49354f016"
+storage_target = 0x004a65fc
+storage_size = 8
+enabled_target = 0x0049ea50
+enabled_size = 4
+evidence = "docs/knowledge/audio-isa-aligned-eh.md"
