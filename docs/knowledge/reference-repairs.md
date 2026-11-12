@@ -1677,3 +1677,42 @@ use `.analysis/bullet-collision-restored-check.json`,
 `.analysis/bullet-collision-regression-check.json` and
 `.analysis/bullet-collision-controls-summary.json`. Source-origin review
 remains open and Factory acceptance remains unsubmitted. Nothing is published.
+
+## Timing, collision and audio scalar identities
+
+Eight independently decoded original scalar reads establish complete bindings
+for 2^-31, 5.0f, 1.5f, 0.125, 2.5, 3.5, 48.0f and 56.0f. Every value has
+other read-only occurrences, including embedded or unaligned patterns; only
+the fixed original typed read selects storage. Complete original witness
+owners, control flow, inter-entry padding and the update_window tail exit
+are independently reviewed before candidate comparison. No verifier or
+normalization rule changes. See
+[the complete review](timing-literal-identities.md).
+
+Nine existing full source candidates now pass: RNG normalization (64),
+jagged-line animation (455), Reimu orb start (263), bullet step_ex_00 (227),
+line-laser graze/hit (514), sleeping window update (597), resolution selection
+(174), audio track switch (199) and audio play time (178). These add
+**2,671 exact primary bytes**. Supervisor surface setup is a complete
+682/693 mismatch; its two pops precede the flag clear in the original and
+follow it in the candidate. Marisa cancellation retains the independently
+reviewed 621-byte original against a 595-byte candidate. Neither receives
+exact credit. Reimu orb update and window update retain unresolved fields.
+
+Canonical replay reports **824 exact, 64 mismatch and 327 incomplete**, covering
+147,675 exact primary bytes and 888 units. All 815 prior exact results, all
+63 prior complete mismatches and all 878 prior units remain identical.
+All 210 controls pass across nine suites. The reviewed-linkage suite now has
+29 controls, including mutation refusal for each new scalar's instruction
+interior, wrong instruction, changed mnemonic, expanded width and duplicate
+original storage. Game source, compiler/linker profiles, build receipt and
+all current artifacts remain unchanged; no compilation occurs.
+
+Original identities and complete consumer evidence are
+`.analysis/timing-literal-original-identities.json` and
+`.analysis/timing-literal-consumer-scopes.json`. Full replay, retained-pass and
+control evidence is `.analysis/timing-literal-full-audit.log`,
+`.analysis/timing-literal-regression-check.json` and
+`.analysis/timing-literal-controls-summary.json`; the baseline is
+`.analysis/timing-literal-baseline/`. Source-origin review remains open,
+Factory acceptance remains unsubmitted and nothing is published.

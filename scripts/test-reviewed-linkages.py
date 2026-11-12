@@ -85,6 +85,27 @@ class ReviewedLinkageControls(unittest.TestCase):
                     with self.assertRaises(Incomplete):
                         self.check_rows(rows)
 
+    def test_timing_and_collision_scalars_require_their_fixed_typed_reads(self):
+        for symbol, witness, duplicate, size in [
+                ("__real@30000000", 0x402cd4, 0x496e58, 4),
+                ("__real@40a00000", 0x414edd, 0x4917e0, 4),
+                ("__real@3fc00000", 0x45b2ac, 0x49452c, 4),
+                ("__real@3fc0000000000000", 0x471c29, 0x496640, 8),
+                ("__real@4004000000000000", 0x45aa2c, 0x496d60, 8),
+                ("__real@400c000000000000", 0x45afd0, 0x497060, 8),
+                ("__real@42400000", 0x40fee2, 0x491f68, 4),
+                ("__real@42600000", 0x410a5a, 0x491ec0, 4)]:
+            for field, value in [("witness_instruction", hex(witness + 1)),
+                                 ("witness_instruction", "0x402cb0"),
+                                 ("witness_mnemonic", "addss"),
+                                 ("size", str(size * 2)),
+                                 ("target_address", hex(duplicate))]:
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == symbol)[field] = value
+                with self.subTest(symbol=symbol, field=field, value=value):
+                    with self.assertRaises(Incomplete):
+                        self.check_rows(rows)
+
     def test_replay_fps_format_requires_its_complete_storage_and_fixed_push(self):
         symbol = "??_C@_03GOOLIKIF@?$CF3d?$AA@"
         candidate = next(p["address"] for p in self.context.publics if p["symbol"] == symbol)

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after six rejected Bullet collision contexts and fresh restoration.
+Updated 2026-11-12 after eight scalar identities and nine complete exact passes.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,21 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report remains **815 exact, 63 mismatch and 337 incomplete** among
-1215 annotated candidates, covering 145,004 exact owned bytes and 878 units.
+The current report is **824 exact, 64 mismatch and 327 incomplete** among
+1215 annotated candidates, covering 147,675 exact owned bytes and 888 units.
+Eight fixed original scalar reads resolve nine complete source candidates:
+RNG normalization (64), jagged-line animation (455), Reimu orb start (263),
+bullet step_ex_00 (227), line-laser graze/hit (514), sleeping window update
+(597), resolution selection (174), audio track switch (199) and audio play
+time (178). These add 2,671 exact primary bytes. All 815 preceding exact
+results, 63 complete mismatches and 878 units remain identical; ten new units
+give 888 total. Supervisor surface setup now compares fully at 682/693;
+Marisa cancellation retains a complete 621/595 extent refusal. No game source,
+verifier, build artifact or compiler profile changes. See
+[timing/collision/audio identities](knowledge/timing-literal-identities.md).
+
+The preceding Bullet collision checkpoint reported 815 exact, 63 mismatch and
+337 incomplete, covering 145,004 exact owned bytes and 878 units.
 Six natural Bullet collision contexts are rejected. The independently bounded
 448-byte original remains a complete extent refusal against 449-byte baseline
 source. Vector operand order, in-place scaling, coordinate assignment,
@@ -262,11 +275,13 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **209 controls across nine relevant suites**:
+The current batch passes **210 controls across nine relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
-(28), focused audit (3), constructor EH (25) and empty EH (25). Logs use
-`.analysis/bullet-collision-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+(29), focused audit (3), constructor EH (25) and empty EH (25). Logs use
+`.analysis/timing-literal-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding Bullet collision and Player batches passed 209 controls each;
+their logs use `.analysis/{bullet-collision,player-context}-*controls.log`.
 The preceding replay/numeric batch also passed 209 controls across nine suites;
 its logs use `.analysis/replay-literal-*controls.log`.
 The preceding numeric batch passed 208 controls across nine suites;
@@ -313,8 +328,12 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/bullet-collision-full-audit.log` and
-`.analysis/bullet-collision-regression-check.json`. Latest full source/payload/field
+are `.analysis/timing-literal-full-audit.log` and
+`.analysis/timing-literal-regression-check.json`. Original identities and complete
+consumer proofs are `.analysis/timing-literal-original-identities.json` and
+`.analysis/timing-literal-consumer-scopes.json`; original-only and complete-replay
+reproducers are `.analysis/review-timing-literal-originals.py` and
+`.analysis/review-timing-consumer-scopes.py`. Latest full source/payload/field
 trial evidence is `.analysis/bullet-collision-source-trials.json`, reproduced by
 `.analysis/review-bullet-collision-trials.py`. Preceding Player
 trial evidence is `.analysis/player-context-source-trials.json`, reproduced by
@@ -347,9 +366,11 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-trial evidence is `.analysis/player-context-restored-build.log`,
-`.analysis/player-context-restored-check.json` and
-`.analysis/player-context-source-trials.json`. The preceding music-room evidence
+source-trial evidence is `.analysis/bullet-collision-restored-build.log`,
+`.analysis/bullet-collision-restored-check.json` and
+`.analysis/bullet-collision-source-trials.json`. Current build artifacts and
+receipt remain unchanged through the latest binding-only batch.
+The preceding music-room evidence
 remains `.analysis/music-room-restored-build.log`,
 `.analysis/menu-literal-restored-context-check.json` and
 `.analysis/music-room-source-trials.json`. The preceding replay-slot evidence
@@ -418,7 +439,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 337 incomplete candidates comprise 173 with unresolved fields, 127
+The 327 incomplete candidates comprise 162 with unresolved fields, 128
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.
