@@ -175,6 +175,9 @@ def review_handler(context, record, statics, pdb):
     if record.get("profile") == "allocation-cleanup-v1":
         from eh_allocation import review_allocation
         return review_allocation(context, record, statics, pdb)
+    if record.get("profile") == "bullet-array-constructor-v1":
+        from eh_array_constructor import review_array_constructor
+        return review_array_constructor(context, record, statics, pdb)
     profile = record.get("profile")
     require("profile" not in record or isinstance(profile, str) and profile in _SAVED_REGISTER_PROFILES,
             "unsupported EH owner profile")
@@ -298,8 +301,8 @@ def target_owner_section(context, address, size, code):
 
 
 def single_state_owners(context, record, statics, pdb, action_size):
-    """Check full owners/maps shared by the two explicitly reviewed action lengths."""
-    require(action_size in (11, 18) and record["size"] == action_size + 27
+    """Check full owners/maps shared by the fixed, explicitly reviewed action lengths."""
+    require(action_size in (11, 14, 18, 30) and record["size"] == action_size + 27
             and record["func_info_size"] == 44 and record["eh_flags"] == 1,
             "EH single-state graph lacks its complete fixed aggregates")
     source, symbol = record["source"], record["parent_symbol"]

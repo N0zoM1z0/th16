@@ -6,6 +6,11 @@ different internal roles from the empty destructor graphs. The explicit
 `single-member-constructor-v1` profile independently checks these two graphs.
 Both complete primary parents now pass, adding 409 exact bytes.
 
+The later [array/thread review](array-thread-constructor-eh.md) adds a third
+explicit member role for EndingScriptVm: a fourteen-byte cleanup at offset
+208, a cross-source Thread destructor and RET 4. The two original role proofs
+and primary results below remain identical.
+
 A later [allocation-cleanup review](allocation-cleanup-eh.md) shares complete
 one-state ownership/map checks with this profile. Its five separate creation
 methods require distinct action/frame rules; both member-constructor proofs
@@ -92,9 +97,9 @@ second member construction can throw. Its action destroys only the first member.
 
 This verifier binds only the existing registration operand at offset six in
 its exact complete parent. All other body bytes and fields undergo ordinary
-whole-owner replay. The profile is restricted to these two fixed constructor
-roles. Allocation cleanups in `Stage::create` and `ItemManager::create`, array
-cleanup graphs and other nonempty graphs remain outside its scope.
+whole-owner replay. This initial review admits only these two fixed constructor
+roles; the later thread review adds exactly one explicit role. Allocation
+cleanups in `Stage::create` and `ItemManager::create`, array cleanup graphs and other nonempty graphs remain outside its scope.
 
 ## Results, refusal controls and retained evidence
 

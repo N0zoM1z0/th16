@@ -31,6 +31,11 @@ complete creation-method graphs with fixed sized-delete actions, allocation
 lifetimes and both normal exits. It shares complete one-state ownership/map
 checks with the member constructors while keeping action/frame rules separate.
 
+The [array/thread review](array-thread-constructor-eh.md) adds the complete
+BulletManager array cleanup and one fixed EndingScriptVm thread-member role.
+It independently checks the 57/41-byte code owners, 44-byte metadata owners,
+array ranges, cross-source member destructor and full RET 4 restoration.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

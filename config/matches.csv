@@ -189,6 +189,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00411790,BombReimuSubInf::cancel_bullets,reference-00411790,local-strict-pass,190,190,190,.analysis/reference-audit.json
 0x00411850,BombReimuSubInf::end_at_stage_clear,reference-00411850,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00411860,LaserInfiniteInner::LaserInfiniteInner,reference-00411860,local-strict-pass,30,30,30,.analysis/reference-audit.json
+0x00411880,BulletManager::BulletManager,reference-00411880,local-strict-pass,181,181,181,.analysis/reference-audit.json
 0x00411940,Bullet::Bullet,reference-00411940,local-strict-pass,108,108,108,.analysis/reference-audit.json
 0x004119B0,Bullet::~Bullet,reference-004119b0,local-strict-pass,120,120,120,.analysis/reference-audit.json
 0x00411A30,BulletManager::initialize,reference-00411a30,local-strict-pass,315,315,315,.analysis/reference-audit.json
@@ -260,6 +261,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004196C0,Ending::on_tick_body,reference-004196c0,local-strict-pass,219,219,219,.analysis/reference-audit.json
 0x004197A0,Ending::on_tick_callback,reference-004197a0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x004197B0,Ending::on_draw_callback,reference-004197b0,local-strict-pass,6,6,6,.analysis/reference-audit.json
+0x004197C0,EndingScriptVm::EndingScriptVm,reference-004197c0,local-strict-pass,551,551,551,.analysis/reference-audit.json
 0x0041A310,ending_load_anm,reference-0041a310,local-strict-pass,77,77,77,.analysis/reference-audit.json
 0x0041A360,AsciiInf::hide_now_loading,reference-0041a360,local-strict-pass,39,39,39,.analysis/reference-audit.json
 0x0041A390,AsciiInf::show_now_loading,reference-0041a390,local-strict-pass,92,92,92,.analysis/reference-audit.json

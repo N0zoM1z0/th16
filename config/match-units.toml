@@ -4027,6 +4027,31 @@ linkages = [
   { offset = 12, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
 ]
 
+[units.reference-00411880]
+artifact_kind = "linked-pe"
+source = "src/BulletManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0BulletManager@@QAE@XZ"
+object = "BulletManager.obj"
+candidate_address = 4303744
+target_address = 4266112
+size = 181
+compare_size = 181
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??0BulletManager@@QAE@XZ", target = 4760862, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 43, width = 4, type = "DIR32", symbol = "??1Bullet@@QAE@XZ", target = 4266416, addend = 0 },
+  { offset = 48, width = 4, type = "DIR32", symbol = "??0Bullet@@QAE@XZ", target = 4266304, addend = 0 },
+  { offset = 70, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 75, width = 4, type = "DIR32", symbol = "??1Bullet@@QAE@XZ", target = 4266416, addend = 0 },
+  { offset = 80, width = 4, type = "DIR32", symbol = "??0Bullet@@QAE@XZ", target = 4266304, addend = 0 },
+  { offset = 109, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 149, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 158, width = 4, type = "DIR32", symbol = "?g_BulletManager@@3PAUBulletManager@@A", target = 4877740, addend = 0 },
+]
+
 [units.reference-00411940]
 artifact_kind = "linked-pe"
 source = "src/BulletManager.cpp"
@@ -5570,6 +5595,33 @@ compare_size = 6
 profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
+]
+
+[units.reference-004197c0]
+artifact_kind = "linked-pe"
+source = "src/Ending.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0EndingScriptVm@@QAE@PAX@Z"
+object = "Ending.obj"
+candidate_address = 4355424
+target_address = 4298688
+size = 551
+compare_size = 551
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??0EndingScriptVm@@QAE@PAX@Z", target = 4761166, addend = 0, eh_handler = true },
+  { offset = 23, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 130, width = 4, type = "DIR32", symbol = "??_7ThreadInf@@6B@", target = 4791348, addend = 0 },
+  { offset = 190, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 210, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1832, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 227, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 233, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 243, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 255, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 269, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 281, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 295, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
 ]
 
 [units.reference-0041a310]

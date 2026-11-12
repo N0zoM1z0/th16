@@ -55,11 +55,12 @@ only PE relocation at 36. Every other action and handler byte is checked too.
 
 The ownership, original cleanup boundary and complete map checks are shared
 with the [member constructor profile](member-constructor-eh.md). This shared
-helper accepts only the two reviewed action lengths, eleven and eighteen;
+helper now accepts only four reviewed action lengths, 11/14/18/30, after the
+[array/thread constructor review](array-thread-constructor-eh.md);
 each caller separately enforces its fixed source roles, action semantics and
 parent frames. Both earlier member-constructor proof dictionaries and their
-complete primary results remain identical. Array cleanups and other map/state
-shapes receive no implicit support.
+complete primary results remain identical. Array cleanup uses a separate fixed
+profile; other map/state shapes receive no implicit support.
 
 ## Allocation lifetime and complete frames
 

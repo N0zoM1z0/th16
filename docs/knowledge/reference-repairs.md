@@ -2215,3 +2215,34 @@ occurs; all 1,719 complete linked owners and 192 dependency stamps validate.
 See [the full review](allocation-cleanup-eh.md),
 `.analysis/allocation-eh-caller-scopes.json` and
 `.analysis/allocation-eh-regression-check.json`.
+
+## Complete array and thread-member constructor EH graphs
+
+Original-only scope review and whole private graph checks resolve BulletManager
+construction (181 bytes, 53 reachable instructions) and EndingScriptVm
+construction (551 bytes, 128 instructions). The Bullet action destroys the first
+completed 2,001-element array with fixed stride 0x1478 and base 0x9C; the second
+array starts at 0x9FFE94. Both iterator roles and the complete element destructor
+remain independently bound. The thread-member action adds fixed offset 208 and
+tail-transfers to the complete eleven-byte Thread destructor in Thread.cpp.
+Its parent requires the full RET 4 restoration. Existing member proofs retain
+their exact dictionaries; shared complete owner/map checks do not generalize
+action semantics or frame shapes.
+
+The complete private code owners contain 57/41 bytes; both metadata owners have
+44 bytes, with all fields and relocations checked. These 98 code and 88 metadata
+bytes receive no additional primary credit. Canonical replay reports 867 exact,
+65 mismatch and 283 incomplete among 1,215 annotations, covering 162,185 primary
+exact bytes and 932 units. All preceding 865 exact results, 65 complete mismatches
+and 930 unit definitions remain identical; every other incomplete record also
+remains identical. Two hundred six controls pass across nine suites. No game
+source or compiler artifact changes and no build occurs; all 1,719 complete
+linked owners and 192 dependency stamps validate.
+
+Investigation also retains complete original/candidate terminate thunk scopes
+and 59/60-byte terminate owners. Full SEH/filter metadata and dependency role
+review remain open. No terminate binding or additional destructor credit is
+added. See [the complete review](array-thread-constructor-eh.md),
+`.analysis/array-member-caller-scopes.json`,
+`.analysis/array-member-regression-check.json` and
+`.analysis/terminate-entry-investigation.json`.

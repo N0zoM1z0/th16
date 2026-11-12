@@ -377,3 +377,51 @@ func_info_size = 44
 func_info_sha256 = "92a4f1ef6a7234812037d8bc161d9200e8f59696e05fcafd81906ed802a02f52"
 eh_flags = 1
 evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "bullet-array-constructor-v1"
+source = "src/BulletManager.cpp"
+parent_symbol = "??0BulletManager@@QAE@XZ"
+parent_target = 0x411880
+parent_size = 181
+parent_sha256 = "1e9ff944ad1230cd00d630d3953ec6627d84789ea3cc3a27da061dbe2c5d624d"
+target = 0x48a51e
+code_target = 0x48a500
+size = 57
+target_sha256 = "52aed36aed88a232f1bc5cd3c1a48790c492d664cd673644d20078a24cbaf9c5"
+func_info_target = 0x49b0c8
+func_info_size = 44
+func_info_sha256 = "3a056a7bd6ad5e042075dd072d020499bd9ca8b068f660ff1ab0ffa51a46151a"
+eh_flags = 1
+evidence = "docs/knowledge/array-thread-constructor-eh.md"
+
+[handlers.cleanup_entry]
+source = "src/BulletManager.cpp"
+symbol = "??1Bullet@@QAE@XZ"
+target = 0x4119b0
+size = 120
+sha256 = "efc824b33156663319be6c441527c3c376a6bae0070ebefb4c78287f96cb45a6"
+
+[[handlers]]
+profile = "single-member-constructor-v1"
+source = "src/Ending.cpp"
+parent_symbol = "??0EndingScriptVm@@QAE@PAX@Z"
+parent_target = 0x4197c0
+parent_size = 551
+parent_sha256 = "636874ebbd69c9ff108fa89b42fa884a6556544face10bcfafaf0e1fe31f5c74"
+target = 0x48a64e
+code_target = 0x48a640
+size = 41
+target_sha256 = "5fbeda51a20e620e3849f95af9add02a3a21025e8cb8bbfb0bfc2c770bc76147"
+func_info_target = 0x49b200
+func_info_size = 44
+func_info_sha256 = "4798061a25c8e11226e69e0c11ff8e23b1e02e4a62d27535e144d3abbab90a68"
+eh_flags = 1
+evidence = "docs/knowledge/array-thread-constructor-eh.md"
+
+[handlers.cleanup_entry]
+source = "src/Thread.cpp"
+symbol = "??1ThreadInf@@UAE@XZ"
+target = 0x402f20
+size = 11
+sha256 = "3cee6875cfb34f549211c87fc53857659432a90bd67fd6ed68120e538a3bd532"

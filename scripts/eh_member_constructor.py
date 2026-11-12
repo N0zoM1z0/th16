@@ -1,4 +1,4 @@
-"""Review the complete single-member EH aggregates of Stage and ItemManager."""
+"""Review three complete constructor EH aggregates with fixed member cleanup roles."""
 from __future__ import annotations
 
 import struct
@@ -11,24 +11,34 @@ from linked_image import linked_code_fields
 PROFILE = "single-member-constructor-v1"
 _SPECS = {
     ("src/Stage.cpp", "??0Stage@@QAE@XZ"): {
-        "parent": 0x409670, "size": 249, "member": 12,
+        "parent": 0x409670, "size": 249, "adjust": bytes.fromhex("83c10c"), "ret": b"\xc3",
         "saves": bytes.fromhex("5657"), "restores": bytes.fromhex("5f5e"),
         "this": bytes.fromhex("8bf9897df0"),
-        "cleanup": ("??1StageInner@@QAE@XZ", 0x409770, 73),
+        "cleanup": ("src/Stage.cpp", "??1StageInner@@QAE@XZ", 0x409770, 73),
         "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (27, "33c5"),
                   (30, "8d45f4"), (33, "64a300000000"), (41, "897df0"),
                   (104, "8975ec"), (125, "c745fc00000000"), (189, "8975ec"),
                   (232, "8b4df4"), (235, "64890d00000000"), (245, "8be5"), (247, "5d")],
     },
     ("src/Item.cpp", "??0ItemManager@@QAE@XZ"): {
-        "parent": 0x42f0b0, "size": 160, "member": 20,
+        "parent": 0x42f0b0, "size": 160, "adjust": bytes.fromhex("83c114"), "ret": b"\xc3",
         "saves": bytes.fromhex("56"), "restores": bytes.fromhex("5e"),
         "this": bytes.fromhex("8bf18975f0"),
-        "cleanup": ("??1ItemManagerInner@@QAE@XZ", 0x42f150, 70),
+        "cleanup": ("src/Item.cpp", "??1ItemManagerInner@@QAE@XZ", 0x42f150, 70),
         "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (26, "33c5"),
                   (29, "8d45f4"), (32, "64a300000000"), (40, "8975f0"),
                   (67, "8945ec"), (96, "c745fc00000000"), (109, "8945ec"),
                   (144, "8b4df4"), (147, "64890d00000000"), (156, "8be5"), (158, "5d")],
+    },
+    ("src/Ending.cpp", "??0EndingScriptVm@@QAE@PAX@Z"): {
+        "parent": 0x4197c0, "size": 551, "adjust": bytes.fromhex("81c1d0000000"), "ret": b"\xc2\x04\x00",
+        "saves": bytes.fromhex("5657"), "restores": bytes.fromhex("5f5e"),
+        "this": bytes.fromhex("8bf18975f0"),
+        "cleanup": ("src/Thread.cpp", "??1ThreadInf@@UAE@XZ", 0x402f20, 11),
+        "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (27, "33c5"),
+                  (30, "8d45f4"), (33, "64a300000000"), (41, "8975f0"),
+                  (182, "c745fc00000000"), (222, "8d45ec"), (324, "8b75f0"), (327, "8b4508"),
+                  (532, "8b4df4"), (535, "64890d00000000"), (545, "8be5"), (547, "5d")],
     },
 }
 
@@ -41,7 +51,7 @@ def inspect_frame(image, parent, handler, spec):
               + bytes.fromhex("64a1000000005083ec08") + spec["saves"]
               + b"\xa1" + struct.pack("<I", cookie)
               + bytes.fromhex("33c5508d45f464a300000000") + spec["this"])
-    suffix = bytes.fromhex("8b4df464890d0000000059") + spec["restores"] + bytes.fromhex("8be55dc3")
+    suffix = bytes.fromhex("8b4df464890d0000000059") + spec["restores"] + bytes.fromhex("8be55d") + spec["ret"]
     size = spec["size"]
     require(image.read_address(parent, len(prefix)) == prefix
             and image.read_address(parent + size - len(suffix), len(suffix)) == suffix,
@@ -60,7 +70,7 @@ def inspect_frame(image, parent, handler, spec):
             frame.append((instruction.address - parent, instruction.bytes.hex()))
         if instruction.group(capstone.CS_GRP_RET):
             returns.append(instruction.address - parent)
-    require(frame == spec["frame"] and returns == [size - 1],
+    require(frame == spec["frame"] and returns == [size - len(spec["ret"])],
             "EH member constructor state, saved-this or protected frame uses differ")
     return len(prefix), len(suffix)
 
@@ -73,20 +83,20 @@ def review_member_constructor(context, record, statics, pdb):
             "unsupported EH member constructor declaration")
     source, symbol = record["source"], record["parent_symbol"]
     spec = _SPECS.get((source, symbol))
+    action_size = 8 + len(spec["adjust"]) if spec is not None else 0
     require(spec is not None and record["parent_target"] == spec["parent"]
-            and record["parent_size"] == spec["size"] and record["size"] == 38
+            and record["parent_size"] == spec["size"] and record["size"] == action_size + 27
             and record["func_info_size"] == 44 and record["eh_flags"] == 1,
-            "EH member constructor requires its complete fixed parent and 38/44-byte aggregates")
+            "EH member constructor requires its complete fixed parent and code/data aggregates")
     parent, code, info, handler = spec["parent"], record["code_target"], record["func_info_target"], record["target"]
-    candidate_parent, code_owner, descriptor = single_state_owners(context, record, statics, pdb, 11)
+    candidate_parent, code_owner, descriptor = single_state_owners(context, record, statics, pdb, action_size)
     candidate_code, candidate_data = code_owner["address"], descriptor["address"]
     candidate_info = candidate_data + 8
     entry = record["cleanup_entry"]
     require(set(entry) == {"source", "symbol", "target", "size", "sha256"}
-            and entry["source"] == source
-            and (entry["symbol"], entry["target"], entry["size"]) == spec["cleanup"],
+            and (entry["source"], entry["symbol"], entry["target"], entry["size"]) == spec["cleanup"],
             "EH member constructor cleanup differs from its fixed member destructor")
-    _, candidate_cleanup = complete_game_entry(context, source, entry["symbol"], entry["target"],
+    _, candidate_cleanup = complete_game_entry(context, entry["source"], entry["symbol"], entry["target"],
                                                entry["size"], entry["sha256"])
     runtime = []
     for name in ("@__security_check_cookie@4", "___CxxFrameHandler3"):
@@ -101,25 +111,26 @@ def review_member_constructor(context, record, statics, pdb):
     for image, base, fi, checker, dispatcher, cleanup in (
             (context.target, code, info, runtime[0][0], runtime[1][0], entry["target"]),
             (context.image, candidate_code, candidate_info, runtime[0][1], runtime[1][1], candidate_cleanup)):
-        action = (bytes.fromhex("8b4df083c1") + bytes([spec["member"]]) + b"\xe9"
-                  + struct.pack("<I", (cleanup - base - 11) & 0xffffffff))
-        require(image.read_address(base, 11) == action,
+        action = (bytes.fromhex("8b4df0") + spec["adjust"] + b"\xe9"
+                  + struct.pack("<I", (cleanup - base - action_size) & 0xffffffff))
+        require(image.read_address(base, action_size) == action,
                 "EH member constructor complete saved-this cleanup action differs")
-        inspect_handler(image, base + 11, fi, checker, dispatcher, cookie_offset=cookie_offset)
-    fields = linked_code_fields(context.image, context.publics, candidate_code, 38)
-    require(fields["decoded_bytes"] == 38 and fields["normalization_complete"]
+        inspect_handler(image, base + action_size, fi, checker, dispatcher, cookie_offset=cookie_offset)
+    fields = linked_code_fields(context.image, context.publics, candidate_code, record["size"])
+    require(fields["decoded_bytes"] == record["size"] and fields["normalization_complete"]
             and [(f["offset"], f["width"], f["type"]) for f in fields["fields"]]
-            == [(7, 4, "REL32"), (24, 4, "REL32"), (29, 4, "DIR32"), (34, 4, "REL32")],
+            == [(action_size - 4, 4, "REL32"), (action_size + 13, 4, "REL32"),
+                (action_size + 18, 4, "DIR32"), (action_size + 23, 4, "REL32")],
             "EH member constructor aggregate has unreviewed instruction fields")
-    check_relocations(context.image, candidate_code, 38, [29])
+    check_relocations(context.image, candidate_code, record["size"], [action_size + 18])
     prefix_size, suffix_size = inspect_frame(context.target, parent, handler, spec)
-    require(inspect_frame(context.image, candidate_parent, candidate_code + 11, spec)
+    require(inspect_frame(context.image, candidate_parent, candidate_code + action_size, spec)
             == (prefix_size, suffix_size), "EH member constructor frame extents differ")
     check_relocations(context.image, candidate_parent, prefix_size, [6, 21 + len(spec["saves"])])
     check_relocations(context.image, candidate_parent + spec["size"] - suffix_size, suffix_size, [])
     return dict(source=source, parent_symbol=symbol, parent_target=parent, parent_size=spec["size"],
                 parent_candidate=candidate_parent, target=handler, profile=PROFILE,
-                handler=dict(symbol="__ehhandler$" + symbol, address=candidate_code + 11,
-                             owner_symbol=code_owner["symbol"], owner_offset=11),
+                handler=dict(symbol="__ehhandler$" + symbol, address=candidate_code + action_size,
+                             owner_symbol=code_owner["symbol"], owner_offset=action_size),
                 code_target=code, code_owner=code_owner, func_info_target=info, descriptor=descriptor,
                 cleanup_entry=entry, cookie_offset=cookie_offset, eh_flags=1, evidence=record["evidence"])

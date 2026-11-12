@@ -17,6 +17,16 @@ _spec.loader.exec_module(_base)
 Overlay = _base.Overlay
 
 
+CASES = {
+    0x409670: dict(action=11, state_byte=128, cookie_field=23, interior=(44, 4), body_byte=231,
+                   mutations=(19, 20, 23, 43, 106, 128, 234, 235)),
+    0x42f0b0: dict(action=11, state_byte=99, cookie_field=22, interior=(43, 5), body_byte=141,
+                   mutations=(19, 20, 22, 42, 69, 99, 146, 147)),
+    0x4197c0: dict(action=14, state_byte=185, cookie_field=23, interior=(44, 4), body_byte=524,
+                   mutations=(19, 20, 23, 43, 185, 224, 326, 329, 534, 535)),
+}
+
+
 class MemberConstructorEHControls(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -45,14 +55,15 @@ class MemberConstructorEHControls(unittest.TestCase):
         return next(r for r in pdb["contributions"] if self.context.image.image_base
                     + self.context.image.section(r["section_number"]).rva + r["section_offset"] == owner["address"])
 
-    def test_both_complete_aggregate_graphs_pass(self):
-        self.assertEqual(len(self.records), 2)
-        self.assertEqual({r["parent_target"] for r in self.records}, {0x409670, 0x42f0b0})
+    def test_all_complete_aggregate_graphs_pass(self):
+        self.assertEqual(len(self.records), 3)
+        self.assertEqual({r["parent_target"] for r in self.records}, set(CASES))
         for record in self.records:
             proof = self.review(record)
             self.assertEqual(proof, self.proof(record))
-            self.assertEqual((proof["code_owner"]["size"], proof["descriptor"]["size"]), (38, 44))
-            self.assertEqual(proof["handler"]["owner_offset"], 11)
+            action = CASES[record["parent_target"]]["action"]
+            self.assertEqual((proof["code_owner"]["size"], proof["descriptor"]["size"]), (action + 27, 44))
+            self.assertEqual(proof["handler"]["owner_offset"], action)
             self.assertNotIn("size", proof["handler"])
             self.assertEqual((proof["descriptor"]["func_info_offset"], proof["descriptor"]["unwind_offset"]), (8, 0))
 
@@ -61,6 +72,17 @@ class MemberConstructorEHControls(unittest.TestCase):
             result = self.context.compare(self.units[f'reference-{record["parent_target"]:08x}'])
             self.assertEqual((result["result"], result["compared_size"]), ("exact", record["parent_size"]))
             self.assertEqual(result["auxiliary_eh_owners"], [self.proof(record)])
+
+    def test_thread_member_keeps_its_cross_source_role_and_ret_4(self):
+        record = next(r for r in self.records if r["parent_target"] == 0x4197c0)
+        self.assertEqual(record["cleanup_entry"]["source"], "src/Thread.cpp")
+        with self.assertRaises(EHEvidenceError):
+            self.review(dict(record, cleanup_entry=dict(record["cleanup_entry"], source=record["source"])))
+        parent = self.proof(record)["parent_candidate"]
+        for offset in (548, 549, 550):
+            value = self.context.image.read_address(parent + offset, 1)[0] ^ 1
+            with self.subTest(offset=offset), self.assertRaisesRegex(EHEvidenceError, "restoration"):
+                self.review(record, self.mutate("image", parent + offset, bytes([value])))
 
     def test_new_verifier_module_is_fingerprinted(self):
         path = "scripts/eh_member_constructor.py"
@@ -82,7 +104,7 @@ class MemberConstructorEHControls(unittest.TestCase):
     def test_every_candidate_code_byte_is_checked(self):
         for record in self.records:
             owner = self.proof(record)["code_owner"]
-            for offset in range(38):
+            for offset in range(owner["size"]):
                 address = owner["address"] + offset
                 value = self.context.image.read_address(address, 1)[0] ^ 1
                 with self.subTest(parent=record["parent_target"], offset=offset), self.assertRaises(ValueError):
@@ -113,7 +135,7 @@ class MemberConstructorEHControls(unittest.TestCase):
                 value = self.context.target.read_address(address, 1)[0] ^ 1
                 context = self.mutate("target", address, bytes([value]))
                 changed = dict(record, target_sha256=hashlib.sha256(
-                    context.target.read_address(record["code_target"], 38)).hexdigest())
+                    context.target.read_address(record["code_target"], record["size"])).hexdigest())
                 with self.subTest(offset=offset), self.assertRaises(EHEvidenceError):
                     self.review(changed, context)
 
@@ -130,7 +152,7 @@ class MemberConstructorEHControls(unittest.TestCase):
 
     def test_original_parent_state_is_checked_after_a_hash_update(self):
         for record in self.records:
-            offset = 128 if record["parent_target"] == 0x409670 else 99
+            offset = CASES[record["parent_target"]]["state_byte"]
             context = self.mutate("target", record["parent_target"] + offset, b"\x01")
             changed = dict(record, parent_sha256=hashlib.sha256(
                 context.target.read_address(record["parent_target"], record["parent_size"])).hexdigest())
@@ -224,15 +246,15 @@ class MemberConstructorEHControls(unittest.TestCase):
         for record in self.records:
             proof = self.proof(record)
             code, data, parent = proof["code_owner"]["address"], proof["descriptor"]["address"], proof["parent_candidate"]
-            cookie_field = 23 if record["parent_target"] == 0x409670 else 22
-            fields = [code + 29, data + 4, data + 16, parent + 6, parent + cookie_field]
+            case = CASES[record["parent_target"]]
+            fields = [code + case["action"] + 18, data + 4, data + 16, parent + 6, parent + case["cookie_field"]]
             for location in fields:
                 for remove, add in (([location], []), ([], [location])):
                     context = copy.copy(self.context)
                     context.image = Overlay(self.context.image, remove=remove, add=add)
                     with self.subTest(location=location), self.assertRaises(ValueError):
                         self.review(record, context)
-            for location in (code + 36, data + 42, parent + record["parent_size"] - 2):
+            for location in (code + record["size"] - 2, data + 42, parent + record["parent_size"] - 2):
                 context = copy.copy(self.context)
                 context.image = Overlay(self.context.image, add=[location])
                 with self.assertRaises(ValueError):
@@ -240,9 +262,11 @@ class MemberConstructorEHControls(unittest.TestCase):
 
     def test_same_shape_foreign_graph_edges_are_rejected(self):
         for index, record in enumerate(self.records):
-            proof, other = self.proof(record), self.proof(self.records[1 - index])
+            proof = self.proof(record)
+            other = self.proof(self.records[(index + 1) % len(self.records)])
             for address, destination in ((proof["parent_candidate"] + 6, other["handler"]["address"]),
-                                         (proof["code_owner"]["address"] + 29, other["descriptor"]["address"] + 8),
+                                         (proof["code_owner"]["address"] + CASES[record["parent_target"]]["action"] + 18,
+                                          other["descriptor"]["address"] + 8),
                                          (proof["descriptor"]["address"] + 4, other["code_owner"]["address"])):
                 with self.assertRaises(EHEvidenceError):
                     self.review(record, self.mutate("image", address, struct.pack("<I", destination)))
@@ -250,8 +274,7 @@ class MemberConstructorEHControls(unittest.TestCase):
     def test_candidate_state_saved_this_and_registration_are_checked(self):
         for record in self.records:
             proof = self.proof(record)
-            offsets = ((19, 20, 23, 43, 106, 128, 234, 235) if record["parent_target"] == 0x409670
-                       else (19, 20, 22, 42, 69, 99, 146, 147))
+            offsets = CASES[record["parent_target"]]["mutations"]
             for offset in offsets:
                 address = proof["parent_candidate"] + offset
                 value = self.context.image.read_address(address, 1)[0] ^ 1
@@ -267,7 +290,7 @@ class MemberConstructorEHControls(unittest.TestCase):
 
     def test_an_interior_return_cannot_bypass_the_reviewed_restoration(self):
         for record in self.records:
-            offset, count = (44, 4) if record["parent_target"] == 0x409670 else (43, 5)
+            offset, count = CASES[record["parent_target"]]["interior"]
             context = self.mutate("image", self.proof(record)["parent_candidate"] + offset,
                                   b"\xc3" + b"\x90" * (count - 1))
             with self.assertRaisesRegex(EHEvidenceError, "protected frame uses"):
@@ -289,7 +312,7 @@ class MemberConstructorEHControls(unittest.TestCase):
     def test_ordinary_body_bytes_still_mismatch_after_valid_eh_review(self):
         for record in self.records:
             proof = self.proof(record)
-            offset = 231 if record["parent_target"] == 0x409670 else 141
+            offset = CASES[record["parent_target"]]["body_byte"]
             context = self.mutate("image", proof["parent_candidate"] + offset, b"\x03")
             self.review(record, context)
             result = context.compare(self.units[f'reference-{record["parent_target"]:08x}'])
