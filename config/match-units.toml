@@ -18258,6 +18258,64 @@ linkages = [
   { offset = 97, width = 4, type = "REL32", symbol = "?log@GameErrorContext@@QAAPBDPBDZZ", target = 4205008, addend = 0 },
 ]
 
+[units.reference-0045d850]
+artifact_kind = "linked-pe"
+source = "src/SoundManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?release@SoundManager@@QAEHXZ"
+object = "SoundManager.obj"
+candidate_address = 4617904
+target_address = 4577360
+size = 370
+compare_size = 370
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?release@SoundManager@@QAEHXZ", target = 4762240, addend = 0, eh_handler = true },
+  { offset = 19, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 36, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6528, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 46, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+  { offset = 55, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6528, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 67, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6788, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 83, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6788, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 103, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 8660, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 120, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+  { offset = 138, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 8928, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 146, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 12, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 161, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 8, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 167, width = 4, type = "DIR32", symbol = "__imp__KillTimer@8", target = 4764108, addend = 0 },
+  { offset = 172, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 0 },
+  { offset = 177, width = 4, type = "REL32", symbol = "?stop_bgm@SoundManager@@QAEXXZ", target = 4579168, addend = 0 },
+  { offset = 182, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 4, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 188, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 0 },
+  { offset = 204, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 4, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 220, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 4, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 230, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22112, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 246, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22112, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 256, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 12, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 293, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+  { offset = 302, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 12, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 311, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6332, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 328, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+  { offset = 346, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6396, storage_name = "g_SoundManager", storage_size = 22168 },
+]
+
+[units.reference-0045d9d0]
+artifact_kind = "linked-pe"
+source = "src/SoundManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_wav_chunk@@YGPAUtWAVEFORMATEX@@PAEPBDPAHI@Z"
+object = "SoundManager.obj"
+candidate_address = 4618288
+target_address = 4577744
+size = 88
+compare_size = 88
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 32, width = 4, type = "REL32", symbol = "_strncmp", target = 4692592, addend = 0 },
+]
+
 [units.reference-0045da30]
 artifact_kind = "linked-pe"
 source = "src/SoundManager.cpp"

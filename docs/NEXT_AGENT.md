@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete sound data review and restored scalar source trials.
+Updated 2026-11-12 after complete audio release and strncmp identities.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,7 +18,36 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **881 exact, 65 mismatch and 269 incomplete** among
+The current report is **883 exact, 65 mismatch and 267 incomplete** among
+1215 annotated candidates, covering 167,817 exact owned bytes and 948 units.
+SoundManager::release (370 bytes) and get_wav_chunk (88) pass complete owners.
+The complete original/candidate strncmp entries own 120 identical bytes,
+including the owned alignment JMP/three INT3 bytes. Pinned UCRT source and
+producer, original call, closed graph, empty field census and no relocations
+establish the runtime identity. Release retains a complete 27-byte handler and
+44-byte one-state terminal map, flags one. Its fixed no-local frame saves only
+ESI, deriving cookie node-8 from the full 35-byte registration and sixteen-byte
+restoration. Previous node-12 profiles retain their values; all prior single-
+state proof dictionaries remain identical. No auxiliary bytes receive credit.
+All preceding 881 exact results, 65 mismatches and 946 unit definitions remain
+identical. SoundBufferEntry::load loses its two strncmp fields and retains the
+data-tag field and complete 702/713-byte extent difference; every other
+incomplete record is identical. No game source/compiler artifact changes and
+no build occurs. All 1,719 complete linked records and 192 dependency stamps
+validate. See [the full review](knowledge/audio-release-strncmp.md).
+
+Initialization remains open: its full 37-byte handler checks node-96 and
+node-4, with a 44-byte single-state terminal map and flags one. It is neither
+the existing 27-byte handler nor the forty-byte aligned audio handler. Its ESI
+cursor starts at sound-table+4, advances twenty and compares sound-table+1564
+(anchor-x+4). Prove the full parent frame/state graph and all cursor/side-exit
+paths plus ESI preservation through both complete loader owners. Do not widen
+the typed sound table, borrow the adjacent array identity or relax the generic
+cursor call/exit restrictions. The detailed original/candidate inventory is
+`.analysis/audio-initialize-next-proof-inventory.json`; its collector is
+`.analysis/prepare-audio-initialize-next.py`. Both requirements remain unproven.
+
+The preceding sound-data report was **881 exact, 65 mismatch and 269 incomplete** among
 1215 annotated candidates, covering 167,359 exact owned bytes and 946 units.
 SoundManager::play_sound_centered (145 bytes) and play_sound_at_position (168)
 pass their complete owners. The fixed sound-data profile validates the full
@@ -622,7 +651,19 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **135 controls across seven relevant suites**:
+The current batch passes **349 controls across fourteen relevant suites**:
+single-state EH (19), reviewed linkages (46), strict Oracle (14), focused audit
+(3), saved-register EH (56), vftables (33), terminate EH (23), array EH (18),
+member EH (25), allocation EH (23), legacy EH (25), AnmManager constructor EH
+(25), sound data (18) and aligned audio EH (21). New controls cover the sole
+ESI save with no local, cookie node-8, all foreign graph pairs, full original/
+candidate strncmp bytes and owned alignment, complete extents and fixed producer.
+All prior 946 units and complete comparison records are identical. Logs use
+`.analysis/audio-release-<suite>-controls.log`; summary and retention checks are
+`.analysis/audio-release-controls-summary.json` and
+`.analysis/audio-release-regression-check.json`.
+
+The preceding sound-data batch passed **135 controls across seven relevant suites**:
 sound data (18), reviewed linkages (43), strict Oracle (14), focused audit (3),
 stage/time identities (20), ISA storage (16) and aligned audio EH (21). New
 controls cover every aggregate byte, both complete original witnesses, all

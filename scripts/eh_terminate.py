@@ -37,6 +37,7 @@ _SINGLE_SPECS = {
     ("src/Arcfile.cpp", "?close@Arcfile@@QAEXXZ"): {
         "parent": 0x457060, "size": 189, "locals": b"", "saves": bytes.fromhex("5657"),
         "restores": bytes.fromhex("5f5e"), "ret": b"\xc3", "flags": 1, "cookie_offset": -12,
+        "array_delete": True,
         "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (24, "33c5"),
                   (27, "8d45f4"), (30, "64a300000000"), (103, "c745fc00000000"),
                   (172, "8b4df4"), (175, "64890d00000000"), (185, "8be5"), (187, "5d")],
@@ -48,6 +49,13 @@ _SINGLE_SPECS = {
         "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (24, "33c5"),
                   (27, "8d45f4"), (30, "64a300000000"), (43, "c745fc00000000"),
                   (143, "8b4df4"), (146, "64890d00000000"), (156, "8be5"), (158, "5d")],
+    },
+    ("src/SoundManager.cpp", "?release@SoundManager@@QAEHXZ"): {
+        "parent": 0x45d850, "size": 370, "locals": b"", "saves": bytes.fromhex("56"),
+        "restores": bytes.fromhex("5e"), "ret": b"\xc3", "flags": 1, "cookie_offset": -8,
+        "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (23, "33c5"),
+                  (26, "8d45f4"), (29, "64a300000000"), (264, "c745fc00000000"),
+                  (354, "8b4df4"), (357, "64890d00000000"), (366, "8be5"), (368, "5d")],
     },
 }
 
@@ -257,6 +265,9 @@ def review_terminate(context, record, statics, pdb):
                                   record["func_info_size"], record["eh_flags"])
             == (spec["parent"], spec["size"], 27, data_size, flags),
             "EH terminate requires its fixed complete parent and code/data graph")
+    if single:
+        require(spec["locals"] == b"" and spec["cookie_offset"] == -4 - 4 * len(spec["saves"]),
+                "EH single-state cookie must follow the complete no-local saved-register frame")
     owner, parent = complete_game_entry(context, source, symbol, spec["parent"], spec["size"],
                                         record["parent_sha256"])
     target, info = record["target"], record["func_info_target"]
@@ -308,6 +319,6 @@ def review_terminate(context, record, statics, pdb):
         proof["producer_source"] = source
         if spec.get("deleting_caller"):
             proof["producer_witness"] = inspect_registry_producer(context, parent)
-        else:
+        elif spec.get("array_delete"):
             proof["array_delete"] = inspect_array_delete(context)
     return proof

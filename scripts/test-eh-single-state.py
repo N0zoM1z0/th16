@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Refusal controls for Arcfile and the fixed synthetic registry terminal graph."""
+"""Refusal controls for three complete single-state terminal graphs."""
 import copy
 import hashlib
 import importlib.util
+from itertools import permutations
 import struct
 import tomllib
 import unittest
@@ -41,14 +42,15 @@ class SingleStateEHControls(unittest.TestCase):
                                       {address + i: value for i, value in enumerate(payload)}))
         return context
 
-    def test_both_complete_graphs_and_primary_owners_pass(self):
-        self.assertEqual({r["parent_target"] for r in self.records}, {0x457060, 0x45a3a0})
-        self.assertEqual(len(self.records), 2)
+    def test_three_complete_graphs_and_primary_owners_pass(self):
+        self.assertEqual({r["parent_target"] for r in self.records}, {0x457060, 0x45a3a0, 0x45d850})
+        self.assertEqual(len(self.records), 3)
         for record in self.records:
             proof = self.review(record)
             self.assertEqual(proof, self.proof(record))
             self.assertEqual((proof["handler"]["size"], proof["descriptor"]["size"]), (27, 44))
-            self.assertEqual((proof["descriptor"]["func_info_offset"], proof["cookie_offset"]), (8, -12))
+            cookie = -8 if record["parent_target"] == 0x45d850 else -12
+            self.assertEqual((proof["descriptor"]["func_info_offset"], proof["cookie_offset"]), (8, cookie))
             result = self.context.compare(self.units[f'reference-{record["parent_target"]:08x}'])
             self.assertEqual((result["result"], result["compared_size"]), ("exact", record["parent_size"]))
             self.assertEqual(result["auxiliary_eh_owners"], [proof])
@@ -92,7 +94,7 @@ class SingleStateEHControls(unittest.TestCase):
 
     def test_candidate_and_original_state_frame_uses_are_fixed(self):
         for record in self.records:
-            state = 106 if record["parent_target"] == 0x457060 else 46
+            state = {0x457060: 106, 0x45a3a0: 46, 0x45d850: 267}[record["parent_target"]]
             for side, base in (("target", record["parent_target"]), ("image", self.proof(record)["parent_candidate"])):
                 context = self.mutate(side, base + state, b"\x01")
                 changed = dict(record)
@@ -110,9 +112,11 @@ class SingleStateEHControls(unittest.TestCase):
     def test_ret_4_and_interior_returns_cannot_change(self):
         for record in self.records:
             parent = self.proof(record)["parent_candidate"]
+            body_offset = 40 if record["parent_target"] == 0x45d850 else 36
             with self.assertRaisesRegex(EHEvidenceError, "protected frame"):
-                self.review(record, self.mutate("image", parent + 36, b"\xc3\x90"))
-            for offset in ((159, 160, 161) if record["parent_target"] == 0x45a3a0 else (188,)):
+                self.review(record, self.mutate("image", parent + body_offset, b"\xc3\x90"))
+            returns = {0x457060: (188,), 0x45a3a0: (159, 160, 161), 0x45d850: (369,)}
+            for offset in returns[record["parent_target"]]:
                 value = self.context.image.read_address(parent + offset, 1)[0] ^ 1
                 with self.assertRaisesRegex(EHEvidenceError, "restoration"):
                     self.review(record, self.mutate("image", parent + offset, bytes([value])))
@@ -192,7 +196,8 @@ class SingleStateEHControls(unittest.TestCase):
         for record in self.records:
             proof = self.proof(record)
             h, data, parent = proof["handler"]["address"], proof["descriptor"]["address"], proof["parent_candidate"]
-            for address in (h + 18, data + 4, data + 16, parent + 6, parent + 20):
+            cookie_field = 19 if record["parent_target"] == 0x45d850 else 20
+            for address in (h + 18, data + 4, data + 16, parent + 6, parent + cookie_field):
                 for remove, add in (([address], []), ([], [address])):
                     context = copy.copy(self.context)
                     context.image = Overlay(self.context.image, remove=remove, add=add)
@@ -205,7 +210,7 @@ class SingleStateEHControls(unittest.TestCase):
                     self.review(record, context)
 
     def test_foreign_graph_edges_are_rejected(self):
-        for record, other in ((self.records[0], self.records[1]), (self.records[1], self.records[0])):
+        for record, other in permutations(self.records, 2):
             proof, foreign = self.proof(record), self.proof(other)
             for address, destination in ((proof["parent_candidate"] + 6, foreign["handler"]["address"]),
                                           (proof["handler"]["address"] + 18, foreign["descriptor"]["address"] + 8)):
@@ -225,11 +230,39 @@ class SingleStateEHControls(unittest.TestCase):
     def test_ordinary_body_bytes_remain_unmasked(self):
         for record in self.records:
             proof = self.proof(record)
-            context = self.mutate("image", proof["parent_candidate"] + 37, b"\xf1")
+            offset, value = (353, b"\xc9") if record["parent_target"] == 0x45d850 else (37, b"\xf1")
+            context = self.mutate("image", proof["parent_candidate"] + offset, value)
             self.review(record, context)
             result = context.compare(self.units[f'reference-{record["parent_target"]:08x}'])
             self.assertEqual((result["result"], result["compared_size"], result["matched_bytes"]),
                              ("mismatch", record["parent_size"], record["parent_size"] - 1))
+
+    def test_release_uses_one_saved_esi_no_local_and_node_minus_eight(self):
+        record = next(r for r in self.records if r["parent_target"] == 0x45d850)
+        proof = self.proof(record)
+        self.assertEqual(proof["cookie_offset"], -4 - 4)
+        self.assertNotIn("array_delete", proof)
+        self.assertNotIn("producer_witness", proof)
+        base = proof["parent_candidate"]
+        self.assertEqual(self.context.image.read_address(base + 17, 2), b"\x56\xa1")
+        self.assertEqual(self.context.image.read_address(base + 26, 9), bytes.fromhex("8d45f464a300000000"))
+        self.assertEqual(self.context.image.read_address(base + 364, 6), bytes.fromhex("595e8be55dc3"))
+
+    def test_release_cookie_displacement_and_saved_register_are_fixed(self):
+        record = next(r for r in self.records if r["parent_target"] == 0x45d850)
+        proof = self.proof(record)
+        for slot in (-4, -12, -16, -20, -24):
+            with self.subTest(slot=slot), self.assertRaises(EHEvidenceError):
+                self.review(record, self.mutate("image", proof["handler"]["address"] + 9, struct.pack("<b", slot)))
+        for opcode in (b"\x51", b"\x53", b"\x57"):
+            with self.subTest(opcode=opcode), self.assertRaises(EHEvidenceError):
+                self.review(record, self.mutate("image", proof["parent_candidate"] + 17, opcode))
+
+    def test_release_does_not_admit_another_parent_with_an_unreviewed_frame(self):
+        record = next(r for r in self.records if r["parent_target"] == 0x45d850)
+        with self.assertRaisesRegex(EHEvidenceError, "fixed complete parent"):
+            self.review(dict(record, parent_symbol="?initialize@SoundManager@@QAEHPAUHWND__@@@Z",
+                             parent_target=0x45d510, parent_size=708))
 
 
 if __name__ == "__main__":

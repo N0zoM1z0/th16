@@ -539,3 +539,19 @@ func_info_size = 44
 func_info_sha256 = "0394e37c11989fc4d6797aecae76d356b816e6cf20781c4650538603b1f609a3"
 eh_flags = 1
 evidence = "docs/knowledge/audio-isa-aligned-eh.md"
+
+[[handlers]]
+profile = "single-state-terminate-v1"
+source = "src/SoundManager.cpp"
+parent_symbol = "?release@SoundManager@@QAEHXZ"
+parent_target = 0x0045d850
+parent_size = 370
+parent_sha256 = "46500bb35cbf3c39f6ad28063de7e1d772eb4f27d0ff25c49437865e81f8e0ad"
+target = 0x0048aa80
+size = 27
+target_sha256 = "ec8c81a0a426f826989d664b948f59ea6917ac4435748c2f53e6122fde02438e"
+func_info_target = 0x0049b628
+func_info_size = 44
+func_info_sha256 = "8678d37177ee640019790ad5faf1bb98bd1e37f3b2a46d3289fdbbfce9c43703"
+eh_flags = 1
+evidence = "docs/knowledge/audio-release-strncmp.md"

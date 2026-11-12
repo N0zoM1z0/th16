@@ -2495,3 +2495,43 @@ suites. See [the full review](audio-scalar-and-sound-data.md),
 `.analysis/audio-scalar-artifact-check.json`,
 `.analysis/audio-sound-data-graph-proof.json` and
 `.analysis/audio-sound-data-regression-check.json`.
+
+## Audio release terminal graph and complete strncmp identity
+
+SoundManager::release (370 bytes) and get_wav_chunk (88) now pass their complete
+owners, adding 458 primary exact bytes. The original strncmp call selects the
+complete 120-byte UCRT procedure; its pinned candidate owns all 120 identical
+bytes. Both have 48 decoded/44 reachable instructions, no external fields or
+relocations, and the same owned two-byte alignment JMP plus three INT3 bytes.
+The explicit pinned MASM procedure retains this entire interval. No runtime
+exact credit is added.
+
+Release's complete 27-byte handler and 44-byte metadata declare one terminal
+state, flags one and the already reviewed full terminate chain. The fixed
+single-state profile now includes its no-local ESI frame: complete 35-byte
+registration and sixteen-byte restoration derive cookie node-8. Previous two-
+register profiles keep node-12; original Arcfile/registry proofs remain identical.
+The Arcfile array-delete dependency is explicitly scoped to that parent. Only
+the new fixed complete release owner is admitted, with full state/frame/source
+ownership and relocation checks.
+
+Canonical replay reports 883 exact, 65 mismatch and 267 incomplete among 1,215
+annotations, covering 167,817 exact bytes and 948 units. All preceding 881 exact
+results, 65 complete mismatches and 946 unit definitions remain identical.
+The loader loses two strncmp fields and retains its data tag and 702/713-byte
+extent difference; other incomplete records are identical. All 349 controls
+pass across fourteen relevant suites. No game source or compiler artifact
+changes and no build occurs; all 1,719 complete linked records and 192 dependency
+stamps validate. Source input remains
+`356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f`.
+See [the full review](audio-release-strncmp.md),
+`.analysis/audio-release-graph-proof.json`,
+`.analysis/audio-release-artifact-check.json` and
+`.analysis/audio-release-regression-check.json`.
+
+Initialization still needs a separate 37-byte dual-cookie/single-state frame
+review and a complete proof of the field cursor at sound-table+1564. The latter
+is anchor-x+4 physically, outside the typed sound table, with a loader call and
+side exits. Do not relax generic cursor rules or infer ESI preservation from
+one save instruction. Complete original/candidate parent, loader and metadata
+evidence is `.analysis/audio-initialize-next-proof-inventory.json`.

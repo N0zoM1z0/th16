@@ -12,6 +12,7 @@ from unittest import mock
 import capstone
 
 from strict_oracle import Context, Incomplete, ROOT, literal_memory_witness, reviewed_linkages, replay_owner
+from linked_image import linked_code_fields
 
 
 class ReviewedLinkageControls(unittest.TestCase):
@@ -355,6 +356,45 @@ class ReviewedLinkageControls(unittest.TestCase):
         next(r for r in rows if r["symbol"] == "_rand")["candidate_library"] = "LIBCMT.lib"
         with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
             self.check_rows(rows)
+
+    def test_strncmp_has_both_complete_equal_owners_and_no_external_fields(self):
+        binding = self.context.reviewed_linkages["_strncmp"]
+        owner = next(f for f in self.context.linked["functions"] if f["symbol"] == "_strncmp")
+        candidate = int(owner["address"], 0)
+        self.assertEqual((binding["target"], binding["size"], owner["size"]), (0x479a70, 120, 120))
+        self.assertEqual(owner["map_object"], "libucrt:strncmp.obj")
+        self.assertEqual(self.context.image.read_address(candidate, 120), self.context.target.read_address(0x479a70, 120))
+        fields = linked_code_fields(self.context.image, self.context.publics, candidate, 120)
+        self.assertEqual((fields["decoded_bytes"], fields["normalization_complete"], fields["fields"]), (120, True, []))
+        for image, address in ((self.context.image, candidate), (self.context.target, 0x479a70)):
+            self.assertFalse(any(p < address + 120 and address < p + 4 for p in image.base_relocations()))
+
+    def test_strncmp_requires_both_complete_extents_and_its_pinned_ucrt(self):
+        for field, value in (("size", "119"), ("size", "121"), ("candidate_size", "119"),
+                             ("candidate_size", "121"), ("candidate_library", "LIBCMT.lib")):
+            rows = copy.deepcopy(self.rows)
+            row = next(r for r in rows if r["symbol"] == "_strncmp")
+            row[field] = value
+            if field == "size":
+                row["target_sha256"] = hashlib.sha256(self.context.target.read_address(0x479a70, int(value))).hexdigest()
+            with self.subTest(field=field, value=value), self.assertRaises(Incomplete):
+                self.check_rows(rows)
+
+    def test_strncmp_preserves_its_original_call_and_owned_alignment(self):
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        parent = list(decoder.disasm(self.context.target.read_address(0x45d9d0, 88), 0x45d9d0))
+        call = next(i for i in parent if i.address == 0x45d9ef)
+        self.assertEqual((call.mnemonic, call.size, call.operands[0].imm), ("call", 5, 0x479a70))
+        payload = self.context.target.read_address(0x479a70, 120)
+        instructions = list(decoder.disasm(payload, 0x479a70))
+        self.assertEqual(sum(i.size for i in instructions), 120)
+        starts = {i.address for i in instructions}
+        for instruction in instructions:
+            if instruction.group(capstone.CS_GRP_JUMP):
+                self.assertEqual(instruction.operands[0].type, capstone.x86.X86_OP_IMM)
+                self.assertIn(instruction.operands[0].imm, starts)
+        self.assertEqual(payload[107:112], bytes.fromhex("eb03cccccc"))
 
     def test_audio_vector_requires_its_full_typed_value_and_fixed_movaps(self):
         symbol = "__xmm@00000003000000020000000100000000"

@@ -102,7 +102,7 @@ def private_owner(context, statics, pdb, symbol, source, size, code, *, internal
 
 def inspect_handler(image, address, info, cookie, frame_handler, *, cookie_offset=-4):
     """All 27 bytes: GS frame check, EAX FuncInfo, and the EH3 tail transfer."""
-    require(type(cookie_offset) is int and cookie_offset in (-4, -12, -16, -20, -24),
+    require(type(cookie_offset) is int and cookie_offset in (-4, -8, -12, -16, -20, -24),
             "unsupported EH handler cookie displacement")
     code = image.read_address(address, 27)
     expected = (bytes.fromhex("8b5424088d420c8b4a") + struct.pack("<b", cookie_offset)

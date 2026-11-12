@@ -971,8 +971,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045D4D0,SoundManager::thread_init,src/SoundManager.cpp,?thread_init@SoundManager@@SAXPAX@Z,exact,,.analysis/reference-audit.json
 0x0045D510,SoundManager::initialize,src/SoundManager.cpp,?initialize@SoundManager@@QAEHPAUHWND__@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045D7E0,SoundManager::thread_load_sound_files,src/SoundManager.cpp,?thread_load_sound_files@SoundManager@@SAXPAX@Z,exact,,.analysis/reference-audit.json
-0x0045D850,SoundManager::release,src/SoundManager.cpp,?release@SoundManager@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0045D9D0,get_wav_chunk,src/SoundManager.cpp,?get_wav_chunk@@YGPAUtWAVEFORMATEX@@PAEPBDPAHI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045D850,SoundManager::release,src/SoundManager.cpp,?release@SoundManager@@QAEHXZ,exact,,.analysis/reference-audit.json
+0x0045D9D0,get_wav_chunk,src/SoundManager.cpp,?get_wav_chunk@@YGPAUtWAVEFORMATEX@@PAEPBDPAHI@Z,exact,,.analysis/reference-audit.json
 0x0045DA30,SoundManager::find_bgm,src/SoundManager.cpp,?find_bgm@SoundManager@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
 0x0045DB10,SoundManager::open_bgm,src/SoundManager.cpp,?open_bgm@SoundManager@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
 0x0045DBF0,SoundManager::select_bgm,src/SoundManager.cpp,?select_bgm@SoundManager@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
@@ -985,7 +985,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045E2A0,SoundManager::stop_sound,src/SoundManager.cpp,?stop_sound@SoundManager@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0045E330,SoundManager::update_sound_thread,src/SoundManager.cpp,?update_sound_thread@SoundManager@@SAHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0045E8D0,SoundBufferEntry::play,src/SoundManager.cpp,?play@SoundBufferEntry@@QAEXH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0045E990,SoundBufferEntry::load,src/SoundManager.cpp,?load@SoundBufferEntry@@QAEHPBD@Z,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045E990,SoundBufferEntry::load,src/SoundManager.cpp,?load@SoundBufferEntry@@QAEHPBD@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045EC50,SoundManager::bgm_thread_proc,src/SoundManager.cpp,?bgm_thread_proc@SoundManager@@SGKPAX@Z,exact,,.analysis/reference-audit.json
 0x0045ED00,SoundManager::modify_bgm,src/SoundManager.cpp,?modify_bgm@SoundManager@@QAEXHHPBD@Z,exact,,.analysis/reference-audit.json
 0x0045EDA0,sound_debug_log,src/SoundManager.cpp,?sound_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
