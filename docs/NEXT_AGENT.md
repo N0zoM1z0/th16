@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after Boss shield flow and collision operand source work.
+Updated 2026-11-12 after Boss damage traversal and impact snapshot source work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,16 +11,16 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation recovers Boss shield control flow and collision operands. The
-complete logic owner now compares as mismatch, with no new exact credit.
+continuation recovers damage-source advancement and impact snapshots, with
+initialized native execution. No new exact credit is claimed.
 The canonical report is **885 exact, 66 mismatch, 264 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 951 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`63cfdc1769d7404dc72afbdb9cb0d7903159eb2d65f3c285d9f923ad9f6cacf2`.
-PDB age is **216**. The final incremental build, strict replay and progress check
+`232ebb9faea0ff50a81d55437a8c16e86e08e1fbb91361875a4a3e110a42f609`.
+PDB age is **227**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -28,6 +28,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Boss damage snapshots and CRT startup](knowledge/boss-damage-snapshots-and-crt-startup.md) | Original pointer/count sequence and XYZ read-before-write order; 96 historical impact-output failures removed; damage owner remains incomplete |
 | [Boss shield flow and collision operands](knowledge/boss-shield-and-collision-operands.md) | Complete 2,207-byte logic owner now compares as mismatch; shield flow recovered, 27 historical collision payload failures removed; no new exact credit |
 | [ECL angle and orbit initialization](knowledge/ecl-angle-and-orbit-initialization.md) | Original angle field order and vector tangent copies; 744 angle and 768 orbit complete calls agree; dispatcher remains incomplete |
 | [ECL coordinate evaluation](knowledge/ecl-coordinate-evaluation.md) | Original coordinate getter/read sequence and animation X operand order; 18 historical NaN-payload failures now agree; complete dispatcher remains incomplete |
@@ -44,8 +45,58 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [Boss shield flow and collision operands](knowledge/boss-shield-and-collision-operands.md)
-first. `EnemyData::step_logic` now uses nested shield conditions. Compiler common
+Read [Boss damage snapshots and initialized native execution](knowledge/boss-damage-snapshots-and-crt-startup.md)
+first. `Player::compute_damage_to_enemy` advances its source before decrementing
+the bounded count. Its compiler-generated source/timer advances now precede SUB,
+which feeds JNE directly; the extra TEST is removed. A local `Float3 impact`
+loads all XYZ bits before publishing the impact output, recovering the original
+MOVQ/Z-load/store ordering. Keep that snapshot when working on local lifetimes.
+
+All **384 impact-output calls** agree with the original and independent full-state
+expectations. The preserved `d6faeac` image fails 96 of them. Shifted overlapping
+storage exposes its late Z read; these are machine-level stress cases, not proof
+of a C++ alias contract or of actual callers using overlapping objects. Ordinary
+outputs, exact self-alias, four source indices and raw signed-zero/NaN Z bits
+are included. The damage owner remains **769 candidate / 774 original bytes**,
+incomplete. Its alignment, enemy-ID lifetime and block layout still differ.
+
+The native host now executes actual executable startup and stops at the existing
+WinMain entry before redirecting to a fixture. This fixes the missing runtime
+precondition found when a nonfinite-angle matrix faulted on an original CRT path
+before initialization. The final **1,164 geometry calls** all agree, including
+324 independent axis-aligned expectations. The first point-array ABI attempt
+passed its pointer on the stack; original instructions instead require ECX.
+Keep both failed protocols and their notes; use the initialized final suites.
+
+The same final image passes **2,196 complete native calls** (the 384 impact,
+1,164 geometry and preceding 648 Boss/damage/collision/shield calls), plus the
+preceding **204 prefixes**. All final native suites execute after actual startup;
+18 startup stops, historical-image receipts and common final artifact hashes
+are authenticated. Existing observation and prefix-chain controls pass, as do
+old-protocol memory replay and a new width-register negative control.
+
+All `Collision.cpp` rotation trials and direct Boss sinf/cosf trials are restored.
+Their code/extent results are in `.analysis/boss-damage-work/`. Named rotation
+forms did not fix the complete layout; the counted do/while point loop grew from
+661 to 664 bytes. Do not keep such changes based on apparent source similarity.
+The point helper remains mismatch and the 2,168-byte original rectangle owner
+remains incomplete at 2,002 candidate bytes. These source and runtime diagnostics
+grant no new exact credit.
+
+Preserve `final-image/`, `complete-scope/`, `native-impact-final/`,
+`native-geometry-final/`, the replayed Boss/shield reports, protocol controls,
+layout probe and rejected forms under `.analysis/boss-damage-work/`.
+`final-regression.json` preserves all 885 exact owners, 169,575 exact primary
+bytes, all classifications and 951 units. The four generated comparison/boundary
+ledgers are byte-identical to `d6faeac`. Source-origin review remains open and
+Factory acceptance is not submitted. Full Boss scripts, due ECL transitions,
+resource effects and real deaths remain outside these fixtures.
+
+### Earlier Boss shield and collision work
+
+For the preceding `d6faeac` checkpoint, read
+[Boss shield flow and collision operands](knowledge/boss-shield-and-collision-operands.md).
+`EnemyData::step_logic` uses nested shield conditions. Compiler common
 expression elimination recovers the original main-state reuse, subseason reads
 and merged disable path. A 156-byte internal source-shape diagnostic agrees
 using existing linked identities; it is not an independent exact owner.
