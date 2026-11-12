@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after shared ECL position setup, spell-name decoding and difficulty dispatch.
+Updated 2026-11-12 after ECL coordinate evaluation and animation offset source work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -9,17 +9,18 @@ running at this checkpoint. Read AGENTS.md before work.
 
 The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
-feedback and damage-source traversal. The current source continuation retains
-shared ECL position setup, destination-pointer spell-name decoding and explicit
-difficulty dispatch, with no new exact credit.
+feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
+position setup, spell-name traversal and difficulty dispatch. The current source
+continuation recovers coordinate output evaluation and animation operand order,
+with no new exact credit.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`71e0dc6fd0fafbfdc9d83f91765d1e17d3e8c4c21c6ea45e5ee5aadbaa2a99cc`.
-PDB age is **195**. The final incremental build, strict replay and progress check
+`6c1f96fe4f8c98cbb947d01ead0107b5a803913897342b68517fc4c2caf496cc`.
+PDB age is **200**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -27,6 +28,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [ECL coordinate evaluation](knowledge/ecl-coordinate-evaluation.md) | Original coordinate getter/read sequence and animation X operand order; 18 historical NaN-payload failures now agree; complete dispatcher remains incomplete |
 | [ECL position and spell names](knowledge/ecl-position-and-spell-name.md) | Shared interpolation finish, forward destination traversal and both difficulty tables; candidate 21,586 to 21,384 bytes against 21,408 original bytes, still incomplete |
 | [Curve laser and projectile dispatch](knowledge/laser-initialization-and-bullet-dispatch.md) | Complete 1,726-byte initializer and 32-byte private helper; projectile dispatcher 5,988 to 5,500 bytes, still incomplete |
 | [Audio release and strncmp](knowledge/audio-release-strncmp.md) | Complete 370/88-byte primary owners; complete 120-byte UCRT identity; fixed ESI-only terminal frame |
@@ -40,12 +42,41 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
+Read [ECL coordinate evaluation and animation offsets](knowledge/ecl-coordinate-evaluation.md)
+first. Instruction 324 now uses explicit found/self branches, recovering the
+original pointer-getter and coordinate-read sequence without floating spills.
+Its case slice is 88 bytes against 82 original bytes; an extra manager load
+remains. Instruction 338 now adds the offset vector to the enemy position.
+This recovers the original X operand and its NaN payload result, while retaining
+the Y/X argument-read order and the Z addition by zero.
+
+All **612 complete lookup calls** agree with original and independent full-state
+expectations. All **42 animation prefixes** agree; the preserved `a29e605` image
+fails 18 of those same cases. The prefixes stop before allocation, so VM creation
+and effect/resource behavior remain untested. The earlier **1,157 movement**,
+**108 difficulty**, **140 spell-prefix** and default-return negative controls also
+pass on this same final image. The complete dispatcher diagnostic is now
+**21,408 original / 21,348 candidate bytes**, including all three tables and the
+full map. The frame difference remains `0x478` original / `0x490` candidate.
+
+Keep `.analysis/ecl-context-work/`, especially its historical-image control,
+typed layout/enum probe and `INVALID-OPCODE.txt` notes. The first lookup protocol
+mistook opcode 800 for alive opcode 555; its positive expected-state assertion
+refused it before candidate execution. Use `native-lookup-verified/`, not that
+failed protocol or its empty-list smoke. Preserve the lookup's existing
+last-visited-enemy result for a missing nonzero ID in a nonempty list.
+
+The full strict replay preserves all 885 exact results and classifications,
+169,575 exact primary bytes and 950 units. No Oracle rule, binding or accepted
+owner scope changes. The large function still needs formal table/EH identity
+review and further source work; its local case slices grant no exact credit.
+
 Read [ECL position setup and spell-name decoding](knowledge/ecl-position-and-spell-name.md)
-first. `ecl_run_over_300` now shares the position/curve initial-goal-timer path,
+for the preceding `a29e605` checkpoint. `ecl_run_over_300` shares the position/curve initial-goal-timer path,
 advances the spell-name destination with a forward counter, and retains separate
 Lunatic/default branches to recover both four-entry difficulty tables. The
 complete diagnostic scope contains **three dispatches**, 182 target slots and
-702 map bytes: **21,408 original / 21,384 candidate bytes**. An early main-only
+702 map bytes: **21,408 original / 21,384 candidate bytes at that checkpoint**. An early main-only
 scope omitted the two nested tables; its 21,374 target total is incomplete.
 Keep its warning and use `.analysis/ecl-dispatch-work/complete-scope/`.
 

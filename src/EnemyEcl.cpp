@@ -368,7 +368,7 @@ int EnemyData::ecl_run_over_300()
         // y is read before x as in the original (random variables draw from the replay RNG).
         f32 y = full->context.current_context->get_float_arg(3);
         f32 x = full->context.current_context->get_float_arg(2);
-        Float3 pos = final_pos.pos + Float3(x, y, 0.0f);
+        Float3 pos = Float3(x, y, 0.0f) + final_pos.pos;
         g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)], full->context.current_context->get_int_arg(1),
                                                   &pos, full->context.current_context->get_float_arg(4)));
         break;
@@ -2350,8 +2350,16 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ENM_POS_OR_SELF:
     {
         EnemyInf *enemy = g_EnemyManager->find_enemy_by_id(get_int_arg(2));
-        *get_float_arg_ptr(0) = enemy != NULL ? enemy->enemy.final_pos.pos.x : final_pos.pos.x;
-        *get_float_arg_ptr(1) = enemy != NULL ? enemy->enemy.final_pos.pos.y : final_pos.pos.y;
+        if (enemy != NULL)
+        {
+            *get_float_arg_ptr(0) = enemy->enemy.final_pos.pos.x;
+            *get_float_arg_ptr(1) = enemy->enemy.final_pos.pos.y;
+        }
+        else
+        {
+            *get_float_arg_ptr(0) = final_pos.pos.x;
+            *get_float_arg_ptr(1) = final_pos.pos.y;
+        }
         break;
     }
     // unknown560(x, y)
