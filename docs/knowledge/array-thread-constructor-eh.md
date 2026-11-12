@@ -113,7 +113,7 @@ raw payloads, fields, relocations and primary replays are retained in
 `.analysis/array-member-{artifact,regression}-check.json` with matching
 `check-*.py` reproducers. Control logs and summary use `.analysis/array-member-*`.
 
-## Open terminate dependency
+## Initial terminate investigation
 
 Stage and ItemManager destruction have two-state maps targeting a shared
 terminate thunk, rather than these private actions. Original `___std_terminate`
@@ -125,3 +125,8 @@ and all external dependency roles still require independent review. No
 terminate binding, new destructor profile or exact credit is added.
 `.analysis/terminate-entry-investigation.json` retains both full chains and
 candidate fields for that next investigation.
+
+The later [terminate review](terminate-destructor-eh.md) completes these SEH
+and dependency checks, binds five complete runtime roles and resolves the
+Stage/ItemManager destructor graphs. The initial investigation above remains
+historical evidence; the full 59/60-byte extents are preserved.

@@ -99,6 +99,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00409670,Stage::Stage,reference-00409670,local-strict-pass,249,249,249,.analysis/reference-audit.json
 0x00409770,StageInner::~StageInner,reference-00409770,local-strict-pass,73,73,73,.analysis/reference-audit.json
 0x004097C0,Stage::load_data,reference-004097c0,local-strict-pass,473,473,473,.analysis/reference-audit.json
+0x004099A0,Stage::~Stage,reference-004099a0,local-strict-pass,994,994,994,.analysis/reference-audit.json
 0x00409DB0,Stage::create,reference-00409db0,local-strict-pass,156,156,156,.analysis/reference-audit.json
 0x0040A410,Stage::on_draw_06,reference-0040a410,local-strict-pass,907,907,907,.analysis/reference-audit.json
 0x0040A7A0,Stage::on_tick_callback,reference-0040a7a0,local-strict-pass,5,5,5,.analysis/reference-audit.json
@@ -402,6 +403,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042F1A0,Item::Item,reference-0042f1a0,local-strict-pass,50,50,50,.analysis/reference-audit.json
 0x0042F1E0,Item::~Item,reference-0042f1e0,local-strict-pass,120,120,120,.analysis/reference-audit.json
 0x0042F260,ItemManager::initialize,reference-0042f260,local-strict-pass,106,106,106,.analysis/reference-audit.json
+0x0042F2D0,ItemManager::~ItemManager,reference-0042f2d0,local-strict-pass,360,360,360,.analysis/reference-audit.json
 0x0042F440,ItemManager::create,reference-0042f440,local-strict-pass,147,147,147,.analysis/reference-audit.json
 0x00430620,Item::collect_point,reference-00430620,mismatch,384,384,383,.analysis/reference-audit.json
 0x004307A0,ItemManager::on_draw_body,reference-004307a0,local-strict-pass,329,329,329,.analysis/reference-audit.json

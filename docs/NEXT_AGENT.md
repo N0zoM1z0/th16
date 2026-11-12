@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete array and thread-member constructor EH graphs.
+Updated 2026-11-12 after complete noexcept destructor and terminate graphs.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,33 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **867 exact, 65 mismatch and 283 incomplete** among
-1215 annotated candidates, covering 162,185 exact owned bytes and 932 units.
+The current report is **869 exact, 65 mismatch and 281 incomplete** among
+1215 annotated candidates, covering 163,539 exact owned bytes and 934 units.
+Stage destruction (994 bytes) and ItemManager destruction (360) now pass all
+1,354 primary bytes. Complete 27-byte handlers and 52-byte two-state metadata
+owners independently select the shared noexcept termination entry. Fixed
+node-24/-20 parent frames, state writes, cookie storage and both complete
+metadata layouts are required. Stage's ECX-derived state zero must retain its
+defining XOR without clobbering or an entering branch. The five reviewed
+runtime roles retain both full original/candidate extents; the complete
+59/60-byte terminate bodies and 28-byte SEH table are checked. Runtime and
+auxiliary graphs receive no extra primary credit. All preceding 867 exact
+results, 65 complete mismatches and 932 unit definitions remain identical,
+as do all other incomplete records. No game source or compiler artifact
+changes and no build occurs; all 1,719 linked owners and 192 dependency stamps
+validate. See [the terminate review](knowledge/terminate-destructor-eh.md).
+
+Other terminate-only state counts, flags and frames still need independent
+review. Arcfile close and the UpdateFuncRegistry deleting destructor are
+possible next scopes; their complete parents and private graphs are unreviewed
+by the new profile. Existing AnmManager's separate node-24 aggregate retains
+its earlier rules. The preceding investigation is retained in
+`.analysis/terminate-entry-investigation.json`; the complete follow-up evidence
+is `.analysis/terminate-{original,caller}-scopes.json`.
+
+The preceding array/thread report was **867 exact, 65 mismatch and
+283 incomplete** among 1215 annotated candidates, covering 162,185 exact owned
+bytes and 932 units.
 BulletManager construction (181 bytes) and EndingScriptVm construction (551)
 now pass all 732 primary bytes. Complete private code (57/41 bytes), metadata
 (44 bytes each), independently bound cleanup roles and complete parent frames
@@ -31,12 +56,6 @@ mismatches and 930 unit definitions remain identical, as do all other
 incomplete records. No game source or compiler artifact changes and no build
 occurs; all 1,719 linked owners and 192 dependency stamps validate. See
 [the array/thread review](knowledge/array-thread-constructor-eh.md).
-
-Stage/ItemManager destructor maps depend on a terminate runtime chain. Complete
-five-byte thunk scopes and 59/60-byte terminate owners are retained in
-`.analysis/terminate-entry-investigation.json`. Complete SEH/filter metadata
-and dependency identities still need review. Neither terminate symbol is bound;
-no new destructor profile or credit is added. Do not truncate the candidate.
 
 The preceding allocation-cleanup report was **865 exact, 65 mismatch and
 285 incomplete** among 1215 annotated candidates, covering 161,453 exact owned
@@ -53,8 +72,8 @@ incomplete records. Complete one-state owner/map checks are shared with the
 member-constructor profile; both earlier proof dictionaries remain identical.
 The new fingerprinted module is `scripts/eh_allocation.py`. Its node-12 frame
 does not relax any existing profile. Other graph/state shapes still require
-independent review. No game source or compiler artifact changes and no build occurs; all 1,719 linked owners and 192 dependency stamps
-validate. See [the allocation review](knowledge/allocation-cleanup-eh.md).
+independent review. No game source or compiler artifact changes and no build
+occurs; all 1,719 linked owners and 192 dependency stamps validate. See [the allocation review](knowledge/allocation-cleanup-eh.md).
 
 The preceding member-constructor checkpoint reported 860 exact, 65 mismatch
 and 290 incomplete, covering 160,619 exact owned bytes and 925 units.
@@ -445,7 +464,7 @@ entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. No further build is needed for the current EH
 review; identical artifacts and current dependency keys are checked in
-`.analysis/array-member-artifact-check.json`. The preceding source restoration is
+`.analysis/terminate-artifact-check.json`. The preceding source restoration is
 `.analysis/replay-destructor-source-trial.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
@@ -506,7 +525,18 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **206 controls across nine relevant suites**:
+The current batch passes **231 controls across ten relevant suites**:
+terminate EH (23), array constructor EH (18), member constructor EH (25),
+allocation EH (23), saved-register EH (37), legacy empty EH (25), AnmManager
+constructor EH (25), reviewed linkages (38), strict Oracle (14) and focused
+audit (3). Controls cover both whole graphs, every terminate/thunk/SEH-table
+byte, state-zero definition/clobber/bypass checks, ownership, complete runtime
+extents, fixed direct witnesses and all relocations. Ordinary body mutations
+still fail primary replay. Logs use `.analysis/terminate-<suite>-controls.log`;
+the summary is `.analysis/terminate-controls-summary.json`. Complete regression
+retention is `.analysis/terminate-regression-check.json`.
+
+The preceding array/thread batch passed **206 controls across nine relevant suites**:
 array constructor EH (18), member constructor EH (25), allocation EH (23),
 saved-register EH (37), legacy empty EH (25), AnmManager constructor EH (25),
 reviewed linkages (36), strict Oracle (14) and focused audit (3). New controls

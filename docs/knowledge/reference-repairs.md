@@ -2246,3 +2246,39 @@ added. See [the complete review](array-thread-constructor-eh.md),
 `.analysis/array-member-caller-scopes.json`,
 `.analysis/array-member-regression-check.json` and
 `.analysis/terminate-entry-investigation.json`.
+
+## Complete noexcept destructor and terminate graphs
+
+Original-only CFGs establish all 994 Stage destructor bytes (251 instructions)
+and all 360 ItemManager destructor bytes (98 instructions). Complete private
+27-byte handlers and 52-byte two-state maps identify the same shared noexcept
+termination action. Original FuncInfo-before-map and candidate map-before-
+FuncInfo layouts, both state transitions and every relocation are checked.
+The fixed Stage frame derives node-24 from two locals and three saved registers;
+ItemManager derives node-20 from one local and the same saves. Stage's state-zero
+store additionally requires its defining ECX XOR without clobbering or bypass.
+The earlier AnmManager node-24 aggregate retains its separate fixed rules.
+
+The five complete runtime identities cover the noexcept thunk, terminate,
+SEH prolog, PTD getter and abort. Original/candidate sizes remain 5/5, 59/60,
+73/90, 131/132 and 67/67; none is shortened. Both complete terminate bodies
+and the full 28-byte SEH table are checked, including its original-selected
+filter and exceptional continuation. Pinned source roles, complete scopes,
+fixed original direct witnesses and library ownership establish identities;
+no runtime implementation or auxiliary graph receives primary exact credit.
+
+Canonical replay reports 869 exact, 65 mismatch and 281 incomplete among 1,215
+annotations, covering 163,539 primary exact bytes and 934 units. The new whole
+parents add 1,354 primary bytes. All preceding 867 exact results, 65 complete
+mismatches and 932 units remain identical, as do all other incomplete records.
+Two hundred thirty-one controls pass across ten suites. A new mutation test
+initially rewrote the AnmManager cookie displacement unchanged; it is corrected
+to mutate each profile's actual value and all affected controls pass. No game
+source or compiler artifact changes and no build occurs; all 1,719 complete
+linked owners and 192 dependency stamps validate.
+
+See [the complete review](terminate-destructor-eh.md),
+`.analysis/terminate-original-scopes.json`,
+`.analysis/terminate-caller-scopes.json` and
+`.analysis/terminate-regression-check.json`. The earlier unbound investigation
+is retained. Other terminate-only graph shapes still require independent review.

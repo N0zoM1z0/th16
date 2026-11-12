@@ -86,3 +86,8 @@ __aulldiv,0x4876b0,104,runtime-function,84d17e172ff5e6bce23b7837cc15439649f685d0
 ??_7SptResourceInf@@6B@,0x4921e0,8,vftable,fd0a6ec0d57dd029835ada9f1653aeb4384f5d12351b66eda3f1b3401e18dd8e,,,docs/knowledge/ecl-vftable-identities.md,,
 ??_7SptInf@@6B@,0x4921c4,24,vftable,db10a36973278edf467e074ab6cf318e98ca9442de2162787b0895825df8149a,,,docs/knowledge/ecl-vftable-identities.md,,
 ??_7EnemyInf@@6B@,0x4921a8,24,vftable,70577fddb8ad9bf5ea4402edabd8a06dd0e9da2aa50206b394f99629a3ce4d3c,,,docs/knowledge/enemy-empty-eh.md,,
+___std_terminate,0x476b19,5,runtime-function,1fcab52575b9d0102f5ab4b83b942f35824563799c4ed62594189e1ef029c008,,,docs/knowledge/terminate-destructor-eh.md,libvcruntime.lib,5
+_terminate,0x47b825,59,runtime-function,39ca075e5be877c0069dc6e89ee70c8b82fe08ee38bebeb5d610924501872e6b,0x476b19,jmp,docs/knowledge/terminate-destructor-eh.md,libucrt.lib,60
+__SEH_prolog4_GS,0x486ce0,73,runtime-function,0034a7544cb18ee988bcf579c21ef8ae26fca23773f65a61b29638108e960620,0x47b82c,call,docs/knowledge/terminate-destructor-eh.md,LIBCMT.lib,90
+___acrt_getptd,0x47cad3,131,runtime-function,6b1ed6706621b5994c0074622f3eca237215f9e3b2d0d0c01272efe030ac019b,0x47b831,call,docs/knowledge/terminate-destructor-eh.md,libucrt.lib,132
+_abort,0x47bbdb,67,runtime-function,d34341665fd4912d198ad02a064b4f3c6c729ee2ad5d0a0129dcc6279c9b1f37,0x47b85b,call,docs/knowledge/terminate-destructor-eh.md,libucrt.lib,67

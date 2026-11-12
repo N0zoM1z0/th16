@@ -36,6 +36,11 @@ BulletManager array cleanup and one fixed EndingScriptVm thread-member role.
 It independently checks the 57/41-byte code owners, 44-byte metadata owners,
 array ranges, cross-source member destructor and full RET 4 restoration.
 
+The [terminate follow-up](terminate-destructor-eh.md) independently checks two
+complete noexcept destructor graphs, their fixed two-state terminal maps,
+complete node-24/-20 frames and the shared runtime chain with its SEH table.
+Other state counts, flags and frames receive no implicit support.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

@@ -101,7 +101,7 @@ def private_owner(context, statics, pdb, symbol, source, size, code, *, internal
 
 def inspect_handler(image, address, info, cookie, frame_handler, *, cookie_offset=-4):
     """All 27 bytes: GS frame check, EAX FuncInfo, and the EH3 tail transfer."""
-    require(type(cookie_offset) is int and cookie_offset in (-4, -12, -16, -20),
+    require(type(cookie_offset) is int and cookie_offset in (-4, -12, -16, -20, -24),
             "unsupported EH handler cookie displacement")
     code = image.read_address(address, 27)
     expected = (bytes.fromhex("8b5424088d420c8b4a") + struct.pack("<b", cookie_offset)
@@ -167,6 +167,9 @@ def inspect_saved_register_frame(image, address, size, handler, *,
 
 
 def review_handler(context, record, statics, pdb):
+    if record.get("profile") == "two-state-terminate-v1":
+        from eh_terminate import review_terminate
+        return review_terminate(context, record, statics, pdb)
     if record.get("profile") == "anm-manager-constructor-v1":
         return review_anm_constructor(context, record, statics, pdb)
     if record.get("profile") == "single-member-constructor-v1":

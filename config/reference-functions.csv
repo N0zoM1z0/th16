@@ -141,7 +141,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00409670,Stage::Stage,src/Stage.cpp,??0Stage@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00409770,StageInner::~StageInner,src/Stage.cpp,??1StageInner@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x004097C0,Stage::load_data,src/Stage.cpp,?load_data@Stage@@QAEHPBDH@Z,exact,,.analysis/reference-audit.json
-0x004099A0,Stage::~Stage,src/Stage.cpp,??1Stage@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004099A0,Stage::~Stage,src/Stage.cpp,??1Stage@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00409D90,??_GFog@@QAEPAXI@Z,src/Stage.cpp,??_GFog@@QAEPAXI@Z,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
 0x00409DB0,Stage::create,src/Stage.cpp,?create@Stage@@SAPAU1@PBD@Z,exact,,.analysis/reference-audit.json
 0x00409E50,Stage::on_tick,src/Stage.cpp,?on_tick@Stage@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -515,7 +515,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042F1A0,Item::Item,src/Item.cpp,??0Item@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F1E0,Item::~Item,src/Item.cpp,??1Item@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F260,ItemManager::initialize,src/Item.cpp,?initialize@ItemManager@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0042F2D0,ItemManager::~ItemManager,src/Item.cpp,??1ItemManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042F2D0,ItemManager::~ItemManager,src/Item.cpp,??1ItemManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F440,ItemManager::create,src/Item.cpp,?create@ItemManager@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x0042F4E0,ItemManager::on_tick_body,src/Item.cpp,?on_tick_body@ItemManager@@QAEHXZ,incomplete,6 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00430100,Item::collect_power,src/Item.cpp,?collect_power@Item@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

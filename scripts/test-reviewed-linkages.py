@@ -285,6 +285,36 @@ class ReviewedLinkageControls(unittest.TestCase):
                 with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
                     self.check_rows(rows)
 
+    def test_terminate_chain_requires_both_complete_runtime_extents(self):
+        for symbol in ("___std_terminate", "_terminate", "__SEH_prolog4_GS", "___acrt_getptd", "_abort"):
+            for field in ("size", "candidate_size"):
+                rows = copy.deepcopy(self.rows)
+                row = next(r for r in rows if r["symbol"] == symbol)
+                row[field] = str(int(row[field]) - 1)
+                if field == "size":
+                    row["target_sha256"] = hashlib.sha256(self.context.target.read_address(
+                        int(row["target_address"], 0), int(row[field]))).hexdigest()
+                with self.subTest(symbol=symbol, field=field):
+                    with self.assertRaisesRegex(Incomplete, "complete function extents"):
+                        self.check_rows(rows)
+
+    def test_terminate_chain_requires_pinned_libraries_and_direct_witnesses(self):
+        for symbol in ("___std_terminate", "_terminate", "__SEH_prolog4_GS", "___acrt_getptd", "_abort"):
+            rows = copy.deepcopy(self.rows)
+            row = next(r for r in rows if r["symbol"] == symbol)
+            row["candidate_library"] = "libucrt.lib" if row["candidate_library"] != "libucrt.lib" else "LIBCMT.lib"
+            with self.subTest(symbol=symbol), self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
+                self.check_rows(rows)
+            if symbol == "___std_terminate":
+                continue
+            witness = int(row["witness_instruction"], 0)
+            for field, value in (("witness_instruction", hex(witness + 1)),
+                                 ("witness_mnemonic", "push")):
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == symbol)[field] = value
+                with self.subTest(symbol=symbol, field=field), self.assertRaises(Incomplete):
+                    self.check_rows(rows)
+
     def test_string_must_have_its_complete_pdb_extent(self):
         rows = copy.deepcopy(self.rows)
         row = next(r for r in rows if r["kind"] == "string-literal")

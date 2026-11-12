@@ -425,3 +425,35 @@ symbol = "??1ThreadInf@@UAE@XZ"
 target = 0x402f20
 size = 11
 sha256 = "3cee6875cfb34f549211c87fc53857659432a90bd67fd6ed68120e538a3bd532"
+
+[[handlers]]
+profile = "two-state-terminate-v1"
+source = "src/Stage.cpp"
+parent_symbol = "??1Stage@@QAE@XZ"
+parent_target = 0x4099a0
+parent_size = 994
+parent_sha256 = "535a7b5b196f1e75e9fb3be3d8694ab006d8ff774e51a24f03578d5a3825e637"
+target = 0x48a450
+size = 27
+target_sha256 = "1339f43f156527eb3cadd85b2cef16b7c7d43ffafebf443487439a0fc291e872"
+func_info_target = 0x49b010
+func_info_size = 52
+func_info_sha256 = "2862c9f858d2deb759d24f4664c938f1a83b772b6c5862535ef5027fe91d763a"
+eh_flags = 5
+evidence = "docs/knowledge/terminate-destructor-eh.md"
+
+[[handlers]]
+profile = "two-state-terminate-v1"
+source = "src/Item.cpp"
+parent_symbol = "??1ItemManager@@QAE@XZ"
+parent_target = 0x42f2d0
+parent_size = 360
+parent_sha256 = "fe6aa98cb57628f678d911b6df7e0394e7d7f4bb971b5fcfeaeecf0b8ee6ad9e"
+target = 0x48a800
+size = 27
+target_sha256 = "52a8af00f356819cdd52569a4c2202256cd48cdea846ac428bc798e71fc855ba"
+func_info_target = 0x49b3ac
+func_info_size = 52
+func_info_sha256 = "c3b85b04c14858486c4b2812a397e7abe28a3f9c2020496259b7cf0d0bec1a93"
+eh_flags = 5
+evidence = "docs/knowledge/terminate-destructor-eh.md"

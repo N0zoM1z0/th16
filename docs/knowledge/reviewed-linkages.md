@@ -4,6 +4,12 @@ These bindings apply to the original Japanese TH16 v1.00a target with SHA-256
 `c11776019f083978e66027e7394dafb1fb9543afca986f28049a49417e341929`.
 The machine inputs are `config/linkage-bindings.csv`.
 
+The [terminate/destructor review](terminate-destructor-eh.md) adds five complete
+runtime identities for the noexcept thunk, terminate, its SEH prolog, PTD
+getter and abort. Unequal complete original/candidate extents remain explicit.
+The whole terminate bodies and private SEH table are checked; runtime code
+receives no primary exact credit.
+
 The subsequent [stage/time review](stage-time-identities.md) adds the complete
 66-byte current-time entry and an explicit complete 1,696-byte stage-table
 identity. Table initialization and every string/relocation are independently
