@@ -520,6 +520,14 @@ class Context:
             self.boundaries = {int(row["address"], 0): row for row in csv.DictReader(stream)}
         self.switch_owners = load_switch_owners(ROOT / "config/switch-owners.toml")
         self.reviewed_linkages = reviewed_linkages(self)
+        from runtime_identity import review_runtime_interiors, RuntimeEvidenceError
+        try:
+            runtime_entries, self.runtime_interiors = review_runtime_interiors(self, ROOT / "config/runtime-interiors.toml")
+            if set(runtime_entries) & self.reviewed_linkages.keys():
+                raise Incomplete("runtime interior identity duplicates an ordinary linkage")
+            self.reviewed_linkages.update(runtime_entries)
+        except RuntimeEvidenceError as error:
+            raise Incomplete(str(error)) from error
         try:
             self.eh_handlers = review_handlers(self, ROOT / "config/eh-handlers.toml")
         except EHEvidenceError as error:
@@ -543,6 +551,7 @@ class Context:
                  ROOT / "scripts/switch_ownership.py", ROOT / "config/switch-owners.toml",
                  ROOT / "scripts/eh_identity.py", ROOT / "config/eh-handlers.toml",
                  ROOT / "scripts/static_identity.py", ROOT / "config/static-functions.toml",
+                 ROOT / "scripts/runtime_identity.py", ROOT / "config/runtime-interiors.toml",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
@@ -604,6 +613,12 @@ class Context:
             reviewed = self.reviewed_linkages.get(field.get("symbol"))
             if reviewed and field["target"] != reviewed["target"]:
                 raise Incomplete("linkage differs from the independently reviewed fixed destination")
+            if reviewed and reviewed["kind"] == "runtime-interior-v1":
+                from runtime_identity import validate_runtime_field, RuntimeEvidenceError
+                try:
+                    validate_runtime_field(self, function, field, reviewed)
+                except RuntimeEvidenceError as error:
+                    raise Incomplete(str(error)) from error
             addend = field.get("addend", 0)
             if reviewed and reviewed["kind"] == "vftable" and (addend or field["type"] != "DIR32"):
                 raise Incomplete("reviewed vftable permits only its exact DIR32 address point")

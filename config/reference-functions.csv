@@ -490,7 +490,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042D7B0,GameThread::on_tick_body,src/GameThread.cpp,?on_tick_body@GameThread@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0042DB70,GameThread::on_tick_callback,src/GameThread.cpp,?on_tick_callback@GameThread@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0042DB80,GameThread::on_draw_callback,src/GameThread.cpp,?on_draw_callback@GameThread@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
-0x0042DBC0,GameThread::update_play_time,src/GameThread.cpp,?update_play_time@GameThread@@SAXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042DBC0,GameThread::update_play_time,src/GameThread.cpp,?update_play_time@GameThread@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0042DC50,GameThread::begin_stage,src/GameThread.cpp,?begin_stage@GameThread@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0042DEE0,GameThread::finish_stage_transition,src/GameThread.cpp,?finish_stage_transition@GameThread@@QAEHXZ,mismatch,,.analysis/reference-audit.json
 0x0042E150,stage_clear,src/GameThread.cpp,?stage_clear@@YAHXZ,exact,,.analysis/reference-audit.json
@@ -934,7 +934,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045AE70,GameWindow::do_frame,src/GameWindow.cpp,?do_frame@GameWindow@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0045AF80,GameWindow::update_window,src/GameWindow.cpp,?update_window@GameWindow@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0045B080,GameWindow::take_screenshot,src/GameWindow.cpp,?take_screenshot@GameWindow@@QAEXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x0045B130,get_runtime,src/GameWindow.cpp,?get_runtime@@YQNXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045B130,get_runtime,src/GameWindow.cpp,?get_runtime@@YQNXZ,mismatch,,.analysis/reference-audit.json
 0x0045B280,GameWindow::set_resolution_from_config,src/GameWindow.cpp,?set_resolution_from_config@GameWindow@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0045B330,create_game_window,src/WinMain.cpp,?create_game_window@@YAHPAUHINSTANCE__@@@Z,exact,,.analysis/reference-audit.json
 0x0045B530,create_d3d_device,src/WinMain.cpp,?create_d3d_device@@YAHH@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json

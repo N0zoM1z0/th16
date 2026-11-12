@@ -22,6 +22,11 @@ adds eight original scalar reads and nine complete passes. The
 [COMISD review](comisd-literal-identities.md) adds three double reads and a
 guarded correction for the decoder's m128 report of an encoded m64 read.
 
+The subsequent [conversion-runtime review](conversion-runtime.md) establishes
+the complete 887-byte code and 130-byte data contributions behind two fixed
+internal CALL entries. The ordinary 206-byte `__except1` identity is also
+reviewed. These bindings grant no primary credit to runtime code or data.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

@@ -1,0 +1,24 @@
+# One explicitly reviewed complete runtime contribution; no generic interior aliases.
+[objects.ftol3]
+profile = "msvc-x86-ftol3-v1"
+target_address = 0x00487720
+code_size = 887
+code_sha256 = "f85651aafb97443ad5c1923eedc17411fb583f2a989a8005966e30f774d4ebee"
+data_address = 0x004948b0
+data_size = 130
+data_sha256 = "ed98120018b575fe46d1dad78a14cbdc5b0c7f76b1f3e8c09d7acfad8171b815"
+evidence = "docs/knowledge/conversion-runtime.md"
+
+[[objects.ftol3.entries]]
+symbol = "__dtoul3"
+offset = 496
+witness_parent = 0x0042dbc0
+witness_parent_sha256 = "f5303a67afe211715ed6bdaa9bb1d29b9b4b3e2d117ddf696674a0409d04d63c"
+witnesses = [0x0042dc0a]
+
+[[objects.ftol3.entries]]
+symbol = "__ltod3"
+offset = 848
+witness_parent = 0x0045b130
+witness_parent_sha256 = "2c7915ea74b359f705a467b0c48771f024cec15f57d49f096a6c048f4e5f2694"
+witnesses = [0x0045b190, 0x0045b1a6]

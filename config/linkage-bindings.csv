@@ -72,3 +72,4 @@ __real@42600000,0x494614,4,literal,5ddb16eb82bf3586c884b7e9ebb1033d9901e13a2dbbf
 __real@3ff0000000000000,0x494540,8,literal,6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712,0x42631c,comisd,docs/knowledge/comisd-literal-identities.md,,
 __real@0000000000000000,0x4943c8,8,literal,af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc,0x42dbf2,comisd,docs/knowledge/comisd-literal-identities.md,,
 __real@3ff8000000000000,0x494550,8,literal,e163f8cb0f7067a7fc78ca859a77f849aea3214f38fb75b884e4a16be725c905,0x45ac95,comisd,docs/knowledge/comisd-literal-identities.md,,
+__except1,0x4861db,206,runtime-function,5816e89297aeccc9d274cb6becd81d8963596986567b811d6e621fed5fe0e83c,,,docs/knowledge/conversion-runtime.md,libucrt.lib,

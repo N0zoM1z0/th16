@@ -1755,3 +1755,45 @@ evidence is `.analysis/comisd-literal-consumer-scopes.json`,
 is `.analysis/comisd-time-conversion-unresolved.json`; baseline evidence remains
 under `.analysis/comisd-literal-baseline/`. Source-origin review remains open,
 Factory acceptance remains unsubmitted and nothing is published.
+
+## Complete conversion-runtime contribution and caller identities
+
+The pinned LIBCMT conversion object has a complete 887-byte code contribution
+and 130-byte read-only contribution. Independent original review covers all
+207 decoded instructions, 204 reachable instructions, 11 owned alignment
+bytes, surrounding INT3 padding, the entire data pool and complete caller/
+exception scopes. All 24 fields replay: 23 pool displacements and one CALL.
+Candidate PE relocations cover the 23 data fields; original relocation absence
+is checked separately. No alignment or original displacement is masked.
+See [conversion-runtime evidence](conversion-runtime.md).
+
+An explicit profile establishes only the `__dtoul3` and `__ltod3` interior
+CALL entries at offsets 496 and 848. It requires both complete PDB contributions
+from one pinned producer, fixed original hashes, complete code/data replay,
+unique entry publics and original direct-call witnesses. Only exact zero-addend
+REL32 CALLs are admitted. The ordinary 206-byte `__except1` runtime identity
+supports the one external edge. No runtime code, data, helper or exception
+routine receives primary exact credit, and ordinary interior bindings remain
+refused.
+
+Complete GameThread play-time update (142) now passes. Complete get_runtime
+compares at 330/332; two spill/reload displacement bytes remain different.
+Reusing the fallback time variable and putting fallback declarations in a
+sibling else scope produce identical complete bytes across all 1,719 linked
+owners and are rejected. GameWindow.cpp is restored byte for byte and freshly
+rebuilt. All owner entries/extents/raw hashes and all 192 dependency stamps
+validate against baseline. No clean build or archived-output substitution occurs.
+
+Canonical replay reports **828 exact, 65 mismatch and 322 incomplete**, covering
+148,714 exact primary bytes and 893 units. All 827 previous exact results,
+64 complete mismatches and 891 previous units remain retained. The 22 new
+runtime controls bring the total to **237 across ten suites**. Complete original
+and formal evidence is `.analysis/conversion-runtime-original-review.json`,
+`.analysis/conversion-runtime-profile-proof.json` and
+`.analysis/conversion-runtime-caller-scopes.json`. Trial/restoration/replay
+evidence is `.analysis/conversion-runtime-source-trials.json`,
+`.analysis/conversion-runtime-restored-check.json`,
+`.analysis/conversion-runtime-full-audit.log`,
+`.analysis/conversion-runtime-regression-check.json` and
+`.analysis/conversion-runtime-controls-summary.json`. Source-origin review
+remains open, Factory acceptance remains unsubmitted and nothing is published.

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after guarded COMISD width evidence and three complete passes.
+Updated 2026-11-12 after complete conversion-runtime ownership and timer trials.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,21 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **827 exact, 64 mismatch and 324 incomplete** among
-1215 annotated candidates, covering 148,572 exact owned bytes and 891 units.
+The current report is **828 exact, 65 mismatch and 322 incomplete** among
+1215 annotated candidates, covering 148,714 exact owned bytes and 893 units.
+Complete 887-byte code and 130-byte data contributions from pinned LIBCMT
+establish two explicit interior CALL identities, with all 24 fields, 23 candidate
+PE relocations, original relocation absence and complete byte replay checked.
+GameThread::update_play_time now passes all 142 bytes. get_runtime is a complete
+330/332 mismatch at two spill/reload displacement bytes. All 827 previous exact
+results, 64 complete mismatches and 891 units remain retained; two new units
+give 893 total. No auxiliary runtime primary credit is taken. Two ordinary
+timer source contexts are rejected and baseline GameWindow.cpp is freshly
+restored, with all 1,719 complete linked owners and 192 dependency stamps checked.
+See [conversion-runtime evidence](knowledge/conversion-runtime.md).
+
+The preceding COMISD checkpoint reported 827 exact, 64 mismatch and 324
+incomplete, covering 148,572 exact owned bytes and 891 units.
 Three fixed doubles and a guarded correction for Capstone's COMISD memory
 width report resolve complete FPS update (235), frame-skipping (416) and
 window update (246). These add 897 exact primary bytes. All 824 preceding
@@ -221,13 +234,13 @@ acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The retained source
-change is one used replay-slot local in PauseMenu.cpp. The latest Bullet collision
-trials and preceding Player trials are restored byte for byte; source input
+change is one used replay-slot local in PauseMenu.cpp. The latest GameWindow
+trials and preceding Bullet/Player trials are restored byte for byte; source input
 identity equals the baseline checkpoint, including that retained PauseMenu
 change. All 1,719 complete linked owner entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/bullet-collision-restored-check.json`. The preceding callback
+`.analysis/conversion-runtime-restored-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -287,11 +300,14 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **215 controls across nine relevant suites**:
+The current batch passes **237 controls across ten relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
-(34), focused audit (3), constructor EH (25) and empty EH (25). Logs use
-`.analysis/comisd-literal-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+(34), focused audit (3), constructor EH (25), empty EH (25) and runtime
+interiors (22). Logs use
+`.analysis/conversion-runtime-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding COMISD batch passed 215 controls across nine suites;
+its logs use `.analysis/comisd-literal-*controls.log`.
 The preceding timing batch passed 210 controls;
 its logs use `.analysis/timing-literal-*controls.log`.
 The preceding Bullet collision and Player batches passed 209 controls each;
@@ -342,8 +358,14 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/comisd-literal-full-audit.log` and
-`.analysis/comisd-literal-regression-check.json`. Latest original identities and
+are `.analysis/conversion-runtime-full-audit.log` and
+`.analysis/conversion-runtime-regression-check.json`. Current runtime/caller
+proofs are `.analysis/conversion-runtime-original-review.json`,
+`.analysis/conversion-runtime-profile-proof.json` and
+`.analysis/conversion-runtime-caller-scopes.json`; source trials are
+`.analysis/conversion-runtime-source-trials.json`. Reproducers are
+`.analysis/review-conversion-runtime.py` and
+`.analysis/review-runtime-source-trials.py`. Preceding original identities and
 complete consumer proofs are `.analysis/comisd-original-identities.json` and
 `.analysis/comisd-literal-consumer-scopes.json`, reproduced by
 `.analysis/review-comisd-originals.py` and
@@ -387,10 +409,11 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-trial evidence is `.analysis/bullet-collision-restored-build.log`,
-`.analysis/bullet-collision-restored-check.json` and
-`.analysis/bullet-collision-source-trials.json`. Current build artifacts and
-receipt remain unchanged through the latest literal-witness batch.
+source-trial evidence is `.analysis/conversion-runtime-restored-build.log`,
+`.analysis/conversion-runtime-restored-check.json` and
+`.analysis/conversion-runtime-source-trials.json`. The current build receipt
+is fresh and incremental; source inputs equal the preceding baseline and all
+1,719 complete linked owners retain their entries/extents/raw hashes.
 The preceding music-room evidence
 remains `.analysis/music-room-restored-build.log`,
 `.analysis/menu-literal-restored-context-check.json` and
@@ -460,7 +483,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 324 incomplete candidates comprise 159 with unresolved fields, 128
+The 322 incomplete candidates comprise 157 with unresolved fields, 128
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.

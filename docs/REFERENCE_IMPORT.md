@@ -74,6 +74,12 @@ name. Literal storage requires either a unique complete payload or an explicit
 reviewed fixed instruction witness with its full storage proof. Runtime
 identities require complete extents, pinned library ownership and reviewed
 target evidence. See [shared linkage evidence](knowledge/reviewed-linkages.md).
+Explicit runtime interior CALL identities additionally require a complete
+reviewed code contribution, its complete data contribution from the same
+pinned producer, exhaustive fields/relocations and original call witnesses.
+The current conversion profile binds two fixed interior entries without
+inventing smaller PDB owners or granting runtime primary credit. Unreviewed
+interiors remain incomplete. See [the complete review](knowledge/conversion-runtime.md).
 Reviewed primary vftables additionally require complete PDB storage, the locator
 prefix, full supported RTTI inheritance graphs, every relocated slot and fixed
 callee identities. These data bindings do not grant exact credit to the tables

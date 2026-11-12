@@ -1,5 +1,8 @@
 # COMISD double-width evidence and complete consumers
 
+The later [conversion-runtime review](conversion-runtime.md) supersedes the
+unbound conversion-entry finding below and records the remaining timer mismatch.
+
 ## Result
 
 Three fixed double bindings and a guarded correction to literal-witness

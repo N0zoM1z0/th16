@@ -359,6 +359,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042D7B0,GameThread::on_tick_body,reference-0042d7b0,local-strict-pass,945,945,945,.analysis/reference-audit.json
 0x0042DB70,GameThread::on_tick_callback,reference-0042db70,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0042DB80,GameThread::on_draw_callback,reference-0042db80,local-strict-pass,51,51,51,.analysis/reference-audit.json
+0x0042DBC0,GameThread::update_play_time,reference-0042dbc0,local-strict-pass,142,142,142,.analysis/reference-audit.json
 0x0042DEE0,GameThread::finish_stage_transition,reference-0042dee0,mismatch,623,623,622,.analysis/reference-audit.json
 0x0042E150,stage_clear,reference-0042e150,local-strict-pass,896,896,896,.analysis/reference-audit.json
 0x0042E4D0,SoundManager::pause_sounds,reference-0042e4d0,local-strict-pass,76,76,76,.analysis/reference-audit.json
@@ -675,6 +676,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0045ADF0,GameWindow::present,reference-0045adf0,local-strict-pass,115,115,115,.analysis/reference-audit.json
 0x0045AE70,GameWindow::do_frame,reference-0045ae70,local-strict-pass,269,269,269,.analysis/reference-audit.json
 0x0045AF80,GameWindow::update_window,reference-0045af80,local-strict-pass,246,246,246,.analysis/reference-audit.json
+0x0045B130,get_runtime,reference-0045b130,mismatch,332,332,330,.analysis/reference-audit.json
 0x0045B280,GameWindow::set_resolution_from_config,reference-0045b280,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x0045B330,create_game_window,reference-0045b330,local-strict-pass,505,505,505,.analysis/reference-audit.json
 0x0045BA80,Supervisor::reset_render_state,reference-0045ba80,local-strict-pass,750,750,750,.analysis/reference-audit.json
