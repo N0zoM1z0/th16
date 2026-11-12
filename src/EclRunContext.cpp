@@ -663,10 +663,9 @@ __forceinline f32 *EclRunContext::float_arg_ptr_at(EclLocation *loc, int index)
 // Instructions below 300; the VM handles the rest (run_over_300). Each
 // instruction runs once its time has come; time counts up by speed per
 // frame and jumps set it. Case bodies follow ZUN's order in the binary.
-// TODO: the original computes each operator's result before the inlined
-// push (ours sinks it into the push), so sub/mul and the comparisons do not
-// tail-merge into add's and eq's push; stack slots and base/index register
-// order in the stack addressing differ; the float_i loop keeps vm in esi.
+// Integer add/sub/mul share a result-push exit; division and remainder keep
+// their own exits. Stack slots, comparison exits and base/index register
+// order still differ; the original float_i loop keeps vm in esi.
 // FUNCTION: TH16 0x472030
 HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
 {
@@ -680,6 +679,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     {
         if (ins->rank_mask & difficulty_mask)
         {
+            i32 arithmetic_result;
             switch ((i16)ins->opcode)
             {
             case ECL_OP_NOP:
@@ -840,26 +840,25 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                a += b;
-                stack.push_int(a);
+                arithmetic_result = a + b;
+            }
+            push_arithmetic_result:
+                stack.push_int(arithmetic_result);
                 ins->num_stack_refs = 0;
                 goto next_instr;
-            }
             case ECL_OP_SUB:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a - b);
-                ins->num_stack_refs = 0;
-                goto next_instr;
+                arithmetic_result = a - b;
+                goto push_arithmetic_result;
             }
             case ECL_OP_MUL:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a * b);
-                ins->num_stack_refs = 0;
-                goto next_instr;
+                arithmetic_result = a * b;
+                goto push_arithmetic_result;
             }
             case ECL_OP_DIV:
             {

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after curve elapsed-time and integration-order source work.
+Updated 2026-11-12 after ECL integer result exits and live Boss async cleanup work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,17 +11,17 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation recovers curve-node elapsed-time lifetime, integration order and
-acceleration operands, while retaining the preceding vector, Boss frame-context
-and phase work. No new exact credit is claimed.
+continuation recovers shared add/subtract/multiply result exits in the large ECL
+interpreter and verifies live async cleanup across Boss time/life transitions.
+The preceding curve and Boss source work is retained. No new exact credit is claimed.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`c262f65d5f37e7d96ada30d5d5bd5c5140d60c5feee740415a78d3f249c92681`.
-PDB age is **265**. The final incremental build, strict replay and progress check
+`55d8af3d1b0dd73b97170346069ce664f35f8df125a4fa6031514f7b8b0bbe85`.
+PDB age is **273**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves
 the current incremental build, target, canonical report, Wine prefix, Ghidra
 project and pinned reference.
@@ -30,6 +30,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [ECL integer exits and live async cleanup](knowledge/ecl-integer-exits-and-boss-async.md) | Three-handler shared result push; interpreter 7,462 to 7,370 bytes; 1,192 complete Boss/ECL calls and 360 live-head prefixes agree; no new exact credit |
 | [Curve elapsed time and integration](knowledge/curve-laser-elapsed-and-loop.md) | Original loop accumulator registers and acceleration operands; 372 historical differences removed in 1,488 complete calls; both owners remain incomplete |
 | [Curve laser vectors and speed](knowledge/curve-laser-vectors-and-speed.md) | Original X multiplication/addition and speed accumulator operands; 216 historical output differences removed in 768 complete cases; both owners remain incomplete |
 | [Boss damage frame context and phases](knowledge/boss-damage-frame-context-and-phases.md) | Natural planar vector recovers original alignment arrangement; 400 complete phase calls agree; complete owners remain incomplete |
@@ -49,6 +50,58 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [ECL integer result exits and Boss async cleanup](knowledge/ecl-integer-exits-and-boss-async.md)
+first. Starting checkpoint `aba6395` is preserved. The large interpreter now
+uses one integer-result exit for add/subtract/multiply, retaining separate
+division/remainder exits. A CFG diagnostic through both pop conversions proves
+that the original and candidate share one integer-tag write and compute each
+result before it. The starting image has three writes and sinks addition after
+its tag write. The candidate still places the shared block after multiplication,
+while the original places it after addition.
+
+The interpreter is **7,370 bytes**, down from 7,462, against the existing
+**7,046-byte provisional target span**. Do not promote that boundary. The final
+packet explicitly separates 67 four-byte switch targets and a 94-byte remap
+from code/padding, validates every target/index and retains all 362 data bytes.
+The generic early interpreter listing decodes table data as instructions; use
+`interpreter-final/` instead. Three linked fields remain unbound. Comparison
+exits, stack addressing/slots and interpolation-loop registers remain open.
+Boss statistics, life-restart inlining and damage owner differences also remain.
+
+The final image passes **1,192 complete native Boss calls**: 432 mixed integer/
+float typed-stack arithmetic cases, 360 time-then-life phase cases, and the
+preceding 400 phase cases. The dual programs create 1/3/8 real heap asyncs via
+ECL, then trigger a life restart that calls the unchanged exact async cleanup.
+Another **360 prefixes** stop before cleanup and require a live non-fixture
+async head, then check the remaining complete observed storage. The head address
+is image-dependent; it is validated before cross-image normalization. Prefixes
+do not count or inspect every heap node, and they discard live allocations when
+the diagnostic process ends. Full shipped scripts, resource effects, allocation
+failure and general leak freedom are not proved.
+
+Both negative controls reject on the original before candidate execution:
+NOP arithmetic fails the typed-stack model; NOP async creation fails the live-head
+requirement. First model drafts mis-handle fractional timer decrements and
+primary time after early returns. The first prefix setup leaves its hardware
+stop unarmed. Preserve those refused logs and exact driver snapshots; only the
+corrected final reports are passing evidence.
+
+Only `src/EclRunContext.cpp` is retained as a game-source change. Boss life-sub
+and health-reference trials are restored, as are compound stack arithmetic
+assignments and an over-shared five-operator result exit. Preserve
+`.analysis/boss-restart-work/`, especially `final-image/`, `interpreter-final/`,
+`complete-scope/`, native full/prefix outputs, `shared-exit-diagnostic.json`,
+`negative-controls.json`, `TRIALS.md`, driver versions and `final-regression.json`.
+Do not overwrite the corrected driver using its retained early generator.
+
+Full strict replay and progress preserve **885/65/265**, 169,575 exact primary
+bytes and 950 units, with no classification change or lost exact owner. The
+ledger only rebinds candidate addresses. Original geometry, profiles, bindings
+and Oracle rules are unchanged. All builds are incremental. No prior broad
+native replay was repeated; older curve/Boss results belong to their images.
+
+### Earlier curve elapsed time and integration order
 
 Read [Curve elapsed time and integration order](knowledge/curve-laser-elapsed-and-loop.md)
 first. The starting checkpoint for this continuation is `2add62b`. State now
