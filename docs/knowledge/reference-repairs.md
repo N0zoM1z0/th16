@@ -2069,3 +2069,33 @@ linked owners and 192 dependency stamps remain valid. See
 `.analysis/enemy-eh-caller-scopes.json` and
 `.analysis/enemy-eh-regression-check.json`. No cold build, cleanup, archived
 output substitution, Factory submission or remote publication occurs.
+
+## Six further complete saved-register empty EH graphs
+
+The existing empty-eh3-saved-ebx-esi-edi-v1 profile validates six further
+complete source-qualified graphs without admission-rule or game source changes.
+Original-only control-flow reviews account for every instruction and following
+INT3 interval. Parent-specific registration PUSHes identify six complete
+27-byte private handlers and empty 36-byte flags-five descriptors. Whole
+candidate PDB contributions, module ownership, instruction semantics, cookie
+witnesses and exhaustive pointer relocations pass the unchanged verifier.
+
+Fog destruction (273), EndingScriptVm destruction (181), Ending destruction
+(496), GuiMsgVm destruction (729), LoadingThread destruction (518) and Player
+destruction (519) pass all 2,716 primary bytes. The 162 auxiliary code bytes and
+216 metadata bytes receive no additional primary credit. ReplayManager remains
+incomplete: its original 416-byte owner ends immediately before the next
+function, but its complete candidate PDB owner is 415 bytes. Both frame shapes
+validate separately; equal complete extents remain mandatory and no record is
+admitted for this parent.
+
+Canonical replay reports 855 exact, 65 mismatch and 295 incomplete among 1,215
+annotations, covering 159,345 primary exact bytes and 920 units. All previous
+849 exact results, 65 complete mismatches and 914 unit definitions remain
+identical. The saved-register mutation suite now exercises all eight reviewed
+parents and cross-module reuse. One hundred twenty controls pass across six
+relevant suites. No game source or compiler artifact changes and no build
+occurs; all 1,719 linked owners and 192 dependency stamps validate. See
+[the complete review](shared-empty-eh-frames.md),
+`.analysis/shared-empty-eh-caller-scopes.json` and
+`.analysis/shared-empty-eh-regression-check.json`.

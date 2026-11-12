@@ -100,3 +100,99 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/enemy-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/Stage.cpp"
+parent_symbol = "??1Fog@@QAE@XZ"
+parent_target = 0x409550
+parent_size = 273
+parent_sha256 = "02f18536bf7dfb9ee9295a263a4fed4a536fbbfc05d4ad0f901ee796bb1f3680"
+target = 0x48a3e0
+size = 27
+target_sha256 = "e3da62b2fbe9069da8801236244dc3440eb5dda28620e4abf0c7b239525ae578"
+func_info_target = 0x49af9c
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/shared-empty-eh-frames.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/Ending.cpp"
+parent_symbol = "??1EndingScriptVm@@QAE@XZ"
+parent_target = 0x4190b0
+parent_size = 181
+parent_sha256 = "6a135fbc6c0e2d9c403a792cf910efb6f0c527eb693cd119bf793e4829c5ba4a"
+target = 0x48a5d0
+size = 27
+target_sha256 = "91d20e0699bb27e09a6fff9de567be8a8c65c497010d044d57b3a0f356346f14"
+func_info_target = 0x49b18c
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/shared-empty-eh-frames.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/Ending.cpp"
+parent_symbol = "??1Ending@@QAE@XZ"
+parent_target = 0x419450
+parent_size = 496
+parent_sha256 = "1c97a24e264b54dde98b9c27413abf89b19b78cd4d2845ee7626454be64132da"
+target = 0x48a620
+size = 27
+target_sha256 = "215a03d3ac71829e20d8223ae400ddb8330933278000a1b2d4282165e985dac7"
+func_info_target = 0x49b1dc
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/shared-empty-eh-frames.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/Gui.cpp"
+parent_symbol = "??1GuiMsgVm@@QAE@XZ"
+parent_target = 0x4264a0
+parent_size = 729
+parent_sha256 = "c1cb555866c64fe6fb53b7ff77e2a8d39a77ef2ca99ef83ae2d8138ff02938d4"
+target = 0x48a6f0
+size = 27
+target_sha256 = "878d6b3791d393edd7268f728958b2e77e53e1ce2136ef31caf3c5d028f7e416"
+func_info_target = 0x49b2a0
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/shared-empty-eh-frames.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/LoadingThread.cpp"
+parent_symbol = "??1LoadingThread@@QAE@XZ"
+parent_target = 0x43afe0
+parent_size = 518
+parent_sha256 = "56e26f8cb8c44666acbb3afe48d88e4e28b61f7f326080c5e45f7a4eb6467fb5"
+target = 0x48a8a0
+size = 27
+target_sha256 = "22372df449923bb3e54c7eb342b455d68e3cfab9a39828affa8d634e676610fc"
+func_info_target = 0x49b45c
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/shared-empty-eh-frames.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/Player.cpp"
+parent_symbol = "??1Player@@QAE@XZ"
+parent_target = 0x441a50
+parent_size = 519
+parent_sha256 = "ffa087cf2101b59df8e6d0d49c116f25c1b7a087f018c2546cadd1d82691dbb5"
+target = 0x48a8c0
+size = 27
+target_sha256 = "be71c8ab9fa3bf30081edb800cb71f9828812c182b5ea0e1d5e54d0874483cbe"
+func_info_target = 0x49b480
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/shared-empty-eh-frames.md"

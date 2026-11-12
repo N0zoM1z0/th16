@@ -11,6 +11,11 @@ profile for a saved EBX/ESI/EDI frame, with cookie displacement minus twenty
 independently derived from the complete parent. The default minus-four profile
 and its restrictions below remain unchanged.
 
+The [six-parent follow-up](shared-empty-eh-frames.md) applies that unchanged
+saved-register profile to Fog, EndingScriptVm, Ending, GuiMsgVm, LoadingThread
+and Player destruction. ReplayManager retains its unequal complete extents
+and remains excluded.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

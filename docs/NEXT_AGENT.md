@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after EnemyInf table ownership and complete saved-register EH frames.
+Updated 2026-11-12 after six further complete saved-register EH destructor graphs.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,24 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **849 exact, 65 mismatch and 301 incomplete** among
-1215 annotated candidates, covering 156,629 exact owned bytes and 914 units.
+The current report is **855 exact, 65 mismatch and 295 incomplete** among
+1215 annotated candidates, covering 159,345 exact owned bytes and 920 units.
+The existing saved-register EH profile independently validates six more
+complete private graphs: Fog destruction (273), EndingScriptVm destruction
+(181), Ending destruction (496), GuiMsgVm destruction (729), LoadingThread
+destruction (518) and Player destruction (519). All 2,716 primary bytes pass;
+the complete 162-byte auxiliary code and 216-byte metadata receive no extra
+credit. All previous 849 exact results, 65 complete mismatches and 914 units
+remain identical. No game source, admission rule or compiler artifact changes
+and no build occurs; all 1,719 linked owners and 192 dependency stamps validate.
+The saved-register mutation suite now covers all eight reviewed parents.
+ReplayManager destruction remains incomplete: its original owner is 416 bytes
+with a final RET immediately before the next entry, while its candidate owner
+is 415 bytes. Do not truncate the original or bypass equal complete extents to
+bind its private graph. See [the six-parent review](knowledge/shared-empty-eh-frames.md).
+
+The preceding Enemy checkpoint reported 849 exact, 65 mismatch and 301 incomplete,
+covering 156,629 exact owned bytes and 914 units.
 An explicit empty-EH3 saved-EBX/ESI/EDI profile independently derives the node-20
 cookie slot from each complete parent frame. It checks full private 27-byte
 handlers and 36-byte descriptors, the 38-byte registration and 18-byte restore
@@ -350,9 +366,9 @@ Both replay index trials, the snapshot-ID trial, wrap bounds trial and two
 ANM insertion ID contexts are restored. All 1,719 complete linked owner
 entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
-192 dependency stamps validate. No new build is needed for the current EH/table
+192 dependency stamps validate. No new build is needed for the current EH
 review; identical artifacts and current dependency keys are checked in
-`.analysis/enemy-eh-artifact-check.json`. The preceding callback
+`.analysis/shared-empty-eh-artifact-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -412,7 +428,13 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **150 controls across seven relevant suites**:
+The current batch passes **120 controls across six relevant suites**:
+saved-register EH (17), legacy empty EH (25), constructor EH (25), reviewed
+linkages (36), strict Oracle (14) and focused audit (3). The saved-register suite
+exercises all eight reviewed parents; its cross-parent mutation also crosses
+source modules. Logs use `.analysis/shared-empty-eh-<suite>-controls.log`;
+the summary is `.analysis/shared-empty-eh-controls-summary.json`.
+The preceding Enemy batch passed **150 controls across seven relevant suites**:
 saved-register EH (17), legacy empty EH (25), constructor EH (25), vftables
 (30), reviewed linkages (36), strict Oracle (14) and focused audit (3).
 Logs use `.analysis/enemy-eh-<suite>-controls.log`; the summary is
@@ -904,8 +926,8 @@ the complete owner and also changes wave scheduling. The current 696/700 result
 retains the indexed circle form. Remaining circle
 operand order needs better source/type/context evidence; do not normalize it.
 
-The two reviewed empty-EH3 graphs are complete. Their selectors require the
-exact parent-derived private MAP names, full source-object PDB ownership and
+The two legacy and eight saved-register empty-EH3 graphs are complete. Their
+selectors require the exact parent-derived private MAP names, full source-object PDB ownership and
 complete 27/36-byte handler/descriptor extents. Do not extend this proof to
 nonempty unwind/try tables or another handler shape. Identical metadata from
 another parent is explicitly rejected. Continue from unresolved-field reasons

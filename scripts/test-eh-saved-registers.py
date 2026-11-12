@@ -42,8 +42,11 @@ class SavedRegisterEHControls(unittest.TestCase):
         setattr(context, side, Overlay(getattr(context, side), changes))
         return context
 
-    def test_both_complete_graphs_pass(self):
-        self.assertEqual(len(self.records), 2)
+    def test_all_reviewed_complete_graphs_pass(self):
+        self.assertEqual(len(self.records), 8)
+        self.assertEqual({r["parent_target"] for r in self.records},
+                         {0x409550, 0x4190b0, 0x419450, 0x41b1a0,
+                          0x41ba10, 0x4264a0, 0x43afe0, 0x441a50})
         for record in self.records:
             proof = self.review(record)
             self.assertEqual((proof["profile"], proof["cookie_offset"]), (PROFILE, -20))
@@ -172,7 +175,8 @@ class SavedRegisterEHControls(unittest.TestCase):
 
     def test_identical_descriptor_or_handler_of_the_other_parent_is_rejected(self):
         for index, record in enumerate(self.records):
-            proof, other = self.proof(record), self.proof(self.records[1 - index])
+            proof = self.proof(record)
+            other = self.proof(self.records[(index + 1) % len(self.records)])
             self.assertEqual(self.context.image.read_address(proof["descriptor"]["address"], 36),
                              self.context.image.read_address(other["descriptor"]["address"], 36))
             for address, destination in ((proof["handler"]["address"] + 18, other["descriptor"]["address"]),
