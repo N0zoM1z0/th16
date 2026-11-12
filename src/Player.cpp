@@ -871,10 +871,10 @@ HARNESS_CALLED i32 Player::compute_damage_to_enemy(Float3 *pos, Float3 *size, f3
         }
         else
         {
-            f32 dx = source->pos.pos.x - pos->x;
-            f32 dy = source->pos.pos.y - pos->y;
+            // Collision distance is planar; depth is not part of the hurtbox.
+            Float2 offset(source->pos.pos.x - pos->x, source->pos.pos.y - pos->y);
             f32 r = source->radius + radius;
-            if (dx * dx + dy * dy > r * r)
+            if (offset.x * offset.x + offset.y * offset.y > r * r)
             {
                 continue;
             }

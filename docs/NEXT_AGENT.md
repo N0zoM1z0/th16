@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after Boss damage traversal and impact snapshot source work.
+Updated 2026-11-12 after Boss damage frame-context and phase-transition work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,23 +11,26 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation recovers damage-source advancement and impact snapshots, with
-initialized native execution. No new exact credit is claimed.
-The canonical report is **885 exact, 66 mismatch, 264 incomplete** among 1,215
-annotations: **169,575 exact primary bytes and 951 retained units**.
+continuation retains a planar damage vector, recovering the original Boss/callee
+alignment arrangement, and verifies real phase transitions. No new exact credit
+is claimed.
+The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
+annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`232ebb9faea0ff50a81d55437a8c16e86e08e1fbb91361875a4a3e110a42f609`.
-PDB age is **227**. The final incremental build, strict replay and progress check
-validate current source, artifact and comparison identities. Cleanup preserves the current incremental
-build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
+`3211bb688256a2c841cfbb37df81728faa89b52e2c8e5f70de63448764d58f23`.
+PDB age is **237**. The final incremental build, strict replay and progress check
+validate current source, artifact and comparison identities. Cleanup preserves
+the current incremental build, target, canonical report, Wine prefix, Ghidra
+project and pinned reference.
 
 Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Boss damage frame context and phases](knowledge/boss-damage-frame-context-and-phases.md) | Natural planar vector recovers original alignment arrangement; 400 complete phase calls agree; complete owners remain incomplete |
 | [Boss damage snapshots and CRT startup](knowledge/boss-damage-snapshots-and-crt-startup.md) | Original pointer/count sequence and XYZ read-before-write order; 96 historical impact-output failures removed; damage owner remains incomplete |
 | [Boss shield flow and collision operands](knowledge/boss-shield-and-collision-operands.md) | Complete 2,207-byte logic owner now compares as mismatch; shield flow recovered, 27 historical collision payload failures removed; no new exact credit |
 | [ECL angle and orbit initialization](knowledge/ecl-angle-and-orbit-initialization.md) | Original angle field order and vector tangent copies; 744 angle and 768 orbit complete calls agree; dispatcher remains incomplete |
@@ -45,9 +48,48 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [Boss damage snapshots and initialized native execution](knowledge/boss-damage-snapshots-and-crt-startup.md)
-first. `Player::compute_damage_to_enemy` advances its source before decrementing
-the bounded count. Its compiler-generated source/timer advances now precede SUB,
+Read [Boss damage frame context and phase transitions](knowledge/boss-damage-frame-context-and-phases.md)
+first. A `Float2` XY difference in the circle/circle damage branch naturally gives
+the original alignment arrangement: Boss logic realigns ESP to eight bytes and
+its damage callee does not. No alignment or register constraint is introduced.
+The complete owners are now **2,222/2,207 Boss bytes** and **741/774 damage
+bytes**, both incomplete. The beginning of Boss logic recovers the original
+stack accesses; a 563-byte internal diagnostic binds 14 existing external fields
+and agrees. It grants no independent owner or exact credit. The next branch has
+a different internal displacement, and statistics, restart inlining, enemy-ID
+lifetime and loop layout still need work.
+
+All **400 new complete phase calls** agree with independent full-state models
+and the original. They cover time/life interrupt slots and boundaries, script
+lookup/reset, missing names, ECL life/rotation/bomb-multiplier commands, return,
+delete, spell timeout and chapter accounting. Missing names preserve offset zero
+with index -1; executed delete/return set both to -1. Typed probes and original
+state corrected the first refused models before candidate execution. Empty async
+lists leave actual async deletion, resources, deaths and full Boss scripts open.
+A no-op negative entry is refused on the original before candidate fixtures.
+
+The same final image passes **2,596 complete native calls and 204 prefixes**,
+including all preceding impact, geometry, Boss, damage, collision and shield
+suites after actual CRT startup. Historical controls retain the expected 96
+impact and 27 collision failures; current failures are zero. Protocol,
+observation and exception-chain controls pass. The first copied chain-control
+job lacked its preserved fixture files; keep its failed log and the corrected
+fixture hashes. `Enemy.cpp` and `Collision.cpp` are restored byte for byte.
+
+The full strict replay preserves all 885 exact owners and 169,575 exact primary
+bytes. Boss logic changes **mismatch to incomplete** because its complete extent
+now differs; the normal writer removes its comparison unit. Counts are
+**885/65/265**, with **950 units**. Original geometry, bindings and Oracle rules
+are unchanged. Preserve `.analysis/boss-lifetimes-work/`, especially the tested
+`final-image/`, complete scopes, phase fixtures/models, source trials, prefix
+diagnostic, typed probe, controls and `final-regression.json`.
+
+### Earlier Boss damage snapshots and CRT startup
+
+For the preceding `dd3ba35` checkpoint, read
+[Boss damage snapshots and initialized native execution](knowledge/boss-damage-snapshots-and-crt-startup.md)
+before revisiting snapshot changes. `Player::compute_damage_to_enemy` advances
+its source before decrementing the bounded count. Its compiler-generated source/timer advances now precede SUB,
 which feeds JNE directly; the extra TEST is removed. A local `Float3 impact`
 loads all XYZ bits before publishing the impact output, recovering the original
 MOVQ/Z-load/store ordering. Keep that snapshot when working on local lifetimes.
