@@ -68,3 +68,35 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/eh-handlers.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/Enemy.cpp"
+parent_symbol = "??1EnemyManager@@QAE@XZ"
+parent_target = 0x41b1a0
+parent_size = 414
+parent_sha256 = "43ae8b0c8ee919634277381667fa7c3c165e0d8d544bd9bd78806720c7d1d874"
+target = 0x48a670
+size = 27
+target_sha256 = "cf69a8f54f8bcc3ad561dbb28b4c3b7792389d0da3f0a7fd43ff499a5b4fe995"
+func_info_target = 0x49b22c
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/enemy-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-edi-v1"
+source = "src/Enemy.cpp"
+parent_symbol = "??1EnemyInf@@UAE@XZ"
+parent_target = 0x41ba10
+parent_size = 306
+parent_sha256 = "cdbcc04448ab82952b7ca50e3e847d83d404a894557a09007ff572f4e2301620"
+target = 0x48a690
+size = 27
+target_sha256 = "5a92882937e421940579e47402d110a42de4dc33adf56a938e31a4206d399168"
+func_info_target = 0x49b250
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/enemy-empty-eh.md"

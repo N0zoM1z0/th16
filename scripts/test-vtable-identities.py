@@ -16,7 +16,7 @@ from strict_oracle import Context, Incomplete, ROOT, reviewed_linkages
 
 THREAD = "??_7ThreadInf@@6B@"
 FILE = "??_7File@Pbg@@6B@"
-ECL_TABLES = ("??_7EclResourceInf@@6B@", "??_7SptResourceInf@@6B@", "??_7SptInf@@6B@")
+ECL_TABLES = ("??_7EclResourceInf@@6B@", "??_7SptResourceInf@@6B@", "??_7SptInf@@6B@", "??_7EnemyInf@@6B@")
 
 
 class Overlay:
@@ -71,7 +71,7 @@ class VftableControls(unittest.TestCase):
 
     def test_real_reviewed_slot_witnesses_pass(self):
         result = self.check()
-        for symbol, size in [(THREAD, 4), (FILE, 36), *zip(ECL_TABLES, (12, 8, 24))]:
+        for symbol, size in [(THREAD, 4), (FILE, 36), *zip(ECL_TABLES, (12, 8, 24, 24))]:
             with self.subTest(symbol=symbol):
                 self.assertEqual(result[symbol]["size"], size)
 

@@ -54,6 +54,12 @@ complete class tables, all eleven slots and their full eighteen-object RTTI
 graph with 36 pointer relocations. Four further whole source owners pass under
 existing rules. Two ANM insertion ID source contexts are rejected and restored.
 
+The subsequent [Enemy table/frame review](enemy-empty-eh.md) adds EnemyInf's
+complete six-slot primary table. Its saved-register empty-EH3 profile separately
+checks two private destructor graphs and their complete parent frames. Three
+whole source owners add 1,881 primary bytes; no auxiliary data/code receives
+additional primary credit.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |
@@ -230,6 +236,7 @@ complete virtual-function contracts:
 | `EclResourceInf` | `0x00492198` | 12 | 16 bytes, including its locator pointer |
 | `SptResourceInf` | `0x004921E0` | 8 | 12 bytes, including its locator pointer |
 | `SptInf` | `0x004921C4` | 24 | 28 bytes, including its locator pointer |
+| `EnemyInf` | `0x004921A8` | 24 | 28 bytes, including its locator pointer |
 
 These are `vftable` records in the linkage table. Their hashes cover every
 original slot byte. The preceding locator pointer and all supporting RTTI

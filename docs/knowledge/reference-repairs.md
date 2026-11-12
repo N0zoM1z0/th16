@@ -2027,3 +2027,45 @@ See [the complete review](ecl-vftable-identities.md),
 `.analysis/anm-insertion-source-trials.json`. No game source or admission-rule
 change, cold build, cleanup, archived-output substitution, Factory submission
 or remote publication is retained.
+
+## Enemy table and complete saved-register empty EH frames
+
+Original RTTI independently identifies EnemyInf's primary address point at
+`0x004921A8`. All six slots have fixed original method identities and complete
+candidate owners. The full table object includes its locator pointer; the
+EnemyInf/SptInf graph contains ten complete metadata objects, 194 bytes and
+twenty pointer relocations, including shared base records. Existing vftable
+rules remain unchanged.
+
+EnemyManager and EnemyInf destruction register complete private 27-byte
+handlers at `0x0048A670`/`0x0048A690` with empty 36-byte FuncInfo records at
+`0x0049B22C`/`0x0049B250`. The registration node is EBP-12; one local and
+saved EBX/ESI/EDI place the cookie at EBP-32, so the helper reads node-20.
+The explicit empty-eh3-saved-ebx-esi-edi-v1 profile validates the whole 38-byte
+parent registration sequence, 18-byte restoration, all direct reserved-slot
+uses, FS references, EBP writes and final return. It obtains the cookie pointer
+independently from the PE load configuration. All private code/data extents,
+source-qualified ownership and complete relocation sets are required.
+Legacy node-4 and nonempty constructor profiles retain their restrictions;
+no arbitrary offset, nonempty table, public alias or partial owner is allowed.
+
+Both complete destructors pass all 414/306 bytes. The EnemyInf table also
+resolves its complete 1,161-byte constructor. Original-only dense reviews
+account for 118/90/170 reachable instructions and all following alignment.
+Canonical replay reports 849 exact, 65 mismatch and 301 incomplete among
+1,215 annotations, covering 156,629 primary exact bytes and 914 units. The
+three passes add 1,881 bytes. All prior 846 exact results, 65 complete mismatches
+and 911 unit definitions remain identical. Auxiliary handlers, descriptors,
+tables and slot callees receive no additional primary credit.
+
+Seventeen new saved-register rejection controls and the existing empty-EH,
+constructor-EH, vftable, linkage, strict-Oracle and focused-audit suites pass
+150 tests. They cover wrong/forged frames, cookies, state writes, metadata,
+ownership, relocations, source scopes and cross-parent reuse. An ordinary body
+mutation still fails complete byte replay after its EH graph validates.
+No game source or compiler artifact changes and no build occurs; all 1,719
+linked owners and 192 dependency stamps remain valid. See
+[the complete review](enemy-empty-eh.md),
+`.analysis/enemy-eh-caller-scopes.json` and
+`.analysis/enemy-eh-regression-check.json`. No cold build, cleanup, archived
+output substitution, Factory submission or remote publication occurs.

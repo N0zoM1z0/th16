@@ -85,3 +85,4 @@ __aulldiv,0x4876b0,104,runtime-function,84d17e172ff5e6bce23b7837cc15439649f685d0
 ??_7EclResourceInf@@6B@,0x492198,12,vftable,d17bb82f3e1e980c5886e531c41e7f587f1438d0813300f989da6619e5de2a84,,,docs/knowledge/ecl-vftable-identities.md,,
 ??_7SptResourceInf@@6B@,0x4921e0,8,vftable,fd0a6ec0d57dd029835ada9f1653aeb4384f5d12351b66eda3f1b3401e18dd8e,,,docs/knowledge/ecl-vftable-identities.md,,
 ??_7SptInf@@6B@,0x4921c4,24,vftable,db10a36973278edf467e074ab6cf318e98ca9442de2162787b0895825df8149a,,,docs/knowledge/ecl-vftable-identities.md,,
+??_7EnemyInf@@6B@,0x4921a8,24,vftable,70577fddb8ad9bf5ea4402edabd8a06dd0e9da2aa50206b394f99629a3ce4d3c,,,docs/knowledge/enemy-empty-eh.md,,

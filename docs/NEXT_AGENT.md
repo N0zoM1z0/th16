@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete ECL vftable identities and rejected insertion ID contexts.
+Updated 2026-11-12 after EnemyInf table ownership and complete saved-register EH frames.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,23 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **846 exact, 65 mismatch and 304 incomplete** among
-1215 annotated candidates, covering 154,748 exact owned bytes and 911 units.
+The current report is **849 exact, 65 mismatch and 301 incomplete** among
+1215 annotated candidates, covering 156,629 exact owned bytes and 914 units.
+An explicit empty-EH3 saved-EBX/ESI/EDI profile independently derives the node-20
+cookie slot from each complete parent frame. It checks full private 27-byte
+handlers and 36-byte descriptors, the 38-byte registration and 18-byte restore
+sequences, reserved frame uses and complete pointer relocations. The legacy
+node-4 and nonempty constructor profiles retain their existing restrictions.
+Original RTTI also identifies EnemyInf's complete six-slot table and ten-object
+base graph. EnemyManager destruction (414), EnemyInf construction (1,161) and
+EnemyInf destruction (306) now pass all 1,881 bytes. All previous 846 exact
+results, 65 complete mismatches and 911 unit definitions remain identical;
+three whole passes give 914 units. No game source, artifact or build change
+occurs; all 1,719 complete linked owners and 192 dependency stamps validate.
+See [the Enemy frame/table review](knowledge/enemy-empty-eh.md).
+
+The preceding ECL checkpoint reported 846 exact, 65 mismatch and 304 incomplete,
+covering 154,748 exact primary bytes and 911 units.
 Original RTTI independently identifies complete EclResourceInf, SptResourceInf
 and SptInf primary tables. All eleven fixed function slots, eighteen complete
 candidate metadata objects (346 bytes) and all 36 pointer relocations are
@@ -335,8 +350,9 @@ Both replay index trials, the snapshot-ID trial, wrap bounds trial and two
 ANM insertion ID contexts are restored. All 1,719 complete linked owner
 entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
-192 dependency stamps validate. See
-`.analysis/anm-insertion-restored-check.json`. The preceding callback
+192 dependency stamps validate. No new build is needed for the current EH/table
+review; identical artifacts and current dependency keys are checked in
+`.analysis/enemy-eh-artifact-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -396,7 +412,12 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **83 controls across four relevant suites**:
+The current batch passes **150 controls across seven relevant suites**:
+saved-register EH (17), legacy empty EH (25), constructor EH (25), vftables
+(30), reviewed linkages (36), strict Oracle (14) and focused audit (3).
+Logs use `.analysis/enemy-eh-<suite>-controls.log`; the summary is
+`.analysis/enemy-eh-controls-summary.json`.
+The preceding ECL batch passed **83 controls across four suites**:
 vftable identities (30), reviewed linkages (36), strict Oracle (14) and focused
 audit (3). Logs use `.analysis/ecl-vftable-<suite>-controls.log`; the summary
 is `.analysis/ecl-vftable-controls-summary.json`. Two older permission tests
@@ -476,8 +497,12 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/ecl-vftable-full-audit.log` and
-`.analysis/ecl-vftable-regression-check.json`. Current RTTI/slot evidence is
+are `.analysis/enemy-eh-full-audit.log` and
+`.analysis/enemy-eh-regression-check.json`. Current private graphs and full callers
+are `.analysis/enemy-eh-caller-scopes.json`; original-only roles/scopes are
+`.analysis/enemy-eh-original-scopes.json` and
+`.analysis/enemy-constructor-original-scope.json`. The new table graph is
+`.analysis/enemy-vftable-graph-proof.json`. Preceding RTTI/slot evidence is
 `.analysis/ecl-vftable-graph-proof.json`; complete primary scopes and callers
 are `.analysis/ecl-consumer-original-scopes.json` and
 `.analysis/ecl-vftable-caller-scopes.json`. The rejected ID contexts are
@@ -554,9 +579,10 @@ and `.analysis/compound-owner-original-scopes.json`. The preceding direct-table
 evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
-`.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-restoration evidence is `.analysis/anm-insertion-restored-build.log` and
-`.analysis/anm-insertion-restored-check.json`. The current source input includes
+`.analysis/remapped-owner-original-scopes.json`. Current unchanged compiler artifacts and
+incremental graph are checked in `.analysis/enemy-eh-artifact-check.json`.
+Preceding source-restoration evidence is `.analysis/anm-insertion-restored-build.log`
+and `.analysis/anm-insertion-restored-check.json`. The current source input includes
 the retained season/replay table declarations; all complete function bytes remain
 unchanged. Preceding source-trial evidence is `.analysis/failure-format-runtime-restored-build.log`,
 `.analysis/failure-format-runtime-restored-check.json` and
@@ -631,7 +657,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 304 incomplete candidates comprise 135 with unresolved fields, 132
+The 301 incomplete candidates comprise 132 with unresolved fields, 132
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.

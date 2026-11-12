@@ -282,11 +282,14 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0041ADE0,EnemyManager::remove_from_active_list,reference-0041ade0,local-strict-pass,144,144,144,.analysis/reference-audit.json
 0x0041AE70,EnemyManager::initialize,reference-0041ae70,local-strict-pass,459,459,459,.analysis/reference-audit.json
 0x0041B040,EclResourceInf::load_includes,reference-0041b040,local-strict-pass,351,351,351,.analysis/reference-audit.json
+0x0041B1A0,EnemyManager::~EnemyManager,reference-0041b1a0,local-strict-pass,414,414,414,.analysis/reference-audit.json
 0x0041B340,EnemyManager::create,reference-0041b340,local-strict-pass,141,141,141,.analysis/reference-audit.json
 0x0041B3D0,EnemyManager::update,reference-0041b3d0,local-strict-pass,283,283,283,.analysis/reference-audit.json
 0x0041B4F0,EnemyManager::on_tick_callback,reference-0041b4f0,local-strict-pass,55,55,55,.analysis/reference-audit.json
 0x0041B530,EnemyManager::on_draw_callback,reference-0041b530,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x0041B540,EnemyRef::get,reference-0041b540,local-strict-pass,52,52,52,.analysis/reference-audit.json
+0x0041B580,EnemyInf::EnemyInf,reference-0041b580,local-strict-pass,1161,1161,1161,.analysis/reference-audit.json
+0x0041BA10,EnemyInf::~EnemyInf,reference-0041ba10,local-strict-pass,306,306,306,.analysis/reference-audit.json
 0x0041C1F0,EnemyData::update_final_pos,reference-0041c1f0,local-strict-pass,313,313,313,.analysis/reference-audit.json
 0x0041CBD0,EnemyData::update_fog,reference-0041cbd0,local-strict-pass,1547,1547,1547,.analysis/reference-audit.json
 0x0041D1E0,EnemyInf::on_tick,reference-0041d1e0,local-strict-pass,242,242,242,.analysis/reference-audit.json

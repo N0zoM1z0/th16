@@ -6,6 +6,11 @@ linked-owner comparison after their private EH graphs are independently bound.
 The handlers, descriptors and runtime binding grant no additional primary
 function or byte credit.
 
+A later [Enemy destructor review](enemy-empty-eh.md) adds an explicit empty-EH3
+profile for a saved EBX/ESI/EDI frame, with cookie displacement minus twenty
+independently derived from the complete parent. The default minus-four profile
+and its restrictions below remain unchanged.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

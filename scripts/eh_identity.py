@@ -93,10 +93,13 @@ def private_owner(context, statics, pdb, symbol, source, size, code, *, internal
                 module_index=contribution["module_index"], visibility="static")
 
 
-def inspect_handler(image, address, info, cookie, frame_handler):
+def inspect_handler(image, address, info, cookie, frame_handler, *, cookie_offset=-4):
     """All 27 bytes: GS frame check, EAX FuncInfo, and the EH3 tail transfer."""
+    require(type(cookie_offset) is int and cookie_offset in (-4, -20),
+            "unsupported EH handler cookie displacement")
     code = image.read_address(address, 27)
-    expected = (bytes.fromhex("8b5424088d420c8b4afc33c8e8")
+    expected = (bytes.fromhex("8b5424088d420c8b4a") + struct.pack("<b", cookie_offset)
+                + bytes.fromhex("33c8e8")
                 + struct.pack("<I", (cookie - address - 17) & 0xFFFFFFFF)
                 + b"\xb8" + struct.pack("<I", info) + b"\xe9"
                 + struct.pack("<I", (frame_handler - address - 27) & 0xFFFFFFFF))
@@ -109,10 +112,60 @@ def inspect_parent(image, address, handler):
             "EH parent lacks its fixed frame-registration prologue")
 
 
+def inspect_saved_register_frame(image, address, size, handler):
+    """Derive the -20 cookie displacement from the complete saved-register frame."""
+    import capstone
+    cookie = load_config_cookie(image)
+    prefix = (bytes.fromhex("558bec6aff68") + struct.pack("<I", handler)
+              + bytes.fromhex("64a1000000005051535657a1") + struct.pack("<I", cookie)
+              + bytes.fromhex("33c5508d45f464a300000000"))
+    suffix = bytes.fromhex("8b4df464890d00000000595f5e5b8be55dc3")
+    require(size >= len(prefix) + len(suffix), "EH saved-register frame exceeds its complete parent")
+    require(image.read_address(address, len(prefix)) == prefix
+            and image.read_address(address + size - len(suffix), len(suffix)) == suffix,
+            "EH saved-register frame registration, cookie or restoration differs")
+    # The registration node is EBP-12; one local, EBX/ESI/EDI and the encoded
+    # cookie extend the frame to EBP-32. The handler must read node-20.
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    decoder.detail = True
+    instructions = list(decoder.disasm(image.read_address(address, size), address))
+    require(sum(i.size for i in instructions) == size,
+            "EH saved-register frame does not decode the complete parent")
+    protected, fs_uses, frame_writes, returns = [], [], [], []
+    for instruction in instructions:
+        offset = instruction.address - address
+        _, writes = instruction.regs_access()
+        if capstone.x86.X86_REG_EBP in writes:
+            frame_writes.append(offset)
+        if instruction.group(capstone.CS_GRP_RET):
+            returns.append(offset)
+        for op in instruction.operands:
+            if op.type != capstone.x86.X86_OP_MEM:
+                continue
+            if op.mem.segment == capstone.x86.X86_REG_FS:
+                fs_uses.append(offset)
+            if op.mem.base == capstone.x86.X86_REG_EBP and op.mem.disp in (-4, -8, -12, -32):
+                protected.append((offset, bytes(instruction.bytes)))
+    require(protected == [(29, bytes.fromhex("8d45f4")),
+                          (size - 18, bytes.fromhex("8b4df4"))]
+            and fs_uses == [10, 32, size - 15]
+            and frame_writes == [1, size - 2] and returns == [size - 1],
+            "EH-sensitive parent frame use differs from the reviewed empty frame")
+    return cookie
+
+
 def review_handler(context, record, statics, pdb):
     if record.get("profile") == "anm-manager-constructor-v1":
         return review_anm_constructor(context, record, statics, pdb)
-    require("profile" not in record, "unsupported EH owner profile")
+    profile = record.get("profile")
+    require("profile" not in record or profile == "empty-eh3-saved-ebx-esi-edi-v1",
+            "unsupported EH owner profile")
+    saved_registers = profile is not None
+    if saved_registers:
+        require(set(record) == {"profile", "source", "parent_symbol", "parent_target", "parent_size",
+                                "parent_sha256", "target", "size", "target_sha256", "func_info_target",
+                                "func_info_size", "func_info_sha256", "eh_flags", "evidence"},
+                "unsupported saved-register EH declaration")
     root = Path(__file__).resolve().parents[1]
     source, symbol = record["source"], record["parent_symbol"]
     path = root / source
@@ -160,19 +213,30 @@ def review_handler(context, record, statics, pdb):
         require(binding.get("kind") == "runtime-function" and len(entries) == 1,
                 "EH runtime entry lacks its independent complete binding")
         runtime.append((binding["target"], entries[0]["address"]))
-    inspect_handler(context.target, target, info, runtime[0][0], runtime[1][0])
-    inspect_handler(context.image, handler["address"], descriptor["address"], runtime[0][1], runtime[1][1])
+    cookie_offset = -20 if saved_registers else -4
+    inspect_handler(context.target, target, info, runtime[0][0], runtime[1][0], cookie_offset=cookie_offset)
+    inspect_handler(context.image, handler["address"], descriptor["address"], runtime[0][1], runtime[1][1],
+                    cookie_offset=cookie_offset)
     inspect_parent(context.target, parent, target)
     inspect_parent(context.image, candidate_parent, handler["address"])
+    if saved_registers:
+        inspect_saved_register_frame(context.target, parent, size, target)
+        inspect_saved_register_frame(context.image, candidate_parent, size, handler["address"])
+        check_relocations(context.image, candidate_parent, 38, [6, 22])
+        check_relocations(context.image, candidate_parent + size - 18, 18, [])
     check_relocations(context.image, handler["address"], 27, [18])
     check_relocations(context.image, descriptor["address"], 36, [])
     check_relocations(context.image, candidate_parent, 17, [6])
     require(context.image.read_address(descriptor["address"], 36) == metadata,
             "EH candidate descriptor differs from the complete reviewed empty descriptor")
-    return dict(source=source, parent_symbol=symbol, parent_target=parent, parent_size=size,
+    proof = dict(source=source, parent_symbol=symbol, parent_target=parent, parent_size=size,
                 parent_candidate=candidate_parent, target=target, handler=handler,
                 func_info_target=info, descriptor=descriptor, eh_flags=record["eh_flags"],
                 evidence=record["evidence"])
+    if saved_registers:
+        proof["profile"] = profile
+        proof["cookie_offset"] = cookie_offset
+    return proof
 
 
 def complete_game_entry(context, source, symbol, target, size, target_hash):
