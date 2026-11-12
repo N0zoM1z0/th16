@@ -258,7 +258,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004119B0,Bullet::~Bullet,src/BulletManager.cpp,??1Bullet@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00411A30,BulletManager::initialize,src/BulletManager.cpp,?initialize@BulletManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00411B70,BulletManager::destroy_all,src/BulletManager.cpp,?destroy_all@BulletManager@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00411CA0,BulletManager::~BulletManager,src/BulletManager.cpp,??1BulletManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00411CA0,BulletManager::~BulletManager,src/BulletManager.cpp,??1BulletManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00411DD0,BulletManager::create,src/BulletManager.cpp,?create@BulletManager@@SAPAU1@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00411E70,Bullet::on_tick,src/BulletManager.cpp,?on_tick@Bullet@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004124B0,Bullet::check_player_collision,src/BulletManager.cpp,?check_player_collision@Bullet@@QAEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -323,7 +323,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00418720,MenuHelper::set_cursor,src/MenuHelper.cpp,?set_cursor@MenuHelper@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x00418790,preload_bullet_and_effect_anm,src/EffectManager.cpp,?preload_bullet_and_effect_anm@@YAHXZ,exact,,.analysis/reference-audit.json
 0x004187D0,EffectManager::initialize,src/EffectManager.cpp,?initialize@EffectManager@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x004188D0,EffectManager::~EffectManager,src/EffectManager.cpp,??1EffectManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004188D0,EffectManager::~EffectManager,src/EffectManager.cpp,??1EffectManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00418A30,EffectManager::create,src/EffectManager.cpp,?create@EffectManager@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x00418AB0,EffectManager::on_tick_callback,src/EffectManager.cpp,?on_tick_callback@EffectManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00418AE0,EffectManager::on_draw_callback,src/EffectManager.cpp,?on_draw_callback@EffectManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
@@ -568,7 +568,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004312B0,LaserBeamInf::get_point,src/Laser.cpp,?get_point@LaserBeamInf@@UAEXMPAUD3DXVECTOR3@@@Z,exact,,.analysis/reference-audit.json
 0x00431310,LaserBeamInf::method_8,src/Laser.cpp,?method_8@LaserBeamInf@@UAEXH@Z,exact,,.analysis/reference-audit.json
 0x00431330,LaserManager::initialize,src/Laser.cpp,?initialize@LaserManager@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x004313B0,LaserManager::~LaserManager,src/Laser.cpp,??1LaserManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004313B0,LaserManager::~LaserManager,src/Laser.cpp,??1LaserManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x004314A0,LaserManager::create,src/Laser.cpp,?create@LaserManager@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x00431510,LaserManager::on_tick_body,src/Laser.cpp,?on_tick_body@LaserManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004316B0,LaserManager::on_tick_callback,src/Laser.cpp,?on_tick_callback@LaserManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json

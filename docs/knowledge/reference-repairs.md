@@ -2099,3 +2099,42 @@ occurs; all 1,719 linked owners and 192 dependency stamps validate. See
 [the complete review](shared-empty-eh-frames.md),
 `.analysis/shared-empty-eh-caller-scopes.json` and
 `.analysis/shared-empty-eh-regression-check.json`.
+
+## Complete EBX/ESI empty EH frames and rejected Replay destructor snapshot
+
+BulletManager, EffectManager and LaserManager destruction use a complete
+37-byte registration sequence with one local and saved EBX/ESI. Their node at
+EBP-12 and encoded cookie at EBP-28 independently require a node-16 handler
+read. The explicit empty-eh3-saved-ebx-esi-v1 profile checks the exact saves,
+17-byte restoration, direct protected-slot uses, FS references, EBP writes,
+final return and full relocation sets. It shares checks with the earlier fixed
+EBX/ESI/EDI sequence while retaining all old profile restrictions. Other
+node-16 frames, including Bomb's ESI/EDI saves and Spellcard's two-local/ESI
+frame, remain rejected. There is no configurable offset or save sequence.
+
+All three complete parents pass 292/345/228 bytes, adding 865 exact primary
+bytes. Original-only reviews account for 77/87/64 reachable instructions and
+following INT3 padding. Complete parent-qualified private 27/36-byte PDB owners,
+all handler instructions and both independent runtime roles are required.
+The 81 auxiliary code bytes and 108 metadata bytes receive no extra credit.
+
+A used local capturing each ReplayManager update-function pointer before its
+null check and critical section produces a complete 437-byte candidate against
+the complete 416-byte original. The pointer spills beside the registry rather
+than reproducing the original retained value. Only this function's extent
+changes; 1,153 complete owner records change through payload/address/field
+movement. The trial is rejected. Source is restored byte for byte and freshly
+rebuilt incrementally; all 1,719 complete linked owner records and 192 dependency
+stamps validate. Do not repeat this context or force the register allocation.
+
+Canonical replay reports 858 exact, 65 mismatch and 292 incomplete among 1,215
+annotations, covering 160,210 primary exact bytes and 923 units. All previous
+855 exact results, 65 complete mismatches and 920 unit definitions remain
+retained. Only the independently verified fresh image hash and PDB age change
+in prior complete comparison records; every other comparison detail and all
+other incomplete records are identical. One hundred forty controls pass across
+six suites, covering both saved-register profiles and eleven complete graphs.
+No game source change, cold build, cleanup, artifact substitution, Factory
+submission or publication is retained. See [the complete review](ebx-esi-empty-eh.md),
+`.analysis/ebx-esi-eh-regression-check.json` and
+`.analysis/replay-destructor-source-trial.json`.

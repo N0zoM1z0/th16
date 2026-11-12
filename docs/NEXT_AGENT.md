@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after six further complete saved-register EH destructor graphs.
+Updated 2026-11-12 after EBX/ESI empty EH frames and the rejected Replay destructor snapshot.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,27 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **855 exact, 65 mismatch and 295 incomplete** among
-1215 annotated candidates, covering 159,345 exact owned bytes and 920 units.
+The current report is **858 exact, 65 mismatch and 292 incomplete** among
+1215 annotated candidates, covering 160,210 exact owned bytes and 923 units.
+An explicit empty-EH3 EBX/ESI profile derives cookie node-16 from its complete
+37-byte registration and 17-byte restoration. Full private handler/descriptor
+owners resolve BulletManager destruction (292), EffectManager destruction
+(345) and LaserManager destruction (228), adding 865 primary bytes. The earlier
+EBX/ESI/EDI, legacy empty and nonempty constructor profiles retain their rules.
+Bomb and Spellcard have the same cookie displacement but different complete
+frames and remain excluded. All prior 855 exact results, 65 complete mismatches
+and 920 unit definitions remain retained; only the fresh image fingerprint and
+PDB age change in prior comparison records. Every other comparison detail and
+all other incomplete records remain identical.
+A used update-function pointer snapshot in ReplayManager destruction produces
+437 bytes against the complete 416-byte original and is rejected. Source is
+restored byte for byte and freshly rebuilt incrementally; all 1,719 complete
+linked owner records and 192 dependency stamps validate. The retained candidate
+is again 415 bytes. Do not repeat this pointer snapshot or force its register
+allocation. See [the frame/source review](knowledge/ebx-esi-empty-eh.md).
+
+The preceding six-parent checkpoint reported 855 exact, 65 mismatch and 295
+incomplete, covering 159,345 exact owned bytes and 920 units.
 The existing saved-register EH profile independently validates six more
 complete private graphs: Fog destruction (273), EndingScriptVm destruction
 (181), Ending destruction (496), GuiMsgVm destruction (729), LoadingThread
@@ -363,12 +382,14 @@ The preceding spell-page, GameWindow, Bullet and Player function trials remain
 restored. The current source input is unchanged from the ANM insertion trial
 baseline and retains the preceding two replay-format linkage definitions.
 Both replay index trials, the snapshot-ID trial, wrap bounds trial and two
-ANM insertion ID contexts are restored. All 1,719 complete linked owner
+ANM insertion ID contexts and the Replay destructor pointer snapshot are restored.
+All 1,719 complete linked owner
 entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
-192 dependency stamps validate. No new build is needed for the current EH
+192 dependency stamps validate. No further build is needed for the current EH
 review; identical artifacts and current dependency keys are checked in
-`.analysis/shared-empty-eh-artifact-check.json`. The preceding callback
+`.analysis/ebx-esi-eh-artifact-check.json`. The fresh source restoration is
+`.analysis/replay-destructor-source-trial.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -428,7 +449,14 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **120 controls across six relevant suites**:
+The current batch passes **140 controls across six relevant suites**:
+saved-register EH (37), legacy empty EH (25), constructor EH (25), reviewed
+linkages (36), strict Oracle (14) and focused audit (3). Both explicit
+saved-register profiles exercise eleven complete graphs, wrong-profile reuse
+and two same-displacement unsupported frame shapes. Logs use
+`.analysis/ebx-esi-eh-<suite>-controls.log`; the summary is
+`.analysis/ebx-esi-eh-controls-summary.json`.
+The preceding six-parent batch passed **120 controls across six relevant suites**:
 saved-register EH (17), legacy empty EH (25), constructor EH (25), reviewed
 linkages (36), strict Oracle (14) and focused audit (3). The saved-register suite
 exercises all eight reviewed parents; its cross-parent mutation also crosses
@@ -926,7 +954,7 @@ the complete owner and also changes wave scheduling. The current 696/700 result
 retains the indexed circle form. Remaining circle
 operand order needs better source/type/context evidence; do not normalize it.
 
-The two legacy and eight saved-register empty-EH3 graphs are complete. Their
+The two legacy and eleven saved-register empty-EH3 graphs are complete. Their
 selectors require the exact parent-derived private MAP names, full source-object PDB ownership and
 complete 27/36-byte handler/descriptor extents. Do not extend this proof to
 nonempty unwind/try tables or another handler shape. Identical metadata from

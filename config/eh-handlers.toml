@@ -196,3 +196,51 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/shared-empty-eh-frames.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-v1"
+source = "src/BulletManager.cpp"
+parent_symbol = "??1BulletManager@@QAE@XZ"
+parent_target = 0x411ca0
+parent_size = 292
+parent_sha256 = "47e652277e3ca2138f7b45a8bcfbabcadb58f9bb0deb5cfa6660339200d0e231"
+target = 0x48a540
+size = 27
+target_sha256 = "5861b8e511cc3c0ff551252a1a8673f61763cfab6f692738ce29f42601760a35"
+func_info_target = 0x49b0f4
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-v1"
+source = "src/EffectManager.cpp"
+parent_symbol = "??1EffectManager@@QAE@XZ"
+parent_target = 0x4188d0
+parent_size = 345
+parent_sha256 = "a3b19aeb6147e344e30e21e19ba9197df86ce4c4e951058b7d753a5b75f89333"
+target = 0x48a5b0
+size = 27
+target_sha256 = "e2128c618bf41151aa2bf6e7c6c34199fa71d028ee1aac7e1b439a5b29f0c661"
+func_info_target = 0x49b168
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-ebx-esi-v1"
+source = "src/Laser.cpp"
+parent_symbol = "??1LaserManager@@QAE@XZ"
+parent_target = 0x4313b0
+parent_size = 228
+parent_sha256 = "beb197fa922314170d7a54f144f70d39b14767e168ca3f99abcc5f63b632aeb0"
+target = 0x48a850
+size = 27
+target_sha256 = "ee2fe2916ed0be74a0676dfd5029f3e3b554b90125f30abc2137c61ba465e9ca"
+func_info_target = 0x49b40c
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"

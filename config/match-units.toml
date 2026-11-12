@@ -4041,6 +4041,50 @@ linkages = [
   { offset = 126, width = 4, type = "REL32", symbol = "?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199344, addend = 0 },
 ]
 
+[units.reference-00411ca0]
+artifact_kind = "linked-pe"
+source = "src/BulletManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??1BulletManager@@QAE@XZ"
+object = "BulletManager.obj"
+candidate_address = 4304800
+target_address = 4267168
+size = 292
+compare_size = 292
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??1BulletManager@@QAE@XZ", target = 4760896, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 40, width = 4, type = "DIR32", symbol = "?g_UpdateFuncRegistry@@3PAUUpdateFuncRegistry@@A", target = 4877716, addend = 0 },
+  { offset = 51, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 61, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 69, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 77, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 86, width = 4, type = "REL32", symbol = "?unregister@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200352, addend = 0 },
+  { offset = 92, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 100, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 106, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 112, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 117, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 126, width = 4, type = "DIR32", symbol = "?g_UpdateFuncRegistry@@3PAUUpdateFuncRegistry@@A", target = 4877716, addend = 0 },
+  { offset = 139, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 147, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 155, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 164, width = 4, type = "REL32", symbol = "?unregister@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200352, addend = 0 },
+  { offset = 170, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 178, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 184, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 190, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 202, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 207, width = 4, type = "REL32", symbol = "?disable_vms_from_anm_file@AnmManager@@QAEXPAUAnmLoaded@@@Z", target = 4649584, addend = 0 },
+  { offset = 212, width = 4, type = "DIR32", symbol = "??1Bullet@@QAE@XZ", target = 4266416, addend = 0 },
+  { offset = 234, width = 4, type = "DIR32", symbol = "?g_BulletManager@@3PAUBulletManager@@A", target = 4877740, addend = 0 },
+  { offset = 244, width = 4, type = "REL32", symbol = "??_M@YGXPAXIIP6EX0@Z@Z", target = 4672785, addend = 0 },
+  { offset = 249, width = 4, type = "DIR32", symbol = "??1Bullet@@QAE@XZ", target = 4266416, addend = 0 },
+  { offset = 271, width = 4, type = "REL32", symbol = "??_M@YGXPAXIIP6EX0@Z@Z", target = 4672785, addend = 0 },
+]
+
 [units.reference-00412670]
 artifact_kind = "linked-pe"
 source = "src/BulletManager.cpp"
@@ -5069,6 +5113,54 @@ linkages = [
   { offset = 105, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
   { offset = 181, width = 4, type = "DIR32", symbol = "?on_draw_callback@EffectManager@@SIHPAU1@@Z", target = 4295392, addend = 0 },
   { offset = 212, width = 4, type = "REL32", symbol = "?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199344, addend = 0 },
+]
+
+[units.reference-004188d0]
+artifact_kind = "linked-pe"
+source = "src/EffectManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??1EffectManager@@QAE@XZ"
+object = "EffectManager.obj"
+candidate_address = 4352320
+target_address = 4294864
+size = 345
+compare_size = 345
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??1EffectManager@@QAE@XZ", target = 4761008, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 44, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 49, width = 4, type = "REL32", symbol = "?disable_vms_from_anm_file@AnmManager@@QAEXPAUAnmLoaded@@@Z", target = 4649584, addend = 0 },
+  { offset = 58, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 63, width = 4, type = "REL32", symbol = "?disable_vms_from_anm_file@AnmManager@@QAEXPAUAnmLoaded@@@Z", target = 4649584, addend = 0 },
+  { offset = 68, width = 4, type = "DIR32", symbol = "?g_UpdateFuncRegistry@@3PAUUpdateFuncRegistry@@A", target = 4877716, addend = 0 },
+  { offset = 79, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 89, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 97, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 105, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 114, width = 4, type = "REL32", symbol = "?unregister@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200352, addend = 0 },
+  { offset = 120, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 128, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 134, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 140, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 145, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 154, width = 4, type = "DIR32", symbol = "?g_UpdateFuncRegistry@@3PAUUpdateFuncRegistry@@A", target = 4877716, addend = 0 },
+  { offset = 164, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 172, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 180, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 188, width = 4, type = "REL32", symbol = "?unregister@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200352, addend = 0 },
+  { offset = 194, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 202, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 208, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 214, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 220, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 235, width = 4, type = "REL32", symbol = "?release@AnmLoaded@@QAEXXZ", target = 4642672, addend = 0 },
+  { offset = 251, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+  { offset = 270, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 285, width = 4, type = "REL32", symbol = "?release@AnmLoaded@@QAEXXZ", target = 4642672, addend = 0 },
+  { offset = 301, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+  { offset = 320, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
 ]
 
 [units.reference-00418a30]
@@ -9507,6 +9599,45 @@ linkages = [
   { offset = 80, width = 4, type = "DIR32", symbol = "?on_draw_callback@LaserManager@@SIHPAU1@@Z", target = 4396832, addend = 0 },
   { offset = 88, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
   { offset = 105, width = 4, type = "REL32", symbol = "?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199344, addend = 0 },
+]
+
+[units.reference-004313b0]
+artifact_kind = "linked-pe"
+source = "src/Laser.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??1LaserManager@@QAE@XZ"
+object = "Laser.obj"
+candidate_address = 4466336
+target_address = 4395952
+size = 228
+compare_size = 228
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??1LaserManager@@QAE@XZ", target = 4761680, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 40, width = 4, type = "DIR32", symbol = "?g_UpdateFuncRegistry@@3PAUUpdateFuncRegistry@@A", target = 4877716, addend = 0 },
+  { offset = 51, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 61, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 69, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 77, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 86, width = 4, type = "REL32", symbol = "?unregister@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200352, addend = 0 },
+  { offset = 92, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 100, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 106, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 112, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 117, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 126, width = 4, type = "DIR32", symbol = "?g_UpdateFuncRegistry@@3PAUUpdateFuncRegistry@@A", target = 4877716, addend = 0 },
+  { offset = 139, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 147, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 155, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 164, width = 4, type = "REL32", symbol = "?unregister@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200352, addend = 0 },
+  { offset = 170, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 178, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
+  { offset = 184, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 190, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 336, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 197, width = 4, type = "REL32", symbol = "?destroy_all@LaserManager@@QAEXXZ", target = 4377344, addend = 0 },
+  { offset = 203, width = 4, type = "DIR32", symbol = "?g_LaserManager@@3PAULaserManager@@A", target = 4878048, addend = 0 },
 ]
 
 [units.reference-004314a0]

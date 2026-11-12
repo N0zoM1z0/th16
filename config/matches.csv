@@ -190,6 +190,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00411940,Bullet::Bullet,reference-00411940,local-strict-pass,108,108,108,.analysis/reference-audit.json
 0x004119B0,Bullet::~Bullet,reference-004119b0,local-strict-pass,120,120,120,.analysis/reference-audit.json
 0x00411A30,BulletManager::initialize,reference-00411a30,local-strict-pass,315,315,315,.analysis/reference-audit.json
+0x00411CA0,BulletManager::~BulletManager,reference-00411ca0,local-strict-pass,292,292,292,.analysis/reference-audit.json
 0x00412670,Bullet::release,reference-00412670,local-strict-pass,487,487,487,.analysis/reference-audit.json
 0x00412A60,BulletManager::on_draw_body,reference-00412a60,local-strict-pass,490,490,490,.analysis/reference-audit.json
 0x00412C50,BulletManager::on_tick_callback,reference-00412c50,local-strict-pass,38,38,38,.analysis/reference-audit.json
@@ -239,6 +240,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00418720,MenuHelper::set_cursor,reference-00418720,local-strict-pass,105,105,105,.analysis/reference-audit.json
 0x00418790,preload_bullet_and_effect_anm,reference-00418790,local-strict-pass,57,57,57,.analysis/reference-audit.json
 0x004187D0,EffectManager::initialize,reference-004187d0,local-strict-pass,241,241,241,.analysis/reference-audit.json
+0x004188D0,EffectManager::~EffectManager,reference-004188d0,local-strict-pass,345,345,345,.analysis/reference-audit.json
 0x00418A30,EffectManager::create,reference-00418a30,local-strict-pass,118,118,118,.analysis/reference-audit.json
 0x00418AB0,EffectManager::on_tick_callback,reference-00418ab0,local-strict-pass,47,47,47,.analysis/reference-audit.json
 0x00418AE0,EffectManager::on_draw_callback,reference-00418ae0,local-strict-pass,6,6,6,.analysis/reference-audit.json
@@ -440,6 +442,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004312B0,LaserBeamInf::get_point,reference-004312b0,local-strict-pass,84,84,84,.analysis/reference-audit.json
 0x00431310,LaserBeamInf::method_8,reference-00431310,local-strict-pass,25,25,25,.analysis/reference-audit.json
 0x00431330,LaserManager::initialize,reference-00431330,local-strict-pass,127,127,127,.analysis/reference-audit.json
+0x004313B0,LaserManager::~LaserManager,reference-004313b0,local-strict-pass,228,228,228,.analysis/reference-audit.json
 0x004314A0,LaserManager::create,reference-004314a0,local-strict-pass,109,109,109,.analysis/reference-audit.json
 0x00431510,LaserManager::on_tick_body,reference-00431510,local-strict-pass,404,404,404,.analysis/reference-audit.json
 0x004316B0,LaserManager::on_tick_callback,reference-004316b0,local-strict-pass,102,102,102,.analysis/reference-audit.json

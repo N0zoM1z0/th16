@@ -9,6 +9,12 @@ import tomllib
 from linked_image import map_statics, pdb_section_contributions, linked_code_fields, _object_path
 
 
+_SAVED_REGISTER_PROFILES = {
+    "empty-eh3-saved-ebx-esi-edi-v1": (bytes.fromhex("535657"), bytes.fromhex("5f5e5b")),
+    "empty-eh3-saved-ebx-esi-v1": (bytes.fromhex("5356"), bytes.fromhex("5e5b")),
+}
+
+
 class EHEvidenceError(ValueError):
     """An EH owner or an edge lacks its independently reviewed evidence."""
 
@@ -95,7 +101,7 @@ def private_owner(context, statics, pdb, symbol, source, size, code, *, internal
 
 def inspect_handler(image, address, info, cookie, frame_handler, *, cookie_offset=-4):
     """All 27 bytes: GS frame check, EAX FuncInfo, and the EH3 tail transfer."""
-    require(type(cookie_offset) is int and cookie_offset in (-4, -20),
+    require(type(cookie_offset) is int and cookie_offset in (-4, -16, -20),
             "unsupported EH handler cookie displacement")
     code = image.read_address(address, 27)
     expected = (bytes.fromhex("8b5424088d420c8b4a") + struct.pack("<b", cookie_offset)
@@ -112,20 +118,26 @@ def inspect_parent(image, address, handler):
             "EH parent lacks its fixed frame-registration prologue")
 
 
-def inspect_saved_register_frame(image, address, size, handler):
-    """Derive the -20 cookie displacement from the complete saved-register frame."""
+def inspect_saved_register_frame(image, address, size, handler, *,
+                                 profile="empty-eh3-saved-ebx-esi-edi-v1"):
+    """Derive the cookie slot from one of the two explicitly reviewed save sequences."""
     import capstone
+    require(isinstance(profile, str) and profile in _SAVED_REGISTER_PROFILES,
+            "unsupported saved-register EH frame")
+    saves, restores = _SAVED_REGISTER_PROFILES[profile]
+    save_count = len(saves)
     cookie = load_config_cookie(image)
     prefix = (bytes.fromhex("558bec6aff68") + struct.pack("<I", handler)
-              + bytes.fromhex("64a1000000005051535657a1") + struct.pack("<I", cookie)
+              + bytes.fromhex("64a1000000005051") + saves + b"\xa1" + struct.pack("<I", cookie)
               + bytes.fromhex("33c5508d45f464a300000000"))
-    suffix = bytes.fromhex("8b4df464890d00000000595f5e5b8be55dc3")
+    suffix = bytes.fromhex("8b4df464890d0000000059") + restores + bytes.fromhex("8be55dc3")
     require(size >= len(prefix) + len(suffix), "EH saved-register frame exceeds its complete parent")
     require(image.read_address(address, len(prefix)) == prefix
             and image.read_address(address + size - len(suffix), len(suffix)) == suffix,
             "EH saved-register frame registration, cookie or restoration differs")
-    # The registration node is EBP-12; one local, EBX/ESI/EDI and the encoded
-    # cookie extend the frame to EBP-32. The handler must read node-20.
+    # The registration node is EBP-12. One local, the fixed save sequence and
+    # the encoded cookie extend the frame to EBP-(20 + 4 * save_count).
+    cookie_slot = -(20 + 4 * save_count)
     decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     decoder.detail = True
     instructions = list(decoder.disasm(image.read_address(address, size), address))
@@ -144,11 +156,11 @@ def inspect_saved_register_frame(image, address, size, handler):
                 continue
             if op.mem.segment == capstone.x86.X86_REG_FS:
                 fs_uses.append(offset)
-            if op.mem.base == capstone.x86.X86_REG_EBP and op.mem.disp in (-4, -8, -12, -32):
+            if op.mem.base == capstone.x86.X86_REG_EBP and op.mem.disp in (-4, -8, -12, cookie_slot):
                 protected.append((offset, bytes(instruction.bytes)))
-    require(protected == [(29, bytes.fromhex("8d45f4")),
-                          (size - 18, bytes.fromhex("8b4df4"))]
-            and fs_uses == [10, 32, size - 15]
+    require(protected == [(26 + save_count, bytes.fromhex("8d45f4")),
+                          (size - len(suffix), bytes.fromhex("8b4df4"))]
+            and fs_uses == [10, 29 + save_count, size - len(suffix) + 3]
             and frame_writes == [1, size - 2] and returns == [size - 1],
             "EH-sensitive parent frame use differs from the reviewed empty frame")
     return cookie
@@ -158,7 +170,7 @@ def review_handler(context, record, statics, pdb):
     if record.get("profile") == "anm-manager-constructor-v1":
         return review_anm_constructor(context, record, statics, pdb)
     profile = record.get("profile")
-    require("profile" not in record or profile == "empty-eh3-saved-ebx-esi-edi-v1",
+    require("profile" not in record or isinstance(profile, str) and profile in _SAVED_REGISTER_PROFILES,
             "unsupported EH owner profile")
     saved_registers = profile is not None
     if saved_registers:
@@ -213,17 +225,19 @@ def review_handler(context, record, statics, pdb):
         require(binding.get("kind") == "runtime-function" and len(entries) == 1,
                 "EH runtime entry lacks its independent complete binding")
         runtime.append((binding["target"], entries[0]["address"]))
-    cookie_offset = -20 if saved_registers else -4
+    save_count = len(_SAVED_REGISTER_PROFILES[profile][0]) if saved_registers else 0
+    cookie_offset = -(8 + 4 * save_count) if saved_registers else -4
     inspect_handler(context.target, target, info, runtime[0][0], runtime[1][0], cookie_offset=cookie_offset)
     inspect_handler(context.image, handler["address"], descriptor["address"], runtime[0][1], runtime[1][1],
                     cookie_offset=cookie_offset)
     inspect_parent(context.target, parent, target)
     inspect_parent(context.image, candidate_parent, handler["address"])
     if saved_registers:
-        inspect_saved_register_frame(context.target, parent, size, target)
-        inspect_saved_register_frame(context.image, candidate_parent, size, handler["address"])
-        check_relocations(context.image, candidate_parent, 38, [6, 22])
-        check_relocations(context.image, candidate_parent + size - 18, 18, [])
+        inspect_saved_register_frame(context.target, parent, size, target, profile=profile)
+        inspect_saved_register_frame(context.image, candidate_parent, size, handler["address"], profile=profile)
+        prefix_size, suffix_size = 35 + save_count, 15 + save_count
+        check_relocations(context.image, candidate_parent, prefix_size, [6, 19 + save_count])
+        check_relocations(context.image, candidate_parent + size - suffix_size, suffix_size, [])
     check_relocations(context.image, handler["address"], 27, [18])
     check_relocations(context.image, descriptor["address"], 36, [])
     check_relocations(context.image, candidate_parent, 17, [6])

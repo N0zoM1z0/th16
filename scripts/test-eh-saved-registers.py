@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mutation controls for complete empty EH3 graphs with saved EBX/ESI/EDI frames."""
+"""Mutation controls for the two explicit saved-register empty EH3 frame profiles."""
 import copy
 import hashlib
 import importlib.util
@@ -9,7 +9,7 @@ import unittest
 
 import capstone
 
-from eh_identity import EHEvidenceError, handler_field, review_handler, validate_field
+from eh_identity import EHEvidenceError, handler_field, inspect_saved_register_frame, review_handler, validate_field
 from linked_image import map_statics, pdb_section_contributions
 from strict_oracle import Context, ROOT
 
@@ -21,11 +21,20 @@ PROFILE = "empty-eh3-saved-ebx-esi-edi-v1"
 
 
 class SavedRegisterEHControls(unittest.TestCase):
+    PROFILE = PROFILE
+    TARGETS = {0x409550, 0x4190b0, 0x419450, 0x41b1a0,
+               0x41ba10, 0x4264a0, 0x43afe0, 0x441a50}
+    COOKIE_OFFSET = -20
+    COOKIE_FIELD = 22
+    COOKIE_SLOT_BYTE = 0xe0
+    OTHER_COOKIE_BYTE = 0xf0
+    PREFIX_SIZE = 38
+
     @classmethod
     def setUpClass(cls):
         cls.context = Context()
         cls.records = [r for r in tomllib.loads((ROOT / "config/eh-handlers.toml").read_text())["handlers"]
-                       if r.get("profile") == PROFILE]
+                       if r.get("profile") == cls.PROFILE]
         cls.statics = map_statics(cls.context.directory / "th16.map")
         cls.pdb = pdb_section_contributions(cls.context.directory / "th16.pdb")
         cls.units = tomllib.loads((ROOT / "config/match-units.toml").read_text())["units"]
@@ -43,30 +52,34 @@ class SavedRegisterEHControls(unittest.TestCase):
         return context
 
     def test_all_reviewed_complete_graphs_pass(self):
-        self.assertEqual(len(self.records), 8)
-        self.assertEqual({r["parent_target"] for r in self.records},
-                         {0x409550, 0x4190b0, 0x419450, 0x41b1a0,
-                          0x41ba10, 0x4264a0, 0x43afe0, 0x441a50})
+        self.assertEqual(len(self.records), len(self.TARGETS))
+        self.assertEqual({r["parent_target"] for r in self.records}, self.TARGETS)
         for record in self.records:
             proof = self.review(record)
-            self.assertEqual((proof["profile"], proof["cookie_offset"]), (PROFILE, -20))
+            self.assertEqual((proof["profile"], proof["cookie_offset"]), (self.PROFILE, self.COOKIE_OFFSET))
             self.assertEqual((proof["handler"]["size"], proof["descriptor"]["size"]), (27, 36))
 
     def test_profile_is_explicit_and_cookie_offset_is_not_configurable(self):
         for record in self.records:
             missing = {k: v for k, v in record.items() if k != "profile"}
             for changed in (missing, dict(record, profile="unknown"), dict(record, profile=None),
-                            dict(record, cookie_offset=-20), dict(record, cookie_offset=-4)):
+                            dict(record, cookie_offset=self.COOKIE_OFFSET), dict(record, cookie_offset=-4)):
                 with self.subTest(parent=record["parent_symbol"], changed=changed), self.assertRaises(EHEvidenceError):
                     self.review(changed)
 
     def test_handler_cannot_use_the_legacy_or_an_arbitrary_cookie_slot(self):
         for record in self.records:
             proof = self.proof(record)
-            for slot in (0xfc, 0xf0, 0xe8):
+            for slot in (0xfc, self.OTHER_COOKIE_BYTE, 0xe8):
                 context = self.mutate("image", proof["handler"]["address"] + 9, bytes([slot]))
                 with self.subTest(parent=record["parent_symbol"], slot=slot), self.assertRaises(EHEvidenceError):
                     self.review(record, context)
+
+    def test_other_registered_profile_cannot_replace_this_frame(self):
+        other = ("empty-eh3-saved-ebx-esi-v1" if self.PROFILE == PROFILE else PROFILE)
+        for record in self.records:
+            with self.assertRaisesRegex(EHEvidenceError, "handler differs"):
+                self.review(dict(record, profile=other))
 
     def test_target_cookie_slot_is_verified_even_with_an_updated_hash(self):
         for record in self.records:
@@ -109,12 +122,12 @@ class SavedRegisterEHControls(unittest.TestCase):
             proof = self.proof(record)
             parent, size = proof["parent_candidate"], proof["parent_size"]
             writes = [i for i in decoder.disasm(self.context.image.read_address(parent, size), parent)
-                      if i.address >= parent + 38 and i.mnemonic == "mov"
+                      if i.address >= parent + self.PREFIX_SIZE and i.mnemonic == "mov"
                       and i.operands[0].type == capstone.x86.X86_OP_MEM
                       and i.operands[0].mem.base == capstone.x86.X86_REG_EBP
                       and i.operands[0].mem.disp == -16 and i.disp_size == 1]
             self.assertTrue(writes)
-            for displacement in (0xfc, 0xf8, 0xe0):
+            for displacement in (0xfc, 0xf8, self.COOKIE_SLOT_BYTE):
                 context = self.mutate("image", writes[0].address + writes[0].disp_offset, bytes([displacement]))
                 with self.subTest(parent=record["parent_symbol"], displacement=displacement), self.assertRaisesRegex(
                         EHEvidenceError, "EH-sensitive parent frame"):
@@ -123,7 +136,7 @@ class SavedRegisterEHControls(unittest.TestCase):
     def test_body_cannot_replace_the_frame_pointer(self):
         for record in self.records:
             parent = self.proof(record)["parent_candidate"]
-            context = self.mutate("image", parent + 38, bytes.fromhex("8be9"))
+            context = self.mutate("image", parent + self.PREFIX_SIZE, bytes.fromhex("8be9"))
             with self.assertRaisesRegex(EHEvidenceError, "EH-sensitive parent frame"):
                 self.review(record, context)
 
@@ -163,7 +176,7 @@ class SavedRegisterEHControls(unittest.TestCase):
             proof = self.proof(record)
             parent, size = proof["parent_candidate"], proof["parent_size"]
             handler, descriptor = proof["handler"]["address"], proof["descriptor"]["address"]
-            cases = [([parent + 22], []), ([], [parent + 22]), ([], [parent + 10]),
+            cases = [([parent + self.COOKIE_FIELD], []), ([], [parent + self.COOKIE_FIELD]), ([], [parent + 10]),
                      ([], [parent + 35]), ([], [parent + size - 2]), ([handler + 18], []),
                      ([], [descriptor])]
             for remove, add in cases:
@@ -208,13 +221,31 @@ class SavedRegisterEHControls(unittest.TestCase):
         for record in self.records:
             proof = self.proof(record)
             parent = proof["parent_candidate"]
-            original = self.context.image.read_address(parent + 39, 1)[0]
-            context = self.mutate("image", parent + 39, bytes([original ^ 8]))
+            offset = self.PREFIX_SIZE + 1
+            original = self.context.image.read_address(parent + offset, 1)[0]
+            context = self.mutate("image", parent + offset, bytes([original ^ 8]))
             self.review(record, context)
             unit = self.units[f'reference-{record["parent_target"]:08x}']
             result = context.compare(unit)
             self.assertEqual(result["result"], "mismatch")
             self.assertLess(result["matched_bytes"], record["parent_size"])
+
+
+class SavedEBXESIEHControls(SavedRegisterEHControls):
+    PROFILE = "empty-eh3-saved-ebx-esi-v1"
+    TARGETS = {0x411ca0, 0x4188d0, 0x4313b0}
+    COOKIE_OFFSET = -16
+    COOKIE_FIELD = 21
+    COOKIE_SLOT_BYTE = 0xe4
+    OTHER_COOKIE_BYTE = 0xec
+    PREFIX_SIZE = 37
+
+    def test_other_node_minus_16_frames_remain_unsupported(self):
+        # Bomb saves ESI/EDI; Spellcard reserves two local words and saves ESI.
+        # A shared handler displacement does not establish either frame shape.
+        for parent, size, handler in ((0x40d710, 377, 0x48a4e0), (0x417790, 272, 0x48a590)):
+            with self.assertRaisesRegex(EHEvidenceError, "saved-register frame"):
+                inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
 
 
 if __name__ == "__main__":

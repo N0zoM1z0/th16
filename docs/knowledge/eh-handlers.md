@@ -16,6 +16,11 @@ saved-register profile to Fog, EndingScriptVm, Ending, GuiMsgVm, LoadingThread
 and Player destruction. ReplayManager retains its unequal complete extents
 and remains excluded.
 
+The [EBX/ESI review](ebx-esi-empty-eh.md) adds one explicit node-16 frame profile
+for BulletManager, EffectManager and LaserManager destruction. The complete
+registration/save/restore sequence determines its cookie slot; Bomb and
+Spellcard frames sharing the displacement remain excluded.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |
