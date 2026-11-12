@@ -203,6 +203,32 @@ class ReviewedLinkageControls(unittest.TestCase):
             with self.subTest(sizes=sizes), self.assertRaisesRegex(Incomplete, "complete NUL-terminated PDB storage"):
                 reviewed_linkages(context)
 
+    def test_short_formats_require_fixed_pushes_and_complete_string_storage(self):
+        for symbol, witness, duplicate, payload in [
+                ("??_C@_02DKCKIIND@?$CFs?$AA@", 0x46d12c, 0x4929de, b"%s\0"),
+                ("??_C@_01CLKCMJKC@?5?$AA@", 0x452d55, 0x48c1c3, b" \0"),
+                ("??_C@_01IDAFKMJL@_?$AA@", 0x43e78d, 0x48f80c, b"_\0")]:
+            address = next(p["address"] for p in self.context.publics if p["symbol"] == symbol)
+            self.assertEqual(self.context.data_contributions[address], [len(payload)])
+            self.assertEqual(self.context.image.read_address(address, len(payload)), payload)
+            for key, value in (("witness_instruction", hex(witness + 1)),
+                               ("witness_mnemonic", "lea"), ("target_address", hex(duplicate))):
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == symbol)[key] = value
+                with self.subTest(symbol=symbol, key=key), self.assertRaises(Incomplete):
+                    self.check_rows(rows)
+            rows = copy.deepcopy(self.rows)
+            next(r for r in rows if r["symbol"] == symbol).update(
+                size=str(len(payload)-1), target_sha256=hashlib.sha256(payload[:-1]).hexdigest())
+            with self.assertRaisesRegex(Incomplete, "complete NUL-terminated PDB storage"):
+                self.check_rows(rows)
+            for sizes in ([len(payload)-1], [len(payload), len(payload)]):
+                context = copy.copy(self.context)
+                context.data_contributions = dict(context.data_contributions)
+                context.data_contributions[address] = sizes
+                with self.subTest(symbol=symbol, sizes=sizes), self.assertRaises(Incomplete):
+                    reviewed_linkages(context)
+
     def test_wrong_runtime_library_is_rejected(self):
         rows = copy.deepcopy(self.rows)
         rows[0]["candidate_library"] = "unreviewed.lib"
@@ -229,6 +255,21 @@ class ReviewedLinkageControls(unittest.TestCase):
                     self.context.target.read_address(int(row["target_address"], 0), size)).hexdigest()
                 with self.assertRaisesRegex(Incomplete, "complete function extents"):
                     self.check_rows(rows)
+
+    def test_rangecheck_and_tangent_runtime_require_both_complete_extents(self):
+        for symbol, candidate_short, target_short in [
+                ("___report_rangecheckfailure", 11, 11),
+                ("__libm_sse2_tan_precise", 605, 604)]:
+            for field, size in (("candidate_size", candidate_short), ("size", target_short)):
+                rows = copy.deepcopy(self.rows)
+                row = next(r for r in rows if r["symbol"] == symbol)
+                row[field] = str(size)
+                if field == "size":
+                    row["target_sha256"] = hashlib.sha256(
+                        self.context.target.read_address(int(row["target_address"], 0), size)).hexdigest()
+                with self.subTest(symbol=symbol, field=field):
+                    with self.assertRaisesRegex(Incomplete, "complete function extents"):
+                        self.check_rows(rows)
 
     def test_stack_probe_and_thread_entries_require_their_own_libraries(self):
         for symbol, wrong_library in [("__chkstk", "libucrt.lib"),

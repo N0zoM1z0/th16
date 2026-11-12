@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete conversion-runtime ownership and timer trials.
+Updated 2026-11-12 after runtime/format identities and spell-page source trials.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,22 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **828 exact, 65 mismatch and 322 incomplete** among
-1215 annotated candidates, covering 148,714 exact owned bytes and 893 units.
+The current report is **833 exact, 65 mismatch and 317 incomplete** among
+1215 annotated candidates, covering 150,443 exact owned bytes and 898 units.
+Complete range-check/tangent runtime identities and fixed `%s`/space/underscore
+PUSHes resolve five whole source candidates: tangent wrapper (23), keyboard
+drawing (394), replay-save drawing (997), LZSS initialization (68) and ANM
+entry loading (247). These add 1,729 exact primary bytes. All 828 prior exact
+results, 65 complete mismatches and 893 units remain retained; five new units
+give 898 total. No runtime callee credit or admission-rule change occurs.
+The complete spell-page original remains 1,011 bytes against baseline 1,016;
+index and index-plus-character contexts give 1,012/994 and are rejected.
+Source is freshly restored with all 1,719 complete linked owners and 192
+dependency stamps checked. See
+[runtime/format and spell-page evidence](knowledge/failure-tangent-runtime.md).
+
+The preceding conversion-runtime checkpoint reported 828 exact, 65 mismatch
+and 322 incomplete, covering 148,714 exact owned bytes and 893 units.
 Complete 887-byte code and 130-byte data contributions from pinned LIBCMT
 establish two explicit interior CALL identities, with all 24 fields, 23 candidate
 PE relocations, original relocation absence and complete byte replay checked.
@@ -234,13 +248,13 @@ acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The retained source
-change is one used replay-slot local in PauseMenu.cpp. The latest GameWindow
-trials and preceding Bullet/Player trials are restored byte for byte; source input
-identity equals the baseline checkpoint, including that retained PauseMenu
+change is one used replay-slot local in PauseMenu.cpp. The latest spell-page
+trials and preceding GameWindow/Bullet/Player trials are restored byte for byte.
+Source input identity equals the baseline checkpoint, including that retained PauseMenu
 change. All 1,719 complete linked owner entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/conversion-runtime-restored-check.json`. The preceding callback
+`.analysis/failure-format-runtime-restored-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -300,12 +314,14 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **237 controls across ten relevant suites**:
+The current batch passes **239 controls across ten relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
-(34), focused audit (3), constructor EH (25), empty EH (25) and runtime
+(36), focused audit (3), constructor EH (25), empty EH (25) and runtime
 interiors (22). Logs use
-`.analysis/conversion-runtime-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+`.analysis/failure-format-runtime-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding conversion-runtime batch passed 237 controls across ten suites;
+its logs use `.analysis/conversion-runtime-*controls.log`.
 The preceding COMISD batch passed 215 controls across nine suites;
 its logs use `.analysis/comisd-literal-*controls.log`.
 The preceding timing batch passed 210 controls;
@@ -358,8 +374,15 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/conversion-runtime-full-audit.log` and
-`.analysis/conversion-runtime-regression-check.json`. Current runtime/caller
+are `.analysis/failure-format-runtime-full-audit.log` and
+`.analysis/failure-format-runtime-regression-check.json`. Current original and
+caller proofs are `.analysis/failure-tangent-runtime-original-review.json`,
+`.analysis/failure-format-original-identities.json` and
+`.analysis/failure-format-runtime-caller-scopes.json`. Source trials are
+`.analysis/failure-format-spell-source-trials.json`; reproducers are
+`.analysis/review-failure-tangent-runtime.py`,
+`.analysis/review-failure-format-originals.py` and
+`.analysis/review-failure-spell-trials.py`. Preceding runtime/caller
 proofs are `.analysis/conversion-runtime-original-review.json`,
 `.analysis/conversion-runtime-profile-proof.json` and
 `.analysis/conversion-runtime-caller-scopes.json`; source trials are
@@ -409,9 +432,9 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-trial evidence is `.analysis/conversion-runtime-restored-build.log`,
-`.analysis/conversion-runtime-restored-check.json` and
-`.analysis/conversion-runtime-source-trials.json`. The current build receipt
+source-trial evidence is `.analysis/failure-format-runtime-restored-build.log`,
+`.analysis/failure-format-runtime-restored-check.json` and
+`.analysis/failure-format-spell-source-trials.json`. The current build receipt
 is fresh and incremental; source inputs equal the preceding baseline and all
 1,719 complete linked owners retain their entries/extents/raw hashes.
 The preceding music-room evidence
@@ -483,7 +506,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 322 incomplete candidates comprise 157 with unresolved fields, 128
+The 317 incomplete candidates comprise 150 with unresolved fields, 130
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.

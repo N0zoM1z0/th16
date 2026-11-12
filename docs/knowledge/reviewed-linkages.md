@@ -27,6 +27,11 @@ the complete 887-byte code and 130-byte data contributions behind two fixed
 internal CALL entries. The ordinary 206-byte `__except1` identity is also
 reviewed. These bindings grant no primary credit to runtime code or data.
 
+The subsequent [failure/tangent and short-format review](failure-tangent-runtime.md)
+adds two complete ordinary runtime identities and three fixed string PUSHes.
+Five whole source candidates pass; the spell-page and full ANM-load extent
+refusals remain explicit. Existing admission and normalization rules are unchanged.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

@@ -1797,3 +1797,46 @@ evidence is `.analysis/conversion-runtime-source-trials.json`,
 `.analysis/conversion-runtime-regression-check.json` and
 `.analysis/conversion-runtime-controls-summary.json`. Source-origin review
 remains open, Factory acceptance remains unsubmitted and nothing is published.
+
+## Failure, tangent and short-format identities
+
+Independent complete original review establishes the 12-byte range-check
+failure entry and 605-byte precise tangent entry. Candidate owners remain
+complete at 12/624 bytes from pinned Microsoft producers; the differing
+tangent extents are explicit and confer no callee exact-code credit. Fixed
+original PUSHes also establish complete `%s`, space and underscore storage,
+with unique full candidate PDB extents and NUL-terminated payloads. No
+admission or normalization rule changes. See
+[the complete review](failure-tangent-runtime.md).
+
+Five whole source candidates pass: tangent wrapper (23), keyboard drawing
+(394), replay-save drawing (997), LZSS initialization (68) and ANM entry
+loading (247), adding **1,729 exact primary bytes**. Canonical replay reports
+**833 exact, 65 mismatch and 317 incomplete**, covering 150,443 exact primary
+bytes and 898 units. All 828 previous exact results, 65 complete mismatches
+and 893 previous units remain retained. All **239 controls across ten suites**
+pass; reviewed-linkage controls increase to 36.
+
+The complete spell-page original is independently reviewed at 1,011 bytes,
+including its terminal INT3 and excluding thirteen subsequent padding bytes.
+Baseline source owns 1,016 bytes. Retaining the digit remainder until argument
+lookup gives 1,012; adding a used character-base pointer gives 994. Both are
+complete extent refusals and are rejected. All changed linked owners, including
+1,231 records for the second trial, retain full old/new payloads, producers,
+fields and relocations in the evidence. No unequal prefix receives credit.
+MainMenuStates.cpp is restored byte for byte and freshly rebuilt; all 1,719
+complete linked owner entries/extents/raw hashes and 192 dependency stamps
+validate against baseline. No clean build or archived-output substitution occurs.
+ANM load retains an independently complete 430-byte original against 461.
+
+Original, caller and trial evidence is
+`.analysis/failure-tangent-runtime-original-review.json`,
+`.analysis/failure-format-original-identities.json`,
+`.analysis/failure-format-runtime-caller-scopes.json` and
+`.analysis/failure-format-spell-source-trials.json`. Restoration/replay evidence
+is `.analysis/failure-format-runtime-restored-check.json`,
+`.analysis/failure-format-runtime-full-audit.log`,
+`.analysis/failure-format-runtime-regression-check.json` and
+`.analysis/failure-format-runtime-controls-summary.json`. Full baseline/trial
+sets and reproducers remain local. Source-origin review remains open, Factory
+acceptance remains unsubmitted and nothing is published.

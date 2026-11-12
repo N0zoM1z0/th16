@@ -73,3 +73,8 @@ __real@3ff0000000000000,0x494540,8,literal,6c3c396ed6b5c36dcae172271f462051b1266
 __real@0000000000000000,0x4943c8,8,literal,af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc,0x42dbf2,comisd,docs/knowledge/comisd-literal-identities.md,,
 __real@3ff8000000000000,0x494550,8,literal,e163f8cb0f7067a7fc78ca859a77f849aea3214f38fb75b884e4a16be725c905,0x45ac95,comisd,docs/knowledge/comisd-literal-identities.md,,
 __except1,0x4861db,206,runtime-function,5816e89297aeccc9d274cb6becd81d8963596986567b811d6e621fed5fe0e83c,,,docs/knowledge/conversion-runtime.md,libucrt.lib,
+___report_rangecheckfailure,0x475058,12,runtime-function,c0a7b006eade2e3a2b317aa4acd19b29f036187d7c99525b1da228d54a6a0f8f,,,docs/knowledge/failure-tangent-runtime.md,LIBCMT.lib,
+__libm_sse2_tan_precise,0x488790,605,runtime-function,412e147245ec97d8c67f989ccb6037a68922540782d11f41f975420a16892695,,,docs/knowledge/failure-tangent-runtime.md,libucrt.lib,624
+??_C@_02DKCKIIND@?$CFs?$AA@,0x4929b0,3,string-literal,2f3a3f9b55f5df846abf81c7d13ff74998bdda8664df664173220675150020ff,0x46d12c,push,docs/knowledge/failure-tangent-runtime.md,,
+??_C@_01CLKCMJKC@?5?$AA@,0x492154,2,string-literal,869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4,0x452d55,push,docs/knowledge/failure-tangent-runtime.md,,
+??_C@_01IDAFKMJL@_?$AA@,0x4929b4,2,string-literal,090c554bb6a344300e5690ce6f80c4ef6ee6cf5bd0fef3fde87a079dee2fa70c,0x43e78d,push,docs/knowledge/failure-tangent-runtime.md,,
