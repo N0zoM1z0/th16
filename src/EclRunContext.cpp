@@ -663,9 +663,11 @@ __forceinline f32 *EclRunContext::float_arg_ptr_at(EclLocation *loc, int index)
 // Instructions below 300; the VM handles the rest (run_over_300). Each
 // instruction runs once its time has come; time counts up by speed per
 // frame and jumps set it. Case bodies follow ZUN's order in the binary.
-// Integer add/sub/mul share a result-push exit; division and remainder keep
-// their own exits. Stack slots, comparison exits and base/index register
-// order still differ; the original float_i loop keeps vm in esi.
+// Integer add/sub/mul share one result-push exit. Comparisons, integer logic,
+// bit operations and integer negation share another without clearing stack refs.
+// Division/remainder, direct pushes and decrement keep separate exits.
+// TODO: block placement, stack slots and base/index register order still differ;
+// the original float_i loop keeps vm in esi.
 // FUNCTION: TH16 0x472030
 HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
 {
@@ -679,7 +681,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     {
         if (ins->rank_mask & difficulty_mask)
         {
-            i32 arithmetic_result;
+            i32 stack_result;
             switch ((i16)ins->opcode)
             {
             case ECL_OP_NOP:
@@ -840,24 +842,24 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                arithmetic_result = a + b;
+                stack_result = a + b;
             }
             push_arithmetic_result:
-                stack.push_int(arithmetic_result);
+                stack.push_int(stack_result);
                 ins->num_stack_refs = 0;
                 goto next_instr;
             case ECL_OP_SUB:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                arithmetic_result = a - b;
+                stack_result = a - b;
                 goto push_arithmetic_result;
             }
             case ECL_OP_MUL:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                arithmetic_result = a * b;
+                stack_result = a * b;
                 goto push_arithmetic_result;
             }
             case ECL_OP_DIV:
@@ -914,133 +916,135 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a == b);
-                goto next_instr;
+                stack_result = a == b;
             }
+            push_expression_result:
+                stack.push_int(stack_result);
+                goto next_instr;
             case ECL_OP_NEQ:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a != b);
-                goto next_instr;
+                stack_result = a != b;
+                goto push_expression_result;
             }
             case ECL_OP_LESS:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a < b);
-                goto next_instr;
+                stack_result = a < b;
+                goto push_expression_result;
             }
             case ECL_OP_LEQ:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a <= b);
-                goto next_instr;
+                stack_result = a <= b;
+                goto push_expression_result;
             }
             case ECL_OP_GREATER:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a > b);
-                goto next_instr;
+                stack_result = a > b;
+                goto push_expression_result;
             }
             case ECL_OP_GEQ:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a >= b);
-                goto next_instr;
+                stack_result = a >= b;
+                goto push_expression_result;
             }
             case ECL_OP_NOT:
-                stack.push_int(!stack.pop_int());
-                goto next_instr;
+                stack_result = !stack.pop_int();
+                goto push_expression_result;
             // Float comparisons.
             case ECL_OP_EQF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack.push_int(a == b);
-                goto next_instr;
+                stack_result = a == b;
+                goto push_expression_result;
             }
             case ECL_OP_NEQF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack.push_int(a != b);
-                goto next_instr;
+                stack_result = a != b;
+                goto push_expression_result;
             }
             case ECL_OP_LESSF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack.push_int(a < b);
-                goto next_instr;
+                stack_result = a < b;
+                goto push_expression_result;
             }
             case ECL_OP_LEQF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack.push_int(a <= b);
-                goto next_instr;
+                stack_result = a <= b;
+                goto push_expression_result;
             }
             case ECL_OP_GREATERF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack.push_int(a > b);
-                goto next_instr;
+                stack_result = a > b;
+                goto push_expression_result;
             }
             case ECL_OP_GEQF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack.push_int(a >= b);
-                goto next_instr;
+                stack_result = a >= b;
+                goto push_expression_result;
             }
             case ECL_OP_NOTF:
-                stack.push_int(stack.pop_float() == 0.0f);
-                goto next_instr;
+                stack_result = stack.pop_float() == 0.0f;
+                goto push_expression_result;
             // Logic and bit operations.
             case ECL_OP_OR:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a || b);
-                goto next_instr;
+                stack_result = a || b;
+                goto push_expression_result;
             }
             case ECL_OP_AND:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a && b);
-                goto next_instr;
+                stack_result = a && b;
+                goto push_expression_result;
             }
             case ECL_OP_XOR:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a ^ b);
-                goto next_instr;
+                stack_result = a ^ b;
+                goto push_expression_result;
             }
             case ECL_OP_BIT_OR:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a | b);
-                goto next_instr;
+                stack_result = a | b;
+                goto push_expression_result;
             }
             case ECL_OP_BIT_AND:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a & b);
-                goto next_instr;
+                stack_result = a & b;
+                goto push_expression_result;
             }
             // Negation.
             case ECL_OP_NEG:
-                stack.push_int(-stack.pop_int());
-                goto next_instr;
+                stack_result = -stack.pop_int();
+                goto push_expression_result;
             case ECL_OP_NEGF:
                 stack.push_float(-stack.pop_float());
                 goto next_instr;

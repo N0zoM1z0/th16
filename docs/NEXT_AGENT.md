@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after ECL integer result exits and live Boss async cleanup work.
+Updated 2026-11-12 after shared ECL expression exits and floating-negation guards.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,17 +11,17 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation recovers shared add/subtract/multiply result exits in the large ECL
-interpreter and verifies live async cleanup across Boss time/life transitions.
-The preceding curve and Boss source work is retained. No new exact credit is claimed.
+continuation recovers the common result exit for 20 ECL expression handlers,
+while retaining distinct arithmetic metadata behavior and floating negation.
+The preceding curve, Boss and async source work is retained. No new exact credit is claimed.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`55d8af3d1b0dd73b97170346069ce664f35f8df125a4fa6031514f7b8b0bbe85`.
-PDB age is **273**. The final incremental build, strict replay and progress check
+`0dd36c03a6cba531ccff7352c69de0ad2bf2c7b9f493525aa184907fcc5fe65d`.
+PDB age is **277**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves
 the current incremental build, target, canonical report, Wine prefix, Ghidra
 project and pinned reference.
@@ -30,6 +30,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [ECL expression exits](knowledge/ecl-expression-result-exits.md) | One result exit for 20 handlers; complete interpreter 7,370 to 6,950 bytes; 3,457 complete calls and 360 prefixes agree; wrong floating-negation draft rejected |
 | [ECL integer exits and live async cleanup](knowledge/ecl-integer-exits-and-boss-async.md) | Three-handler shared result push; interpreter 7,462 to 7,370 bytes; 1,192 complete Boss/ECL calls and 360 live-head prefixes agree; no new exact credit |
 | [Curve elapsed time and integration](knowledge/curve-laser-elapsed-and-loop.md) | Original loop accumulator registers and acceleration operands; 372 historical differences removed in 1,488 complete calls; both owners remain incomplete |
 | [Curve laser vectors and speed](knowledge/curve-laser-vectors-and-speed.md) | Original X multiplication/addition and speed accumulator operands; 216 historical output differences removed in 768 complete cases; both owners remain incomplete |
@@ -50,6 +51,60 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [ECL expression result exits](knowledge/ecl-expression-result-exits.md) first.
+The starting checkpoint is `73643b8`. Twenty comparison, logic, bit-operation
+and integer-negation handlers now share one result push. A single integer scratch
+value feeds it and the separate add/subtract/multiply exit. Expressions preserve
+the instruction's stack-reference byte; arithmetic clears it. Direct push,
+division, remainder, decrement and floating negation retain separate exits.
+
+The complete interpreter is **6,950 bytes**, against the unchanged **7,046-byte
+provisional target span**. Do not promote that boundary or infer exactness from
+size. All 362 switch-data bytes and decoded code/padding are retained in
+`interpreter-corrected/`; every table destination/remap index is checked. The
+original and corrected candidate both use a 56-byte frame aligned to eight.
+Shared-block placement, stack slots/addressing, interpolation VM registers and
+three unbound linked fields remain. Boss statistics and restart inlining remain.
+
+Only the **corrected PDB 277** evidence is authoritative. The first batch edit
+also redirected neighboring NEG_F after its floating push, adding an unwanted
+integer item. Its 2,163-case subset missed that path; full diff review caught the
+error before commit. The corrected source restores the direct advance. All 42
+new float-negation guards agree with the original. A replay first passes the
+original, then rejects the preserved wrong image (stack offset 16 versus eight).
+The CFG guard also distinguishes one floating tag from floating-then-integer.
+`invalid-negf-image/`, initial `final-image/`, `interpreter-final/`, `*-final`
+reports and `final-regression.json` belong to the rejected **PDB 276** draft.
+
+The corrected image passes **3,457 complete native Boss/ECL calls**: 2,205 unique
+expression/guard cases, 492 arithmetic cases, 360 live-async dual phases and 400
+preceding phases. Another **360 live-head prefixes** pass. All 20 handlers have
+zero/eight metadata cases; arithmetic includes 60 new nonzero-byte cases. NaNs,
+signed zeros, infinities, fractional conversions and the float integer-precision
+boundary are modeled. Four controls reject the original on missing expressions,
+wrong metadata clearing/preservation or missing async creation. Full scripts,
+resources and general heap/leak behavior remain unproved.
+
+Strict replay preserves **885/65/265**, 169,575 exact primary bytes and 950 units,
+with no classification change. One generated upper-dispatch reason changes from
+seven to eight unbound fields. Its new field is within the unchanged 702-byte
+opcode map (offset 20,986, bytes `9f a0`), not new executable code. The complete
+old/new 21,316-byte candidate scopes, original 21,408-byte scope, all three tables
+and link-field differences are retained in `enemy-dispatch-corrected/` and the
+relink diagnostic. The Oracle refusal remains; no binding, profile or rule is
+changed. The ignored checker allows only this reviewed reason update.
+
+Preserve `.analysis/ecl-predicate-work/`, especially `corrected-image/`,
+`interpreter-corrected/`, `complete-scope-corrected/`, `enemy-dispatch-corrected/`,
+`native-*-corrected/`, `corrected-result-exits-diagnostic.json`,
+`dispatch-relink-diagnostic.json`, `corrected-negative-controls.json`, the invalid
+image/control, driver snapshots, `TRIALS.md` and `corrected-regression.json`.
+Do not overwrite the corrected driver using its retained early generator.
+Only `src/EclRunContext.cpp` is a retained game-source change. All builds are
+incremental; older broad gameplay reports retain their own image identities.
+
+### Earlier ECL integer exits and live Boss async cleanup
 
 Read [ECL integer result exits and Boss async cleanup](knowledge/ecl-integer-exits-and-boss-async.md)
 first. Starting checkpoint `aba6395` is preserved. The large interpreter now
