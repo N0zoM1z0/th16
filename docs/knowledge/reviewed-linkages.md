@@ -32,6 +32,12 @@ adds two complete ordinary runtime identities and three fixed string PUSHes.
 Five whole source candidates pass; the spell-page and full ANM-load extent
 refusals remain explicit. Existing admission and normalization rules are unchanged.
 
+The subsequent [season-table linkage review](season-name-linkage.md) makes the
+existing annotated readonly table externally linked, preserving all complete
+function bytes while providing its named typed identity. A fixed 58.0f read
+and complete 104-byte unsigned-division identity resolve two further whole
+menu-drawing candidates without changing admission rules.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

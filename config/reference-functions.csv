@@ -858,12 +858,12 @@ address,name,source_file,symbol,result,reason,evidence
 0x00451560,TitleInf::load_replay_list,src/MainMenuStates.cpp,?load_replay_list@TitleInf@@SAXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00451740,TitleInf::replay_list_thread,src/MainMenu.cpp,?replay_list_thread@TitleInf@@SAIPAX@Z,exact,,.analysis/reference-audit.json
 0x00451750,TitleInf::do_replay_menu,src/MainMenuStates.cpp,?do_replay_menu@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00451D50,TitleInf::on_draw__replay,src/MainMenuStates.cpp,?on_draw__replay@TitleInf@@QAEHXZ,incomplete,13 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00451D50,TitleInf::on_draw__replay,src/MainMenuStates.cpp,?on_draw__replay@TitleInf@@QAEHXZ,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00452330,TitleInf::do_player_data,src/MainMenuStates.cpp,?do_player_data@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00452C30,TitleInf::draw_spell_card_page,src/MainMenuStates.cpp,?draw_spell_card_page@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00453030,TitleInf::on_draw__player_data,src/MainMenuStates.cpp,?on_draw__player_data@TitleInf@@QAEHXZ,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00453030,TitleInf::on_draw__player_data,src/MainMenuStates.cpp,?on_draw__player_data@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004532F0,TitleInf::do_score_name_entry,src/MainMenuStates.cpp,?do_score_name_entry@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004538B0,TitleInf::on_draw__score_name_entry,src/MainMenuStates.cpp,?on_draw__score_name_entry@TitleInf@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004538B0,TitleInf::on_draw__score_name_entry,src/MainMenuStates.cpp,?on_draw__score_name_entry@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00453C10,TitleInf::do_replay_save,src/MainMenuStates.cpp,?do_replay_save@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004541B0,TitleInf::on_draw__replay_save,src/MainMenuStates.cpp,?on_draw__replay_save@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004545A0,TitleInf::do_manual,src/MainMenuStates.cpp,?do_manual@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json

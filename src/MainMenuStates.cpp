@@ -1485,7 +1485,7 @@ HARNESS_CALLED i32 TitleInf::on_draw__spell_practice_histories()
 // Name tables of the replay lists. The short ones are defined with the
 // pause menu's replay list (PauseMenu.cpp).
 // GLOBAL: TH16 0x4918c0
-const char *const g_season_names[5] = {"Spring", "Summer", "Autumn", "Winter", "Full  "};
+extern const char *const g_season_names[5] = {"Spring", "Summer", "Autumn", "Winter", "Full  "};
 // GLOBAL: TH16 0x491950
 const char *const g_difficulty_names[6] = {"Easy   ", "Normal ", "Hard   ", "Lunatic", "Extra  ", "O.D.   "};
 extern const char *g_chara_names_short[4];

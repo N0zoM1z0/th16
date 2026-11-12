@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after runtime/format identities and spell-page source trials.
+Updated 2026-11-12 after explicit season-table linkage and two menu drawing passes.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,21 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **833 exact, 65 mismatch and 317 incomplete** among
-1215 annotated candidates, covering 150,443 exact owned bytes and 898 units.
+The current report is **835 exact, 65 mismatch and 315 incomplete** among
+1215 annotated candidates, covering 152,002 exact owned bytes and 900 units.
+The annotated readonly season-name table now has explicit external linkage,
+preserving its bytes while providing a unique public and complete 20-byte
+PDB global type. All five strings and five pointer relocations match the
+original. A fixed 58.0f read and complete unsigned-division identity resolve
+the remaining fields of player-data drawing (698) and score-name drawing
+(861), adding 1,559 exact primary bytes. All 833 prior exact results,
+65 complete mismatches and 898 units remain retained; two new units give 900.
+All 1,719 complete function entries/extents/raw hashes remain unchanged and
+all 192 incremental dependency stamps validate. No admission-rule changes
+occur. See [season-table linkage](knowledge/season-name-linkage.md).
+
+The preceding failure/format checkpoint reported 833 exact, 65 mismatch and
+317 incomplete, covering 150,443 exact owned bytes and 898 units.
 Complete range-check/tangent runtime identities and fixed `%s`/space/underscore
 PUSHes resolve five whole source candidates: tangent wrapper (23), keyboard
 drawing (394), replay-save drawing (997), LZSS initialization (68) and ANM
@@ -247,14 +260,15 @@ inventory-only, has not been activated on the live service, and no Truth Kernel
 acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
-cache and non-LTCG symbol-discovery cache are retained. The retained source
-change is one used replay-slot local in PauseMenu.cpp. The latest spell-page
-trials and preceding GameWindow/Bullet/Player trials are restored byte for byte.
-Source input identity equals the baseline checkpoint, including that retained PauseMenu
-change. All 1,719 complete linked owner entries/extents/payloads remain
+cache and non-LTCG symbol-discovery cache are retained. Retained source changes
+include the used replay-slot local in PauseMenu.cpp and explicit external
+linkage for the existing readonly season-name table in MainMenuStates.cpp.
+The preceding spell-page, GameWindow, Bullet and Player function trials remain
+restored. The current source input differs from the preceding baseline only
+by the season-table linkage definition. All 1,719 complete linked owner entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/failure-format-runtime-restored-check.json`. The preceding callback
+`.analysis/season-name-linkage-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -314,12 +328,14 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **239 controls across ten relevant suites**:
+The current batch passes **246 controls across eleven relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
 (36), focused audit (3), constructor EH (25), empty EH (25) and runtime
-interiors (22). Logs use
-`.analysis/failure-format-runtime-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+interiors (22) and PDB types (7). Logs use
+`.analysis/season-name-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+The preceding failure/format batch passed 239 controls across ten suites;
+its logs use `.analysis/failure-format-runtime-*controls.log`.
 The preceding conversion-runtime batch passed 237 controls across ten suites;
 its logs use `.analysis/conversion-runtime-*controls.log`.
 The preceding COMISD batch passed 215 controls across nine suites;
@@ -374,8 +390,15 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/failure-format-runtime-full-audit.log` and
-`.analysis/failure-format-runtime-regression-check.json`. Current original and
+are `.analysis/season-name-full-audit.log` and
+`.analysis/season-name-regression-check.json`. Current original/caller proofs
+are `.analysis/season-name-original-review.json`,
+`.analysis/season-menu-player-original-scope.json`,
+`.analysis/season-menu-division-review.json` and
+`.analysis/season-name-caller-scopes.json`. The retained source declaration,
+complete typed table and incremental graph are checked in
+`.analysis/season-name-linkage-check.json`, reproduced by
+`.analysis/check-season-name-linkage.py`. Preceding original and
 caller proofs are `.analysis/failure-tangent-runtime-original-review.json`,
 `.analysis/failure-format-original-identities.json` and
 `.analysis/failure-format-runtime-caller-scopes.json`. Source trials are
@@ -432,11 +455,13 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-trial evidence is `.analysis/failure-format-runtime-restored-build.log`,
+source-linkage evidence is `.analysis/season-name-linkage-build.log` and
+`.analysis/season-name-linkage-check.json`. The current source input includes
+the retained season-table declaration; all complete function bytes remain
+unchanged. Preceding source-trial evidence is `.analysis/failure-format-runtime-restored-build.log`,
 `.analysis/failure-format-runtime-restored-check.json` and
-`.analysis/failure-format-spell-source-trials.json`. The current build receipt
-is fresh and incremental; source inputs equal the preceding baseline and all
-1,719 complete linked owners retain their entries/extents/raw hashes.
+`.analysis/failure-format-spell-source-trials.json`. That restoration used a
+fresh incremental receipt before the current declaration change.
 The preceding music-room evidence
 remains `.analysis/music-room-restored-build.log`,
 `.analysis/menu-literal-restored-context-check.json` and
@@ -506,7 +531,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 317 incomplete candidates comprise 150 with unresolved fields, 130
+The 315 incomplete candidates comprise 148 with unresolved fields, 130
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.

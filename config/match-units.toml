@@ -14420,6 +14420,100 @@ linkages = [
   { offset = 1, width = 4, type = "REL32", symbol = "?load_replay_list@TitleInf@@SAXXZ", target = 4527456, addend = 0 },
 ]
 
+[units.reference-00453030]
+artifact_kind = "linked-pe"
+source = "src/MainMenuStates.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw__player_data@TitleInf@@QAEHXZ"
+object = "MainMenuStates.obj"
+candidate_address = 4547552
+target_address = 4534320
+size = 698
+compare_size = 698
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 28, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 42, width = 4, type = "DIR32", symbol = "__real@43200000", target = 4802128, addend = 0 },
+  { offset = 115, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 155, width = 4, type = "REL32", symbol = "__localtime64", target = 4694890, addend = 0 },
+  { offset = 188, width = 4, type = "DIR32", symbol = "?g_stage_names@@3PAPBDA", target = 4790560, addend = 0 },
+  { offset = 199, width = 4, type = "DIR32", symbol = "?g_season_names@@3QBQBDB", target = 4790464, addend = 0 },
+  { offset = 240, width = 4, type = "DIR32", symbol = "??_C@_0DK@KNPDDLBJ@?$CF2d?5?5?$CFs?5?5?$CF9ld?$CFd?5?5?$CF?44d?1?$CF?42d?1?$CF?42d?5@", target = 4797364, addend = 0 },
+  { offset = 250, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 255, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 299, width = 4, type = "DIR32", symbol = "??_C@_0DJ@MFLBDMMJ@?$CF2d?5?5?$CFs?5?5?$CF9ld?$CFd?5?5?9?9?9?9?1?9?9?1?9?9?5?9?9?3?9@", target = 4797424, addend = 0 },
+  { offset = 309, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 326, width = 4, type = "DIR32", symbol = "__real@41900000", target = 4802020, addend = 0 },
+  { offset = 341, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 378, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 424, width = 4, type = "DIR32", symbol = "??_C@_07NOKGIHLK@?5?5?5?5?$CF5d?$AA@", target = 4797484, addend = 0 },
+  { offset = 431, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 446, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 476, width = 4, type = "REL32", symbol = "__aulldiv", target = 4748976, addend = 0 },
+  { offset = 491, width = 4, type = "REL32", symbol = "__aulldiv", target = 4748976, addend = 0 },
+  { offset = 510, width = 4, type = "REL32", symbol = "__aulldiv", target = 4748976, addend = 0 },
+  { offset = 584, width = 4, type = "DIR32", symbol = "??_C@_0BE@DKGPHHKD@?$CF3lld?3?$CF?42lld?3?$CF?42lld?$AA@", target = 4797492, addend = 0 },
+  { offset = 594, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 599, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 624, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 642, width = 4, type = "DIR32", symbol = "??_C@_07NOKGIHLK@?5?5?5?5?$CF5d?$AA@", target = 4797484, addend = 0 },
+  { offset = 649, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 654, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 662, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+]
+
+[units.reference-004538b0]
+artifact_kind = "linked-pe"
+source = "src/MainMenuStates.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_draw__score_name_entry@TitleInf@@QAEHXZ"
+object = "MainMenuStates.obj"
+candidate_address = 4549712
+target_address = 4536496
+size = 861
+compare_size = 861
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 26, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 36, width = 4, type = "DIR32", symbol = "__real@43200000", target = 4802128, addend = 0 },
+  { offset = 46, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 137, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 143, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 157, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 175, width = 4, type = "REL32", symbol = "__localtime64", target = 4694890, addend = 0 },
+  { offset = 211, width = 4, type = "DIR32", symbol = "?g_stage_names@@3PAPBDA", target = 4790560, addend = 0 },
+  { offset = 222, width = 4, type = "DIR32", symbol = "?g_season_names@@3QBQBDB", target = 4790464, addend = 0 },
+  { offset = 266, width = 4, type = "DIR32", symbol = "??_C@_0DK@KNPDDLBJ@?$CF2d?5?5?$CFs?5?5?$CF9ld?$CFd?5?5?$CF?44d?1?$CF?42d?1?$CF?42d?5@", target = 4797364, addend = 0 },
+  { offset = 276, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 281, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 332, width = 4, type = "DIR32", symbol = "??_C@_0DJ@MFLBDMMJ@?$CF2d?5?5?$CFs?5?5?$CF9ld?$CFd?5?5?9?9?9?9?1?9?9?1?9?9?5?9?9?3?9@", target = 4797424, addend = 0 },
+  { offset = 342, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 364, width = 4, type = "DIR32", symbol = "__real@41900000", target = 4802020, addend = 0 },
+  { offset = 401, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 442, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 451, width = 4, type = "DIR32", symbol = "??_C@_02DKCKIIND@?$CFs?$AA@", target = 4794800, addend = 0 },
+  { offset = 492, width = 4, type = "DIR32", symbol = "__real@43200000", target = 4802128, addend = 0 },
+  { offset = 502, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 529, width = 4, type = "DIR32", symbol = "__real@42680000", target = 4802076, addend = 0 },
+  { offset = 547, width = 4, type = "DIR32", symbol = "__real@41100000", target = 4801988, addend = 0 },
+  { offset = 557, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 565, width = 4, type = "DIR32", symbol = "??_C@_01IDAFKMJL@_?$AA@", target = 4794804, addend = 0 },
+  { offset = 582, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 590, width = 4, type = "DIR32", symbol = "__real@43540000", target = 4802156, addend = 0 },
+  { offset = 599, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 624, width = 4, type = "DIR32", symbol = "__real@43b40000", target = 4802200, addend = 0 },
+  { offset = 684, width = 4, type = "DIR32", symbol = "?g_name_entry_chars@@3QBDB", target = 4794432, addend = 0 },
+  { offset = 712, width = 4, type = "DIR32", symbol = "??_C@_02HAOIJKIC@?$CFc?$AA@", target = 4794808, addend = 0 },
+  { offset = 722, width = 4, type = "REL32", symbol = "?create_stringf@AsciiInf@@QAAXPAUD3DXVECTOR3@@PBDZZ", target = 4227680, addend = 0 },
+  { offset = 755, width = 4, type = "DIR32", symbol = "__real@43540000", target = 4802156, addend = 0 },
+  { offset = 778, width = 4, type = "DIR32", symbol = "__real@41800000", target = 4802016, addend = 0 },
+  { offset = 803, width = 4, type = "DIR32", symbol = "__real@41900000", target = 4802020, addend = 0 },
+  { offset = 825, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 835, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+]
+
 [units.reference-004541b0]
 artifact_kind = "linked-pe"
 source = "src/MainMenuStates.cpp"

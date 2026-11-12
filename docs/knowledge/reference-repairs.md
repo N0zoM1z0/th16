@@ -1840,3 +1840,44 @@ is `.analysis/failure-format-runtime-restored-check.json`,
 `.analysis/failure-format-runtime-controls-summary.json`. Full baseline/trial
 sets and reproducers remain local. Source-origin review remains open, Factory
 acceptance remains unsubmitted and nothing is published.
+
+## Explicit season-table linkage and complete menu drawing
+
+The existing annotated readonly season-name array lacked an external
+declaration and therefore had internal C++ linkage. Its anonymous CIL storage
+provided no named PDB global for the ordinary annotation rules. The definition
+now explicitly uses extern, preserving its const type, five initializers,
+20 raw table bytes and all complete function code. The table gains one public
+from MainMenuStates.obj and one complete 20-byte PDB array type. No separate
+20-byte PDB section contribution is claimed. See
+[the source and table review](season-name-linkage.md).
+
+Independent original review checks all five pointers and complete strings,
+the indexed table PUSH in the 861-byte score-name drawing owner, and the fixed
+58.0f ADDSS read. The complete 104-byte unsigned-division owner from pinned
+LIBCMT equals the original raw bytes; its three original CALL witnesses occur
+inside the complete 698-byte player-data drawing owner. Table data and runtime
+helpers receive no additional primary credit. Admission and normalization
+rules remain unchanged.
+
+Both complete source callers pass, adding **1,559 exact primary bytes**.
+Canonical replay reports **835 exact, 65 mismatch and 315 incomplete**,
+covering 152,002 exact primary bytes and 900 units. All 833 previous exact
+results, 65 complete mismatches and 898 previous units remain retained.
+All **246 controls across eleven suites** pass, including seven relevant
+PDB-type controls. Existing numeric/runtime mutations cover the new literal
+and both complete division extents.
+
+The retained source declaration is freshly built incrementally. All 1,719
+complete linked owner entries/extents/raw hashes remain identical to baseline;
+current artifact hashes and all 192 dependency stamps validate. No clean build
+or archived-output substitution occurs. Original/caller/table evidence is
+`.analysis/season-name-original-review.json`,
+`.analysis/season-menu-player-original-scope.json`,
+`.analysis/season-menu-division-review.json`,
+`.analysis/season-name-caller-scopes.json` and
+`.analysis/season-name-linkage-check.json`. Canonical/regression/control
+evidence is `.analysis/season-name-full-audit.log`,
+`.analysis/season-name-regression-check.json` and
+`.analysis/season-name-controls-summary.json`. Source-origin review remains
+open; Factory acceptance remains unsubmitted and nothing is published.

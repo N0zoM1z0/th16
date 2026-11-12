@@ -78,3 +78,5 @@ __libm_sse2_tan_precise,0x488790,605,runtime-function,412e147245ec97d8c67f989ccb
 ??_C@_02DKCKIIND@?$CFs?$AA@,0x4929b0,3,string-literal,2f3a3f9b55f5df846abf81c7d13ff74998bdda8664df664173220675150020ff,0x46d12c,push,docs/knowledge/failure-tangent-runtime.md,,
 ??_C@_01CLKCMJKC@?5?$AA@,0x492154,2,string-literal,869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4,0x452d55,push,docs/knowledge/failure-tangent-runtime.md,,
 ??_C@_01IDAFKMJL@_?$AA@,0x4929b4,2,string-literal,090c554bb6a344300e5690ce6f80c4ef6ee6cf5bd0fef3fde87a079dee2fa70c,0x43e78d,push,docs/knowledge/failure-tangent-runtime.md,,
+__real@42680000,0x49461c,4,literal,43434cefabebc41dc208f0dd4f005745a600197d5ace5312d9696dbc0eb8243c,0x453abd,addss,docs/knowledge/season-name-linkage.md,,
+__aulldiv,0x4876b0,104,runtime-function,84d17e172ff5e6bce23b7837cc15439649f685d00b3cdff9cc07cae79a0a88f2,,,docs/knowledge/season-name-linkage.md,LIBCMT.lib,

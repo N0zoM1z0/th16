@@ -76,7 +76,8 @@ class ReviewedLinkageControls(unittest.TestCase):
                 ("__real@41f00000", 0x42640c, 0x4917ec, 4),
                 ("__real@40200000", 0x443a56, 0x49457c, 4),
                 ("__real@43300000", 0x40f501, 0x490254, 4),
-                ("__real@44000000", 0x442649, 0x494868, 4)]:
+                ("__real@44000000", 0x442649, 0x494868, 4),
+                ("__real@42680000", 0x453abd, 0x491ec4, 4)]:
             mutations = [("witness_instruction", hex(witness + 1)),
                          ("witness_instruction", "0x454970"),
                          ("witness_mnemonic", "subss"), ("size", str(size * 2)),
@@ -237,7 +238,8 @@ class ReviewedLinkageControls(unittest.TestCase):
 
     def test_runtime_identity_requires_the_full_candidate_extent(self):
         for symbol, truncated_size in [("__libm_sse2_sqrt_precise", 254),
-                                       ("__chkstk", 44), ("__beginthreadex", 132)]:
+                                       ("__chkstk", 44), ("__beginthreadex", 132),
+                                       ("__aulldiv", 103)]:
             with self.subTest(symbol=symbol):
                 rows = copy.deepcopy(self.rows)
                 next(r for r in rows if r["symbol"] == symbol)["candidate_size"] = str(truncated_size)
@@ -245,7 +247,7 @@ class ReviewedLinkageControls(unittest.TestCase):
                     self.check_rows(rows)
 
     def test_runtime_identity_requires_the_full_target_extent(self):
-        for symbol in ["__libm_sse2_sqrt_precise", "__chkstk", "__beginthreadex"]:
+        for symbol in ["__libm_sse2_sqrt_precise", "__chkstk", "__beginthreadex", "__aulldiv"]:
             with self.subTest(symbol=symbol):
                 rows = copy.deepcopy(self.rows)
                 row = next(r for r in rows if r["symbol"] == symbol)
