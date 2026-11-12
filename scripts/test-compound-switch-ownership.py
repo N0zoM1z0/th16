@@ -5,10 +5,12 @@ import hashlib
 import struct
 import tomllib
 import unittest
+from unittest.mock import patch
 
 import capstone
 
-from strict_oracle import Context, Incomplete, ROOT
+from strict_oracle import Context, Incomplete, ROOT, replay_owner
+from linked_image import linked_code_fields
 from switch_ownership import (compound_data_parts, inspect_dispatch, inspect_switch,
                               switch_owner_size, validate_compound_record, validate_switch_owner)
 
@@ -90,6 +92,62 @@ class CompoundSwitchControls(unittest.TestCase):
                 self.assertEqual(result['result'],'exact')
                 self.assertEqual(result['compared_size'],size)
                 self.assertFalse(result['data_spans'])
+
+    def incomplete_table_decode(self):
+        unit=self.unit(0x45a450)
+        fields=linked_code_fields(self.context.image,self.context.publics,
+                                  unit['candidate_address'],unit['size'])
+        fields['decoded_bytes']=self.records[0x45a450]['code_size']
+        fields['normalization_complete']=False
+        return fields
+
+    def test_proved_data_does_not_need_executable_decoding(self):
+        # Moving table-address bytes can make Capstone stop at any data slot.
+        # Keep the actual payload, fields, relocations and ownership checks.
+        fields=self.incomplete_table_decode()
+        with patch('strict_oracle.linked_code_fields',return_value=fields):
+            result=self.context.compare(self.unit(0x45a450))
+        self.assertEqual(result['result'],'exact')
+        self.assertEqual(result['compared_size'],680)
+        self.assertEqual(result['decoded_bytes'],609)
+        self.assertFalse(result['data_spans'])
+
+    def test_compound_data_cannot_cover_a_code_decode_failure(self):
+        fields=self.incomplete_table_decode()
+        fields['decoded_bytes']-=1
+        with patch('strict_oracle.linked_code_fields',return_value=fields):
+            with self.assertRaisesRegex(Incomplete,'all executable bytes'):
+                self.context.compare(self.unit(0x45a450))
+
+    def test_unreviewed_tail_cannot_borrow_compound_coverage(self):
+        unit=self.unit(0x45a450)
+        function=next(f for f in self.context.linked['functions'] if f['symbol']==unit['symbol'])
+        context=copy.copy(self.context)
+        context.switch_owners={}
+        with patch('strict_oracle.linked_code_fields',return_value=self.incomplete_table_decode()):
+            with self.assertRaisesRegex(Incomplete,'Capstone decoded'):
+                replay_owner(self.context.image,self.context.target,self.context.publics,
+                             function,unit,ownership_context=context)
+
+    def test_compound_coverage_cannot_borrow_different_images(self):
+        unit=self.unit(0x45a450)
+        function=next(f for f in self.context.linked['functions'] if f['symbol']==unit['symbol'])
+        for side in ('image','target'):
+            context=copy.copy(self.context)
+            setattr(context,side,ImageOverlay(getattr(context,side)))
+            with self.subTest(side=side),self.assertRaisesRegex(Incomplete,'different images'):
+                replay_owner(self.context.image,self.context.target,self.context.publics,
+                             function,unit,ownership_context=context)
+
+    def test_coverage_rechecks_the_complete_original_proof(self):
+        unit=self.unit(0x45a450)
+        function=next(f for f in self.context.linked['functions'] if f['symbol']==unit['symbol'])
+        context=copy.copy(self.context)
+        context.switch_owners=copy.deepcopy(self.context.switch_owners)
+        context.switch_owners[0x45a450]['target_sha256']='0'*64
+        with self.assertRaisesRegex(Incomplete,'target extent hash'):
+            replay_owner(self.context.image,self.context.target,self.context.publics,
+                         function,unit,ownership_context=context)
 
     def test_every_target_slot_and_address_operand_requires_its_relocation(self):
         for address in (0x45a450,0x468490):

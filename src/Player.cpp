@@ -818,9 +818,8 @@ HARNESS_CALLED i32 Player::check_hit_rotated_rect(Float3 *pos, f32 angle, f32 wi
     return 1;
 }
 
-// TODO: the original walks the sources with two pointers (source and
-// &lifetime.current) and rereads pos/size from the stack; ours keeps one
-// pointer and pos/size in registers.
+// TODO: the original keeps enemy_id live across the source walk and
+// rereads pos/size from the stack. Frame alignment and block order differ.
 // FUNCTION: TH16 0x445a30
 HARNESS_CALLED i32 Player::compute_damage_to_enemy(Float3 *pos, Float3 *size, f32 rotation, f32 radius,
                                                    i32 *bomb_hit, Float3 *hit_pos, i32 no_score, i32 enemy_id)
@@ -835,14 +834,14 @@ HARNESS_CALLED i32 Player::compute_damage_to_enemy(Float3 *pos, Float3 *size, f3
     {
         *bomb_hit = total > 0 ? 1 : 0;
     }
-    for (i32 i = 0; i < PLAYER_DAMAGE_SOURCE_COUNT; i++)
+    PlayerDamageSource *source = player->inner.damage_sources;
+    for (i32 remaining = PLAYER_DAMAGE_SOURCE_COUNT; remaining > 0; remaining--, source++)
     {
-        PlayerDamageSource *source = &player->inner.damage_sources[i];
         if (!(source->flags & DAMAGE_SOURCE_ACTIVE))
         {
             continue;
         }
-        if (source->lifetime.current == source->lifetime.previous || source->lifetime.current % source->hit_interval != 0)
+        if (!source->lifetime.ticked_on_multiple_of(source->hit_interval))
         {
             continue;
         }

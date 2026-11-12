@@ -551,27 +551,11 @@ int __fastcall ecl_ext_damage_anm_hurtbox(EnemyData *enemy, int damage)
     return damage + bar_damage + circle_damage;
 }
 
-// The hit sound of a damaged enemy: quieter unless it is a boss whose
-// attack is nearly over.
-static inline void enemy_play_hit_sound(EnemyData *enemy, i32 low_life_spell, i32 low_life)
-{
-    u32 spell_flags = g_Spellcard->flags;
-    if ((enemy->flags_low & (ENEMY_FLAG_BIG_LIFE | ENEMY_FLAG_BOSS)) && (spell_flags & (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY)) != (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY) &&
-        (((spell_flags & SPELLCARD_ACTIVE) && enemy->full->enemy.life.remaining_for_cur_attack < low_life_spell) ||
-         (!(spell_flags & SPELLCARD_ACTIVE) && enemy->full->enemy.life.remaining_for_cur_attack < low_life)))
-    {
-        g_SoundManager.play_sound_at_position(SE_DAMAGE01, enemy->final_pos.pos.x);
-    }
-    else
-    {
-        g_SoundManager.play_sound_at_position(SE_DAMAGE00, enemy->final_pos.pos.x);
-    }
-}
-
 // Bomb shields, damage from the player's shots and bombs (with the life
 // and time interrupts it can trigger), collision with the player and the
 // damage flash of the main VM.
-// TODO: functionally complete; register allocation and block order differ.
+// TODO: complete-owner differences remain in frame alignment, shield
+// control flow and collision temporaries.
 // FUNCTION: TH16 0x41c330
 int EnemyData::step_logic()
 {
@@ -808,7 +792,16 @@ int EnemyData::step_logic()
             hit_flash_timer = 4;
             if (hit_sound < 0)
             {
-                enemy_play_hit_sound(this, 200, 900);
+                if ((flags_low & (ENEMY_FLAG_BIG_LIFE | ENEMY_FLAG_BOSS)) && (g_Spellcard->flags & (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY)) != (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY) &&
+                    (((g_Spellcard->flags & SPELLCARD_ACTIVE) && full->enemy.life.remaining_for_cur_attack < 200) ||
+                     (!(g_Spellcard->flags & SPELLCARD_ACTIVE) && full->enemy.life.remaining_for_cur_attack < 900)))
+                {
+                    g_SoundManager.play_sound_at_position(SE_DAMAGE01, final_pos.pos.x);
+                }
+                else
+                {
+                    g_SoundManager.play_sound_at_position(SE_DAMAGE00, final_pos.pos.x);
+                }
             }
             else
             {
@@ -817,10 +810,9 @@ int EnemyData::step_logic()
         }
         else if (time_in_ecl.current % 4 == 0)
         {
-            u32 spell_flags = g_Spellcard->flags;
-            if ((flags_low & (ENEMY_FLAG_BIG_LIFE | ENEMY_FLAG_BOSS)) && (spell_flags & (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY)) != (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY) &&
-                (((spell_flags & SPELLCARD_ACTIVE) && full->enemy.life.remaining_for_cur_attack < 100) ||
-                 (!(spell_flags & SPELLCARD_ACTIVE) && full->enemy.life.remaining_for_cur_attack < 500)))
+            if ((flags_low & (ENEMY_FLAG_BIG_LIFE | ENEMY_FLAG_BOSS)) && (g_Spellcard->flags & (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY)) != (SPELLCARD_ACTIVE | SPELLCARD_NO_BONUS_DECAY) &&
+                (((g_Spellcard->flags & SPELLCARD_ACTIVE) && full->enemy.life.remaining_for_cur_attack < 100) ||
+                 (!(g_Spellcard->flags & SPELLCARD_ACTIVE) && full->enemy.life.remaining_for_cur_attack < 500)))
             {
                 vm->color_2.d3d = 0xff0000ff;
                 vm->flags_lo = (vm->flags_lo & ~ANM_VM_COLOR_MODE_2) | ANM_VM_COLOR_MODE_1;

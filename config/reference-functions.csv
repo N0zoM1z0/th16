@@ -385,7 +385,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0041BA10,EnemyInf::~EnemyInf,src/Enemy.cpp,??1EnemyInf@@UAE@XZ,exact,,.analysis/reference-audit.json
 0x0041BB50,EnemyData::step_interpolators,src/Enemy.cpp,?step_interpolators@EnemyData@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041C1F0,EnemyData::update_final_pos,src/Enemy.cpp,?update_final_pos@EnemyData@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x0041C330,EnemyData::step_logic,src/Enemy.cpp,?step_logic@EnemyData@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0041C330,EnemyData::step_logic,src/Enemy.cpp,?step_logic@EnemyData@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041CBD0,EnemyData::update_fog,src/EnemyFog.cpp,?update_fog@EnemyData@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0041D1E0,EnemyInf::on_tick,src/Enemy.cpp,?on_tick@EnemyInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0041D2E0,EnemyData::on_tick,src/Enemy.cpp,?on_tick@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json

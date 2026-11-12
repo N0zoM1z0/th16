@@ -1,23 +1,23 @@
 # Current handoff
 
-Updated 2026-11-12 after curve laser initialization and projectile dispatch work.
+Updated 2026-11-12 after boss damage/feedback and source traversal work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
 
 ## Authoritative checkpoint
 
-The current continuation of `059efe5` adds the complete curve laser initializer
-and independently proves the elliptical drop helper. The large projectile
-dispatcher improves without exact credit; see the gameplay section below.
+The exact-credit checkpoint is `a95321e` (curve laser initialization and the
+elliptical drop helper). The current continuation recovers inline boss feedback
+and damage-source traversal without adding exact credit; see gameplay below.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`712f97f71342573da544bd597abf22153fc255316e55b63abc49e063f08c7a07`.
-PDB age is **168**. The final incremental build, strict replay and progress check
+`ad2da61dc4edd8acc9786383f25b07f16e256d9bcc67d1605446a8019135281c`.
+PDB age is **173**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -36,6 +36,39 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+`EnemyData::step_logic` at `0x0041c330` now contains the original inline
+200/900 low-life hit-sound test. Its private helper is removed, and spell flags
+are read within the boss/large-life short-circuit conditions, including the
+100/500 periodic flash test. The complete candidate is 2,196 bytes against
+2,207 original bytes; it remains incomplete. New shield pointer/state snapshots
+hoisted reads and were restored.
+
+`Player::compute_damage_to_enemy` at `0x00445a30` advances a source pointer
+with a bounded remaining count and reuses the timer's multiple-frame query.
+The candidate recovers separate source/timer pointers and grows from 735 to
+769 bytes against 774 original bytes. It remains incomplete. The timer query
+alone does not change code. Original boss logic realigns its frame while its
+damage callee does not; the candidate has the opposite arrangement. Recover
+the actual source/call context rather than forcing either alignment.
+
+Read [boss damage and hit feedback](knowledge/boss-damage-and-hit-feedback.md).
+`.analysis/boss-core-work/` retains complete original/trial scopes, game-owned
+Ghidra context, native compiler layout evidence and partial instruction
+diagnostics: 118 damage cases and 278 boss cases agree with zero faults. These
+exercise actual mapped callees, sound queuing, timers and threshold boundaries;
+no function is patched or stubbed. They grant no exact credit and leave real
+resources, shield replacement, allocation, deaths and ECL transitions untested.
+
+Relinking exposed a coverage error in the already proved 680-byte window
+procedure: Capstone stopped in its first target table, before the middle byte
+map. Replay now revalidates the existing compound code/table/relocation proof
+against the same images and requires decoding all real code, then compares
+every owned byte. It adds no owner, boundary or normalization allowance.
+All 885 prior exact results are preserved. Compound controls (26), switch
+controls (40), Oracle controls (14) and focused-audit controls (3) pass. The
+window procedure also passes standalone complete replay. Preserve the failed
+decode record and final regression evidence in `.analysis/boss-core-work/`.
 
 `LaserCurveInf::initialize` at `0x004370a0` is exact over its complete
 1,726-byte owner. The initial distance is cleared between computing and storing
@@ -72,10 +105,11 @@ Read [the boss and projectile source trials](knowledge/boss-motion-source-trials
 before retrying the enemy motion, damage, projectile corner tests or shared
 circle/wave movement. Failed forms were restored byte for byte and rebuilt
 incrementally. Their source snapshots, diagnostics and final regression record
-are in `.analysis/enemy-motion-work/`. No Oracle or compile-profile changes remain.
+are in `.analysis/enemy-motion-work/`. Those historical trials left no Oracle
+or compile-profile change; the later compound-coverage repair is described above.
 
 The unresolved substantial owners include `EnemyData::step_interpolators`
-(1,692/1,691 bytes), `EnemyData::step_logic` (2,207/2,092 baseline bytes) and
+(1,692/1,691 bytes), `EnemyData::step_logic` (2,207/2,196 bytes) and
 `Bullet::step_ex_08` (1,390/1,382 bytes). The directional animation's child mode
 is 8, whereas the common creation helper uses zero. Recover real source/type
 and calling context; do not add cookies, padding, dead arithmetic or register

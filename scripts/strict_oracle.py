@@ -420,7 +420,8 @@ def pointer_limit(context, function, field, linkages):
                 storage_name=anchor["storage_name"], storage_size=extent, pointer_limit=True)
 
 
-def replay_owner(image, target, publics, function, unit, *, eh_handlers=None, static_functions=None):
+def replay_owner(image, target, publics, function, unit, *, eh_handlers=None, static_functions=None,
+                 ownership_context=None):
     """Compare every owned byte, permitting only enumerated, bound fields."""
     candidate_address = int(function["address"], 0)
     target_address = unit["target_address"]
@@ -437,7 +438,19 @@ def replay_owner(image, target, publics, function, unit, *, eh_handlers=None, st
     occupied = {b for row in expected for b in range(row["offset"], row["offset"] + row["width"])}
     spans = expected_data_spans(unit, size, occupied)
     try:
-        require_decode_coverage(actual, spans, size)
+        record = (ownership_context.switch_owners.get(target_address)
+                  if ownership_context is not None else None)
+        if record and "dispatches" in record:
+            if ownership_context.image is not image or ownership_context.target is not target:
+                raise ValueError("compound coverage belongs to different images")
+            validate_switch_owner(ownership_context, unit, record)
+            if spans or actual["decoded_bytes"] < record["code_size"]:
+                raise ValueError("compound coverage requires all executable bytes and no declared spans")
+            # The complete code, padding, maps, target slots and relocations
+            # were proved above. Data need not decode as executable x86.
+            # Every byte still participates in the complete replay below.
+        else:
+            require_decode_coverage(actual, spans, size)
     except ValueError as error:
         raise Incomplete(str(error)) from error
     public_addresses = {}
@@ -676,7 +689,8 @@ class Context:
                        for s in self.target.sections):
                 raise Incomplete("typed target storage leaves mapped non-code data")
         result = replay_owner(self.image, self.target, self.publics, function, unit,
-                              eh_handlers=self.eh_handlers, static_functions=self.static_functions)
+                              eh_handlers=self.eh_handlers, static_functions=self.static_functions,
+                              ownership_context=self)
         if any("eh_handler" in field for field in unit["linkages"]):
             result["auxiliary_eh_owners"] = [self.eh_handlers[(unit["source"], unit["symbol"])]]
         return {**result, "symbol": unit["symbol"], "target_address": unit["target_address"],
