@@ -554,17 +554,25 @@ int __fastcall ecl_ext_damage_anm_hurtbox(EnemyData *enemy, int damage)
 // Bomb shields, damage from the player's shots and bombs (with the life
 // and time interrupts it can trigger), collision with the player and the
 // damage flash of the main VM.
-// TODO: complete-owner differences remain in frame alignment, shield
-// control flow and collision temporaries.
+// TODO: complete-owner differences remain in frame alignment and collision
+// temporaries.
 // FUNCTION: TH16 0x41c330
 int EnemyData::step_logic()
 {
-    if ((flags_low & ENEMY_FLAG_BOMBSHIELD) && (g_MainBomb->in_use == 1 || g_SubseasonBomb->in_use == 1) &&
-        !(flags_low & ENEMY_FLAG_BOMBSHIELD_UP))
+    if (flags_low & ENEMY_FLAG_BOMBSHIELD)
     {
-        anm_set_main = bombshield_on_anm_main;
-        anm_ids[0].replace_with_effect(bombshield_on_anm_main);
-        flags_low |= (ENEMY_FLAG_BOMBSHIELD_UP | ENEMY_FLAG_NO_HURTBOX);
+        if ((g_MainBomb->in_use == 1 || g_SubseasonBomb->in_use == 1) && !(flags_low & ENEMY_FLAG_BOMBSHIELD_UP))
+        {
+            anm_set_main = bombshield_on_anm_main;
+            anm_ids[0].replace_with_effect(bombshield_on_anm_main);
+            flags_low |= (ENEMY_FLAG_BOMBSHIELD_UP | ENEMY_FLAG_NO_HURTBOX);
+        }
+        else if (g_MainBomb->in_use != 1 && g_SubseasonBomb->in_use != 1 && (flags_low & ENEMY_FLAG_BOMBSHIELD_UP))
+        {
+            anm_set_main = bombshield_off_anm_main;
+            anm_ids[0].replace_with_effect(bombshield_off_anm_main);
+            flags_low &= ~(ENEMY_FLAG_BOMBSHIELD_UP | ENEMY_FLAG_NO_HURTBOX);
+        }
     }
     else if (g_MainBomb->in_use != 1 && g_SubseasonBomb->in_use != 1 && (flags_low & ENEMY_FLAG_BOMBSHIELD_UP))
     {
@@ -753,10 +761,7 @@ int EnemyData::step_logic()
                     x = c * 0.0f - s * half;
                     y = c * half + s * 0.0f;
                 }
-                D3DXVECTOR3 pos;
-                pos.x = x + final_pos.pos.x;
-                pos.y = final_pos.pos.y + y;
-                pos.z = final_pos.pos.z + 0.0f;
+                Float3 pos = final_pos.pos + Float3(x, y, 0.0f);
                 result = g_Player->check_hit_rotated_rect(&pos, rotation, hitbox_size.x, hitbox_size.y, 0);
             }
             if ((flags_low & ENEMY_FLAG_GRAZEABLE) && result == 2 && time_in_ecl.current % 6 == 0)

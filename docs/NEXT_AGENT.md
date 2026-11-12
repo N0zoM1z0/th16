@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after ECL angle and orbit initialization source work.
+Updated 2026-11-12 after Boss shield flow and collision operand source work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,16 +11,16 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation recovers angle initialization field order and vector tangent copies
-for circular/elliptical motion, with no new exact credit.
-The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
-annotations: **169,575 exact primary bytes and 950 retained units**.
+continuation recovers Boss shield control flow and collision operands. The
+complete logic owner now compares as mismatch, with no new exact credit.
+The canonical report is **885 exact, 66 mismatch, 264 incomplete** among 1,215
+annotations: **169,575 exact primary bytes and 951 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`42bebf3e6fc8c3adb07cd7a422912ae2792c4188f71a842da1e63a27e23927b9`.
-PDB age is **205**. The final incremental build, strict replay and progress check
+`63cfdc1769d7404dc72afbdb9cb0d7903159eb2d65f3c285d9f923ad9f6cacf2`.
+PDB age is **216**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -28,6 +28,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Boss shield flow and collision operands](knowledge/boss-shield-and-collision-operands.md) | Complete 2,207-byte logic owner now compares as mismatch; shield flow recovered, 27 historical collision payload failures removed; no new exact credit |
 | [ECL angle and orbit initialization](knowledge/ecl-angle-and-orbit-initialization.md) | Original angle field order and vector tangent copies; 744 angle and 768 orbit complete calls agree; dispatcher remains incomplete |
 | [ECL coordinate evaluation](knowledge/ecl-coordinate-evaluation.md) | Original coordinate getter/read sequence and animation X operand order; 18 historical NaN-payload failures now agree; complete dispatcher remains incomplete |
 | [ECL position and spell names](knowledge/ecl-position-and-spell-name.md) | Shared interpolation finish, forward destination traversal and both difficulty tables; candidate 21,586 to 21,384 bytes against 21,408 original bytes, still incomplete |
@@ -43,15 +44,62 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [ECL angle and orbit initialization](knowledge/ecl-angle-and-orbit-initialization.md)
-first. Instructions 441/443 now retain end time, method, zero tangents, initial,
+Read [Boss shield flow and collision operands](knowledge/boss-shield-and-collision-operands.md)
+first. `EnemyData::step_logic` now uses nested shield conditions. Compiler common
+expression elimination recovers the original main-state reuse, subseason reads
+and merged disable path. A 156-byte internal source-shape diagnostic agrees
+using existing linked identities; it is not an independent exact owner.
+
+The retained collision position is `final_pos.pos + Float3(x, y, 0.0f)`. In the
+final combined source, this keeps the original X floating operands and removes
+all 27 historical NaN-payload failures. An explicit branch-local bomb-state
+snapshot recovered the shield shape but reintroduced those failures. Preserve
+`combined-first/`; do not reuse its failed report as final evidence. The retained
+nested condition has no explicit snapshot.
+
+The complete logic candidate grows from 2,196 to **2,207 bytes**, equal to the
+independent original extent. The strict Oracle decodes and compares all 2,207
+bytes and existing linked fields: **mismatch**, not exact. This replaces its
+former incomplete result and adds comparison unit `reference-0041c330`; totals
+are now 885 exact / 66 mismatch / 264 incomplete and 951 units. No original extent,
+binding, normalization or comparison rule changes. Frame alignment and other
+instruction differences remain; equal extents are not a near-exactness measure.
+The existing boundary row is now `strict-compared`, with unchanged geometry.
+
+`Player::compute_damage_to_enemy` uses a zero-tested bounded count, recovering
+the original JNE instead of JG. It remains 769/774 bytes and incomplete. The
+original logic realigns its frame while its damage callee does not; the candidate
+still has the opposite arrangement. Do not force either frame.
+
+The same final image passes **648 complete native calls** (278 Boss, 118 damage,
+126 collision and 126 shield cases without transitions) and **204 prefixes**
+(126 collision, 78 shield transitions). Complete calls include real collision
+helpers and independent state expectations. Shield prefixes stop before animation
+replacement, so resource startup, effects and allocation remain untested. The
+full collision cases use the compiler-probed dead Player state to avoid death
+resources. Due ECL transitions and whole Boss scripts remain outside the fixtures.
+
+Keep `.analysis/boss-flow-work/`, especially `final-image/`, `complete-scope/`,
+`final-regression.json`, native reports, model/enum probes, rejected forms and
+prefix-chain controls. New no-frame prefix mode 5 requires an unchanged exception
+chain; existing mode 4 retains its SEH-frame guard. The first reused ECL-host
+smoke refused the Boss frame and is invalid. Final controls accept an ECL prefix
+in mode 4 and refuse it in mode 5. All 885 prior exact owners and 169,575 exact
+primary bytes are preserved; source-origin review remains open and Factory
+acceptance is not submitted.
+
+### Earlier ECL work
+
+For the preceding `52ec72d` checkpoint, read
+[ECL angle and orbit initialization](knowledge/ecl-angle-and-orbit-initialization.md).
+Instructions 441/443 retain end time, method, zero tangents, initial,
 goal and reset in the original order. The delta remains a separate value;
 overwriting the angle changed floating operands and write order and was restored.
 Circular/elliptical initialization now copies complete tangent vectors, recovering
 integer copies from live `g_zero_vec2`. The compiler still merges reads and
 reorders other initialization writes differently from the original.
 
-The final image passes **744 angle**, **768 orbit**, **1,157 movement**,
+The `52ec72d` image passes **744 angle**, **768 orbit**, **1,157 movement**,
 **108 difficulty** and **612 lookup** complete paired calls, plus **140 spell**
 and **42 animation** prefixes and a prefix negative control. The new independent
 state models check timer initialization, modes, sentinel fallback and final
@@ -59,9 +107,9 @@ coordinates. Raw special-value angle goals use the unmodified original as the
 bit-pattern reference. Orbit geometry starts with finite zero angles; subsequent
 interpolation frames and full Boss scripts remain untested.
 
-The complete packet is **21,408 original / 21,316 candidate bytes**, with all
-three tables, 182 target slots and the 702-byte map. Smaller size is not exact
-credit. The frame is now **`0x478` original / `0x498` candidate**, eight bytes
+At that checkpoint, the complete packet is **21,408 original / 21,316 candidate
+bytes**, with all three tables, 182 target slots and the 702-byte map. Smaller size is not exact
+credit. Its frame is **`0x478` original / `0x498` candidate**, eight bytes
 larger than the previous candidate frame; register and lifetime work remains.
 Preserve `.analysis/ecl-angle-work/`, especially `final-image/`, `complete-scope/`,
 `final-regression.json`, rejected forms and native fixtures. Its `before-comment/`
@@ -74,7 +122,7 @@ The isolated full replay preserves all 885 exact owners and classifications,
 Factory acceptance is not submitted. The Oracle still refuses the dispatcher;
 no binding, boundary or comparison rule changes.
 
-The current refusal lists seven unbound fields: EH handler, four `g_zero_vec2`
+That ECL refusal lists seven unbound fields: EH handler, four `g_zero_vec2`
 references, private sin/cos helper and BossDead literal. The previous count of
 ten included six vector references and an incidental decode inside the map;
 the reduction does not establish any new identity. The original store between

@@ -6427,6 +6427,83 @@ linkages = [
   { offset = 131, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
 ]
 
+[units.reference-0041c330]
+artifact_kind = "linked-pe"
+source = "src/Enemy.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?step_logic@EnemyData@@QAEHXZ"
+object = "Enemy.obj"
+candidate_address = 4362528
+target_address = 4309808
+size = 2207
+compare_size = 2207
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 4, width = 4, type = "DIR32", symbol = "?g_MainBomb@@3PAVBombInf@@A", target = 4877736, addend = 0 },
+  { offset = 34, width = 4, type = "DIR32", symbol = "?g_SubseasonBomb@@3PAVBombInf@@A", target = 4877732, addend = 0 },
+  { offset = 77, width = 4, type = "REL32", symbol = "?replace_with_effect@AnmId@@QAEXH@Z", target = 4650048, addend = 0 },
+  { offset = 107, width = 4, type = "DIR32", symbol = "?g_SubseasonBomb@@3PAVBombInf@@A", target = 4877732, addend = 0 },
+  { offset = 145, width = 4, type = "REL32", symbol = "?replace_with_effect@AnmId@@QAEXH@Z", target = 4650048, addend = 0 },
+  { offset = 231, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 271, width = 4, type = "REL32", symbol = "?compute_damage_to_enemy@Player@@QAEHPAUD3DXVECTOR3@@0MMPAH0HH@Z", target = 4479536, addend = 0 },
+  { offset = 292, width = 4, type = "REL32", symbol = "?die@EnemyInf@@QAEHXZ", target = 4314400, addend = 0 },
+  { offset = 319, width = 4, type = "REL32", symbol = "?check_time_interrupts@EnemyInf@@QAEPBDXZ", target = 4345872, addend = 0 },
+  { offset = 430, width = 4, type = "REL32", symbol = "?free_all_async@SptInf@@QAEXXZ", target = 4302064, addend = 0 },
+  { offset = 441, width = 4, type = "REL32", symbol = "?reset_run_context@SptInf@@QAEXXZ", target = 4302240, addend = 0 },
+  { offset = 459, width = 4, type = "REL32", symbol = "?find_sub_by_name@SptResourceInf@@QAEHPBD@Z", target = 4671296, addend = 0 },
+  { offset = 503, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 512, width = 4, type = "REL32", symbol = "?run_ecl@SptInf@@QAEHM@Z", target = 4668352, addend = 0 },
+  { offset = 625, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 654, width = 4, type = "REL32", symbol = "?compute_damage_to_enemy@Player@@QAEHPAUD3DXVECTOR3@@0MMPAH0HH@Z", target = 4479536, addend = 0 },
+  { offset = 663, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 723, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 759, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 797, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 829, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 842, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 853, width = 4, type = "DIR32", symbol = "?g_MainBomb@@3PAVBombInf@@A", target = 4877736, addend = 0 },
+  { offset = 875, width = 4, type = "DIR32", symbol = "__real@3f800000", target = 4801752, addend = 0 },
+  { offset = 904, width = 4, type = "REL32", symbol = "?play_sound_at_position@SoundManager@@QAEXHM@Z", target = 4579824, addend = 0 },
+  { offset = 936, width = 4, type = "DIR32", symbol = "?g_Spellcard@@3PAUSpellcard@@A", target = 4877744, addend = 0 },
+  { offset = 995, width = 4, type = "REL32", symbol = "?receive_damage@EnemyLife@@QAEHH@Z", target = 4302544, addend = 0 },
+  { offset = 1056, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 1061, width = 4, type = "REL32", symbol = "?randf_0_to_1@Rng@@QAEMXZ", target = 4205680, addend = 0 },
+  { offset = 1067, width = 4, type = "DIR32", symbol = "__real@3f99999a", target = 4801808, addend = 0 },
+  { offset = 1073, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 1091, width = 4, type = "REL32", symbol = "?randf_neg_pi_to_pi@Rng@@QAEMXZ", target = 4205808, addend = 0 },
+  { offset = 1106, width = 4, type = "REL32", symbol = "?spawn_item@ItemManager@@QAEPAUItem@@HPAUD3DXVECTOR3@@HMMHH@Z", target = 4393312, addend = 0 },
+  { offset = 1133, width = 4, type = "REL32", symbol = "?set_value@ZunTimer@@QAEXH@Z", target = 4220048, addend = 0 },
+  { offset = 1144, width = 4, type = "REL32", symbol = "?check_life_interrupts@EnemyInf@@QAEPBDXZ", target = 4345600, addend = 0 },
+  { offset = 1163, width = 4, type = "REL32", symbol = "?set_value@ZunTimer@@QAEXH@Z", target = 4220048, addend = 0 },
+  { offset = 1174, width = 4, type = "REL32", symbol = "?free_all_async@SptInf@@QAEXXZ", target = 4302064, addend = 0 },
+  { offset = 1185, width = 4, type = "REL32", symbol = "?reset_run_context@SptInf@@QAEXXZ", target = 4302240, addend = 0 },
+  { offset = 1203, width = 4, type = "REL32", symbol = "?find_sub_by_name@SptResourceInf@@QAEHPBD@Z", target = 4671296, addend = 0 },
+  { offset = 1247, width = 4, type = "DIR32", symbol = "?g_timer_speed_ptrs@@3QBQAMB", target = 4787888, addend = 0 },
+  { offset = 1256, width = 4, type = "REL32", symbol = "?run_ecl@SptInf@@QAEHM@Z", target = 4668352, addend = 0 },
+  { offset = 1301, width = 4, type = "REL32", symbol = "?die@EnemyInf@@QAEHXZ", target = 4314400, addend = 0 },
+  { offset = 1339, width = 4, type = "REL32", symbol = "?die@EnemyInf@@QAEHXZ", target = 4314400, addend = 0 },
+  { offset = 1430, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 1438, width = 4, type = "REL32", symbol = "?check_hit_circle@Player@@QAEHPAUD3DXVECTOR3@@MH@Z", target = 4471264, addend = 0 },
+  { offset = 1454, width = 4, type = "REL32", symbol = "?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ", target = 4649696, addend = 0 },
+  { offset = 1473, width = 4, type = "DIR32", symbol = "__real@3f000000", target = 4801692, addend = 0 },
+  { offset = 1498, width = 4, type = "DIR32", symbol = "__real@3fc90fdb", target = 4801844, addend = 0 },
+  { offset = 1503, width = 4, type = "REL32", symbol = "?normalize_angle@@YQMM@Z", target = 4205968, addend = 0 },
+  { offset = 1513, width = 4, type = "REL32", symbol = "_sinf", target = 4216080, addend = 0 },
+  { offset = 1528, width = 4, type = "REL32", symbol = "_cosf", target = 4216048, addend = 0 },
+  { offset = 1650, width = 4, type = "REL32", symbol = "?check_hit_rotated_rect@Player@@QAEHPAUD3DXVECTOR3@@MMMH@Z", target = 4471536, addend = 0 },
+  { offset = 1690, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 1701, width = 4, type = "REL32", symbol = "?do_graze@Player@@QAEXPAUD3DXVECTOR3@@@Z", target = 4476144, addend = 0 },
+  { offset = 1713, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 1718, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 1917, width = 4, type = "DIR32", symbol = "?g_Spellcard@@3PAUSpellcard@@A", target = 4877744, addend = 0 },
+  { offset = 1986, width = 4, type = "REL32", symbol = "?play_sound_at_position@SoundManager@@QAEXHM@Z", target = 4579824, addend = 0 },
+  { offset = 2003, width = 4, type = "REL32", symbol = "?play_sound_at_position@SoundManager@@QAEXHM@Z", target = 4579824, addend = 0 },
+  { offset = 2019, width = 4, type = "REL32", symbol = "?play_sound_at_position@SoundManager@@QAEXHM@Z", target = 4579824, addend = 0 },
+  { offset = 2057, width = 4, type = "DIR32", symbol = "?g_Spellcard@@3PAUSpellcard@@A", target = 4877744, addend = 0 },
+  { offset = 2194, width = 4, type = "REL32", symbol = "??FZunTimer@@QAEXH@Z", target = 4248720, addend = 0 },
+]
+
 [units.reference-0041cbd0]
 artifact_kind = "linked-pe"
 source = "src/EnemyFog.cpp"

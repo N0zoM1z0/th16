@@ -19,6 +19,7 @@ outside this repository; never follow them when cleaning local outputs.
 | `.analysis/enemy-motion-work/` | Boss, spellcard and projectile source trials, baseline report and final regression evidence |
 | `.analysis/bullet-ex-work/` | Curve laser exact comparison, large projectile dispatcher trials, private helper controls and partial instruction-emulation diagnostics |
 | `.analysis/boss-core-work/` | Boss damage/feedback and Player damage traversal trials, native layout probe, partial instruction-emulation diagnostics and strict regression evidence |
+| `.analysis/boss-flow-work/` | Boss shield/collision source trials, complete logic/damage packets, historical NaN-payload control, native shield/collision fixtures, explicit SEH/no-frame prefix controls, failed combined image and final regression evidence |
 | `.analysis/laser-core-work/` | Laser/context source trials, large ECL context, native debugger and complete fixtures, parameter observation controls, failed prototypes and restored-build regression evidence |
 | `.analysis/ecl-dispatch-work/` | Large ECL shared-position and spell-name source trials, complete diagnostic code/table/map packets, native movement and spell-prefix fixtures, final tested image, scope refusals and regression evidence |
 | `.analysis/ecl-context-work/` | ECL coordinate evaluation and animation operand trials, typed lookup fixtures, native animation snapshots and historical-image control, invalid-opcode notes and final source regression evidence |

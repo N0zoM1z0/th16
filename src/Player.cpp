@@ -835,7 +835,7 @@ HARNESS_CALLED i32 Player::compute_damage_to_enemy(Float3 *pos, Float3 *size, f3
         *bomb_hit = total > 0 ? 1 : 0;
     }
     PlayerDamageSource *source = player->inner.damage_sources;
-    for (i32 remaining = PLAYER_DAMAGE_SOURCE_COUNT; remaining > 0; remaining--, source++)
+    for (i32 remaining = PLAYER_DAMAGE_SOURCE_COUNT; remaining != 0; remaining--, source++)
     {
         if (!(source->flags & DAMAGE_SOURCE_ACTIVE))
         {
