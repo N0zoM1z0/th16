@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after replay-format linkage and two pause-menu entry passes.
+Updated 2026-11-12 after a rejected snapshot-ID context and complete x87 dependency review.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -20,6 +20,23 @@ This file describes current state; the repair log records historical batches.
 
 The current report is **837 exact, 65 mismatch and 313 incomplete** among
 1215 annotated candidates, covering 152,600 exact owned bytes and 902 units.
+A used snapshot-ID local in AnmManager::restore_snapshot gives 122 bytes
+against the complete 128-byte original and is rejected. Only that complete
+linked owner changes. The source is restored byte for byte and freshly
+rebuilt; all 1,719 linked owner entries/extents/raw hashes and 192 dependency
+stamps validate. All prior function results and 902 unit definitions remain
+identical. No source or admission-rule change is retained in this batch.
+
+The x87 investigation independently establishes the complete original
+645-byte dispatcher aggregate (209 instructions across seven scopes) and its
+full 48-byte pool from six fixed x87 reads. The full 80-byte atan2 descriptor
+contains sixteen pointers into complete 168/500-byte producers. Complete
+candidate payloads, fields and relocations are retained, and both ten-byte
+MASM stub records partition the entire 20-byte candidate contribution.
+Original companion ownership and external field roles remain open, so no
+__CIatan2 binding or runtime exact credit is added. See
+[the dependency review](knowledge/atan2-runtime-dependencies.md).
+
 The annotated replay list/spell format tables now have explicit external
 linkage and complete 16/4-byte named PDB global types. Their five full strings
 match the originals, and all five candidate pointer relocations are checked.
@@ -281,12 +298,12 @@ include the used replay-slot local in PauseMenu.cpp and explicit external
 linkage for the existing readonly season-name and replay-format tables in
 MainMenuStates.cpp.
 The preceding spell-page, GameWindow, Bullet and Player function trials remain
-restored. The current source input differs from the preceding baseline only
-by the two replay-format linkage definitions. Both replay index trials are
-restored. All 1,719 complete linked owner entries/extents/payloads remain
+restored. The current source input is unchanged from the snapshot-ID trial
+baseline and retains the preceding two replay-format linkage definitions.
+Both replay index trials and the snapshot-ID trial are restored. All 1,719 complete linked owner entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/replay-format-linkage-check.json`. The preceding callback
+`.analysis/snapshot-id-restored-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -346,7 +363,11 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **60 controls across four relevant suites**:
+The current restoration batch passes **17 controls across two relevant suites**:
+strict Oracle (14) and focused audit (3). Logs use
+`.analysis/snapshot-id-<suite>-controls.log`. The complete regression proof is
+`.analysis/snapshot-atan2-regression-check.json`.
+The preceding replay-format batch passed **60 controls across four suites**:
 reviewed linkages (36), strict Oracle (14), focused audit (3) and PDB types (7).
 Logs use `.analysis/replay-format-<suite>-controls.log`; the summary is
 `.analysis/replay-format-controls-summary.json`.
@@ -412,8 +433,11 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/replay-format-pause-full-audit.log` and
-`.analysis/replay-format-regression-check.json`. Current complete caller evidence
+are `.analysis/snapshot-id-restored-full-audit.log` and
+`.analysis/snapshot-atan2-regression-check.json`. Current source-trial evidence
+is `.analysis/snapshot-id-source-trial.json`; full x87 research is
+`.analysis/atan2-original-dispatcher-scope.json` and
+`.analysis/atan2-complete-dependencies.json`. Preceding complete caller evidence
 is `.analysis/replay-format-pause-caller-scopes.json`; original proofs and
 rejected index contexts are `.analysis/replay-format-original-review.json`,
 `.analysis/pause-label-original-review.json` and
@@ -481,8 +505,8 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-linkage evidence is `.analysis/replay-format-retained-build.log` and
-`.analysis/replay-format-linkage-check.json`. The current source input includes
+source-restoration evidence is `.analysis/snapshot-id-restored-build.log` and
+`.analysis/snapshot-id-restored-check.json`. The current source input includes
 the retained season/replay table declarations; all complete function bytes remain
 unchanged. Preceding source-trial evidence is `.analysis/failure-format-runtime-restored-build.log`,
 `.analysis/failure-format-runtime-restored-check.json` and
@@ -828,8 +852,14 @@ contribution; it remains unbound.
 `__CIatan2` is a promising evidence investigation, not an accepted runtime
 binding. Its two explicit MASM procedure records share one complete 20-byte
 contribution. The [investigation note](knowledge/reference-repairs.md#unfinished-atan2-entry-investigation)
-records the native evidence and the withdrawn draft. Do not infer an interior
-entry from a public label or shorten a contribution to obtain exact credit.
+records the earlier native evidence and withdrawn draft. The subsequent
+[complete dependency review](knowledge/atan2-runtime-dependencies.md) now
+establishes the original 645-byte dispatcher aggregate, complete 48-byte pool,
+full 80-byte descriptor and nonadjacent 500-byte candidate producer. Original
+companion ownership and all external field identities remain open. Do not
+infer an interior entry from a public label or shorten a contribution to obtain
+exact credit. The extracted research parser remains outside the Oracle and
+must not be installed as a production proof without negative controls.
 
 ## Local artifacts
 

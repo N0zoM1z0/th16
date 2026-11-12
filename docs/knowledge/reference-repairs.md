@@ -1916,3 +1916,42 @@ See [the full review](replay-format-linkage.md),
 `.analysis/replay-format-regression-check.json` and
 `.analysis/replay-format-pause-caller-scopes.json`. No cold build, cleanup,
 archived-output substitution, Factory submission or remote publication occurs.
+
+## Snapshot-ID local rejection and complete x87 dependencies
+
+AnmManager::restore_snapshot has an independently complete 128-byte original:
+46 reachable instructions, two returns and a contiguous next entry. Its
+remaining mismatch is the protected request-ID reload preceding the enabled
+flag reload. A used local copy, refreshed after critical-section acquisition,
+changes the whole candidate to 122 bytes by retaining the ID in a register.
+It is rejected. Only this complete linked owner changes; full original/trial
+bytes, fields, relocations and receipts are retained. The source is restored
+byte for byte and freshly rebuilt. All 1,719 linked owner entries/extents/raw
+hashes and 192 dependency stamps validate. Do not repeat this local-copy form
+or force a reload to recover the order. Evidence is
+`.analysis/snapshot-id-source-trial.json` and
+`.analysis/snapshot-id-restored-check.json`.
+
+The atan2 investigation now retains complete candidate contributions of
+20-byte stub code, 80-byte descriptor data, 168-byte operation code, 500-byte
+shared code, 645-byte dispatcher code and 48-byte dispatcher data. Both MASM
+S_GPROC32/S_END pairs partition the entire stub contribution and agree with
+current native LLVM output. The descriptor's sixteen relocated pointer slots
+reach both the operation producer and nonadjacent shared NaN/infinity entries.
+The original dispatcher is independently complete as a 645-byte aggregate of
+seven inventoried scopes: all 209 instructions are reached, every direct branch
+is checked and eleven following INT3 bytes are accounted for. Six fixed x87
+qword reads establish the complete 48-byte original pool, equal to candidate
+storage. All fourteen dispatcher fields are traced without granting bindings.
+
+The original companion scope and external callee/field roles remain open;
+no __CIatan2 identity or generic interior rule is added. The research parser
+still refuses the other modules' unsupported record shapes and remains outside
+the Oracle. See [the full dependency review](atan2-runtime-dependencies.md).
+Current source/report freshness is regenerated after restoration, retaining
+all 1,215 function outcomes and all 902 unit definitions. Counts remain
+837 exact, 65 mismatch and 313 incomplete, with 152,600 exact primary bytes.
+Seventeen strict-Oracle/focused-audit controls pass. No exact credit, cold
+build, cleanup, archived-output substitution, Factory submission or remote
+publication occurs. Regression evidence is
+`.analysis/snapshot-atan2-regression-check.json`.
