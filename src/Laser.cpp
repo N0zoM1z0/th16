@@ -2817,8 +2817,8 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
     case 1:
         if (-990.0f > angle_delta)
         {
-            f32 dt = speed - speed_delta;
-            *out_pos = *pos - velocity * dt;
+            // The inline difference retains the original X multiplication operands.
+            *out_pos = *pos - velocity * (speed - speed_delta);
             *out_speed = this->speed - speed_delta;
             *out_angle = angle;
         }
@@ -2872,7 +2872,7 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
 }
 
 // Mode 2 uses a guarded countdown loop for the whole elapsed frames.
-// TODO: in mode 2's loop the original keeps s in xmm6 and pos.x in its stack slot (ours keeps pos.x in xmm7 and s in memory); the frame is aligned to 64.
+// TODO: mode 2 still has different local slots and instruction scheduling; the frame is aligned to 64.
 // FUNCTION: TH16 0x437ee0
 void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, f32 time)
 {
@@ -2900,7 +2900,9 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
             b.z = 0.0f;
             laser_sincosmul(&a, angle, speed);
             laser_sincosmul(&b, angle_delta, speed_delta);
-            Float3 sum = b + a;
+            Float3 sum;
+            // This add retains the original X operand order.
+            D3DXVec3Add(&sum, &a, &b);
             *out_pos = start + sum * time;
             *out_speed = (f32)sqrt(sum.x * sum.x + sum.y * sum.y);
             *out_angle = atan2(sum.y, sum.x);
@@ -2937,10 +2939,8 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
                         break;
                     }
                 }
-                pos.x += d.x;
+                pos += d;
                 s += speed_delta;
-                pos.y += d.y;
-                pos.z += d.z;
             } while (--n);
         }
         laser_sincosmul(&d, a, s);

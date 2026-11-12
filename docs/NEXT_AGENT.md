@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after Boss damage frame-context and phase-transition work.
+Updated 2026-11-12 after curve laser vector and discrete-speed source work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,17 +11,17 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation retains a planar damage vector, recovering the original Boss/callee
-alignment arrangement, and verifies real phase transitions. No new exact credit
-is claimed.
+continuation recovers curve-node vector operands and discrete speed accumulation,
+while retaining the preceding Boss frame context and phase execution. No new
+exact credit is claimed.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`3211bb688256a2c841cfbb37df81728faa89b52e2c8e5f70de63448764d58f23`.
-PDB age is **237**. The final incremental build, strict replay and progress check
+`47b99f84e47d04f3983ea93f1b716a841b562b7c12e87ba2be5c03ceace42942`.
+PDB age is **253**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves
 the current incremental build, target, canonical report, Wine prefix, Ghidra
 project and pinned reference.
@@ -30,6 +30,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Curve laser vectors and speed](knowledge/curve-laser-vectors-and-speed.md) | Original X multiplication/addition and speed accumulator operands; 216 historical output differences removed in 768 complete cases; both owners remain incomplete |
 | [Boss damage frame context and phases](knowledge/boss-damage-frame-context-and-phases.md) | Natural planar vector recovers original alignment arrangement; 400 complete phase calls agree; complete owners remain incomplete |
 | [Boss damage snapshots and CRT startup](knowledge/boss-damage-snapshots-and-crt-startup.md) | Original pointer/count sequence and XYZ read-before-write order; 96 historical impact-output failures removed; damage owner remains incomplete |
 | [Boss shield flow and collision operands](knowledge/boss-shield-and-collision-operands.md) | Complete 2,207-byte logic owner now compares as mismatch; shield flow recovered, 27 historical collision payload failures removed; no new exact credit |
@@ -48,8 +49,48 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [Boss damage frame context and phase transitions](knowledge/boss-damage-frame-context-and-phases.md)
-first. A `Float2` XY difference in the circle/circle damage branch naturally gives
+Read [Curve laser vectors and speed accumulation](knowledge/curve-laser-vectors-and-speed.md)
+first. The reverse-step sentinel branch keeps the speed difference inside its
+vector scale expression, recovering the original X multiplication. State mode 1
+uses `D3DXVec3Add` to recover X's floating operands. State mode 2 uses `pos += d`
+then updates speed, retaining the accumulator in a register and its original
+operand order. The alternative add API produces identical complete code.
+
+The full reverse-step owner is **986/986 bytes**; state is **1,162/1,164 bytes**.
+Both remain incomplete. Mode-1 squared-length registers, state slots/scheduling
+and the two unbound floor/atan2 call fields still need work. No register or
+alignment constraint, unused local, extra double or Oracle change is added.
+Do not restore the four unused integer locals removed in `1da68af`.
+
+All **768 new curve calls** agree with the original, including 168 independent
+full-output expectations, three x87 precisions and raw signed/signaling NaNs.
+The preserved `d56cd1c` image fails 216 cases: 96 reverse-step multiplications,
+24 state-vector additions and 96 multi-frame speed updates. An operator-sum
+trial introduced 24 turning failures and is restored. Scalar-first declarations
+left speed spilled and are also restored. `Enemy.cpp`, `Player.cpp` and
+`Collision.cpp` are unchanged from the starting checkpoint.
+
+The same final image passes **3,364 complete native cases and 204 prefixes**,
+including the preceding 400 Boss-phase calls. Observation, protocol, chain and
+phase negative controls pass; 23 actual CRT startup stops are authenticated.
+The copied observation control initially lacked its retained layout probe, and
+a manual continuation used system Python and was refused by the Capstone lock.
+Use the corrected control logs and repository interpreter; neither refusal is
+passing evidence. Existing resource, async-deletion and whole-script limits
+remain. CRT errno/matherr and overlapping curve outputs are not modeled.
+
+Strict replay and progress preserve **885/65/265**, 169,575 exact primary bytes
+and 950 units, with no classification change or lost exact owner. Preserve
+`.analysis/boss-stats-work/`, especially the final image, six complete owners,
+curve layout probe, 768-case raw fixtures, historical receipt, rejected forms,
+replayed Boss suites, controls and `final-regression.json`.
+
+### Earlier Boss damage frame context and phases
+
+For the preceding `d56cd1c` checkpoint, read
+[Boss damage frame context and phase transitions](knowledge/boss-damage-frame-context-and-phases.md)
+before revisiting the frame work. A `Float2` XY difference in the circle/circle
+damage branch naturally gives
 the original alignment arrangement: Boss logic realigns ESP to eight bytes and
 its damage callee does not. No alignment or register constraint is introduced.
 The complete owners are now **2,222/2,207 Boss bytes** and **741/774 damage
