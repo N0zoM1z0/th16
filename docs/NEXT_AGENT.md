@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-11 after four rejected Player source contexts and fresh restoration.
+Updated 2026-11-12 after six rejected Bullet collision contexts and fresh restoration.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -20,8 +20,19 @@ This file describes current state; the repair log records historical batches.
 
 The current report remains **815 exact, 63 mismatch and 337 incomplete** among
 1215 annotated candidates, covering 145,004 exact owned bytes and 878 units.
-Four natural Player source contexts are rejected and source is restored byte
-for byte and freshly rebuilt. Used item-origin pointers give 4,504/4,508-byte
+Six natural Bullet collision contexts are rejected. The independently bounded
+448-byte original remains a complete extent refusal against 449-byte baseline
+source. Vector operand order, in-place scaling, coordinate assignment,
+coordinate construction, a hit-branch return and a named VM ID produce
+449/458/449/449/452/451-byte candidates respectively. No source change or exact
+credit is retained. BulletManager.cpp is restored byte for byte and freshly
+rebuilt; all 1,719 complete linked owners and 192 dependency stamps validate.
+Do not repeat these contexts or force vector scheduling, stack locations or
+shared-return destinations. See
+[Bullet collision findings](knowledge/bullet-collision-contexts.md).
+
+The preceding four natural Player source contexts are rejected; source is
+restored byte for byte and freshly rebuilt. Used item-origin pointers give 4,504/4,508-byte
 update candidates against 4,540. A Float2 displacement gives a 261-byte circle
 check against 258; a combined rejection guard remains a 190/258 mismatch.
 No source change or exact credit is retained. Every prior comparison result
@@ -185,12 +196,13 @@ acceptance receipts have been submitted.
 
 The current build receipt is incremental. Its PE, MAP, PDB, function map, object
 cache and non-LTCG symbol-discovery cache are retained. The retained source
-change is one used replay-slot local in PauseMenu.cpp. The latest Player
-trials are restored byte for byte and source input identity equals the baseline
-checkpoint, including that retained PauseMenu change. All 1,719 complete linked owner entries/extents/payloads remain
+change is one used replay-slot local in PauseMenu.cpp. The latest Bullet collision
+trials and preceding Player trials are restored byte for byte; source input
+identity equals the baseline checkpoint, including that retained PauseMenu
+change. All 1,719 complete linked owner entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/player-context-restored-check.json`. The preceding callback
+`.analysis/bullet-collision-restored-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -254,7 +266,7 @@ The current batch passes **209 controls across nine relevant suites**:
 stage/time identities (20), compound switch ownership (21), primary switch
 ownership (40), private identities (33), strict Oracle (14), reviewed linkages
 (28), focused audit (3), constructor EH (25) and empty EH (25). Logs use
-`.analysis/player-context-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
+`.analysis/bullet-collision-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
 The preceding replay/numeric batch also passed 209 controls across nine suites;
 its logs use `.analysis/replay-literal-*controls.log`.
 The preceding numeric batch passed 208 controls across nine suites;
@@ -301,8 +313,10 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/player-context-full-audit.log` and
-`.analysis/player-context-regression-check.json`. Full source/payload/field
+are `.analysis/bullet-collision-full-audit.log` and
+`.analysis/bullet-collision-regression-check.json`. Latest full source/payload/field
+trial evidence is `.analysis/bullet-collision-source-trials.json`, reproduced by
+`.analysis/review-bullet-collision-trials.py`. Preceding Player
 trial evidence is `.analysis/player-context-source-trials.json`, reproduced by
 `.analysis/review-player-context-trials.py`. Complete instruction alignment is
 in `.analysis/player-tick-baseline-layout.json` and

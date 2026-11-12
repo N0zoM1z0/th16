@@ -1642,3 +1642,38 @@ includes `.analysis/player-tick-baseline-layout.json`,
 `.analysis/player-context-<suite>-controls.log`. Diagnostic alignment has no
 acceptance authority. Source-origin review remains open; Factory acceptance
 remains unsubmitted. Nothing is published.
+
+## Bullet collision source contexts
+
+Six natural contexts for `Bullet::check_player_collision` are built
+incrementally and rejected against its independently bounded 448-byte original.
+Vector-first multiplication produces the identical 449-byte baseline owner;
+in-place scaling gives 458 bytes, coordinate assignment and construction each
+give 449, an explicit hit return gives 452, and a named `AnmId` gives 451.
+Only this complete linked owner changes in the five nonidentical trials.
+See [Bullet collision contexts](bullet-collision-contexts.md).
+
+The remaining differences include memory versus register multiplication,
+goal-vector stack location and shared-return branch destinations. A named
+handle moves VM lookup after vector computation while retaining the baseline
+goal location; an explicit hit return produces an immediate return value.
+Neither establishes original source context. No forced register, local,
+access, branch or normalization change is retained.
+
+BulletManager.cpp is restored byte for byte and freshly rebuilt. All 1,719
+complete linked owner entries/extents/raw hashes and 192 dependency stamps
+validate against baseline. Canonical replay retains every prior result and
+all 878 units: **815 exact, 63 mismatch and 337 incomplete**, covering
+145,004 exact primary bytes. No exact credit is added. All 209 existing
+controls across nine suites pass. No clean build or archived-output
+substitution occurs.
+
+Full original/trial payloads, source-qualified producers, all linked fields
+and relocations, instruction streams, artifact/source identities and strict
+outcomes remain in `.analysis/bullet-collision-source-trials.json` and the
+matching baseline/trial artifact directories. Restoration, replay and controls
+use `.analysis/bullet-collision-restored-check.json`,
+`.analysis/bullet-collision-full-audit.log`,
+`.analysis/bullet-collision-regression-check.json` and
+`.analysis/bullet-collision-controls-summary.json`. Source-origin review
+remains open and Factory acceptance remains unsubmitted. Nothing is published.
