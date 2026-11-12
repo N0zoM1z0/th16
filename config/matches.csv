@@ -318,6 +318,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00426020,AnmVm::scale_to,reference-00426020,local-strict-pass,170,170,170,.analysis/reference-audit.json
 0x004260D0,PosVel::set_ellipse_angle,reference-004260d0,local-strict-pass,136,136,136,.analysis/reference-audit.json
 0x00426160,AnmLoaded::create_vm_front,reference-00426160,mismatch,224,224,223,.analysis/reference-audit.json
+0x004262F0,FpsCounter::update,reference-004262f0,local-strict-pass,235,235,235,.analysis/reference-audit.json
 0x004263E0,FpsCounter::draw,reference-004263e0,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x00426490,FpsCounter::on_draw_callback,reference-00426490,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00426840,Spellcard::decode_time_code,reference-00426840,local-strict-pass,127,127,127,.analysis/reference-audit.json
@@ -670,8 +671,10 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0045A450,window_proc,reference-0045a450,local-strict-pass,680,680,680,.analysis/reference-audit.json
 0x0045A8A0,GameWindow::do_frame_sleeping,reference-0045a8a0,local-strict-pass,336,336,336,.analysis/reference-audit.json
 0x0045A9F0,GameWindow::update_window_sleeping,reference-0045a9f0,local-strict-pass,597,597,597,.analysis/reference-audit.json
+0x0045AC50,GameWindow::do_frame_frameskip,reference-0045ac50,local-strict-pass,416,416,416,.analysis/reference-audit.json
 0x0045ADF0,GameWindow::present,reference-0045adf0,local-strict-pass,115,115,115,.analysis/reference-audit.json
 0x0045AE70,GameWindow::do_frame,reference-0045ae70,local-strict-pass,269,269,269,.analysis/reference-audit.json
+0x0045AF80,GameWindow::update_window,reference-0045af80,local-strict-pass,246,246,246,.analysis/reference-audit.json
 0x0045B280,GameWindow::set_resolution_from_config,reference-0045b280,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x0045B330,create_game_window,reference-0045b330,local-strict-pass,505,505,505,.analysis/reference-audit.json
 0x0045BA80,Supervisor::reset_render_state,reference-0045ba80,local-strict-pass,750,750,750,.analysis/reference-audit.json

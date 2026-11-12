@@ -1716,3 +1716,42 @@ control evidence is `.analysis/timing-literal-full-audit.log`,
 `.analysis/timing-literal-controls-summary.json`; the baseline is
 `.analysis/timing-literal-baseline/`. Source-origin review remains open,
 Factory acceptance remains unsubmitted and nothing is published.
+
+## COMISD scalar-width correction and complete consumers
+
+Capstone 5.0.7 reports a 16-byte memory operand for the observed legacy COMISD
+instructions, whereas the encoded scalar read is eight bytes. Intel's manual
+and an independent GNU objdump 2.42 synthetic probe confirm the m64 form.
+The literal-witness check now handles only the exact eight-byte absolute
+`66 0F 2F /r` encoding, with matching ModRM register, decoded and encoded
+disp32, eight-byte literal size and a unique fully decoded original parent
+instruction start. Unsupported addressing/prefix forms and sixteen-byte
+literal claims remain refused. Byte/relocation replay is unchanged. See
+[COMISD evidence](comisd-literal-identities.md).
+
+Original-only full scopes and fixed typed reads establish doubles 1.0, 0.0
+and 1.5. Complete FPS update (235), frame-skipping (416) and window update
+(246) now pass, adding **897 exact primary bytes**. GameThread play-time
+update retains one unbound `__dtoul3` CALL. That candidate label is an interior
+entry of the complete 887-byte `__ftoui3` PDB contribution from pinned LIBCMT;
+it is not promoted to an ordinary same-start runtime owner.
+
+Canonical replay reports **827 exact, 64 mismatch and 324 incomplete**, covering
+148,572 exact primary bytes and 891 units. All 824 previous exact results,
+64 complete mismatches and 888 previous units remain identical. All 215
+controls across nine suites pass. Reviewed-linkage controls increase to 34,
+covering all eight destination registers, read footprints, unsupported encodings,
+original parent ownership, encoded/decoded disagreement and each fixed binding's
+witness/extent/duplicate-storage mutations. Game source, compiler/linker
+profiles, build receipt and all current artifacts remain unchanged.
+
+Decoder/original evidence is `.analysis/comisd-decoder-probe.json`,
+`.analysis/comisd-objdump-probe.log` and
+`.analysis/comisd-original-identities.json`. Complete replay and regression
+evidence is `.analysis/comisd-literal-consumer-scopes.json`,
+`.analysis/comisd-literal-full-audit.log`,
+`.analysis/comisd-literal-regression-check.json` and
+`.analysis/comisd-literal-controls-summary.json`. The unresolved aggregate
+is `.analysis/comisd-time-conversion-unresolved.json`; baseline evidence remains
+under `.analysis/comisd-literal-baseline/`. Source-origin review remains open,
+Factory acceptance remains unsubmitted and nothing is published.

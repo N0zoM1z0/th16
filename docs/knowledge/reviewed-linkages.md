@@ -17,6 +17,11 @@ The subsequent [replay/numeric review](replay-literal-identities.md) adds fixed
 176.0f/512.0f reads and a complete `%3d` format with an original PUSH witness.
 It preserves refusals for private exception-handling code and differing owners.
 
+The subsequent [timing/collision/audio review](timing-literal-identities.md)
+adds eight original scalar reads and nine complete passes. The
+[COMISD review](comisd-literal-identities.md) adds three double reads and a
+guarded correction for the decoder's m128 report of an encoded m64 read.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |
@@ -273,6 +278,10 @@ The loader checks each entire typed payload in both images, the fixed target
 instruction mnemonic, absolute operand, operand width and payload hash. It does
 not select a different equal-valued location for another caller. Every consumer
 still undergoes complete PDB-owner and byte/relocation replay.
+For the reviewed absolute legacy COMISD form, an explicit eight-byte encoding,
+matching register/disp32 and unique original instruction-start proof establish
+the architectural m64 footprint. The decoder's reported 16-byte operand does
+not authorize a 16-byte literal. See [the encoding evidence](comisd-literal-identities.md).
 
 The decimal format literal `%d` (including its terminating NUL, three bytes) is
 bound separately to `0x00491C7C`. Its candidate public is

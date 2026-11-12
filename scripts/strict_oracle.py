@@ -119,6 +119,39 @@ def review_stage_table(context, row, candidate):
         raise Incomplete("stage table lacks its indexed original stride witness")
 
 
+def literal_memory_witness(context, instruction, address, size):
+    """Check typed storage; guard the legacy absolute COMISD m64 encoding."""
+    import capstone
+    if instruction is None:
+        return False
+    if instruction.mnemonic != "comisd":
+        return any(op.type == capstone.x86.X86_OP_MEM and not op.mem.base and not op.mem.index
+                   and op.mem.disp == address and op.size == size for op in instruction.operands)
+
+    # Capstone 5.0.7 reports an m128 operand for COMISD. Intel specifies m64.
+    # Support only 66 0F 2F /r with ModRM mod=00,r/m=101 and a disp32;
+    # other encodings remain unreviewed. This does not alter replay bytes.
+    encoded = bytes(instruction.bytes)
+    operands = instruction.operands
+    if (size != 8 or len(encoded) != 8 or encoded[:3] != b"\x66\x0f\x2f"
+            or encoded[3] & 0xc7 != 0x05 or len(operands) != 2
+            or operands[0].type != capstone.x86.X86_OP_REG
+            or operands[0].reg != getattr(capstone.x86, f"X86_REG_XMM{(encoded[3] >> 3) & 7}")
+            or operands[1].type != capstone.x86.X86_OP_MEM or operands[1].size not in (8, 16)
+            or operands[1].mem.base or operands[1].mem.index
+            or operands[1].mem.disp != address or struct.unpack_from("<I", encoded, 4)[0] != address):
+        return False
+    parents = [(base, int(row["size"])) for base, row in context.boundaries.items()
+               if base <= instruction.address and instruction.address + len(encoded) <= base + int(row["size"])]
+    if len(parents) != 1:
+        return False
+    base, extent = parents[0]
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    sequence = list(decoder.disasm(context.target.read_address(base, extent), base))
+    return (sum(i.size for i in sequence) == extent
+            and any(i.address == instruction.address and bytes(i.bytes) == encoded for i in sequence))
+
+
 def reviewed_linkages(context, path=None):
     """Validate fixed, independently reviewed runtime/literal storage bindings."""
     import capstone
@@ -170,10 +203,7 @@ def reviewed_linkages(context, path=None):
                 decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
                 decoder.detail = True
                 instruction = next(decoder.disasm(context.target.read_address(witness, 16), witness), None)
-                memory_witness = instruction is not None and any(
-                    op.type == capstone.x86.X86_OP_MEM and not op.mem.base and not op.mem.index
-                    and op.mem.disp == address and op.size == size for op in instruction.operands
-                )
+                memory_witness = literal_memory_witness(context, instruction, address, size)
                 string_witness = (instruction is not None and instruction.mnemonic == "push"
                                   and len(instruction.operands) == 1
                                   and instruction.operands[0].type == capstone.x86.X86_OP_IMM

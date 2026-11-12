@@ -69,3 +69,6 @@ __real@4004000000000000,0x494560,8,literal,5caaabe50da77f59f448b3edf650d68fbca7b
 __real@400c000000000000,0x494568,8,literal,42b215bc5c10e8a6453db424667de747070305824b7e67e63df3aca31215898f,0x45afd0,subsd,docs/knowledge/timing-literal-identities.md,,
 __real@42400000,0x49460c,4,literal,db1622363269735489d7661ecb9b1e69f4a09099979bcc124a264a43960a9427,0x40fee2,mulss,docs/knowledge/timing-literal-identities.md,,
 __real@42600000,0x494614,4,literal,5ddb16eb82bf3586c884b7e9ebb1033d9901e13a2dbbfbb209468747d62260ab,0x410a5a,movss,docs/knowledge/timing-literal-identities.md,,
+__real@3ff0000000000000,0x494540,8,literal,6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712,0x42631c,comisd,docs/knowledge/comisd-literal-identities.md,,
+__real@0000000000000000,0x4943c8,8,literal,af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc,0x42dbf2,comisd,docs/knowledge/comisd-literal-identities.md,,
+__real@3ff8000000000000,0x494550,8,literal,e163f8cb0f7067a7fc78ca859a77f849aea3214f38fb75b884e4a16be725c905,0x45ac95,comisd,docs/knowledge/comisd-literal-identities.md,,

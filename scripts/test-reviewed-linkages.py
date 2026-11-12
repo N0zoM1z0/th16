@@ -5,9 +5,12 @@ import csv
 import hashlib
 from pathlib import Path
 import tempfile
+from types import SimpleNamespace
 import unittest
 
-from strict_oracle import Context, Incomplete, ROOT, reviewed_linkages, replay_owner
+import capstone
+
+from strict_oracle import Context, Incomplete, ROOT, literal_memory_witness, reviewed_linkages, replay_owner
 
 
 class ReviewedLinkageControls(unittest.TestCase):
@@ -105,6 +108,75 @@ class ReviewedLinkageControls(unittest.TestCase):
                 with self.subTest(symbol=symbol, field=field, value=value):
                     with self.assertRaises(Incomplete):
                         self.check_rows(rows)
+
+    def test_comisd_literals_require_their_fixed_complete_double_reads(self):
+        for symbol, witness, duplicate in [
+                ("__real@3ff0000000000000", 0x42631c, 0x490170),
+                ("__real@0000000000000000", 0x42dbf2, 0x48b300),
+                ("__real@3ff8000000000000", 0x45ac95, 0x496a60)]:
+            for field, value in [("witness_instruction", hex(witness + 1)),
+                                 ("witness_instruction", "0x4262f0"),
+                                 ("witness_mnemonic", "ucomisd"), ("size", "16"),
+                                 ("target_address", hex(duplicate))]:
+                rows = copy.deepcopy(self.rows)
+                next(r for r in rows if r["symbol"] == symbol)[field] = value
+                with self.subTest(symbol=symbol, field=field, value=value):
+                    with self.assertRaises(Incomplete):
+                        self.check_rows(rows)
+
+    def test_comisd_absolute_reads_have_an_eight_byte_footprint(self):
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        for register in range(8):
+            raw = bytes.fromhex("660f2f") + bytes([5 | (register << 3)]) + bytes.fromhex("78563412")
+            context = SimpleNamespace(boundaries={0: {"size": len(raw)}},
+                                      target=SimpleNamespace(read_address=lambda base, size: raw[base:base+size]))
+            instruction = next(decoder.disasm(raw, 0))
+            with self.subTest(register=register):
+                self.assertTrue(literal_memory_witness(context, instruction, 0x12345678, 8))
+                self.assertFalse(literal_memory_witness(context, instruction, 0x12345678, 16))
+                self.assertFalse(literal_memory_witness(context, instruction, 0x12345678, 4))
+
+    def test_comisd_unreviewed_addressing_and_prefixes_are_rejected(self):
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        for text in ("660f2f9078563412", "660f2f148578563412", "64660f2f1578563412",
+                     "66660f2f1578563412", "660f2fd1"):
+            raw = bytes.fromhex(text)
+            context = SimpleNamespace(boundaries={0: {"size": len(raw)}},
+                                      target=SimpleNamespace(read_address=lambda base, size: raw[base:base+size]))
+            instruction = next(decoder.disasm(raw, 0))
+            self.assertEqual(instruction.mnemonic, "comisd")
+            with self.subTest(encoding=text):
+                self.assertFalse(literal_memory_witness(context, instruction, 0x12345678, 8))
+
+    def test_comisd_witness_requires_one_complete_parent_instruction(self):
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        instruction = next(decoder.disasm(self.context.target.read_address(0x42631c, 16), 0x42631c))
+        for mode in ("missing", "ambiguous", "shortened"):
+            context = copy.copy(self.context)
+            context.boundaries = copy.deepcopy(self.context.boundaries)
+            if mode == "missing":
+                del context.boundaries[0x4262f0]
+            elif mode == "ambiguous":
+                context.boundaries[0x4262ef] = {"size": "236"}
+            else:
+                context.boundaries[0x4262f0]["size"] = str(0x42631c - 0x4262f0 + 7)
+            with self.subTest(mode=mode):
+                self.assertFalse(literal_memory_witness(context, instruction, 0x494540, 8))
+
+    def test_comisd_encoded_address_and_register_must_match_decoder_operands(self):
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        instruction = next(decoder.disasm(self.context.target.read_address(0x42631c, 16), 0x42631c))
+        for byte, mask in ((0, 1), (2, 1), (3, 8), (4, 1)):
+            changed = bytearray(instruction.bytes)
+            changed[byte] ^= mask
+            altered = SimpleNamespace(bytes=changed, operands=instruction.operands,
+                                      mnemonic=instruction.mnemonic, address=instruction.address)
+            with self.subTest(byte=byte):
+                self.assertFalse(literal_memory_witness(self.context, altered, 0x494540, 8))
 
     def test_replay_fps_format_requires_its_complete_storage_and_fixed_push(self):
         symbol = "??_C@_03GOOLIKIF@?$CF3d?$AA@"
