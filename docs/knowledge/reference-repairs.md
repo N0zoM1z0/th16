@@ -1955,3 +1955,37 @@ Seventeen strict-Oracle/focused-audit controls pass. No exact credit, cold
 build, cleanup, archived-output substitution, Factory submission or remote
 publication occurs. Regression evidence is
 `.analysis/snapshot-atan2-regression-check.json`.
+
+## Loader failure identity and rejected wrap bounds context
+
+The complete original 23-byte loader-failure message at `0x00491C64` is selected
+by the fixed PUSH at `0x00407CFE` in AsciiInf::initialize. Seven original copies
+have identical payloads; all seven independently reviewed callers actually
+PUSH the selected address. The candidate has one source-qualified MSVC public
+and a complete 23-byte PDB contribution. Existing string rules validate the
+whole NUL-terminated payload and witness. The mutation table now also checks
+this string's interior/wrong witness, duplicate original storage, missing NUL,
+shortened contribution and ambiguous contribution refusals. No verifier changes.
+
+Five complete source owners pass: ASCII initialization (326), GUI initialization
+(258), stage-file loading (337), shared-ANM loading (60) and title initialization
+(165). These add 1,146 primary exact bytes. Ending initialization and ECL include
+loading retain two/one unresolved fields. All seven original scopes are fully
+decoded, reachable and bounded independently of candidate artifacts.
+
+The Bullet wrap owner at `0x00415D80` is independently complete at 519 bytes
+and 124 reachable instructions, followed by nine INT3 bytes. A used half-width,
+height and derived width context leaves the same 515/519 result and all 1,719
+complete linked owner entries/extents/raw hashes unchanged. It is rejected.
+The earlier named horizontal predicate remains excluded too. Source is restored
+byte for byte and freshly rebuilt; all 192 dependency stamps validate.
+
+Canonical replay reports 842 exact, 65 mismatch and 308 incomplete among
+1,215 candidates, with 153,746 exact primary bytes and 907 units. All previous
+837 exact results, 65 complete mismatches and 902 unit definitions remain
+retained. Fifty-three reviewed-linkage, strict-Oracle and focused-audit controls
+pass. See [the full review](loader-error-identities.md),
+`.analysis/loader-error-regression-check.json` and
+`.analysis/bullet-wrap-bounds-source-trial.json`. No game source change,
+primary literal credit, cold build, cleanup, archived-output substitution,
+Factory submission or remote publication is retained.

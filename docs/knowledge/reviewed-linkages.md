@@ -44,6 +44,11 @@ A fixed complete `Pause` PUSH resolves two further whole menu entries. Replay
 index source trials are rejected; both remaining full extent refusals stay
 explicit, with no admission-rule change.
 
+The subsequent [loader-failure review](loader-error-identities.md) identifies
+one complete 23-byte string through a fixed original PUSH, distinguishing seven
+identical original copies. Five complete source owners pass. The natural wrap
+bounds context is rejected and restored; no admission or normalization rule changes.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

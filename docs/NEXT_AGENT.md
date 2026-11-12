@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after a rejected snapshot-ID context and complete x87 dependency review.
+Updated 2026-11-12 after a fixed loader-failure identity and rejected wrap bounds context.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,23 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **837 exact, 65 mismatch and 313 incomplete** among
-1215 annotated candidates, covering 152,600 exact owned bytes and 902 units.
+The current report is **842 exact, 65 mismatch and 308 incomplete** among
+1215 annotated candidates, covering 153,746 exact owned bytes and 907 units.
+A fixed original PUSH identifies complete 23-byte loader-failure storage
+among seven identical original copies. Its unique complete candidate string
+contribution resolves ASCII initialization (326), GUI initialization (258),
+stage-file loading (337), shared-ANM loading (60) and title initialization
+(165), adding 1,146 exact primary bytes. Ending/ECL loading retain two/one
+unresolved fields. All previous 837 exact results, 65 complete mismatches and
+902 unit definitions remain unchanged; five whole passes give 907 units.
+A named half-width/height/width context leaves the complete Bullet wrap owner
+at the same 515/519 mismatch and is rejected. Source is restored byte for
+byte and freshly rebuilt; all 1,719 complete linked owner entries/extents/raw
+hashes and 192 dependency stamps validate. No game source or admission-rule
+change is retained. See [the loader/wrap review](knowledge/loader-error-identities.md).
+
+The preceding snapshot-ID/x87 checkpoint reported 837 exact, 65 mismatch and
+313 incomplete, with 152,600 exact primary bytes and 902 units.
 A used snapshot-ID local in AnmManager::restore_snapshot gives 122 bytes
 against the complete 128-byte original and is rejected. Only that complete
 linked owner changes. The source is restored byte for byte and freshly
@@ -298,12 +313,13 @@ include the used replay-slot local in PauseMenu.cpp and explicit external
 linkage for the existing readonly season-name and replay-format tables in
 MainMenuStates.cpp.
 The preceding spell-page, GameWindow, Bullet and Player function trials remain
-restored. The current source input is unchanged from the snapshot-ID trial
+restored. The current source input is unchanged from the Bullet wrap trial
 baseline and retains the preceding two replay-format linkage definitions.
-Both replay index trials and the snapshot-ID trial are restored. All 1,719 complete linked owner entries/extents/payloads remain
+Both replay index trials, the snapshot-ID trial and wrap bounds trial are
+restored. All 1,719 complete linked owner entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/snapshot-id-restored-check.json`. The preceding callback
+`.analysis/bullet-wrap-restored-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -363,7 +379,11 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current restoration batch passes **17 controls across two relevant suites**:
+The current batch passes **53 controls across three relevant suites**:
+reviewed linkages (36), strict Oracle (14) and focused audit (3). Logs use
+`.analysis/loader-error-<suite>-controls.log`; the summary is
+`.analysis/loader-error-controls-summary.json`.
+The preceding snapshot-ID restoration batch passed **17 controls across two suites**:
 strict Oracle (14) and focused audit (3). Logs use
 `.analysis/snapshot-id-<suite>-controls.log`. The complete regression proof is
 `.analysis/snapshot-atan2-regression-check.json`.
@@ -433,8 +453,11 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/snapshot-id-restored-full-audit.log` and
-`.analysis/snapshot-atan2-regression-check.json`. Current source-trial evidence
+are `.analysis/loader-error-full-audit.log` and
+`.analysis/loader-error-regression-check.json`. Current complete callers and
+original-only scopes are `.analysis/loader-error-caller-scopes.json` and
+`.analysis/loader-error-original-review.json`; the rejected wrap context is
+`.analysis/bullet-wrap-bounds-source-trial.json`. Preceding source-trial evidence
 is `.analysis/snapshot-id-source-trial.json`; full x87 research is
 `.analysis/atan2-original-dispatcher-scope.json` and
 `.analysis/atan2-complete-dependencies.json`. Preceding complete caller evidence
@@ -505,8 +528,8 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-restoration evidence is `.analysis/snapshot-id-restored-build.log` and
-`.analysis/snapshot-id-restored-check.json`. The current source input includes
+source-restoration evidence is `.analysis/bullet-wrap-restored-build.log` and
+`.analysis/bullet-wrap-restored-check.json`. The current source input includes
 the retained season/replay table declarations; all complete function bytes remain
 unchanged. Preceding source-trial evidence is `.analysis/failure-format-runtime-restored-build.log`,
 `.analysis/failure-format-runtime-restored-check.json` and
@@ -581,7 +604,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 313 incomplete candidates comprise 144 with unresolved fields, 132
+The 308 incomplete candidates comprise 139 with unresolved fields, 132
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.
