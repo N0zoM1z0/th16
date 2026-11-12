@@ -2110,6 +2110,28 @@ linkages = [
   { offset = 353, width = 4, type = "REL32", symbol = "?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199344, addend = 0 },
 ]
 
+[units.reference-00409db0]
+artifact_kind = "linked-pe"
+source = "src/Stage.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create@Stage@@SAPAU1@PBD@Z"
+object = "Stage.obj"
+candidate_address = 4630480
+target_address = 4234672
+size = 156
+compare_size = 156
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?create@Stage@@SAPAU1@PBD@Z", target = 4760706, addend = 0, eh_handler = true },
+  { offset = 23, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 47, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 67, width = 4, type = "REL32", symbol = "??0Stage@@QAE@XZ", target = 4232816, addend = 0 },
+  { offset = 85, width = 4, type = "REL32", symbol = "?load_data@Stage@@QAEHPBDH@Z", target = 4233152, addend = 0 },
+  { offset = 100, width = 4, type = "REL32", symbol = "??1Stage@@QAE@XZ", target = 4233632, addend = 0 },
+  { offset = 111, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+]
+
 [units.reference-0040a410]
 artifact_kind = "linked-pe"
 source = "src/Stage.cpp"
@@ -4107,6 +4129,28 @@ linkages = [
   { offset = 244, width = 4, type = "REL32", symbol = "??_M@YGXPAXIIP6EX0@Z@Z", target = 4672785, addend = 0 },
   { offset = 249, width = 4, type = "DIR32", symbol = "??1Bullet@@QAE@XZ", target = 4266416, addend = 0 },
   { offset = 271, width = 4, type = "REL32", symbol = "??_M@YGXPAXIIP6EX0@Z@Z", target = 4672785, addend = 0 },
+]
+
+[units.reference-00411dd0]
+artifact_kind = "linked-pe"
+source = "src/BulletManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create@BulletManager@@SAPAU1@XZ"
+object = "BulletManager.obj"
+candidate_address = 4305104
+target_address = 4267472
+size = 147
+compare_size = 147
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?create@BulletManager@@SAPAU1@XZ", target = 4760946, addend = 0, eh_handler = true },
+  { offset = 20, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 42, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 62, width = 4, type = "REL32", symbol = "??0BulletManager@@QAE@XZ", target = 4266112, addend = 0 },
+  { offset = 78, width = 4, type = "REL32", symbol = "?initialize@BulletManager@@QAEHXZ", target = 4266544, addend = 0 },
+  { offset = 93, width = 4, type = "REL32", symbol = "??1BulletManager@@QAE@XZ", target = 4267168, addend = 0 },
+  { offset = 104, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-00412670]
@@ -8882,6 +8926,28 @@ linkages = [
   { offset = 70, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
   { offset = 87, width = 4, type = "REL32", symbol = "?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199344, addend = 0 },
   { offset = 97, width = 4, type = "REL32", symbol = "?destroy_all@ItemManager@@QAEXXZ", target = 4293792, addend = 0 },
+]
+
+[units.reference-0042f440]
+artifact_kind = "linked-pe"
+source = "src/Item.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create@ItemManager@@SAPAU1@XZ"
+object = "Item.obj"
+candidate_address = 4458192
+target_address = 4387904
+size = 147
+compare_size = 147
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?create@ItemManager@@SAPAU1@XZ", target = 4761650, addend = 0, eh_handler = true },
+  { offset = 20, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 42, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 62, width = 4, type = "REL32", symbol = "??0ItemManager@@QAE@XZ", target = 4386992, addend = 0 },
+  { offset = 78, width = 4, type = "REL32", symbol = "?initialize@ItemManager@@QAEHXZ", target = 4387424, addend = 0 },
+  { offset = 93, width = 4, type = "REL32", symbol = "??1ItemManager@@QAE@XZ", target = 4387536, addend = 0 },
+  { offset = 104, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-00430620]
@@ -13694,6 +13760,57 @@ linkages = [
   { offset = 1236, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
   { offset = 1253, width = 4, type = "REL32", symbol = "?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199344, addend = 0 },
   { offset = 1288, width = 4, type = "REL32", symbol = "?read_replay_file@ReplayManager@@QAEHPBD@Z", target = 4492304, addend = 0 },
+]
+
+[units.reference-00447e20]
+artifact_kind = "linked-pe"
+source = "src/ReplayManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create@ReplayManager@@SAPAU1@H@Z"
+object = "ReplayManager.obj"
+candidate_address = 4603008
+target_address = 4488736
+size = 193
+compare_size = 193
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?create@ReplayManager@@SAPAU1@H@Z", target = 4761874, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 45, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 58, width = 4, type = "DIR32", symbol = "??1ReplayStageData@@QAE@XZ", target = 4494112, addend = 0 },
+  { offset = 63, width = 4, type = "DIR32", symbol = "??0ReplayStageData@@QAE@XZ", target = 4494048, addend = 0 },
+  { offset = 86, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 99, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 116, width = 4, type = "DIR32", symbol = "?g_current_replay_filename@@3PADA", target = 4877792, addend = 0 },
+  { offset = 122, width = 4, type = "REL32", symbol = "?initialize@ReplayManager@@QAEHHPBD@Z", target = 4487008, addend = 0 },
+  { offset = 137, width = 4, type = "REL32", symbol = "??1ReplayManager@@QAE@XZ", target = 4488320, addend = 0 },
+  { offset = 148, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+]
+
+[units.reference-00447ef0]
+artifact_kind = "linked-pe"
+source = "src/ReplayManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create_from_file@ReplayManager@@SAPAU1@PBD@Z"
+object = "ReplayManager.obj"
+candidate_address = 4603216
+target_address = 4488944
+size = 191
+compare_size = 191
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?create_from_file@ReplayManager@@SAPAU1@PBD@Z", target = 4761922, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 45, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 58, width = 4, type = "DIR32", symbol = "??1ReplayStageData@@QAE@XZ", target = 4494112, addend = 0 },
+  { offset = 63, width = 4, type = "DIR32", symbol = "??0ReplayStageData@@QAE@XZ", target = 4494048, addend = 0 },
+  { offset = 86, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 99, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 124, width = 4, type = "REL32", symbol = "?read_replay_file@ReplayManager@@QAEHPBD@Z", target = 4492304, addend = 0 },
+  { offset = 135, width = 4, type = "REL32", symbol = "??1ReplayManager@@QAE@XZ", target = 4488320, addend = 0 },
+  { offset = 146, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-00447fb0]

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete Stage/ItemManager single-member constructor EH graphs.
+Updated 2026-11-12 after five complete allocation-cleanup EH graphs.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,26 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **860 exact, 65 mismatch and 290 incomplete** among
-1215 annotated candidates, covering 160,619 exact owned bytes and 925 units.
+The current report is **865 exact, 65 mismatch and 285 incomplete** among
+1215 annotated candidates, covering 161,453 exact owned bytes and 930 units.
+An explicit allocation-cleanup profile validates five complete 45-byte private
+code and 44-byte metadata aggregates. Original allocator/size operands,
+saved-pointer/state lifetimes, three fixed cookie frames and both normal
+returns are required. Stage create (156), BulletManager create (147),
+ItemManager create (147), ReplayManager create (193) and create_from_file
+(191) now pass all 834 primary bytes. Their 225 auxiliary code bytes and 220
+metadata bytes grant no extra credit. All previous 860 exact results, 65
+complete mismatches and 925 unit definitions remain identical, as do all other
+incomplete records. Complete one-state owner/map checks are shared with the
+member-constructor profile; both earlier proof dictionaries remain identical.
+The new fingerprinted module is `scripts/eh_allocation.py`. Its node-12 frame
+does not relax any existing profile. Array cleanups and other graph/state
+shapes still require independent review. No game source or compiler artifact
+changes and no build occurs; all 1,719 linked owners and 192 dependency stamps
+validate. See [the allocation review](knowledge/allocation-cleanup-eh.md).
+
+The preceding member-constructor checkpoint reported 860 exact, 65 mismatch
+and 290 incomplete, covering 160,619 exact owned bytes and 925 units.
 An explicit single-member constructor profile independently validates complete
 Stage/ItemManager 38-byte code and 44-byte metadata aggregates. The original
 stores FuncInfo before its map; the candidate's complete PDB owner stores the
@@ -407,7 +425,7 @@ entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. No further build is needed for the current EH
 review; identical artifacts and current dependency keys are checked in
-`.analysis/member-constructor-artifact-check.json`. The preceding source restoration is
+`.analysis/allocation-eh-artifact-check.json`. The preceding source restoration is
 `.analysis/replay-destructor-source-trial.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
@@ -468,7 +486,15 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **164 controls across seven relevant suites**:
+The current batch passes **187 controls across eight relevant suites**:
+allocation EH (23), member constructor EH (24), saved-register EH (37), legacy
+empty EH (25), AnmManager constructor EH (25), reviewed linkages (36), strict
+Oracle (14) and focused audit (3). New controls cover five complete graphs,
+every aggregate byte, all four independent runtime roles, both normal exits,
+saved-pointer/state lifetime, relocations and refusal of node-12 by every
+earlier profile. Logs use `.analysis/allocation-eh-<suite>-controls.log`;
+the summary is `.analysis/allocation-eh-controls-summary.json`.
+The preceding member-constructor batch passed **164 controls across seven relevant suites**:
 member constructor EH (24), saved-register EH (37), legacy empty EH (25),
 AnmManager constructor EH (25), reviewed linkages (36), strict Oracle (14) and
 focused audit (3). New controls exercise both entire aggregates, every code/data
@@ -924,7 +950,8 @@ are compared. The retained volatile-this accesses in the shared UpdateFunc
 constructor remain a source/context hypothesis. Recover that context rather
 than special-casing one registration or forcing the instruction order. Other
 nonempty EH graphs, apart from the separately reviewed Stage/ItemManager
-single-member constructors, still need independent complete-owner review; do not
+single-member constructors and five allocation cleanups, still need independent
+complete-owner review; do not
 generalize this explicit profile to arbitrary tables or interior symbols.
 Moving an ordinary constructor definition to UpdateFunc.cpp alone has now
 been tested and rejected against complete owners; do not repeat that trial.

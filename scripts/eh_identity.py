@@ -101,7 +101,7 @@ def private_owner(context, statics, pdb, symbol, source, size, code, *, internal
 
 def inspect_handler(image, address, info, cookie, frame_handler, *, cookie_offset=-4):
     """All 27 bytes: GS frame check, EAX FuncInfo, and the EH3 tail transfer."""
-    require(type(cookie_offset) is int and cookie_offset in (-4, -16, -20),
+    require(type(cookie_offset) is int and cookie_offset in (-4, -12, -16, -20),
             "unsupported EH handler cookie displacement")
     code = image.read_address(address, 27)
     expected = (bytes.fromhex("8b5424088d420c8b4a") + struct.pack("<b", cookie_offset)
@@ -172,6 +172,9 @@ def review_handler(context, record, statics, pdb):
     if record.get("profile") == "single-member-constructor-v1":
         from eh_member_constructor import review_member_constructor
         return review_member_constructor(context, record, statics, pdb)
+    if record.get("profile") == "allocation-cleanup-v1":
+        from eh_allocation import review_allocation
+        return review_allocation(context, record, statics, pdb)
     profile = record.get("profile")
     require("profile" not in record or isinstance(profile, str) and profile in _SAVED_REGISTER_PROFILES,
             "unsupported EH owner profile")
@@ -292,6 +295,49 @@ def target_owner_section(context, address, size, code):
     flags = sections[0].characteristics
     require(flags & required == required and not flags & forbidden,
             "EH aggregate target has wrong section permissions")
+
+
+def single_state_owners(context, record, statics, pdb, action_size):
+    """Check full owners/maps shared by the two explicitly reviewed action lengths."""
+    require(action_size in (11, 18) and record["size"] == action_size + 27
+            and record["func_info_size"] == 44 and record["eh_flags"] == 1,
+            "EH single-state graph lacks its complete fixed aggregates")
+    source, symbol = record["source"], record["parent_symbol"]
+    parent, size = record["parent_target"], record["parent_size"]
+    code, info, handler = record["code_target"], record["func_info_target"], record["target"]
+    code_size = action_size + 27
+    require(handler == code + action_size, "EH single-state handler is not its reviewed interior entry")
+    owner, candidate_parent = complete_game_entry(context, source, symbol, parent, size, record["parent_sha256"])
+    extent_hash(context.target, code, code_size, record["target_sha256"])
+    metadata = extent_hash(context.target, info, 44, record["func_info_sha256"])
+    target_owner_section(context, code, code_size, True)
+    target_owner_section(context, info, 44, False)
+    overlaps = {a: r for a, r in context.boundaries.items()
+                if a < code + code_size and code <= int(r["span_end"], 0)}
+    require(set(overlaps) == {code} and int(overlaps[code]["size"]) == action_size
+            and int(overlaps[code]["span_end"], 0) == code + action_size - 1,
+            "EH single-state aggregate conflicts with its original cleanup scope")
+    require(not any(a < info + 44 and info <= int(r["span_end"], 0)
+                    for a, r in context.boundaries.items()), "EH single-state metadata overlaps code")
+    code_names = {"__unwindfunclet$" + symbol + "$0": 0, "__ehhandler$" + symbol: action_size}
+    data_names = {"__unwindtable$" + symbol: 0, "__ehfuncinfo$" + symbol: 8}
+    code_owner = private_owner(context, statics, pdb, "__unwindfunclet$" + symbol + "$0",
+                               source, code_size, True, internal_symbols=code_names)
+    descriptor = private_owner(context, statics, pdb, "__unwindtable$" + symbol,
+                               source, 44, False, internal_symbols=data_names)
+    require(code_owner["module_index"] == descriptor["module_index"] == owner["pdb_module_index"],
+            "EH single-state graph leaves its parent PDB module")
+    require(metadata == struct.pack("<9IiI", 0x19930522, 1, info + 36, 0, 0, 0, 0, 0, 1, -1, code),
+            "EH original metadata is not the complete one-state graph")
+    candidate_code, candidate_data = code_owner["address"], descriptor["address"]
+    expected_data = struct.pack("<iI9I", -1, candidate_code, 0x19930522, 1, candidate_data,
+                                0, 0, 0, 0, 0, 1)
+    require(context.image.read_address(candidate_data, 44) == expected_data,
+            "EH complete metadata or single-state unwind action differs")
+    check_relocations(context.image, candidate_data, 44, [4, 16])
+    code_owner["internal_symbols"] = code_names
+    descriptor.update(internal_symbols=data_names, func_info_offset=8, unwind_offset=0)
+    return candidate_parent, code_owner, descriptor
 
 
 def inspect_constructor_frame(image, parent, size, handler, cookie):

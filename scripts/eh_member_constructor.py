@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import struct
 
-from eh_identity import (check_relocations, complete_game_entry, extent_hash, inspect_handler,
-                         load_config_cookie, private_owner, require, target_owner_section)
+from eh_identity import (check_relocations, complete_game_entry, inspect_handler,
+                         load_config_cookie, require, single_state_owners)
 from linked_image import linked_code_fields
 
 
@@ -78,28 +78,7 @@ def review_member_constructor(context, record, statics, pdb):
             and record["func_info_size"] == 44 and record["eh_flags"] == 1,
             "EH member constructor requires its complete fixed parent and 38/44-byte aggregates")
     parent, code, info, handler = spec["parent"], record["code_target"], record["func_info_target"], record["target"]
-    require(handler == code + 11, "EH member constructor handler is not its reviewed interior entry")
-    owner, candidate_parent = complete_game_entry(context, source, symbol, parent, spec["size"],
-                                                  record["parent_sha256"])
-    extent_hash(context.target, code, 38, record["target_sha256"])
-    metadata = extent_hash(context.target, info, 44, record["func_info_sha256"])
-    target_owner_section(context, code, 38, True)
-    target_owner_section(context, info, 44, False)
-    overlaps = {a: r for a, r in context.boundaries.items()
-                if a < code + 38 and code <= int(r["span_end"], 0)}
-    require(set(overlaps) == {code} and int(overlaps[code]["size"]) == 11
-            and int(overlaps[code]["span_end"], 0) == code + 10,
-            "EH member constructor aggregate conflicts with its original cleanup scope")
-    require(not any(a < info + 44 and info <= int(r["span_end"], 0)
-                    for a, r in context.boundaries.items()), "EH member constructor metadata overlaps code")
-    code_names = {"__unwindfunclet$" + symbol + "$0": 0, "__ehhandler$" + symbol: 11}
-    data_names = {"__unwindtable$" + symbol: 0, "__ehfuncinfo$" + symbol: 8}
-    code_owner = private_owner(context, statics, pdb, "__unwindfunclet$" + symbol + "$0",
-                               source, 38, True, internal_symbols=code_names)
-    descriptor = private_owner(context, statics, pdb, "__unwindtable$" + symbol,
-                               source, 44, False, internal_symbols=data_names)
-    require(code_owner["module_index"] == descriptor["module_index"] == owner["pdb_module_index"],
-            "EH member constructor graph leaves its parent PDB module")
+    candidate_parent, code_owner, descriptor = single_state_owners(context, record, statics, pdb, 11)
     candidate_code, candidate_data = code_owner["address"], descriptor["address"]
     candidate_info = candidate_data + 8
     entry = record["cleanup_entry"]
@@ -133,22 +112,11 @@ def review_member_constructor(context, record, statics, pdb):
             == [(7, 4, "REL32"), (24, 4, "REL32"), (29, 4, "DIR32"), (34, 4, "REL32")],
             "EH member constructor aggregate has unreviewed instruction fields")
     check_relocations(context.image, candidate_code, 38, [29])
-    require(metadata == struct.pack("<9IiI", 0x19930522, 1, info + 36, 0, 0, 0, 0, 0, 1, -1, code),
-            "EH member constructor original metadata is not the complete one-state graph")
-    # The original stores FuncInfo before the map; the complete candidate PDB
-    # object stores the map before FuncInfo. Both full layouts are checked.
-    expected_data = struct.pack("<iI9I", -1, candidate_code, 0x19930522, 1, candidate_data,
-                                0, 0, 0, 0, 0, 1)
-    require(context.image.read_address(candidate_data, 44) == expected_data,
-            "EH member constructor complete metadata or unwind action differs")
-    check_relocations(context.image, candidate_data, 44, [4, 16])
     prefix_size, suffix_size = inspect_frame(context.target, parent, handler, spec)
     require(inspect_frame(context.image, candidate_parent, candidate_code + 11, spec)
             == (prefix_size, suffix_size), "EH member constructor frame extents differ")
     check_relocations(context.image, candidate_parent, prefix_size, [6, 21 + len(spec["saves"])])
     check_relocations(context.image, candidate_parent + spec["size"] - suffix_size, suffix_size, [])
-    code_owner["internal_symbols"] = code_names
-    descriptor.update(internal_symbols=data_names, func_info_offset=8, unwind_offset=0)
     return dict(source=source, parent_symbol=symbol, parent_target=parent, parent_size=spec["size"],
                 parent_candidate=candidate_parent, target=handler, profile=PROFILE,
                 handler=dict(symbol="__ehhandler$" + symbol, address=candidate_code + 11,

@@ -6,6 +6,11 @@ different internal roles from the empty destructor graphs. The explicit
 `single-member-constructor-v1` profile independently checks these two graphs.
 Both complete primary parents now pass, adding 409 exact bytes.
 
+A later [allocation-cleanup review](allocation-cleanup-eh.md) shares complete
+one-state ownership/map checks with this profile. Its five separate creation
+methods require distinct action/frame rules; both member-constructor proofs
+and primary results remain identical.
+
 ## Original scopes and fixed roles
 
 | Parent | Complete original | Reachable instructions | Cleanup | Handler | FuncInfo | Unwind map |

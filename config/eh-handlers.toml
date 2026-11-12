@@ -292,3 +292,88 @@ symbol = "??1ItemManagerInner@@QAE@XZ"
 target = 0x42f150
 size = 70
 sha256 = "993289394e086dd01896eca5c08eccb2dca8ecbdf6014ef362c185d6a9c44aac"
+
+[[handlers]]
+profile = "allocation-cleanup-v1"
+source = "src/Stage.cpp"
+parent_symbol = "?create@Stage@@SAPAU1@PBD@Z"
+parent_target = 0x409db0
+parent_size = 156
+parent_sha256 = "e6c4d18789d37ca62dfc75e7e27b5ba1606879f5c417eaaf256d6f4ae9610bdc"
+target = 0x48a482
+code_target = 0x48a470
+size = 45
+target_sha256 = "ba36caabb6b1a606de648ebfbde7a3393c85deb51b2b05d4ffc44e50fe167f79"
+func_info_target = 0x49b044
+func_info_size = 44
+func_info_sha256 = "57ff270e6643e3ca6449b62a473af879586b0cb4978e8f4f28d6e6c66319cee1"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "allocation-cleanup-v1"
+source = "src/BulletManager.cpp"
+parent_symbol = "?create@BulletManager@@SAPAU1@XZ"
+parent_target = 0x411dd0
+parent_size = 147
+parent_sha256 = "adceffc52225a51d84ed00e337cf35fd7d39c5d16e23e2429e6ff2ef47db7983"
+target = 0x48a572
+code_target = 0x48a560
+size = 45
+target_sha256 = "db99f9a63204b79eb9973ab8f12134d35332d2a00fc4cb5e59d4a821397a0ae7"
+func_info_target = 0x49b118
+func_info_size = 44
+func_info_sha256 = "075bcffceb558f11d22ac8d376c3336f46d237b069ebf5a4bfe492049f37d177"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "allocation-cleanup-v1"
+source = "src/Item.cpp"
+parent_symbol = "?create@ItemManager@@SAPAU1@XZ"
+parent_target = 0x42f440
+parent_size = 147
+parent_sha256 = "826c6b7ad79f5e6dcac8adf99758ac8c78c0bd119b12837dc3a42a182847ce49"
+target = 0x48a832
+code_target = 0x48a820
+size = 45
+target_sha256 = "c474af88c2aad6c2bb7238945700a7ff196b46d2faa0b280e12b1f8af01bb20e"
+func_info_target = 0x49b3e0
+func_info_size = 44
+func_info_sha256 = "7d71738dd098a6e8900661c87e86a4d2e6b4350a2aeb2903c88ae507ee0ac8cc"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "allocation-cleanup-v1"
+source = "src/ReplayManager.cpp"
+parent_symbol = "?create@ReplayManager@@SAPAU1@H@Z"
+parent_target = 0x447e20
+parent_size = 193
+parent_sha256 = "70c898a31fdd30103bf406de3add0979186b93310396f0d18901e9eafbf4ce72"
+target = 0x48a912
+code_target = 0x48a900
+size = 45
+target_sha256 = "fb9d6ae57222a7b78d816e124c36f52ad2fda6c4b75fbb7f5889b6d07e368010"
+func_info_target = 0x49b4c8
+func_info_size = 44
+func_info_sha256 = "ef2c6572431d9d36e82a8d033a9dd0b8a8453d763232ddb7346221adcb579c4d"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "allocation-cleanup-v1"
+source = "src/ReplayManager.cpp"
+parent_symbol = "?create_from_file@ReplayManager@@SAPAU1@PBD@Z"
+parent_target = 0x447ef0
+parent_size = 191
+parent_sha256 = "9923f2df004b44665f0a00dd95ba4b2adce4ad19c2918328286bcc998838bcbc"
+target = 0x48a942
+code_target = 0x48a930
+size = 45
+target_sha256 = "706a0bd7a68cdd2f987101f89c7fbc94abe208e96da7b2e7bddce2818e46b2e8"
+func_info_target = 0x49b4f4
+func_info_size = 44
+func_info_sha256 = "92a4f1ef6a7234812037d8bc161d9200e8f59696e05fcafd81906ed802a02f52"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"

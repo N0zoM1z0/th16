@@ -26,6 +26,11 @@ one-state graph for Stage and ItemManager construction. Its whole 38/44-byte
 aggregates, fixed member destructor roles and complete parent state/frame
 checks do not relax the empty profiles or generalize to allocation cleanups.
 
+The separate [allocation review](allocation-cleanup-eh.md) establishes five
+complete creation-method graphs with fixed sized-delete actions, allocation
+lifetimes and both normal exits. It shares complete one-state ownership/map
+checks with the member constructors while keeping action/frame rules separate.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

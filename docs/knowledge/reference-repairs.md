@@ -2178,3 +2178,40 @@ owner records and 192 dependency stamps validate. See
 [the full review](member-constructor-eh.md),
 `.analysis/member-constructor-caller-scopes.json` and
 `.analysis/member-constructor-regression-check.json`.
+
+## Five complete allocation-cleanup EH graphs
+
+Original registration, allocation and unwind edges independently identify five
+complete 45-byte private code and 44-byte metadata graphs. Each eighteen-byte
+action passes the fixed object size and saved allocation at EBP-16 to the
+independently bound complete sized-delete runtime. The handler remains an
+interior entry at eighteen. Complete source-qualified PDB owners and exact
+parent-qualified private names are required for every code/data aggregate.
+
+The original FuncInfo-before-map and candidate map-before-FuncInfo layouts are
+checked in full, with one state, flags one and exactly one action to state -1.
+These owner/map checks are shared with member constructors; both older proof
+dictionaries and complete primary results remain identical. Allocation action
+semantics, fixed class sizes, parent allocator calls, saved pointers and state
+lifetimes retain separate rules. Three complete frame layouts derive cookie
+node-20/-12/-16 offsets from actual locals/saves. Each parent has two complete
+normal restorations and exactly two fixed RET offsets. Existing profiles
+explicitly refuse the newly reviewed node-12 displacement.
+
+Stage create (156), BulletManager create (147), ItemManager create (147),
+ReplayManager create (193) and create_from_file (191) pass all 834 primary
+bytes. Original-only reviews account for 56/50/50/66/64 reachable instructions,
+every branch/terminal path and following alignment. The 225 auxiliary code
+bytes, 220 metadata bytes and already bound runtime callees receive no extra
+primary credit. Array actions and other graph/state shapes remain unsupported.
+
+Canonical replay reports 865 exact, 65 mismatch and 285 incomplete among 1,215
+annotations, covering 161,453 primary exact bytes and 930 units. All previous
+860 exact results, 65 complete mismatches and 925 unit definitions remain
+identical; every other incomplete record is also identical. One hundred
+eighty-seven controls pass across eight suites, including twenty-three new
+allocation tests. No game source or compiler artifact changes and no build
+occurs; all 1,719 complete linked owners and 192 dependency stamps validate.
+See [the full review](allocation-cleanup-eh.md),
+`.analysis/allocation-eh-caller-scopes.json` and
+`.analysis/allocation-eh-regression-check.json`.
