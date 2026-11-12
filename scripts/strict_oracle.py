@@ -189,6 +189,13 @@ def reviewed_linkages(context, path=None):
                 vftables.append((row, publics[0]["address"]))
             elif row["kind"] == "stage-table-v1":
                 review_stage_table(context, row, publics[0]["address"])
+            elif row["kind"] == "sound-data-aggregate-v1":
+                from sound_data_identity import review_sound_data
+                from runtime_identity import RuntimeEvidenceError
+                try:
+                    review_sound_data(context, row, publics[0]["address"])
+                except RuntimeEvidenceError as error:
+                    raise Incomplete(str(error)) from error
             elif row["kind"] in {"literal", "indexed-literal", "string-literal"}:
                 if row["kind"] != "string-literal":
                     match = re.fullmatch(r"__(?:real|xmm)@([0-9a-fA-F]+)", symbol)
@@ -566,6 +573,7 @@ class Context:
                  ROOT / "scripts/static_identity.py", ROOT / "config/static-functions.toml",
                  ROOT / "scripts/runtime_identity.py", ROOT / "config/runtime-interiors.toml",
                  ROOT / "scripts/runtime_isa.py", ROOT / "config/runtime-globals.toml",
+                 ROOT / "scripts/sound_data_identity.py",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
@@ -634,6 +642,13 @@ class Context:
                 except RuntimeEvidenceError as error:
                     raise Incomplete(str(error)) from error
             addend = field.get("addend", 0)
+            if reviewed and reviewed["kind"] == "sound-data-aggregate-v1":
+                from sound_data_identity import validate_sound_field
+                from runtime_identity import RuntimeEvidenceError
+                try:
+                    validate_sound_field(field, reviewed)
+                except RuntimeEvidenceError as error:
+                    raise Incomplete(str(error)) from error
             if reviewed and reviewed["kind"] == "runtime-global-isa-v1":
                 from runtime_isa import validate_isa_field, RuntimeEvidenceError
                 try:

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete ISA storage and aligned audio EH identities.
+Updated 2026-11-12 after complete sound data review and restored scalar source trials.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,7 +18,37 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **879 exact, 65 mismatch and 271 incomplete** among
+The current report is **881 exact, 65 mismatch and 269 incomplete** among
+1215 annotated candidates, covering 167,359 exact owned bytes and 946 units.
+SoundManager::play_sound_centered (145 bytes) and play_sound_at_position (168)
+pass their complete owners. The fixed sound-data profile validates the full
+1,656-byte PDB contribution containing the 1,560-byte sound table and two
+48-byte anchor arrays, with unique typed members, one source producer, every
+byte and no pointer relocations. Two independent complete original reads prove
+twenty-byte rows and the signed field at offset ten. Only sound-table DIR32
+points are bound; adjacent anchors and one-past limits remain excluded. All
+preceding 879 exact results, 65 complete mismatches and 944 unit definitions
+remain retained; complete comparison details only refresh image hash/PDB age.
+Title replay save loses its table field but still has an extent mismatch;
+audio initialization loses three table fields and retains its EH/adjacent-array
+limit. All other incomplete records are identical. See
+[the full review](knowledge/audio-scalar-and-sound-data.md).
+
+Two natural SetVolume contexts are rejected at 115 bytes against the complete
+114-byte original: a used buffer snapshot with branch-specific returns, then a
+used BGM-setting snapshot. They compile identically. Unpause compound assignment
+produces exactly its baseline 107 bytes against 103 and is rejected. Do not
+repeat these forms, earlier addend reversal or the named duration trial. Source
+is restored byte for byte and freshly rebuilt incrementally. All 1,719 complete
+linked function records are identical and all 192 dependency stamps validate.
+Source input remains 356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f;
+PDB age changes from 121 to 124. The complete 1,428-byte original sound worker
+independently witnesses both scalar calls; it receives no exact credit.
+Continue from `.analysis/audio-sound-data-next-inventory.json`. SoundManager
+initialization's remaining end is anchor-x-plus-four, outside the typed sound
+table; require a separate cursor/ownership proof rather than enlarging a type.
+
+The preceding ISA/audio report was **879 exact, 65 mismatch and 271 incomplete** among
 1215 annotated candidates, covering 167,046 exact owned bytes and 944 units.
 CSoundManager::CreateStreaming (856 bytes) and CreateStreamingFromMemory
 (809) pass their complete owners. An independent twelve-instruction normal
@@ -38,8 +68,9 @@ See [the complete review](knowledge/audio-isa-aligned-eh.md).
 
 The remaining DSUtil candidates are SetVolume at 0x004711F0 and Unpause at
 0x00471380, with candidate extents 116/107 against complete originals 114/103.
-The bounded inventory is `.analysis/isa-aligned-next-audio-inventory.json`. Continue with natural source/type/calling context and complete-owner
-comparison. The ISA profile admits no other global or interior address;
+The earlier bounded inventory is `.analysis/isa-aligned-next-audio-inventory.json`.
+The rejected snapshot/compound forms are now recorded above; continue with
+new natural source/type/calling evidence and complete-owner comparison. The ISA profile admits no other global or interior address;
 other aligned EH graphs require separate independent review.
 
 The preceding rand/vector report was **877 exact, 65 mismatch and 273 incomplete** among
@@ -591,7 +622,18 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **363 controls across fifteen relevant suites**:
+The current batch passes **135 controls across seven relevant suites**:
+sound data (18), reviewed linkages (43), strict Oracle (14), focused audit (3),
+stage/time identities (20), ISA storage (16) and aligned audio EH (21). New
+controls cover every aggregate byte, both complete original witnesses, all
+three typed members, full producer ownership, no relocations, the narrow
+primary field gate and complete primary body rejection. All prior 944 units
+and complete comparison details are retained apart from fresh image/PDB age.
+Logs and summaries use `.analysis/audio-sound-data-`;
+`.analysis/audio-scalar-artifact-check.json` verifies source and build restoration.
+The full retention check is `.analysis/audio-sound-data-regression-check.json`.
+
+The preceding ISA/audio batch passed **363 controls across fifteen relevant suites**:
 ISA storage (16), aligned audio EH (21), reviewed linkages (43), strict Oracle
 (14), focused audit (3), saved-register EH (56), vftables (33), single-state EH
 (16), terminate EH (23), array EH (18), member EH (25), allocation EH (23),

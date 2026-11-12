@@ -757,6 +757,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0045DE30,SoundManager::play_preloaded_bgm,reference-0045de30,local-strict-pass,291,291,291,.analysis/reference-audit.json
 0x0045DF60,SoundManager::stop_bgm,reference-0045df60,local-strict-pass,150,150,150,.analysis/reference-audit.json
 0x0045E000,SoundManager::reset,reference-0045e000,local-strict-pass,331,331,331,.analysis/reference-audit.json
+0x0045E150,SoundManager::play_sound_centered,reference-0045e150,local-strict-pass,145,145,145,.analysis/reference-audit.json
+0x0045E1F0,SoundManager::play_sound_at_position,reference-0045e1f0,local-strict-pass,168,168,168,.analysis/reference-audit.json
 0x0045E2A0,SoundManager::stop_sound,reference-0045e2a0,local-strict-pass,132,132,132,.analysis/reference-audit.json
 0x0045EC50,SoundManager::bgm_thread_proc,reference-0045ec50,local-strict-pass,172,172,172,.analysis/reference-audit.json
 0x0045ED00,SoundManager::modify_bgm,reference-0045ed00,local-strict-pass,150,150,150,.analysis/reference-audit.json

@@ -2455,3 +2455,43 @@ their candidate extents differ from the independent originals. Continue with
 natural source/type/calling context, preserving whole-owner comparison and
 the current incremental build graph. Other ISA globals, arbitrary address
 addends and unrelated aligned EH graphs remain unbound.
+
+## Complete sound aggregate and rejected scalar source contexts
+
+Two complete sound-queue entries now pass: play_sound_centered (145 bytes) and
+play_sound_at_position (168), adding 313 primary exact bytes. Two complete
+original signed-word reads independently prove the table's twenty-byte rows
+and offset-ten field. The candidate sound table shares one complete 1,656-byte
+PDB contribution with both anchor arrays. The fixed profile requires all three
+typed objects (1,560/48/48), all names, one source producer, every initialized
+byte and no relocations. Only sound-table DIR32 points are bound. The anchors,
+one-past addresses and arbitrary aggregates remain excluded; auxiliary data
+gives no primary exact credit.
+
+A used scaled-path buffer snapshot and branch-specific SetVolume returns
+produce 115 bytes against the complete 114-byte original. Adding a used BGM
+setting snapshot gives exactly the same whole candidate; the common buffer
+load remains hoisted and the setting is reloaded. Both are rejected. Unpause
+compound assignment gives exactly the baseline 107 bytes against 103 and is
+also rejected. Do not repeat these forms or the earlier addend/duration trials.
+All sources are restored byte for byte and freshly rebuilt incrementally.
+All 1,719 complete linked function records are identical and all 192 dependency
+stamps validate; source input remains
+`356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f`.
+PDB age changes from 121 to 124; fresh metadata is retained. The complete
+1,428-byte/368-instruction original sound worker witnesses both scalar calls
+without granting primary exact credit.
+
+Canonical replay reports 881 exact, 65 mismatch and 269 incomplete among 1,215
+annotations, covering 167,359 exact bytes and 946 units. All previous 879 exact
+results, 65 mismatches and 944 units are retained; comparison details only
+refresh image hash/PDB age. Title replay save loses its table field but still
+has unequal complete extents. SoundManager initialization loses three table
+fields but retains its private EH and anchor-x-plus-four loop limit; do not
+widen the typed sound table or borrow the adjacent anchor identity. Other
+incomplete records are identical. All 135 controls pass across seven relevant
+suites. See [the full review](audio-scalar-and-sound-data.md),
+`.analysis/audio-scalar-trial-records.json`,
+`.analysis/audio-scalar-artifact-check.json`,
+`.analysis/audio-sound-data-graph-proof.json` and
+`.analysis/audio-sound-data-regression-check.json`.
