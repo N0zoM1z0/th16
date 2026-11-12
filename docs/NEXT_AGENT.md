@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after native boss/damage/laser diagnostics and source trials.
+Updated 2026-11-12 after shared ECL position setup, spell-name decoding and difficulty dispatch.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -9,16 +9,17 @@ running at this checkpoint. Read AGENTS.md before work.
 
 The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
-feedback and damage-source traversal. This continuation adds native execution
-evidence; all new source trials are restored, with no new exact credit.
+feedback and damage-source traversal. The current source continuation retains
+shared ECL position setup, destination-pointer spell-name decoding and explicit
+difficulty dispatch, with no new exact credit.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`ad2da61dc4edd8acc9786383f25b07f16e256d9bcc67d1605446a8019135281c`.
-PDB age is **188**. The final incremental build, strict replay and progress check
+`71e0dc6fd0fafbfdc9d83f91765d1e17d3e8c4c21c6ea45e5ee5aadbaa2a99cc`.
+PDB age is **195**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -26,6 +27,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [ECL position and spell names](knowledge/ecl-position-and-spell-name.md) | Shared interpolation finish, forward destination traversal and both difficulty tables; candidate 21,586 to 21,384 bytes against 21,408 original bytes, still incomplete |
 | [Curve laser and projectile dispatch](knowledge/laser-initialization-and-bullet-dispatch.md) | Complete 1,726-byte initializer and 32-byte private helper; projectile dispatcher 5,988 to 5,500 bytes, still incomplete |
 | [Audio release and strncmp](knowledge/audio-release-strncmp.md) | Complete 370/88-byte primary owners; complete 120-byte UCRT identity; fixed ESI-only terminal frame |
 | [Sound data](knowledge/audio-scalar-and-sound-data.md) | Complete 1,656-byte aggregate; complete 145/168-byte queue entries |
@@ -38,8 +40,36 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
+Read [ECL position setup and spell-name decoding](knowledge/ecl-position-and-spell-name.md)
+first. `ecl_run_over_300` now shares the position/curve initial-goal-timer path,
+advances the spell-name destination with a forward counter, and retains separate
+Lunatic/default branches to recover both four-entry difficulty tables. The
+complete diagnostic scope contains **three dispatches**, 182 target slots and
+702 map bytes: **21,408 original / 21,384 candidate bytes**. An early main-only
+scope omitted the two nested tables; its 21,374 target total is incomplete.
+Keep its warning and use `.analysis/ecl-dispatch-work/complete-scope/`.
+
+Final native checks agree in **1,157 complete movement calls**, **108 complete
+difficulty-selector calls** and **140 spell prefixes**. Independent expected
+objects, stack-variable writes, decoded names and actual call arguments also
+agree. A negative control refuses a default return that never reaches the
+spell call. Prefix cases stop before `Spellcard::start`; resource startup and
+the rest of that path are untested. The complete calls check preserved registers,
+stack cleanup, floating controls and exception-chain restoration. Constant
+arguments and positive-offset local destinations leave other ECL variables,
+stack references and most handlers outside the fixtures.
+
+Preserve `.analysis/ecl-dispatch-work/`, including the tested final image,
+partial-scope warning, multibyte-padding refusal and restored source forms.
+The strict Oracle still refuses the large dispatcher. Its existing adjacency
+proof does not cover the original frame-slot store between remap and dispatch;
+several linked identities and code differences also remain. No acceptance
+profile or normalization is changed. The full replay preserves all 885 exact
+owners and classifications, 169,575 exact primary bytes and 950 units.
+
 Read [native boss and laser diagnostics](knowledge/native-boss-and-laser-diagnostics.md)
-before repeating calling-context or laser trials. A Win32 debug child now runs
+before repeating calling-context or laser trials. At the preceding `8eb77c0`
+checkpoint, a Win32 debug child runs
 the unmodified original and candidate at their preferred image bases under this
 game's Wine prefix. Redirect only after the loader's initial breakpoint. Native
 execution agrees in **278 boss, 118 damage and 596 laser cases**, including
@@ -56,12 +86,12 @@ also did not execute game code. Keep both failures and use the final reports.
 The final isolated strict replay preserves all 885 exact owners and all
 comparison classifications; `final-regression.json` records PDB age 188.
 
-The large `ecl_run_over_300` candidate is 21,586 bytes. A 21,402-byte owner
-snapshot removes original reloads after calls and is restored. Its target
-primary boundary is provisionally 19,976 bytes; switch storage still needs
-independent review. The nine unresolved fields reported first by the Oracle
-do not imply that binding them will make the remaining body exact. The retained
-Ghidra context warns about switch recovery. The compiler call graph also finds
+The earlier 21,402-byte ECL owner snapshot removes original reloads after calls
+and is restored. The target primary boundary is provisionally 19,976 bytes;
+the newer diagnostic accounts for all three trailing tables as described above,
+while formal scope review remains open. Binding unresolved fields alone cannot
+make the body exact. The retained Ghidra context warns about switch recovery.
+The compiler call graph also finds
 `ecl_ext_damage_anm_hurtbox` as a second damage caller; retaining that real
 callback does not fix the boss/damage alignment arrangement. See the review
 for the other restored source forms and their complete extents.

@@ -241,6 +241,10 @@ static __forceinline void ecl_angle_to_player(EnemyData *enemy)
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {
+    PosVel *position;
+    InterpStrange1 *position_interp;
+    f32 goal_x;
+    f32 goal_y;
     EclRawInstr *instr = full->context.current_context->current_instr();
     switch ((i16)instr->opcode)
     {
@@ -565,29 +569,40 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_TIME_OFFSET:
     case ECL_OP_MOVE_POS_REL_TIME_OFFSET:
     {
-        PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos : &rel_pos;
-        InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos_i : &rel_pos_i;
-        f32 x = full->context.current_context->get_float_arg(2);
-        f32 y = full->context.current_context->get_float_arg(3);
+        position = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos : &rel_pos;
+        position_interp = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos_i : &rel_pos_i;
+        goal_x = full->context.current_context->get_float_arg(2);
+        goal_y = full->context.current_context->get_float_arg(3);
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
-            interp->end_time = 0;
+            position_interp->end_time = 0;
             break;
         }
         if (instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET || instr->opcode == ECL_OP_MOVE_POS_REL_TIME_OFFSET)
         {
-            x = flags_low & ENEMY_FLAG_MIRRORED ? pos_vel->pos.x - x : pos_vel->pos.x + x;
-            y = pos_vel->pos.y + y;
+            f32 origin_x = position->pos.x;
+            if (flags_low & ENEMY_FLAG_MIRRORED)
+            {
+                origin_x -= goal_x;
+            }
+            else
+            {
+                origin_x += goal_x;
+            }
+            goal_x = origin_x;
+            goal_y = position->pos.y + goal_y;
         }
-        interp->end_time = full->context.current_context->get_int_arg(0);
-        interp->bezier_1 = g_zero_vec;
-        interp->bezier_2 = g_zero_vec;
-        interp->method_for_3d = full->context.current_context->get_int_arg(1);
-        interp->flag_1d &= ~1;
-        interp->initial = pos_vel->pos;
-        interp->goal = Float3(x > -999999.0 ? x : pos_vel->pos.x, y > -999999.0 ? y : pos_vel->pos.y, 0.0f);
-        interp->reset_timer();
-        pos_vel->flags &= ~0xf;
+        position_interp->end_time = full->context.current_context->get_int_arg(0);
+        position_interp->bezier_1 = g_zero_vec;
+        position_interp->bezier_2 = g_zero_vec;
+        position_interp->method_for_3d = full->context.current_context->get_int_arg(1);
+        position_interp->flag_1d &= ~1;
+    // Position and per-axis movement share the initial, goal and timer setup.
+    initialize_position_goal:
+        position_interp->initial = position->pos;
+        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : position->pos.x, goal_y > -999999.0 ? goal_y : position->pos.y, 0.0f);
+        position_interp->reset_timer();
+        position->flags &= ~0xf;
         break;
     }
     // moveCurve(time, mode_x, mode_y, x, y) and its variants: separate
@@ -597,32 +612,37 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos : &rel_pos;
-        InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos_i : &rel_pos_i;
-        f32 x = full->context.current_context->get_float_arg(3);
-        f32 y = full->context.current_context->get_float_arg(4);
+        position = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos : &rel_pos;
+        position_interp = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos_i : &rel_pos_i;
+        goal_x = full->context.current_context->get_float_arg(3);
+        goal_y = full->context.current_context->get_float_arg(4);
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
-            interp->end_time = 0;
+            position_interp->end_time = 0;
             break;
         }
         if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
         {
-            x = flags_low & ENEMY_FLAG_MIRRORED ? pos_vel->pos.x - x : pos_vel->pos.x + x;
-            y = pos_vel->pos.y + y;
+            f32 origin_x = position->pos.x;
+            if (flags_low & ENEMY_FLAG_MIRRORED)
+            {
+                origin_x -= goal_x;
+            }
+            else
+            {
+                origin_x += goal_x;
+            }
+            goal_x = origin_x;
+            goal_y = position->pos.y + goal_y;
         }
-        interp->end_time = full->context.current_context->get_int_arg(0);
-        interp->bezier_1 = g_zero_vec;
-        interp->bezier_2 = g_zero_vec;
-        interp->method_for_1d = full->context.current_context->get_int_arg(1);
-        interp->flag_1d |= 1;
-        interp->move_curve_mode = full->context.current_context->get_int_arg(2);
-        interp->flag_1d |= 1;
-        interp->initial = pos_vel->pos;
-        interp->goal = Float3(x > -999999.0 ? x : pos_vel->pos.x, y > -999999.0 ? y : pos_vel->pos.y, 0.0f);
-        interp->reset_timer();
-        pos_vel->flags &= ~0xf;
-        break;
+        position_interp->end_time = full->context.current_context->get_int_arg(0);
+        position_interp->bezier_1 = g_zero_vec;
+        position_interp->bezier_2 = g_zero_vec;
+        position_interp->method_for_1d = full->context.current_context->get_int_arg(1);
+        position_interp->flag_1d |= 1;
+        position_interp->move_curve_mode = full->context.current_context->get_int_arg(2);
+        position_interp->flag_1d |= 1;
+        goto initialize_position_goal;
     }
     // moveBezier(time, b1x, b1y, x, y, b2x, b2y), moveBezierRel
     case ECL_OP_MOVE_BEZIER:
@@ -1372,6 +1392,8 @@ int EnemyData::ecl_run_over_300()
             *get_int_arg_ptr(0) = hard;
             break;
         case DIFFICULTY_LUNATIC:
+            *get_int_arg_ptr(0) = lunatic;
+            break;
         default:
             *get_int_arg_ptr(0) = lunatic;
             break;
@@ -1397,6 +1419,8 @@ int EnemyData::ecl_run_over_300()
             *get_float_arg_ptr(0) = hard;
             break;
         case DIFFICULTY_LUNATIC:
+            *get_float_arg_ptr(0) = lunatic;
+            break;
         default:
             *get_float_arg_ptr(0) = lunatic;
             break;
@@ -1879,9 +1903,10 @@ int EnemyData::ecl_run_over_300()
         const char *src = (const char *)&instr->args[4];
         u8 key = 0x77;
         u8 step = 7;
-        for (i32 i = 0; i < len; i++)
+        char *dest = name;
+        for (i32 i = 0; i < len; i++, dest++)
         {
-            name[i] = src[i] ^ key;
+            *dest = src[i] ^ key;
             key += step;
             step += 0x10;
         }
