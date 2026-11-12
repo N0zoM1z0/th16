@@ -534,6 +534,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043EC10,PauseMenu::draw_high_scores,reference-0043ec10,local-strict-pass,426,426,426,.analysis/reference-audit.json
 0x0043EDC0,PauseMenu::on_draw,reference-0043edc0,local-strict-pass,324,324,324,.analysis/reference-audit.json
 0x0043EF10,PauseMenu::on_draw_thunk,reference-0043ef10,local-strict-pass,5,5,5,.analysis/reference-audit.json
+0x0043F0F0,PauseMenu::open,reference-0043f0f0,local-strict-pass,331,331,331,.analysis/reference-audit.json
+0x0043F240,open_replay_end_menu,reference-0043f240,local-strict-pass,267,267,267,.analysis/reference-audit.json
 0x0043F500,open_stage_end_menu,reference-0043f500,local-strict-pass,415,415,415,.analysis/reference-audit.json
 0x0043F6A0,PauseMenu::leave_paused,reference-0043f6a0,local-strict-pass,148,148,148,.analysis/reference-audit.json
 0x0043F740,PauseMenu::leave_game_over,reference-0043f740,local-strict-pass,74,74,74,.analysis/reference-audit.json

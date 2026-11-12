@@ -700,8 +700,8 @@ address,size,span_end,state,evidence
 0x0043EDC0,324,0x0043EF03,strict-compared,.analysis/reference-audit.json
 0x0043EF10,5,0x0043EF14,strict-compared,.analysis/reference-audit.json
 0x0043EF20,464,0x0043F0EF,provisional,.analysis/reference-audit.json
-0x0043F0F0,331,0x0043F23A,provisional,.analysis/reference-audit.json
-0x0043F240,267,0x0043F34A,provisional,.analysis/reference-audit.json
+0x0043F0F0,331,0x0043F23A,strict-compared,.analysis/reference-audit.json
+0x0043F240,267,0x0043F34A,strict-compared,.analysis/reference-audit.json
 0x0043F350,428,0x0043F4FB,provisional,.analysis/reference-audit.json
 0x0043F500,415,0x0043F69E,strict-compared,.analysis/reference-audit.json
 0x0043F6A0,148,0x0043F733,strict-compared,.analysis/reference-audit.json

@@ -208,7 +208,8 @@ class ReviewedLinkageControls(unittest.TestCase):
         for symbol, witness, duplicate, payload in [
                 ("??_C@_02DKCKIIND@?$CFs?$AA@", 0x46d12c, 0x4929de, b"%s\0"),
                 ("??_C@_01CLKCMJKC@?5?$AA@", 0x452d55, 0x48c1c3, b" \0"),
-                ("??_C@_01IDAFKMJL@_?$AA@", 0x43e78d, 0x48f80c, b"_\0")]:
+                ("??_C@_01IDAFKMJL@_?$AA@", 0x43e78d, 0x48f80c, b"_\0"),
+                ("??_C@_05PEDNBBBD@Pause?$AA@", 0x43f186, 0x492abe, b"Pause\0")]:
             address = next(p["address"] for p in self.context.publics if p["symbol"] == symbol)
             self.assertEqual(self.context.data_contributions[address], [len(payload)])
             self.assertEqual(self.context.image.read_address(address, len(payload)), payload)

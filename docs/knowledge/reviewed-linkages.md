@@ -38,6 +38,12 @@ function bytes while providing its named typed identity. A fixed 58.0f read
 and complete 104-byte unsigned-division identity resolve two further whole
 menu-drawing candidates without changing admission rules.
 
+The subsequent [replay-format/pause review](replay-format-linkage.md) exposes
+complete named 16/4-byte format globals through explicit external linkage.
+A fixed complete `Pause` PUSH resolves two further whole menu entries. Replay
+index source trials are rejected; both remaining full extent refusals stay
+explicit, with no admission-rule change.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |

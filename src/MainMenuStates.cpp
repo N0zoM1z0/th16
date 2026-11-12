@@ -1700,14 +1700,14 @@ i32 TitleInf::do_replay_menu()
 // Line formats of the replay list: numbered and user replays, each with
 // and without a replay in the slot.
 // GLOBAL: TH16 0x493700
-const char *const g_replay_list_formats[2][2] = {
+extern const char *const g_replay_list_formats[2][2] = {
     {"No.%.2d %s %.2d/%.2d/%.2d %.2d:%.2d %s %s %s %s %2.1f%%",
      "No.%.2d -------- --/--/-- --:-- ------- ------ ------- --- ---%%"},
     {"%s  %s %.2d/%.2d/%.2d %.2d:%.2d %s %s %s %s %s %2.1f%%",
      "User  -------- --/--/-- --:-- ------- ------ ------- --- ---%%"},
 };
 // GLOBAL: TH16 0x493710
-const char *const g_replay_spell_format[1] = {"No.%.2d %s %.2d/%.2d/%.2d %.2d:%.2d %s %s SpellPr %3d %2.1f%%"};
+extern const char *const g_replay_spell_format[1] = {"No.%.2d %s %.2d/%.2d/%.2d %.2d:%.2d %s %s SpellPr %3d %2.1f%%"};
 
 // The 4 characters after "th16_ud" in a user replay's file name.
 // GLOBAL: TH16 0x4dfd54

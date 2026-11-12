@@ -11816,6 +11816,76 @@ linkages = [
   { offset = 1, width = 4, type = "REL32", symbol = "?on_draw@PauseMenu@@QAEHXZ", target = 4451776, addend = 0 },
 ]
 
+[units.reference-0043f0f0]
+artifact_kind = "linked-pe"
+source = "src/PauseMenu.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?open@PauseMenu@@QAEXXZ"
+object = "PauseMenu.obj"
+candidate_address = 4565920
+target_address = 4452592
+size = 331
+compare_size = 331
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 9, width = 4, type = "REL32", symbol = "?update_play_time@GameThread@@SAXXZ", target = 4381632, addend = 0 },
+  { offset = 18, width = 4, type = "REL32", symbol = "?set_state@PauseMenu@@QAEXH@Z", target = 4448592, addend = 0 },
+  { offset = 24, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 29, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 59, width = 4, type = "REL32", symbol = "?delete_vm@AnmManager@@QAEXUAnmId@@@Z", target = 4649408, addend = 0 },
+  { offset = 106, width = 4, type = "REL32", symbol = "?create_ui_vm_at_origin@AnmLoaded@@QAE?AUAnmId@@HH@Z", target = 4296672, addend = 0 },
+  { offset = 122, width = 4, type = "REL32", symbol = "?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z", target = 4649136, addend = 0 },
+  { offset = 127, width = 4, type = "REL32", symbol = "?pause_sounds@SoundManager@@SAXXZ", target = 4383952, addend = 0 },
+  { offset = 135, width = 4, type = "REL32", symbol = "?play_sound_centered@SoundManager@@QAEXHH@Z", target = 4579664, addend = 0 },
+  { offset = 140, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 1116, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 151, width = 4, type = "DIR32", symbol = "??_C@_05PEDNBBBD@Pause?$AA@", target = 4795076, addend = 0 },
+  { offset = 160, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 0 },
+  { offset = 165, width = 4, type = "REL32", symbol = "?modify_bgm@SoundManager@@QAEXHHPBD@Z", target = 4582656, addend = 0 },
+  { offset = 177, width = 4, type = "REL32", symbol = "?update_sound_thread@SoundManager@@SAHXZ", target = 4580144, addend = 0 },
+  { offset = 188, width = 4, type = "REL32", symbol = "?take_snapshot@PauseMenu@@QAEXXZ", target = 4452128, addend = 0 },
+  { offset = 196, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 202, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 215, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8368, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 221, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 237, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8368, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 256, width = 4, type = "REL32", symbol = "?hide@GuiMsgVm@@QAEXXZ", target = 4371984, addend = 0 },
+  { offset = 268, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 273, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 307, width = 4, type = "REL32", symbol = "?hide_tree@AnmVm@@QAEXXZ", target = 4649904, addend = 0 },
+]
+
+[units.reference-0043f240]
+artifact_kind = "linked-pe"
+source = "src/PauseMenu.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?open_replay_end_menu@@YAXXZ"
+object = "PauseMenu.obj"
+candidate_address = 4567088
+target_address = 4452928
+size = 267
+compare_size = 267
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "?g_PauseMenu@@3PAUPauseMenu@@A", target = 4878068, addend = 0 },
+  { offset = 16, width = 4, type = "REL32", symbol = "?set_state@PauseMenu@@QAEXH@Z", target = 4448592, addend = 0 },
+  { offset = 72, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 105, width = 4, type = "REL32", symbol = "?take_snapshot@PauseMenu@@QAEXXZ", target = 4452128, addend = 0 },
+  { offset = 110, width = 4, type = "DIR32", symbol = "?g_Gui@@3PAUGui@@A", target = 4877772, addend = 0 },
+  { offset = 133, width = 4, type = "REL32", symbol = "?delete_vm@AnmManager@@QAEXUAnmId@@@Z", target = 4649408, addend = 0 },
+  { offset = 164, width = 4, type = "REL32", symbol = "?create_ui_vm_at_origin@AnmLoaded@@QAE?AUAnmId@@HH@Z", target = 4296672, addend = 0 },
+  { offset = 180, width = 4, type = "REL32", symbol = "?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z", target = 4649136, addend = 0 },
+  { offset = 185, width = 4, type = "REL32", symbol = "?pause_sounds@SoundManager@@SAXXZ", target = 4383952, addend = 0 },
+  { offset = 190, width = 4, type = "DIR32", symbol = "??_C@_05PEDNBBBD@Pause?$AA@", target = 4795076, addend = 0 },
+  { offset = 199, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 0 },
+  { offset = 204, width = 4, type = "REL32", symbol = "?modify_bgm@SoundManager@@QAEXHHPBD@Z", target = 4582656, addend = 0 },
+  { offset = 212, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 225, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8368, storage_name = "g_GameWindow", storage_size = 8420 },
+  { offset = 231, width = 4, type = "DIR32", symbol = "?g_game_speed@@3MA", target = 4872072, addend = 0 },
+  { offset = 247, width = 4, type = "DIR32", symbol = "?g_GameWindow@@3UGameWindow@@A", target = 5078240, addend = 8368, storage_name = "g_GameWindow", storage_size = 8420 },
+]
+
 [units.reference-0043f500]
 artifact_kind = "linked-pe"
 source = "src/PauseMenu.cpp"

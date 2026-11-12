@@ -1881,3 +1881,38 @@ evidence is `.analysis/season-name-full-audit.log`,
 `.analysis/season-name-regression-check.json` and
 `.analysis/season-name-controls-summary.json`. Source-origin review remains
 open; Factory acceptance remains unsubmitted and nothing is published.
+
+## Replay format declarations and complete pause entries
+
+The two existing readonly replay format arrays now have explicit external
+linkage, consistent with their maintained GLOBAL annotations. Each has a
+unique source-qualified public and complete 16/4-byte named PDB global type.
+Neither is a standalone physical PDB contribution. All five full strings
+match the original and every candidate table-pointer relocation is checked;
+candidate bytes remain unchanged. No verifier or compiler profile changes.
+
+The complete original replay drawing entry is 1,500 bytes / 375 reachable
+instructions, followed by four INT3 bytes. Resolving its seven format fields
+reveals a complete 1,500/1,501 extent refusal. A direct bool cast retains
+1,501; a used replay-kind local gives 1,509 and changes 1,229 linked owner
+records. Both are rejected. Full original/candidate bytes, fields, relocations
+and every changed owner are retained. The function source is restored and
+freshly rebuilt, preserving only the two declaration changes. All 1,719 linked
+owner entries/extents/raw hashes and 192 dependency stamps validate.
+
+A fixed original PUSH at `0x0043F186` selects the six-byte NUL-terminated
+`Pause` at `0x00492AC4`, rather than its duplicate at `0x00492ABE`.
+The three original menu entry scopes are independently complete at
+331/267/428 bytes. The first two source candidates pass completely, adding
+598 primary exact bytes; the game-over entry retains a 428/425 extent refusal
+with frame and loop-alignment differences. No artificial frame forcing occurs.
+
+The canonical report is 837 exact, 65 mismatch and 313 incomplete among
+1,215 candidates, with 152,600 primary exact bytes and 902 units. All previous
+835 exact results, 65 complete mismatches and 900 units remain retained.
+Sixty controls pass across reviewed linkages, strict Oracle, focused audit
+and PDB types. Existing string mutation cases now include the pause label.
+See [the full review](replay-format-linkage.md),
+`.analysis/replay-format-regression-check.json` and
+`.analysis/replay-format-pause-caller-scopes.json`. No cold build, cleanup,
+archived-output substitution, Factory submission or remote publication occurs.
