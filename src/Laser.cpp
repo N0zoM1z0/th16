@@ -2872,23 +2872,23 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
 }
 
 // Mode 2 uses a guarded countdown loop for the whole elapsed frames.
-// TODO: mode 2 still has different local slots and instruction scheduling; the frame is aligned to 64.
+// TODO: mode 2 local slots and mode 1 polar-vector scheduling still differ; the frame is aligned to 64.
 // FUNCTION: TH16 0x437ee0
 void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, f32 time)
 {
-    time -= start_time;
+    f32 elapsed = time - start_time;
     switch (mode)
     {
     case 0:
-        *out_pos = start_pos + velocity * time * speed;
+        *out_pos = start_pos + velocity * elapsed * speed;
         *out_speed = speed;
         *out_angle = angle;
         break;
     case 1:
         if (-990.0f > angle_delta)
         {
-            *out_pos = start_pos + velocity * (speed + speed + speed_delta * time) * (time + 1.0f) * 0.5f;
-            *out_speed = speed_delta * time + speed;
+            *out_pos = start_pos + velocity * (speed + speed + speed_delta * elapsed) * (elapsed + 1.0f) * 0.5f;
+            *out_speed = speed_delta * elapsed + speed;
             *out_angle = angle;
         }
         else
@@ -2903,7 +2903,7 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
             Float3 sum;
             // This add retains the original X operand order.
             D3DXVec3Add(&sum, &a, &b);
-            *out_pos = start + sum * time;
+            *out_pos = start + sum * elapsed;
             *out_speed = (f32)sqrt(sum.x * sum.x + sum.y * sum.y);
             *out_angle = atan2(sum.y, sum.x);
         }
@@ -2915,7 +2915,7 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
         f32 s = speed;
         Float3 d;
         d.z = 0.0f;
-        i32 n = (i32)time;
+        i32 n = (i32)elapsed;
         if (n > 0)
         {
             do
@@ -2939,12 +2939,13 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
                         break;
                     }
                 }
-                pos += d;
+                // d uses the incoming speed; advance speed for the next frame.
                 s += speed_delta;
+                pos += d;
             } while (--n);
         }
         laser_sincosmul(&d, a, s);
-        *out_pos = pos + d * (time - (f32)floor(time));
+        *out_pos = pos + d * (elapsed - (f32)floor(elapsed));
         *out_speed = s;
         *out_angle = a;
         break;
