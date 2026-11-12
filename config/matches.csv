@@ -263,7 +263,9 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0041A4D0,SptInf::get_float_global,reference-0041a4d0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0041A4E0,SptInf::get_float_global_ptr,reference-0041a4e0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0041A4F0,SptInf::free_all_async,reference-0041a4f0,local-strict-pass,51,51,51,.analysis/reference-audit.json
+0x0041A530,SptInf::SptInf,reference-0041a530,local-strict-pass,99,99,99,.analysis/reference-audit.json
 0x0041A5A0,SptInf::reset_run_context,reference-0041a5a0,local-strict-pass,196,196,196,.analysis/reference-audit.json
+0x0041A670,??_GSptInf@@UAEPAXI@Z,reference-0041a670,local-strict-pass,93,93,93,.analysis/reference-audit.json
 0x0041A6D0,EnemyLife::receive_damage,reference-0041a6d0,local-strict-pass,79,79,79,.analysis/reference-audit.json
 0x0041A720,EnemyDrop::eject_all_drops,reference-0041a720,local-strict-pass,63,63,63,.analysis/reference-audit.json
 0x0041A760,??_GEnemyInf@@UAEPAXI@Z,reference-0041a760,local-strict-pass,38,38,38,.analysis/reference-audit.json
@@ -278,6 +280,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0041AA40,LaserManager::find_by_id,reference-0041aa40,local-strict-pass,43,43,43,.analysis/reference-audit.json
 0x0041AA70,EnemyManager::allocate_new_enemy,reference-0041aa70,local-strict-pass,876,876,876,.analysis/reference-audit.json
 0x0041ADE0,EnemyManager::remove_from_active_list,reference-0041ade0,local-strict-pass,144,144,144,.analysis/reference-audit.json
+0x0041AE70,EnemyManager::initialize,reference-0041ae70,local-strict-pass,459,459,459,.analysis/reference-audit.json
+0x0041B040,EclResourceInf::load_includes,reference-0041b040,local-strict-pass,351,351,351,.analysis/reference-audit.json
 0x0041B340,EnemyManager::create,reference-0041b340,local-strict-pass,141,141,141,.analysis/reference-audit.json
 0x0041B3D0,EnemyManager::update,reference-0041b3d0,local-strict-pass,283,283,283,.analysis/reference-audit.json
 0x0041B4F0,EnemyManager::on_tick_callback,reference-0041b4f0,local-strict-pass,55,55,55,.analysis/reference-audit.json

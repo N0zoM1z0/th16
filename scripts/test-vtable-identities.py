@@ -16,6 +16,7 @@ from strict_oracle import Context, Incomplete, ROOT, reviewed_linkages
 
 THREAD = "??_7ThreadInf@@6B@"
 FILE = "??_7File@Pbg@@6B@"
+ECL_TABLES = ("??_7EclResourceInf@@6B@", "??_7SptResourceInf@@6B@", "??_7SptInf@@6B@")
 
 
 class Overlay:
@@ -68,10 +69,11 @@ class VftableControls(unittest.TestCase):
         context.target = Overlay(context.target, {address: data})
         return context
 
-    def test_real_one_and_nine_slot_witnesses_pass(self):
+    def test_real_reviewed_slot_witnesses_pass(self):
         result = self.check()
-        self.assertEqual(result[THREAD]["size"], 4)
-        self.assertEqual(result[FILE]["size"], 36)
+        for symbol, size in [(THREAD, 4), (FILE, 36), *zip(ECL_TABLES, (12, 8, 24))]:
+            with self.subTest(symbol=symbol):
+                self.assertEqual(result[symbol]["size"], size)
 
     def test_complete_laser_constructor_with_26_slots_replays(self):
         units = tomllib.loads((ROOT / "config/match-units.toml").read_text())["units"]
@@ -79,11 +81,12 @@ class VftableControls(unittest.TestCase):
         self.assertEqual((result["result"], result["compared_size"], result["matched_bytes"]), ("exact", 138, 138))
 
     def test_pdb_table_cannot_be_truncated(self):
-        context = copy.copy(self.context)
-        context.data_contributions = copy.deepcopy(context.data_contributions)
-        context.data_contributions[self.candidate(FILE) - 4] = [36]
-        with self.assertRaisesRegex(Incomplete, "complete PDB storage"):
-            self.check(context=context)
+        for symbol in (FILE, *ECL_TABLES):
+            context = copy.copy(self.context)
+            context.data_contributions = copy.deepcopy(context.data_contributions)
+            context.data_contributions[self.candidate(symbol) - 4] = [int(self.row(self.rows, symbol)["size"])]
+            with self.subTest(symbol=symbol), self.assertRaisesRegex(Incomplete, "complete PDB storage"):
+                self.check(context=context)
 
     def test_pdb_table_cannot_have_ambiguous_owners(self):
         context = copy.copy(self.context)
@@ -93,16 +96,18 @@ class VftableControls(unittest.TestCase):
             self.check(context=context)
 
     def test_original_table_cannot_be_truncated_even_with_forged_candidate_size(self):
-        rows = copy.deepcopy(self.rows)
-        row = self.row(rows, FILE)
-        row["size"] = "4"
-        address = int(row["target_address"], 0)
-        row["target_sha256"] = hashlib.sha256(self.context.target.read_address(address, 4)).hexdigest()
-        context = copy.copy(self.context)
-        context.data_contributions = copy.deepcopy(context.data_contributions)
-        context.data_contributions[self.candidate(FILE) - 4] = [8]
-        with self.assertRaisesRegex(Incomplete, "slot extent is truncated"):
-            self.check(rows, context)
+        for symbol in (FILE, *ECL_TABLES):
+            rows = copy.deepcopy(self.rows)
+            row = self.row(rows, symbol)
+            size = 4 if symbol == FILE else int(row["size"]) - 4
+            row["size"] = str(size)
+            address = int(row["target_address"], 0)
+            row["target_sha256"] = hashlib.sha256(self.context.target.read_address(address, size)).hexdigest()
+            context = copy.copy(self.context)
+            context.data_contributions = copy.deepcopy(context.data_contributions)
+            context.data_contributions[self.candidate(symbol) - 4] = [size + 4]
+            with self.subTest(symbol=symbol), self.assertRaisesRegex(Incomplete, "slot extent is truncated"):
+                self.check(rows, context)
 
     def test_original_class_name_is_required(self):
         table = int(self.row(self.rows)["target_address"], 0)
@@ -172,20 +177,25 @@ class VftableControls(unittest.TestCase):
             self.check(rows, context)
 
     def test_wrong_candidate_slot_is_rejected(self):
-        table = self.candidate(FILE)
-        wrong = self.words(self.context.image, table + 4, 1)[0]
-        context = copy.copy(self.context)
-        context.image = Overlay(context.image, {table: struct.pack("<I", wrong)})
-        with self.assertRaisesRegex(Incomplete, "slot lacks"):
-            self.check(context=context)
+        for symbol in (FILE, *ECL_TABLES):
+            table = self.candidate(symbol)
+            wrong = self.words(self.context.image, table + 4, 1)[0]
+            context = copy.copy(self.context)
+            context.image = Overlay(context.image, {table: struct.pack("<I", wrong)})
+            with self.subTest(symbol=symbol), self.assertRaisesRegex(Incomplete, "slot lacks"):
+                self.check(context=context)
 
     def test_each_table_pointer_requires_a_relocation(self):
-        table = self.candidate()
-        context = copy.copy(self.context)
-        context.image = Overlay(context.image, {})
-        context.image.base_relocations = lambda: [a for a in self.context.image.base_relocations() if a != table]
-        with self.assertRaisesRegex(Incomplete, "complete relocated"):
-            self.check(context=context)
+        for symbol in (THREAD, *ECL_TABLES):
+            table = self.candidate(symbol)
+            size = int(self.row(self.rows, symbol)["size"])
+            for offset in range(-4, size, 4):
+                context = copy.copy(self.context)
+                context.image = Overlay(context.image, {})
+                context.image.base_relocations = lambda removed=table + offset: [
+                    a for a in self.context.image.base_relocations() if a != removed]
+                with self.subTest(symbol=symbol, offset=offset), self.assertRaisesRegex(Incomplete, "complete relocated"):
+                    self.check(context=context)
 
     def test_writable_vftable_storage_is_rejected(self):
         context = copy.copy(self.context)
@@ -193,7 +203,7 @@ class VftableControls(unittest.TestCase):
         context.image.sections = [replace(s, characteristics=s.characteristics | 0x80000000)
                                   if s.name == ".rdata" else s for s in context.image.sections]
         with self.assertRaisesRegex(Incomplete, "read-only data"):
-            self.check(context=context)
+            self.check(rows=[self.row(self.rows)], context=context)
 
     def test_multiple_inheritance_is_explicitly_unsupported(self):
         table = int(self.row(self.rows)["target_address"], 0)
@@ -293,7 +303,7 @@ class VftableControls(unittest.TestCase):
         context.image.sections = [replace(s, characteristics=s.characteristics & ~0x40000000)
                                   if s.name == ".rdata" else s for s in context.image.sections]
         with self.assertRaisesRegex(Incomplete, "read-only data"):
-            self.check(context=context)
+            self.check(rows=[self.row(self.rows)], context=context)
 
     def test_zero_length_callee_extent_is_rejected(self):
         slot = self.words(self.context.image, self.candidate(), 1)[0]

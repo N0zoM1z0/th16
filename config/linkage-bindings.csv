@@ -82,3 +82,6 @@ __real@42680000,0x49461c,4,literal,43434cefabebc41dc208f0dd4f005745a600197d5ace5
 __aulldiv,0x4876b0,104,runtime-function,84d17e172ff5e6bce23b7837cc15439649f685d00b3cdff9cc07cae79a0a88f2,,,docs/knowledge/season-name-linkage.md,LIBCMT.lib,
 ??_C@_05PEDNBBBD@Pause?$AA@,0x492ac4,6,string-literal,55b2a63e68fc41ee4673a22eb2e735993a21a9d8ae1da5307ec7cb353678e04d,0x43f186,push,docs/knowledge/replay-format-linkage.md,,
 ??_C@_0BH@JNGBGENB@?$IDf?$IB?$FL?$ID?$FO?$IC?$KK?$IJ?s?$IC?j?$IC?D?$IC?$KC?$IC?$NM?$IC?$LH?$AN?6?$AA@,0x491c64,23,string-literal,b399417298c7a57196281a7d95c8576bfea2695b9ae9dac352216f41398c5d8c,0x407cfe,push,docs/knowledge/loader-error-identities.md,,
+??_7EclResourceInf@@6B@,0x492198,12,vftable,d17bb82f3e1e980c5886e531c41e7f587f1438d0813300f989da6619e5de2a84,,,docs/knowledge/ecl-vftable-identities.md,,
+??_7SptResourceInf@@6B@,0x4921e0,8,vftable,fd0a6ec0d57dd029835ada9f1653aeb4384f5d12351b66eda3f1b3401e18dd8e,,,docs/knowledge/ecl-vftable-identities.md,,
+??_7SptInf@@6B@,0x4921c4,24,vftable,db10a36973278edf467e074ab6cf318e98ca9442de2162787b0895825df8149a,,,docs/knowledge/ecl-vftable-identities.md,,

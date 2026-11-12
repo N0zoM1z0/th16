@@ -49,6 +49,11 @@ one complete 23-byte string through a fixed original PUSH, distinguishing seven
 identical original copies. Five complete source owners pass. The natural wrap
 bounds context is rejected and restored; no admission or normalization rule changes.
 
+The subsequent [ECL vftable review](ecl-vftable-identities.md) establishes three
+complete class tables, all eleven slots and their full eighteen-object RTTI
+graph with 36 pointer relocations. Four further whole source owners pass under
+existing rules. Two ANM insertion ID source contexts are rejected and restored.
+
 ## Runtime entry points
 
 | Candidate symbol | Target | Complete extent | Identification evidence |
@@ -222,6 +227,9 @@ complete virtual-function contracts:
 | `LaserInfiniteInf` | `0x004923B8` | 104 | 108 bytes, including its locator pointer |
 | `LaserCurveInf` | `0x004922E0` | 104 | 108 bytes, including its locator pointer |
 | `LaserBeamInf` | `0x0049234C` | 104 | 108 bytes, including its locator pointer |
+| `EclResourceInf` | `0x00492198` | 12 | 16 bytes, including its locator pointer |
+| `SptResourceInf` | `0x004921E0` | 8 | 12 bytes, including its locator pointer |
+| `SptInf` | `0x004921C4` | 24 | 28 bytes, including its locator pointer |
 
 These are `vftable` records in the linkage table. Their hashes cover every
 original slot byte. The preceding locator pointer and all supporting RTTI
@@ -268,7 +276,7 @@ Every slot must point to a unique complete candidate code contribution and an
 independent original function entry, with one pre-existing fixed function
 identity. Unknown slots are incomplete. An executable pointer immediately after
 the declared original table rejects a shortened extent. Together with the
-reviewed one/nine-slot layouts and original RTTI, this bounds the supported
+reviewed complete class method contracts and original RTTI, this bounds the supported
 original callable tables independently of their consumers.
 
 The result binds only the exact address point in a DIR32 field. Nonzero addends

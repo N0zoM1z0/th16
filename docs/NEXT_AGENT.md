@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after a fixed loader-failure identity and rejected wrap bounds context.
+Updated 2026-11-12 after complete ECL vftable identities and rejected insertion ID contexts.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,24 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **842 exact, 65 mismatch and 308 incomplete** among
-1215 annotated candidates, covering 153,746 exact owned bytes and 907 units.
+The current report is **846 exact, 65 mismatch and 304 incomplete** among
+1215 annotated candidates, covering 154,748 exact owned bytes and 911 units.
+Original RTTI independently identifies complete EclResourceInf, SptResourceInf
+and SptInf primary tables. All eleven fixed function slots, eighteen complete
+candidate metadata objects (346 bytes) and all 36 pointer relocations are
+checked. Existing admission rules resolve SptInf construction (99), its scalar
+deleting destructor (93), EnemyManager initialization (459) and ECL include
+loading (351), adding 1,002 primary exact bytes. The two remaining destructors
+retain one/two unbound fields. All previous 842 exact results, 65 complete
+mismatches and 907 unit definitions remain unchanged; four new units give 911.
+Used ID values and reversed high/low field expressions leave all four complete
+ANM insertion owners unchanged and are rejected. Source is restored byte for
+byte and freshly rebuilt; all 1,719 complete linked owners and 192 dependency
+stamps validate. No game source or admission-rule change is retained. See
+[the ECL vftable review](knowledge/ecl-vftable-identities.md).
+
+The preceding loader checkpoint reported 842 exact, 65 mismatch and 308
+incomplete, with 153,746 exact primary bytes and 907 units.
 A fixed original PUSH identifies complete 23-byte loader-failure storage
 among seven identical original copies. Its unique complete candidate string
 contribution resolves ASCII initialization (326), GUI initialization (258),
@@ -313,13 +329,14 @@ include the used replay-slot local in PauseMenu.cpp and explicit external
 linkage for the existing readonly season-name and replay-format tables in
 MainMenuStates.cpp.
 The preceding spell-page, GameWindow, Bullet and Player function trials remain
-restored. The current source input is unchanged from the Bullet wrap trial
+restored. The current source input is unchanged from the ANM insertion trial
 baseline and retains the preceding two replay-format linkage definitions.
-Both replay index trials, the snapshot-ID trial and wrap bounds trial are
-restored. All 1,719 complete linked owner entries/extents/payloads remain
+Both replay index trials, the snapshot-ID trial, wrap bounds trial and two
+ANM insertion ID contexts are restored. All 1,719 complete linked owner
+entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. See
-`.analysis/bullet-wrap-restored-check.json`. The preceding callback
+`.analysis/anm-insertion-restored-check.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
 aggregate profile. The preceding callback-table batch adds a fixed literal
@@ -379,7 +396,13 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **53 controls across three relevant suites**:
+The current batch passes **83 controls across four relevant suites**:
+vftable identities (30), reviewed linkages (36), strict Oracle (14) and focused
+audit (3). Logs use `.analysis/ecl-vftable-<suite>-controls.log`; the summary
+is `.analysis/ecl-vftable-controls-summary.json`. Two older permission tests
+now isolate their target vftable after unrelated stage-table preemption; their
+exact rejection assertions remain intact.
+The preceding loader batch passed **53 controls across three suites**:
 reviewed linkages (36), strict Oracle (14) and focused audit (3). Logs use
 `.analysis/loader-error-<suite>-controls.log`; the summary is
 `.analysis/loader-error-controls-summary.json`.
@@ -453,8 +476,12 @@ table derivation is `.analysis/review-table-entry-scopes.py` and
 `.analysis/additional-sincos-original-scopes.json` and
 `.analysis/anm-private-dispatch-original-scopes.json`; the maintained verifier
 rechecks the full originals and paths. Current replay and retained-pass evidence
-are `.analysis/loader-error-full-audit.log` and
-`.analysis/loader-error-regression-check.json`. Current complete callers and
+are `.analysis/ecl-vftable-full-audit.log` and
+`.analysis/ecl-vftable-regression-check.json`. Current RTTI/slot evidence is
+`.analysis/ecl-vftable-graph-proof.json`; complete primary scopes and callers
+are `.analysis/ecl-consumer-original-scopes.json` and
+`.analysis/ecl-vftable-caller-scopes.json`. The rejected ID contexts are
+`.analysis/anm-insertion-source-trials.json`. Preceding complete callers and
 original-only scopes are `.analysis/loader-error-caller-scopes.json` and
 `.analysis/loader-error-original-review.json`; the rejected wrap context is
 `.analysis/bullet-wrap-bounds-source-trial.json`. Preceding source-trial evidence
@@ -528,8 +555,8 @@ evidence remains `.analysis/review-direct-owner-scopes.py` and
 `.analysis/direct-owner-original-scopes.json`. The preceding remap reproducer
 and scopes remain `.analysis/review-remapped-owner-scopes.py` and
 `.analysis/remapped-owner-original-scopes.json`. Current incremental build and
-source-restoration evidence is `.analysis/bullet-wrap-restored-build.log` and
-`.analysis/bullet-wrap-restored-check.json`. The current source input includes
+source-restoration evidence is `.analysis/anm-insertion-restored-build.log` and
+`.analysis/anm-insertion-restored-check.json`. The current source input includes
 the retained season/replay table declarations; all complete function bytes remain
 unchanged. Preceding source-trial evidence is `.analysis/failure-format-runtime-restored-build.log`,
 `.analysis/failure-format-runtime-restored-check.json` and
@@ -604,7 +631,7 @@ audit writing those ledgers.
 
 ## Outstanding work
 
-The 308 incomplete candidates comprise 139 with unresolved fields, 132
+The 304 incomplete candidates comprise 135 with unresolved fields, 132
 candidate/original-inventory extent refusals, 27 without a same-start
 contribution, six with source-object ownership differences, two requiring
 reviewed switch or owned-data extents and two with reviewed case-map mismatches.

@@ -1989,3 +1989,41 @@ pass. See [the full review](loader-error-identities.md),
 `.analysis/bullet-wrap-bounds-source-trial.json`. No game source change,
 primary literal credit, cold build, cleanup, archived-output substitution,
 Factory submission or remote publication is retained.
+
+## Complete ECL vftables and rejected insertion ID contexts
+
+Original RTTI name/COL references independently identify the complete primary
+EclResourceInf, SptResourceInf and SptInf address points at `0x00492198`,
+`0x004921E0` and `0x004921C4`. Their three/two/six callable slots have fixed
+original identities and unique complete candidate code owners. All eighteen
+unique candidate metadata objects (346 bytes) and 36 pointer relocations are
+checked, including full locator prefixes, type names and base-array trailing
+bytes. Existing vftable/RTTI rules require no changes. No metadata or extra
+slot-callee primary credit is granted.
+
+SptInf construction (99), its scalar deleting destructor (93), EnemyManager
+initialization (459) and ECL include loading (351) now pass all 1,002 bytes.
+Their independent complete original scopes contain 14/34/116/134 reachable
+instructions and account for all terminal paths and following alignment.
+EnemyManager/EnemyInf destruction retain one/two unbound fields.
+
+Two ordinary ANM insertion contexts are rejected: an AnmId value shared by the
+VM assignment and return, and a high-field-first packed-ID expression. Both
+produce identical code for all four 177/172/177/172-byte insertion owners and
+leave all 1,719 complete linked owner entries/extents/raw hashes unchanged.
+Source is restored byte for byte and freshly rebuilt; all 192 dependency
+stamps validate. Do not repeat these contexts or the earlier node helper,
+or force a register/read order to recover the remaining allocations.
+
+Canonical replay reports 846 exact, 65 mismatch and 304 incomplete among
+1,215 candidates, with 154,748 exact primary bytes and 911 units. All previous
+842 exact results, 65 complete mismatches and 907 unit definitions are retained.
+Eighty-three controls pass across vftable identities, reviewed linkages, strict
+Oracle and focused audit. The existing table mutation cases now include the
+three ECL tables. Two older permission tests now isolate their vftable binding
+from earlier stage-table failures while retaining the exact rejection assertions.
+See [the complete review](ecl-vftable-identities.md),
+`.analysis/ecl-vftable-regression-check.json` and
+`.analysis/anm-insertion-source-trials.json`. No game source or admission-rule
+change, cold build, cleanup, archived-output substitution, Factory submission
+or remote publication is retained.
