@@ -2034,6 +2034,30 @@ linkages = [
   { offset = 241, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
 ]
 
+[units.reference-00409670]
+artifact_kind = "linked-pe"
+source = "src/Stage.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0Stage@@QAE@XZ"
+object = "Stage.obj"
+candidate_address = 4628656
+target_address = 4232816
+size = 249
+compare_size = 249
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??0Stage@@QAE@XZ", target = 4760587, addend = 0, eh_handler = true },
+  { offset = 23, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 87, width = 4, type = "DIR32", symbol = "??1AnmVm@@QAE@XZ", target = 4232112, addend = 0 },
+  { offset = 92, width = 4, type = "DIR32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 108, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 172, width = 4, type = "DIR32", symbol = "??1AnmVm@@QAE@XZ", target = 4232112, addend = 0 },
+  { offset = 177, width = 4, type = "DIR32", symbol = "??0AnmVm@@QAE@XZ", target = 4232176, addend = 0 },
+  { offset = 193, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 220, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+]
+
 [units.reference-00409770]
 artifact_kind = "linked-pe"
 source = "src/Stage.cpp"
@@ -8755,6 +8779,31 @@ compare_size = 32
 profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
+]
+
+[units.reference-0042f0b0]
+artifact_kind = "linked-pe"
+source = "src/Item.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0ItemManager@@QAE@XZ"
+object = "Item.obj"
+candidate_address = 4457280
+target_address = 4386992
+size = 160
+compare_size = 160
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??0ItemManager@@QAE@XZ", target = 4761531, addend = 0, eh_handler = true },
+  { offset = 22, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 44, width = 4, type = "DIR32", symbol = "??1Item@@QAE@XZ", target = 4387296, addend = 0 },
+  { offset = 49, width = 4, type = "DIR32", symbol = "??0Item@@QAE@XZ", target = 4387232, addend = 0 },
+  { offset = 71, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 76, width = 4, type = "DIR32", symbol = "??1Item@@QAE@XZ", target = 4387296, addend = 0 },
+  { offset = 81, width = 4, type = "DIR32", symbol = "??0Item@@QAE@XZ", target = 4387232, addend = 0 },
+  { offset = 113, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 126, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 135, width = 4, type = "DIR32", symbol = "?g_ItemManager@@3PAUItemManager@@A", target = 4877788, addend = 0 },
 ]
 
 [units.reference-0042f150]

@@ -169,6 +169,9 @@ def inspect_saved_register_frame(image, address, size, handler, *,
 def review_handler(context, record, statics, pdb):
     if record.get("profile") == "anm-manager-constructor-v1":
         return review_anm_constructor(context, record, statics, pdb)
+    if record.get("profile") == "single-member-constructor-v1":
+        from eh_member_constructor import review_member_constructor
+        return review_member_constructor(context, record, statics, pdb)
     profile = record.get("profile")
     require("profile" not in record or isinstance(profile, str) and profile in _SAVED_REGISTER_PROFILES,
             "unsupported EH owner profile")

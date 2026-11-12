@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after EBX/ESI empty EH frames and the rejected Replay destructor snapshot.
+Updated 2026-11-12 after complete Stage/ItemManager single-member constructor EH graphs.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,8 +18,27 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **858 exact, 65 mismatch and 292 incomplete** among
-1215 annotated candidates, covering 160,210 exact owned bytes and 923 units.
+The current report is **860 exact, 65 mismatch and 290 incomplete** among
+1215 annotated candidates, covering 160,619 exact owned bytes and 925 units.
+An explicit single-member constructor profile independently validates complete
+Stage/ItemManager 38-byte code and 44-byte metadata aggregates. The original
+stores FuncInfo before its map; the candidate's complete PDB owner stores the
+map first. Both layouts and every byte/field/relocation are checked. Fixed
+member offsets, complete destructor roles, saved-this/cookie frames and the
+sole live state are mandatory. Stage construction (249) and ItemManager
+construction (160) now pass all 409 primary bytes. Auxiliary graphs grant no
+extra credit. All previous 858 exact results, 65 complete mismatches and 923
+units remain identical; every other incomplete record also remains identical.
+The verifier lives in `scripts/eh_member_constructor.py`, explicitly included
+in the Oracle fingerprint. Empty and AnmManager constructor profiles retain
+their existing restrictions. Allocation cleanups in Stage/ItemManager create
+methods and array cleanups still need separate complete graph review.
+No game source or compiler artifact changes and no build occurs; all 1,719
+complete linked owner records and 192 dependency stamps validate. See
+[the member constructor review](knowledge/member-constructor-eh.md).
+
+The preceding EBX/ESI checkpoint reported 858 exact, 65 mismatch and 292 incomplete,
+covering 160,210 exact owned bytes and 923 units.
 An explicit empty-EH3 EBX/ESI profile derives cookie node-16 from its complete
 37-byte registration and 17-byte restoration. Full private handler/descriptor
 owners resolve BulletManager destruction (292), EffectManager destruction
@@ -388,7 +407,7 @@ entries/extents/payloads remain
 unchanged, current artifacts match their fresh incremental receipt and all
 192 dependency stamps validate. No further build is needed for the current EH
 review; identical artifacts and current dependency keys are checked in
-`.analysis/ebx-esi-eh-artifact-check.json`. The fresh source restoration is
+`.analysis/member-constructor-artifact-check.json`. The preceding source restoration is
 `.analysis/replay-destructor-source-trial.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
@@ -449,7 +468,15 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **140 controls across six relevant suites**:
+The current batch passes **164 controls across seven relevant suites**:
+member constructor EH (24), saved-register EH (37), legacy empty EH (25),
+AnmManager constructor EH (25), reviewed linkages (36), strict Oracle (14) and
+focused audit (3). New controls exercise both entire aggregates, every code/data
+byte, forged original hashes, parent state lifetime, source/module ownership,
+interior roles, independent cookie storage and all pointer relocations. Logs
+use `.analysis/member-constructor-<suite>-controls.log`; the summary is
+`.analysis/member-constructor-controls-summary.json`.
+The preceding EBX/ESI batch passed **140 controls across six relevant suites**:
 saved-register EH (37), legacy empty EH (25), constructor EH (25), reviewed
 linkages (36), strict Oracle (14) and focused audit (3). Both explicit
 saved-register profiles exercise eleven complete graphs, wrong-profile reuse
@@ -896,7 +923,8 @@ bit zero, whereas the candidate clears the flag first. All 164 primary linkages
 are compared. The retained volatile-this accesses in the shared UpdateFunc
 constructor remain a source/context hypothesis. Recover that context rather
 than special-casing one registration or forcing the instruction order. Other
-nonempty EH graphs still need independent complete-owner review; do not
+nonempty EH graphs, apart from the separately reviewed Stage/ItemManager
+single-member constructors, still need independent complete-owner review; do not
 generalize this explicit profile to arbitrary tables or interior symbols.
 Moving an ordinary constructor definition to UpdateFunc.cpp alone has now
 been tested and rejected against complete owners; do not repeat that trial.

@@ -550,6 +550,7 @@ class Context:
                  ROOT / "scripts/pdb_types.py", ROOT / "scripts/vtable_identity.py",
                  ROOT / "scripts/switch_ownership.py", ROOT / "config/switch-owners.toml",
                  ROOT / "scripts/eh_identity.py", ROOT / "config/eh-handlers.toml",
+                 ROOT / "scripts/eh_member_constructor.py",
                  ROOT / "scripts/static_identity.py", ROOT / "config/static-functions.toml",
                  ROOT / "scripts/runtime_identity.py", ROOT / "config/runtime-interiors.toml",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]

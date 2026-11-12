@@ -244,3 +244,51 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "single-member-constructor-v1"
+source = "src/Stage.cpp"
+parent_symbol = "??0Stage@@QAE@XZ"
+parent_target = 0x409670
+parent_size = 249
+parent_sha256 = "56ccaa50641647ab09d4a1454d70670ab313256a3492c8737f58ad09d19b274b"
+target = 0x48a40b
+code_target = 0x48a400
+size = 38
+target_sha256 = "3ca5c40df501941214c4df05701e79fa2dbd9275a9dcd610112614d508f4a563"
+func_info_target = 0x49afc0
+func_info_size = 44
+func_info_sha256 = "dc27a79cf3bf4864523ae606edd84a8fad38d5461667fb20e43380e9d3fdd03a"
+eh_flags = 1
+evidence = "docs/knowledge/member-constructor-eh.md"
+
+[handlers.cleanup_entry]
+source = "src/Stage.cpp"
+symbol = "??1StageInner@@QAE@XZ"
+target = 0x409770
+size = 73
+sha256 = "a4e6da4122c22036be3d33def12225963bce4b6002aa5d962175ed1696c3ca64"
+
+[[handlers]]
+profile = "single-member-constructor-v1"
+source = "src/Item.cpp"
+parent_symbol = "??0ItemManager@@QAE@XZ"
+parent_target = 0x42f0b0
+parent_size = 160
+parent_sha256 = "ccf9f47b489330109abfbd47ae700e5fa7fabf28081a8d04915c61a02b4ae86c"
+target = 0x48a7bb
+code_target = 0x48a7b0
+size = 38
+target_sha256 = "598c1e3267714ca57dd29f7c103806e14dd58e191fac9d8413cfe163d01fcc6c"
+func_info_target = 0x49b35c
+func_info_size = 44
+func_info_sha256 = "8bc3fbdc44eb9d0a2b271c9e3a1fd8b737703570ec5b561600226444a40e887c"
+eh_flags = 1
+evidence = "docs/knowledge/member-constructor-eh.md"
+
+[handlers.cleanup_entry]
+source = "src/Item.cpp"
+symbol = "??1ItemManagerInner@@QAE@XZ"
+target = 0x42f150
+size = 70
+sha256 = "993289394e086dd01896eca5c08eccb2dca8ecbdf6014ef362c185d6a9c44aac"

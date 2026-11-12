@@ -21,6 +21,11 @@ for BulletManager, EffectManager and LaserManager destruction. The complete
 registration/save/restore sequence determines its cookie slot; Bomb and
 Spellcard frames sharing the displacement remain excluded.
 
+The [member constructor review](member-constructor-eh.md) adds an independent
+one-state graph for Stage and ItemManager construction. Its whole 38/44-byte
+aggregates, fixed member destructor roles and complete parent state/frame
+checks do not relax the empty profiles or generalize to allocation cleanups.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

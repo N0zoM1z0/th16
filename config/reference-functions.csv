@@ -138,7 +138,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004093F0,AnmVm::AnmVm,src/AnmVm.cpp,??0AnmVm@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00409490,StageInner::set_sky_interp,src/Stage.cpp,?set_sky_interp@StageInner@@QAEXHHPAUCameraSky@@@Z,exact,,.analysis/reference-audit.json
 0x00409550,Fog::~Fog,src/Stage.cpp,??1Fog@@QAE@XZ,exact,,.analysis/reference-audit.json
-0x00409670,Stage::Stage,src/Stage.cpp,??0Stage@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00409670,Stage::Stage,src/Stage.cpp,??0Stage@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00409770,StageInner::~StageInner,src/Stage.cpp,??1StageInner@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x004097C0,Stage::load_data,src/Stage.cpp,?load_data@Stage@@QAEHPBDH@Z,exact,,.analysis/reference-audit.json
 0x004099A0,Stage::~Stage,src/Stage.cpp,??1Stage@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -510,7 +510,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042EFA0,HelpManual::on_draw_callback,src/HelpManual.cpp,?on_draw_callback@HelpManual@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0042EFB0,AnmLoaded::create_ui_vm,src/HelpManual.cpp,?create_ui_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@H@Z,mismatch,,.analysis/reference-audit.json
 0x0042F090,BombInf::is_active_before,src/Bomb.cpp,?is_active_before@BombInf@@QAEHH@Z,exact,,.analysis/reference-audit.json
-0x0042F0B0,ItemManager::ItemManager,src/Item.cpp,??0ItemManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042F0B0,ItemManager::ItemManager,src/Item.cpp,??0ItemManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F150,??1ItemManagerInner@@QAE@XZ,src/Item.cpp,??1ItemManagerInner@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F1A0,Item::Item,src/Item.cpp,??0Item@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F1E0,Item::~Item,src/Item.cpp,??1Item@@QAE@XZ,exact,,.analysis/reference-audit.json

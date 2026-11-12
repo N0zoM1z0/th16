@@ -2138,3 +2138,43 @@ No game source change, cold build, cleanup, artifact substitution, Factory
 submission or publication is retained. See [the complete review](ebx-esi-empty-eh.md),
 `.analysis/ebx-esi-eh-regression-check.json` and
 `.analysis/replay-destructor-source-trial.json`.
+
+## Complete Stage and ItemManager member-constructor EH graphs
+
+The original registration PUSH, handler FuncInfo load and one-entry unwind map
+independently identify complete 38-byte private code and 44-byte metadata
+graphs for Stage and ItemManager construction. Each eleven-byte cleanup reads
+the complete `this` from EBP-16, adds the fixed member offset 12/20 and jumps to
+the independently bound complete StageInner/ItemManagerInner destructor.
+The handler remains an interior entry at code plus eleven. Complete private
+PDB ownership and exactly the two parent-qualified internal names are required
+for each code/data object.
+
+Original metadata stores the full 36-byte FuncInfo before its eight-byte map;
+candidate PDB objects store the map first. Both whole layouts, flags one,
+state zero to -1, every pointer relocation and every action/handler byte are
+checked explicitly. The fixed complete parent frames establish two local
+words, saved `this`, independently witnessed cookie storage, the sole live
+state and complete restoration. The verifier is a separately fingerprinted
+module; default empty and AnmManager constructor profiles retain their rules.
+Other allocation/array graphs receive no implicit support.
+
+Stage construction (249 bytes, 65 reachable instructions) and ItemManager
+construction (160 bytes, 47 reachable instructions) now pass all 409 primary
+bytes. Original-only review accounts for the final return, following alignment
+and all complete cleanup scopes. The 76 auxiliary code bytes, 88 metadata bytes
+and already bound destructor callees receive no extra primary credit.
+Canonical replay reports 860 exact, 65 mismatch and 290 incomplete among 1,215
+annotations, covering 160,619 exact primary bytes and 925 units. All previous
+858 exact results, 65 complete mismatches and 923 unit definitions remain
+identical; every other incomplete record is also identical.
+
+One hundred sixty-four controls pass across seven suites. Twenty-four new
+controls cover every candidate aggregate byte, forged original hashes,
+state/this/cookie changes, full extents, private module/name ownership, graph
+reuse, relocation completeness and unmasked body comparison. No game source
+or compiler artifact changes and no build occurs; all 1,719 complete linked
+owner records and 192 dependency stamps validate. See
+[the full review](member-constructor-eh.md),
+`.analysis/member-constructor-caller-scopes.json` and
+`.analysis/member-constructor-regression-check.json`.
