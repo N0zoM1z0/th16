@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after ECL coordinate evaluation and animation offset source work.
+Updated 2026-11-12 after ECL angle and orbit initialization source work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,16 +11,16 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation recovers coordinate output evaluation and animation operand order,
-with no new exact credit.
+continuation recovers angle initialization field order and vector tangent copies
+for circular/elliptical motion, with no new exact credit.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`6c1f96fe4f8c98cbb947d01ead0107b5a803913897342b68517fc4c2caf496cc`.
-PDB age is **200**. The final incremental build, strict replay and progress check
+`42bebf3e6fc8c3adb07cd7a422912ae2792c4188f71a842da1e63a27e23927b9`.
+PDB age is **205**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -28,6 +28,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [ECL angle and orbit initialization](knowledge/ecl-angle-and-orbit-initialization.md) | Original angle field order and vector tangent copies; 744 angle and 768 orbit complete calls agree; dispatcher remains incomplete |
 | [ECL coordinate evaluation](knowledge/ecl-coordinate-evaluation.md) | Original coordinate getter/read sequence and animation X operand order; 18 historical NaN-payload failures now agree; complete dispatcher remains incomplete |
 | [ECL position and spell names](knowledge/ecl-position-and-spell-name.md) | Shared interpolation finish, forward destination traversal and both difficulty tables; candidate 21,586 to 21,384 bytes against 21,408 original bytes, still incomplete |
 | [Curve laser and projectile dispatch](knowledge/laser-initialization-and-bullet-dispatch.md) | Complete 1,726-byte initializer and 32-byte private helper; projectile dispatcher 5,988 to 5,500 bytes, still incomplete |
@@ -42,8 +43,46 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [ECL coordinate evaluation and animation offsets](knowledge/ecl-coordinate-evaluation.md)
-first. Instruction 324 now uses explicit found/self branches, recovering the
+Read [ECL angle and orbit initialization](knowledge/ecl-angle-and-orbit-initialization.md)
+first. Instructions 441/443 now retain end time, method, zero tangents, initial,
+goal and reset in the original order. The delta remains a separate value;
+overwriting the angle changed floating operands and write order and was restored.
+Circular/elliptical initialization now copies complete tangent vectors, recovering
+integer copies from live `g_zero_vec2`. The compiler still merges reads and
+reorders other initialization writes differently from the original.
+
+The final image passes **744 angle**, **768 orbit**, **1,157 movement**,
+**108 difficulty** and **612 lookup** complete paired calls, plus **140 spell**
+and **42 animation** prefixes and a prefix negative control. The new independent
+state models check timer initialization, modes, sentinel fallback and final
+coordinates. Raw special-value angle goals use the unmodified original as the
+bit-pattern reference. Orbit geometry starts with finite zero angles; subsequent
+interpolation frames and full Boss scripts remain untested.
+
+The complete packet is **21,408 original / 21,316 candidate bytes**, with all
+three tables, 182 target slots and the 702-byte map. Smaller size is not exact
+credit. The frame is now **`0x478` original / `0x498` candidate**, eight bytes
+larger than the previous candidate frame; register and lifetime work remains.
+Preserve `.analysis/ecl-angle-work/`, especially `final-image/`, `complete-scope/`,
+`final-regression.json`, rejected forms and native fixtures. Its `before-comment/`
+image is historical; the final source-comment correction leaves complete owner
+bytes unchanged but changes artifact identities. A premature diagnostic correctly
+refused a stale build receipt; retain its refusal log.
+
+The isolated full replay preserves all 885 exact owners and classifications,
+169,575 exact primary bytes and 950 units. Source-origin review remains open;
+Factory acceptance is not submitted. The Oracle still refuses the dispatcher;
+no binding, boundary or comparison rule changes.
+
+The current refusal lists seven unbound fields: EH handler, four `g_zero_vec2`
+references, private sin/cos helper and BossDead literal. The previous count of
+ten included six vector references and an incidental decode inside the map;
+the reduction does not establish any new identity. The original store between
+remap and dispatch still exceeds the existing switch proof.
+
+The preceding coordinate work is documented in
+[ECL coordinate evaluation and animation offsets](knowledge/ecl-coordinate-evaluation.md).
+Instruction 324 now uses explicit found/self branches, recovering the
 original pointer-getter and coordinate-read sequence without floating spills.
 Its case slice is 88 bytes against 82 original bytes; an extra manager load
 remains. Instruction 338 now adds the offset vector to the enemy position.
@@ -55,9 +94,9 @@ expectations. All **42 animation prefixes** agree; the preserved `a29e605` image
 fails 18 of those same cases. The prefixes stop before allocation, so VM creation
 and effect/resource behavior remain untested. The earlier **1,157 movement**,
 **108 difficulty**, **140 spell-prefix** and default-return negative controls also
-pass on this same final image. The complete dispatcher diagnostic is now
-**21,408 original / 21,348 candidate bytes**, including all three tables and the
-full map. The frame difference remains `0x478` original / `0x490` candidate.
+pass on the coordinate checkpoint image. At `90e049a`, the complete dispatcher
+diagnostic was **21,408 original / 21,348 candidate bytes**, including all three
+tables and the full map. Its frame was `0x478` original / `0x490` candidate.
 
 Keep `.analysis/ecl-context-work/`, especially its historical-image control,
 typed layout/enum probe and `INVALID-OPCODE.txt` notes. The first lookup protocol

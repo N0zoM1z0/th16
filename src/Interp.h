@@ -117,10 +117,8 @@ struct InterpFloat2
     __forceinline void start(i32 end_time, i32 method, f32 initial_x, f32 initial_y, f32 goal_x, f32 goal_y)
     {
         this->end_time = end_time;
-        bezier_1.x = g_zero_vec2.x;
-        bezier_1.y = g_zero_vec2.y;
-        bezier_2.x = g_zero_vec2.x;
-        bezier_2.y = g_zero_vec2.y;
+        bezier_1 = g_zero_vec2;
+        bezier_2 = g_zero_vec2;
         this->method = method;
         initial.x = initial_x;
         initial.y = initial_y;

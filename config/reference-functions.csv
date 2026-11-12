@@ -395,7 +395,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0041DA30,EnemyManager::kill_all_in_group,src/Enemy.cpp,?kill_all_in_group@EnemyManager@@SGXH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041DB70,EnemyManager::kill_all_no_set_death,src/Enemy.cpp,?kill_all_no_set_death@EnemyManager@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041DCA0,EnemyInf::run_over_300,src/Enemy.cpp,?run_over_300@EnemyInf@@UAEHXZ,exact,,.analysis/reference-audit.json
-0x0041DCB0,EnemyData::ecl_run_over_300,src/EnemyEcl.cpp,?ecl_run_over_300@EnemyData@@QAEHXZ,incomplete,10 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0041DCB0,EnemyData::ecl_run_over_300,src/EnemyEcl.cpp,?ecl_run_over_300@EnemyData@@QAEHXZ,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00423050,EnemyData::ecl_enm_create,src/Enemy.cpp,?ecl_enm_create@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00423260,EnemyData::ecl_anm_set_sprite,src/Enemy.cpp,?ecl_anm_set_sprite@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004233A0,EnemyData::ecl_anm_vm_instr,src/Enemy.cpp,?ecl_anm_vm_instr@EnemyData@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

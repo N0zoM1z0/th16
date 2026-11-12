@@ -235,7 +235,7 @@ static __forceinline void ecl_angle_to_player(EnemyData *enemy)
         zun_atan2f(g_Player->inner.pos.y - enemy->get_float_arg(2), g_Player->inner.pos.x - enemy->get_float_arg(1));
 }
 
-// TODO: frame layout (ours is 0x18 bytes bigger) and register allocation differ.
+// TODO: frame layout and register allocation differ.
 // The early argument getters are spelled out because LTCG inlined only those (its
 // inline budget ran out in moveVelTime), plus the three in the spell case.
 // FUNCTION: TH16 0x41dcb0
@@ -834,7 +834,13 @@ int EnemyData::ecl_run_over_300()
         {
             delta = angle - initial;
         }
-        angle_i->start(get_int_arg(0), mode, initial, delta + initial);
+        angle_i->end_time = get_int_arg(0);
+        angle_i->method = mode;
+        angle_i->bezier_1 = 0.0f;
+        angle_i->bezier_2 = 0.0f;
+        angle_i->initial = initial;
+        angle_i->goal = delta + initial;
+        angle_i->reset();
         pv->flags &= ~0xf;
         break;
     }
