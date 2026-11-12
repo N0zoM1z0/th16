@@ -5,7 +5,8 @@ The supplied executable is pinned in `config/target.toml`. Imported reconstructi
 candidates are evaluated independently using the Factory/TH10 strict Oracle
 method. Upstream similarity scores and exact labels are not acceptance results.
 This repository is local-only: do not push branches, tags or repository contents.
-Start with the [current handoff](docs/NEXT_AGENT.md).
+Start with the [current handoff](docs/NEXT_AGENT.md) and
+[knowledge index](docs/knowledge/README.md).
 
 The layout follows the local TH10 workspace:
 
@@ -34,8 +35,6 @@ python3 scripts/ghidra.py function_context .analysis/entry.txt 0x0047537B
 python3 scripts/compile-probe.py probes/toolchain-smoke.c -o build/probe.obj
 python3 scripts/compile-probe.py probes/toolchain-smoke.cpp -o build/probe-ltcg.obj --ltcg
 python3 scripts/msvc.py link /?
-.venv/bin/reccmp-reccmp --version
-.tools/objdiff/objdiff-cli-linux-x86_64 --version
 ```
 
 To rebuild and evaluate the imported candidates:
@@ -48,8 +47,9 @@ To rebuild and evaluate the imported candidates:
 
 Incremental builds reuse objects by their source, included-header and compiler
 flag hashes, then perform a full LTCG link. Use `--clean` for a milestone or a
-demonstrated cache/dependency problem. Focused comparison also accepts
-`--require-cold` when that additional requirement is needed.
+demonstrated cache/dependency problem. For a retained unit, `scripts/compare-linked-function.py UNIT --require-cold`
+can require a cold receipt. The focused `audit-reference.py --address ...`
+command does not accept that flag.
 
 Game source lives in `src/`; imported compiler-context callers and opaque support
 are kept separately under `probes/reference-harness/` and
@@ -60,7 +60,8 @@ The [recorded import audit](docs/evidence/reference-import-20261108/README.md)
 lists the complete comparisons with differences and the outstanding evidence.
 Subsequent source fixes and retained failed experiments are recorded in
 [reference repairs](docs/knowledge/reference-repairs.md). Use `scripts/progress.py`
-for current results.
+for current results. Historical snapshots may require restoration through
+`scripts/evidence-archive.py`; see the artifact policy below.
 
 The selected historical tools are MSVC **19.10.25017**, linker
 **14.10.25017.0**, Windows **7.1A** SDK, UCRT **10.0.10240.0** and DirectX SDK

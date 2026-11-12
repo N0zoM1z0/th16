@@ -5,8 +5,9 @@ This work uses the original Japanese TH16 v1.00a target pinned in
 results come from the local Factory/TH10-style Oracle.
 Sections below are successive historical batches; their counts and test totals
 describe those checkpoints. Use [NEXT_AGENT.md](../NEXT_AGENT.md) and
-`scripts/progress.py` for current state. Historical JSON reports are now stored
-as `.json.gz`; see [ARTIFACTS.md](../ARTIFACTS.md).
+`scripts/progress.py` for current state. Historical reports and trial/baseline directories may be stored as `.json.gz`
+or indexed `.tar.gz` archives. Use `scripts/evidence-archive.py` to read or
+restore their original paths; see [ARTIFACTS.md](../ARTIFACTS.md).
 
 ## Formatting buffers
 

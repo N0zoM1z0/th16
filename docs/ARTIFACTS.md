@@ -14,6 +14,9 @@ outside this repository; never follow them when cleaning local outputs.
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
 | `.analysis/reference-audit.json` | Current fingerprinted results read by `scripts/progress.py` |
+| `.analysis/audio-release-baseline/` | Latest accepted checkpoint regression inputs, kept uncompressed |
+| `.analysis/audio-initialize-baseline/`, `.analysis/experiments/audio-initialize-unvalidated/` | Unvalidated initialization draft, its clean base and review notes |
+| `.analysis/archives/`, `.analysis/cleanup-handoff-20261112.json` | Verified historical evidence and recovery index |
 | `.analysis/factory-registration.toml`, `.analysis/factory-validation*` | Staged private registration and isolated validation evidence |
 | `.analysis/ghidra/`, diagnostic notes and regression records | Analysis evidence and failed-experiment context |
 | `_reference/johnthreekay-th16/` | Pinned, unchanged upstream checkout |
@@ -22,7 +25,46 @@ Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
 
-## Compressed historical evidence
+## Current handoff cleanup: 2026-11-12
+
+The handoff cleanup reclaimed about **703 MiB** of allocated local storage.
+Eighty-two historical baseline/trial directories are stored as individual
+`.analysis/archives/NAME.tar.gz` files. Large historical root reports are stored
+as `.json.gz`. The original 1,000-plus-line handoff is retained as
+`.analysis/handoff-next-agent-6427da9.md.gz`; its statements are historical.
+The exact file/member list, original and archive SHA-256 hashes, modes, times,
+byte counts and protected current artifact hashes are in
+`.analysis/cleanup-handoff-20261112.json`.
+
+Every archive was read back and every member checked before its source copy
+was removed. Evidence was compressed rather than discarded. Both recent
+baselines named in the preservation table remain directly usable. The active
+build graph, canonical report, private inputs, shared installations, game-owned
+Wine prefix, analyzer project and pinned checkout were not cleaned.
+
+Read or restore indexed evidence with the standard-library helper:
+
+```sh
+python3 scripts/evidence-archive.py list audio-scalar
+python3 scripts/evidence-archive.py show audio-scalar-baseline/build/reference-candidate/build-receipt.json
+python3 scripts/evidence-archive.py restore audio-scalar-baseline
+python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md
+```
+
+`show` emits one file without restoring its directory. `restore` verifies the
+archive and member hashes, stages the result, and refuses an existing destination.
+Use the directory name for a directory archive or the original filename for an
+individual gzip report. Older diagnostic helpers use their original literal
+paths, so restore the named snapshot before rerunning them. Do not rerun a
+historical helper as if its expected counts described the current checkpoint.
+
+The initialization proof draft was withdrawn from `scripts/` and Oracle
+configuration before cleanup. A positive focused result under those draft rules
+is retained only inside the clearly marked experiment directory; it does not
+change the accepted 883/65/267 checkpoint. No compiler run or Oracle acceptance
+change was performed as part of cleanup.
+
+## Earlier compressed evidence: 2026-11-08
 
 The 2026-11-08 cleanup retained evidence while reducing its storage:
 
@@ -61,7 +103,7 @@ logs and actual Ghidra project are retained. Ghidra recreates its cache on use;
 `python3 scripts/verify-toolchain.py --execute` recreates smoke outputs.
 Regenerated caches and smoke outputs will consume storage again.
 
-The operation reclaimed about **78 MiB** of allocated local storage. The exact
+That earlier operation reclaimed about **78 MiB** of allocated local storage. The exact
 paths, byte counts, source hashes for archived files and preserved current
 artifact hashes are recorded in `.analysis/cleanup-20261108.json`. Current build
 artifacts, the active audit and private target were unchanged. The user-supplied
