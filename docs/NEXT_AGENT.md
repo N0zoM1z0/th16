@@ -1,21 +1,24 @@
 # Current handoff
 
-Updated 2026-11-12 for agent handoff after evidence cleanup.
-The user ended the active reconstruction goal and requested cleanup. No build,
-audit writer or reconstruction experiment is running. Read AGENTS.md before work.
+Updated 2026-11-12 after complex gameplay reconstruction trials.
+The user resumed reconstruction and explicitly prioritizes substantial enemy,
+boss and projectile functions over small helpers. No build or audit writer is
+running at this checkpoint. Read AGENTS.md before work.
 
 ## Authoritative checkpoint
 
-The last reconstruction commit is `6427da9` (audio release EH and strncmp).
+The exact-credit baseline is `6427da9` (audio release EH and strncmp).
+The current source continuation improves a mismatching spellcard owner without
+adding exact credit; see the gameplay section below.
 The canonical report is **883 exact, 65 mismatch, 267 incomplete** among 1,215
 annotations: **167,817 exact primary bytes and 948 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f`.
-PDB age is **124**. All 1,719 complete linked function records and 192 dependency
-stamps validated at the checkpoint. Cleanup preserves the current incremental
+`2cdfc15cc3f6c75cc13900d4aa61eaed50c55c43ca39a5373ea2a4302f3c6799`.
+PDB age is **156**. The final incremental build, strict replay and progress check
+validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
 Recent accepted work:
@@ -30,6 +33,27 @@ See the [knowledge index](knowledge/README.md) for other topics. Older findings,
 counts and open-item statements are historical; use this file and the canonical
 report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
+
+## Current gameplay source work
+
+`Spellcard::on_tick_body` at `0x00417930` retains its complete 650-byte scope.
+A planar vector delta and scalar depth delta improve strict matching from
+437 to 451 bytes. It remains a mismatch. The full replay preserves every one
+of the 883 baseline exact owners, and the standalone replay agrees with the
+canonical report. Source-origin review remains open.
+
+Read [the boss and projectile source trials](knowledge/boss-motion-source-trials.md)
+before retrying the enemy motion, damage, projectile corner tests or shared
+circle/wave movement. Failed forms were restored byte for byte and rebuilt
+incrementally. Their source snapshots, diagnostics and final regression record
+are in `.analysis/enemy-motion-work/`. No Oracle or compile-profile changes remain.
+
+The unresolved substantial owners include `EnemyData::step_interpolators`
+(1,692/1,691 bytes), `EnemyData::step_logic` (2,207/2,092 baseline bytes) and
+`Bullet::step_ex_08` (1,390/1,382 bytes). The directional animation's child mode
+is 8, whereas the common creation helper uses zero. Recover real source/type
+and calling context; do not add cookies, padding, dead arithmetic or register
+forcing to close these differences. `PosVel::step` remains 696/700 matching.
 
 ## Work rules
 

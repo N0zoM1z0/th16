@@ -12,7 +12,7 @@ chronological experiment log. Use `scripts/progress.py` for authoritative totals
 | EH and class metadata | [EH handlers](eh-handlers.md), [single-state terminal graphs](single-state-terminate-eh.md), [terminate chain](terminate-destructor-eh.md), [allocation cleanup](allocation-cleanup-eh.md), [sound RTTI](sound-eh-vftables.md) |
 | Complete dispatch owners | [Bounded switches](switch-ownership.md), [compound owners](compound-owner-scopes.md), [remapped owners](remapped-owner-scopes.md), [direct owner scopes](direct-owner-scopes.md) |
 | Original roots and private entries | [Runtime roots](runtime-entry-scopes.md), [registered callbacks](registered-callbacks.md), [Anm callbacks](anm-callback-scopes.md), [static sin/cos](static-sincos-ownership.md) |
-| Source/context trials | [Player](player-context-trials.md), [bullet collisions](bullet-collision-contexts.md), [pause/replay slot](pause-replay-slot.md), [full repair history](reference-repairs.md) |
+| Source/context trials | [Boss, spellcard and projectile motion](boss-motion-source-trials.md), [Player](player-context-trials.md), [bullet collisions](bullet-collision-contexts.md), [pause/replay slot](pause-replay-slot.md), [full repair history](reference-repairs.md) |
 | CRT/math dependencies | [Conversion runtime](conversion-runtime.md), [atan2 dependency research](atan2-runtime-dependencies.md), [tangent/failure runtime](failure-tangent-runtime.md) |
 | Setup and stored evidence | [Bootstrap](../BOOTSTRAP.md), [shared tools](../SHARED_TOOLS.md), [artifact policy and archive access](../ARTIFACTS.md) |
 

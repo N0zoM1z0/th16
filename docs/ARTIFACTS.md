@@ -16,6 +16,7 @@ outside this repository; never follow them when cleaning local outputs.
 | `.analysis/reference-audit.json` | Current fingerprinted results read by `scripts/progress.py` |
 | `.analysis/audio-release-baseline/` | Latest accepted checkpoint regression inputs, kept uncompressed |
 | `.analysis/audio-initialize-baseline/`, `.analysis/experiments/audio-initialize-unvalidated/` | Unvalidated initialization draft, its clean base and review notes |
+| `.analysis/enemy-motion-work/` | Boss, spellcard and projectile source trials, baseline report and final regression evidence |
 | `.analysis/archives/`, `.analysis/cleanup-handoff-20261112.json` | Verified historical evidence and recovery index |
 | `.analysis/factory-registration.toml`, `.analysis/factory-validation*` | Staged private registration and isolated validation evidence |
 | `.analysis/ghidra/`, diagnostic notes and regression records | Analysis evidence and failed-experiment context |
