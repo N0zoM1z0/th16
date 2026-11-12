@@ -95,3 +95,5 @@ _abort,0x47bbdb,67,runtime-function,d34341665fd4912d198ad02a064b4f3c6c729ee2ad5d
 ??_V@YAXPAX@Z,0x475150,5,runtime-function,95606805315ff9a4adc98b0cc5a2c8b933e58c85a96b612c34d746924030782c,0x47513a,call,docs/knowledge/single-state-terminate-eh.md,LIBCMT.lib,
 ??_7CSound@@6B@,0x4943a0,4,vftable,8207e2ee6d521fe7df3a3382d17eef25d5c922a28f7ba9a3081fe7c4fb7d7bfc,,,docs/knowledge/sound-eh-vftables.md,,
 ??_7CStreamingSound@@6B@,0x494398,4,vftable,dc3e49017232ef208e393eab29121899002ddc6373566d110104500c4924756e,,,docs/knowledge/sound-eh-vftables.md,,
+_rand,0x47a739,33,runtime-function,92d9fc80a108c3bfc58f9a05f9afc502597944ddf999644dc14f4c13fc8bc857,,,docs/knowledge/audio-rand-vector-identities.md,libucrt.lib,
+__xmm@00000003000000020000000100000000,0x4947b0,16,literal,baed642339816affb3fe8719792d0e4ce82f12db72b7373d244eaa65445800fe,0x4704c9,movaps,docs/knowledge/audio-rand-vector-identities.md,,

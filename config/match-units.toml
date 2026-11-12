@@ -21753,6 +21753,22 @@ linkages = [
   { offset = 43, width = 4, type = "DIR32", symbol = "__imp__Sleep@4", target = 4763808, addend = 0 },
 ]
 
+[units.reference-004710b0]
+artifact_kind = "linked-pe"
+source = "src/DSUtil.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?GetFreeBuffer@CSound@@QAEPAUIDirectSoundBuffer@@XZ"
+object = "DSUtil.obj"
+candidate_address = 4336672
+target_address = 4657328
+size = 110
+compare_size = 110
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 89, width = 4, type = "REL32", symbol = "_rand", target = 4695865, addend = 0 },
+]
+
 [units.reference-00471120]
 artifact_kind = "linked-pe"
 source = "src/DSUtil.cpp"

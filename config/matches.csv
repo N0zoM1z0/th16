@@ -908,6 +908,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00470E10,CSound::~CSound,reference-00470e10,local-strict-pass,179,179,179,.analysis/reference-audit.json
 0x00470ED0,CSound::FillBufferWithSound,reference-00470ed0,local-strict-pass,366,366,366,.analysis/reference-audit.json
 0x00471040,DSoundBufferRestore::restore,reference-00471040,local-strict-pass,105,105,105,.analysis/reference-audit.json
+0x004710B0,CSound::GetFreeBuffer,reference-004710b0,local-strict-pass,110,110,110,.analysis/reference-audit.json
 0x00471120,CSound::Play,reference-00471120,local-strict-pass,204,204,204,.analysis/reference-audit.json
 0x00471270,CSound::Stop,reference-00471270,local-strict-pass,128,128,128,.analysis/reference-audit.json
 0x004712F0,CSound::Pause,reference-004712f0,local-strict-pass,144,144,144,.analysis/reference-audit.json

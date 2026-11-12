@@ -20,6 +20,11 @@ single-slot primary tables from original RTTI. All twelve candidate metadata
 objects and nineteen relocations are checked; the metadata grants no extra
 primary credit. Four complete sound owners pass with the new empty-frame proof.
 
+The [rand/audio-vector review](audio-rand-vector-identities.md) adds the
+complete 33-byte UCRT rand identity and a fixed sixteen-byte MOVAPS witness
+for [0,1,2,3]. Buffer selection passes all 110 bytes; both audio initialization
+owners retain unbound EH/ISA fields. Mutable ISA storage remains unbound.
+
 The subsequent [stage/time review](stage-time-identities.md) adds the complete
 66-byte current-time entry and an explicit complete 1,696-byte stage-table
 identity. Table initialization and every string/relocation are independently

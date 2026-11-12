@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete sound class tables and an empty ESI/EDI frame.
+Updated 2026-11-12 after complete rand and audio-vector identities.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,7 +18,30 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **876 exact, 65 mismatch and 274 incomplete** among
+The current report is **877 exact, 65 mismatch and 273 incomplete** among
+1215 annotated candidates, covering 165,381 exact owned bytes and 942 units.
+CSound::GetFreeBuffer passes its entire 110-byte owner after independently
+binding the complete 33-byte CRT rand entry. Its PTD getter, state offset 24,
+recurrence constants and 15-bit result agree with the pinned UCRT source.
+A fixed original MOVAPS identifies the full sixteen-byte [0,1,2,3] vector
+among two identical original copies. Both initialization owners lose two
+unbound vector fields each but remain incomplete. All preceding 876 exact
+results, 65 complete mismatches and 941 units remain identical; all other
+incomplete records are unchanged. No game source, admission-rule or compiler
+artifact change occurs and no build is needed. All 1,719 complete linked
+function records and 192 dependency stamps validate. See
+[the rand/vector review](knowledge/audio-rand-vector-identities.md).
+
+The two audio initialization owners retain private EH and mutable ISA fields.
+Original ISA storage is 0x004A65FC; candidate ___isa_available is 0x004A67EC,
+in virtual zero-fill storage with an eight-byte candidate PDB contribution.
+Do not infer a standalone four-byte owner or bind it as literal zero.
+Candidate ___isa_available_init is a complete 415-byte owner at 0x0047548B;
+its original identity/startup witness and complete field/storage roles remain
+open. The next inventory is `.analysis/audio-isa-next-inventory.json`.
+Both nonstandard audio EH graphs also need complete independent review.
+
+The preceding sound-table report was **876 exact, 65 mismatch and 274 incomplete** among
 1215 annotated candidates, covering 165,271 exact owned bytes and 941 units.
 CSound construction (463 bytes) and destruction (179), CStreamingSound
 construction (90) and its scalar deleting destructor (44) pass all 776 primary
@@ -32,12 +55,6 @@ previous 872 exact results, 65 complete mismatches and 937 unit definitions
 remain identical, as do all other incomplete records. No game source or
 compiler artifact changes and no build occurs; all 1,719 linked owners and
 192 dependency stamps validate. See [the sound review](knowledge/sound-eh-vftables.md).
-
-Audio initialization and CSound::GetFreeBuffer still have unresolved fields.
-Other state counts, flags, frame layouts and data roles require their own
-independent review. The primary producer-mismatch gate remains strict, and
-WinMain remains a complete mismatch. The new table/RTTI and private EH graphs
-receive no extra primary credit.
 
 The preceding single-state report was **872 exact, 65 mismatch and 278 incomplete** among
 1215 annotated candidates, covering 164,495 exact owned bytes and 937 units.
@@ -498,7 +515,7 @@ entries/extents/payloads remain
 unchanged after the fresh annotation-only incremental rebuild. Current
 artifacts match their new receipt and all 192 dependency stamps validate;
 complete owner and dependency evidence is
-`.analysis/sound-artifact-check.json`. The preceding source restoration is
+`.analysis/rand-audio-artifact-check.json`. The preceding source restoration is
 `.analysis/replay-destructor-source-trial.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
@@ -559,7 +576,18 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **301 controls across twelve relevant suites**:
+The current batch passes **60 controls across three relevant suites**:
+reviewed linkages (43), strict Oracle (14) and focused audit (3). New cases
+require both complete rand extents and its pinned UCRT producer, the actual
+original vector read, full typed width and the entire candidate payload.
+Instruction interiors, duplicate original storage, wrong mnemonics and a
+changed final vector byte are refused. The full regression separately checks
+all previous 941 unit definitions and comparison records. Frame/table rules
+are unchanged. Logs use `.analysis/rand-audio-<suite>-controls.log`; the summary
+is `.analysis/rand-audio-controls-summary.json`. Regression retention is
+`.analysis/rand-audio-regression-check.json`.
+
+The preceding sound-table batch passed **301 controls across twelve relevant suites**:
 saved-register EH (56), vftables (33), reviewed linkages (40), single-state EH
 (16), two-state EH (23), array constructor EH (18), member constructor EH (25),
 allocation EH (23), legacy empty EH (25), AnmManager constructor EH (25),

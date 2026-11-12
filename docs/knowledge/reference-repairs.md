@@ -2375,3 +2375,45 @@ See [the full review](sound-eh-vftables.md),
 `.analysis/sound-vftable-graph-proof.json`,
 `.analysis/sound-eh-caller-scopes.json` and
 `.analysis/sound-regression-check.json`.
+
+## Complete rand identity and fixed audio vector read
+
+The complete original rand entry at 0x0047A739 has 33 bytes and eight reachable
+instructions; its unique pinned UCRT candidate also owns all 33 bytes. It calls
+the independently bound PTD getter, updates the unsigned state at offset 24
+with multiplier 214013 and addend 2531011, then returns bits 16-30. Pinned UCRT
+rand.cpp and the PTD declaration establish the role. The whole candidate field
+census has only REL32 at one and no PE relocations. No runtime primary exact
+credit is added. CSound::GetFreeBuffer at 0x004710B0 has 110 bytes and 51 reachable
+instructions; its final random-buffer path now passes the entire owner.
+
+The full [0,1,2,3] vector is sixteen bytes, with two identical original read-only
+copies at 0x00490EE0/0x004947B0. A fixed MOVAPS at 0x004704C9 selects the latter.
+The unique complete candidate contribution is sixteen bytes at 0x00494520.
+Complete original audio initialization scopes own 856/809 bytes and 236/224
+reachable instructions. MOVAPS and PADDD each read that vector in both owners.
+The new binding removes four fields without granting data or initialization
+exact credit; each initialization owner retains its private EH and ISA field.
+
+Both ISA addresses lie in virtual zero-fill storage rather than raw file data.
+The candidate public belongs to LIBCMT:_cpu_disp_.obj and its same-start PDB
+contribution owns eight bytes, so no four-byte complete owner is inferred.
+The complete candidate initializer is 415 bytes at 0x0047548B. Its original
+identity/startup witness, whole initializer dependencies, complete mutable
+storage ownership and both nonstandard EH graphs remain open. No ISA global
+binding or literal-zero assumption is added. Diagnostic reads retain virtual
+storage as such instead of fabricating raw bytes.
+
+Canonical replay reports 877 exact, 65 mismatch and 273 incomplete among 1,215
+annotations, covering 165,381 primary exact bytes and 942 units. All preceding
+876 exact results, 65 complete mismatches and 941 units remain identical.
+The two initialization records only lose their two vector fields each; every
+other incomplete record remains identical. Sixty relevant controls pass across
+reviewed linkage, strict Oracle and focused audit suites. No game source,
+admission rule or compiler artifact change occurs and no build is needed.
+All 1,719 complete linked function records and 192 dependency stamps validate.
+See [the full review](audio-rand-vector-identities.md),
+`.analysis/rand-audio-original-scopes.json`,
+`.analysis/rand-audio-caller-scopes.json`,
+`.analysis/rand-audio-regression-check.json` and
+`.analysis/audio-isa-next-inventory.json`.

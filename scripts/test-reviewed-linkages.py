@@ -7,6 +7,7 @@ from pathlib import Path
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest import mock
 
 import capstone
 
@@ -340,6 +341,51 @@ class ReviewedLinkageControls(unittest.TestCase):
             next(r for r in rows if r["symbol"] == "??_V@YAXPAX@Z")[key] = value
             with self.subTest(key=key, value=value), self.assertRaises(Incomplete):
                 self.check_rows(rows)
+
+    def test_rand_requires_both_complete_extents_and_its_pinned_ucrt(self):
+        for field in ("size", "candidate_size"):
+            rows = copy.deepcopy(self.rows)
+            row = next(r for r in rows if r["symbol"] == "_rand")
+            row[field] = "32"
+            if field == "size":
+                row["target_sha256"] = hashlib.sha256(self.context.target.read_address(0x47a739, 32)).hexdigest()
+            with self.subTest(field=field), self.assertRaisesRegex(Incomplete, "complete function extents"):
+                self.check_rows(rows)
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r["symbol"] == "_rand")["candidate_library"] = "LIBCMT.lib"
+        with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
+            self.check_rows(rows)
+
+    def test_audio_vector_requires_its_full_typed_value_and_fixed_movaps(self):
+        symbol = "__xmm@00000003000000020000000100000000"
+        candidate = next(p["address"] for p in self.context.publics if p["symbol"] == symbol)
+        self.assertEqual(self.context.data_contributions[candidate], [16])
+        for key, value in (("target_address", "0x490ee0"), ("witness_instruction", "0x4704ca"),
+                           ("witness_instruction", "0x470320"), ("witness_mnemonic", "movdqa")):
+            rows = copy.deepcopy(self.rows)
+            next(r for r in rows if r["symbol"] == symbol)[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(Incomplete):
+                self.check_rows(rows)
+        rows = copy.deepcopy(self.rows)
+        row = next(r for r in rows if r["symbol"] == symbol)
+        row.update(size="8", target_sha256=hashlib.sha256(self.context.target.read_address(0x4947b0, 8)).hexdigest())
+        with self.assertRaisesRegex(Incomplete, "complete typed value"):
+            self.check_rows(rows)
+
+    def test_audio_vector_checks_the_last_candidate_payload_byte(self):
+        symbol = "__xmm@00000003000000020000000100000000"
+        candidate = next(p["address"] for p in self.context.publics if p["symbol"] == symbol)
+        original_read = self.context.image.read_address
+
+        def changed_read(address, size):
+            payload = bytearray(original_read(address, size))
+            if address <= candidate + 15 < address + size:
+                payload[candidate + 15 - address] ^= 1
+            return bytes(payload)
+
+        with mock.patch.object(self.context.image, "read_address", side_effect=changed_read):
+            with self.assertRaisesRegex(Incomplete, "candidate literal differs"):
+                reviewed_linkages(self.context)
 
     def test_string_must_have_its_complete_pdb_extent(self):
         rows = copy.deepcopy(self.rows)

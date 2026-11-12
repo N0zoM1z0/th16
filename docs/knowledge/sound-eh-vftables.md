@@ -6,6 +6,11 @@ CSound destruction, which saves ESI/EDI without a local word. Four whole
 primary owners now pass, adding 776 exact bytes. No game source, compiler
 artifact or build change occurs.
 
+The later [rand/vector review](audio-rand-vector-identities.md) resolves
+CSound::GetFreeBuffer and four vector fields in the initialization paths.
+Their remaining EH/ISA fields stay unbound; the frame/table proofs here
+retain their original restrictions.
+
 ## Complete original owners
 
 | Original | Owner | Complete bytes | Reachable instructions | Candidate |
