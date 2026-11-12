@@ -315,6 +315,32 @@ class ReviewedLinkageControls(unittest.TestCase):
                 with self.subTest(symbol=symbol, field=field), self.assertRaises(Incomplete):
                     self.check_rows(rows)
 
+    def test_array_delete_chain_requires_complete_extents_and_pinned_libraries(self):
+        for symbol in ("??_V@YAXPAXI@Z", "??_V@YAXPAX@Z"):
+            for field in ("size", "candidate_size"):
+                rows = copy.deepcopy(self.rows)
+                row = next(r for r in rows if r["symbol"] == symbol)
+                size = int(row[field] or row["size"]) - 1
+                row[field] = str(size)
+                if field == "size":
+                    row["target_sha256"] = hashlib.sha256(self.context.target.read_address(
+                        int(row["target_address"], 0), size)).hexdigest()
+                with self.subTest(symbol=symbol, field=field):
+                    with self.assertRaisesRegex(Incomplete, "complete function extents"):
+                        self.check_rows(rows)
+            rows = copy.deepcopy(self.rows)
+            next(r for r in rows if r["symbol"] == symbol)["candidate_library"] = "libvcruntime.lib"
+            with self.assertRaisesRegex(Incomplete, "pinned Microsoft library"):
+                self.check_rows(rows)
+
+    def test_unsized_array_delete_requires_its_fixed_sized_delete_call(self):
+        for key, value in (("witness_instruction", "0x47513b"),
+                           ("witness_instruction", "0x475134"), ("witness_mnemonic", "jmp")):
+            rows = copy.deepcopy(self.rows)
+            next(r for r in rows if r["symbol"] == "??_V@YAXPAX@Z")[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(Incomplete):
+                self.check_rows(rows)
+
     def test_string_must_have_its_complete_pdb_extent(self):
         rows = copy.deepcopy(self.rows)
         row = next(r for r in rows if r["kind"] == "string-literal")

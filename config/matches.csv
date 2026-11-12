@@ -677,6 +677,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004569A0,TitleInf::highlight_spell_row,reference-004569a0,local-strict-pass,119,119,119,.analysis/reference-audit.json
 0x00456FB0,Arcfile::Arcfile,reference-00456fb0,local-strict-pass,30,30,30,.analysis/reference-audit.json
 0x00456FD0,Arcfile::~Arcfile,reference-00456fd0,local-strict-pass,5,5,5,.analysis/reference-audit.json
+0x00457060,Arcfile::close,reference-00457060,local-strict-pass,189,189,189,.analysis/reference-audit.json
 0x00457120,Arcfile::read_file,reference-00457120,local-strict-pass,367,367,367,.analysis/reference-audit.json
 0x00457290,Arcfile::find_entry,reference-00457290,local-strict-pass,73,73,73,.analysis/reference-audit.json
 0x00457620,Arcfile::dup_string,reference-00457620,local-strict-pass,68,68,68,.analysis/reference-audit.json
@@ -709,6 +710,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,reference-00459640,mismatch,190,190,181,.analysis/reference-audit.json
 0x00459700,AnmManager::take_screenshots,reference-00459700,local-strict-pass,293,293,293,.analysis/reference-audit.json
 0x00459830,_WinMain@16,reference-00459830,mismatch,2919,2919,900,.analysis/reference-audit.json
+0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,reference-0045a3a0,local-strict-pass,162,162,162,.analysis/reference-audit.json
 0x0045A450,window_proc,reference-0045a450,local-strict-pass,680,680,680,.analysis/reference-audit.json
 0x0045A8A0,GameWindow::do_frame_sleeping,reference-0045a8a0,local-strict-pass,336,336,336,.analysis/reference-audit.json
 0x0045A9F0,GameWindow::update_window_sleeping,reference-0045a9f0,local-strict-pass,597,597,597,.analysis/reference-audit.json
@@ -901,6 +903,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00470240,anm_log,reference-00470240,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00470250,CSoundManager::SetPrimaryBufferFormat,reference-00470250,local-strict-pass,208,208,208,.analysis/reference-audit.json
 0x00470B80,??_GCSound@@UAEPAXI@Z,reference-00470b80,local-strict-pass,38,38,38,.analysis/reference-audit.json
+0x00470BB0,CStreamingSound::recreate_buffers,reference-00470bb0,local-strict-pass,605,605,605,.analysis/reference-audit.json
 0x00470ED0,CSound::FillBufferWithSound,reference-00470ed0,local-strict-pass,366,366,366,.analysis/reference-audit.json
 0x00471040,DSoundBufferRestore::restore,reference-00471040,local-strict-pass,105,105,105,.analysis/reference-audit.json
 0x00471120,CSound::Play,reference-00471120,local-strict-pass,204,204,204,.analysis/reference-audit.json

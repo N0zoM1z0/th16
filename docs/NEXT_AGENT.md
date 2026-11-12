@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after complete noexcept destructor and terminate graphs.
+Updated 2026-11-12 after single-state terminal graphs and array-delete identities.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,7 +18,32 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **869 exact, 65 mismatch and 281 incomplete** among
+The current report is **872 exact, 65 mismatch and 278 incomplete** among
+1215 annotated candidates, covering 164,495 exact owned bytes and 937 units.
+Arcfile close (189 bytes), the UpdateFuncRegistry scalar deleting destructor
+(162) and audio buffer recreation (605) pass all 956 primary bytes. Two fixed
+one-state terminal maps have complete 27-byte handlers and 44-byte metadata,
+flags 1/5 and node-12 frames. The deleting entry requires the full RET 4 and
+an independently reviewed complete WinMain caller. Its synthetic annotation
+is moved to the actual delete expression in WinMain.cpp, matching its PDB
+producer; primary source-owner checks remain unchanged. Two complete 14/5-byte
+array-delete runtime identities also resolve the audio owner's three fields.
+All preceding 869 exact results, 65 complete mismatches and 934 units remain
+retained. Prior comparison details and two-state proof dictionaries are
+identical; only image fingerprint/PDB age change. CSound destruction loses
+one unbound field and retains two; other incomplete records remain identical.
+The annotation-only edit is freshly rebuilt incrementally. All 1,719 complete
+linked function records remain identical and all 192 dependency stamps
+validate. See [the single-state review](knowledge/single-state-terminate-eh.md).
+
+CSound destruction at 0x00470E10 remains incomplete at its full 179-byte scope,
+with unbound fields at offsets 6/42. Other state counts, flags and frames still
+need independent review. The primary producer-mismatch gate remains strict;
+each remaining producer mismatch needs its own complete role/caller review.
+The original and candidate WinMain owners remain complete mismatches; the
+new deleting-call witness grants no WinMain exact credit.
+
+The preceding two-state report was **869 exact, 65 mismatch and 281 incomplete** among
 1215 annotated candidates, covering 163,539 exact owned bytes and 934 units.
 Stage destruction (994 bytes) and ItemManager destruction (360) now pass all
 1,354 primary bytes. Complete 27-byte handlers and 52-byte two-state metadata
@@ -33,14 +58,6 @@ results, 65 complete mismatches and 932 unit definitions remain identical,
 as do all other incomplete records. No game source or compiler artifact
 changes and no build occurs; all 1,719 linked owners and 192 dependency stamps
 validate. See [the terminate review](knowledge/terminate-destructor-eh.md).
-
-Other terminate-only state counts, flags and frames still need independent
-review. Arcfile close and the UpdateFuncRegistry deleting destructor are
-possible next scopes; their complete parents and private graphs are unreviewed
-by the new profile. Existing AnmManager's separate node-24 aggregate retains
-its earlier rules. The preceding investigation is retained in
-`.analysis/terminate-entry-investigation.json`; the complete follow-up evidence
-is `.analysis/terminate-{original,caller}-scopes.json`.
 
 The preceding array/thread report was **867 exact, 65 mismatch and
 283 incomplete** among 1215 annotated candidates, covering 162,185 exact owned
@@ -455,16 +472,19 @@ include the used replay-slot local in PauseMenu.cpp and explicit external
 linkage for the existing readonly season-name and replay-format tables in
 MainMenuStates.cpp.
 The preceding spell-page, GameWindow, Bullet and Player function trials remain
-restored. The current source input is unchanged from the ANM insertion trial
-baseline and retains the preceding two replay-format linkage definitions.
+restored. The current source input adds only the synthetic registry annotation
+move to WinMain.cpp and its explanatory comments. It retains the ANM insertion
+trial baseline's preceding two replay-format linkage definitions. The current
+source input is
+`356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f`.
 Both replay index trials, the snapshot-ID trial, wrap bounds trial and two
 ANM insertion ID contexts and the Replay destructor pointer snapshot are restored.
 All 1,719 complete linked owner
 entries/extents/payloads remain
-unchanged, current artifacts match their fresh incremental receipt and all
-192 dependency stamps validate. No further build is needed for the current EH
-review; identical artifacts and current dependency keys are checked in
-`.analysis/terminate-artifact-check.json`. The preceding source restoration is
+unchanged after the fresh annotation-only incremental rebuild. Current
+artifacts match their new receipt and all 192 dependency stamps validate;
+complete owner and dependency evidence is
+`.analysis/one-state-artifact-check.json`. The preceding source restoration is
 `.analysis/replay-destructor-source-trial.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
@@ -525,7 +545,18 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **231 controls across ten relevant suites**:
+The current batch passes **249 controls across eleven relevant suites**:
+single-state EH (16), two-state terminate EH (23), array constructor EH (18),
+member constructor EH (25), allocation EH (23), saved-register EH (37), legacy
+empty EH (25), AnmManager constructor EH (25), reviewed linkages (40), strict
+Oracle (14) and focused audit (3). New controls cover both complete graphs,
+both array-delete bodies, fixed flags/state counts, RET 4, true source producers,
+complete deleting callers/witnesses and all relocations. Body mutations remain
+unmasked. Logs use `.analysis/one-state-<suite>-controls.log`; the summary is
+`.analysis/one-state-controls-summary.json`. Complete regression retention is
+`.analysis/one-state-regression-check.json`.
+
+The preceding two-state batch passed **231 controls across ten relevant suites**:
 terminate EH (23), array constructor EH (18), member constructor EH (25),
 allocation EH (23), saved-register EH (37), legacy empty EH (25), AnmManager
 constructor EH (25), reviewed linkages (38), strict Oracle (14) and focused

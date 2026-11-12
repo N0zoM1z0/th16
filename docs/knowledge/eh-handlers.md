@@ -41,6 +41,11 @@ complete noexcept destructor graphs, their fixed two-state terminal maps,
 complete node-24/-20 frames and the shared runtime chain with its SEH table.
 Other state counts, flags and frames receive no implicit support.
 
+The [single-state follow-up](single-state-terminate-eh.md) checks Arcfile close
+and the registry deleting entry with their own fixed flags, complete node-12
+frames and 27/44-byte graphs. The synthetic marker is corrected to its actual
+WinMain producer; the complete deleting caller is independently witnessed.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

@@ -1,4 +1,4 @@
-"""Review two complete noexcept destructor graphs and their terminate entry."""
+"""Review fixed one/two-state terminal EH graphs and their terminate entry."""
 from __future__ import annotations
 
 import struct
@@ -10,6 +10,7 @@ from linked_image import _object_path, linked_code_fields
 
 
 PROFILE = "two-state-terminate-v1"
+SINGLE_PROFILE = "single-state-terminate-v1"
 _SPECS = {
     ("src/Stage.cpp", "??1Stage@@QAE@XZ"): {
         "parent": 0x4099a0, "size": 994, "locals": bytes.fromhex("83ec08"),
@@ -32,18 +33,38 @@ _SPECS = {
                   (342, "8b4df4"), (345, "64890d00000000"), (356, "8be5"), (358, "5d")],
     },
 }
+_SINGLE_SPECS = {
+    ("src/Arcfile.cpp", "?close@Arcfile@@QAEXXZ"): {
+        "parent": 0x457060, "size": 189, "locals": b"", "saves": bytes.fromhex("5657"),
+        "restores": bytes.fromhex("5f5e"), "ret": b"\xc3", "flags": 1, "cookie_offset": -12,
+        "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (24, "33c5"),
+                  (27, "8d45f4"), (30, "64a300000000"), (103, "c745fc00000000"),
+                  (172, "8b4df4"), (175, "64890d00000000"), (185, "8be5"), (187, "5d")],
+    },
+    ("src/WinMain.cpp", "??_GUpdateFuncRegistry@@QAEPAXI@Z"): {
+        "parent": 0x45a3a0, "size": 162, "locals": b"", "saves": bytes.fromhex("5657"),
+        "restores": bytes.fromhex("5f5e"), "ret": b"\xc2\x04\x00", "flags": 5, "cookie_offset": -12,
+        "deleting_caller": True,
+        "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (24, "33c5"),
+                  (27, "8d45f4"), (30, "64a300000000"), (43, "c745fc00000000"),
+                  (143, "8b4df4"), (146, "64890d00000000"), (156, "8be5"), (158, "5d")],
+    },
+}
 
 
 def inspect_frame(image, parent, handler, spec):
     import capstone
     prefix = (bytes.fromhex("558bec6aff68") + struct.pack("<I", handler)
               + bytes.fromhex("64a10000000050") + spec["locals"]
-              + bytes.fromhex("535657a1") + struct.pack("<I", load_config_cookie(image))
+              + spec.get("saves", bytes.fromhex("535657")) + b"\xa1"
+              + struct.pack("<I", load_config_cookie(image))
               + bytes.fromhex("33c5508d45f464a300000000"))
-    suffix = bytes.fromhex("8b4df464890d00000000595f5e5b8be55dc3")
+    ret = spec.get("ret", b"\xc3")
+    suffix = (bytes.fromhex("8b4df464890d0000000059")
+              + spec.get("restores", bytes.fromhex("5f5e5b")) + bytes.fromhex("8be55d") + ret)
     size = spec["size"]
     require(image.read_address(parent, len(prefix)) == prefix
-            and image.read_address(parent + size - 18, 18) == suffix,
+            and image.read_address(parent + size - len(suffix), len(suffix)) == suffix,
             "EH terminate parent registration, cookie or restoration differs")
     decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     decoder.detail = True
@@ -58,7 +79,7 @@ def inspect_frame(image, parent, handler, spec):
             frame.append((instruction.address - parent, instruction.bytes.hex()))
         if instruction.group(capstone.CS_GRP_RET):
             returns.append(instruction.address - parent)
-    require(frame == spec["frame"] and returns == [size - 1],
+    require(frame == spec["frame"] and returns == [size - len(ret)],
             "EH terminate parent states or protected frame uses differ")
     if spec["parent"] == 0x4099a0:
         # Stage stores state zero from ECX. Its defining XOR must dominate
@@ -77,6 +98,59 @@ def inspect_frame(image, parent, handler, spec):
                         and not parent + 891 < instruction.operands[0].imm <= parent + 936,
                         "EH terminate Stage state zero definition can be bypassed")
     return len(prefix)
+
+
+def inspect_registry_producer(context, parent):
+    """One explicit synthetic role emitted in its deleting caller's object."""
+    import capstone
+    _, caller = complete_game_entry(
+        context, "src/WinMain.cpp", "_WinMain@16", 0x459830, 2919,
+        "2401bd15572213d5fbf8c5620ebd8fcf64f82e742b9306027e950c3eaca3166a")
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    decoder.detail = True
+    witnesses = []
+    for image, base, destination in ((context.target, 0x459830, 0x45a3a0),
+                                      (context.image, caller, parent)):
+        instructions = list(decoder.disasm(image.read_address(base, 2919), base))
+        require(sum(i.size for i in instructions) == 2919,
+                "EH synthetic producer caller decode is incomplete")
+        calls = [i for i in instructions if i.mnemonic == "call" and len(i.operands) == 1
+                 and i.operands[0].type == capstone.x86.X86_OP_IMM
+                 and i.operands[0].imm == destination]
+        require(len(calls) == 1 and bytes(calls[0].bytes)[:1] == b"\xe8",
+                "EH synthetic producer lacks its unique complete caller witness")
+        witnesses.append(calls[0].address - base)
+    require(witnesses[0] == 2495, "EH synthetic producer original call leaves its fixed witness")
+    return dict(source="src/WinMain.cpp", symbol="_WinMain@16", target=0x459830,
+                size=2919, candidate=caller, original_call_offset=2495, candidate_call_offset=witnesses[1])
+
+
+def inspect_array_delete(context):
+    runtime = []
+    for name, target, size in (("??_V@YAXPAXI@Z", 0x475134, 14),
+                               ("??_V@YAXPAX@Z", 0x475150, 5),
+                               ("??3@YAXPAX@Z", 0x47514b, 5)):
+        binding = context.reviewed_linkages.get(name, {})
+        entries = [p for p in context.publics if p["symbol"] == name]
+        require(binding.get("kind") == "runtime-function" and binding.get("target") == target
+                and binding.get("size") == size and len(entries) == 1,
+                "EH Arcfile array delete lacks its independent complete runtime role")
+        runtime.append((target, entries[0]["address"]))
+    for side, image in ((0, context.target), (1, context.image)):
+        sized, unsized, scalar = (pair[side] for pair in runtime)
+        require(image.read_address(sized, 14) == bytes.fromhex("558becff7508e8")
+                + struct.pack("<i", unsized - sized - 11) + bytes.fromhex("595dc3")
+                and image.read_address(unsized, 5) == b"\xe9" + struct.pack("<i", scalar - unsized - 5),
+                "EH Arcfile complete array-delete chain differs")
+    for index, size, offset in ((0, 14, 7), (1, 5, 1)):
+        address = runtime[index][1]
+        fields = linked_code_fields(context.image, context.publics, address, size)
+        require(fields["decoded_bytes"] == size and fields["normalization_complete"]
+                and [(f["offset"], f["width"], f["type"]) for f in fields["fields"]] == [(offset, 4, "REL32")],
+                "EH Arcfile array delete has unreviewed instruction fields")
+        check_relocations(context.image, address, size, [])
+    return dict(target=0x475134, size=14, candidate=runtime[0][1],
+                unsized_target=0x475150, unsized_size=5, unsized_candidate=runtime[1][1])
 
 
 def runtime_entries(context):
@@ -172,41 +246,44 @@ def review_terminate(context, record, statics, pdb):
     require(set(record) == {"profile", "source", "parent_symbol", "parent_target", "parent_size",
                             "parent_sha256", "target", "size", "target_sha256", "func_info_target",
                             "func_info_size", "func_info_sha256", "eh_flags", "evidence"}
-            and record["profile"] == PROFILE, "unsupported EH terminate declaration")
+            and record["profile"] in (PROFILE, SINGLE_PROFILE), "unsupported EH terminate declaration")
     source, symbol = record["source"], record["parent_symbol"]
-    spec = _SPECS.get((source, symbol))
+    single = record["profile"] == SINGLE_PROFILE
+    spec = (_SINGLE_SPECS if single else _SPECS).get((source, symbol))
+    states = 1 if single else 2
+    data_size, map_size = 36 + states * 8, states * 8
+    flags = spec.get("flags", 5) if spec is not None else 0
     require(spec is not None and (record["parent_target"], record["parent_size"], record["size"],
                                   record["func_info_size"], record["eh_flags"])
-            == (spec["parent"], spec["size"], 27, 52, 5),
-            "EH terminate requires its fixed complete parent and 27/52-byte graph")
+            == (spec["parent"], spec["size"], 27, data_size, flags),
+            "EH terminate requires its fixed complete parent and code/data graph")
     owner, parent = complete_game_entry(context, source, symbol, spec["parent"], spec["size"],
                                         record["parent_sha256"])
     target, info = record["target"], record["func_info_target"]
     extent_hash(context.target, target, 27, record["target_sha256"])
-    metadata = extent_hash(context.target, info, 52, record["func_info_sha256"])
-    for address, size, code in ((target, 27, True), (info, 52, False)):
+    metadata = extent_hash(context.target, info, data_size, record["func_info_sha256"])
+    for address, size, code in ((target, 27, True), (info, data_size, False)):
         target_owner_section(context, address, size, code)
         require(not any(a < address + size and address <= int(r["span_end"], 0)
                         for a, r in context.boundaries.items()),
                 "EH terminate private owner overlaps an original function")
     handler = private_owner(context, statics, pdb, "__ehhandler$" + symbol, source, 27, True)
-    descriptor = private_owner(context, statics, pdb, "__unwindtable$" + symbol, source, 52, False,
+    descriptor = private_owner(context, statics, pdb, "__unwindtable$" + symbol, source, data_size, False,
                                internal_symbols={"__unwindtable$" + symbol: 0,
-                                                 "__ehfuncinfo$" + symbol: 16})
+                                                 "__ehfuncinfo$" + symbol: map_size})
     require(handler["module_index"] == descriptor["module_index"] == owner["pdb_module_index"],
             "EH terminate graph leaves its parent PDB module")
     runtime = runtime_entries(context)
     terminate = inspect_terminate(context, statics, pdb, runtime)
     data = descriptor["address"]
-    expected = struct.pack("<9IiIiI", 0x19930522, 2, info + 36, 0, 0, 0, 0, 0, 5,
-                           -1, runtime["___std_terminate"][0], -1, runtime["___std_terminate"][0])
-    candidate_data = struct.pack("<iIiI9I", -1, runtime["___std_terminate"][1],
-                                 -1, runtime["___std_terminate"][1],
-                                 0x19930522, 2, data, 0, 0, 0, 0, 0, 5)
-    require(metadata == expected and context.image.read_address(data, 52) == candidate_data,
-            "EH terminate metadata differs from its complete two-state graph")
+    expected = (struct.pack("<9I", 0x19930522, states, info + 36, 0, 0, 0, 0, 0, flags)
+                + struct.pack("<iI", -1, runtime["___std_terminate"][0]) * states)
+    candidate_data = (struct.pack("<iI", -1, runtime["___std_terminate"][1]) * states
+                      + struct.pack("<9I", 0x19930522, states, data, 0, 0, 0, 0, 0, flags))
+    require(metadata == expected and context.image.read_address(data, data_size) == candidate_data,
+            "EH terminate metadata differs from its complete one/two-state graph")
     for side, image, base, h, fi in ((0, context.target, spec["parent"], target, info),
-                                    (1, context.image, parent, handler["address"], data + 16)):
+                                    (1, context.image, parent, handler["address"], data + map_size)):
         inspect_handler(image, h, fi, runtime["@__security_check_cookie@4"][side],
                         runtime["___CxxFrameHandler3"][side], cookie_offset=spec["cookie_offset"])
         prefix = inspect_frame(image, base, h, spec)
@@ -216,13 +293,21 @@ def review_terminate(context, record, statics, pdb):
             == [(13, 4, "REL32"), (18, 4, "DIR32"), (23, 4, "REL32")],
             "EH terminate handler has unreviewed instruction fields")
     check_relocations(context.image, handler["address"], 27, [18])
-    check_relocations(context.image, data, 52, [4, 12, 24])
+    check_relocations(context.image, data, data_size, list(range(4, map_size, 8)) + [map_size + 8])
     check_relocations(context.image, parent, prefix, [6, prefix - 16])
-    check_relocations(context.image, parent + spec["size"] - 18, 18, [])
-    descriptor.update(func_info_offset=16, unwind_offset=0,
-                      internal_symbols={"__unwindtable$" + symbol: 0, "__ehfuncinfo$" + symbol: 16})
-    return dict(source=source, parent_symbol=symbol, parent_target=spec["parent"],
+    suffix = 14 + len(spec.get("restores", bytes.fromhex("5f5e5b"))) + len(spec.get("ret", b"\xc3"))
+    check_relocations(context.image, parent + spec["size"] - suffix, suffix, [])
+    descriptor.update(func_info_offset=map_size, unwind_offset=0,
+                      internal_symbols={"__unwindtable$" + symbol: 0, "__ehfuncinfo$" + symbol: map_size})
+    proof = dict(source=source, parent_symbol=symbol, parent_target=spec["parent"],
                 parent_size=spec["size"], parent_candidate=parent, target=target,
                 handler=handler, func_info_target=info, descriptor=descriptor,
-                profile=PROFILE, cookie_offset=spec["cookie_offset"], eh_flags=5,
+                profile=record["profile"], cookie_offset=spec["cookie_offset"], eh_flags=flags,
                 terminate=terminate, evidence=record["evidence"])
+    if single:
+        proof["producer_source"] = source
+        if spec.get("deleting_caller"):
+            proof["producer_witness"] = inspect_registry_producer(context, parent)
+        else:
+            proof["array_delete"] = inspect_array_delete(context)
+    return proof

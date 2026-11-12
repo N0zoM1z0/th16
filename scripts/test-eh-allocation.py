@@ -203,14 +203,18 @@ class AllocationEHControls(unittest.TestCase):
             with self.assertRaisesRegex(EHEvidenceError, "cookie differs"):
                 self.review(record, self.mutate("image", location, struct.pack("<I", value + 4)))
 
-    def test_node_minus_12_does_not_relax_any_other_profile(self):
+    def test_other_profiles_keep_their_explicit_cookie_displacements(self):
         records = tomllib.loads((ROOT / "config/eh-handlers.toml").read_text())["handlers"]
         for record in records:
             if record.get("profile") == "allocation-cleanup-v1":
                 continue
             proof = self.proof(record)
+            address = proof["handler"]["address"] + 9
+            # The later single-state graph independently uses node-12 too.
+            # Always change the displacement instead of rewriting that value.
+            value = b"\xfc" if self.context.image.read_address(address, 1) == b"\xf4" else b"\xf4"
             with self.subTest(parent=record["parent_symbol"]), self.assertRaises(EHEvidenceError):
-                self.review(record, self.mutate("image", proof["handler"]["address"] + 9, b"\xf4"))
+                self.review(record, self.mutate("image", address, value))
 
     def test_all_four_runtime_roles_require_independent_bindings(self):
         for record in self.records:

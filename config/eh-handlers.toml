@@ -457,3 +457,35 @@ func_info_size = 52
 func_info_sha256 = "c3b85b04c14858486c4b2812a397e7abe28a3f9c2020496259b7cf0d0bec1a93"
 eh_flags = 5
 evidence = "docs/knowledge/terminate-destructor-eh.md"
+
+[[handlers]]
+profile = "single-state-terminate-v1"
+source = "src/Arcfile.cpp"
+parent_symbol = "?close@Arcfile@@QAEXXZ"
+parent_target = 0x457060
+parent_size = 189
+parent_sha256 = "d54b04b342c3ca951a4b39d9adb1adb3ca582842b5d168c727d8a5ad182fd1bc"
+target = 0x48a9c0
+size = 27
+target_sha256 = "e14b63d085316fac6ab421328087c38f531302266db089b9d095e2446e0b13b3"
+func_info_target = 0x49b570
+func_info_size = 44
+func_info_sha256 = "cf2cbccdc959f13260123301a9be139b409be5a77060e9d8d653fec5da27d3e7"
+eh_flags = 1
+evidence = "docs/knowledge/single-state-terminate-eh.md"
+
+[[handlers]]
+profile = "single-state-terminate-v1"
+source = "src/WinMain.cpp"
+parent_symbol = "??_GUpdateFuncRegistry@@QAEPAXI@Z"
+parent_target = 0x45a3a0
+parent_size = 162
+parent_sha256 = "92288a0489fafb63659d9032b7aa94ce8ba0742e7491af1602257fd8c6cb7b96"
+target = 0x48aa30
+size = 27
+target_sha256 = "4c494669429fd2457dece671f682f18b6704250c424b5658ccb544b4300742a5"
+func_info_target = 0x49b5d0
+func_info_size = 44
+func_info_sha256 = "b20d3bf1e9fb1dd4f3a69937fe47443001fd0f833871532a53f3ea0525b2f430"
+eh_flags = 5
+evidence = "docs/knowledge/single-state-terminate-eh.md"

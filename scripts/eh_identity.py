@@ -167,7 +167,7 @@ def inspect_saved_register_frame(image, address, size, handler, *,
 
 
 def review_handler(context, record, statics, pdb):
-    if record.get("profile") == "two-state-terminate-v1":
+    if record.get("profile") in ("two-state-terminate-v1", "single-state-terminate-v1"):
         from eh_terminate import review_terminate
         return review_terminate(context, record, statics, pdb)
     if record.get("profile") == "anm-manager-constructor-v1":

@@ -6,6 +6,11 @@ original maps and parent frames establish these roles independently of the
 candidate. Both complete primary owners now pass, adding 1,354 exact bytes.
 No game source or compiler artifact changes occur.
 
+The later [single-state review](single-state-terminate-eh.md) adds two fixed
+one-state roles with different flags and node-12 frames, and two complete
+array-delete identities. Shared map/frame handling retains both earlier proof
+dictionaries below. The primary source-owner rule remains unchanged.
+
 ## Complete original and candidate scopes
 
 | Parent | Original / complete bytes | Reachable instructions | Original handler | Original FuncInfo / map |

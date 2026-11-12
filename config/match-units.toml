@@ -15971,6 +15971,29 @@ linkages = [
   { offset = 1, width = 4, type = "REL32", symbol = "?close@Arcfile@@QAEXXZ", target = 4550752, addend = 0 },
 ]
 
+[units.reference-00457060]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?close@Arcfile@@QAEXXZ"
+object = "Arcfile.obj"
+candidate_address = 4279424
+target_address = 4550752
+size = 189
+compare_size = 189
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?close@Arcfile@@QAEXXZ", target = 4762048, addend = 0, eh_handler = true },
+  { offset = 20, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 47, width = 4, type = "DIR32", symbol = "??_C@_0BK@EBAFFKPC@info?5?3?5?$CFs?5close?5arcfile?$AN?6?$AA@", target = 4798260, addend = 0 },
+  { offset = 52, width = 4, type = "REL32", symbol = "?arcfile_log@@YAXPBDZZ", target = 4552352, addend = 0 },
+  { offset = 68, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
+  { offset = 96, width = 4, type = "DIR32", symbol = "??1ArcfileEntry@@QAE@XZ", target = 4552304, addend = 0 },
+  { offset = 116, width = 4, type = "REL32", symbol = "??_M@YGXPAXIIP6EX0@Z@Z", target = 4672785, addend = 0 },
+  { offset = 131, width = 4, type = "REL32", symbol = "??_V@YAXPAXI@Z", target = 4673844, addend = 0 },
+]
+
 [units.reference-00457120]
 artifact_kind = "linked-pe"
 source = "src/Arcfile.cpp"
@@ -16982,6 +17005,29 @@ linkages = [
   { offset = 2865, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 0 },
   { offset = 2883, width = 4, type = "DIR32", symbol = "__imp__DeleteCriticalSection@4", target = 4763868, addend = 0 },
   { offset = 2909, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+]
+
+[units.reference-0045a3a0]
+artifact_kind = "linked-pe"
+source = "src/WinMain.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??_GUpdateFuncRegistry@@QAEPAXI@Z"
+object = "WinMain.obj"
+candidate_address = 4669376
+target_address = 4563872
+size = 162
+compare_size = 162
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??_GUpdateFuncRegistry@@QAEPAXI@Z", target = 4762160, addend = 0, eh_handler = true },
+  { offset = 20, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 39, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2456, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 51, width = 4, type = "REL32", symbol = "?join_if_running@ThreadInf@@QAEXXZ", target = 4206384, addend = 0 },
+  { offset = 65, width = 4, type = "REL32", symbol = "?run_all_on_tick@UpdateFuncRegistry@@QAEHXZ", target = 4199520, addend = 0 },
+  { offset = 73, width = 4, type = "REL32", symbol = "?unregister_all_in_list@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200112, addend = 0 },
+  { offset = 84, width = 4, type = "REL32", symbol = "?unregister_all_in_list@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z", target = 4200112, addend = 0 },
+  { offset = 134, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-0045a450]
@@ -21600,6 +21646,31 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
   { offset = 7, width = 4, type = "REL32", symbol = "??1CSound@@UAE@XZ", target = 4656656, addend = 0 },
   { offset = 24, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+]
+
+[units.reference-00470bb0]
+artifact_kind = "linked-pe"
+source = "src/DSUtil.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?recreate_buffers@CStreamingSound@@QAEJPAUThBgmFormat@@@Z"
+object = "DSUtil.obj"
+candidate_address = 4338512
+target_address = 4656048
+size = 605
+compare_size = 605
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 79, width = 4, type = "REL32", symbol = "??_V@YAXPAX@Z", target = 4673872, addend = 0 },
+  { offset = 121, width = 4, type = "REL32", symbol = "??_U@YAPAXI@Z", target = 4673858, addend = 0 },
+  { offset = 222, width = 4, type = "DIR32", symbol = "_IID_IDirectSoundNotify", target = 4765708, addend = 0 },
+  { offset = 245, width = 4, type = "REL32", symbol = "??_U@YAPAXI@Z", target = 4673858, addend = 0 },
+  { offset = 493, width = 4, type = "REL32", symbol = "??_V@YAXPAX@Z", target = 4673872, addend = 0 },
+  { offset = 521, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+  { offset = 550, width = 4, type = "REL32", symbol = "??_V@YAXPAX@Z", target = 4673872, addend = 0 },
+  { offset = 571, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+  { offset = 595, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
 ]
 
 [units.reference-00470ed0]

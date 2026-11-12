@@ -10,6 +10,11 @@ getter and abort. Unequal complete original/candidate extents remain explicit.
 The whole terminate bodies and private SEH table are checked; runtime code
 receives no primary exact credit.
 
+The [single-state/array-delete review](single-state-terminate-eh.md) adds the
+complete fourteen-byte sized and five-byte unsized array-delete identities.
+Their fixed chain reaches the already bound scalar delete. Two new terminal
+graphs and the full audio buffer recreation owner pass.
+
 The subsequent [stage/time review](stage-time-identities.md) adds the complete
 66-byte current-time entry and an explicit complete 1,696-byte stage-table
 identity. Table initialization and every string/relocation are independently

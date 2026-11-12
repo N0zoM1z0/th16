@@ -711,6 +711,9 @@ teardown:
         g_Supervisor.config.window_y = g_Supervisor.window_rect.top;
     }
     g_Supervisor.teardown_everything();
+    // The delete expression generates this complete entry in WinMain.obj.
+    // SYNTHETIC: TH16 0x45a3a0
+    // UpdateFuncRegistry::`scalar deleting destructor'
     delete g_UpdateFuncRegistry;
     g_UpdateFuncRegistry = NULL;
 shutdown:

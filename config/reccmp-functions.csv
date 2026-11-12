@@ -909,7 +909,7 @@ address,name,module,source_file,notes
 0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,AnmTextures,src/AnmTextures.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00459700,AnmManager::take_screenshots,AnmTextures,src/AnmTextures.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00459830,_WinMain@16,WinMain,src/WinMain.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,UpdateFunc,src/UpdateFunc.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,WinMain,src/WinMain.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045A450,window_proc,GameWindow,src/GameWindow.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045A700,GameWindow::make_dirs_and_disable_screensaver,GameWindow,src/GameWindow.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0045A8A0,GameWindow::do_frame_sleeping,GameWindow,src/GameWindow.cpp,Reference candidate; local comparison is separate from Factory acceptance.

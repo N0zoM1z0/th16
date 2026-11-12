@@ -2282,3 +2282,55 @@ See [the complete review](terminate-destructor-eh.md),
 `.analysis/terminate-caller-scopes.json` and
 `.analysis/terminate-regression-check.json`. The earlier unbound investigation
 is retained. Other terminate-only graph shapes still require independent review.
+
+## Single-state terminal graphs, generated ownership and array deletion
+
+Complete original CFGs establish Arcfile close (189 bytes, 63 instructions),
+the UpdateFuncRegistry scalar deleting destructor (162 bytes, 46 instructions)
+and audio buffer recreation (605 bytes, 193 instructions). The first two have
+fixed one-state terminal maps with flags 1/5, complete 27-byte handlers and
+44-byte metadata. Their node-12 frames have no locals and save ESI/EDI; the
+deleting entry requires the entire RET 4. Shared terminal-map/frame handling
+retains both preceding two-state proof dictionaries without adding configurable
+state counts, flags, producers or frame offsets.
+
+The deleting entry is generated in WinMain.obj at its delete expression. Its
+old UpdateFunc.cpp marker is refused by the unchanged primary source-owner
+check after EH resolution. The marker and explanatory comments are corrected
+to WinMain.cpp and freshly rebuilt incrementally. Original WinMain's complete
+2,919-byte CFG has 725 instructions and a unique deleting CALL at offset 2,495;
+the full candidate has its unique call at 2,493. The fixed original hash and
+both complete caller extents are required. WinMain remains a complete mismatch,
+and its witness grants no exact credit. Each other producer mismatch still
+requires its own independent complete role/caller review.
+
+The fourteen-byte sized array delete forwards its block to the five-byte
+unsized array delete, which tail-transfers to independently bound scalar delete.
+Both entire original/candidate bodies and all fields/relocations are checked.
+Pinned library producers and the fixed original CALL anchor the roles. Arcfile's
+count-cookie and count-times-sixteen-plus-four allocation size independently
+select sized array delete. Its three uses also resolve the whole audio buffer
+recreation owner. CSound destruction loses one unbound field but keeps two.
+Neighboring code after the original five-byte tail remains explicitly unreviewed;
+its bytes are not treated as padding or added to the reviewed scope.
+
+Canonical replay reports 872 exact, 65 mismatch and 278 incomplete among 1,215
+annotations, covering 164,495 primary exact bytes and 937 units. Three full
+passes add 956 bytes. All preceding 869 exact results, 65 complete mismatches
+and 934 units remain retained. Comparison details are identical apart from
+image fingerprint/PDB age; both earlier two-state proofs remain identical.
+Only the three new passes and CSound's removed field change other report details.
+Two hundred forty-nine controls pass across eleven suites. Mutation tests now
+change each profile's actual cookie displacement when node-12 is already valid;
+added PE relocations are refused even when instruction-field census rejects them
+before the dedicated relocation check.
+
+All 1,719 complete linked function records remain identical after the fresh
+incremental rebuild, and all 192 dependency stamps validate. The new source
+input is `356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f`.
+No implementation bytes change. See [the full review](single-state-terminate-eh.md),
+`.analysis/one-state-original-scopes.json`,
+`.analysis/one-state-caller-scopes.json`,
+`.analysis/one-state-artifact-check.json` and
+`.analysis/one-state-regression-check.json`. The initial producer refusal remains
+in `.analysis/one-state-before-owner-correction.json`.
