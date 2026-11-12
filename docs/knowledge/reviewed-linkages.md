@@ -15,6 +15,11 @@ complete fourteen-byte sized and five-byte unsized array-delete identities.
 Their fixed chain reaches the already bound scalar delete. Two new terminal
 graphs and the full audio buffer recreation owner pass.
 
+The [sound class review](sound-eh-vftables.md) identifies two complete
+single-slot primary tables from original RTTI. All twelve candidate metadata
+objects and nineteen relocations are checked; the metadata grants no extra
+primary credit. Four complete sound owners pass with the new empty-frame proof.
+
 The subsequent [stage/time review](stage-time-identities.md) adds the complete
 66-byte current-time entry and an explicit complete 1,696-byte stage-table
 identity. Table initialization and every string/relocation are independently

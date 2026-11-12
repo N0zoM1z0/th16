@@ -17,6 +17,7 @@ from strict_oracle import Context, Incomplete, ROOT, reviewed_linkages
 THREAD = "??_7ThreadInf@@6B@"
 FILE = "??_7File@Pbg@@6B@"
 ECL_TABLES = ("??_7EclResourceInf@@6B@", "??_7SptResourceInf@@6B@", "??_7SptInf@@6B@", "??_7EnemyInf@@6B@")
+SOUND_TABLES = ("??_7CSound@@6B@", "??_7CStreamingSound@@6B@")
 
 
 class Overlay:
@@ -71,9 +72,47 @@ class VftableControls(unittest.TestCase):
 
     def test_real_reviewed_slot_witnesses_pass(self):
         result = self.check()
-        for symbol, size in [(THREAD, 4), (FILE, 36), *zip(ECL_TABLES, (12, 8, 24, 24))]:
+        for symbol, size in [(THREAD, 4), (FILE, 36), *zip(ECL_TABLES, (12, 8, 24, 24)),
+                             *zip(SOUND_TABLES, (4, 4))]:
             with self.subTest(symbol=symbol):
                 self.assertEqual(result[symbol]["size"], size)
+
+    def test_sound_tables_require_complete_unambiguous_storage(self):
+        for symbol in SOUND_TABLES:
+            for sizes in ([4], [8, 8], [12]):
+                context = copy.copy(self.context)
+                context.data_contributions = copy.deepcopy(self.context.data_contributions)
+                context.data_contributions[self.candidate(symbol) - 4] = sizes
+                with self.subTest(symbol=symbol, sizes=sizes), self.assertRaisesRegex(Incomplete, "complete PDB storage"):
+                    self.check(context=context)
+
+    def test_sound_class_identity_cannot_be_borrowed_from_its_peer(self):
+        for symbol, peer in zip(SOUND_TABLES, reversed(SOUND_TABLES)):
+            rows = copy.deepcopy(self.rows)
+            row, other = self.row(rows, symbol), self.row(rows, peer)
+            row["target_address"], row["target_sha256"] = other["target_address"], other["target_sha256"]
+            with self.subTest(symbol=symbol), self.assertRaisesRegex(Incomplete, "RTTI class differs"):
+                self.check(rows)
+
+    def test_sound_slots_require_complete_independently_identified_entries(self):
+        for symbol in SOUND_TABLES:
+            rows = copy.deepcopy(self.rows)
+            row = self.row(rows, symbol)
+            table = int(row["target_address"], 0)
+            slot = self.words(self.context.target, table, 1)[0]
+            context = self.target_change(table, struct.pack("<I", slot + 1))
+            row["target_sha256"] = hashlib.sha256(context.target.read_address(table, 4)).hexdigest()
+            with self.subTest(symbol=symbol), self.assertRaisesRegex(Incomplete, "slot lacks"):
+                self.check(rows, context)
+            candidate_slot = self.words(self.context.image, self.candidate(symbol), 1)[0]
+            for key, value in (("extent_source", "next-map-label"), ("size", 0)):
+                context = copy.copy(self.context)
+                context.linked = copy.deepcopy(self.context.linked)
+                for function in context.linked["functions"]:
+                    if int(function["address"], 0) == candidate_slot:
+                        function[key] = value
+                with self.subTest(symbol=symbol, key=key), self.assertRaisesRegex(Incomplete, "slot lacks"):
+                    self.check(context=context)
 
     def test_complete_laser_constructor_with_26_slots_replays(self):
         units = tomllib.loads((ROOT / "config/match-units.toml").read_text())["units"]

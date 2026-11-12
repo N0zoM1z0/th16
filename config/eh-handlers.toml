@@ -489,3 +489,19 @@ func_info_size = 44
 func_info_sha256 = "b20d3bf1e9fb1dd4f3a69937fe47443001fd0f833871532a53f3ea0525b2f430"
 eh_flags = 5
 evidence = "docs/knowledge/single-state-terminate-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-esi-edi-v1"
+source = "src/DSUtil.cpp"
+parent_symbol = "??1CSound@@UAE@XZ"
+parent_target = 0x470e10
+parent_size = 179
+parent_sha256 = "4e3cd80f9de90330527baade9883da2e899153d815b37a7b6d8a669151be59ba"
+target = 0x48abd0
+size = 27
+target_sha256 = "0049c158ca30e8018af23ccfe7e53d3681794be1e0c37069addfe558d497b08c"
+func_info_target = 0x49b71c
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/sound-eh-vftables.md"

@@ -21631,6 +21631,28 @@ linkages = [
   { offset = 198, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
 ]
 
+[units.reference-004709b0]
+artifact_kind = "linked-pe"
+source = "src/DSUtil.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAUCWaveFile@@@Z"
+object = "DSUtil.obj"
+candidate_address = 4335488
+target_address = 4655536
+size = 463
+compare_size = 463
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 12, width = 4, type = "DIR32", symbol = "??_7CSound@@6B@", target = 4801440, addend = 0 },
+  { offset = 17, width = 4, type = "REL32", symbol = "??_U@YAPAXI@Z", target = 4673858, addend = 0 },
+  { offset = 114, width = 4, type = "DIR32", symbol = "__imp__Sleep@4", target = 4763808, addend = 0 },
+  { offset = 264, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22128, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 278, width = 4, type = "DIR32", symbol = "__imp__SetFilePointer@16", target = 4763800, addend = 0 },
+  { offset = 311, width = 4, type = "REL32", symbol = "?Read@CWaveFile@@QAEJPAEKPAK@Z", target = 4659760, addend = 0 },
+  { offset = 401, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+]
+
 [units.reference-00470b80]
 artifact_kind = "linked-pe"
 source = "src/DSUtil.cpp"
@@ -21671,6 +21693,27 @@ linkages = [
   { offset = 550, width = 4, type = "REL32", symbol = "??_V@YAXPAX@Z", target = 4673872, addend = 0 },
   { offset = 571, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
   { offset = 595, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+]
+
+[units.reference-00470e10]
+artifact_kind = "linked-pe"
+source = "src/DSUtil.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??1CSound@@UAE@XZ"
+object = "DSUtil.obj"
+candidate_address = 4336000
+target_address = 4656656
+size = 179
+compare_size = 179
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$??1CSound@@UAE@XZ", target = 4762576, addend = 0, eh_handler = true },
+  { offset = 20, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 42, width = 4, type = "DIR32", symbol = "??_7CSound@@6B@", target = 4801440, addend = 0 },
+  { offset = 92, width = 4, type = "REL32", symbol = "??_V@YAXPAX@Z", target = 4673872, addend = 0 },
+  { offset = 127, width = 4, type = "DIR32", symbol = "__imp__CloseHandle@4", target = 4763776, addend = 0 },
+  { offset = 148, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-00470ed0]
@@ -21778,6 +21821,41 @@ compare_size = 60
 profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
+]
+
+[units.reference-00471430]
+artifact_kind = "linked-pe"
+source = "src/DSUtil.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAUCWaveFile@@K@Z"
+object = "DSUtil.obj"
+candidate_address = 4337568
+target_address = 4658224
+size = 90
+compare_size = 90
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 22, width = 4, type = "REL32", symbol = "??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAUCWaveFile@@@Z", target = 4655536, addend = 0 },
+  { offset = 39, width = 4, type = "DIR32", symbol = "??_7CStreamingSound@@6B@", target = 4801432, addend = 0 },
+]
+
+[units.reference-00471490]
+artifact_kind = "linked-pe"
+source = "src/DSUtil.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??_GCStreamingSound@@UAEPAXI@Z"
+object = "DSUtil.obj"
+candidate_address = 4337664
+target_address = 4658320
+size = 44
+compare_size = 44
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 8, width = 4, type = "DIR32", symbol = "??_7CStreamingSound@@6B@", target = 4801432, addend = 0 },
+  { offset = 13, width = 4, type = "REL32", symbol = "??1CSound@@UAE@XZ", target = 4656656, addend = 0 },
+  { offset = 30, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-004714c0]

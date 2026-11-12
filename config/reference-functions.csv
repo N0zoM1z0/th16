@@ -1157,10 +1157,10 @@ address,name,source_file,symbol,result,reason,evidence
 0x00470250,CSoundManager::SetPrimaryBufferFormat,src/DSUtil.cpp,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z,exact,,.analysis/reference-audit.json
 0x00470320,CSoundManager::CreateStreaming,src/DSUtil.cpp,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PBDKU_GUID@@KKPAXPAUThBgmFormat@@@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00470680,CSoundManager::CreateStreamingFromMemory,src/DSUtil.cpp,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAEKPAUThBgmFormat@@KU_GUID@@KKPAX@Z,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004709B0,CSound::CSound,src/DSUtil.cpp,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAUCWaveFile@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004709B0,CSound::CSound,src/DSUtil.cpp,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAUCWaveFile@@@Z,exact,,.analysis/reference-audit.json
 0x00470B80,??_GCSound@@UAEPAXI@Z,src/DSUtil.cpp,??_GCSound@@UAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x00470BB0,CStreamingSound::recreate_buffers,src/DSUtil.cpp,?recreate_buffers@CStreamingSound@@QAEJPAUThBgmFormat@@@Z,exact,,.analysis/reference-audit.json
-0x00470E10,CSound::~CSound,src/DSUtil.cpp,??1CSound@@UAE@XZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00470E10,CSound::~CSound,src/DSUtil.cpp,??1CSound@@UAE@XZ,exact,,.analysis/reference-audit.json
 0x00470ED0,CSound::FillBufferWithSound,src/DSUtil.cpp,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@HK@Z,exact,,.analysis/reference-audit.json
 0x00471040,DSoundBufferRestore::restore,src/DSUtil.cpp,?restore@DSoundBufferRestore@@QAEJPAH@Z,exact,,.analysis/reference-audit.json
 0x004710B0,CSound::GetFreeBuffer,src/DSUtil.cpp,?GetFreeBuffer@CSound@@QAEPAUIDirectSoundBuffer@@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
@@ -1170,8 +1170,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x004712F0,CSound::Pause,src/DSUtil.cpp,?Pause@CSound@@QAEJXZ,exact,,.analysis/reference-audit.json
 0x00471380,CSound::Unpause,src/DSUtil.cpp,?Unpause@CSound@@QAEJXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004713F0,CSound::Reset,src/DSUtil.cpp,?Reset@CSound@@QAEJXZ,exact,,.analysis/reference-audit.json
-0x00471430,CStreamingSound::CStreamingSound,src/DSUtil.cpp,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAUCWaveFile@@K@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00471490,??_GCStreamingSound@@UAEPAXI@Z,src/DSUtil.cpp,??_GCStreamingSound@@UAEPAXI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00471430,CStreamingSound::CStreamingSound,src/DSUtil.cpp,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAUCWaveFile@@K@Z,exact,,.analysis/reference-audit.json
+0x00471490,??_GCStreamingSound@@UAEPAXI@Z,src/DSUtil.cpp,??_GCStreamingSound@@UAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x004714C0,CStreamingSound::HandleWaveStreamNotification,src/DSUtil.cpp,?HandleWaveStreamNotification@CStreamingSound@@QAEJH@Z,exact,,.analysis/reference-audit.json
 0x00471720,CStreamingSound::Reset,src/DSUtil.cpp,?Reset@CStreamingSound@@QAEJK@Z,exact,,.analysis/reference-audit.json
 0x004717E0,CWaveFile::open_file,src/DSUtil.cpp,?open_file@CWaveFile@@QAEJPBDPAUThBgmFormat@@@Z,exact,,.analysis/reference-audit.json

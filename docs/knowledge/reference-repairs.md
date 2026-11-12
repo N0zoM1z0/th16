@@ -2334,3 +2334,44 @@ No implementation bytes change. See [the full review](single-state-terminate-eh.
 `.analysis/one-state-artifact-check.json` and
 `.analysis/one-state-regression-check.json`. The initial producer refusal remains
 in `.analysis/one-state-before-owner-correction.json`.
+
+## Sound class tables and an empty frame without locals
+
+Original-only complete CFGs establish CSound construction (463 bytes, 160
+instructions), its scalar deleting destructor (38 bytes, 15 instructions),
+normal destruction (179 bytes, 58 instructions), CStreamingSound construction
+(90 bytes, 24 instructions) and its scalar deleting destructor (44 bytes,
+16 instructions). The first deleting entry was already exact and receives
+no extra slot credit. Four other complete primary owners now pass all 776 bytes.
+
+Unique terminated original RTTI names locate both primary COL records and
+their exact locator-pointer references. Each class has one independently
+annotated deleting slot and a following non-code word. Both complete candidate
+contributions own the preceding locator pointer plus the slot, eight bytes
+per table. Twelve unique complete metadata objects (209 bytes) and all nineteen
+pointer relocations are retained and checked, including CSound's complete
+base graph and CStreamingSound's inherited hierarchy. No table or RTTI exact
+credit is added.
+
+CSound's complete 27-byte handler and 36-byte empty descriptor have source-
+qualified private PDB owners in DSUtil.obj. The new explicit ESI/EDI profile
+has no local PUSH; its full 36-byte registration places the cookie at EBP-24,
+node minus twelve. Its seventeen-byte restoration ends in the sole RET.
+The shared calculation now derives the depths of three fixed local/save
+sequences; it exposes no configurable local/register/count offsets. Both older
+saved-register proofs retain their values. Nonempty Arcfile/registry frames
+sharing node-12 are refused. Protected state/cookie reads, extra frame-pointer
+writes and all pointer relocations remain checked.
+
+Canonical replay reports 876 exact, 65 mismatch and 274 incomplete among 1,215
+annotations, covering 165,271 primary exact bytes and 941 units. All preceding
+872 exact results, 65 complete mismatches and 937 unit definitions remain
+identical, as do all other incomplete records. Three hundred one controls pass
+across twelve suites. No game source or compiler artifact changes and no build
+occurs; all 1,719 complete linked owner records and 192 dependency stamps validate.
+The source input remains
+`356af008e8064e7f8080f6c112145362eea142d1955f371a989e5b65034aca5f`.
+See [the full review](sound-eh-vftables.md),
+`.analysis/sound-vftable-graph-proof.json`,
+`.analysis/sound-eh-caller-scopes.json` and
+`.analysis/sound-regression-check.json`.

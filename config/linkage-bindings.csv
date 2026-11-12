@@ -93,3 +93,5 @@ ___acrt_getptd,0x47cad3,131,runtime-function,6b1ed6706621b5994c0074622f3eca23721
 _abort,0x47bbdb,67,runtime-function,d34341665fd4912d198ad02a064b4f3c6c729ee2ad5d0a0129dcc6279c9b1f37,0x47b85b,call,docs/knowledge/terminate-destructor-eh.md,libucrt.lib,67
 ??_V@YAXPAXI@Z,0x475134,14,runtime-function,1965d46362b9967a9cfcfe272c9f8f94b1956ee6eb37ddce3a70f2bf97678220,,,docs/knowledge/single-state-terminate-eh.md,LIBCMT.lib,
 ??_V@YAXPAX@Z,0x475150,5,runtime-function,95606805315ff9a4adc98b0cc5a2c8b933e58c85a96b612c34d746924030782c,0x47513a,call,docs/knowledge/single-state-terminate-eh.md,LIBCMT.lib,
+??_7CSound@@6B@,0x4943a0,4,vftable,8207e2ee6d521fe7df3a3382d17eef25d5c922a28f7ba9a3081fe7c4fb7d7bfc,,,docs/knowledge/sound-eh-vftables.md,,
+??_7CStreamingSound@@6B@,0x494398,4,vftable,dc3e49017232ef208e393eab29121899002ddc6373566d110104500c4924756e,,,docs/knowledge/sound-eh-vftables.md,,

@@ -46,6 +46,11 @@ and the registry deleting entry with their own fixed flags, complete node-12
 frames and 27/44-byte graphs. The synthetic marker is corrected to its actual
 WinMain producer; the complete deleting caller is independently witnessed.
 
+The [sound review](sound-eh-vftables.md) adds a separate empty-EH3 ESI/EDI
+frame with no local word. Its full registration and restoration derive node-12;
+nonempty frames with the same cookie displacement remain excluded. Complete
+CSound/CStreamingSound primary tables are independently located through RTTI.
+
 ## Original roles and complete scopes
 
 | Parent | Complete parent | Private handler | Complete FuncInfo |

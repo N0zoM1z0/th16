@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mutation controls for the two explicit saved-register empty EH3 frame profiles."""
+"""Mutation controls for three explicit saved-register empty EH3 frame profiles."""
 import copy
 import hashlib
 import importlib.util
@@ -245,6 +245,41 @@ class SavedEBXESIEHControls(SavedRegisterEHControls):
         # A shared handler displacement does not establish either frame shape.
         for parent, size, handler in ((0x40d710, 377, 0x48a4e0), (0x417790, 272, 0x48a590)):
             with self.assertRaisesRegex(EHEvidenceError, "saved-register frame"):
+                inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
+
+
+class SavedESIEDIEHControls(SavedRegisterEHControls):
+    PROFILE = "empty-eh3-saved-esi-edi-v1"
+    TARGETS = {0x470e10}
+    COOKIE_OFFSET = -12
+    COOKIE_FIELD = 20
+    COOKIE_SLOT_BYTE = 0xe8
+    OTHER_COOKIE_BYTE = 0xf0
+    PREFIX_SIZE = 36
+
+    def test_empty_state_and_cookie_slots_cannot_be_used_by_the_body(self):
+        record = self.records[0]
+        parent = self.proof(record)["parent_candidate"]
+        for displacement in (0xfc, 0xf8, self.COOKIE_SLOT_BYTE):
+            context = self.mutate("image", parent + 51, b"\x8b\x45" + bytes([displacement]))
+            with self.subTest(displacement=displacement), self.assertRaisesRegex(
+                    EHEvidenceError, "EH-sensitive parent frame"):
+                self.review(record, context)
+
+    def test_identical_descriptor_or_handler_of_the_other_parent_is_rejected(self):
+        record = self.records[0]
+        proof = self.proof(record)
+        other = self.context.eh_handlers[("src/BulletManager.cpp", "??1BulletManager@@QAE@XZ")]
+        self.assertEqual(self.context.image.read_address(proof["descriptor"]["address"], 36),
+                         self.context.image.read_address(other["descriptor"]["address"], 36))
+        for address, destination in ((proof["handler"]["address"] + 18, other["descriptor"]["address"]),
+                                     (proof["parent_candidate"] + 6, other["handler"]["address"])):
+            with self.assertRaises(EHEvidenceError):
+                self.review(record, self.mutate("image", address, struct.pack("<I", destination)))
+
+    def test_nonempty_node_minus_12_frames_remain_outside_this_profile(self):
+        for parent, size, handler in ((0x457060, 189, 0x48a9c0), (0x45a3a0, 162, 0x48aa30)):
+            with self.subTest(parent=parent), self.assertRaises(EHEvidenceError):
                 inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
 
 

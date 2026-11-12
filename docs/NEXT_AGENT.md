@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after single-state terminal graphs and array-delete identities.
+Updated 2026-11-12 after complete sound class tables and an empty ESI/EDI frame.
 This file describes current state; the repair log records historical batches.
 
 ## Constraints
@@ -18,7 +18,28 @@ This file describes current state; the repair log records historical batches.
 
 ## Verified checkpoint
 
-The current report is **872 exact, 65 mismatch and 278 incomplete** among
+The current report is **876 exact, 65 mismatch and 274 incomplete** among
+1215 annotated candidates, covering 165,271 exact owned bytes and 941 units.
+CSound construction (463 bytes) and destruction (179), CStreamingSound
+construction (90) and its scalar deleting destructor (44) pass all 776 primary
+bytes. Original RTTI independently locates both complete single-slot tables;
+all twelve unique candidate metadata objects (209 bytes), nineteen pointer
+relocations and both fixed slot identities are checked. An explicit empty-EH3
+ESI/EDI frame has no local word, a full 36-byte registration, a 17-byte
+restoration and node-12 cookie. Both older saved-register profiles retain their
+local word and original depths. Nonempty node-12 frames remain excluded. All
+previous 872 exact results, 65 complete mismatches and 937 unit definitions
+remain identical, as do all other incomplete records. No game source or
+compiler artifact changes and no build occurs; all 1,719 linked owners and
+192 dependency stamps validate. See [the sound review](knowledge/sound-eh-vftables.md).
+
+Audio initialization and CSound::GetFreeBuffer still have unresolved fields.
+Other state counts, flags, frame layouts and data roles require their own
+independent review. The primary producer-mismatch gate remains strict, and
+WinMain remains a complete mismatch. The new table/RTTI and private EH graphs
+receive no extra primary credit.
+
+The preceding single-state report was **872 exact, 65 mismatch and 278 incomplete** among
 1215 annotated candidates, covering 164,495 exact owned bytes and 937 units.
 Arcfile close (189 bytes), the UpdateFuncRegistry scalar deleting destructor
 (162) and audio buffer recreation (605) pass all 956 primary bytes. Two fixed
@@ -35,13 +56,6 @@ one unbound field and retains two; other incomplete records remain identical.
 The annotation-only edit is freshly rebuilt incrementally. All 1,719 complete
 linked function records remain identical and all 192 dependency stamps
 validate. See [the single-state review](knowledge/single-state-terminate-eh.md).
-
-CSound destruction at 0x00470E10 remains incomplete at its full 179-byte scope,
-with unbound fields at offsets 6/42. Other state counts, flags and frames still
-need independent review. The primary producer-mismatch gate remains strict;
-each remaining producer mismatch needs its own complete role/caller review.
-The original and candidate WinMain owners remain complete mismatches; the
-new deleting-call witness grants no WinMain exact credit.
 
 The preceding two-state report was **869 exact, 65 mismatch and 281 incomplete** among
 1215 annotated candidates, covering 163,539 exact owned bytes and 934 units.
@@ -484,7 +498,7 @@ entries/extents/payloads remain
 unchanged after the fresh annotation-only incremental rebuild. Current
 artifacts match their new receipt and all 192 dependency stamps validate;
 complete owner and dependency evidence is
-`.analysis/one-state-artifact-check.json`. The preceding source restoration is
+`.analysis/sound-artifact-check.json`. The preceding source restoration is
 `.analysis/replay-destructor-source-trial.json`. The preceding callback
 batch added 41 original inventory rows and unknown/review source-origin rows.
 The preceding batch extended the EH verifier with one explicitly reviewed
@@ -545,7 +559,19 @@ forms. Other recent source trials were restored; read the repair log before
 repeating them. WinMain's earlier natural cleanup remains; its complete 2919-byte
 extent still mismatches.
 
-The current batch passes **249 controls across eleven relevant suites**:
+The current batch passes **301 controls across twelve relevant suites**:
+saved-register EH (56), vftables (33), reviewed linkages (40), single-state EH
+(16), two-state EH (23), array constructor EH (18), member constructor EH (25),
+allocation EH (23), legacy empty EH (25), AnmManager constructor EH (25),
+strict Oracle (14) and focused audit (3). New controls cover complete ESI/EDI
+graphs, protected state/cookie reads, nonempty node-12 rejection, foreign
+identical metadata, full table storage, peer class substitution and independent
+complete slot owners. Ordinary body changes still fail whole-owner replay.
+Logs use `.analysis/sound-<suite>-controls.log`; the summary is
+`.analysis/sound-controls-summary.json`. Complete regression retention is
+`.analysis/sound-regression-check.json`.
+
+The preceding single-state batch passed **249 controls across eleven relevant suites**:
 single-state EH (16), two-state terminate EH (23), array constructor EH (18),
 member constructor EH (25), allocation EH (23), saved-register EH (37), legacy
 empty EH (25), AnmManager constructor EH (25), reviewed linkages (40), strict
@@ -1101,7 +1127,7 @@ the complete owner and also changes wave scheduling. The current 696/700 result
 retains the indexed circle form. Remaining circle
 operand order needs better source/type/context evidence; do not normalize it.
 
-The two legacy and eleven saved-register empty-EH3 graphs are complete. Their
+The two legacy and twelve saved-register empty-EH3 graphs are complete. Their
 selectors require the exact parent-derived private MAP names, full source-object PDB ownership and
 complete 27/36-byte handler/descriptor extents. Do not extend this proof to
 nonempty unwind/try tables or another handler shape. Identical metadata from

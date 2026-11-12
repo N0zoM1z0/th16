@@ -6,6 +6,11 @@ Their complete graphs now pass. Independent sized/unsized array-delete
 identities also resolve the complete audio buffer recreation owner. These
 three primary owners add 956 exact bytes.
 
+The later [sound review](sound-eh-vftables.md) resolves CSound destruction with
+a separate empty node-12 frame and complete class table identities. It retains
+both single-state terminal proofs below and refuses reuse of their nonempty
+frames under the empty profile.
+
 ## Original scopes and private ownership
 
 | Parent | Complete original | Reachable instructions | Original handler | Original FuncInfo / map | Flags |
