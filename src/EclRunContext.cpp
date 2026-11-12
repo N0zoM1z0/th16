@@ -514,6 +514,12 @@ HARNESS_CALLED void ecl_log(const char *fmt, ...)
 {
 }
 
+// From a to b as t goes from zero to one.
+static inline f32 ecl_lerp(f32 a, f32 b, f32 t)
+{
+    return t * (b - a) + a;
+}
+
 // This file's copy of sincosmul (ZunAsm.h).
 // FUNCTION: TH16 0x474510
 static void __fastcall ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
@@ -1187,7 +1193,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 f32 r1 = get_float_arg(2);
                 f32 r2 = get_float_arg(3);
                 f32 angle = g_replay_safe_rng.randf_neg_to(ZUN_PI);
-                f32 radius = g_replay_safe_rng.randf_neg_to(r2 - r1) + r1;
+                f32 radius = ecl_lerp(r1, r2, g_replay_safe_rng.randf_neg_1_to_1());
                 Float3 pos;
                 ecl_sincosmul(&pos, angle, radius);
                 *get_float_arg_ptr(0) = pos.x;

@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after shared ECL expression exits and floating-negation guards.
+Updated 2026-11-13 after ECL random-ring precision and active interpolation.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -11,8 +11,9 @@ The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. The current source
-continuation recovers the common result exit for 20 ECL expression handlers,
-while retaining distinct arithmetic metadata behavior and floating negation.
+continuation restores the random-ring radius interpolation boundary and SSE
+arithmetic. The shared expression exits, distinct arithmetic metadata behavior
+and floating negation are retained.
 The preceding curve, Boss and async source work is retained. No new exact credit is claimed.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
@@ -20,16 +21,17 @@ Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`0dd36c03a6cba531ccff7352c69de0ad2bf2c7b9f493525aa184907fcc5fe65d`.
-PDB age is **277**. The final incremental build, strict replay and progress check
-validate current source, artifact and comparison identities. Cleanup preserves
-the current incremental build, target, canonical report, Wine prefix, Ghidra
-project and pinned reference.
+`fdd04a2fec8a0c8faf41c88ff6f126d68bd243d79f1bb13c0c1a93557456051d`.
+PDB age is **288**. The final incremental build, strict replay and progress check
+validate current source, artifact and comparison identities. Preserve the
+current incremental build, target, canonical report, Wine prefix, Ghidra project
+and pinned reference. No local outputs are cleaned during this continuation.
 
 Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [ECL ring precision and active interpolation](knowledge/ecl-ring-precision-and-interpolation.md) | Original float sample boundary and SSE radius arithmetic; 120 historical position differences removed; 3,288 complete calls agree; no new exact credit |
 | [ECL expression exits](knowledge/ecl-expression-result-exits.md) | One result exit for 20 handlers; complete interpreter 7,370 to 6,950 bytes; 3,457 complete calls and 360 prefixes agree; wrong floating-negation draft rejected |
 | [ECL integer exits and live async cleanup](knowledge/ecl-integer-exits-and-boss-async.md) | Three-handler shared result push; interpreter 7,462 to 7,370 bytes; 1,192 complete Boss/ECL calls and 360 live-head prefixes agree; no new exact credit |
 | [Curve elapsed time and integration](knowledge/curve-laser-elapsed-and-loop.md) | Original loop accumulator registers and acceleration operands; 372 historical differences removed in 1,488 complete calls; both owners remain incomplete |
@@ -51,6 +53,47 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [ECL ring precision and active interpolation](knowledge/ecl-ring-precision-and-interpolation.md)
+first. Starting checkpoint `a088cca` is preserved. Random-ring instruction 93 now
+uses an ordinary float linear-interpolation helper, restoring the original
+sample store and SSE multiply/add. Named locals and compound assignments keep
+the incorrect x87 arithmetic and are restored. Only this helper and its call
+are retained game-source changes. Both natural helper parameter orders produce
+the same complete owner; the final source uses endpoints followed by the sample.
+
+The interpreter is **6,942 bytes**, against the unchanged **7,046-byte provisional
+target span**. `ring-lerp-order/` retains all code, compiler padding and 362 table
+bytes. Three fields remain unbound; shared exits, stack slots, interpolation
+registers and ring SSE operands still differ. The surrounding-code diagnostic
+checks all 1,575 non-ring executable instructions against the starting image;
+changes are validated branch/callee/switch fields, with padding recorded fully.
+
+The final image passes **3,288 complete native Boss/ECL conditions**: 672 floating
+arithmetic, 1,344 active interpolation and 1,272 random-ring conditions. The
+original/final ring outputs agree; the historical image has 120 differences
+(96 independently modeled finite cases and 24 special-value cases). Full
+remaining observed storage and real RNG transitions agree. Three controls reject
+missing ring/interpolation instructions and reversed interpolation traversal.
+Locks are disabled in these pre-WinMain fixtures; repeated interpolation frames,
+live-slot reconfiguration, RNG-valued arguments and full resource behavior remain
+unproved. No broad older gameplay matrix is replayed for this focused change.
+
+Strict replay preserves **885/65/265**, 169,575 exact primary bytes and 950 units,
+without classification changes. The upper-dispatch reason changes from eight
+unbound fields back to seven: the disappearing incidental field at offset
+20,986 is inside the unchanged opcode remap, bytes `9f a0`. Full original and
+old/new candidate scopes and all tables are retained; only existing link fields
+change. No Oracle rule, binding, target geometry or acceptance status changes.
+
+Preserve `.analysis/ecl-float-work/`, especially `baseline-image/`, `final-image/`,
+`ring-lerp-order/`, `enemy-dispatch-final/`, native `*-final/` outputs and drivers,
+ring/surrounding/relink diagnostics, layout probes, negative controls, rejected
+source snapshots, `TRIALS.md` and `final-regression.json`. The initial float driver
+fails fixture generation on division by converted integer zero; its corrected
+version and refused log remain. Failed diagnostic prototypes also remain.
+
+### Earlier ECL expression exits and floating-negation guards
 
 Read [ECL expression result exits](knowledge/ecl-expression-result-exits.md) first.
 The starting checkpoint is `73643b8`. Twenty comparison, logic, bit-operation
