@@ -19,6 +19,7 @@ outside this repository; never follow them when cleaning local outputs.
 | `.analysis/enemy-motion-work/` | Boss, spellcard and projectile source trials, baseline report and final regression evidence |
 | `.analysis/bullet-ex-work/` | Curve laser exact comparison, large projectile dispatcher trials, private helper controls and partial instruction-emulation diagnostics |
 | `.analysis/boss-core-work/` | Boss damage/feedback and Player damage traversal trials, native layout probe, partial instruction-emulation diagnostics and strict regression evidence |
+| `.analysis/laser-core-work/` | Laser/context source trials, large ECL context, native debugger and complete fixtures, parameter observation controls, failed prototypes and restored-build regression evidence |
 | `.analysis/archives/`, `.analysis/cleanup-handoff-20261112.json` | Verified historical evidence and recovery index |
 | `.analysis/factory-registration.toml`, `.analysis/factory-validation*` | Staged private registration and isolated validation evidence |
 | `.analysis/ghidra/`, diagnostic notes and regression records | Analysis evidence and failed-experiment context |

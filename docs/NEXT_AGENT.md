@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-12 after boss damage/feedback and source traversal work.
+Updated 2026-11-12 after native boss/damage/laser diagnostics and source trials.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -8,8 +8,9 @@ running at this checkpoint. Read AGENTS.md before work.
 ## Authoritative checkpoint
 
 The exact-credit checkpoint is `a95321e` (curve laser initialization and the
-elliptical drop helper). The current continuation recovers inline boss feedback
-and damage-source traversal without adding exact credit; see gameplay below.
+elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
+feedback and damage-source traversal. This continuation adds native execution
+evidence; all new source trials are restored, with no new exact credit.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
@@ -17,7 +18,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `ad2da61dc4edd8acc9786383f25b07f16e256d9bcc67d1605446a8019135281c`.
-PDB age is **173**. The final incremental build, strict replay and progress check
+PDB age is **188**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -36,6 +37,34 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [native boss and laser diagnostics](knowledge/native-boss-and-laser-diagnostics.md)
+before repeating calling-context or laser trials. A Win32 debug child now runs
+the unmodified original and candidate at their preferred image bases under this
+game's Wine prefix. Redirect only after the loader's initial breakpoint. Native
+execution agrees in **278 boss, 118 damage and 596 laser cases**, including
+**140 complete 856-byte new-segment parameter captures**. Native observations
+also agree with the corresponding instruction emulation. One positive and three
+negative native observation controls pass. These partial fixtures skip real
+allocation/effects, deaths and ECL transitions and grant no exact credit.
+
+`.analysis/laser-core-work/` retains the final tested PE/MAP/PDB/receipt,
+debugger host, fixtures, native reports, observation schema controls and failed
+prototypes. Its first REP observer result is invalid; callback errors were
+swallowed and EDI was recorded after advancing. Its first native loader stop
+also did not execute game code. Keep both failures and use the final reports.
+The final isolated strict replay preserves all 885 exact owners and all
+comparison classifications; `final-regression.json` records PDB age 188.
+
+The large `ecl_run_over_300` candidate is 21,586 bytes. A 21,402-byte owner
+snapshot removes original reloads after calls and is restored. Its target
+primary boundary is provisionally 19,976 bytes; switch storage still needs
+independent review. The nine unresolved fields reported first by the Oracle
+do not imply that binding them will make the remaining body exact. The retained
+Ghidra context warns about switch recovery. The compiler call graph also finds
+`ecl_ext_damage_anm_hurtbox` as a second damage caller; retaining that real
+callback does not fix the boss/damage alignment arrangement. See the review
+for the other restored source forms and their complete extents.
 
 `EnemyData::step_logic` at `0x0041c330` now contains the original inline
 200/900 low-life hit-sound test. Its private helper is removed, and spell flags
@@ -90,7 +119,8 @@ mapped instructions in Unicorn: 488 identical cases, no faults, and identical
 complete laser parameter snapshots for 16 cases with allocation declined by a
 full manager. This is partial emulation evidence, not native execution or exact
 credit. Real allocations, resource paths and several side effects are untested.
-The Wine host prototypes failed before entering game code.
+Those historical Wine host-mapping prototypes failed before entering game code;
+the later debug-child approach above overcomes that mapping problem.
 
 The full strict replay preserves all 883 previous exact owners. Standalone
 comparisons confirm both new exact entries. Private-function controls (34),
