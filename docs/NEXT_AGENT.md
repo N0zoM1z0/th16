@@ -1,23 +1,23 @@
 # Current handoff
 
-Updated 2026-11-12 after complex gameplay reconstruction trials.
+Updated 2026-11-12 after curve laser initialization and projectile dispatch work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
 
 ## Authoritative checkpoint
 
-The exact-credit baseline is `6427da9` (audio release EH and strncmp).
-The current source continuation improves a mismatching spellcard owner without
-adding exact credit; see the gameplay section below.
-The canonical report is **883 exact, 65 mismatch, 267 incomplete** among 1,215
-annotations: **167,817 exact primary bytes and 948 retained units**.
+The current continuation of `059efe5` adds the complete curve laser initializer
+and independently proves the elliptical drop helper. The large projectile
+dispatcher improves without exact credit; see the gameplay section below.
+The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
+annotations: **169,575 exact primary bytes and 950 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`2cdfc15cc3f6c75cc13900d4aa61eaed50c55c43ca39a5373ea2a4302f3c6799`.
-PDB age is **156**. The final incremental build, strict replay and progress check
+`712f97f71342573da544bd597abf22153fc255316e55b63abc49e063f08c7a07`.
+PDB age is **168**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Cleanup preserves the current incremental
 build, target, canonical report, Wine prefix, Ghidra project and pinned reference.
 
@@ -25,6 +25,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Curve laser and projectile dispatch](knowledge/laser-initialization-and-bullet-dispatch.md) | Complete 1,726-byte initializer and 32-byte private helper; projectile dispatcher 5,988 to 5,500 bytes, still incomplete |
 | [Audio release and strncmp](knowledge/audio-release-strncmp.md) | Complete 370/88-byte primary owners; complete 120-byte UCRT identity; fixed ESI-only terminal frame |
 | [Sound data](knowledge/audio-scalar-and-sound-data.md) | Complete 1,656-byte aggregate; complete 145/168-byte queue entries |
 | [ISA and aligned audio EH](knowledge/audio-isa-aligned-eh.md) | Complete 856/809-byte initialization owners, startup-derived ISA storage and private EH graphs |
@@ -36,11 +37,36 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
+`LaserCurveInf::initialize` at `0x004370a0` is exact over its complete
+1,726-byte owner. The initial distance is cleared between computing and storing
+the translated X coordinate. Pointer-based component arithmetic retains the
+original floating operand order. The independent ellipse helper at `0x00426240`
+is exact over all 32 bytes; its 500-byte drop caller remains 455/500 mismatch.
+The new helper profile preserves all existing complete-owner and witness checks.
+
+`Bullet::run_ex` at `0x00413860` now retains a command pointer by advancing it
+for paired shooting and laser commands. The candidate shrank from 5,988 to
+5,500 bytes against the complete 5,436-byte original. The nested laser switch
+and signed packed-parameter shift follow the original. No exact credit is
+claimed. Remaining differences are spread across handlers and frame layout.
+An extracted readiness helper and pointer declaration reorder did not help.
+
+Read [the laser and dispatcher review](knowledge/laser-initialization-and-bullet-dispatch.md)
+and preserve `.analysis/bullet-ex-work/`. Its final diagnostic executes actual
+mapped instructions in Unicorn: 488 identical cases, no faults, and identical
+complete laser parameter snapshots for 16 cases with allocation declined by a
+full manager. This is partial emulation evidence, not native execution or exact
+credit. Real allocations, resource paths and several side effects are untested.
+The Wine host prototypes failed before entering game code.
+
+The full strict replay preserves all 883 previous exact owners. Standalone
+comparisons confirm both new exact entries. Private-function controls (34),
+Oracle controls (14) and focused-audit controls (3) pass. See the regression
+record and logs in `.analysis/bullet-ex-work/`. No failed source trial remains.
+
 `Spellcard::on_tick_body` at `0x00417930` retains its complete 650-byte scope.
 A planar vector delta and scalar depth delta improve strict matching from
-437 to 451 bytes. It remains a mismatch. The full replay preserves every one
-of the 883 baseline exact owners, and the standalone replay agrees with the
-canonical report. Source-origin review remains open.
+437 to 451 bytes. It remains a mismatch. Source-origin review remains open.
 
 Read [the boss and projectile source trials](knowledge/boss-motion-source-trials.md)
 before retrying the enemy motion, damage, projectile corner tests or shared

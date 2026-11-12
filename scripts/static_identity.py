@@ -17,7 +17,11 @@ class StaticEvidenceError(ValueError):
 
 SINCOS_SCALE = bytes.fromhex('558bec51894dfc8b45fcd94508d9fbd84d0cd918d84d0cd958048be55dc20800')
 SINCOS_SCALE_XY = bytes.fromhex('558bec83ec088955f8894dfc8b45fcd94508d9fbd84d0cd918d84d0c8b45f8d9188be55dc20800')
-PROFILES = {'x87-sincos-scale-v1': SINCOS_SCALE, 'x87-sincos-scale-xy-v1': SINCOS_SCALE_XY}
+# ECX is the output vector; angle, x radius and y radius occupy distinct
+# stack arguments. The complete owner stores only X/Y and returns twelve bytes.
+SINCOS_ELLIPSE = bytes.fromhex('558bec51894dfc8b45fcd94508d9fbd84d0cd918d84d10d958048be55dc20c00')
+PROFILES = {'x87-sincos-scale-v1': SINCOS_SCALE, 'x87-sincos-scale-xy-v1': SINCOS_SCALE_XY,
+            'x87-sincos-ellipse-v1': SINCOS_ELLIPSE}
 
 
 def require(condition, message):

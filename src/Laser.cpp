@@ -2362,7 +2362,6 @@ i32 LaserBeamInf::initialize(void *params)
 // aim, and the node list: a copy of the source laser's when a bomb split
 // this one off (et_ex then skipped), else one straight node. Then places
 // the segments for the starting time.
-// Effective match: the original stores inner.distance = 0 between the position's x add and its store.
 // FUNCTION: TH16 0x4370a0
 i32 LaserCurveInf::initialize(void *params)
 {
@@ -2408,14 +2407,15 @@ i32 LaserCurveInf::initialize(void *params)
     {
         Float3 offset;
         laser_sincosmul(&offset, inner.ang_aim, inner.distance);
-        // Through pointers to the components: the adds then load the
-        // position and add the offset from memory, as in the original.
+        // Consume the initial distance before committing the translated position.
         f32 *px = &position.x;
-        *px += offset.x;
+        f32 translated_x = *px;
+        translated_x += offset.x;
+        inner.distance = 0.0f;
+        *px = translated_x;
         f32 *py = &position.y;
         *py += offset.y;
         inner.start_pos = position;
-        inner.distance = 0.0f;
     }
     width = inner.laser_new_arg_4;
     angle = inner.ang_aim;

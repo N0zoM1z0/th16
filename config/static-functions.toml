@@ -1,3 +1,14 @@
+[functions.enemy_drop_ellipse]
+profile = "x87-sincos-ellipse-v1"
+source = "src/Enemy.cpp"
+symbol = "?sincosmul_ellipse@@YIXPAUD3DXVECTOR3@@MMM@Z"
+target = 0x426240
+size = 32
+sha256 = "b9e0c55bf9c7ed2be1caffd6e29b91a597d3d903b65d7d8eb1c47c5a0d316d50"
+witness_parent = 0x41d700
+witness = 0x41d766
+parent_sha256 = "91bf0c1160b2117cd6f3c16eeba678da9dc76eb322b3f41553c7915b34865a87"
+
 [functions.gather]
 profile = "x87-sincos-scale-v1"
 source = "src/AnmVmCallbacks.cpp"

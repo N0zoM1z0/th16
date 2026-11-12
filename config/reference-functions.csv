@@ -390,7 +390,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0041D1E0,EnemyInf::on_tick,src/Enemy.cpp,?on_tick@EnemyInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0041D2E0,EnemyData::on_tick,src/Enemy.cpp,?on_tick@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0041D520,EnemyInf::die,src/Enemy.cpp,?die@EnemyInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0041D700,EnemyDrop::eject_extra_drops,src/Enemy.cpp,?eject_extra_drops@EnemyDrop@@QAEXPAUD3DXVECTOR3@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0041D700,EnemyDrop::eject_extra_drops,src/Enemy.cpp,?eject_extra_drops@EnemyDrop@@QAEXPAUD3DXVECTOR3@@@Z,mismatch,,.analysis/reference-audit.json
 0x0041D900,EnemyManager::kill_all,src/Enemy.cpp,?kill_all@EnemyManager@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0041DA30,EnemyManager::kill_all_in_group,src/Enemy.cpp,?kill_all_in_group@EnemyManager@@SGXH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0041DB70,EnemyManager::kill_all_no_set_death,src/Enemy.cpp,?kill_all_no_set_death@EnemyManager@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -427,7 +427,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00426020,AnmVm::scale_to,src/AnmVmEcl.cpp,?scale_to@AnmVm@@QAEXHHMM@Z,exact,,.analysis/reference-audit.json
 0x004260D0,PosVel::set_ellipse_angle,src/AnmVmEcl.cpp,?set_ellipse_angle@PosVel@@QAEXM@Z,exact,,.analysis/reference-audit.json
 0x00426160,AnmLoaded::create_vm_front,src/AnmVmEcl.cpp,?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z,mismatch,,.analysis/reference-audit.json
-0x00426240,sincosmul_ellipse,src/Enemy.cpp,?sincosmul_ellipse@@YIXPAUD3DXVECTOR3@@MMM@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
+0x00426240,sincosmul_ellipse,src/Enemy.cpp,?sincosmul_ellipse@@YIXPAUD3DXVECTOR3@@MMM@Z,exact,,.analysis/reference-audit.json
 0x00426260,ecl_sincosmul,src/EnemyEcl.cpp,?ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
 0x00426280,??_GFpsCounter@@QAEPAXI@Z,src/FpsCounter.cpp,??_GFpsCounter@@QAEPAXI@Z,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
 0x004262F0,FpsCounter::update,src/FpsCounter.cpp,?update@FpsCounter@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -607,7 +607,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00436C70,LaserInfiniteInf::cancel,src/Laser.cpp,?cancel@LaserInfiniteInf@@UAEHHH@Z,mismatch,,.analysis/reference-audit.json
 0x00436EF0,LaserInfiniteInf::touches_circle,src/LaserInfinite.cpp,?touches_circle@LaserInfiniteInf@@UAEHPAUD3DXVECTOR3@@M@Z,exact,,.analysis/reference-audit.json
 0x00436FD0,LaserInfiniteInf::run_ex,src/LaserInfinite.cpp,?run_ex@LaserInfiniteInf@@UAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004370A0,LaserCurveInf::initialize,src/Laser.cpp,?initialize@LaserCurveInf@@UAEHPAX@Z,mismatch,,.analysis/reference-audit.json
+0x004370A0,LaserCurveInf::initialize,src/Laser.cpp,?initialize@LaserCurveInf@@UAEHPAX@Z,exact,,.analysis/reference-audit.json
 0x00437760,LaserCurveInf::on_destroy,src/LaserCurve.cpp,?on_destroy@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x004377D0,LaserCurveInf::on_tick,src/Laser.cpp,?on_tick@LaserCurveInf@@UAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00437CF0,LaserCurveInf::check_graze_or_kill,src/Laser.cpp,?check_graze_or_kill@LaserCurveInf@@UAEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

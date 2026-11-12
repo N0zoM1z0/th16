@@ -349,23 +349,34 @@ class StaticIdentityControls(unittest.TestCase):
             with self.subTest(address=hex(at)),self.assertRaises(static.StaticEvidenceError):
                 self.review(context=context)
 
-    def test_xy_profile_requires_every_original_and_candidate_byte(self):
-        for which in ('image','target'):
-            context = copy.copy(self.context)
-            original = getattr(context,which)
-            base = self.context.static_functions['anm_xy']['candidate' if which=='image' else 'target']
-            for offset in range(39):
-                class Overlay:
-                    def __getattr__(self,key):
-                        return getattr(original,key)
-                    def read_address(self,a,size):
-                        raw = bytearray(original.read_address(a,size))
-                        if a <= base+offset < a+size:
-                            raw[base+offset-a] ^= 1
-                        return bytes(raw)
-                setattr(context,which,Overlay())
-                with self.subTest(which=which,offset=offset),self.assertRaises(static.StaticEvidenceError):
-                    self.review(context=context)
+    def test_vector_profiles_require_every_original_and_candidate_byte(self):
+        for name in ('anm_xy', 'enemy_drop_ellipse'):
+            profile = self.context.static_functions[name]
+            for which in ('image','target'):
+                context = copy.copy(self.context)
+                original = getattr(context,which)
+                base = profile['candidate' if which=='image' else 'target']
+                for offset in range(profile['size']):
+                    class Overlay:
+                        def __getattr__(self,key):
+                            return getattr(original,key)
+                        def read_address(self,a,size):
+                            raw = bytearray(original.read_address(a,size))
+                            if a <= base+offset < a+size:
+                                raw[base+offset-a] ^= 1
+                            return bytes(raw)
+                    setattr(context,which,Overlay())
+                    with self.subTest(profile=name,which=which,offset=offset),self.assertRaises(static.StaticEvidenceError):
+                        self.review(context=context)
+
+    def test_ellipse_profile_requires_separate_radii_and_three_stack_arguments(self):
+        for key,value in [('size',31),('size',33),('profile','x87-sincos-scale-v1'),
+                          ('profile','x87-sincos-scale-xy-v1'),('witness',0x41d767),
+                          ('source','src/BulletManager.cpp')]:
+            records = copy.deepcopy(self.records)
+            records['functions']['enemy_drop_ellipse'][key] = value
+            with self.subTest(key=key,value=value),self.assertRaises(static.StaticEvidenceError):
+                self.review(records)
 
     def test_xy_profile_cannot_change_extent_or_use_the_vector_abi(self):
         for key,value in [('size',38),('size',40),('profile','x87-sincos-scale-v1')]:

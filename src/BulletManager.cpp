@@ -705,9 +705,8 @@ i32 BulletManager::shoot_one(EnemyBulletShooter *props, i32 i, i32 layer, f32 an
     return 0;
 }
 
-// TODO: about half the code differs: ours addresses et_ex by index instead of through an ex
-// pointer kept in esi (every way of writing the pointer gives the index form), hoists
-// constants, and lays out the frame differently.
+// TODO: the complete owner still differs in angle temporaries, constant
+// lifetimes and frame layout. Paired commands advance the same command pointer.
 // Starts the et_ex transforms from ex_index on, until one has to wait: an
 // empty slot, a slot-0 transform while others still run, or a transform of
 // a kind already running. Angle arguments of -999990 keep the bullet's
@@ -953,9 +952,10 @@ void Bullet::run_ex()
             props.spd1 = ex->m <= -999990.0f ? speed : ex->m;
             props.spd2 = ex->n;
             ex_index = index + 1;
-            props.type = ex[1].a;
-            i32 cancel_after = ex[1].c;
-            props.color = ex[1].b;
+            ++ex;
+            props.type = ex->a;
+            i32 cancel_after = ex->c;
+            props.color = ex->b;
             props.sfx_flags = 0;
             memcpy(props.ex, et_ex, sizeof(props.ex));
             g_BulletManager->shoot_bullets(&props);
@@ -1117,7 +1117,9 @@ void Bullet::run_ex()
             break;
         }
         case BULLET_EX_LASER:
-            if (ex->a == 0)
+            switch (ex->a)
+            {
+            case 0:
             {
                 LaserLineInner params;
                 memcpy(params.ex, et_ex, sizeof(params.ex));
@@ -1134,12 +1136,13 @@ void Bullet::run_ex()
                 params.laser_new_arg_1 = ex->m;
                 params.laser_new_arg_2 = ex->n;
                 ex_index++;
-                params.laser_new_arg_3 = ex[1].r;
-                params.laser_new_arg_4 = ex[1].s;
-                params.distance = ex[1].m;
-                params.shot_sfx = ex[1].a;
-                params.shot_transform_sfx = ex[1].b;
-                params.start_transform = ex[1].c;
+                ++ex;
+                params.laser_new_arg_3 = ex->r;
+                params.laser_new_arg_4 = ex->s;
+                params.distance = ex->m;
+                params.shot_sfx = ex->a;
+                params.shot_transform_sfx = ex->b;
+                params.start_transform = ex->c;
                 LaserManager *mgr = g_LaserManager;
                 if (mgr->list_length < 0x200)
                 {
@@ -1160,12 +1163,12 @@ void Bullet::run_ex()
                 }
                 continue;
             }
-            else if (ex->a == 1)
+            case 1:
             {
                 LaserInfiniteInner params;
                 memcpy(params.ex, et_ex, sizeof(params.ex));
                 params.start_pos = pos;
-                u32 d = ex->d;
+                i32 d = ex->d;
                 params.flags = (d & 0xfd) | 2;
                 params.type = ex->b;
                 params.color = ex->c;
@@ -1178,12 +1181,13 @@ void Bullet::run_ex()
                 params.laser_new_arg_1 = ex->m;
                 params.laser_new_arg_2 = ex->n;
                 ex_index++;
-                params.start_time = ex[1].a;
-                params.expand_time = ex[1].b;
-                params.duration = ex[1].c;
-                params.shrink_time = ex[1].d;
-                params.laser_new_arg_4 = ex[1].r;
-                params.distance = ex[1].s;
+                ++ex;
+                params.start_time = ex->a;
+                params.expand_time = ex->b;
+                params.duration = ex->c;
+                params.shrink_time = ex->d;
+                params.laser_new_arg_4 = ex->r;
+                params.distance = ex->s;
                 params.shot_sfx = 0x12;
                 params.shot_transform_sfx = -1;
                 LaserManager *mgr = g_LaserManager;
@@ -1205,6 +1209,7 @@ void Bullet::run_ex()
                     cancel(0);
                 }
                 continue;
+            }
             }
             continue;
         case BULLET_EX_WAIT:

@@ -306,6 +306,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0041D1E0,EnemyInf::on_tick,reference-0041d1e0,local-strict-pass,242,242,242,.analysis/reference-audit.json
 0x0041D2E0,EnemyData::on_tick,reference-0041d2e0,local-strict-pass,561,561,561,.analysis/reference-audit.json
 0x0041D520,EnemyInf::die,reference-0041d520,local-strict-pass,467,467,467,.analysis/reference-audit.json
+0x0041D700,EnemyDrop::eject_extra_drops,reference-0041d700,mismatch,500,500,455,.analysis/reference-audit.json
 0x0041D900,EnemyManager::kill_all,reference-0041d900,local-strict-pass,298,298,298,.analysis/reference-audit.json
 0x0041DCA0,EnemyInf::run_over_300,reference-0041dca0,local-strict-pass,11,11,11,.analysis/reference-audit.json
 0x00423050,EnemyData::ecl_enm_create,reference-00423050,local-strict-pass,518,518,518,.analysis/reference-audit.json
@@ -337,6 +338,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00426020,AnmVm::scale_to,reference-00426020,local-strict-pass,170,170,170,.analysis/reference-audit.json
 0x004260D0,PosVel::set_ellipse_angle,reference-004260d0,local-strict-pass,136,136,136,.analysis/reference-audit.json
 0x00426160,AnmLoaded::create_vm_front,reference-00426160,mismatch,224,224,223,.analysis/reference-audit.json
+0x00426240,sincosmul_ellipse,reference-00426240,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x004262F0,FpsCounter::update,reference-004262f0,local-strict-pass,235,235,235,.analysis/reference-audit.json
 0x004263E0,FpsCounter::draw,reference-004263e0,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x00426490,FpsCounter::on_draw_callback,reference-00426490,local-strict-pass,5,5,5,.analysis/reference-audit.json
@@ -474,7 +476,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00435870,LaserInfiniteInf::on_destroy,reference-00435870,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00436C70,LaserInfiniteInf::cancel,reference-00436c70,mismatch,633,633,521,.analysis/reference-audit.json
 0x00436EF0,LaserInfiniteInf::touches_circle,reference-00436ef0,local-strict-pass,219,219,219,.analysis/reference-audit.json
-0x004370A0,LaserCurveInf::initialize,reference-004370a0,mismatch,1726,1726,1677,.analysis/reference-audit.json
+0x004370A0,LaserCurveInf::initialize,reference-004370a0,local-strict-pass,1726,1726,1726,.analysis/reference-audit.json
 0x00437760,LaserCurveInf::on_destroy,reference-00437760,local-strict-pass,98,98,98,.analysis/reference-audit.json
 0x00438750,LaserCurveInf::on_draw,reference-00438750,local-strict-pass,1371,1371,1371,.analysis/reference-audit.json
 0x004392C0,LaserCurveInf::step_ex_angle,reference-004392c0,mismatch,412,412,401,.analysis/reference-audit.json
