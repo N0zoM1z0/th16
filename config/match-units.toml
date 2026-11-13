@@ -5117,6 +5117,67 @@ linkages = [
   { offset = 1, width = 4, type = "REL32", symbol = "?on_draw_body@Spellcard@@QAEHXZ", target = 4291952, addend = 0 },
 ]
 
+[units.reference-00417f00]
+artifact_kind = "linked-pe"
+source = "src/Spellcard.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?start@Spellcard@@QAEXHPBDHH@Z"
+object = "Spellcard.obj"
+candidate_address = 4623488
+target_address = 4292352
+size = 1007
+compare_size = 1007
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 130, width = 4, type = "DIR32", symbol = "?g_ReplayManager@@3PAUReplayManager@@A", target = 4878088, addend = 0 },
+  { offset = 145, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 153, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 159, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 207, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 1116, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 220, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 227, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 236, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 282, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 306, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+  { offset = 333, width = 4, type = "REL32", symbol = "?boss_timer_on_spell_start@Gui@@QAEXXZ", target = 4290000, addend = 0 },
+  { offset = 365, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 381, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 401, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1832, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 407, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 426, width = 4, type = "DIR32", symbol = "?g_AsciiManager@@3PAVAsciiInf@@A", target = 4877720, addend = 0 },
+  { offset = 438, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 444, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 459, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 485, width = 4, type = "REL32", symbol = "?draw_text_right@AnmManager@@QAAXPAUAnmVm@@KKHHPBDZZ", target = 4643504, addend = 0 },
+  { offset = 495, width = 4, type = "REL32", symbol = "?play_sound_centered@SoundManager@@QAEXHH@Z", target = 4579664, addend = 0 },
+  { offset = 500, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
+  { offset = 518, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 530, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 590, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 617, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 659, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 678, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 696, width = 4, type = "REL32", symbol = "?search_children@AnmVm@@QAEPAU1@HH@Z", target = 4650256, addend = 0 },
+  { offset = 715, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 734, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 752, width = 4, type = "REL32", symbol = "?search_children@AnmVm@@QAEPAU1@HH@Z", target = 4650256, addend = 0 },
+  { offset = 759, width = 4, type = "DIR32", symbol = "__xmm@001e84800016e360000f42400007a120", target = 4802592, addend = 0 },
+  { offset = 781, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 36, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 805, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 826, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
+  { offset = 844, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 850, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 8, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 857, width = 4, type = "DIR32", symbol = "?g_stage_data@@3PAUStageData@@A", target = 4878104, addend = 0 },
+  { offset = 882, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 910, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 916, width = 4, type = "DIR32", symbol = "?g_stage_data@@3PAUStageData@@A", target = 4878104, addend = 0 },
+  { offset = 960, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
+  { offset = 984, width = 4, type = "REL32", symbol = "?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z", target = 4219776, addend = 0 },
+  { offset = 997, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+]
+
 [units.reference-004182f0]
 artifact_kind = "linked-pe"
 source = "src/Spellcard.cpp"

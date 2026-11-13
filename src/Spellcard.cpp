@@ -224,7 +224,8 @@ HARNESS_CALLED void Spellcard::decode_time_code(i32 *seconds, i32 *hundredths)
     }
 }
 
-// TODO: this and name trade esi/edi, and later code differs in register allocation.
+// Starts the spell HUD, records attempts and creates the boss effects.
+// The two decoration calls discard their class results at the call sites.
 // FUNCTION: TH16 0x417f00
 void Spellcard::start(i32 spell_id, const char *name, i32 time_limit, i32 boss_index)
 {
@@ -286,16 +287,19 @@ void Spellcard::start(i32 spell_id, const char *name, i32 time_limit, i32 boss_i
     i32 bonuses[5] = {500000, 1000000, 1500000, 2000000, 1000000};
     bonus = bonuses[g_Globals.difficulty] * g_Globals.stage_num;
     bonus_max = bonus >= 1000000000 ? 999999999 : bonus;
-    create_effect_via_pointer(g_EffectManager->effect_anm, 0x14, -1, NULL);
-    StageBoss *stage_boss = &g_stage_data->bosses[g_Globals.chapter < 43 && g_stage_data->bosses[1].spell_bg_anm_slot != -1];
-    background_anm_id = create_effect_via_pointer(g_EnemyManager->anim_statement_anms[stage_boss->spell_bg_anm_slot],
-                                                  stage_boss->spell_bg_script, -1, NULL);
-    flags = (flags & ~SPELLCARD_FLAG_200) | ((stage_boss->spell_flag_200 << 9) & SPELLCARD_FLAG_200);
-    stage_boss = &g_stage_data->bosses[boss_index];
+    (g_EffectManager->effect_anm->*anm_create_effect_func())(0x14, -1, NULL);
+    // Keep the selection across creation and read the stage table again for its flags.
+    i32 background_boss_index = g_Globals.chapter < 43 && g_stage_data->bosses[1].spell_bg_anm_slot != -1;
+    background_anm_id = create_effect_via_pointer(
+        g_EnemyManager->anim_statement_anms[g_stage_data->bosses[background_boss_index].spell_bg_anm_slot],
+        g_stage_data->bosses[background_boss_index].spell_bg_script, -1, NULL);
+    flags = (flags & ~SPELLCARD_FLAG_200) |
+            ((g_stage_data->bosses[background_boss_index].spell_flag_200 << 9) & SPELLCARD_FLAG_200);
+    StageBoss *stage_boss = &g_stage_data->bosses[boss_index];
     if (stage_boss->spell_anm_slot != -1)
     {
-        create_effect_via_pointer(g_EnemyManager->anim_statement_anms[stage_boss->spell_anm_slot],
-                                  stage_boss->spell_script, -1, NULL);
+        (g_EnemyManager->anim_statement_anms[stage_boss->spell_anm_slot]->*anm_create_effect_func())(
+            stage_boss->spell_script, -1, NULL);
     }
 }
 

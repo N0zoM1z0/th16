@@ -311,7 +311,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00417D70,Spellcard::on_draw_body,src/Spellcard.cpp,?on_draw_body@Spellcard@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00417EE0,Spellcard::on_tick_callback,src/Spellcard.cpp,?on_tick_callback@Spellcard@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00417EF0,Spellcard::on_draw_callback,src/Spellcard.cpp,?on_draw_callback@Spellcard@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
-0x00417F00,Spellcard::start,src/Spellcard.cpp,?start@Spellcard@@QAEXHPBDHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00417F00,Spellcard::start,src/Spellcard.cpp,?start@Spellcard@@QAEXHPBDHH@Z,exact,,.analysis/reference-audit.json
 0x004182F0,Spellcard::end,src/Spellcard.cpp,?end@Spellcard@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00418420,GameThread::enable_update_funcs,src/GameThread.cpp,?enable_update_funcs@GameThread@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00418440,anm_vm_interrupt_3_run,src/Gui.cpp,?anm_vm_interrupt_3_run@@YIXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
