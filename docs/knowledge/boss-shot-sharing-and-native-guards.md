@@ -3,14 +3,16 @@
 Starting checkpoint: `a9c0a41`. This continuation investigates the complete Boss
 logic, enemy-motion and enemy-shot owners. Every game-source trial is restored.
 There is **no new retained game-source change or exact credit**. The useful new
-evidence is a native 978-condition shot suite and an executable rejection control
-for a source draft that has the correct sharing graph but wrong NaN results.
+evidence includes a native 978-condition rejection suite, 390 successful-spawn
+conditions and executable guards for wrong source drafts. The live-shot
+continuation starts at `0b88461`; it also restores every game-source trial.
 
 The canonical result remains **885 exact, 65 mismatch, 265 incomplete**, with
 **169,575 exact primary bytes and 950 units**. Source-origin review is open;
 Factory acceptance is not submitted. The restored incremental build has source
 input `fdd04a2fec8a0c8faf41c88ff6f126d68bd243d79f1bb13c0c1a93557456051d`
-and PDB age **296**. Evidence is in `.analysis/boss-accounting-work/`.
+and PDB age **301**. Historical evidence is in `.analysis/boss-accounting-work/`;
+new successful-spawn evidence is in `.analysis/shot-live-work/`.
 
 ## Complete owners and restored forms
 
@@ -78,7 +80,74 @@ normal-ring sharing and keeping mode 7 separate. Repeating these goto, scratch
 or helper forms without new type/call-context evidence is unlikely to help.
 Accumulator/wrap registers, block placement and later stores remain different.
 
-## Complete native shot calls
+## Successful spawns and live ANM state
+
+The new `native-live-restored/` suite passes **390 complete successful shoot_one
+calls per image** on the original, PDB-296 historical baseline and restored
+PDB-301 candidate. It reaches initialization beyond the protection-radius
+return. The bullet is the actual index-zero subobject of the typed manager's
+inline pool; two other complete pool bullets exercise neighboring free/tick
+links. The manager objects are allocated at their full typed sizes.
+
+The real AnmVm::wipe, AnmLoaded::set_vm_script, AnmVm::run, interrupt and run_ex
+entries execute without code patches or replacement callees. Data-only ANM
+fixtures use STATIC or STOP/label-2/STATIC/label-9/STATIC/END programs, registered
+consistently in the actual bullet slot 7. These test static termination, repeated
+stop handling, found interrupts, script timers and the new-script counter.
+The first three-case smoke and initial 390-case report use an internally
+consistent slot-2 registration. Their initial driver/layout artifacts remain;
+the final schema obtains ANM_SLOT_BULLET from the historical compiler.
+
+The main 234 conditions combine all 13 aim modes, two script programs, ordinary
+or animation-spawn commands 1/2, and three floating-control settings. Game speeds
+0.5/1/1.5 vary with those settings. Distances alternate between zero and two.
+Another 132 conditions cover every stock bullet type with colors 0/7/15; 24 cover
+special angle inputs. The complete 44-row bullet-type table is read from each
+image and required to equal the original scalar table. The
+observed cancel kinds are 0, 6 and 7-10. All 44 overlay-script entries are zero;
+this suite does not claim enabled-overlay behavior.
+
+All 366 ordinary conditions match a complete independent numeric model for
+speed, angle, XYZ position and XYZ velocity. The 24 other raw numeric states
+remain in whole cross-image comparisons. Remaining observed storage is modeled
+for every condition. The trigonometric helper writes only velocity X/Y. A seeded
+Z velocity of 0.125 survives; animation spawning subtracts four times that depth
+velocity from the initial 0.1 position. Script state, list topology, flags,
+cancel script, copied transform table and selected type data are also checked.
+
+Observation includes three complete 5,240-byte Bullets, the full shooter and
+Player, the BulletManager prefix and animation-file pointer, the AnmManager
+prefix and complete loaded-file pointer array, the complete ANM arena, both
+RNGs, critical sections, global pointers/speed and object guards. Return value,
+stack cleanup and floating controls are checked. The entire manager storage is
+not observed. Textures, drawing and real asset loading are unproved; run_ex sees
+empty commands after the spawn setup, so nonempty runtime transforms remain
+unproved too. Locks are disabled in this pre-WinMain fixture state.
+
+Four further source forms are restored at **3,004 bytes**: sequential scalar
+offsets, reversed spelling of the final sum, an ordinary angle/speed aggregate,
+and an explicit common shot-initialization exit. Each complete owner is retained
+with both switch tables; each fails the same original-first NaN counterexample.
+The first complete failed image is kept in `invalid-sequential-image/`. The later
+images are not retained, and only their complete owners/sources may be replayed
+as recorded evidence. No smaller scope or artificial compiler constraint is
+accepted in place of the original owner.
+
+Three expectation controls reject on the original before candidate execution:
+an unexpected STOP script, omitted animation command and a wrong Z velocity.
+The invalid-image control passes the original and baseline, then rejects the
+preserved wrong image through the successful-spawn path. The first animation
+control generator silently misses an obsolete slot-2 source anchor; its wrapper
+correctly refuses the resulting all-pass control. That prototype, output and
+log remain. The corrected generator uses the typed slot and checks substitution
+cardinality. The 390-condition base driver is unchanged by the control repair.
+
+The final source and 3,024-byte owner are byte-identical to `0b88461`. Full strict
+replay preserves all counts, credits and ledger/unit semantics. The new
+`final-regression.json` authenticates the PDB-301 restoration and its evidence;
+older matrices retain their own image identities and are not broadly replayed.
+
+## Earlier complete native rejection calls
 
 `native-shot-restored/` passes **978 complete calls per image** on the original,
 receipt-authenticated PDB-288 baseline and restored PDB-296 candidate. These are

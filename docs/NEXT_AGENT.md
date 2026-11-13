@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after Boss shot sharing trials and native rejection guards.
+Updated 2026-11-13 after successful shot initialization and ANM state guards.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -23,7 +23,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `fdd04a2fec8a0c8faf41c88ff6f126d68bd243d79f1bb13c0c1a93557456051d`.
-PDB age is **296**. The final incremental build, strict replay and progress check
+PDB age is **301**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -54,6 +54,45 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read the [successful-spawn continuation](knowledge/boss-shot-sharing-and-native-guards.md#successful-spawns-and-live-anm-state)
+first. Starting checkpoint `0b88461` is preserved. **No new game-source change is
+retained.** Sequential ring offsets, reversed final-sum spelling, a natural
+angle/speed aggregate and an explicit initialization exit all produce refused
+3,004-byte owners and the same NaN payload counterexample. Full code/padding and
+both switch tables are preserved for every form. The final 3,024-byte shot owner
+and source are byte-identical to the starting checkpoint; original span 2,984
+remains provisional. Continue seeking actual source/type/call context rather
+than repeating these scalar or exit-label variants.
+
+The new image passes **390 complete successful shoot_one conditions per image**
+on the original, PDB-296 baseline and restored PDB-301 candidate. It uses the real
+inline Bullet pool and actual VM wipe/script/interrupt/run_ex calls. All 44 stock
+bullet types, two valid fixture scripts, ordinary/spawning states, nonzero shot
+distance, preserved Z velocity, list neighbors and script timers are covered.
+There are 366 independently modeled numeric states; the remaining 24 raw states
+stay in complete native cross-image comparisons. Stock overlay entries are all
+zero. Direct3D textures, drawing, real asset loading, nonempty runtime transforms,
+enabled locks and unobserved manager storage remain unproved.
+
+Three model controls reject on the original before candidate execution. A fourth
+passes original/baseline and rejects the preserved invalid sequential image
+through successful initialization. The first missing-animation control does not
+mutate its input because of a stale slot-2 generator anchor; the wrapper refuses
+its passing result. The corrected generator checks anchor cardinality and uses
+typed bullet slot 7. Preserve the initial driver, generator, outputs and log.
+The first successful-spawn smoke/matrix used consistent slot 2; only the final
+slot-7 matrix authenticates the final typed fixture. The base positive driver
+is unchanged by the control correction.
+
+Strict replay preserves **885/65/265**, 169,575 exact primary bytes and 950 units.
+The source input is unchanged, with PDB age 301 after the incremental restoration.
+No older broad matrix is rerun. Preserve `.analysis/shot-live-work/`, especially
+`baseline-image/`, `final-image/`, `invalid-sequential-image/`, all scope packets,
+`native-live-restored/`, both typed-layout versions, versioned drivers, controls,
+source snapshots, `TRIALS.md` and `final-regression.json`.
+
+### Earlier Boss shot sharing and protected-rejection guards
 
 Read [Boss shot sharing and native rejection guards](knowledge/boss-shot-sharing-and-native-guards.md)
 first. Starting checkpoint `a9c0a41` is preserved. **No new game-source change is
