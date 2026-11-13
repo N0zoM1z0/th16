@@ -306,7 +306,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00417700,Spellcard::initialize,src/Spellcard.cpp,?initialize@Spellcard@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00417790,Spellcard::~Spellcard,src/Spellcard.cpp,??1Spellcard@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004178A0,Spellcard::create,src/Spellcard.cpp,?create@Spellcard@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
-0x00417930,Spellcard::on_tick_body,src/Spellcard.cpp,?on_tick_body@Spellcard@@QAEHXZ,mismatch,,.analysis/reference-audit.json
+0x00417930,Spellcard::on_tick_body,src/Spellcard.cpp,?on_tick_body@Spellcard@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00417BC0,Spellcard::measure_real_time,src/Spellcard.cpp,?measure_real_time@Spellcard@@SAXXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00417D70,Spellcard::on_draw_body,src/Spellcard.cpp,?on_draw_body@Spellcard@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00417EE0,Spellcard::on_tick_callback,src/Spellcard.cpp,?on_tick_callback@Spellcard@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json

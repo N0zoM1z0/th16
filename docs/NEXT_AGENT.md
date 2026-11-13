@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after rejecting further static enemy/Boss result forms.
+Updated 2026-11-13 after exact reconstruction of the complete spellcard frame update.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,15 +17,27 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-Eight further camera/vector, Boss scaling/statistics/life-result and VM argument
-staging forms are restored. Do not repeat them as new hypotheses; see the
+The complete **650-byte** `Spellcard::on_tick_body` at `0x00417930` is now
+**exact**, including all 167 reachable instructions and 17 linked fields
+(14 DIR32, three REL32). A local inline helper returns fractional time and
+reports integer time through an output reference; the caller writes both
+current fields and uses that integer for its frame-120 predicate. This recovers
+the original timer, branch widths and title loops without padding or register
+constraints. See [complete spellcard frame update](knowledge/spellcard-frame-update-exact.md).
+Only `Spellcard.cpp` retains game-source changes in this continuation. A single
+two-output Float3 interpolation trial fails its complete owner and is restored;
+the retained 899/906 mismatch is unchanged. Keep `.analysis/spellcard-timer-result-work/`.
+
+The preceding static follow-up restores eight camera/vector, Boss
+scaling/statistics/life-result and VM argument staging forms. Do not repeat
+them as new hypotheses; see the
 static follow-up in [enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md).
 Keep `.analysis/enemy-camera-order-work/`. Full static restoration preserves
 all 1,215 annotation results/diagnostics, all 956 units and all 1,719 candidate
 owners byte for byte (527,136 bytes), their addresses/extents, image relocations
 and the entire raw `.text`. No new exact credit, game runtime or emulation.
 
-The latest source work recovers the original 0x38-byte frame, separate zero
+The preceding source work recovers the original 0x38-byte frame, separate zero
 vector and VM/manager register sequence in the complete **1,692-byte**
 `EnemyData::step_interpolators` at `0x0041BB50`. Strict comparison is
 **1,682/1,692, mismatch**, with all 48 links bound. Only the camera Y load/add
@@ -68,7 +80,7 @@ bytes or claim new exact credit. All other interpolation trials are restored.
 See [Float3 timer result join](knowledge/float3-timer-result-join.md) and preserve
 `.analysis/vector-owner-work/`. No dynamic testing is used.
 
-The latest exact result is the complete **1,692-byte** `interp_common_methods`
+The preceding exact result is the complete **1,692-byte** `interp_common_methods`
 at `0x004033F0`: 388 code instructions, two alignment bytes, all 31 target-table
 entries and all 131 links. Conditional result expressions recover the quadratic
 and sine result joins without new helpers or Oracle changes. See
@@ -122,23 +134,22 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **890 exact, 66 mismatch, 259 incomplete** among 1,215
-annotations: **175,386 exact primary bytes and 956 retained comparison units**.
-All previous 890 exact owners, the other 1,214 annotation results/diagnostics
-and all previous 955 unit definitions/addresses remain unchanged, apart from
-current build identities. Only enemy motion changes classification: incomplete
-to mismatch, with a new complete comparison unit. All target numeric boundaries
-are unchanged; its generated boundary-ledger state is now strict-compared.
-All other 1,718 complete candidate owners remain raw-identical (525,444 bytes),
-with unchanged addresses/extents and relocations outside the changed owner.
-Every raw .text byte outside the final 1,692-byte owner is unchanged. The Boss
-logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
+The canonical report is **891 exact, 65 mismatch, 259 incomplete** among 1,215
+annotations: **176,036 exact primary bytes and 956 retained comparison units**.
+All previous 890 exact owners and the other 1,214 annotation results/diagnostics
+remain unchanged, apart from current build identities. The spellcard unit
+refreshes seven relocation offsets; its 17 existing field identities and all
+original boundaries/addresses are unchanged. The other 955 unit definitions
+are identical. All other 1,718 complete candidate owners remain raw-identical
+(526,486 bytes), with unchanged addresses/extents and relocations outside the
+changed owner. Every raw .text byte outside the final 650-byte owner is unchanged.
+The Boss logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`129507e1a5cf66bdd4fa39501a6397298df804dbbd706f11e18246383221c1ef`.
-PDB age is **471**. The final incremental restoration, strict replay and progress check
+`0b4ce2bd4813b5d00ec1b2b6195a252d17684eb07e1bb8cf2a9e2201819119ea`.
+PDB age is **476**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -147,6 +158,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Complete spellcard frame update](knowledge/spellcard-frame-update-exact.md) | Complete 650-byte exact owner, all 167 instructions and 17 fields; all prior 890 exact and other 1,718 candidate owners retained; Float3 trial restored |
 | [Enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md) | Complete 1,682/1,692 mismatch, 48 links; frame/zero slot/GP joins restored; all 890 exact and other 1,718 native owners retained; no new exact credit |
 | [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md) | Complete original laser CFG and both tables; 36-operand address-cost diagnostic; all four Boss/seven laser forms restored; all 1,719 owners and entire raw .text preserved; no new exact credit |
 | [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md) | Separate original TESTs restored in the full 2,197/2,207-byte candidate; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
@@ -184,8 +196,13 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md)
-first. Only `AnmManager.h` and `Enemy.cpp` retain game-source changes. Keep the
+Read [complete spellcard frame update](knowledge/spellcard-frame-update-exact.md)
+first. The two-output timer helper closes the complete owner; do not restore
+the superseded fractional-only helper. Keep the failed Float3 trial rather than
+assuming this result transfers to its different frame/comparison context.
+
+The preceding [enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md)
+checkpoint changes only `AnmManager.h` and `Enemy.cpp`. Keep the
 explicit-mode overload separate from the unchanged four-argument body: a
 shared optional parameter changes Player options code. The retained typed
 member-pointer call and named initialized handle keep the original camera X
@@ -263,10 +280,10 @@ functions remain exact. Source input/PDB are updated above. Preserve
 original table/CFG evidence, complete packets, comparison inputs, failed source
 forms and `retained-regression.json`. No game runtime is executed.
 
-The preceding [spellcard marker component order](knowledge/spellcard-marker-component-order.md)
-remains retained: its complete 650-byte owner has 461 matching bytes, with the
-timer accumulation and title-loop differences still open. The new interpolation,
-Player loop/callback-type and rotation representations all fail their complete
+The earlier [spellcard marker component order](knowledge/spellcard-marker-component-order.md)
+remains retained inside the now-exact 650-byte owner. Its former timer/title
+differences are closed by the later two-output timer reconstruction. The
+historical interpolation, Player loop/callback-type and rotation representations all fail their complete
 owners and are restored. Consult the private `TRIALS.md` before repeating them.
 
 ### Earlier masked-animation exact result

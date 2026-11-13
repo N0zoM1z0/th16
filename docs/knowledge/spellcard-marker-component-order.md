@@ -1,5 +1,9 @@
 # Spellcard marker component order
 
+The later [complete frame update](spellcard-frame-update-exact.md) closes this
+650-byte owner as exact. The mismatch counts and open items below describe
+this earlier checkpoint.
+
 This static reconstruction starts at `408da53`. The retained change is in
 `Spellcard::on_tick_body` at `0x00417930`, which controls bonus decay, the
 scaled frame timer, title movement, Boss marker smoothing and early-bomb state.

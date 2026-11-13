@@ -420,7 +420,27 @@ HARNESS_CALLED void Spellcard::measure_real_time()
 }
 #pragma fenv_access(off)
 
-// The complete owner still differs in timer dataflow and title-loop alignment.
+// Compute both next-frame values for the caller's timer writeback.
+static inline f32 advance_spellcard_time(ZunTimer &time, i32 &cur)
+{
+    f32 *speed = time.speed();
+    cur = time.current;
+    f32 value;
+    time.previous = cur;
+    if (speed == NULL || (*speed > 0.99f && *speed < 1.01f))
+    {
+        cur++;
+        value = time.current_f + 1.0f;
+    }
+    else
+    {
+        value = time.current_f + *speed;
+        cur = (i32)value;
+    }
+    return value;
+}
+
+// Bonus decay, scaled time, title placement, boss marker and early-bomb state.
 // FUNCTION: TH16 0x417930
 i32 Spellcard::on_tick_body()
 {
@@ -437,8 +457,11 @@ i32 Spellcard::on_tick_body()
     {
         bonus = (bonus - (bonus_max - bonus_max / 3) / (timeout - 300)) / 10 * 10;
     }
-    time.tick();
-    if (time.current >= 120)
+    i32 frame;
+    f32 frame_f = advance_spellcard_time(time, frame);
+    time.current = frame;
+    time.current_f = frame_f;
+    if (frame >= 120)
     {
         Player *player = g_Player;
         if (!(flags & SPELLCARD_TEXT_MOVED))
