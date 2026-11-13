@@ -491,5 +491,41 @@ class RemappedSwitchOwnershipControls(unittest.TestCase):
         cls.context.finish()
 
 
+class InterposedRegisterSaveControls(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.context = Context()
+        cls.record = cls.context.switch_owners[0x45D1A0]
+        public = next(p for p in cls.context.publics
+                      if p["symbol"] == "?initialize@ScreenEffect@@QAEXHHHHHH@Z")
+        cls.unit = {"target_address": 0x45D1A0, "candidate_address": public["address"],
+                    "size": 448, "compare_size": 448}
+
+    def mutate(self, offset, payload):
+        context = copy.copy(self.context)
+        changes = {0x45D1A0 + offset + i: byte for i, byte in enumerate(payload)}
+        context.target = ImageOverlay(context.target, changes)
+        return context
+
+    def test_reviewed_esi_save_passes(self):
+        validate_switch_owner(self.context, self.unit, self.record)
+        self.context.check_boundary(self.unit)
+
+    def test_index_frame_or_unrecorded_saves_are_rejected(self):
+        for payload in (b"\x53", b"\x55", b"\x50"):  # index EBX, EBP, EAX
+            with self.subTest(payload=payload), self.assertRaisesRegex(ValueError, "interposed register save"):
+                inspect_switch(self.mutate(0x13, payload).target, 0x45D1A0, self.record)
+        record = {k: v for k, v in self.record.items() if k != "saved_register_push_offset"}
+        with self.assertRaisesRegex(ValueError, "adjacent unsigned default branch"):
+            inspect_switch(self.context.target, 0x45D1A0, record)
+        with tempfile.TemporaryDirectory(dir=ROOT / ".analysis") as directory:
+            path = __import__("pathlib").Path(directory) / "owners.toml"
+            text = (ROOT / "config/switch-owners.toml").read_text().replace(
+                "saved_register_push_offset = 0x13", "saved_register_push_offset = 0x14")
+            path.write_text(text)
+            with self.assertRaisesRegex(ValueError, "interposed register save"):
+                load_switch_owners(path)
+
+
 if __name__ == "__main__":
     unittest.main()

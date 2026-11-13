@@ -96,6 +96,10 @@ def load_switch_owners(path):
                     or any(type(v) is not int or not 0 <= v < count for v in values)
                     or max(values) != count - 1):
                 raise ValueError("invalid complete switch remap extent")
+        if "saved_register_push_offset" in row and (
+                type(row["saved_register_push_offset"]) is not int or "remap_values" in row
+                or not row["guard_offset"] < row["saved_register_push_offset"] < row["dispatch_offset"]):
+            raise ValueError("invalid reviewed interposed register save")
         records[address] = row
     return records
 
@@ -209,6 +213,17 @@ def inspect_dispatch(payload, address, record, instructions, *, same_remap_regis
         index_register = remap.operands[0].reg
         if payload[record["remap_offset"]:record["remap_offset"]+bound_count] != bytes(record["remap_values"]):
             raise ValueError("switch remap differs from the complete reviewed byte map")
+    if "saved_register_push_offset" in record:
+        # A shrink-wrapped one-byte save of a callee-saved register between
+        # the bound and the dispatch; it never touches the index register.
+        push = by_address.get(next_address)
+        if (next_address != address + record["saved_register_push_offset"] or push is None
+                or push.mnemonic != "push" or push.size != 1 or len(push.operands) != 1
+                or push.operands[0].type != x86.X86_OP_REG
+                or push.operands[0].reg not in {x86.X86_REG_EBX, x86.X86_REG_ESI, x86.X86_REG_EDI}
+                or push.operands[0].reg == index_register):
+            raise ValueError("unreviewed interposed register save")
+        next_address += push.size
     frame_entries = set()
     if "frame_store_offset" in record:
         if not frame_store or "remap_values" not in record:

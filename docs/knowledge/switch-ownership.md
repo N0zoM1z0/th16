@@ -82,3 +82,11 @@ its operand has a base register and no index, a slot-aligned displacement
 below 0x1000, and the base was loaded by `MOV reg, [ECX]` in the same block
 with neither register written again. It leaves the function, so it needs no
 switch ownership. Both owners are exact.
+
+## Interposed register save
+
+`ScreenEffect::initialize` (`0x0045D1A0`) saves ESI between its `ja` default
+branch and the dispatch. A record may name that one-byte `push` with
+`saved_register_push_offset`; it must be EBX, ESI or EDI and not the index
+register. The complete owner is 406 code bytes, two padding bytes and the
+ten-entry table (448 bytes), and it is exact.

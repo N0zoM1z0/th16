@@ -796,6 +796,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0045CF10,ScreenEffect::on_tick_shake_with_ramp,reference-0045cf10,local-strict-pass,537,537,537,.analysis/reference-audit.json
 0x0045D130,ScreenEffect::on_cleanup,reference-0045d130,local-strict-pass,27,27,27,.analysis/reference-audit.json
 0x0045D150,ScreenEffect::create,reference-0045d150,local-strict-pass,75,75,75,.analysis/reference-audit.json
+0x0045D1A0,ScreenEffect::initialize,reference-0045d1a0,local-strict-pass,448,448,448,.analysis/reference-audit.json
 0x0045D360,ScreenEffect::~ScreenEffect,reference-0045d360,local-strict-pass,176,176,176,.analysis/reference-audit.json
 0x0045D410,screen_debug_log,reference-0045d410,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0045D420,SoundManager::stop_threads,reference-0045d420,local-strict-pass,170,170,170,.analysis/reference-audit.json

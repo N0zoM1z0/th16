@@ -20423,6 +20423,62 @@ linkages = [
   { offset = 60, width = 4, type = "REL32", symbol = "?initialize@ScreenEffect@@QAEXHHHHHH@Z", target = 4575648, addend = 0 },
 ]
 
+[units.reference-0045d1a0]
+artifact_kind = "linked-pe"
+source = "src/ScreenEffect.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?initialize@ScreenEffect@@QAEXHHHHHH@Z"
+object = "ScreenEffect.obj"
+candidate_address = 4614512
+target_address = 4575648
+size = 448
+compare_size = 448
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 23, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4576056 },
+  { offset = 28, width = 4, type = "DIR32", symbol = "?on_tick_fade_in@ScreenEffect@@SIHPAU1@@Z", target = 4572720, addend = 0 },
+  { offset = 33, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
+  { offset = 50, width = 4, type = "REL32", symbol = "?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199168, addend = 0 },
+  { offset = 55, width = 4, type = "DIR32", symbol = "?on_draw_viewport@ScreenEffect@@SIHPAU1@@Z", target = 4573280, addend = 0 },
+  { offset = 65, width = 4, type = "DIR32", symbol = "?on_tick_shake@ScreenEffect@@SIHPAU1@@Z", target = 4574512, addend = 0 },
+  { offset = 75, width = 4, type = "DIR32", symbol = "?on_tick_fade_out@ScreenEffect@@SIHPAU1@@Z", target = 4573440, addend = 0 },
+  { offset = 80, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
+  { offset = 97, width = 4, type = "REL32", symbol = "?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199168, addend = 0 },
+  { offset = 102, width = 4, type = "DIR32", symbol = "?on_draw_screen@ScreenEffect@@SIHPAU1@@Z", target = 4573584, addend = 0 },
+  { offset = 119, width = 4, type = "DIR32", symbol = "?on_tick_fade_in@ScreenEffect@@SIHPAU1@@Z", target = 4572720, addend = 0 },
+  { offset = 126, width = 4, type = "DIR32", symbol = "?on_tick_fade_out@ScreenEffect@@SIHPAU1@@Z", target = 4573440, addend = 0 },
+  { offset = 133, width = 4, type = "DIR32", symbol = "?on_tick_pulse@ScreenEffect@@SIHPAU1@@Z", target = 4574160, addend = 0 },
+  { offset = 138, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
+  { offset = 155, width = 4, type = "REL32", symbol = "?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199168, addend = 0 },
+  { offset = 160, width = 4, type = "DIR32", symbol = "?on_draw_arcade_2@ScreenEffect@@SIHPAU1@@Z", target = 4574400, addend = 0 },
+  { offset = 167, width = 4, type = "DIR32", symbol = "?on_tick_flash@ScreenEffect@@SIHPAU1@@Z", target = 4573664, addend = 0 },
+  { offset = 174, width = 4, type = "DIR32", symbol = "?on_tick_flash@ScreenEffect@@SIHPAU1@@Z", target = 4573664, addend = 0 },
+  { offset = 179, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
+  { offset = 196, width = 4, type = "REL32", symbol = "?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199168, addend = 0 },
+  { offset = 201, width = 4, type = "DIR32", symbol = "?on_draw_arcade@ScreenEffect@@SIHPAU1@@Z", target = 4574112, addend = 0 },
+  { offset = 208, width = 4, type = "DIR32", symbol = "?on_tick_shake_with_ramp@ScreenEffect@@SIHPAU1@@Z", target = 4574992, addend = 0 },
+  { offset = 213, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
+  { offset = 230, width = 4, type = "REL32", symbol = "?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199168, addend = 0 },
+  { offset = 240, width = 4, type = "DIR32", symbol = "?on_tick_hold@ScreenEffect@@SIHPAU1@@Z", target = 4573888, addend = 0 },
+  { offset = 245, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
+  { offset = 262, width = 4, type = "REL32", symbol = "?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199168, addend = 0 },
+  { offset = 267, width = 4, type = "DIR32", symbol = "?on_draw_screen_2@ScreenEffect@@SIHPAU1@@Z", target = 4574032, addend = 0 },
+  { offset = 275, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
+  { offset = 293, width = 4, type = "REL32", symbol = "?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199344, addend = 0 },
+  { offset = 307, width = 4, type = "DIR32", symbol = "?on_cleanup@ScreenEffect@@SIHPAU1@@Z", target = 4575536, addend = 0 },
+  { offset = 408, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575675 },
+  { offset = 412, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575712 },
+  { offset = 416, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575722 },
+  { offset = 420, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575759 },
+  { offset = 424, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575780 },
+  { offset = 428, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575773 },
+  { offset = 432, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575814 },
+  { offset = 436, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575821 },
+  { offset = 440, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575855 },
+  { offset = 444, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4575887 },
+]
+
 [units.reference-0045d360]
 artifact_kind = "linked-pe"
 source = "src/ScreenEffect.cpp"

@@ -964,7 +964,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045CF10,ScreenEffect::on_tick_shake_with_ramp,src/ScreenEffect.cpp,?on_tick_shake_with_ramp@ScreenEffect@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0045D130,ScreenEffect::on_cleanup,src/ScreenEffect.cpp,?on_cleanup@ScreenEffect@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0045D150,ScreenEffect::create,src/ScreenEffect.cpp,?create@ScreenEffect@@SIPAU1@HHHHHH@Z,exact,,.analysis/reference-audit.json
-0x0045D1A0,ScreenEffect::initialize,src/ScreenEffect.cpp,?initialize@ScreenEffect@@QAEXHHHHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0045D1A0,ScreenEffect::initialize,src/ScreenEffect.cpp,?initialize@ScreenEffect@@QAEXHHHHHH@Z,exact,,.analysis/reference-audit.json
 0x0045D360,ScreenEffect::~ScreenEffect,src/ScreenEffect.cpp,??1ScreenEffect@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0045D410,screen_debug_log,src/ScreenEffect.cpp,?screen_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x0045D420,SoundManager::stop_threads,src/SoundManager.cpp,?stop_threads@SoundManager@@SAHXZ,exact,,.analysis/reference-audit.json

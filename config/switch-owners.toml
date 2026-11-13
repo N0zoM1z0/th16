@@ -839,3 +839,15 @@ case_count = 4
 case_offsets = [
     11075, 11101, 11127, 11153,
 ]
+
+[[switch_owners]]
+target_address = 0x45d1a0
+code_size = 406
+table_offset = 408
+case_count = 10
+guard_offset = 0xa
+saved_register_push_offset = 0x13
+dispatch_offset = 0x14
+case_offsets = [0x1b, 0x40, 0x4a, 0x6f, 0x84, 0x7d, 0xa6, 0xad, 0xcf, 0xef]
+target_sha256 = "79db2ec3886d51c6a7fe9d6e8538e784d18357f68d6e13be728597e52bce82a3"
+evidence = "docs/knowledge/switch-ownership.md"
