@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import hashlib
+from collections import defaultdict
 from pathlib import Path
 import re
 import struct
@@ -859,8 +860,37 @@ def linked_functions(
                     "sha256": hashlib.sha256(code).hexdigest(),
                 }
             )
+    # Compiler-generated dynamic initializers and atexit finalizers are always
+    # statics. Each uniquely named one that starts an otherwise unowned code
+    # contribution owns exactly that contribution.
+    statics = map_statics(map_path)
+    names = defaultdict(int)
+    for row in [*publics, *statics]:
+        names[row["symbol"]] += 1
+    for row in statics:
+        if not re.match(r"\?\?__[EF]", row["symbol"]) or names[row["symbol"]] != 1:
+            continue
+        key = (int(row["section_number"]), int(row["section_offset"]))
+        owned = [c for c in unowned if (int(c["section_number"]), int(c["section_offset"])) == key]
+        if len(owned) != 1:
+            continue
+        contribution = owned[0]
+        section = image.section(key[0])
+        address = image.image_base + section.rva + key[1]
+        if int(row["address"]) != address:
+            raise LinkedImageError("linker map VA disagrees with PE section layout")
+        size = int(contribution["size"])
+        functions.append({
+            "symbol": row["symbol"], "address": f"0x{address:08X}", "size": size,
+            "extent_source": "pdb-section-contribution", "section": section.name,
+            "section_number": key[0], "section_offset": key[1], "map_object": row["object"],
+            "pdb_module_index": contribution["module_index"], "pdb_module": contribution["module"],
+            "pdb_object": contribution["object"],
+            "sha256": hashlib.sha256(image.read_section(key[0], key[1], size)).hexdigest(),
+        })
+        unowned.remove(contribution)
     if static_owner is not None:
-        selected = _static_function(image, publics, map_statics(map_path), pdb, static_owner)
+        selected = _static_function(image, publics, statics, pdb, static_owner)
         functions.append(selected)
         unowned = [row for row in unowned if
                    (row["section_number"], row["section_offset"]) !=

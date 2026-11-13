@@ -566,6 +566,15 @@ class Context:
             raise Incomplete("candidate lacks PE relocation evidence; link with /FIXED:NO")
         self.linked = linked_functions(self.directory / "th16.exe", self.directory / "th16.map", self.directory / "th16.pdb")
         self.publics = map_publics(self.directory / "th16.map")
+        # Uniquely named compiler-generated initializer/finalizer statics that
+        # own complete contributions (linked_functions) are addressable too.
+        public_names = {p["symbol"] for p in self.publics}
+        for function in self.linked["functions"]:
+            if function["symbol"].startswith("??__") and function["symbol"] not in public_names:
+                self.publics.append({"section_number": function["section_number"],
+                                     "section_offset": function["section_offset"],
+                                     "symbol": function["symbol"], "address": int(function["address"], 0),
+                                     "flags": ["f"], "object": function["map_object"]})
         self.typed_globals = globals_with_sizes(self.directory / "th16.pdb", self.image)
         self.data_contributions = {}
         for row in pdb_section_contributions(self.directory / "th16.pdb")["contributions"]:

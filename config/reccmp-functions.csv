@@ -1,5 +1,18 @@
 address,name,module,source_file,notes
+0x00401000,??__Eg_Arcfile@@YAXXZ,Arcfile,src/Arcfile.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401010,??__Eg_GameErrorContext@@YAXXZ,GameErrorContext,src/GameErrorContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401020,??__Eg_ZunMemory@@YAXXZ,GameErrorContext,src/GameErrorContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00401030,??__Eg_Supervisor@@YAXXZ,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401100,??__Eg_static_player_inner@@YAXXZ,Player,src/Player.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401110,??__Eg_arcfiles@@YAXXZ,Arcfile,src/Arcfile.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401140,??__Eg_D3DThreadInf@@YAXXZ,TextHelper,src/TextHelper.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401150,??__Eg_TextHelper@@YAXXZ,TextHelper,src/TextHelper.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401160,??__Eg_unused_thread@@YAXXZ,TextHelper,src/TextHelper.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401170,??__Eg_screen_effect@@YAXXZ,ScreenEffect,src/ScreenEffect.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004011B0,??__Eg_SoundManager@@YAXXZ,SoundManager,src/SoundManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004011F0,??__Eg_unit_quad_rhw@@YAXXZ,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401220,??__Eg_sprite_temp_buffer@@YAXXZ,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00401250,??__Eg_unit_quad_xyz@@YAXXZ,AnmRender,src/AnmRender.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00401280,UpdateFuncRegistry::UpdateFuncRegistry,UpdateFunc,src/UpdateFunc.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00401300,UpdateFuncRegistry::register_on_tick,UpdateFunc,src/UpdateFunc.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004013B0,UpdateFuncRegistry::register_on_draw,UpdateFunc,src/UpdateFunc.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -1192,8 +1205,10 @@ address,name,module,source_file,notes
 0x00474810,EclStack::enter,EclRunContext,src/EclRunContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00474860,EclStack::ecl_return,EclRunContext,src/EclRunContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00474890,SptInf::load_sub_by_name,EclRunContext,src/EclRunContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0048AC10,??__Fg_Arcfile@@YAXXZ,Arcfile,src/Arcfile.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0048AC20,??__Fg_GameErrorContext@@YAXXZ,GameErrorContext,src/GameErrorContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0048AC30,??__Fg_ZunMemory@@YAXXZ,GameErrorContext,src/GameErrorContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0048AC40,??__Fg_Supervisor@@YAXXZ,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0048AC60,??__Fg_arcfiles@@YAXXZ,Arcfile,src/Arcfile.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0048AC80,??__Fg_D3DThreadInf@@YAXXZ,TextHelper,src/TextHelper.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0048ACA0,??__Fg_TextHelper@@YAXXZ,TextHelper,src/TextHelper.cpp,Reference candidate; local comparison is separate from Factory acceptance.

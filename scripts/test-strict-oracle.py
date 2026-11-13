@@ -169,5 +169,39 @@ class VirtualTailCallControls(unittest.TestCase):
                 self.assertFalse(self.accepted(code))
 
 
+class CompilerGeneratedStaticOwnerControls(unittest.TestCase):
+    """Only uniquely named ??__E/??__F statics own their contributions."""
+
+    @classmethod
+    def setUpClass(cls):
+        from linked_image import linked_functions, map_statics
+        cls.directory = ROOT / "build/reference-candidate"
+        cls.linked_functions = staticmethod(linked_functions)
+        cls.functions = linked_functions(cls.directory / "th16.exe", cls.directory / "th16.map",
+                                         cls.directory / "th16.pdb")["functions"]
+        cls.statics = map_statics(cls.directory / "th16.map")
+
+    def test_unique_initializers_and_finalizers_are_owned(self):
+        symbols = {f["symbol"] for f in self.functions}
+        self.assertIn("??__Eg_Arcfile@@YAXXZ", symbols)
+        self.assertIn("??__Fg_Arcfile@@YAXXZ", symbols)
+        ordinary = {r["symbol"] for r in self.statics if not r["symbol"].startswith("??__")}
+        self.assertTrue(ordinary)
+        self.assertFalse(ordinary & symbols)
+
+    def test_duplicated_initializer_name_is_not_owned(self):
+        import tempfile
+        from pathlib import Path
+        text = (self.directory / "th16.map").read_text(encoding="cp1252", errors="replace")
+        line = next(l for l in text.splitlines() if "??__Eg_Arcfile@@YAXXZ" in l)
+        duplicate = line.replace("Arcfile.obj", "Other.obj")
+        with tempfile.TemporaryDirectory(dir=ROOT / ".analysis") as directory:
+            path = Path(directory) / "th16.map"
+            path.write_text(text.replace(line, line + "\n" + duplicate, 1), encoding="cp1252")
+            functions = self.linked_functions(self.directory / "th16.exe", path,
+                                              self.directory / "th16.pdb")["functions"]
+        self.assertNotIn("??__Eg_Arcfile@@YAXXZ", {f["symbol"] for f in functions})
+
+
 if __name__ == "__main__":
     unittest.main()

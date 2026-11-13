@@ -111,6 +111,7 @@ _atoi,0x4798d4,42,runtime-function,ef1566bfb31b57224172e1b947df6544ad39261e49323
 __beginthread,0x47949f,140,runtime-function,430906fdad69fa5809b2cc9e44a2aabe1acdf0993e1c3e1e77f55dd57a4233ee,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
 __mkdir,0x47a6ec,77,runtime-function,a4f04aa2754e0e6df29ac18b5591590cdbe99c187a3165e58891fc96ee0cde4a,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
 ___stdio_common_vsprintf,0x4792a8,36,runtime-function,f190a95f4c3b665b7b8ea169f70a78262f83c7936c962d00ab6519f0ab6b5469,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
+_atexit,0x474c70,21,runtime-function,2b249f6d45bdf474fdd740ded523dd70bf8f44661580643553f2762afd9a987b,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,
 ??_7AsciiInf@@6B@,0x491ce0,4,vftable,c7eded6b9de508c7cc66339fbcb02ca581a7e2576be4976c42a4bc366dc1b140,,,docs/knowledge/reviewed-linkages.md,,
 ??_7BombInf@@6B@,0x491e58,24,vftable,f003d5dde2e499adc9de493689fb6acb37bfa91f9903d50ab7c2f123134fa8d1,,,docs/knowledge/reviewed-linkages.md,,
 ??_7TitleInf@@6B@,0x493730,4,vftable,cf84ce335b0e30ba53ec68f5f51ab9472f6d2e5a3dfd0fe14c6cebfab39f4b76,,,docs/knowledge/reviewed-linkages.md,,

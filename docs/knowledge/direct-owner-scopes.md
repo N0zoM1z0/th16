@@ -144,3 +144,14 @@ comparisons are `.analysis/direct-owner-focused.json`. Logs use
 `.analysis/direct-owner-{switch,static,oracle,linkage,focused,constructor-eh,empty-eh}-controls.log`.
 Source-origin review remains open and Factory acceptance remains unsubmitted.
 Nothing is published.
+
+## Compiler-generated initializers and finalizers
+
+Dynamic initializers (`??__E`) and atexit finalizers (`??__F`) are always
+map statics. `linked_functions` now admits one when its name is unique among
+all map symbols and it starts an otherwise unowned code contribution; the
+strict context then treats it as a uniquely named symbol for field binding
+and replay. Ordinary statics remain excluded. With `_atexit`
+(`0x00474C70`, LIBCMT) reviewed and fifteen original boundaries recorded
+from complete CFG reviews, 22 of the 24 owners are exact; the Supervisor
+initializer differs in size.

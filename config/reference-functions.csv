@@ -1,18 +1,18 @@
 address,name,source_file,symbol,result,reason,evidence
-0x00401000,??__Eg_Arcfile@@YAXXZ,src/Arcfile.cpp,??__Eg_Arcfile@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401010,??__Eg_GameErrorContext@@YAXXZ,src/GameErrorContext.cpp,??__Eg_GameErrorContext@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401020,??__Eg_ZunMemory@@YAXXZ,src/GameErrorContext.cpp,??__Eg_ZunMemory@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401030,??__Eg_Supervisor@@YAXXZ,src/Supervisor.cpp,??__Eg_Supervisor@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401100,??__Eg_static_player_inner@@YAXXZ,src/Player.cpp,??__Eg_static_player_inner@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401110,??__Eg_arcfiles@@YAXXZ,src/Arcfile.cpp,??__Eg_arcfiles@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401140,??__Eg_D3DThreadInf@@YAXXZ,src/TextHelper.cpp,??__Eg_D3DThreadInf@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401150,??__Eg_TextHelper@@YAXXZ,src/TextHelper.cpp,??__Eg_TextHelper@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401160,??__Eg_unused_thread@@YAXXZ,src/TextHelper.cpp,??__Eg_unused_thread@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401170,??__Eg_screen_effect@@YAXXZ,src/ScreenEffect.cpp,??__Eg_screen_effect@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x004011B0,??__Eg_SoundManager@@YAXXZ,src/SoundManager.cpp,??__Eg_SoundManager@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x004011F0,??__Eg_unit_quad_rhw@@YAXXZ,src/AnmRender.cpp,??__Eg_unit_quad_rhw@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401220,??__Eg_sprite_temp_buffer@@YAXXZ,src/AnmRender.cpp,??__Eg_sprite_temp_buffer@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00401250,??__Eg_unit_quad_xyz@@YAXXZ,src/AnmRender.cpp,??__Eg_unit_quad_xyz@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
+0x00401000,??__Eg_Arcfile@@YAXXZ,src/Arcfile.cpp,??__Eg_Arcfile@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401010,??__Eg_GameErrorContext@@YAXXZ,src/GameErrorContext.cpp,??__Eg_GameErrorContext@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401020,??__Eg_ZunMemory@@YAXXZ,src/GameErrorContext.cpp,??__Eg_ZunMemory@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401030,??__Eg_Supervisor@@YAXXZ,src/Supervisor.cpp,??__Eg_Supervisor@@YAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00401100,??__Eg_static_player_inner@@YAXXZ,src/Player.cpp,??__Eg_static_player_inner@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401110,??__Eg_arcfiles@@YAXXZ,src/Arcfile.cpp,??__Eg_arcfiles@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401140,??__Eg_D3DThreadInf@@YAXXZ,src/TextHelper.cpp,??__Eg_D3DThreadInf@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401150,??__Eg_TextHelper@@YAXXZ,src/TextHelper.cpp,??__Eg_TextHelper@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401160,??__Eg_unused_thread@@YAXXZ,src/TextHelper.cpp,??__Eg_unused_thread@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401170,??__Eg_screen_effect@@YAXXZ,src/ScreenEffect.cpp,??__Eg_screen_effect@@YAXXZ,exact,,.analysis/reference-audit.json
+0x004011B0,??__Eg_SoundManager@@YAXXZ,src/SoundManager.cpp,??__Eg_SoundManager@@YAXXZ,exact,,.analysis/reference-audit.json
+0x004011F0,??__Eg_unit_quad_rhw@@YAXXZ,src/AnmRender.cpp,??__Eg_unit_quad_rhw@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401220,??__Eg_sprite_temp_buffer@@YAXXZ,src/AnmRender.cpp,??__Eg_sprite_temp_buffer@@YAXXZ,exact,,.analysis/reference-audit.json
+0x00401250,??__Eg_unit_quad_xyz@@YAXXZ,src/AnmRender.cpp,??__Eg_unit_quad_xyz@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00401280,UpdateFuncRegistry::UpdateFuncRegistry,src/UpdateFunc.cpp,??0UpdateFuncRegistry@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00401300,UpdateFuncRegistry::register_on_tick,src/UpdateFunc.cpp,?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z,exact,,.analysis/reference-audit.json
 0x004013B0,UpdateFuncRegistry::register_on_draw,src/UpdateFunc.cpp,?register_on_draw@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z,exact,,.analysis/reference-audit.json
@@ -445,7 +445,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00427970,Gui::release_msg,src/Gui.cpp,?release_msg@Gui@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00427A20,Gui::~Gui,src/Gui.cpp,??1Gui@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00427CA0,Gui::create,src/Gui.cpp,?create@Gui@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
-0x00427CF0,Gui::on_tick_body,src/Gui.cpp,?on_tick_body@Gui@@QAEHXZ,incomplete,4 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00427CF0,Gui::on_tick_body,src/Gui.cpp,?on_tick_body@Gui@@QAEHXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00428E70,Gui::on_draw_2_body,src/Gui.cpp,?on_draw_2_body@Gui@@QAEHXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00429AF0,Gui::on_tick_callback,src/Gui.cpp,?on_tick_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00429B00,Gui::on_draw_1_callback,src/Gui.cpp,?on_draw_1_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
@@ -1205,12 +1205,12 @@ address,name,source_file,symbol,result,reason,evidence
 0x00474810,EclStack::enter,src/EclRunContext.cpp,?enter@EclStack@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x00474860,EclStack::ecl_return,src/EclRunContext.cpp,?ecl_return@EclStack@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00474890,SptInf::load_sub_by_name,src/EclRunContext.cpp,?load_sub_by_name@SptInf@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
-0x0048AC10,??__Fg_Arcfile@@YAXXZ,src/Arcfile.cpp,??__Fg_Arcfile@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048AC20,??__Fg_GameErrorContext@@YAXXZ,src/GameErrorContext.cpp,??__Fg_GameErrorContext@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048AC30,??__Fg_ZunMemory@@YAXXZ,src/GameErrorContext.cpp,??__Fg_ZunMemory@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048AC40,??__Fg_Supervisor@@YAXXZ,src/Supervisor.cpp,??__Fg_Supervisor@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048AC60,??__Fg_arcfiles@@YAXXZ,src/Arcfile.cpp,??__Fg_arcfiles@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048AC80,??__Fg_D3DThreadInf@@YAXXZ,src/TextHelper.cpp,??__Fg_D3DThreadInf@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048ACA0,??__Fg_TextHelper@@YAXXZ,src/TextHelper.cpp,??__Fg_TextHelper@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048ACB0,??__Fg_unused_thread@@YAXXZ,src/TextHelper.cpp,??__Fg_unused_thread@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x0048ACD0,??__Fg_screen_effect@@YAXXZ,src/ScreenEffect.cpp,??__Fg_screen_effect@@YAXXZ,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
+0x0048AC10,??__Fg_Arcfile@@YAXXZ,src/Arcfile.cpp,??__Fg_Arcfile@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048AC20,??__Fg_GameErrorContext@@YAXXZ,src/GameErrorContext.cpp,??__Fg_GameErrorContext@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048AC30,??__Fg_ZunMemory@@YAXXZ,src/GameErrorContext.cpp,??__Fg_ZunMemory@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048AC40,??__Fg_Supervisor@@YAXXZ,src/Supervisor.cpp,??__Fg_Supervisor@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048AC60,??__Fg_arcfiles@@YAXXZ,src/Arcfile.cpp,??__Fg_arcfiles@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048AC80,??__Fg_D3DThreadInf@@YAXXZ,src/TextHelper.cpp,??__Fg_D3DThreadInf@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048ACA0,??__Fg_TextHelper@@YAXXZ,src/TextHelper.cpp,??__Fg_TextHelper@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048ACB0,??__Fg_unused_thread@@YAXXZ,src/TextHelper.cpp,??__Fg_unused_thread@@YAXXZ,exact,,.analysis/reference-audit.json
+0x0048ACD0,??__Fg_screen_effect@@YAXXZ,src/ScreenEffect.cpp,??__Fg_screen_effect@@YAXXZ,exact,,.analysis/reference-audit.json
