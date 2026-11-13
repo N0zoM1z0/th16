@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after static Boss counter and complete stage-fog follow-up.
+Updated 2026-11-13 after complete static camera-sky and Boss-query follow-up.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,6 +17,20 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
+Eight camera-sky source forms and three Boss damage-query forms are rejected
+and restored, with **no new exact credit**. The complete 1,623-byte camera-sky
+original has all 408 instructions reachable. Scalar-product and difference-order
+forms still fail its complete owner; coefficient-first, const-reference and
+member-pointer variants preserve baseline step code. The member-pointer form
+also preserves every native owner and the entire raw `.text`. All three Boss
+query helpers leave extra calls; do not force them inline or invent bindings.
+See [camera-sky and Boss-query evidence](knowledge/camera-sky-and-boss-query-trials.md).
+Keep `.analysis/camera-sky-exact-work/`, `.analysis/boss-query-result-work/` and
+the read-only `.analysis/float2-time-result-work/` baseline. No Float2 source
+trial was built. Final restoration preserves all 1,215 results, 956 units,
+all 1,719 owners (527,136 bytes), addresses/extents/relocations and raw `.text`.
+Game source is unchanged from `1048422`; current incremental PDB age is **537**.
+
 Two Boss counter-layout forms and seven complete stage-fog forms are
 rejected and restored, with **no new exact credit**. Separating direct/other
 statistics fields leaves all native code unchanged with the retained dialogue
@@ -31,7 +45,7 @@ Keep `.analysis/boss-statistics-layout-work/` and
 `.analysis/stage-disc-fog-work/`. Final restoration preserves all 1,215 results,
 956 units, all 1,719 owners (527,136 bytes), all addresses/extents/relocations
 and the entire raw `.text`. Game source is unchanged from `4e01372`;
-current incremental PDB age is **525**.
+that checkpoint's incremental PDB age is **525**.
 
 The complete **1,223-byte** `GuiMsgVm::GuiMsgVm` at `0x00429B20` is now
 **exact**, including all 287 original instructions and all 33 linked fields.
@@ -221,7 +235,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `80da752f1d593ebbb54bc5fecf92210566c8ba0ed0acb6e05ce1e4659e99259d`.
-PDB age is **525**. The final incremental build, strict replay and progress check
+PDB age is **537**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -230,6 +244,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Camera-sky and Boss query boundaries](knowledge/camera-sky-and-boss-query-trials.md) | Complete 408-instruction camera-sky CFG; eight camera and three Boss query forms rejected/restored; all 893 exact results and complete native code preserved |
 | [Dialogue position-array context](knowledge/dialogue-position-array-exact.md) | Complete 1,223-byte dialogue constructor exact, all 287 instructions and 33 fields; all prior 892 exact and other 1,718 native owners preserved; Boss/bomb trials restored |
 | [Shared callback construction](knowledge/updatefunc-construction-exact.md) | Complete 5,071-byte AnmManager constructor exact, all 164 fields and existing EH graph; all prior 891 exact and other 1,718 native owners preserved; no callback-specific source case |
 | [Complete spellcard frame update](knowledge/spellcard-frame-update-exact.md) | Complete 650-byte exact owner, all 167 instructions and 17 fields; all prior 890 exact and other 1,718 candidate owners retained; Float3 trial restored |
