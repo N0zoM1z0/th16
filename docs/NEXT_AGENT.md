@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after rectangle containment and complete edge-table review.
+Updated 2026-11-13 after complete Gui destructor exact validation.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,7 +17,11 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-The latest exact result is the complete 1,348-byte masked-animation callback,
+The latest exact result is the complete 640-byte `Gui::~Gui`, including all
+172 instructions and 40 linked fields. Its independently reviewed three-local
+EH frame closes the final private handler field; game source is unchanged.
+See [Gui destructor exact evidence](knowledge/gui-destructor-exact.md).
+The preceding exact result is the complete 1,348-byte masked-animation callback,
 reviewed in [masked-effect exact evidence](knowledge/masked-effect-exact.md).
 Earlier exact checkpoint `a95321e` covers curve laser initialization and the
 elliptical drop helper. Source checkpoint `291be6e` recovers inline boss
@@ -25,7 +29,7 @@ feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. Source checkpoint
 `a9c0a41` restores the random-ring radius interpolation boundary and SSE arithmetic.
 The preceding exact continuation resolves the masked callback's final literal
-through its original MOVSS witness. The current source checkpoint restores
+through its original MOVSS witness. The preceding source checkpoint restores
 the first inlined rectangle-containment pass and reviews its complete edge
 table. Its 2,155-byte owner remains incomplete against 2,168 original bytes.
 The preceding spellcard marker repair is retained. Other new source trials
@@ -33,17 +37,16 @@ are restored. The preceding Boss
 restart and projectile angle-consumer repairs are retained. The shared
 expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
-The preceding curve, Boss and async source work is retained. The last exact
-addition was the complete 1,348-byte masked callback; this source continuation
-adds no new exact credit. The canonical report is **886 exact,
-65 mismatch, 264 incomplete** among 1,215 annotations: **170,923 exact primary
-bytes and 951 retained units**.
+The preceding curve, Boss and async source work is retained. Five further natural
+geometry trials are restored; see the Gui review for their rejected forms.
+The canonical report is **887 exact, 65 mismatch, 263 incomplete** among 1,215
+annotations: **171,563 exact primary bytes and 952 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `cfbea2fb7262af493ea44cc4005f42eccf2841c09b9cc83bee4cdb28c67aa7a3`.
-PDB age is **356**. The final incremental build, strict replay and progress check
+PDB age is **362**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -52,6 +55,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Gui destructor exact](knowledge/gui-destructor-exact.md) | Complete 640-byte owner, 172 instructions and all 40 linked fields; full private EH graph and three-local frame validated; all 886 previous exact owners retained; 134 static controls pass |
 | [Rectangle containment and edge storage](knowledge/rectangle-containment-and-edge-storage.md) | First containment pass explicitly inlined and four corner checks expanded; complete candidate 2,002 to 2,155 bytes vs 2,168 original; 32-byte edge identity reviewed; no new exact credit |
 | [Spellcard marker component order](knowledge/spellcard-marker-component-order.md) | Complete 650-byte owner improves from 451 to 461 matching bytes; marker calculation instructions agree; timer and title-loop differences remain; no new exact credit |
 | [Masked-animation draw callback](knowledge/masked-effect-exact.md) | Complete 1,348-byte exact owner, all 57 linked fields; original 464.0f identity resolved through its fixed MOVSS read; no game-source change |

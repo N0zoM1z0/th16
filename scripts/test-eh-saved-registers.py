@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mutation controls for three explicit saved-register empty EH3 frame profiles."""
+"""Mutation controls for explicit saved-register empty EH3 frame profiles."""
 import copy
 import hashlib
 import importlib.util
@@ -280,6 +280,41 @@ class SavedESIEDIEHControls(SavedRegisterEHControls):
     def test_nonempty_node_minus_12_frames_remain_outside_this_profile(self):
         for parent, size, handler in ((0x457060, 189, 0x48a9c0), (0x45a3a0, 162, 0x48aa30)):
             with self.subTest(parent=parent), self.assertRaises(EHEvidenceError):
+                inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
+
+
+class ThreeLocalSavedRegisterEHControls(SavedRegisterEHControls):
+    PROFILE = "empty-eh3-three-locals-saved-ebx-esi-edi-v1"
+    TARGETS = {0x427a20}
+    COOKIE_OFFSET = -28
+    COOKIE_FIELD = 24
+    COOKIE_SLOT_BYTE = 0xd8
+    OTHER_COOKIE_BYTE = 0xe0
+    PREFIX_SIZE = 40
+
+    def test_identical_descriptor_or_handler_of_the_other_parent_is_rejected(self):
+        record = self.records[0]
+        proof = self.proof(record)
+        other = self.context.eh_handlers[("src/Gui.cpp", "??1GuiMsgVm@@QAE@XZ")]
+        self.assertEqual(self.context.image.read_address(proof["descriptor"]["address"], 36),
+                         self.context.image.read_address(other["descriptor"]["address"], 36))
+        for address, destination in ((proof["handler"]["address"] + 18, other["descriptor"]["address"]),
+                                     (proof["parent_candidate"] + 6, other["handler"]["address"])):
+            with self.assertRaises(EHEvidenceError):
+                self.review(record, self.mutate("image", address, struct.pack("<I", destination)))
+
+    def test_local_reservation_and_save_order_are_fixed(self):
+        record = self.records[0]
+        parent = self.proof(record)["parent_candidate"]
+        for address, payload in ((parent + 19, b"\x08"), (parent + 19, b"\x10"),
+                                 (parent + 20, bytes.fromhex("565357"))):
+            with self.subTest(address=address, payload=payload), self.assertRaisesRegex(
+                    EHEvidenceError, "saved-register frame"):
+                self.review(record, self.mutate("image", address, payload))
+
+    def test_other_empty_frames_cannot_use_the_three_local_profile(self):
+        for parent, size, handler in ((0x4264a0, 729, 0x48a6f0), (0x470e10, 179, 0x48abd0)):
+            with self.subTest(parent=parent), self.assertRaisesRegex(EHEvidenceError, "saved-register frame"):
                 inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
 
 

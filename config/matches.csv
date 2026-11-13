@@ -351,6 +351,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00427730,Gui::release_stage_files,reference-00427730,local-strict-pass,539,539,539,.analysis/reference-audit.json
 0x00427950,??_GGuiMsgVm@@QAEPAXI@Z,reference-00427950,local-strict-pass,28,28,28,.analysis/reference-audit.json
 0x00427970,Gui::release_msg,reference-00427970,local-strict-pass,167,167,167,.analysis/reference-audit.json
+0x00427A20,Gui::~Gui,reference-00427a20,local-strict-pass,640,640,640,.analysis/reference-audit.json
 0x00427CA0,Gui::create,reference-00427ca0,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x00429AF0,Gui::on_tick_callback,reference-00429af0,local-strict-pass,8,8,8,.analysis/reference-audit.json
 0x00429B00,Gui::on_draw_1_callback,reference-00429b00,local-strict-pass,6,6,6,.analysis/reference-audit.json

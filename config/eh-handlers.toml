@@ -555,3 +555,19 @@ func_info_size = 44
 func_info_sha256 = "8678d37177ee640019790ad5faf1bb98bd1e37f3b2a46d3289fdbbfce9c43703"
 eh_flags = 1
 evidence = "docs/knowledge/audio-release-strncmp.md"
+
+[[handlers]]
+profile = "empty-eh3-three-locals-saved-ebx-esi-edi-v1"
+source = "src/Gui.cpp"
+parent_symbol = "??1Gui@@QAE@XZ"
+parent_target = 0x427a20
+parent_size = 640
+parent_sha256 = "69cb9d5c426203b636fb4702f0686f888f27ef981d2b107903361687160c5118"
+target = 0x48a710
+size = 27
+target_sha256 = "6bd0d965bd85c1da553e232028a9ad67791c4716e56223a995750c44fb89a76a"
+func_info_target = 0x49b2c4
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/gui-destructor-exact.md"
