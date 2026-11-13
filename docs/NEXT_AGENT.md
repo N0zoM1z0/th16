@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after static Boss hit-effect flag reconstruction (partial).
+Updated 2026-11-13 after complete static Boss/laser source-join investigation.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,7 +17,18 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-The latest source work restores separate damaged/suppression TESTs in the
+The latest static continuation rejects and restores four Boss result-boundary
+forms and seven complete line-laser EX forms. The 1,588-byte original EX owner
+has 327 reachable code instructions and both complete dispatch tables. Its
+1,748-byte candidate retains a scaled index instead of a full EX pointer;
+36 longer field addresses account for a hypothetical 149 bytes of its
+161-byte code gap. Six basic pointer/loop rewrites produce identical complete
+raw owners, and an explicit default-advance arm is worse. Do not repeat these
+as new hypotheses. See [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md).
+All trial game source is restored; no exact credit is added. Keep
+`.analysis/boss-credit-join-work/` and `.analysis/laser-ex-static-work/`.
+
+The latest retained source work restores separate damaged/suppression TESTs in the
 complete **2,207-byte** `EnemyData::step_logic` at `0x0041C330`. Its candidate
 changes **2,195 to 2,197 bytes**, still **incomplete**. Only the suppression
 expression narrows to u16; flags storage stays u32. The original 534-instruction
@@ -93,18 +104,18 @@ The preceding curve, Boss and async source work is retained. Five further natura
 geometry trials are restored; see the Gui review for their rejected forms.
 The canonical report is **890 exact, 65 mismatch, 260 incomplete** among 1,215
 annotations: **175,386 exact primary bytes and 955 retained units**.
-All previous 890 exact owners and the other 1,214 annotation results/diagnostics
-remain unchanged, apart from current build identities. All 955 unit definitions
-and addresses are identical. Complete raw candidate regression preserves all
-other 1,718 owners (524,938 bytes), their addresses/extents and all image
-relocations outside the Boss logic owner. That owner remains incomplete;
+All 890 exact owners, all 1,215 annotation results/diagnostics and all 955 unit
+definitions/addresses remain unchanged, apart from current build identities.
+Complete restoration preserves all 1,719 candidate owners byte for byte
+(527,135 bytes), every address/extent, all image relocations and the complete
+563,712-byte raw .text section. The Boss logic owner remains incomplete;
 Float3 remains a complete 899/906 mismatch with all six fields validated.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `b6676dada1acc3f517c2070de87d75d3308c774a8025fb81cc8dcd70d89f98c0`.
-PDB age is **430**. The final incremental build, strict replay and progress check
+PDB age is **443**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -113,6 +124,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md) | Complete original laser CFG and both tables; 36-operand address-cost diagnostic; all four Boss/seven laser forms restored; all 1,719 owners and entire raw .text preserved; no new exact credit |
 | [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md) | Separate original TESTs restored in the full 2,197/2,207-byte candidate; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
 | [Float3 timer result join](knowledge/float3-timer-result-join.md) | Complete 906-byte owner improves from 413 to 899 matching bytes; two reordered instructions remain; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
 | [Complete easing dispatch](knowledge/easing-dispatch-exact.md) | Complete 1,692-byte exact owner: 388 code instructions, alignment, 31-entry table and 131 links; all 889 prior exact owners and other 1,718 complete candidate owners retained |
@@ -148,8 +160,18 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md)
-first. Only `Enemy.cpp` retains game-source changes in this continuation.
+Read [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md) first.
+All new game-source trials are restored. Larger Boss return helpers introduce
+out-of-line calls absent from the original; small conditional-result helpers
+still swap registers. For LaserLineInf::run_ex, investigate the actual EX
+pointer dataflow/call context, not plain getters, local aliases, base-plus-index,
+reference outputs, do/while or loop breaks: all six generate identical 1,748
+bytes. Original full-pointer materialization differs from the candidate's
+scaled index; the early default advance and epilogue also remain different.
+The existing complete owner/table definitions are unchanged.
+
+The preceding retained source is [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md).
+Only `Enemy.cpp` changed in that continuation.
 Preserve `.analysis/boss-damage-exact-work/TRIALS.md`: the returned-life-pointer
 helper recovers ESI preservation but still changes collision allocation, so it
 is restored. A local owner alias, dialogue helper, scoped life reference and
