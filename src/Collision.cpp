@@ -57,7 +57,7 @@ HARNESS_CALLED i32 __stdcall collision_test_circle_rect(f32 rect_x, f32 rect_y, 
 
 // The corners each edge of a rectangle joins.
 // GLOBAL: TH16 0x490e90
-const i32 g_rect_edges[4][2] = {{0, 1}, {1, 2}, {2, 3}, {3, 0}};
+extern const i32 g_rect_edges[4][2] = {{0, 1}, {1, 2}, {2, 3}, {3, 0}};
 
 // Rotates four points about the origin. sinf and cosf are written inside
 // the loop: MSVC still hoists them (the original calls them once before the
@@ -76,6 +76,39 @@ static __forceinline void rotate_points(Float2 *points, f32 angle)
         points->y = y * c + x * s;
         points->x = x * c - y * s;
     }
+}
+
+static __forceinline i32 points_in_rect(f32 x, f32 y, f32 w, f32 h, f32 angle, Float2 *points)
+{
+    Float2 p[4];
+    for (i32 i = 0; i < 4; i++)
+    {
+        p[i].x = points[i].x - x;
+        p[i].y = points[i].y - y;
+    }
+    if (angle != 0.0f)
+    {
+        angle = -angle;
+        rotate_points(p, angle);
+    }
+    f32 half_w = w * 0.5f;
+    if (half_w >= fabsf(p[0].x) && fabsf(p[0].y) <= h * 0.5f)
+    {
+        return 1;
+    }
+    if (half_w >= fabsf(p[1].x) && fabsf(p[1].y) <= h * 0.5f)
+    {
+        return 1;
+    }
+    if (half_w >= fabsf(p[2].x) && fabsf(p[2].y) <= h * 0.5f)
+    {
+        return 1;
+    }
+    if (half_w >= fabsf(p[3].x) && fabsf(p[3].y) <= h * 0.5f)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 // The corners of a w x h rectangle centered on the origin.
@@ -152,35 +185,7 @@ static __forceinline i32 segments_cross(f32 x1, f32 y1, f32 x2, f32 y2, f32 x3, 
 // FUNCTION: TH16 0x403a90
 HARNESS_CALLED i32 __stdcall collision_test_points_in_rect(f32 x, f32 y, f32 w, f32 h, f32 angle, Float2 *points)
 {
-    Float2 p[4];
-    for (i32 i = 0; i < 4; i++)
-    {
-        p[i].x = points[i].x - x;
-        p[i].y = points[i].y - y;
-    }
-    if (angle != 0.0f)
-    {
-        angle = -angle;
-        rotate_points(p, angle);
-    }
-    f32 half_w = w * 0.5f;
-    if (half_w >= fabsf(p[0].x) && fabsf(p[0].y) <= h * 0.5f)
-    {
-        return 1;
-    }
-    if (half_w >= fabsf(p[1].x) && fabsf(p[1].y) <= h * 0.5f)
-    {
-        return 1;
-    }
-    if (half_w >= fabsf(p[2].x) && fabsf(p[2].y) <= h * 0.5f)
-    {
-        return 1;
-    }
-    if (half_w >= fabsf(p[3].x) && fabsf(p[3].y) <= h * 0.5f)
-    {
-        return 1;
-    }
-    return 0;
+    return points_in_rect(x, y, w, h, angle, points);
 }
 
 // TODO: same tests and formulas; register allocation and stack slots differ (the original spills x4 - x3 into the x4 argument slot).
@@ -398,14 +403,14 @@ HARNESS_CALLED i32 __stdcall collision_line_rect(Float2 *near_point, Float2 *far
     return 1;
 }
 
-// TODO: same logic; the corner arrays, stack slots and registers are allocated differently and the rotation loops store x before y.
+// The first point-array test is inlined; the second keeps its original call.
+// The complete owner still differs in rotation and edge-intersection dataflow.
 // FUNCTION: TH16 0x4049c0
 HARNESS_CALLED i32 __stdcall collision_test_rect_rect(f32 x1, f32 y1, f32 w1, f32 h1, f32 angle1, f32 x2, f32 y2,
                                                       f32 w2, f32 h2, f32 angle2)
 {
     Float2 corners2[4];
     Float2 corners1[4];
-    Float2 rel[4];
     f32 half_w1 = w1 * 0.5f;
     f32 half_h1 = h1 * 0.5f;
     f32 half_w2 = w2 * 0.5f;
@@ -433,23 +438,10 @@ HARNESS_CALLED i32 __stdcall collision_test_rect_rect(f32 x1, f32 y1, f32 w1, f3
         corners1[i].x += x1;
         corners1[i].y += y1;
     }
-    // A corner of the second inside the first?
-    for (i32 i = 0; i < 4; i++)
+    // A corner of the second inside the first? This call is inlined.
+    if (points_in_rect(x1, y1, w1, h1, angle1, corners2))
     {
-        rel[i].x = corners2[i].x - x1;
-        rel[i].y = corners2[i].y - y1;
-    }
-    if (angle1 != 0.0f)
-    {
-        angle1 = -angle1;
-        rotate_points(rel, angle1);
-    }
-    for (i32 i = 0; i < 4; i++)
-    {
-        if (half_w1 >= fabsf(rel[i].x) && half_h1 >= fabsf(rel[i].y))
-        {
-            return 1;
-        }
+        return 1;
     }
     // Of the first inside the second?
     if (collision_test_points_in_rect(x2, y2, w2, h2, angle2, corners1))

@@ -60,8 +60,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x00403D30,collision_test_circle_rect,src/Collision.cpp,?collision_test_circle_rect@@YGHMMMMMMMM@Z,mismatch,,.analysis/reference-audit.json
 0x00403EC0,collision_segment_intersection,src/Collision.cpp,?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00404220,collision_line_intersection,src/Collision.cpp,?collision_line_intersection@@YGHPAM0MMMMMM@Z,exact,,.analysis/reference-audit.json
-0x00404600,collision_line_rect,src/Collision.cpp,?collision_line_rect@@YGHPAUD3DXVECTOR2@@0PAUD3DXVECTOR3@@MMMMMM@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004049C0,collision_test_rect_rect,src/Collision.cpp,?collision_test_rect_rect@@YGHMMMMMMMMMM@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00404600,collision_line_rect,src/Collision.cpp,?collision_line_rect@@YGHPAUD3DXVECTOR2@@0PAUD3DXVECTOR3@@MMMMMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x004049C0,collision_test_rect_rect,src/Collision.cpp,?collision_test_rect_rect@@YGHMMMMMMMMMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00405240,zun_fabsf,src/ZunMath.cpp,?zun_fabsf@@YAMM@Z,exact,,.analysis/reference-audit.json
 0x00405260,_floorf,src/CrtInline.cpp,_floorf,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x004052A0,zun_atan2f,src/ZunMath.cpp,?zun_atan2f@@YAMMM@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json

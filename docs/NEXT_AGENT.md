@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after static Boss and spellcard exact-source work.
+Updated 2026-11-13 after rectangle containment and complete edge-table review.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -25,30 +25,34 @@ feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. Source checkpoint
 `a9c0a41` restores the random-ring radius interpolation boundary and SSE arithmetic.
 The preceding exact continuation resolves the masked callback's final literal
-through its original MOVSS witness. The current source checkpoint recovers the
-spellcard marker's complete component instruction order; its 650-byte owner
-remains a mismatch. Other new gameplay trials are restored. The preceding Boss
+through its original MOVSS witness. The current source checkpoint restores
+the first inlined rectangle-containment pass and reviews its complete edge
+table. Its 2,155-byte owner remains incomplete against 2,168 original bytes.
+The preceding spellcard marker repair is retained. Other new source trials
+are restored. The preceding Boss
 restart and projectile angle-consumer repairs are retained. The shared
 expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
-The preceding curve, Boss and async source work is retained. One complete new
-exact owner adds 1,348 primary bytes. The canonical report is **886 exact,
+The preceding curve, Boss and async source work is retained. The last exact
+addition was the complete 1,348-byte masked callback; this source continuation
+adds no new exact credit. The canonical report is **886 exact,
 65 mismatch, 264 incomplete** among 1,215 annotations: **170,923 exact primary
 bytes and 951 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`8e6f8a51c048acafc5d94e82d9b66e2280b661bcdc3ca49150f22ad7c0922d24`.
-PDB age is **342**. The final incremental build, strict replay and progress check
+`cfbea2fb7262af493ea44cc4005f42eccf2841c09b9cc83bee4cdb28c67aa7a3`.
+PDB age is **356**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
 
-Recent accepted work:
+Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Rectangle containment and edge storage](knowledge/rectangle-containment-and-edge-storage.md) | First containment pass explicitly inlined and four corner checks expanded; complete candidate 2,002 to 2,155 bytes vs 2,168 original; 32-byte edge identity reviewed; no new exact credit |
 | [Spellcard marker component order](knowledge/spellcard-marker-component-order.md) | Complete 650-byte owner improves from 451 to 461 matching bytes; marker calculation instructions agree; timer and title-loop differences remain; no new exact credit |
 | [Masked-animation draw callback](knowledge/masked-effect-exact.md) | Complete 1,348-byte exact owner, all 57 linked fields; original 464.0f identity resolved through its fixed MOVSS read; no game-source change |
 | [Boss restart call context](knowledge/boss-restart-call-context.md) | Original out-of-line life restart and inline ECL call restart; 768 complete native calls per image and unchanged complete upper dispatcher; no new exact credit |
@@ -76,28 +80,37 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [spellcard marker component order](knowledge/spellcard-marker-component-order.md)
-first. Starting checkpoint `408da53` is preserved. `Spellcard::on_tick_body`
-now assigns the planar delta's components directly. This recovers the original
-XYZ registers and full marker calculation order without a three-component
-local or added cookie. Its complete owner remains **650 bytes / 461 matching**,
-up from 451; all 17 fields are resolved. A subordinate 122-byte calculation
-check agrees through both existing identities and grants no separate credit.
+Read [rectangle containment and edge storage](knowledge/rectangle-containment-and-edge-storage.md)
+first. Starting checkpoint `d77ba42` is preserved. `Collision.cpp` shares the
+complete point/rectangle calculation, explicitly inlines the first containment
+pass in rectangle/rectangle and retains the second out-of-line point call.
+The original and retained owners have eight statically expanded absolute-value
+conversions; the baseline has two in a four-iteration loop. The complete
+candidate is **2,155 bytes vs 2,168 original**, still incomplete. The standalone
+point owner is unchanged at **651/661 matching**. Rotation and edge dataflow
+remain open; the extent gap does not quantify byte mismatches.
 
-The remaining timer path folds `current_f` into XMM1, where the original at
-`0x004179ED` loads XMM0 first. That shorter path shifts the title-loop body and
-alignment. Branch-local accumulation gives the same wrong code; ordered member
-stores give 409 matching bytes. Both are restored. Depth-first loads and a full
-three-component delta also fail the complete owner and are restored.
+The complete 32-byte edge table now has a unique public and typed PDB owner.
+Its payload, read-only original storage and fixed indexed witnesses are reviewed.
+Do not accept the rectangle's captured end-limit fields as GUID references:
+the candidate's adjacent `IID_IDirectSoundNotify` happens to occupy those limit
+addresses, while the original operands are table+32 and table+36. Prove their
+iterator roles and side exits without enlarging the table or hiding fields.
+Both parents still fail their independent complete boundaries.
 
-All new Boss damage/credit, conditional animation position and shared rotation
-trials are restored. No new binding, original boundary, compiler profile or
-Oracle rule is retained. Full strict replay changes only the spellcard owner's
-matching-byte result and preserves **886/65/264**, **170,923 exact primary bytes**
-and all **951 units**, byte-for-byte structurally unchanged. No game code runs.
-Preserve `.analysis/boss-static-work/`, particularly both complete artifact sets,
-failed source forms, complete packets and `retained-regression.json`. Continue
-static exact work on the remaining timer and substantial Boss/projectile owners.
+Full strict replay preserves **886/65/264**, **170,923 exact primary bytes** and
+all **951 unit semantics**. Only 643 candidate addresses change. Unit hashes
+include that address, so 604 exact-unit hashes relocate; all prior exact
+functions remain exact. Source input/PDB are updated above. Preserve
+`.analysis/interpolation-exact-work/`, including both complete artifact sets,
+original table/CFG evidence, complete packets, comparison inputs, failed source
+forms and `retained-regression.json`. No game runtime is executed.
+
+The preceding [spellcard marker component order](knowledge/spellcard-marker-component-order.md)
+remains retained: its complete 650-byte owner has 461 matching bytes, with the
+timer accumulation and title-loop differences still open. The new interpolation,
+Player loop/callback-type and rotation representations all fail their complete
+owners and are restored. Consult the private `TRIALS.md` before repeating them.
 
 ### Earlier masked-animation exact result
 
