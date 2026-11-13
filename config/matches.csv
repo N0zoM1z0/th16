@@ -727,6 +727,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00457670,ArcfileEntry::~ArcfileEntry,reference-00457670,local-strict-pass,26,26,26,.analysis/reference-audit.json
 0x00457690,ArcfileEntry::ArcfileEntry,reference-00457690,local-strict-pass,9,9,9,.analysis/reference-audit.json
 0x004576A0,arcfile_log,reference-004576a0,local-strict-pass,1,1,1,.analysis/reference-audit.json
+0x004576B0,??_GFile@Pbg@@UAEPAXI@Z,reference-004576b0,local-strict-pass,71,71,71,.analysis/reference-audit.json
 0x00457700,Pbg::File::open,reference-00457700,local-strict-pass,328,328,328,.analysis/reference-audit.json
 0x00457850,Pbg::File::close,reference-00457850,local-strict-pass,34,34,34,.analysis/reference-audit.json
 0x00457880,Pbg::File::read,reference-00457880,local-strict-pass,58,58,58,.analysis/reference-audit.json
@@ -736,6 +737,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00457940,Pbg::File::seek,reference-00457940,local-strict-pass,38,38,38,.analysis/reference-audit.json
 0x00457970,Pbg::File::read_whole,reference-00457970,local-strict-pass,246,246,246,.analysis/reference-audit.json
 0x00457A70,make_full_path,reference-00457a70,local-strict-pass,122,122,122,.analysis/reference-audit.json
+0x00457AF0,??_GIFile@Pbg@@UAEPAXI@Z,reference-00457af0,local-strict-pass,36,36,36,.analysis/reference-audit.json
 0x00457B20,lzss_compress,reference-00457b20,local-strict-pass,986,986,986,.analysis/reference-audit.json
 0x004580E0,lzss_init,reference-004580e0,local-strict-pass,68,68,68,.analysis/reference-audit.json
 0x00458130,lzss_add_string,reference-00458130,local-strict-pass,561,561,561,.analysis/reference-audit.json

@@ -891,7 +891,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00457670,ArcfileEntry::~ArcfileEntry,src/Arcfile.cpp,??1ArcfileEntry@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00457690,ArcfileEntry::ArcfileEntry,src/Arcfile.cpp,??0ArcfileEntry@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x004576A0,arcfile_log,src/Arcfile.cpp,?arcfile_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
-0x004576B0,??_GFile@Pbg@@UAEPAXI@Z,src/Arcfile.cpp,??_GFile@Pbg@@UAEPAXI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004576B0,??_GFile@Pbg@@UAEPAXI@Z,src/Arcfile.cpp,??_GFile@Pbg@@UAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x00457700,Pbg::File::open,src/Arcfile.cpp,?open@File@Pbg@@UAE_NPBD0@Z,exact,,.analysis/reference-audit.json
 0x00457850,Pbg::File::close,src/Arcfile.cpp,?close@File@Pbg@@UAEXXZ,exact,,.analysis/reference-audit.json
 0x00457880,Pbg::File::read,src/Arcfile.cpp,?read@File@Pbg@@UAEIPAXI@Z,exact,,.analysis/reference-audit.json
@@ -901,7 +901,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00457940,Pbg::File::seek,src/Arcfile.cpp,?seek@File@Pbg@@UAE_NII@Z,exact,,.analysis/reference-audit.json
 0x00457970,Pbg::File::read_whole,src/Arcfile.cpp,?read_whole@File@Pbg@@UAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x00457A70,make_full_path,src/Arcfile.cpp,?make_full_path@@YAXPADPBD@Z,exact,,.analysis/reference-audit.json
-0x00457AF0,??_GIFile@Pbg@@UAEPAXI@Z,src/Arcfile.cpp,??_GIFile@Pbg@@UAEPAXI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00457AF0,??_GIFile@Pbg@@UAEPAXI@Z,src/Arcfile.cpp,??_GIFile@Pbg@@UAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x00457B20,lzss_compress,src/Lzss.cpp,?lzss_compress@@YIPAEPAEHPAH@Z,exact,,.analysis/reference-audit.json
 0x00457F00,lzss_decompress,src/Lzss.cpp,?lzss_decompress@@YIPAEPAEH0H@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004580E0,lzss_init,src/Lzss.cpp,?lzss_init@@YAXXZ,exact,,.analysis/reference-audit.json

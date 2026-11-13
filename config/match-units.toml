@@ -18105,6 +18105,25 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-004576b0]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??_GFile@Pbg@@UAEPAXI@Z"
+object = "Arcfile.obj"
+candidate_address = 4279104
+target_address = 4552368
+size = 71
+compare_size = 71
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 11, width = 4, type = "DIR32", symbol = "??_7File@Pbg@@6B@", target = 4798312, addend = 0 },
+  { offset = 23, width = 4, type = "DIR32", symbol = "__imp__CloseHandle@4", target = 4763776, addend = 0 },
+  { offset = 47, width = 4, type = "DIR32", symbol = "??_7IFile@Pbg@@6B@", target = 4798352, addend = 0 },
+  { offset = 57, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+]
+
 [units.reference-00457700]
 artifact_kind = "linked-pe"
 source = "src/Arcfile.cpp"
@@ -18265,6 +18284,23 @@ linkages = [
   { offset = 10, width = 4, type = "REL32", symbol = "_strchr", target = 4680800, addend = 0 },
   { offset = 49, width = 4, type = "DIR32", symbol = "__imp__GetModuleFileNameA@12", target = 4763832, addend = 0 },
   { offset = 57, width = 4, type = "REL32", symbol = "_strrchr", target = 4680480, addend = 0 },
+]
+
+[units.reference-00457af0]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "??_GIFile@Pbg@@UAEPAXI@Z"
+object = "Arcfile.obj"
+candidate_address = 4279056
+target_address = 4553456
+size = 36
+compare_size = 36
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 12, width = 4, type = "DIR32", symbol = "??_7IFile@Pbg@@6B@", target = 4798352, addend = 0 },
+  { offset = 22, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
 ]
 
 [units.reference-00457b20]

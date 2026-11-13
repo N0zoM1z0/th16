@@ -443,3 +443,8 @@ stays at 0 and candidate and target hierarchies must still be identical.
 are bound. Their three constructors become exact. The nine bomb class tables
 (`0x00491D5C`-`0x00491E3C`, six slots each) that `BombInf::create` installs
 are bound too, making `create` and `BombAyaAInf::on_tick` exact.
+
+`??_7IFile@Pbg@@6B@` (`0x00493790`, eight slots) holds seven `__purecall`
+entries and the deleting destructor. `__purecall` (`0x00476DA0`, 26 bytes,
+`libvcruntime.lib`, candidate contribution 27 bytes including its INT3 pad)
+is a reviewed runtime function, so both Pbg deleting destructors are exact.

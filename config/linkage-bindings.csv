@@ -44,6 +44,7 @@ __localtime64,0x47a36a,39,runtime-function,f91fcc9da1b445d5de93ab389b96c0542e34d
 ??_7LaserInfiniteInf@@6B@,0x4923b8,104,vftable,2aa83f63657476a7cf5eec0fbbfd6834dedd2764975d939b9b49621201e34851,,,docs/knowledge/reviewed-linkages.md,,
 ??_7LaserCurveInf@@6B@,0x4922e0,104,vftable,798e18214e10a70d2d8d60a9b77ace829da19e423d25d9514f9f22af487d9346,,,docs/knowledge/reviewed-linkages.md,,
 ??_7LaserBeamInf@@6B@,0x49234c,104,vftable,d20f15e65fee836581d5eec451f0fc0a3050dcfc81986a4875317301bff5f4ab,,,docs/knowledge/reviewed-linkages.md,,
+__purecall,0x476da0,26,runtime-function,248ad1b38bef54ef7c2ea57e5007fb9d9f7b48ea9c9493abcd0a77aae9e07e2a,,,docs/knowledge/reviewed-linkages.md,libvcruntime.lib,27
 __chkstk,0x487100,45,runtime-function,782928de1aa03e19ef7fb5ac4d77ba42a57644ad873dcf0ebb78c8ec6c5e5151,,,docs/knowledge/reviewed-linkages.md,LIBCMT.lib,
 __beginthreadex,0x47952b,133,runtime-function,0b5c9820b3255e34441b18a919831c7326c1cdb591c9ccecfa1dcc2a4d91c8f6,,,docs/knowledge/reviewed-linkages.md,libucrt.lib,
 __real@43700000,0x494678,4,literal,7860020e90116183228640760ff7502f4df0088992b456e3f0d7b44c9950db7e,0x4079c6,movss,docs/knowledge/switch-ownership.md,,
@@ -118,3 +119,4 @@ _floor,0x488a00,253,runtime-function,333e798a828e3a7d1de02413a8b8a8fd4ba2e6ae5c7
 ??_7BombCirnoAInf@@6B@,0x491e04,24,vftable,9f1d7595fe686cb9fd35f6ff5b0ea4954c992f5842a469a1fa185ca3d63cdfee,,,docs/knowledge/reviewed-linkages.md,,
 ??_7BombMarisaAInf@@6B@,0x491e20,24,vftable,1c109d7245673c644d4f2cf53be8877c18f31dbdedee4b8d01d143a1af6f8982,,,docs/knowledge/reviewed-linkages.md,,
 ??_7BombReimuAInf@@6B@,0x491e3c,24,vftable,a8a1b0ce52cde596b5d825cc2d9c37f7809a5d0299b0f38863a02c3dae949662,,,docs/knowledge/reviewed-linkages.md,,
+??_7IFile@Pbg@@6B@,0x493790,32,vftable,001674c584e7a7ec87c91b9599b1142f623a8a7efdbc21d4a092abf436868572,,,docs/knowledge/reviewed-linkages.md,,
