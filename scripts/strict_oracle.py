@@ -626,7 +626,7 @@ class Context:
                  ROOT / "scripts/switch_ownership.py", ROOT / "config/switch-owners.toml",
                  ROOT / "scripts/eh_identity.py", ROOT / "config/eh-handlers.toml",
                  ROOT / "scripts/eh_member_constructor.py",
-                 ROOT / "scripts/eh_allocation.py",
+                 ROOT / "scripts/eh_allocation.py", ROOT / "scripts/eh_gs_allocation.py",
                  ROOT / "scripts/eh_aligned_audio.py",
                  ROOT / "scripts/eh_array_constructor.py",
                  ROOT / "scripts/eh_terminate.py",

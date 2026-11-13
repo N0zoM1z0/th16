@@ -700,3 +700,37 @@ func_info_size = 44
 func_info_sha256 = "76f9546061854db8c001b3e034d9523d4e59fbf02911da5529cadea689b2c4d3"
 eh_flags = 1
 evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "gs-allocation-cleanup-v1"
+source = "src/Gui.cpp"
+parent_symbol = "?start_dialogue@Gui@@QAEXH@Z"
+parent_target = 0x429ff0
+parent_size = 470
+parent_sha256 = "53b2636bf732dcf30f151beb9536c6af70dbd82a2901dff8f9ab9f89073e8022"
+target = 0x48a745
+code_target = 0x48a730
+size = 61
+target_sha256 = "2da98b2c9b355da8d22c78b56cba67da35a15ba7ce0c7fdd352ec6f6151c382d"
+func_info_target = 0x49b2e8
+func_info_size = 44
+func_info_sha256 = "73fc180fdf7a5fd015275128eadf0648ae053b0030581e2482d67ff475a55e3b"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "gs-allocation-cleanup-v1"
+source = "src/MainMenuStates.cpp"
+parent_symbol = "?load_replay_list@TitleInf@@SAXXZ"
+parent_target = 0x451560
+parent_size = 475
+parent_sha256 = "df3b9dc7f682a663f76f6fe6e3e4ec9a8cca6d5d03557609379d067662ec27bc"
+target = 0x48a995
+code_target = 0x48a980
+size = 61
+target_sha256 = "d9bd7c0866001a37a6395e26e24646fce49f9fc024d6d1a38f8e4ca38e595f0a"
+func_info_target = 0x49b544
+func_info_size = 44
+func_info_sha256 = "497b1024b920ca4d9cc022952f9e3d72edc1dff856e693fbcdf77a5b8c1613c5"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"

@@ -397,6 +397,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00429B00,Gui::on_draw_1_callback,reference-00429b00,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x00429B10,Gui::on_draw_2_callback,reference-00429b10,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00429B20,GuiMsgVm::GuiMsgVm,reference-00429b20,local-strict-pass,1223,1223,1223,.analysis/reference-audit.json
+0x00429FF0,Gui::start_dialogue,reference-00429ff0,local-strict-pass,470,470,470,.analysis/reference-audit.json
 0x0042B5F0,Gui::textbox_on_draw,reference-0042b5f0,local-strict-pass,21,21,21,.analysis/reference-audit.json
 0x0042B610,GuiMsgVm::hide,reference-0042b610,local-strict-pass,514,514,514,.analysis/reference-audit.json
 0x0042B820,GuiMsgVm::show,reference-0042b820,local-strict-pass,514,514,514,.analysis/reference-audit.json
@@ -730,6 +731,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0044F710,TitleInf::set_key,reference-0044f710,local-strict-pass,241,241,241,.analysis/reference-audit.json
 0x0044F810,TitleInf::update_key_config_cursor,reference-0044f810,mismatch,1540,1540,1539,.analysis/reference-audit.json
 0x004513C0,TitleInf::on_draw__practice_stage_select,reference-004513c0,local-strict-pass,405,405,405,.analysis/reference-audit.json
+0x00451560,TitleInf::load_replay_list,reference-00451560,local-strict-pass,475,475,475,.analysis/reference-audit.json
 0x00451740,TitleInf::replay_list_thread,reference-00451740,local-strict-pass,8,8,8,.analysis/reference-audit.json
 0x00453030,TitleInf::on_draw__player_data,reference-00453030,local-strict-pass,698,698,698,.analysis/reference-audit.json
 0x004538B0,TitleInf::on_draw__score_name_entry,reference-004538b0,local-strict-pass,861,861,861,.analysis/reference-audit.json

@@ -133,3 +133,14 @@ the size push and the call, an earlier unprotected allocation reuses the
 saved slot, and its protected path returns without a -1 reset. Its cleanup
 funclet is the only remaining one (`$1`; the compiler removed state 0). The
 complete owner is exact.
+
+## GS-buffer frames
+
+`Gui::start_dialogue` (`0x00429FF0`, 470 bytes) and
+`TitleInf::load_replay_list` (`0x00451560`, 475 bytes) reserve a local buffer,
+store the GS cookie at EBP-16 and push the encoded EH cookie after saving
+EBX/ESI/EDI. Their handlers check both cookies (40 bytes); the cleanup reads
+the saved allocation through a disp32 slot (21 bytes). The explicit
+`gs-allocation-cleanup-v1` profile fixes each parent's buffer size, allocation
+size, saved slot and every use of it, checks both complete 61/44-byte
+aggregates and the two-cookie epilogue at each return. Both owners are exact.

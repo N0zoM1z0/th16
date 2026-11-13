@@ -194,6 +194,9 @@ def review_handler(context, record, statics, pdb):
     if record.get("profile") == "allocation-cleanup-v1":
         from eh_allocation import review_allocation
         return review_allocation(context, record, statics, pdb)
+    if record.get("profile") == "gs-allocation-cleanup-v1":
+        from eh_gs_allocation import review_gs_allocation
+        return review_gs_allocation(context, record, statics, pdb)
     if record.get("profile") == "bullet-array-constructor-v1":
         from eh_array_constructor import review_array_constructor
         return review_array_constructor(context, record, statics, pdb)
@@ -321,15 +324,16 @@ def target_owner_section(context, address, size, code):
             "EH aggregate target has wrong section permissions")
 
 
-def single_state_owners(context, record, statics, pdb, action_size):
+def single_state_owners(context, record, statics, pdb, action_size, handler_size=27):
     """Check full owners/maps shared by the fixed, explicitly reviewed action lengths."""
-    require(action_size in (11, 14, 18, 30) and record["size"] == action_size + 27
+    require((action_size, handler_size) in {(11, 27), (14, 27), (18, 27), (30, 27), (21, 40)}
+            and record["size"] == action_size + handler_size
             and record["func_info_size"] == 44 and record["eh_flags"] == 1,
             "EH single-state graph lacks its complete fixed aggregates")
     source, symbol = record["source"], record["parent_symbol"]
     parent, size = record["parent_target"], record["parent_size"]
     code, info, handler = record["code_target"], record["func_info_target"], record["target"]
-    code_size = action_size + 27
+    code_size = action_size + handler_size
     require(handler == code + action_size, "EH single-state handler is not its reviewed interior entry")
     owner, candidate_parent = complete_game_entry(context, source, symbol, parent, size, record["parent_sha256"])
     extent_hash(context.target, code, code_size, record["target_sha256"])
