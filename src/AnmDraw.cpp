@@ -13,7 +13,9 @@ static_assert(sizeof(RenderVertexXyzDiffuseTex) == 0x18, "RenderVertexXyzDiffuse
 #include "AnmAnchorCorners.h"
 
 // Defined in probes/reference-support/SoundData.cpp, right after the sound table.
+// GLOBAL: TH16 0x4a3048
 extern AnmAnchorCorners g_anchor_corners_x[3];
+// GLOBAL: TH16 0x4a3078
 extern AnmAnchorCorners g_anchor_corners_y[3];
 
 // A color channel scaled by another, where 0x80 is 1.0, saturating.

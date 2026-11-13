@@ -969,7 +969,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0045D410,screen_debug_log,src/ScreenEffect.cpp,?screen_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x0045D420,SoundManager::stop_threads,src/SoundManager.cpp,?stop_threads@SoundManager@@SAHXZ,exact,,.analysis/reference-audit.json
 0x0045D4D0,SoundManager::thread_init,src/SoundManager.cpp,?thread_init@SoundManager@@SAXPAX@Z,exact,,.analysis/reference-audit.json
-0x0045D510,SoundManager::initialize,src/SoundManager.cpp,?initialize@SoundManager@@QAEHPAUHWND__@@@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0045D510,SoundManager::initialize,src/SoundManager.cpp,?initialize@SoundManager@@QAEHPAUHWND__@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0045D7E0,SoundManager::thread_load_sound_files,src/SoundManager.cpp,?thread_load_sound_files@SoundManager@@SAXPAX@Z,exact,,.analysis/reference-audit.json
 0x0045D850,SoundManager::release,src/SoundManager.cpp,?release@SoundManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0045D9D0,get_wav_chunk,src/SoundManager.cpp,?get_wav_chunk@@YGPAUtWAVEFORMATEX@@PAEPBDPAHI@Z,exact,,.analysis/reference-audit.json
@@ -1020,8 +1020,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x00465A30,AnmManager::reset_vertex_buffers,src/AnmRender.cpp,?reset_vertex_buffers@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00465A80,AnmManager::flush_sprites,src/AnmRender.cpp,?flush_sprites@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00465B50,AnmManager::write_sprite,src/AnmRender.cpp,?write_sprite@AnmManager@@QAEHPAURenderVertex144@@@Z,exact,,.analysis/reference-audit.json
-0x00465C40,AnmVm::write_sprite_corners__without_rot,src/AnmDraw.cpp,?write_sprite_corners__without_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x004660B0,AnmVm::write_sprite_corners__with_z_rot,src/AnmDraw.cpp,?write_sprite_corners__with_z_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z,incomplete,8 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00465C40,AnmVm::write_sprite_corners__without_rot,src/AnmDraw.cpp,?write_sprite_corners__without_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x004660B0,AnmVm::write_sprite_corners__with_z_rot,src/AnmDraw.cpp,?write_sprite_corners__with_z_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00466390,AnmManager::write_billboard_corners,src/AnmDraw.cpp,?write_billboard_corners@AnmManager@@SGHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00466820,AnmManager::draw_billboard_fog,src/AnmDraw.cpp,?draw_billboard_fog@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00466F00,AnmManager::build_world_matrix,src/AnmRender.cpp,?build_world_matrix@AnmManager@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
