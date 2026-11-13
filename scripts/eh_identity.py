@@ -19,6 +19,8 @@ _SAVED_REGISTER_PROFILES = {
         bytes.fromhex("535657"), bytes.fromhex("5f5e5b"), bytes.fromhex("83ec08"), 2),
     "empty-eh3-two-locals-saved-esi-v1": (bytes.fromhex("56"), bytes.fromhex("5e"), bytes.fromhex("83ec08"), 2),
     "empty-eh3-local-saved-esi-edi-v1": (bytes.fromhex("5657"), bytes.fromhex("5f5e"), b"\x51", 1),
+    "empty-eh3-seven-locals-saved-ebx-esi-edi-v1": (
+        bytes.fromhex("535657"), bytes.fromhex("5f5e5b"), bytes.fromhex("83ec1c"), 7),
 }
 
 
@@ -108,7 +110,9 @@ def private_owner(context, statics, pdb, symbol, source, size, code, *, internal
 
 def inspect_handler(image, address, info, cookie, frame_handler, *, cookie_offset=-4):
     """All 27 bytes: GS frame check, EAX FuncInfo, and the EH3 tail transfer."""
-    require(type(cookie_offset) is int and cookie_offset in (-4, -8, -12, -16, -20, -24, -28),
+    # The profile derives the displacement; any aligned disp8 slot below the
+    # registration node is encodable by this fixed 27-byte handler.
+    require(type(cookie_offset) is int and -64 <= cookie_offset <= -4 and cookie_offset % 4 == 0,
             "unsupported EH handler cookie displacement")
     code = image.read_address(address, 27)
     expected = (bytes.fromhex("8b5424088d420c8b4a") + struct.pack("<b", cookie_offset)

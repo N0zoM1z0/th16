@@ -667,3 +667,19 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-seven-locals-saved-ebx-esi-edi-v1"
+source = "src/GameThread.cpp"
+parent_symbol = "??1GameThread@@QAE@XZ"
+parent_target = 0x42d200
+parent_size = 1274
+parent_sha256 = "6473f41b08ab7f7ea495ec6b88c28f35bf68d06d88f5a9fc70c06a89e94ff6f3"
+target = 0x48a770
+size = 27
+target_sha256 = "99fda66e9c7ec198e49af9745b9595ca1007680b4579d6b16da310fc6d26db1c"
+func_info_target = 0x49b314
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"

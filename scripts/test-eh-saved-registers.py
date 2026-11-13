@@ -429,5 +429,31 @@ class LocalSavedESIEDIEHControls(SavedRegisterEHControls):
                 inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
 
 
+class SevenLocalSavedRegisterEHControls(SavedRegisterEHControls):
+    PROFILE = "empty-eh3-seven-locals-saved-ebx-esi-edi-v1"
+    TARGETS = {0x42d200}
+    COOKIE_OFFSET = -44
+    COOKIE_FIELD = 24
+    COOKIE_SLOT_BYTE = 0xc8
+    OTHER_COOKIE_BYTE = 0xd0
+    PREFIX_SIZE = 40
+
+    def test_identical_descriptor_or_handler_of_the_other_parent_is_rejected(self):
+        record = self.records[0]
+        proof = self.proof(record)
+        other = self.context.eh_handlers[("src/BulletManager.cpp", "??1BulletManager@@QAE@XZ")]
+        for address, destination in ((proof["handler"]["address"] + 18, other["descriptor"]["address"]),
+                                     (proof["parent_candidate"] + 6, other["handler"]["address"])):
+            with self.assertRaises(EHEvidenceError):
+                self.review(record, self.mutate("image", address, struct.pack("<I", destination)))
+
+    def test_other_empty_frames_cannot_use_the_seven_local_profile(self):
+        for parent, size, handler in ((0x42e910, 278, 0x48a790), (0x427a20, 0, 0)):
+            if not size:
+                continue
+            with self.subTest(parent=parent), self.assertRaisesRegex(EHEvidenceError, "saved-register frame"):
+                inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
+
+
 if __name__ == "__main__":
     unittest.main()

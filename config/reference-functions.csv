@@ -484,7 +484,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042CB00,LaserManager::destroy_all,src/Laser.cpp,?destroy_all@LaserManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042CB60,GameThread::thread_start,src/GameThread.cpp,?thread_start@GameThread@@SAHXZ,exact,,.analysis/reference-audit.json
 0x0042D1F0,GameThread::thread_start_callback,src/GameThread.cpp,?thread_start_callback@GameThread@@SAXXZ,exact,,.analysis/reference-audit.json
-0x0042D200,GameThread::~GameThread,src/GameThread.cpp,??1GameThread@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042D200,GameThread::~GameThread,src/GameThread.cpp,??1GameThread@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042D700,GameThread::create,src/GameThread.cpp,?create@GameThread@@SAPAU1@H@Z,exact,,.analysis/reference-audit.json
 0x0042D780,GameThread::destroy,src/GameThread.cpp,?destroy@GameThread@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0042D7B0,GameThread::on_tick_body,src/GameThread.cpp,?on_tick_body@GameThread@@QAEHXZ,exact,,.analysis/reference-audit.json

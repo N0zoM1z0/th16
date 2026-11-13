@@ -81,6 +81,10 @@ the `TaskInf` vftables bound ([reviewed linkages](reviewed-linkages.md)),
 `AsciiInf::~AsciiInf` and `TitleInf::~TitleInf` use the two-local EBX/ESI/EDI
 profile, and `BombInf::~BombInf` (`0x0040D710`, one local word, node-16) uses
 the explicit `empty-eh3-local-saved-esi-edi-v1` profile; all three are exact.
+`GameThread::~GameThread` (`0x0042D200`, 1,274 bytes, seven local words and
+saved EBX/ESI/EDI, node-44) uses `empty-eh3-seven-locals-saved-ebx-esi-edi-v1`.
+Handler cookie displacements derive from each profile; any aligned disp8 slot
+from node-4 to node-64 is encodable.
 
 All three primary parents pass every byte, field and relocation: 292/345/228
 bytes, totaling 865. The 81 auxiliary code bytes and 108 metadata bytes receive

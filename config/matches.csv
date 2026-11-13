@@ -422,6 +422,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042CB00,LaserManager::destroy_all,reference-0042cb00,local-strict-pass,91,91,91,.analysis/reference-audit.json
 0x0042CB60,GameThread::thread_start,reference-0042cb60,local-strict-pass,1677,1677,1677,.analysis/reference-audit.json
 0x0042D1F0,GameThread::thread_start_callback,reference-0042d1f0,local-strict-pass,5,5,5,.analysis/reference-audit.json
+0x0042D200,GameThread::~GameThread,reference-0042d200,local-strict-pass,1274,1274,1274,.analysis/reference-audit.json
 0x0042D700,GameThread::create,reference-0042d700,local-strict-pass,123,123,123,.analysis/reference-audit.json
 0x0042D780,GameThread::destroy,reference-0042d780,local-strict-pass,44,44,44,.analysis/reference-audit.json
 0x0042D7B0,GameThread::on_tick_body,reference-0042d7b0,local-strict-pass,945,945,945,.analysis/reference-audit.json
