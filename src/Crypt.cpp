@@ -8,8 +8,9 @@
 // second half on the bytes in between. A trailing partial block shorter
 // than a quarter block, and an odd final byte, stay unencrypted.
 
-// TODO: 75%; the original keeps the copy size in eax (spilled) and the tail
-// in ebx, and gives out and the block end separate stack slots.
+// Taking the input cursor right after malloc gives the original frame size.
+// TODO: the original keeps the tail in ebx (cleared in place) and gives data
+// and out the opposite stack slots.
 // FUNCTION: TH16 0x402220
 u8 *LTCG_FASTCALL zun_decrypt(u8 *data, i32 size, u8 key, u8 step, i32 block, i32 limit)
 {
@@ -21,6 +22,7 @@ u8 *LTCG_FASTCALL zun_decrypt(u8 *data, i32 size, u8 key, u8 step, i32 block, i3
     u8 *out = data;
     i32 copy_size = limit > size ? size : limit;
     u8 *tmp = (u8 *)malloc(copy_size);
+    u8 *in = tmp;
     if (tmp == NULL)
     {
         return data;
@@ -28,7 +30,6 @@ u8 *LTCG_FASTCALL zun_decrypt(u8 *data, i32 size, u8 key, u8 step, i32 block, i3
     i32 remaining = (size & ~1) - tail;
     memcpy(tmp, data, copy_size);
 
-    u8 *in = tmp;
     while (remaining > 0 && limit > 0)
     {
         if (remaining < block)
