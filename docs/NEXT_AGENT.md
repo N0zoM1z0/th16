@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after successful shot initialization and ANM state guards.
+Updated 2026-11-13 after projectile angle-consumer repairs and native dispatch guards.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -12,9 +12,10 @@ elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. Source checkpoint
 `a9c0a41` restores the random-ring radius interpolation boundary and SSE arithmetic.
-The latest continuation adds native shot guards and restores every game-source
-trial. The shared expression exits, distinct arithmetic metadata behavior and
-floating negation are retained.
+The latest continuation retains scalar angle-consumer repairs in the large
+projectile transform dispatcher and adds native command/state guards. The shared
+expression exits, distinct arithmetic metadata behavior and floating negation
+are retained.
 The preceding curve, Boss and async source work is retained. No new exact credit is claimed.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
@@ -22,8 +23,8 @@ Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`fdd04a2fec8a0c8faf41c88ff6f126d68bd243d79f1bb13c0c1a93557456051d`.
-PDB age is **301**. The final incremental build, strict replay and progress check
+`6d14644784001cc244b22856267cfa70f3c826fd866445b665bc996b38112fb4`.
+PDB age is **316**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -32,6 +33,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Projectile angle consumers and native dispatch](knowledge/projectile-angle-consumers-and-native-dispatch.md) | Original direct angle-word store and shared float selection in the 5,500-byte dispatcher; 560 native calls agree, including 110 complete-state models; no new exact credit |
 | [ECL ring precision and active interpolation](knowledge/ecl-ring-precision-and-interpolation.md) | Original float sample boundary and SSE radius arithmetic; 120 historical position differences removed; 3,288 complete calls agree; no new exact credit |
 | [ECL expression exits](knowledge/ecl-expression-result-exits.md) | One result exit for 20 handlers; complete interpreter 7,370 to 6,950 bytes; 3,457 complete calls and 360 prefixes agree; wrong floating-negation draft rejected |
 | [ECL integer exits and live async cleanup](knowledge/ecl-integer-exits-and-boss-async.md) | Three-handler shared result push; interpreter 7,462 to 7,370 bytes; 1,192 complete Boss/ECL calls and 360 live-head prefixes agree; no new exact credit |
@@ -54,6 +56,40 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [projectile angle consumers and native transform dispatch](knowledge/projectile-angle-consumers-and-native-dispatch.md)
+first. Starting checkpoint `5e499b5` is preserved. Two source repairs are retained
+inside `Bullet::run_ex`: acceleration consumes the selected temporary directly,
+and turning extracts one float after the conditional selection. These recover
+original data flow without accepting the complete owner: candidate **5,500**
+versus original **5,436 bytes**, still incomplete.
+
+The final PDB-316 image passes **560 complete native run_ex calls per image**
+against the original and immutable PDB-301 baseline. All Bullet, Player and
+LaserManager storage, canaries, supplied pointer/speed globals and RNG are
+compared. **110 cases per image** also pass an independent whole-Bullet model.
+Wrong tag and relative-movement models reject on the original before baseline
+execution. The old 488 emulator inputs are preserved, with 72 additional raw
+floating edge cases. Laser allocation is refused by a real full manager;
+native successful laser creation and shipped Boss programs remain unproved.
+
+Movement-copy and flag rewrites are restored. In particular, smaller trial
+extents do not justify keeping the flag forms. The two acceleration-step
+owners compare conditionally over every byte under an explicitly unaccepted
+atan2 entry hypothesis; the math producer dependency remains unbound. The
+597-byte movement-step owner still has real differences. No Oracle rule is
+changed and no exact credit is added.
+
+Strict replay and progress preserve **885/65/265**, 169,575 exact primary bytes
+and 950 units. Preserve `.analysis/bullet-accel-work/`, including both full
+images, all complete owner/table packets, typed layout, versioned drivers,
+failed source snapshots, native results, controls and `final-regression.json`.
+Use the data-aware `complete-dispatch-scopes/` packet for code/table separation;
+the earlier raw disassembly packets decode table bytes as instructions.
+Continue the remaining large dispatcher or Boss/ECL source work; do not repeat
+the rejected movement-copy and flag forms.
+
+### Earlier successful shot initialization
 
 Read the [successful-spawn continuation](knowledge/boss-shot-sharing-and-native-guards.md#successful-spawns-and-live-anm-state)
 first. Starting checkpoint `0b88461` is preserved. **No new game-source change is

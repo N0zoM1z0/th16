@@ -748,10 +748,11 @@ void Bullet::run_ex()
         {
             active_ex_flags |= BULLET_EX_ACCEL;
             ex_state[1].floats[0] = ex->r;
-            ZunAngle angle = ex->s <= -999990.0f
-                                 ? angle_ref()
-                                 : ZunAngle(ex->s >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m : ex->s);
-            ex_state[1].floats[1] = angle.value;
+            ex_state[1].floats[1] =
+                (ex->s <= -999990.0f
+                     ? angle_ref()
+                     : ZunAngle(ex->s >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m : ex->s))
+                    .value;
             ex_state[1].timer.set_value(0);
             ex_state[1].ints[0] = ex->a;
             bullet_sincosmul((Float3 *)&ex_state[1].floats[5], ex_state[1].floats[1], ex_state[1].floats[0]);
@@ -774,30 +775,26 @@ void Bullet::run_ex()
             active_ex_flags |= BULLET_EX_ANGLE;
             ex_state[3].floats[0] = ex->s > -999990.0f ? ex->s : speed;
             f32 r = ex->r;
-            ZunAngle angle;
-            if (r <= -999990.0f)
-            {
-                angle = angle_ref();
-            }
-            else
-            {
-                angle = ZunAngle(r >= 9999990.0f  ? ex_state[12].floats[1]
-                                 : r >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m
-                                                  : r);
-            }
+            f32 resolved_angle =
+                (r <= -999990.0f
+                     ? angle_ref()
+                     : ZunAngle(r >= 9999990.0f  ? ex_state[12].floats[1]
+                                : r >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m
+                                                 : r))
+                    .value;
             switch (ex->c)
             {
             case 0:
             case 1:
             case 4:
-                ex_state[3].floats[1] = angle.value;
+                ex_state[3].floats[1] = resolved_angle;
                 break;
             case 2:
                 ex_state[3].floats[1] =
-                    normalize_angle(g_Player->angle_to_player((D3DXVECTOR3 *)&ex_state[12].floats[2]) + angle.value);
+                    normalize_angle(g_Player->angle_to_player((D3DXVECTOR3 *)&ex_state[12].floats[2]) + resolved_angle);
                 break;
             case 3:
-                ex_state[3].floats[1] = normalize_angle(ex_state[12].floats[1] + angle.value);
+                ex_state[3].floats[1] = normalize_angle(ex_state[12].floats[1] + resolved_angle);
                 break;
             case 5:
             case 6:
