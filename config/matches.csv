@@ -360,7 +360,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00429AF0,Gui::on_tick_callback,reference-00429af0,local-strict-pass,8,8,8,.analysis/reference-audit.json
 0x00429B00,Gui::on_draw_1_callback,reference-00429b00,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x00429B10,Gui::on_draw_2_callback,reference-00429b10,local-strict-pass,5,5,5,.analysis/reference-audit.json
-0x00429B20,GuiMsgVm::GuiMsgVm,reference-00429b20,mismatch,1223,1223,1080,.analysis/reference-audit.json
+0x00429B20,GuiMsgVm::GuiMsgVm,reference-00429b20,local-strict-pass,1223,1223,1223,.analysis/reference-audit.json
 0x0042B5F0,Gui::textbox_on_draw,reference-0042b5f0,local-strict-pass,21,21,21,.analysis/reference-audit.json
 0x0042B610,GuiMsgVm::hide,reference-0042b610,local-strict-pass,514,514,514,.analysis/reference-audit.json
 0x0042B820,GuiMsgVm::show,reference-0042b820,local-strict-pass,514,514,514,.analysis/reference-audit.json

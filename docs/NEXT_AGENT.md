@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after static WinMain and Boss source-context follow-up.
+Updated 2026-11-13 after exact reconstruction of dialogue VM construction.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,9 +17,25 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-Ten complete WinMain forms and one Boss conditional/statistics form are
-rejected and restored, with **no new exact credit**. Fullscreen width/height
-snapshots recover original import caching but produce 2,935 bytes against
+The complete **1,223-byte** `GuiMsgVm::GuiMsgVm` at `0x00429B20` is now
+**exact**, including all 287 original instructions and all 33 linked fields.
+The four default text positions are one ordinary `Float3[4]` member array;
+layout and vector construction are unchanged. This recovers seven early
+state-clear stores without padding, barriers or compiler/Oracle changes.
+All other 1,718 native owners remain raw-identical (525,913 bytes), including
+Boss logic, the Reimu bomb update and the dialogue interpreter. See
+[dialogue position-array exact evidence](knowledge/dialogue-position-array-exact.md).
+Only `Gui.cpp` and `Gui.h` retain game-source changes. Keep
+`.analysis/dialogue-initialization-work/`, `.analysis/boss-statistics-call-work/`
+and `.analysis/reimu-bomb-tick-work/`. The void statistics helper and all four
+complete bomb-frame/index forms are rejected and restored. Do not repeat them
+as new hypotheses. The native script case constant-folds its position index;
+exact code does not prove the original array declaration or general bounds.
+
+The preceding ten complete WinMain forms and one Boss conditional/statistics
+form are rejected and restored, with **no new exact credit** in that
+continuation. Fullscreen width/height snapshots recover original import
+caching but produce 2,935 bytes against
 2,919 original bytes. Result joins remain wrong. The combined input/predicate
 form recovers the original input sequence; helper/result/state/switch variants
 do not fix the full owner. The Boss form is 2,183/2,207 bytes and merges two
@@ -30,7 +46,7 @@ Keep `.analysis/winmain-static-work/` and
 `.analysis/boss-selection-followup-work/`. Final restoration preserves all
 1,215 results/diagnostics, 956 units, all 1,719 native owners (527,136 bytes),
 all addresses/extents/relocations and the entire raw `.text`. Source is
-unchanged from `5f3d25c`; current incremental PDB age is **504**.
+unchanged from `5f3d25c` at that checkpoint, PDB age **504**.
 
 The complete **5,071-byte** `AnmManager::AnmManager` at `0x0046A3A0` is now
 **exact**, with all 164 fields and its unchanged 136-byte EH code / 76-byte
@@ -176,21 +192,21 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **892 exact, 64 mismatch, 259 incomplete** among 1,215
-annotations: **181,107 exact primary bytes and 956 retained comparison units**.
-All previous 891 exact owners and the other 1,214 annotation results/diagnostics
+The canonical report is **893 exact, 63 mismatch, 259 incomplete** among 1,215
+annotations: **182,330 exact primary bytes and 956 retained comparison units**.
+All previous 892 exact owners and the other 1,214 annotation results/diagnostics
 remain unchanged, apart from current build identities. Every unit definition,
 original boundary and address is unchanged. All other 1,718 complete candidate
-owners remain raw-identical (522,065 bytes), with unchanged addresses/extents.
-All image base relocations and every raw .text byte outside the final 5,071-byte
+owners remain raw-identical (525,913 bytes), with unchanged addresses/extents.
+All image base relocations and every raw .text byte outside the final 1,223-byte
 constructor are unchanged.
 The Boss logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`326e30f1f12bd961bebf860a20069050474879caa1d4526c49690076d945d317`.
-PDB age is **504**. The final incremental build, strict replay and progress check
+`80da752f1d593ebbb54bc5fecf92210566c8ba0ed0acb6e05ce1e4659e99259d`.
+PDB age is **515**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -199,6 +215,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Dialogue position-array context](knowledge/dialogue-position-array-exact.md) | Complete 1,223-byte dialogue constructor exact, all 287 instructions and 33 fields; all prior 892 exact and other 1,718 native owners preserved; Boss/bomb trials restored |
 | [Shared callback construction](knowledge/updatefunc-construction-exact.md) | Complete 5,071-byte AnmManager constructor exact, all 164 fields and existing EH graph; all prior 891 exact and other 1,718 native owners preserved; no callback-specific source case |
 | [Complete spellcard frame update](knowledge/spellcard-frame-update-exact.md) | Complete 650-byte exact owner, all 167 instructions and 17 fields; all prior 890 exact and other 1,718 candidate owners retained; Float3 trial restored |
 | [Enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md) | Complete 1,682/1,692 mismatch, 48 links; frame/zero slot/GP joins restored; all 890 exact and other 1,718 native owners retained; no new exact credit |

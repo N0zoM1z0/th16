@@ -450,7 +450,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00429AF0,Gui::on_tick_callback,src/Gui.cpp,?on_tick_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00429B00,Gui::on_draw_1_callback,src/Gui.cpp,?on_draw_1_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00429B10,Gui::on_draw_2_callback,src/Gui.cpp,?on_draw_2_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
-0x00429B20,GuiMsgVm::GuiMsgVm,src/Gui.cpp,??0GuiMsgVm@@QAE@PAX@Z,mismatch,,.analysis/reference-audit.json
+0x00429B20,GuiMsgVm::GuiMsgVm,src/Gui.cpp,??0GuiMsgVm@@QAE@PAX@Z,exact,,.analysis/reference-audit.json
 0x00429FF0,Gui::start_dialogue,src/Gui.cpp,?start_dialogue@Gui@@QAEXH@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0042A1D0,GuiMsgVm::run,src/Gui.cpp,?run@GuiMsgVm@@QAEHXZ,incomplete,9 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0042B480,GuiMsgVm::update_callout,src/Gui.cpp,?update_callout@GuiMsgVm@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

@@ -641,24 +641,24 @@ HARNESS_CALLED i32 GuiMsgVm::run()
             AnmVm *vm = g_AnmManager->get_vm_with_id(text_line_1);
             if (vm != NULL)
             {
-                vm->entity_pos = (&side_text_pos_0)[active_side];
+                vm->entity_pos = side_text_pos[active_side];
             }
             vm = g_AnmManager->get_vm_with_id(text_line_2);
             if (vm != NULL)
             {
-                vm->entity_pos = (&side_text_pos_0)[active_side];
+                vm->entity_pos = side_text_pos[active_side];
             }
             get_vm_or_clear(text_line_1)->pos_2.y = 0.0f;
             get_vm_or_clear(text_line_2)->pos_2.y = 0.0f;
             vm = g_AnmManager->get_vm_with_id(furigana_1);
             if (vm != NULL)
             {
-                vm->entity_pos = (&side_text_pos_0)[active_side];
+                vm->entity_pos = side_text_pos[active_side];
             }
             vm = g_AnmManager->get_vm_with_id(furigana_2);
             if (vm != NULL)
             {
-                vm->entity_pos = (&side_text_pos_0)[active_side];
+                vm->entity_pos = side_text_pos[active_side];
             }
             get_vm_or_clear(furigana_1)->pos_2.y = 0.0f;
             get_vm_or_clear(furigana_2)->pos_2.y = 0.0f;
@@ -1533,8 +1533,6 @@ static inline void set_float3(Float3 *p, f32 x, f32 y, f32 z)
 // it the lower line),
 // clears bullets, lasers and enemies, and puts the bubble at its default
 // place.
-// TODO: the original stores next_text_line to active_side before the side
-// text positions; ours after them, just before clear_all.
 // FUNCTION: TH16 0x429b20
 GuiMsgVm::GuiMsgVm(void *script)
 {
@@ -1574,10 +1572,10 @@ GuiMsgVm::GuiMsgVm(void *script)
     side_text_color_2 = 0;
     side_text_color_3 = 0;
     active_side = 0;
-    set_float3(&side_text_pos_0, 16.0f, 0.0f, 0.0f);
-    set_float3(&side_text_pos_1, 16.0f, 0.0f, 0.0f);
-    set_float3(&side_text_pos_2, 16.0f, 0.0f, 0.0f);
-    set_float3(&side_text_pos_3, 16.0f, 0.0f, 0.0f);
+    set_float3(&side_text_pos[0], 16.0f, 0.0f, 0.0f);
+    set_float3(&side_text_pos[1], 16.0f, 0.0f, 0.0f);
+    set_float3(&side_text_pos[2], 16.0f, 0.0f, 0.0f);
+    set_float3(&side_text_pos[3], 16.0f, 0.0f, 0.0f);
     // Dialogue starts on a clean screen.
     g_BulletManager->clear_all(0);
     // LaserManager::clear_all(0, 0), inlined.

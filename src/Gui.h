@@ -149,12 +149,8 @@ struct GuiMsgVm
     // Zeroed by the constructor; not otherwise used.
     i32 unk_154;
     void *current_instr;
-    // Where MSG_SPEAKER_NONE puts the text, per side (indexed by
-    // active_side as an array; all four are (16, 0, 0)).
-    Float3 side_text_pos_0;
-    Float3 side_text_pos_1;
-    Float3 side_text_pos_2;
-    Float3 side_text_pos_3;
+    // Per-side default text positions, all initialized to (16, 0, 0).
+    Float3 side_text_pos[4];
     // Set to 1 by MSG_ECL_RESUME and counted down each frame: while it is
     // nonzero, the ECL script waiting in dialogWait goes on.
     i32 ecl_resume_timer;
@@ -542,6 +538,7 @@ static_assert(offsetof(Gui, chapter_result_duration) == 0x1c4, "Gui layout");
 static_assert(offsetof(Gui, boss_bars) == 0x1dc, "Gui layout");
 static_assert(offsetof(Gui, front_anm) == 0x2d8, "Gui layout");
 static_assert(sizeof(Gui) == 0x2e4, "Gui size");
+static_assert(offsetof(GuiMsgVm, side_text_pos) == 0x15c, "GuiMsgVm layout");
 static_assert(offsetof(GuiMsgVm, ecl_resume_timer) == 0x18c, "GuiMsgVm layout");
 static_assert(offsetof(GuiMsgVm, bubble_x) == 0x1b0, "GuiMsgVm layout");
 static_assert(sizeof(GuiMsgVm) == 0x1c8, "GuiMsgVm size");

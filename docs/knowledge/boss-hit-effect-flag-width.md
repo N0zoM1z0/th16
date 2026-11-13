@@ -97,3 +97,11 @@ checkpoint. It is subsequently built and rejected at 2,183/2,207 bytes;
 see the [WinMain and Boss follow-up](winmain-and-boss-static-followup.md).
 The shared-constructor exact result is reviewed
 [separately](updatefunc-construction-exact.md).
+
+A later ordinary inline helper writes shot statistics directly and returns
+void. With conditional dialogue suppression, it preserves both additions but
+still loads the manager early and exchanges damage registers; the complete
+candidate is 2,199/2,207 bytes and is restored. Keep
+`.analysis/boss-statistics-call-work/`. The subsequent
+[dialogue position-array result](dialogue-position-array-exact.md) changes no
+Boss logic bytes and adds no Boss exact credit.
