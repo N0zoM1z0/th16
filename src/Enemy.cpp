@@ -2255,10 +2255,7 @@ void EnemyData::ecl_anm_vm_instr()
     }
 }
 
-// TODO: frame layout (the original keeps the zero vector in a slot of its own at the top
-// of a frame 16 bytes bigger), the directional VM sits in edx, and the camera's y is added
-// the other way round. reccmp also shows the +-0.03f constants as <OFFSET>: it only
-// names constants an x87 instruction somewhere references.
+// TODO: recover the original camera Y addition operand order.
 // FUNCTION: TH16 0x41bb50
 int EnemyData::step_interpolators()
 {
@@ -2335,8 +2332,8 @@ int EnemyData::step_interpolators()
                 break;
             }
             AnmVm *vm = get_vm_or_clear(anm_ids[0]);
-            AnmLoaded *file = g_EnemyManager->anim_statement_anms[anm_slot_0_anm_index];
             Float3 pos(0.0f, 0.0f, 0.0f);
+            AnmLoaded *file = g_EnemyManager->anim_statement_anms[anm_slot_0_anm_index];
             if (vm != NULL)
             {
                 pos = vm->pos;
@@ -2344,27 +2341,9 @@ int EnemyData::step_interpolators()
             }
             i32 layer = anm_layers + 7;
             i32 script = anm_set_main + script_offset;
-            ENTER_CS(CS_ANM_MANAGER);
-            file->vm_count++;
-            AnmVm *new_vm = g_AnmManager->allocate_vm();
-            file->copy_vm(new_vm, script);
-            new_vm->flags_hi |= ANM_VM_CREATED_BY_GAME;
-            if (layer >= 0)
-            {
-                new_vm->layer = layer;
-                if (layer <= 23)
-                {
-                    new_vm->flags_hi &= ~ANM_VM_ORIGIN_HUD;
-                    new_vm->flags_hi |= ANM_VM_ORIGIN_GAME;
-                }
-            }
-            new_vm->entity_pos = pos;
-            new_vm->rotation.z = 0.0f;
-            new_vm->run();
-            new_vm->mode_of_create_child = 8;
-            AnmId id;
-            id = g_AnmManager->insert_in_world_list_back(new_vm);
-            LEAVE_CS(CS_ANM_MANAGER);
+            typedef AnmId (AnmLoaded::*CreateWithMode)(i32, Float3 *, f32, i32, i32);
+            AnmId id = (file->*static_cast<CreateWithMode>(&AnmLoaded::create_vm_inline))(
+                script, &pos, 0.0f, layer, 8);
             anm_ids[0] = id;
             anm_direction = dir;
         }

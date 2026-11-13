@@ -166,6 +166,7 @@ struct AnmLoaded
     HARNESS_CALLED AnmId create_vm(i32 script, Float3 *pos, f32 rotation, i32 layer, i32 unused);
     // create_vm's body, for the callers LTCG inlined it into (0x426780).
     __forceinline AnmId create_vm_inline(i32 script, Float3 *pos, f32 rotation, i32 layer);
+    __forceinline AnmId create_vm_inline(i32 script, Float3 *pos, f32 rotation, i32 layer, i32 child_mode);
     // 0x406380. Creates a VM running the script at the origin, on the given
     // layer unless negative; also stores the VM in *out if out is not NULL.
     AnmId create_effect(i32 script, i32 layer, AnmVm **out);
@@ -809,6 +810,40 @@ __forceinline AnmId AnmLoaded::create_vm_inline(i32 script, Float3 *pos, f32 rot
     vm->rotation.z = rotation;
     vm->run();
     vm->mode_of_create_child = ANM_CREATE_WORLD_BACK;
+    AnmId id;
+    id = g_AnmManager->insert_in_world_list_back(vm);
+    LEAVE_CS(CS_ANM_MANAGER);
+    return id;
+}
+
+// Keep the four-argument creation path intact for its existing callers.
+__forceinline AnmId AnmLoaded::create_vm_inline(i32 script, Float3 *pos, f32 rotation, i32 layer, i32 child_mode)
+{
+    ENTER_CS(CS_ANM_MANAGER);
+    vm_count++;
+    AnmVm *vm = g_AnmManager->allocate_vm();
+    copy_vm(vm, script);
+    vm->flags_hi |= ANM_VM_CREATED_BY_GAME;
+    if (layer >= 0)
+    {
+        vm->layer = layer;
+        if (layer <= ANM_LAYER_HUD_LAST)
+        {
+            vm->flags_hi &= ~ANM_VM_ORIGIN_HUD;
+            vm->flags_hi |= ANM_VM_ORIGIN_GAME;
+        }
+    }
+    if (pos == NULL)
+    {
+        vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+    else
+    {
+        vm->entity_pos = *pos;
+    }
+    vm->rotation.z = rotation;
+    vm->run();
+    vm->mode_of_create_child = child_mode;
     AnmId id;
     id = g_AnmManager->insert_in_world_list_back(vm);
     LEAVE_CS(CS_ANM_MANAGER);

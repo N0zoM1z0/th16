@@ -370,7 +370,7 @@ address,size,span_end,state,evidence
 0x0041B540,52,0x0041B573,strict-compared,.analysis/reference-audit.json
 0x0041B580,1161,0x0041BA08,strict-compared,.analysis/reference-audit.json
 0x0041BA10,306,0x0041BB41,strict-compared,.analysis/reference-audit.json
-0x0041BB50,1692,0x0041C1EB,provisional,.analysis/reference-audit.json
+0x0041BB50,1692,0x0041C1EB,strict-compared,.analysis/reference-audit.json
 0x0041C1F0,313,0x0041C328,strict-compared,.analysis/reference-audit.json
 0x0041C330,2207,0x0041CBCE,provisional,.analysis/reference-audit.json
 0x0041CBD0,1547,0x0041D1DA,strict-compared,.analysis/reference-audit.json

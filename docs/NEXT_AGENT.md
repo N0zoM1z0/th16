@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after complete static Boss/laser source-join investigation.
+Updated 2026-11-13 after complete enemy-motion frame and VM-join reconstruction.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,7 +17,19 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-The latest static continuation rejects and restores four Boss result-boundary
+The latest source work recovers the original 0x38-byte frame, separate zero
+vector and VM/manager register sequence in the complete **1,692-byte**
+`EnemyData::step_interpolators` at `0x0041BB50`. Strict comparison is
+**1,682/1,692, mismatch**, with all 48 links bound. Only the camera Y load/add
+pair remains different. An explicit-mode inline overload preserves child value
+8; the existing four-argument body and all other native owners are preserved.
+Zero-position construction must precede the animation-file lookup. A typed
+member-pointer call and named initialized handle preserve camera X ordering.
+No intrinsic trial is retained and no exact credit is added. See
+[enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md).
+Keep `.analysis/enemy-vm-return-work/` and `.analysis/laser-pointer-lifetime-work/`.
+
+The preceding static continuation rejects and restores four Boss result-boundary
 forms and seven complete line-laser EX forms. The 1,588-byte original EX owner
 has 327 reachable code instructions and both complete dispatch tables. Its
 1,748-byte candidate retains a scaled index instead of a full EX pointer;
@@ -25,10 +37,10 @@ has 327 reachable code instructions and both complete dispatch tables. Its
 161-byte code gap. Six basic pointer/loop rewrites produce identical complete
 raw owners, and an explicit default-advance arm is worse. Do not repeat these
 as new hypotheses. See [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md).
-All trial game source is restored; no exact credit is added. Keep
+That continuation restores all trial game source and adds no exact credit. Keep
 `.analysis/boss-credit-join-work/` and `.analysis/laser-ex-static-work/`.
 
-The latest retained source work restores separate damaged/suppression TESTs in the
+Earlier retained source work restores separate damaged/suppression TESTs in the
 complete **2,207-byte** `EnemyData::step_logic` at `0x0041C330`. Its candidate
 changes **2,195 to 2,197 bytes**, still **incomplete**. Only the suppression
 expression narrows to u16; flags storage stays u32. The original 534-instruction
@@ -102,20 +114,23 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **890 exact, 65 mismatch, 260 incomplete** among 1,215
-annotations: **175,386 exact primary bytes and 955 retained units**.
-All 890 exact owners, all 1,215 annotation results/diagnostics and all 955 unit
-definitions/addresses remain unchanged, apart from current build identities.
-Complete restoration preserves all 1,719 candidate owners byte for byte
-(527,135 bytes), every address/extent, all image relocations and the complete
-563,712-byte raw .text section. The Boss logic owner remains incomplete;
-Float3 remains a complete 899/906 mismatch with all six fields validated.
+The canonical report is **890 exact, 66 mismatch, 259 incomplete** among 1,215
+annotations: **175,386 exact primary bytes and 956 retained comparison units**.
+All previous 890 exact owners, the other 1,214 annotation results/diagnostics
+and all previous 955 unit definitions/addresses remain unchanged, apart from
+current build identities. Only enemy motion changes classification: incomplete
+to mismatch, with a new complete comparison unit. All target numeric boundaries
+are unchanged; its generated boundary-ledger state is now strict-compared.
+All other 1,718 complete candidate owners remain raw-identical (525,444 bytes),
+with unchanged addresses/extents and relocations outside the changed owner.
+Every raw .text byte outside the final 1,692-byte owner is unchanged. The Boss
+logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`b6676dada1acc3f517c2070de87d75d3308c774a8025fb81cc8dcd70d89f98c0`.
-PDB age is **443**. The final incremental build, strict replay and progress check
+`129507e1a5cf66bdd4fa39501a6397298df804dbbd706f11e18246383221c1ef`.
+PDB age is **462**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -124,6 +139,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md) | Complete 1,682/1,692 mismatch, 48 links; frame/zero slot/GP joins restored; all 890 exact and other 1,718 native owners retained; no new exact credit |
 | [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md) | Complete original laser CFG and both tables; 36-operand address-cost diagnostic; all four Boss/seven laser forms restored; all 1,719 owners and entire raw .text preserved; no new exact credit |
 | [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md) | Separate original TESTs restored in the full 2,197/2,207-byte candidate; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
 | [Float3 timer result join](knowledge/float3-timer-result-join.md) | Complete 906-byte owner improves from 413 to 899 matching bytes; two reordered instructions remain; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
@@ -160,8 +176,20 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md) first.
-All new game-source trials are restored. Larger Boss return helpers introduce
+Read [enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md)
+first. Only `AnmManager.h` and `Enemy.cpp` retain game-source changes. Keep the
+explicit-mode overload separate from the unchanged four-argument body: a
+shared optional parameter changes Player options code. The retained typed
+member-pointer call and named initialized handle keep the original camera X
+sequence; direct/member-output alternatives do not. The remaining camera Y
+pair is not an instruction-equivalence exception. Position memcpy, scalar
+return/accumulator, D3DXVec3Add, vector-sum and SSE variants remain rejected in
+`.analysis/enemy-vm-return-work/TRIALS.md`. The three new laser lifetime/shared
+advance/index-snapshot variants are restored. Keep substantial Boss/ECL and
+projectile owners in scope, with no dynamic testing.
+
+The preceding review is [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md).
+That continuation restores all its source trials. Larger Boss return helpers introduce
 out-of-line calls absent from the original; small conditional-result helpers
 still swap registers. For LaserLineInf::run_ex, investigate the actual EX
 pointer dataflow/call context, not plain getters, local aliases, base-plus-index,

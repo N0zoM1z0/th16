@@ -304,6 +304,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0041B540,EnemyRef::get,reference-0041b540,local-strict-pass,52,52,52,.analysis/reference-audit.json
 0x0041B580,EnemyInf::EnemyInf,reference-0041b580,local-strict-pass,1161,1161,1161,.analysis/reference-audit.json
 0x0041BA10,EnemyInf::~EnemyInf,reference-0041ba10,local-strict-pass,306,306,306,.analysis/reference-audit.json
+0x0041BB50,EnemyData::step_interpolators,reference-0041bb50,mismatch,1692,1692,1682,.analysis/reference-audit.json
 0x0041C1F0,EnemyData::update_final_pos,reference-0041c1f0,local-strict-pass,313,313,313,.analysis/reference-audit.json
 0x0041CBD0,EnemyData::update_fog,reference-0041cbd0,local-strict-pass,1547,1547,1547,.analysis/reference-audit.json
 0x0041D1E0,EnemyInf::on_tick,reference-0041d1e0,local-strict-pass,242,242,242,.analysis/reference-audit.json
