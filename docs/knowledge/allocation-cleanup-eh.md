@@ -126,3 +126,10 @@ payloads, fields, relocations, both exits and standalone replays are retained in
 `.analysis/allocation-eh-{artifact,regression}-check.json` with matching
 `check-*.py` reproducers. Terminal audit and control logs use
 `.analysis/allocation-eh-*`.
+
+`LoadingThread::thread_start` (`0x0043ADC0`, 415 bytes) is a sixth graph: its
+protected `new Scorefile` (`0x1A3AC`) has one fixed `or [eax+4], 2` between
+the size push and the call, an earlier unprotected allocation reuses the
+saved slot, and its protected path returns without a -1 reset. Its cleanup
+funclet is the only remaining one (`$1`; the compiler removed state 0). The
+complete owner is exact.

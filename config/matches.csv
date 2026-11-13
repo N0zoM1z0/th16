@@ -546,6 +546,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043AD00,laser_sincosmul,reference-0043ad00,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x0043AD20,load_shared_anms,reference-0043ad20,local-strict-pass,60,60,60,.analysis/reference-audit.json
 0x0043AD60,unload_shared_anms,reference-0043ad60,local-strict-pass,91,91,91,.analysis/reference-audit.json
+0x0043ADC0,LoadingThread::thread_start,reference-0043adc0,local-strict-pass,415,415,415,.analysis/reference-audit.json
 0x0043AF60,LoadingThread::initialize,reference-0043af60,local-strict-pass,125,125,125,.analysis/reference-audit.json
 0x0043AFE0,LoadingThread::~LoadingThread,reference-0043afe0,local-strict-pass,518,518,518,.analysis/reference-audit.json
 0x0043B1F0,LoadingThread::create,reference-0043b1f0,local-strict-pass,147,147,147,.analysis/reference-audit.json

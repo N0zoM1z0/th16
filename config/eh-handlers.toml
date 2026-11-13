@@ -683,3 +683,20 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "allocation-cleanup-v1"
+source = "src/LoadingThread.cpp"
+parent_symbol = "?thread_start@LoadingThread@@SAHPAX@Z"
+parent_target = 0x43adc0
+parent_size = 415
+parent_sha256 = "646b4f8e88693ed192a875ae54b2a765a6b2a191ccdf1c2e2f911c1eee0f5162"
+target = 0x48a882
+code_target = 0x48a870
+size = 45
+target_sha256 = "b90411d0b7e3627f849b9fb9ac241e0d26486906827f864d5272f0966307ea8d"
+func_info_target = 0x49b430
+func_info_size = 44
+func_info_sha256 = "76f9546061854db8c001b3e034d9523d4e59fbf02911da5529cadea689b2c4d3"
+eh_flags = 1
+evidence = "docs/knowledge/allocation-cleanup-eh.md"

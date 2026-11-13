@@ -13004,6 +13004,59 @@ linkages = [
   { offset = 85, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
 ]
 
+[units.reference-0043adc0]
+artifact_kind = "linked-pe"
+source = "src/LoadingThread.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?thread_start@LoadingThread@@SAHPAX@Z"
+object = "LoadingThread.obj"
+candidate_address = 4521040
+target_address = 4435392
+size = 415
+compare_size = 415
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?thread_start@LoadingThread@@SAHPAX@Z", target = 4761730, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 39, width = 4, type = "DIR32", symbol = "?g_LoadingThread@@3PAULoadingThread@@A", target = 4878052, addend = 0 },
+  { offset = 44, width = 4, type = "DIR32", symbol = "??_C@_07NMKMHCPC@sig?4anm?$AA@", target = 4793592, addend = 0 },
+  { offset = 51, width = 4, type = "REL32", symbol = "?preload_anm@AnmManager@@SGPAUAnmLoaded@@HPBD@Z", target = 4640800, addend = 0 },
+  { offset = 88, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 101, width = 4, type = "REL32", symbol = "??0AsciiInf@@QAE@XZ", target = 4226064, addend = 0 },
+  { offset = 110, width = 4, type = "REL32", symbol = "?initialize@AsciiInf@@QAEHXZ", target = 4226224, addend = 0 },
+  { offset = 125, width = 4, type = "REL32", symbol = "??1AsciiInf@@QAE@XZ", target = 4226560, addend = 0 },
+  { offset = 136, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+  { offset = 150, width = 4, type = "DIR32", symbol = "??_C@_0CF@KDDIBPPF@error?5?3?5?$JF?$LG?$IO?$JK?$IC?L?$IP?$IJ?$IK?z?$IJ?$LL?$IC?I?$IO?$LI?$JEs?$IC?$LF?$IC?$NM?$IC?$LF@", target = 4793600, addend = 0 },
+  { offset = 155, width = 4, type = "DIR32", symbol = "?g_GameErrorContext@@3UGameErrorContext@@A", target = 4862120, addend = 0 },
+  { offset = 160, width = 4, type = "REL32", symbol = "?log@GameErrorContext@@QAAPBDPBDZZ", target = 4205008, addend = 0 },
+  { offset = 169, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1780, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 204, width = 4, type = "DIR32", symbol = "??_C@_08MPHPEAP@text?4anm?$AA@", target = 4793640, addend = 0 },
+  { offset = 221, width = 4, type = "REL32", symbol = "?preload_anm@AnmManager@@SGPAUAnmLoaded@@HPBD@Z", target = 4640800, addend = 0 },
+  { offset = 226, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 1832, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 239, width = 4, type = "DIR32", symbol = "??_C@_0BE@MIHPCKEE@?4?4?1?4?4?1bgm?1thbgm?4fmt?$AA@", target = 4793652, addend = 0 },
+  { offset = 244, width = 4, type = "REL32", symbol = "?file_read_all@@YIPAEPBDPAHH@Z", target = 4203584, addend = 0 },
+  { offset = 249, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6528, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 258, width = 4, type = "DIR32", symbol = "??_C@_0CF@GPLBANDJ@error?5?3?5BGM?5?$IC?L?$IP?$IJ?$IK?z?$IJ?$LL?$IC?I?$IO?$LI?$JEs?$IC?$LF?$IC?$NM?$IC?$LF@", target = 4793672, addend = 0 },
+  { offset = 263, width = 4, type = "DIR32", symbol = "?g_GameErrorContext@@3UGameErrorContext@@A", target = 4862120, addend = 0 },
+  { offset = 268, width = 4, type = "REL32", symbol = "?log@GameErrorContext@@QAAPBDPBDZZ", target = 4205008, addend = 0 },
+  { offset = 276, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 0 },
+  { offset = 281, width = 4, type = "REL32", symbol = "?reset@SoundManager@@QAEHXZ", target = 4579328, addend = 0 },
+  { offset = 286, width = 4, type = "DIR32", symbol = "??_C@_09KECKLECK@thbgm?4dat?$AA@", target = 4793712, addend = 0 },
+  { offset = 291, width = 4, type = "REL32", symbol = "?file_exists@@YIHPBD@Z", target = 4204032, addend = 0 },
+  { offset = 301, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 508, storage_name = "g_Supervisor", storage_size = 2624 },
+  { offset = 310, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 0 },
+  { offset = 315, width = 4, type = "REL32", symbol = "?open_bgm@SoundManager@@QAEHPBD@Z", target = 4578064, addend = 0 },
+  { offset = 325, width = 4, type = "DIR32", symbol = "??_C@_09KECKLECK@thbgm?4dat?$AA@", target = 4793712, addend = 0 },
+  { offset = 331, width = 4, type = "DIR32", symbol = "??_C@_09KECKLECK@thbgm?4dat?$AA@", target = 4793712, addend = 8 },
+  { offset = 339, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 21856, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 345, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 21864, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 350, width = 4, type = "REL32", symbol = "?load_shared_anms@@YAHXZ", target = 4435232, addend = 0 },
+  { offset = 367, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 387, width = 4, type = "REL32", symbol = "??0Scorefile@@QAE@XZ", target = 4495328, addend = 0 },
+  { offset = 392, width = 4, type = "DIR32", symbol = "?g_Scorefile@@3PAUScorefile@@A", target = 4878092, addend = 0 },
+]
+
 [units.reference-0043af60]
 artifact_kind = "linked-pe"
 source = "src/LoadingThread.cpp"

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from pathlib import Path
 import struct
 import tomllib
@@ -342,9 +343,14 @@ def single_state_owners(context, record, statics, pdb, action_size):
             "EH single-state aggregate conflicts with its original cleanup scope")
     require(not any(a < info + 44 and info <= int(r["span_end"], 0)
                     for a, r in context.boundaries.items()), "EH single-state metadata overlaps code")
-    code_names = {"__unwindfunclet$" + symbol + "$0": 0, "__ehhandler$" + symbol: action_size}
+    # The compiler numbers funclets per potential state; an earlier state it
+    # removed leaves the sole remaining funclet with a later number.
+    funclets = sorted({row["symbol"] for row in statics
+                       if re.fullmatch(re.escape("__unwindfunclet$" + symbol) + r"\$\d+", row["symbol"])})
+    require(len(funclets) == 1, "EH single-state graph lacks one unique cleanup funclet")
+    code_names = {funclets[0]: 0, "__ehhandler$" + symbol: action_size}
     data_names = {"__unwindtable$" + symbol: 0, "__ehfuncinfo$" + symbol: 8}
-    code_owner = private_owner(context, statics, pdb, "__unwindfunclet$" + symbol + "$0",
+    code_owner = private_owner(context, statics, pdb, funclets[0],
                                source, code_size, True, internal_symbols=code_names)
     descriptor = private_owner(context, statics, pdb, "__unwindtable$" + symbol,
                                source, 44, False, internal_symbols=data_names)

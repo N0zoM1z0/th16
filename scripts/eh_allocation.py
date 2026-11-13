@@ -19,6 +19,11 @@ _LAYOUTS = {
     "replay": dict(locals=bytes.fromhex("51"), local_bytes=4, saves=bytes.fromhex("5657"),
                    restores=bytes.fromhex("5f5e"),
                    middle=[(54, "897df0"), (77, "c745fc00000000"), (106, "c745fcffffffff")]),
+    # LoadingThread::thread_start: an earlier unprotected allocation reuses the
+    # saved slot, and the protected path returns without resetting the state.
+    "loading": dict(locals=bytes.fromhex("51"), local_bytes=4, saves=bytes.fromhex("5657"),
+                    restores=bytes.fromhex("5f5e"),
+                    middle=[(0x5f, "8945f0"), (0x176, "8945f0"), (0x17b, "c745fc00000000")]),
 }
 _SPECS = {
     ("src/Stage.cpp", "?create@Stage@@SAPAU1@PBD@Z"):
@@ -31,6 +36,9 @@ _SPECS = {
         dict(parent=0x447e20, size=193, allocation=0x31c, push=39, layout="replay", returns=[173, 192]),
     ("src/ReplayManager.cpp", "?create_from_file@ReplayManager@@SAPAU1@PBD@Z"):
         dict(parent=0x447ef0, size=191, allocation=0x31c, push=39, layout="replay", returns=[171, 190]),
+    ("src/LoadingThread.cpp", "?thread_start@LoadingThread@@SAHPAX@Z"):
+        dict(parent=0x43adc0, size=415, allocation=0x1a3ac, push=0x165, interposed=bytes.fromhex("83480402"),
+             layout="loading", returns=[0xca, 0x19e]),
 }
 
 
@@ -49,9 +57,11 @@ def inspect_frame(image, parent, handler, allocator, spec):
         require(image.read_address(parent + end + 1 - len(suffix), len(suffix)) == suffix,
                 "EH allocation normal restoration differs")
     push = spec["push"]
-    expected_allocation = (b"\x68" + struct.pack("<I", spec["allocation"]) + b"\xe8"
-                           + struct.pack("<I", (allocator - parent - push - 10) & 0xffffffff))
-    require(image.read_address(parent + push, 10) == expected_allocation,
+    # Only a fixed, reviewed instruction may sit between the size and the call.
+    interposed = spec.get("interposed", b"")
+    expected_allocation = (b"\x68" + struct.pack("<I", spec["allocation"]) + interposed + b"\xe8"
+                           + struct.pack("<I", (allocator - parent - push - 10 - len(interposed)) & 0xffffffff))
+    require(image.read_address(parent + push, len(expected_allocation)) == expected_allocation,
             "EH allocation size or independently bound allocator differs")
     decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     decoder.detail = True
@@ -74,7 +84,7 @@ def inspect_frame(image, parent, handler, allocator, spec):
         start = end + 1 - len(suffix)
         expected_frame.extend([(start, "8b4df4"), (start + 3, "64890d00000000"),
                                (end - 3, "8be5"), (end - 1, "5d")])
-    require(frame == expected_frame and returns == spec["returns"],
+    require(frame == sorted(expected_frame) and returns == spec["returns"],
             "EH allocation saved pointer, state lifetime or protected frame uses differ")
     cookie_field = 18 + len(layout["locals"]) + len(layout["saves"])
     return len(prefix), cookie_field, len(suffix)

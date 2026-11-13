@@ -10,6 +10,7 @@ import unittest
 import capstone
 
 from eh_identity import EHEvidenceError, handler_field, review_handler, validate_field
+from eh_allocation import review_allocation
 from linked_image import map_statics, pdb_section_contributions
 from strict_oracle import Context, ROOT
 
@@ -37,7 +38,7 @@ class AllocationEHControls(unittest.TestCase):
     def setUpClass(cls):
         cls.context = Context()
         cls.records = [r for r in tomllib.loads((ROOT / "config/eh-handlers.toml").read_text())["handlers"]
-                       if r.get("profile") == "allocation-cleanup-v1"]
+                       if r.get("profile") == "allocation-cleanup-v1" and r["parent_target"] in CASES]
         cls.statics = map_statics(cls.context.directory / "th16.map")
         cls.pdb = pdb_section_contributions(cls.context.directory / "th16.pdb")
         cls.units = tomllib.loads((ROOT / "config/match-units.toml").read_text())["units"]
@@ -298,6 +299,37 @@ class AllocationEHControls(unittest.TestCase):
             result = context.compare(self.unit(record))
             self.assertEqual((result["result"], result["compared_size"]), ("mismatch", record["parent_size"]))
             self.assertEqual(result["matched_bytes"], record["parent_size"] - 1)
+
+
+class InterposedAllocationControls(unittest.TestCase):
+    """LoadingThread::thread_start: one fixed instruction between size and new."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.context = Context()
+        cls.record = next(r for r in tomllib.loads((ROOT / "config/eh-handlers.toml").read_text())["handlers"]
+                          if r.get("parent_target") == 0x43adc0)
+        cls.statics = map_statics(cls.context.directory / "th16.map")
+        cls.pdb = pdb_section_contributions(cls.context.directory / "th16.pdb")
+
+    def review(self, context=None, record=None):
+        return review_allocation(context or self.context, record or self.record, self.statics, self.pdb)
+
+    def mutate(self, offset, payload):
+        context = copy.copy(self.context)
+        context.target = Overlay(context.target, {0x43adc0 + offset + i: b for i, b in enumerate(payload)})
+        return context, dict(self.record, parent_sha256=hashlib.sha256(
+            context.target.read_address(0x43adc0, 415)).hexdigest())
+
+    def test_complete_graph_passes(self):
+        proof = self.review()
+        self.assertEqual((proof["allocation_size"], proof["normal_returns"]), (0x1a3ac, [0xca, 0x19e]))
+
+    def test_interposed_instruction_size_and_state_are_fixed(self):
+        for offset, payload in ((0x16d, b"\x01"), (0x166, b"\xad"), (0x17e, b"\xff")):
+            context, record = self.mutate(offset, payload)
+            with self.subTest(offset=hex(offset)), self.assertRaises(EHEvidenceError):
+                self.review(context, record)
 
 
 if __name__ == "__main__":
