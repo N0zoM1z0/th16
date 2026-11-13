@@ -11,11 +11,19 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX_NAME = 'cleanup-handoff-20261112.json'
+INDEX_PATTERN = 'cleanup-handoff-*.json'
 
 
 def digest(payload):
     return hashlib.sha256(payload).hexdigest()
+
+
+def file_digest(path):
+    value = hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            value.update(block)
+    return value.hexdigest()
 
 
 def safe_path(name):
@@ -26,15 +34,35 @@ def safe_path(name):
 
 
 def records(analysis):
-    index = json.loads((analysis / INDEX_NAME).read_text())
-    if index['status'] != 'complete':
-        raise ValueError('Evidence cleanup is not complete')
-    return index['records']
+    rows = []
+    seen = set()
+    indexes = sorted(analysis.glob(INDEX_PATTERN))
+    if not indexes:
+        raise ValueError('No evidence cleanup index found')
+    for path in indexes:
+        index = json.loads(path.read_text())
+        if index['status'] != 'complete':
+            raise ValueError('Evidence cleanup is not complete')
+        for row in index['records']:
+            if row['path'] in seen:
+                raise ValueError('Duplicate evidence path in cleanup indexes')
+            seen.add(row['path'])
+            rows.append(row)
+    return rows
+
+
+def local_path(analysis, name):
+    path = analysis
+    for part in safe_path(name).parts:
+        path = path / part
+        if path.is_symlink():
+            raise ValueError('Evidence path contains a symlink')
+    return path
 
 
 def payloads(analysis, record):
-    archive = analysis / safe_path(record['archive'])
-    if archive.is_symlink() or digest(archive.read_bytes()) != record['archive_sha256']:
+    archive = local_path(analysis, record['archive'])
+    if file_digest(archive) != record['archive_sha256']:
         raise ValueError('Archive checksum differs from the verified cleanup index')
     if record['kind'] == 'file':
         with gzip.open(archive, 'rb') as stream:
@@ -44,13 +72,15 @@ def payloads(analysis, record):
         yield record['path'], data, record
     else:
         expected = {m['path']: m for m in record['members']}
+        root = safe_path(record['path'])
         with tarfile.open(archive, 'r:gz') as stream:
             members = stream.getmembers()
             if len(members) != len(expected) or {m.name for m in members} != set(expected):
                 raise ValueError('Archive members differ from the verified index')
             for member in members:
                 path = safe_path(member.name)
-                if not member.isfile() or path.parts[0] != record['path']:
+                if (not member.isfile() or len(path.parts) <= len(root.parts) or
+                        path.parts[:len(root.parts)] != root.parts):
                     raise ValueError('Archive contains an unsupported member')
                 data = stream.extractfile(member).read()
                 metadata = expected[member.name]
@@ -60,7 +90,7 @@ def payloads(analysis, record):
 
 
 def restore(analysis, record):
-    target = analysis / safe_path(record['path'])
+    target = local_path(analysis, record['path'])
     if target.exists() or target.is_symlink():
         raise ValueError('Restore destination already exists; existing evidence will not be overwritten')
     with tempfile.TemporaryDirectory(prefix='.restore-evidence-', dir=analysis) as temporary:
@@ -71,6 +101,16 @@ def restore(analysis, record):
             path.write_bytes(data)
             path.chmod(metadata['mode'])
             os.utime(path, ns=(metadata['mtime_ns'], metadata['mtime_ns']))
+        root = safe_path(record['path'])
+        for metadata in reversed(record.get('directories', [])):
+            relative = safe_path(metadata['path'])
+            if relative.parts[:len(root.parts)] != root.parts:
+                raise ValueError('Directory metadata escapes the evidence root')
+            path = stage / relative
+            path.mkdir(parents=True, exist_ok=True)
+            path.chmod(metadata['mode'])
+            os.utime(path, ns=(metadata['mtime_ns'], metadata['mtime_ns']))
+        target.parent.mkdir(parents=True, exist_ok=True)
         os.rename(stage / safe_path(record['path']), target)
     return target
 

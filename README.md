@@ -8,6 +8,13 @@ This repository is local-only: do not push branches, tags or repository contents
 Start with the [current handoff](docs/NEXT_AGENT.md) and
 [knowledge index](docs/knowledge/README.md).
 
+The 2026-11-13 handoff retains **904 exact / 67 mismatch / 244 incomplete**,
+185,816 exact primary bytes and 971 unit definitions. Source-origin review is
+open; Factory acceptance is unsubmitted. Use `scripts/progress.py` for current
+results. Reconstruction prioritizes complete static exact comparisons, including
+substantial Boss/interpreter/projectile owners; dynamic game testing is not the
+requested workflow. The active incremental build graph is preserved.
+
 The layout follows the local TH10 workspace:
 
 | Path | Purpose |

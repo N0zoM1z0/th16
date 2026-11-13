@@ -6,6 +6,12 @@ outside this repository; never follow them when cleaning local outputs.
 
 ## Preserve for continued work
 
+Historical evidence may be stored in verified archives instead of expanded
+directories. The work-directory entries below describe evidence to retain;
+they do not require keeping every historical fixture output uncompressed.
+Use `scripts/evidence-archive.py list` to resolve archived paths before assuming
+that evidence is missing. Never remove an archive because its old path is absent.
+
 | Local path | Reason |
 | --- | --- |
 | `resources/th16.exe`, `../game_exe/` | Canonical private target and supplied game files |
@@ -14,10 +20,11 @@ outside this repository; never follow them when cleaning local outputs.
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
 | `.analysis/reference-audit.json` | Current fingerprinted results read by `scripts/progress.py` |
+| `.analysis/projectile-ex-source-work/` | Current PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
 | `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
 | `.analysis/large-owner-operands-work/` | PDB 600 baseline/PDB 614 restored image, twelve complete Boss/motion/menu/curve source trials, original 768-instruction music CFG, full scope/field census, trial images/snapshots and complete raw-image restoration |
 | `.analysis/ecl-interpreter-order-work/` | PDB 591 baseline/PDB 600 restored image, eight full ECL source trials and images, original 1,645-instruction CFG, complete tables/map, source-qualified private helper proof, static controls and complete raw-image regression |
-| `.analysis/audio-release-baseline/` | Latest accepted checkpoint regression inputs, kept uncompressed |
+| `.analysis/audio-release-baseline/` | Historical audio checkpoint regression inputs, kept uncompressed; not the current baseline |
 | `.analysis/audio-initialize-baseline/`, `.analysis/experiments/audio-initialize-unvalidated/` | Unvalidated initialization draft, its clean base and review notes |
 | `.analysis/enemy-motion-work/` | Boss, spellcard and projectile source trials, baseline report and final regression evidence |
 | `.analysis/bullet-ex-work/` | Curve laser exact comparison, large projectile dispatcher trials, private helper controls and partial instruction-emulation diagnostics |
@@ -53,7 +60,7 @@ outside this repository; never follow them when cleaning local outputs.
 | `.analysis/ecl-dispatch-work/` | Large ECL shared-position and spell-name source trials, complete diagnostic code/table/map packets, native movement and spell-prefix fixtures, final tested image, scope refusals and regression evidence |
 | `.analysis/ecl-context-work/` | ECL coordinate evaluation and animation operand trials, typed lookup fixtures, native animation snapshots and historical-image control, invalid-opcode notes and final source regression evidence |
 | `.analysis/ecl-angle-work/` | ECL angle/orbit initialization trials, complete code/table/map packets, native full-state angle/orbit fixtures, pre-rebuild receipt refusal, final tested image and source regression evidence |
-| `.analysis/archives/`, `.analysis/cleanup-handoff-20261112.json` | Verified historical evidence and recovery index |
+| `.analysis/archives/`, `.analysis/cleanup-handoff-*.json` | Verified historical evidence and dated recovery indexes |
 | `.analysis/factory-registration.toml`, `.analysis/factory-validation*` | Staged private registration and isolated validation evidence |
 | `.analysis/ghidra/`, diagnostic notes and regression records | Analysis evidence and failed-experiment context |
 | `_reference/johnthreekay-th16/` | Pinned, unchanged upstream checkout |
@@ -62,7 +69,43 @@ Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
 
-## Current handoff cleanup: 2026-11-12
+## Current handoff cleanup: 2026-11-13
+
+This cleanup reclaimed **42.27 GiB** of allocated storage. `.analysis/` fell
+from **49.04 GiB to 6.77 GiB** at the cleanup checkpoint. Eighty-nine retired
+fixture/output subdirectories, previously about 42.58 GiB, are now individual
+archives under `.analysis/archives/20261113/WORK/LEAF.tar.gz`. Their parent
+scripts, source snapshots, reports and recent baseline/final image sets remain
+uncompressed. No historical game fixture was executed for cleanup.
+
+The former 1,418-line handoff is preserved byte for byte as
+`.analysis/handoff-next-agent-fe98fb8.md.gz`. Its old counts, baseline labels
+and workflow suggestions are superseded by the current handoff. The complete
+90-record index is `.analysis/cleanup-handoff-20261113.json`; it records file
+and archive SHA-256 hashes, modes, nanosecond timestamps, directory metadata,
+allocated/apparent sizes and protected current artifact hashes.
+
+Every archive was fully read back, every file checked, and the source copies
+rechecked before removal. All archive checksums were checked again afterwards.
+An actual nested fixture restore verified content, modes and timestamps; that
+temporary expanded copy was then removed. Legacy archive reading also passed.
+The helper loads both completed dated indexes and supports nested paths:
+
+```sh
+python3 scripts/evidence-archive.py list ecl-float-work
+python3 scripts/evidence-archive.py show handoff-next-agent-fe98fb8.md
+python3 scripts/evidence-archive.py restore ecl-float-work/native-baseline
+```
+
+The private target, current audit, unit ledger and every file in the incremental
+build graph retain their pre-cleanup hashes. Wine/tool selectors, dependencies,
+analyzer project and pinned reference were not cleaned. The preceding source
+trial restoration finished first: PDB 624 preserves **904 exact / 67 mismatch /
+244 incomplete**, all 971 units and all 1,719 raw native owners. See
+[restoration evidence](knowledge/projectile-source-trials-handoff.md).
+No cold build or Oracle rule change was performed for cleanup.
+
+## Earlier handoff cleanup: 2026-11-12
 
 The handoff cleanup reclaimed about **703 MiB** of allocated local storage.
 Eighty-two historical baseline/trial directories are stored as individual
@@ -98,7 +141,7 @@ historical helper as if its expected counts described the current checkpoint.
 The initialization proof draft was withdrawn from `scripts/` and Oracle
 configuration before cleanup. A positive focused result under those draft rules
 is retained only inside the clearly marked experiment directory; it does not
-change the accepted 883/65/267 checkpoint. No compiler run or Oracle acceptance
+change that historical 883/65/267 checkpoint. No compiler run or Oracle acceptance
 change was performed as part of cleanup.
 
 ## Earlier compressed evidence: 2026-11-08
