@@ -1,5 +1,9 @@
 # AnmManager constructor EH aggregate
 
+The later [shared constructor source reconstruction](updatefunc-construction-exact.md)
+closes this complete 5,071-byte parent as exact. The EH profile and original
+scope proofs below remain unchanged; the mismatch describes this earlier review.
+
 Reviewed 2026-11-11 against the canonical original and the retained incremental
 MSVC 19.10.25017 candidate. The complete private EH graph now has an explicit
 Oracle profile. This makes the entire 5,071-byte constructor comparable. Its

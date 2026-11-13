@@ -65,23 +65,18 @@ struct UpdateFunc
     UpdateFuncList list_node;
     void *arg;
 
-    // Every store here survives in the original, even where create_func
-    // overwrites it right away, while create_func's own stores merge with
-    // its callers' (where LTCG inlined it). Writing through a volatile this
-    // is the only construct found that does both; ZUN's source may have
-    // done something else with the same effect.
-    UpdateFunc()
+    // The original retains initialization that factory calls replace later.
+    // Keep the node writes volatile while leaving callback fields ordinary.
+    UpdateFunc() : function(NULL), on_registration(NULL)
     {
-        volatile UpdateFunc *v = this;
-        v->flags &= ~UPDATE_FUNC_HEAP_ALLOCATED;
-        v->function = NULL;
-        v->on_registration = NULL;
-        v->on_cleanup = NULL;
-        v->priority = 0;
-        v->list_node.entry = this;
-        v->list_node.next = NULL;
-        v->list_node.prev = NULL;
-        v->list_node.unk_c = NULL;
+        flags &= ~UPDATE_FUNC_HEAP_ALLOCATED;
+        on_cleanup = NULL;
+        priority = 0;
+        volatile UpdateFuncList *v = &list_node;
+        v->entry = this;
+        v->next = NULL;
+        v->prev = NULL;
+        v->unk_c = NULL;
     }
 
     ~UpdateFunc();

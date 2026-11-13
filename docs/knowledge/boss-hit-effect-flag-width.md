@@ -78,3 +78,20 @@ canonical reports, original-only CFG script/report, complete logic/motion
 packets, all failed source snapshots/build logs, `TRIALS.md`, `suffix-shapes.json`,
 diagnostic diffs and `regression.py`/`final-regression.json`. Diagnostics grant no exact
 credit. All source trials and builds are incremental and static.
+
+
+## Later statistics-result trial
+
+From `132f12a`, an ordinary inline helper returns overkill credit and the caller
+then updates shot-damage statistics. The complete Boss owner becomes 2,185
+bytes against 2,207 original bytes and is rejected. Full code packets show
+two original additions to manager offset `0xAC`, at parent offsets `0x338` and
+`0x347`; the candidate has one shared addition at `0x33A`. Register/life and
+collision differences also remain. Returning a scalar credit loses the original
+branch duplication and is not a solution merely because it inlines.
+
+`Enemy.cpp` is restored byte for byte. Keep `.analysis/music-comment-join-work/`,
+including the complete logic/motion packets and statistics-write diagnostic.
+A conditional-selection variant was prepared but never compiled; it grants
+no trial result or exact credit. The subsequent shared-constructor result is
+reviewed [separately](updatefunc-construction-exact.md).

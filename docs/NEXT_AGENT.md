@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after complete static offscreen-projectile source trials.
+Updated 2026-11-13 after exact reconstruction of animation manager initialization.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,7 +17,23 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-The latest static follow-up traverses all 327 original instructions of the
+The complete **5,071-byte** `AnmManager::AnmManager` at `0x0046A3A0` is now
+**exact**, with all 164 fields and its unchanged 136-byte EH code / 76-byte
+metadata profile. The shared `UpdateFunc` constructor uses ordinary callback
+member initializers and retains only its four existing volatile node writes.
+There is no callback-specific branch, new barrier or compiler/Oracle change.
+All other 1,718 native owners remain raw-identical. See
+[shared callback construction](knowledge/updatefunc-construction-exact.md).
+Only `UpdateFunc.h` changes generated code; `AnmRender.cpp` removes a stale TODO.
+Keep `.analysis/updatefunc-node-context-work/`.
+
+The preceding five music-room result/loop forms and one Boss statistics-result
+form are restored. The complete music-room CFG has all 768 instructions, its
+alignment and four table slots. The Boss helper merges two original statistics
+writes and fails its complete owner. Keep `.analysis/music-comment-join-work/`;
+these trials add no exact credit and should not be repeated as new hypotheses.
+
+The preceding static follow-up traverses all 327 original instructions of the
 complete 1,390-byte `Bullet::step_ex_08` and rejects/restores five source forms.
 Member-call timer, fractional-result/reference amount and Float4 cross/dot
 forms produce the same raw 1,382-byte candidate. Float2 direction-result and
@@ -35,7 +51,7 @@ reports integer time through an output reference; the caller writes both
 current fields and uses that integer for its frame-120 predicate. This recovers
 the original timer, branch widths and title loops without padding or register
 constraints. See [complete spellcard frame update](knowledge/spellcard-frame-update-exact.md).
-Only `Spellcard.cpp` retains game-source changes in this continuation. A single
+That continuation changes only `Spellcard.cpp`. A single
 two-output Float3 interpolation trial fails its complete owner and is restored;
 the retained 899/906 mismatch is unchanged. Keep `.analysis/spellcard-timer-result-work/`.
 
@@ -145,22 +161,21 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **891 exact, 65 mismatch, 259 incomplete** among 1,215
-annotations: **176,036 exact primary bytes and 956 retained comparison units**.
-All previous 890 exact owners and the other 1,214 annotation results/diagnostics
-remain unchanged, apart from current build identities. The spellcard unit
-refreshes seven relocation offsets; its 17 existing field identities and all
-original boundaries/addresses are unchanged. The other 955 unit definitions
-are identical. All other 1,718 complete candidate owners remain raw-identical
-(526,486 bytes), with unchanged addresses/extents and relocations outside the
-changed owner. Every raw .text byte outside the final 650-byte owner is unchanged.
+The canonical report is **892 exact, 64 mismatch, 259 incomplete** among 1,215
+annotations: **181,107 exact primary bytes and 956 retained comparison units**.
+All previous 891 exact owners and the other 1,214 annotation results/diagnostics
+remain unchanged, apart from current build identities. Every unit definition,
+original boundary and address is unchanged. All other 1,718 complete candidate
+owners remain raw-identical (522,065 bytes), with unchanged addresses/extents.
+All image base relocations and every raw .text byte outside the final 5,071-byte
+constructor are unchanged.
 The Boss logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`0b4ce2bd4813b5d00ec1b2b6195a252d17684eb07e1bb8cf2a9e2201819119ea`.
-PDB age is **482**. The final incremental restoration, strict replay and progress check
+`326e30f1f12bd961bebf860a20069050474879caa1d4526c49690076d945d317`.
+PDB age is **492**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -169,6 +184,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Shared callback construction](knowledge/updatefunc-construction-exact.md) | Complete 5,071-byte AnmManager constructor exact, all 164 fields and existing EH graph; all prior 891 exact and other 1,718 native owners preserved; no callback-specific source case |
 | [Complete spellcard frame update](knowledge/spellcard-frame-update-exact.md) | Complete 650-byte exact owner, all 167 instructions and 17 fields; all prior 890 exact and other 1,718 candidate owners retained; Float3 trial restored |
 | [Enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md) | Complete 1,682/1,692 mismatch, 48 links; frame/zero slot/GP joins restored; all 890 exact and other 1,718 native owners retained; no new exact credit |
 | [Boss/laser static joins](knowledge/boss-and-laser-static-joins.md) | Complete original laser CFG and both tables; 36-operand address-cost diagnostic; all four Boss/seven laser forms restored; all 1,719 owners and entire raw .text preserved; no new exact credit |
@@ -207,8 +223,14 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [complete spellcard frame update](knowledge/spellcard-frame-update-exact.md)
-first. The two-output timer helper closes the complete owner; do not restore
+Read [shared callback construction](knowledge/updatefunc-construction-exact.md)
+first. Keep the uniform member-initializer list and narrower node accesses in
+`UpdateFunc.h`; neither the former blanket volatile-this body nor completely
+ordinary construction reproduces this complete context. The original source
+spelling remains unproved. No field declarations or layouts change.
+
+The preceding [complete spellcard frame update](knowledge/spellcard-frame-update-exact.md)
+uses a two-output timer helper to close its complete owner; do not restore
 the superseded fractional-only helper. Keep the failed Float3 trial rather than
 assuming this result transfers to its different frame/comparison context.
 

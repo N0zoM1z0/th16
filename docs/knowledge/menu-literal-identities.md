@@ -121,3 +121,27 @@ Canonical evidence is `.analysis/menu-literal-full-audit.log` and
 `.analysis/menu-literal-<suite>-controls.log`, matching `scripts/test-<suite>.py`.
 The preceding report, inventory, units and bindings remain in
 `.analysis/menu-literal-baseline/`. Nothing is published.
+
+
+## Further result contexts from 132f12a
+
+A fresh original-only traversal retains the complete 3,136-byte owner: 3,118
+code bytes, the two-byte alignment instruction and all four jump-table slots.
+All 768 instructions are reachable, with 59 calls and six returns. Its existing
+original hash, guard, table destinations and boundaries are unchanged.
+
+| Additional source form | Complete candidate result |
+| --- | --- |
+| Named initialized comment handle | Same strict 3,133/3,136 mismatch |
+| Typed member-pointer creator and named handle | Same strict 3,133/3,136 mismatch |
+| Explicit counter and do/while | 3,104 bytes; incomplete |
+| Ordinary comment-creation helper | 2,880 bytes; incomplete with unresolved fields |
+| Reused default-constructed comment handle | Same strict 3,133/3,136 mismatch |
+
+All five forms are rejected and restored. No forced-inlining attribute,
+initialization-order normalization or linkage exception is introduced. Keep
+`.analysis/music-comment-join-work/`: all sources, focused reports, original CFG,
+last music trial image and PDB-489 restoration regression. The separate later
+[shared callback constructor reconstruction](updatefunc-construction-exact.md)
+adds the complete AnmManager exact result; this music-room owner remains the
+same three-byte mismatch.

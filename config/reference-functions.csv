@@ -1049,7 +1049,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046A370,??0RenderVertexXyzrhwTex@@QAE@XZ,src/AnmRender.cpp,??0RenderVertexXyzrhwTex@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046A380,??0RenderVertex144@@QAE@XZ,src/AnmRender.cpp,??0RenderVertex144@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046A390,??0RenderVertexXyzDiffuseTex@@QAE@XZ,src/AnmRender.cpp,??0RenderVertexXyzDiffuseTex@@QAE@XZ,exact,,.analysis/reference-audit.json
-0x0046A3A0,AnmManager::AnmManager,src/AnmRender.cpp,??0AnmManager@@QAE@XZ,mismatch,,.analysis/reference-audit.json
+0x0046A3A0,AnmManager::AnmManager,src/AnmRender.cpp,??0AnmManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046B770,AnmFastVm::AnmFastVm,src/AnmManagerVms.cpp,??0AnmFastVm@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046B790,AnmFastVm::~AnmFastVm,src/AnmManagerVms.cpp,??1AnmFastVm@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046B7D0,AnmManager::~AnmManager,src/AnmManagerVms.cpp,??1AnmManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json

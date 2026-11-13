@@ -88,10 +88,14 @@ not authorize other virtual calls or bind a static device method address.
 
 ## Ordinary UpdateFunc constructor experiment
 
-The shared constructor currently writes through a volatile copy of `this` to
-retain otherwise overwritten initialization stores. Its original source form
-is unresolved. A bounded source experiment removed that qualification and
-moved the ordinary constructor body from the header into `UpdateFunc.cpp`.
+At this checkpoint the shared constructor wrote through a volatile copy of
+`this` to retain otherwise overwritten initialization stores. Its original
+source spelling remains unproved. The later
+[shared constructor reconstruction](updatefunc-construction-exact.md)
+narrows existing volatile accesses and uses ordinary callback member initializers,
+closing the complete AnmManager owner. The earlier experiment below instead
+removed that qualification and moved the ordinary constructor body from the
+header into `UpdateFunc.cpp`.
 Fields, masks, order and layouts were otherwise retained. The pinned compiler
 and link profiles were unchanged, and the existing build graph was rebuilt
 incrementally. The complete build succeeded.

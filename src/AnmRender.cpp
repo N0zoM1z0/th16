@@ -702,7 +702,7 @@ static __forceinline UpdateFunc *anm_create_func(UpdateFuncCallback function, An
 #define ANM_REGISTER_ON_DRAW(callback, priority)                                                                    \
     g_UpdateFuncRegistry->register_on_draw(anm_create_func((UpdateFuncCallback)(callback), this), (priority))
 
-// TODO: 99.9%; one inlined UpdateFunc constructor clears the heap flag two stores later in the original.
+// Initialize VM pools, rendering defaults and ordered frame callbacks.
 // FUNCTION: TH16 0x46a3a0
 AnmManager::AnmManager()
 {
