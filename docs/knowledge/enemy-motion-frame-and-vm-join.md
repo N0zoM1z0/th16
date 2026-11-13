@@ -87,3 +87,33 @@ first-complete/isolated/final images, focused and canonical reports, rejected
 sources and build logs, `TRIALS.md`, four-argument source proof, boundary-ledger
 check and complete regression. Also preserve
 `.analysis/laser-pointer-lifetime-work/` for the restored laser trials.
+
+## Static follow-up from babcb51
+
+Eight further source forms fail complete comparison and are restored. These
+are additional rejected forms, not source progress or new exact credit.
+
+| Source form | Complete candidate owner | Finding |
+| --- | ---: | --- |
+| Reference-returning vector-add member call | Motion 1692 bytes | Same camera Y pair differs |
+| Value-returning vector-add member call | Motion 1698 bytes | Packing and temporary transfers added |
+| Scalar bomb-scaling result helper and conditional dialogue selection | Logic 2195 bytes | Helper inlines; raw/selected damage registers still exchange |
+| Shared statistics credit join and conditional dialogue selection | Logic 2183 bytes | Further control-flow and collision differences |
+| Three-component camera addition loop | Motion 1692 bytes | Loop fully unrolls; Y still differs and Z reverses too |
+| Life-pointer result as an EnemyData member | Logic 2211 bytes | ESI lifetime recovered; damage and collision still differ, as with the free helper |
+| Two by-value inputs to a scalar addition helper | Motion 1704 bytes | Y still differs; longer Y/Z member addresses |
+| Script staging before layer staging | Motion 1692 bytes | Y still differs; script/security-flag sequence also changes |
+
+Preserve `.analysis/enemy-camera-order-work/`: all source snapshots/hashes,
+build logs, complete owner packets, `TRIALS.md`, baseline/final five-artifact
+sets and the static restoration regression. One premature packet request
+correctly refused the unfinished build's source identity; only the subsequent
+completed packet is comparison evidence. No game runtime or emulation runs.
+
+The incremental restoration and full strict replay preserve all 1,215
+annotation results/diagnostics, 890 exact owners, 175,386 exact primary bytes
+and all 956 unit definitions. All **1,719** complete candidate owners remain
+raw-identical (**527,136 bytes**), with unchanged addresses/extents, all image
+base relocations and the complete raw `.text`. Game sources are byte-identical
+to `babcb51`. Restored PDB age is **471**, with the same source input recorded
+above. Source-origin review remains open; Factory acceptance is not submitted.

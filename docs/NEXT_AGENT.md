@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after complete enemy-motion frame and VM-join reconstruction.
+Updated 2026-11-13 after rejecting further static enemy/Boss result forms.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -16,6 +16,14 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+Eight further camera/vector, Boss scaling/statistics/life-result and VM argument
+staging forms are restored. Do not repeat them as new hypotheses; see the
+static follow-up in [enemy motion frame and VM join](knowledge/enemy-motion-frame-and-vm-join.md).
+Keep `.analysis/enemy-camera-order-work/`. Full static restoration preserves
+all 1,215 annotation results/diagnostics, all 956 units and all 1,719 candidate
+owners byte for byte (527,136 bytes), their addresses/extents, image relocations
+and the entire raw `.text`. No new exact credit, game runtime or emulation.
 
 The latest source work recovers the original 0x38-byte frame, separate zero
 vector and VM/manager register sequence in the complete **1,692-byte**
@@ -130,7 +138,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `129507e1a5cf66bdd4fa39501a6397298df804dbbd706f11e18246383221c1ef`.
-PDB age is **462**. The final incremental build, strict replay and progress check
+PDB age is **471**. The final incremental restoration, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
