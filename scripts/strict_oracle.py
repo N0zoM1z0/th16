@@ -152,6 +152,35 @@ def literal_memory_witness(context, instruction, address, size):
             and any(i.address == instruction.address and bytes(i.bytes) == encoded for i in sequence))
 
 
+def virtual_tail_call(instructions, jump):
+    """A thiscall tail call through a vftable slot: JMP [vptr + slot], where
+    vptr was loaded from [ECX] earlier in the same block and neither register
+    is written again before the jump. Such a JMP leaves the function; it never
+    selects code inside it."""
+    import capstone
+    x86 = capstone.x86
+    operand = jump.operands[0]
+    if (jump.mnemonic != "jmp" or operand.type != x86.X86_OP_MEM or operand.size != 4 or operand.mem.segment
+            or operand.mem.index or operand.mem.base in (0, x86.X86_REG_ESP, x86.X86_REG_EBP)
+            or not 0 <= operand.mem.disp < 0x1000 or operand.mem.disp % 4):
+        return False
+    vptr = operand.mem.base
+    position = instructions.index(jump)
+    for instruction in reversed(instructions[max(0, position - 8):position]):
+        if instruction.group(capstone.CS_GRP_JUMP) or instruction.group(capstone.CS_GRP_CALL) \
+                or instruction.group(capstone.CS_GRP_RET):
+            return False
+        _, writes = instruction.regs_access()
+        if vptr in writes:
+            source = instruction.operands[1] if len(instruction.operands) == 2 else None
+            return (instruction.mnemonic == "mov" and source is not None and source.type == x86.X86_OP_MEM
+                    and source.size == 4 and not source.mem.segment and source.mem.base == x86.X86_REG_ECX
+                    and not source.mem.index and source.mem.disp == 0)
+        if x86.X86_REG_ECX in writes:
+            return False
+    return False
+
+
 def reviewed_linkages(context, path=None):
     """Validate fixed, independently reviewed runtime/literal storage bindings."""
     import capstone
@@ -733,7 +762,8 @@ class Context:
                     destination = operand.imm & 0xFFFFFFFF
                     if start <= destination < end and destination not in starts:
                         raise Incomplete("target branch enters the middle of an instruction")
-                elif instruction.address not in reviewed_dispatches and instruction.address + instruction.size != end:
+                elif (instruction.address not in reviewed_dispatches and instruction.address + instruction.size != end
+                      and not virtual_tail_call(instructions, instruction)):
                     raise Incomplete("indirect jump requires reviewed switch/owned-data extents")
         if instructions[-1].mnemonic not in {"ret", "retf", "jmp", "int3", "ud2"}:
             raise Incomplete("target extent ends in unreviewed fallthrough or non-returning code")

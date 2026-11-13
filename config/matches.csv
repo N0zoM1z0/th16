@@ -978,6 +978,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00471D90,dsutil_debug_log,reference-00471d90,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00471DA0,ecl_log,reference-00471da0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00473BC0,SptInf::run_ecl,reference-00473bc0,local-strict-pass,197,197,197,.analysis/reference-audit.json
+0x00473C90,EclRunContext::get_int_arg,reference-00473c90,local-strict-pass,172,172,172,.analysis/reference-audit.json
 0x00473D40,EclRunContext::get_float_arg,reference-00473d40,local-strict-pass,244,244,244,.analysis/reference-audit.json
 0x00473EF0,EclRunContext::get_float_arg_given_value,reference-00473ef0,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00473FE0,EclRunContext::pop_int_arg,reference-00473fe0,local-strict-pass,171,171,171,.analysis/reference-audit.json
@@ -985,6 +986,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00474180,EclRunContext::pop_int_arg_given_value,reference-00474180,local-strict-pass,179,179,179,.analysis/reference-audit.json
 0x00474240,EclRunContext::pop_float_arg_given_value,reference-00474240,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00474330,EclRunContext::get_int_arg_ptr,reference-00474330,mismatch,98,98,97,.analysis/reference-audit.json
+0x004743A0,EclRunContext::get_float_arg_ptr,reference-004743a0,local-strict-pass,139,139,139,.analysis/reference-audit.json
 0x00474430,SptInf::create_async,reference-00474430,local-strict-pass,176,176,176,.analysis/reference-audit.json
 0x004744E0,SptInf::lookup_async,reference-004744e0,local-strict-pass,39,39,39,.analysis/reference-audit.json
 0x00474510,ecl_sincosmul,reference-00474510,local-strict-pass,32,32,32,.analysis/reference-audit.json

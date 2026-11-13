@@ -139,5 +139,35 @@ class CompleteOwnerReplay(unittest.TestCase):
             context.compare(unit)
 
 
+class VirtualTailCallControls(unittest.TestCase):
+    """A mid-function JMP through a vftable slot is an exit, never a switch."""
+
+    def decode(self, code):
+        import capstone
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        instructions = list(decoder.disasm(bytes.fromhex(code), 0x1000))
+        return instructions, instructions[-1]
+
+    def accepted(self, code):
+        from strict_oracle import virtual_tail_call
+        instructions, jump = self.decode(code)
+        return virtual_tail_call(instructions, jump)
+
+    def test_original_get_int_arg_tail_call_is_accepted(self):
+        # mov ecx,[esi+0x1018]; pop edi; pop esi; mov eax,[ecx]; mov [ebp+8],edx; pop ebp; jmp [eax+4]
+        self.assertTrue(self.accepted("8b8e180100005f5e8b018955085dff6004"))
+
+    def test_jump_tables_and_unproven_pointers_are_rejected(self):
+        for code in ("8b8e180100005f5e8b018955085dff248504000000",  # indexed table
+                     "8b8e180100005f5e8b018955085dff6002",          # misaligned slot
+                     "8b8e180100008b018b4e045dff6004",              # ECX rewritten after the vptr load
+                     "8b8e180100008b06895508ff6004",                # vptr not loaded from [ECX]
+                     "8b8e180100008b415dff6004",                    # vptr from [ECX+disp]
+                     "8b018b8e18010000e800000000ff6004"):           # call between load and jump
+            with self.subTest(code=code):
+                self.assertFalse(self.accepted(code))
+
+
 if __name__ == "__main__":
     unittest.main()

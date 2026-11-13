@@ -1186,7 +1186,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00471DB0,EclRunContext::call_sub,src/EclRunContext.cpp,?call_sub@EclRunContext@@QAEHPAU1@HH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00472030,EclRunContext::ecl_run,src/EclRunContext.cpp,?ecl_run@EclRunContext@@QAEHM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00473BC0,SptInf::run_ecl,src/EclRunContext.cpp,?run_ecl@SptInf@@QAEHM@Z,exact,,.analysis/reference-audit.json
-0x00473C90,EclRunContext::get_int_arg,src/EclRunContext.cpp,?get_int_arg@EclRunContext@@QAEHH@Z,incomplete,indirect jump requires reviewed switch/owned-data extents,.analysis/reference-audit.json
+0x00473C90,EclRunContext::get_int_arg,src/EclRunContext.cpp,?get_int_arg@EclRunContext@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x00473D40,EclRunContext::get_float_arg,src/EclRunContext.cpp,?get_float_arg@EclRunContext@@QAEMH@Z,exact,,.analysis/reference-audit.json
 0x00473E40,EclRunContext::get_int_arg_given_value,src/EclRunContext.cpp,?get_int_arg_given_value@EclRunContext@@QAEHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00473EF0,EclRunContext::get_float_arg_given_value,src/EclRunContext.cpp,?get_float_arg_given_value@EclRunContext@@QAEMHM@Z,exact,,.analysis/reference-audit.json
@@ -1195,7 +1195,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00474180,EclRunContext::pop_int_arg_given_value,src/EclRunContext.cpp,?pop_int_arg_given_value@EclRunContext@@QAEHHH@Z,exact,,.analysis/reference-audit.json
 0x00474240,EclRunContext::pop_float_arg_given_value,src/EclRunContext.cpp,?pop_float_arg_given_value@EclRunContext@@QAEMHM@Z,exact,,.analysis/reference-audit.json
 0x00474330,EclRunContext::get_int_arg_ptr,src/EclRunContext.cpp,?get_int_arg_ptr@EclRunContext@@QAEPAHH@Z,mismatch,,.analysis/reference-audit.json
-0x004743A0,EclRunContext::get_float_arg_ptr,src/EclRunContext.cpp,?get_float_arg_ptr@EclRunContext@@QAEPAMH@Z,incomplete,indirect jump requires reviewed switch/owned-data extents,.analysis/reference-audit.json
+0x004743A0,EclRunContext::get_float_arg_ptr,src/EclRunContext.cpp,?get_float_arg_ptr@EclRunContext@@QAEPAMH@Z,exact,,.analysis/reference-audit.json
 0x00474430,SptInf::create_async,src/EclRunContext.cpp,?create_async@SptInf@@QAEHHH@Z,exact,,.analysis/reference-audit.json
 0x004744E0,SptInf::lookup_async,src/EclRunContext.cpp,?lookup_async@SptInf@@QAEPAUEclRunContextList@@H@Z,exact,,.analysis/reference-audit.json
 0x00474510,ecl_sincosmul,src/EclRunContext.cpp,?ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json

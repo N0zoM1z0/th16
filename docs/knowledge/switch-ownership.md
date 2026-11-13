@@ -72,3 +72,13 @@ instruction at `0x004079CE` loads `320.0f` from `0x00494690` and cannot witness
 the 240 binding. The existing typed-literal validation checks the value, width,
 candidate bytes and fixed original instruction witness. New negative controls
 reject the adjacent read, a wrong load mnemonic and a wrong width.
+
+## Virtual tail calls
+
+`EclRunContext::get_int_arg` (`0x00473C90`) and `get_float_arg_ptr`
+(`0x004743A0`) end one path with `JMP [vptr + slot]` after restoring their
+frame. The boundary check accepts such a mid-function indirect jump only when
+its operand has a base register and no index, a slot-aligned displacement
+below 0x1000, and the base was loaded by `MOV reg, [ECX]` in the same block
+with neither register written again. It leaves the function, so it needs no
+switch ownership. Both owners are exact.
