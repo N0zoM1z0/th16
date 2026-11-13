@@ -1,9 +1,9 @@
 # Current handoff
 
-Updated 2026-11-13 after eight complete ECL interpreter source trials and
-independent closure of its private sincos dependency. All game-source trials
-are restored; the large interpreter remains incomplete. The preceding laser
-endpoint repair and nine atan2-dependent exact owners are preserved.
+Updated 2026-11-13 after twelve complete Boss, enemy-motion, menu and curve
+source trials. All game-source trials are restored; no new exact credit is
+added. The preceding private ECL dependency closure, laser endpoint repair
+and nine atan2-dependent exact owners are preserved.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -20,7 +20,36 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-Current totals are **904 exact / 67 mismatch / 244 incomplete**, **185,816 exact
+Current totals remain **904 exact / 67 mismatch / 244 incomplete**, **185,816
+exact primary bytes** and **971 unchanged units**, PDB age **614**. All 1,215
+annotation results/diagnostics, all 1,719 source-qualified native owners
+(527,136 raw bytes), their addresses/extents, base relocations and complete raw
+`.text` are preserved from `f9d129b`. Source input remains
+`ef45258398eb6fe5c3cb4fd560aed06455b5f5695cfb4d398602eb739e51ccc5`.
+No new exact owner is added. All trial game-source edits are restored; no
+game runtime or emulation is used.
+
+The complete 3,136-byte music-room owner now has an independent original-only
+CFG: 768 reachable instructions, four owned switch targets and six returns.
+Twelve restored forms cover comment-position/index lifetimes, camera planar
+views, Boss dialogue selection and branch-produced life pointers, animation
+ID-word copying, menu loop-counter lifetimes, and curve dot/scalar-square
+interfaces. The Boss branch-produced life pointer recovers its cross-call
+preservation but changes collision instructions. Curve dot products and
+reversed scalar square order are raw-identical and leave all four differences.
+Separate menu counters do not recover the original 12-byte allocation. Do not
+repeat these forms or add unused locals to force it. See
+[complete large-owner lifetime trials](knowledge/large-owner-source-lifetimes.md).
+
+Keep `.analysis/large-owner-operands-work/`, including all twelve source/image
+sets, baseline/final artifacts, complete packets, original music CFG,
+byte/field census, focused refusals and canonical/progress/restoration reports.
+The incremental graph is retained. Substantial Boss/interpreter source work
+remains open; Factory is unsubmitted and source-origin review remains open.
+
+## Preceding ECL dependency checkpoint (PDB 600)
+
+At that checkpoint, totals were **904 exact / 67 mismatch / 244 incomplete**, **185,816 exact
 primary bytes** and **971 units**, PDB age **600**. The only new exact owner is
 the existing 32-byte private `ecl_sincosmul` at `0x00474510`, qualified to
 `src/EclRunContext.cpp` and independently checked by the existing verifier.
