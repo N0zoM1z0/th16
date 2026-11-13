@@ -74,7 +74,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004054F0,_cosf,src/CrtInline.cpp,_cosf,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
 0x00405510,_sinf,src/CrtInline.cpp,_sinf,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
 0x00405530,___local_stdio_printf_options,src/CrtInline.cpp,___local_stdio_printf_options,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00405540,__vsnprintf_l,src/CrtInline.cpp,__vsnprintf_l,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00405540,__vsnprintf_l,src/CrtInline.cpp,__vsnprintf_l,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
 0x00405580,InputManager::detect_holds_and_repeats,src/InputManager.cpp,?detect_holds_and_repeats@InputManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00405600,zun_log,src/Log.cpp,?zun_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x00405610,ZunList<void>::unlink,src/ZunList.cpp,?unlink@?$ZunList@X@@QAEXXZ,exact,,.analysis/reference-audit.json
