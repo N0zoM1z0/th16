@@ -235,6 +235,41 @@ class ReviewedLinkageControls(unittest.TestCase):
                 with self.subTest(symbol=symbol, sizes=sizes), self.assertRaises(Incomplete):
                     reviewed_linkages(context)
 
+    def test_masked_arcade_bottom_literal_requires_its_fixed_read(self):
+        symbol = "__real@43e80000"
+        address = next(p["address"] for p in self.context.publics if p["symbol"] == symbol)
+        self.assertEqual(self.context.image.read_address(address, 4), bytes.fromhex("0000e843"))
+        for key, value in (("witness_instruction", "0x4074c5"),
+                           ("witness_mnemonic", "lea"),
+                           ("target_address", "0x49486c")):
+            rows = copy.deepcopy(self.rows)
+            next(r for r in rows if r["symbol"] == symbol)[key] = value
+            with self.subTest(key=key), self.assertRaises(Incomplete):
+                self.check_rows(rows)
+        for size in (3, 8):
+            rows = copy.deepcopy(self.rows)
+            row = next(r for r in rows if r["symbol"] == symbol)
+            row.update(size=str(size), target_sha256=hashlib.sha256(
+                self.context.target.read_address(0x4946B4, size)).hexdigest())
+            with self.subTest(size=size), self.assertRaisesRegex(Incomplete, "complete typed value"):
+                self.check_rows(rows)
+        for side, base in (("target", 0x4946B4), ("image", address)):
+            for offset in range(4):
+                context = copy.copy(self.context)
+                view = copy.copy(getattr(context, side))
+                original_read = view.read_address
+
+                def changed_read(at, size, original_read=original_read, changed=base + offset):
+                    data = bytearray(original_read(at, size))
+                    if at <= changed < at + size:
+                        data[changed - at] ^= 1
+                    return bytes(data)
+
+                view.read_address = changed_read
+                setattr(context, side, view)
+                with self.subTest(side=side, offset=offset), self.assertRaises(Incomplete):
+                    reviewed_linkages(context)
+
     def test_wrong_runtime_library_is_rejected(self):
         rows = copy.deepcopy(self.rows)
         rows[0]["candidate_library"] = "unreviewed.lib"

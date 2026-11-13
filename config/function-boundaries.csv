@@ -96,7 +96,7 @@ address,size,span_end,state,evidence
 0x00406E10,906,0x00407199,strict-compared,.analysis/reference-audit.json
 0x004071A0,396,0x0040732B,strict-compared,.analysis/reference-audit.json
 0x00407330,100,0x00407393,provisional,.analysis/reference-audit.json
-0x004073A0,1348,0x004078E3,provisional,.analysis/reference-audit.json
+0x004073A0,1348,0x004078E3,strict-compared,.analysis/reference-audit.json
 0x004078F0,3,0x004078F2,strict-compared,.analysis/reference-audit.json
 0x00407900,336,0x00407A4F,strict-compared,.analysis/reference-audit.json
 0x00407A50,208,0x00407B1F,strict-compared,.analysis/reference-audit.json

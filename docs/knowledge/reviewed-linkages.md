@@ -329,6 +329,7 @@ locations were reviewed through fixed instructions in separate target functions:
 | `__real@40000000` / 2.0f | `0x00494558` | `0x004034E1`: `movss xmm1, [0x00494558]` | The quadratic interpolation curve loads its 2.0 term. |
 | `__real@40400000` / 3.0f | `0x00494584` | `0x0040703C`: `movss xmm0, [0x00494584]` | `InterpFloat3::step` loads the cubic interpolation coefficient. |
 | `__real@43000000` / 128.0f | `0x00494644` | `0x00407473`: `movss xmm3, [0x00494644]` | `anm_on_draw_masked` constructs the masked rectangle. |
+| `__real@43e80000` / 464.0f | `0x004946B4` | `0x004074C4`: `movss xmm0, [0x004946B4]` | [Complete 1,348-byte masked-animation callback](masked-effect-exact.md); the original read distinguishes equal-content storage. |
 | `__real@3c000000` / 1/128 | `0x004943F4` | `0x0040E7CC`: `mulss xmm0, [0x004943F4]` | `BombAyaAInf::begin` scales the player's horizontal movement for bomb angle and speed. |
 | `__real@43e00000` / 448.0f | `0x004946B0` | `0x0040AB51`: `addss xmm7, [0x004946B0]` | `StdObject::is_culled` adds the vertical playfield extent. |
 | `__real@42c80000` / 100.0f | `0x00494638` | `0x00403379`: `mulss xmm0, [0x00494638]` | `PosVel::step` scales a coordinate before floor/division to snap it to hundredths. |

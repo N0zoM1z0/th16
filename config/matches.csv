@@ -73,6 +73,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00406D80,AnmVm::set_layer,reference-00406d80,local-strict-pass,133,133,133,.analysis/reference-audit.json
 0x00406E10,InterpFloat3::step,reference-00406e10,mismatch,906,906,413,.analysis/reference-audit.json
 0x004071A0,anm_masked_effect_init,reference-004071a0,local-strict-pass,396,396,396,.analysis/reference-audit.json
+0x004073A0,anm_on_draw_masked,reference-004073a0,local-strict-pass,1348,1348,1348,.analysis/reference-audit.json
 0x004078F0,anm_masked_effect_on_destroy,reference-004078f0,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00407900,anm_masked_effect_on_switch,reference-00407900,mismatch,336,336,291,.analysis/reference-audit.json
 0x00407A50,AnmVm::wipe_suffix,reference-00407a50,local-strict-pass,208,208,208,.analysis/reference-audit.json

@@ -1,30 +1,44 @@
 # Current handoff
 
-Updated 2026-11-13 after Boss restart call-context and ECL frame verification.
+Updated 2026-11-13 after the complete masked-animation callback became exact.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
 
+## Working priority
+
+The user's latest correction explicitly prioritizes **exact reconstruction**
+and says dynamic testing is not needed. Do not build or run more native game
+fixtures or behavioral matrices. Concentrate on complete static original and
+candidate owner comparisons, their extents, relocations and independent
+bindings. Keep substantial Boss, projectile and other large functions in scope.
+Historical native evidence below is retained history, not the next workflow.
+Partial source improvements and equivalent instructions are not exact credit.
+
 ## Authoritative checkpoint
 
-The exact-credit checkpoint is `a95321e` (curve laser initialization and the
-elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
+The latest exact result is the complete 1,348-byte masked-animation callback,
+reviewed in [masked-effect exact evidence](knowledge/masked-effect-exact.md).
+Earlier exact checkpoint `a95321e` covers curve laser initialization and the
+elliptical drop helper. Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. Source checkpoint
 `a9c0a41` restores the random-ring radius interpolation boundary and SSE arithmetic.
-The latest continuation restores the distinct Boss and ECL sub-call restart
-shapes. The preceding projectile angle-consumer repairs are retained. The shared
+The latest continuation resolves the masked callback's final literal through
+its original MOVSS witness. All new gameplay source trials are restored; the
+preceding Boss restart and projectile angle-consumer repairs are retained. The shared
 expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
-The preceding curve, Boss and async source work is retained. No new exact credit is claimed.
-The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
-annotations: **169,575 exact primary bytes and 950 retained units**.
+The preceding curve, Boss and async source work is retained. One complete new
+exact owner adds 1,348 primary bytes. The canonical report is **886 exact,
+65 mismatch, 264 incomplete** among 1,215 annotations: **170,923 exact primary
+bytes and 951 retained units**.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `2790b5687dcf511fab390dea7d6299772fd015e6c966a192525f41222ecfe196`.
-PDB age is **322**. The final incremental build, strict replay and progress check
+PDB age is **330**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -33,6 +47,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Masked-animation draw callback](knowledge/masked-effect-exact.md) | Complete 1,348-byte exact owner, all 57 linked fields; original 464.0f identity resolved through its fixed MOVSS read; no game-source change |
 | [Boss restart call context](knowledge/boss-restart-call-context.md) | Original out-of-line life restart and inline ECL call restart; 768 complete native calls per image and unchanged complete upper dispatcher; no new exact credit |
 | [Projectile angle consumers and native dispatch](knowledge/projectile-angle-consumers-and-native-dispatch.md) | Original direct angle-word store and shared float selection in the 5,500-byte dispatcher; 560 native calls agree, including 110 complete-state models; no new exact credit |
 | [ECL ring precision and active interpolation](knowledge/ecl-ring-precision-and-interpolation.md) | Original float sample boundary and SSE radius arithmetic; 120 historical position differences removed; 3,288 complete calls agree; no new exact credit |
@@ -57,6 +72,36 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [exact masked-animation draw callback](knowledge/masked-effect-exact.md)
+first. Starting checkpoint `f14ab14` is preserved. The complete
+`anm_on_draw_masked` owner at `0x004073A0` is now **1,348/1,348 exact**, with
+355 instructions and all 51 DIR32 / 6 REL32 fields checked. Its final unresolved
+field is the 464.0f literal at `0x004946B4`, fixed by the original MOVSS at
+`0x004074C4`. Equal-content storage at `0x0049486C` is rejected by the witness.
+The binding uses the existing literal profile; no Oracle rule is changed.
+
+Full strict replay preserves all prior exact results and changes only this
+callback from incomplete to exact. Totals are **886/65/264**, **170,923 primary
+exact bytes**, **951 units**. All 47 reviewed-linkage static tests pass,
+including the new wrong-witness/storage/extent and byte-mutation controls.
+No game runtime is executed after the user's workflow correction.
+
+All new Boss dialogue, integer-vector and music-room source forms are restored.
+The integer-vector addition variants still fail their full owner; music-room
+zero-initialization variants retain two/three mismatching bytes. The
+anchor-export forecast has 299 different bytes and is not promoted into a
+binding. Game source/build input is unchanged from the starting checkpoint;
+PDB age is 330 after the incremental restoration build.
+
+Preserve `.analysis/boss-credit-work/`, including both full images, source
+snapshots, complete scope/field packets, original-first literal/CFG/table
+proof, failed helper versions, forecasts, control logs and
+`final-regression.json`. Continue with complete static exact work on large
+functions. Do not add padding, dead locals, per-registration ordering exceptions
+or permissive bindings to recover the remaining near-matches.
+
+### Earlier Boss restart call context
 
 Read [Boss restart call context](knowledge/boss-restart-call-context.md) first.
 Starting checkpoint `4823bf3` is preserved. `SptInf::load_sub_by_name` now stays

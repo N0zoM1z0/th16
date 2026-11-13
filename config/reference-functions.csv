@@ -109,7 +109,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00406E10,InterpFloat3::step,src/Interp.cpp,?step@InterpFloat3@@QAE?AUD3DXVECTOR3@@XZ,mismatch,,.analysis/reference-audit.json
 0x004071A0,anm_masked_effect_init,src/AnmVmCallbacks.cpp,?anm_masked_effect_init@@YIHPAUAnmVm@@PAUD3DXVECTOR3@@@Z,exact,,.analysis/reference-audit.json
 0x00407330,anm_masked_effect_on_tick,src/AnmVmCallbacks.cpp,?anm_masked_effect_on_tick@@YIHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004073A0,anm_on_draw_masked,src/AnmRender.cpp,?anm_on_draw_masked@@YIHPAUAnmVm@@@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004073A0,anm_on_draw_masked,src/AnmRender.cpp,?anm_on_draw_masked@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x004078F0,anm_masked_effect_on_destroy,src/AnmVmCallbacks.cpp,?anm_masked_effect_on_destroy@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00407900,anm_masked_effect_on_switch,src/AnmVmCallbacks.cpp,?anm_masked_effect_on_switch@@YIHPAUAnmVm@@H@Z,mismatch,,.analysis/reference-audit.json
 0x00407A50,AnmVm::wipe_suffix,src/AnmVm.cpp,?wipe_suffix@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
