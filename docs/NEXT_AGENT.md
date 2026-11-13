@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after complete static camera-sky and Boss-query follow-up.
+Updated 2026-11-13 after complete static interpreter, laser and menu trials.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,6 +17,21 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
+Three complete laser-rectangle forms, two full options-cursor forms and
+fourteen main animation-interpreter forms are rejected and restored, with
+**no new exact credit**. Original laser/cursor CFGs reach all 451/1,369
+instructions. Explicit circle arguments recover a 146-byte instruction
+sequence inside the 14,177-byte interpreter, but full-owner regression finds
+new Y/Z camera-add operand differences. Vector, scalar and declaration forms
+do not retain both; the entire change is restored. Do not accept this case
+separately or repeat these forms. See
+[complete interpreter/laser trials](knowledge/interpreter-and-laser-complete-owner-trials.md).
+Keep `.analysis/laser-rectangle-copy-work/`, `.analysis/menu-search-result-work/`
+and `.analysis/anm-interpreter-results-work/`, including the failed full-owner
+regression evidence. Restoration preserves all 1,215 results, 956 units,
+all 1,719 native owners (527,136 bytes), addresses/extents/relocations and
+raw `.text`. Game source is unchanged from `e5c5bd9`; current PDB age is **558**.
+
 Eight camera-sky source forms and three Boss damage-query forms are rejected
 and restored, with **no new exact credit**. The complete 1,623-byte camera-sky
 original has all 408 instructions reachable. Scalar-product and difference-order
@@ -29,7 +44,7 @@ Keep `.analysis/camera-sky-exact-work/`, `.analysis/boss-query-result-work/` and
 the read-only `.analysis/float2-time-result-work/` baseline. No Float2 source
 trial was built. Final restoration preserves all 1,215 results, 956 units,
 all 1,719 owners (527,136 bytes), addresses/extents/relocations and raw `.text`.
-Game source is unchanged from `1048422`; current incremental PDB age is **537**.
+Game source is unchanged from `1048422`; that checkpoint's PDB age is **537**.
 
 Two Boss counter-layout forms and seven complete stage-fog forms are
 rejected and restored, with **no new exact credit**. Separating direct/other
@@ -235,7 +250,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `80da752f1d593ebbb54bc5fecf92210566c8ba0ed0acb6e05ce1e4659e99259d`.
-PDB age is **537**. The final incremental build, strict replay and progress check
+PDB age is **558**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -244,6 +259,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Complete interpreter, laser and cursor trials](knowledge/interpreter-and-laser-complete-owner-trials.md) | Full 14,177-byte interpreter, 1,968-byte laser and 5,034-byte menu trials rejected/restored; full-owner check catches camera regression; all 893 exact retained |
 | [Camera-sky and Boss query boundaries](knowledge/camera-sky-and-boss-query-trials.md) | Complete 408-instruction camera-sky CFG; eight camera and three Boss query forms rejected/restored; all 893 exact results and complete native code preserved |
 | [Dialogue position-array context](knowledge/dialogue-position-array-exact.md) | Complete 1,223-byte dialogue constructor exact, all 287 instructions and 33 fields; all prior 892 exact and other 1,718 native owners preserved; Boss/bomb trials restored |
 | [Shared callback construction](knowledge/updatefunc-construction-exact.md) | Complete 5,071-byte AnmManager constructor exact, all 164 fields and existing EH graph; all prior 891 exact and other 1,718 native owners preserved; no callback-specific source case |
