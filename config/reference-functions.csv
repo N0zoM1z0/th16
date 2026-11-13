@@ -482,9 +482,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042CA00,EnemyManager::reset_for_stage,src/EnemyManager.cpp,?reset_for_stage@EnemyManager@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0042CA80,Player::withdraw_options,src/Player.cpp,?withdraw_options@Player@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042CB00,LaserManager::destroy_all,src/Laser.cpp,?destroy_all@LaserManager@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x0042CB60,GameThread::thread_start,src/GameThread.cpp,?thread_start@GameThread@@SAHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042CB60,GameThread::thread_start,src/GameThread.cpp,?thread_start@GameThread@@SAHXZ,exact,,.analysis/reference-audit.json
 0x0042D1F0,GameThread::thread_start_callback,src/GameThread.cpp,?thread_start_callback@GameThread@@SAXXZ,exact,,.analysis/reference-audit.json
-0x0042D200,GameThread::~GameThread,src/GameThread.cpp,??1GameThread@@QAE@XZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042D200,GameThread::~GameThread,src/GameThread.cpp,??1GameThread@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0042D700,GameThread::create,src/GameThread.cpp,?create@GameThread@@SAPAU1@H@Z,exact,,.analysis/reference-audit.json
 0x0042D780,GameThread::destroy,src/GameThread.cpp,?destroy@GameThread@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0042D7B0,GameThread::on_tick_body,src/GameThread.cpp,?on_tick_body@GameThread@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -647,7 +647,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043B3C0,LoadingThread::on_draw_thunk,src/LoadingThread.cpp,?on_draw_thunk@LoadingThread@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043B3D0,Supervisor::on_tick,src/Supervisor.cpp,?on_tick@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043B480,Supervisor::open_data_files,src/Supervisor.cpp,?open_data_files@Supervisor@@SAHXZ,exact,,.analysis/reference-audit.json
-0x0043B520,Supervisor::on_registration,src/Supervisor.cpp,?on_registration@Supervisor@@SIHPAX@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0043B520,Supervisor::on_registration,src/Supervisor.cpp,?on_registration@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043B660,Supervisor::teardown_everything,src/Supervisor.cpp,?teardown_everything@Supervisor@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0043B900,AnmVm::scalar_delete,src/AnmVm.cpp,?scalar_delete@AnmVm@@QAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x0043B950,Supervisor::destroy_game_objects,src/Supervisor.cpp,?destroy_game_objects@Supervisor@@SAXXZ,exact,,.analysis/reference-audit.json
@@ -672,9 +672,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043CB10,Supervisor::setup_cameras,src/Supervisor.cpp,?setup_cameras@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043CE10,Supervisor::switch_gamemodes,src/Supervisor.cpp,?switch_gamemodes@Supervisor@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0043D140,Supervisor::on_draw_01,src/Supervisor.cpp,?on_draw_01@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
-0x0043D2F0,Supervisor::on_draw_0f,src/Supervisor.cpp,?on_draw_0f@Supervisor@@SIHPAX@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0043D2F0,Supervisor::on_draw_0f,src/Supervisor.cpp,?on_draw_0f@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D400,Supervisor::on_draw_0e,src/Supervisor.cpp,?on_draw_0e@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
-0x0043D4A0,Supervisor::on_draw_1a,src/Supervisor.cpp,?on_draw_1a@Supervisor@@SIHPAX@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0043D4A0,Supervisor::on_draw_1a,src/Supervisor.cpp,?on_draw_1a@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D5A0,Supervisor::on_draw_19,src/Supervisor.cpp,?on_draw_19@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D640,Supervisor::on_draw_2c,src/Supervisor.cpp,?on_draw_2c@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D6F0,Supervisor::on_draw_2b,src/Supervisor.cpp,?on_draw_2b@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json

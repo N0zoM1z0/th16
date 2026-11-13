@@ -659,7 +659,9 @@ address,name,module,source_file,notes
 0x0043CB10,Supervisor::setup_cameras,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043CE10,Supervisor::switch_gamemodes,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D140,Supervisor::on_draw_01,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043D2F0,Supervisor::on_draw_0f,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D400,Supervisor::on_draw_0e,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043D4A0,Supervisor::on_draw_1a,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D5A0,Supervisor::on_draw_19,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D640,Supervisor::on_draw_2c,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043D6F0,Supervisor::on_draw_2b,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.

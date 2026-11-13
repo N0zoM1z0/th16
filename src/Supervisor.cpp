@@ -207,9 +207,9 @@ AnmId g_stage_load_anm_ids[3];
 // GLOBAL: TH16 0x4a6ef0
 i32 g_unk_4a6ef0;
 // GLOBAL: TH16 0x4a6ee8
-void (*g_draw_hook_1a)();
+DrawHook g_draw_hook_1a;
 // GLOBAL: TH16 0x4a6eec
-void (*g_draw_hook_0f)();
+DrawHook g_draw_hook_0f;
 
 // The fog and z-write switches: each flushes the sprite batch and changes
 // the render state only if it differs from the cached one.

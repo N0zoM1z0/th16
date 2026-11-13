@@ -190,3 +190,9 @@ No Oracle or binding implementation changes in this batch.
 
 These are local comparison results. Source-origin review and Factory acceptance
 remain open; this review submits no acceptance receipt.
+
+`Supervisor::on_draw_0f` (`0x0043D2F0`, 257 bytes) and `Supervisor::on_draw_1a`
+(`0x0043D4A0`, 244 bytes) are registered by pushes at `0x0043BAC4` and
+`0x0043BAFE`. Each decodes completely from its entry with INT3 padding to the
+next function, so both boundaries are recorded; with the `DrawHook` typedef
+binding `g_draw_hook_0f`/`g_draw_hook_1a`, both callbacks are exact.

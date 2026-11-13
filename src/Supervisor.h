@@ -551,10 +551,11 @@ extern i16 g_pad_mapping[10];
 extern AnmId g_stage_load_anm_ids[3];
 // Cleared with them; nothing else uses it.
 extern i32 g_unk_4a6ef0;
+typedef void (*DrawHook)();
 // When set, Supervisor::on_draw_1a calls it instead of drawing.
-extern void (*g_draw_hook_1a)();
+extern DrawHook g_draw_hook_1a;
 // When set, Supervisor::on_draw_0f calls it instead of drawing.
-extern void (*g_draw_hook_0f)();
+extern DrawHook g_draw_hook_0f;
 
 // Where the title menu starts the next time it is created
 // (g_title_return_point).
