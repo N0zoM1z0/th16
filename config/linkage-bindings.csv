@@ -130,3 +130,5 @@ ___stdio_common_vsprintf,0x4792a8,36,runtime-function,f190a95f4c3b665b7b8ea169f7
 ??_C@_08KDHDGEAE@th16?4dat?$AA@,0x49257c,9,string-literal,dc79139e05d928575fc921539fa98660252c090a6d91f033cb23efe86a469ed9,0x45701a,push,docs/knowledge/reviewed-linkages.md,,
 ??_C@_01KDCPPGHE@r?$AA@,0x4937b0,2,string-literal,96229c0a1dcb79d7d50913f882e3144961b5616140ded9ab844bd685e08e3a30,0x457033,push,docs/knowledge/reviewed-linkages.md,,
 ??_C@_05FHEMFMOG@1?400a?$AA@,0x492d24,6,string-literal,9eb2f5467f7d1e1a98c5458b3f30cecadfc87d68c3762d53d4cf270fd9978b16,0x44894c,push,docs/knowledge/replay-literal-identities.md,,
+__real@42300000,0x494608,4,literal,6ef7381c255a2d0592a9111e7c8d6f3fc6edb7aef5603d1f8a160c9be50db51c,0x456f51,addss,docs/knowledge/reviewed-linkages.md,,
+__real@80000000,0x494704,4,literal,6d58692645c9d1cfaf13541cbd258f86193ef63c2f1d38f6bbca9617372d7bd6,0x434419,movss,docs/knowledge/reviewed-linkages.md,,
