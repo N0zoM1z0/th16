@@ -903,8 +903,8 @@ address,size,span_end,state,evidence
 0x00458730,954,0x00458AE9,provisional,.analysis/reference-audit.json
 0x00458AF0,388,0x00458C73,provisional,.analysis/reference-audit.json
 0x00458C80,210,0x00458D51,strict-compared,.analysis/reference-audit.json
-0x00458D60,80,0x00458DAF,provisional,.analysis/reference-audit.json
-0x00458DB0,1155,0x00459232,provisional,.analysis/reference-audit.json
+0x00458D60,80,0x00458DAF,strict-compared,.analysis/reference-audit.json
+0x00458DB0,1155,0x00459232,strict-compared,.analysis/reference-audit.json
 0x00459240,868,0x004595A3,strict-compared,.analysis/reference-audit.json
 0x004595B0,1,0x004595B0,strict-compared,.analysis/reference-audit.json
 0x004595C0,126,0x0045963D,strict-compared,.analysis/reference-audit.json

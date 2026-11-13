@@ -916,8 +916,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x00458730,TextHelper::bleed_color,src/TextHelper.cpp,?bleed_color@TextHelper@@QAE_NH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00458AF0,TextHelper::blur_alpha,src/TextHelper.cpp,?blur_alpha@TextHelper@@QAE_NH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00458C80,TextHelper::invert_alpha,src/TextHelper.cpp,?invert_alpha@TextHelper@@QAE_NHH@Z,exact,,.analysis/reference-audit.json
-0x00458D60,find_meiryo,src/TextHelper.cpp,?find_meiryo@@YGHPBUtagLOGFONTA@@PBUtagTEXTMETRICA@@KJ@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00458DB0,create_fonts,src/TextHelper.cpp,?create_fonts@@YAXXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00458D60,find_meiryo,src/TextHelper.cpp,?find_meiryo@@YGHPBUtagLOGFONTA@@PBUtagTEXTMETRICA@@KJ@Z,exact,,.analysis/reference-audit.json
+0x00458DB0,create_fonts,src/TextHelper.cpp,?create_fonts@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00459240,draw_text,src/TextHelper.cpp,?draw_text@@YGXPAUtagRECT@@HHKKPBDPAUIDirect3DTexture9@@HHH@Z,exact,,.analysis/reference-audit.json
 0x004595B0,window_debug_log,src/GameWindow.cpp,?window_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x004595C0,AnmManager::release_textures,src/AnmTextures.cpp,?release_textures@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json

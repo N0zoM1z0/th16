@@ -18688,6 +18688,99 @@ linkages = [
   { offset = 18, width = 4, type = "DIR32", symbol = "?g_TextHelper@@3UTextHelper@@A", target = 4873568, addend = 16, storage_name = "g_TextHelper", storage_size = 36 },
 ]
 
+[units.reference-00458d60]
+artifact_kind = "linked-pe"
+source = "src/TextHelper.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?find_meiryo@@YGHPBUtagLOGFONTA@@PBUtagTEXTMETRICA@@KJ@Z"
+object = "TextHelper.obj"
+candidate_address = 4659616
+target_address = 4558176
+size = 80
+compare_size = 80
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "?g_meiryo_available@@3HA", target = 4878124, addend = 0 },
+]
+
+[units.reference-00458db0]
+artifact_kind = "linked-pe"
+source = "src/TextHelper.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create_fonts@@YAXXZ"
+object = "TextHelper.obj"
+candidate_address = 4659696
+target_address = 4558256
+size = 1155
+compare_size = 1155
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 21, width = 4, type = "DIR32", symbol = "__imp__GetDC@4", target = 4764220, addend = 0 },
+  { offset = 37, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 8 },
+  { offset = 60, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 65, width = 4, type = "DIR32", symbol = "?find_meiryo@@YGHPBUtagLOGFONTA@@PBUtagTEXTMETRICA@@KJ@Z", target = 4558176, addend = 0 },
+  { offset = 116, width = 4, type = "DIR32", symbol = "__imp__EnumFontFamiliesExA@20", target = 4763676, addend = 0 },
+  { offset = 125, width = 4, type = "DIR32", symbol = "__imp__ReleaseDC@8", target = 4764092, addend = 0 },
+  { offset = 135, width = 4, type = "REL32", symbol = "?try_allocate_buffer@TextHelper@@QAE_NHHW4_D3DFORMAT@@@Z", target = 4556192, addend = 0 },
+  { offset = 149, width = 4, type = "REL32", symbol = "?try_allocate_buffer@TextHelper@@QAE_NHHW4_D3DFORMAT@@@Z", target = 4556192, addend = 0 },
+  { offset = 156, width = 4, type = "DIR32", symbol = "__imp__LeaveCriticalSection@4", target = 4763764, addend = 0 },
+  { offset = 165, width = 4, type = "DIR32", symbol = "__imp__EnterCriticalSection@4", target = 4763760, addend = 0 },
+  { offset = 178, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 186, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 240, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 194, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 346, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 199, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 0 },
+  { offset = 205, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 4, storage_name = "g_replay_unsafe_rng", storage_size = 8 },
+  { offset = 237, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 350, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 245, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 0 },
+  { offset = 252, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 240, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 260, width = 4, type = "DIR32", symbol = "?g_CriticalSections@@3UCriticalSections@@A", target = 4984664, addend = 346, storage_name = "g_CriticalSections", storage_size = 352 },
+  { offset = 267, width = 4, type = "DIR32", symbol = "?g_replay_unsafe_rng@@3URng@@A", target = 4877696, addend = 0 },
+  { offset = 277, width = 4, type = "DIR32", symbol = "?g_text_random_bytes@@3PAEA", target = 4873312, addend = 0 },
+  { offset = 292, width = 4, type = "DIR32", symbol = "?g_meiryo_available@@3HA", target = 4878124, addend = 0 },
+  { offset = 299, width = 4, type = "DIR32", symbol = "__imp__CreateFontA@56", target = 4763708, addend = 0 },
+  { offset = 312, width = 4, type = "DIR32", symbol = "??_C@_0O@LAEHDGPN@?$ICl?$ICr?5?$IDS?$IDV?$IDb?$IDN?$AA@", target = 4798396, addend = 0 },
+  { offset = 351, width = 4, type = "DIR32", symbol = "??_C@_0O@LAEHDGPN@?$ICl?$ICr?5?$IDS?$IDV?$IDb?$IDN?$AA@", target = 4798396, addend = 0 },
+  { offset = 388, width = 4, type = "DIR32", symbol = "?g_text_font_default@@3PAUHFONT__@@A", target = 5110020, addend = 0 },
+  { offset = 395, width = 4, type = "DIR32", symbol = "??_C@_0O@LAEHDGPN@?$ICl?$ICr?5?$IDS?$IDV?$IDb?$IDN?$AA@", target = 4798396, addend = 0 },
+  { offset = 432, width = 4, type = "DIR32", symbol = "?g_text_font_8@@3PAUHFONT__@@A", target = 5110024, addend = 0 },
+  { offset = 439, width = 4, type = "DIR32", symbol = "??_C@_0O@LAEHDGPN@?$ICl?$ICr?5?$IDS?$IDV?$IDb?$IDN?$AA@", target = 4798396, addend = 0 },
+  { offset = 476, width = 4, type = "DIR32", symbol = "?g_text_font_0@@3PAUHFONT__@@A", target = 5110028, addend = 0 },
+  { offset = 483, width = 4, type = "DIR32", symbol = "??_C@_09LCOPKLB@?$ICl?$ICr?5?$JG?$LO?$JC?$KJ?$AA@", target = 4798424, addend = 0 },
+  { offset = 520, width = 4, type = "DIR32", symbol = "?g_text_font_4@@3PAUHFONT__@@A", target = 5110044, addend = 0 },
+  { offset = 527, width = 4, type = "DIR32", symbol = "?g_text_font_1@@3PAUHFONT__@@A", target = 5110032, addend = 0 },
+  { offset = 532, width = 4, type = "DIR32", symbol = "??_C@_09LCOPKLB@?$ICl?$ICr?5?$JG?$LO?$JC?$KJ?$AA@", target = 4798424, addend = 0 },
+  { offset = 571, width = 4, type = "DIR32", symbol = "??_C@_0O@LAEHDGPN@?$ICl?$ICr?5?$IDS?$IDV?$IDb?$IDN?$AA@", target = 4798396, addend = 0 },
+  { offset = 608, width = 4, type = "DIR32", symbol = "?g_text_font_5@@3PAUHFONT__@@A", target = 5110048, addend = 0 },
+  { offset = 615, width = 4, type = "DIR32", symbol = "??_C@_09LCOPKLB@?$ICl?$ICr?5?$JG?$LO?$JC?$KJ?$AA@", target = 4798424, addend = 0 },
+  { offset = 652, width = 4, type = "DIR32", symbol = "?g_text_font_2@@3PAUHFONT__@@A", target = 5110036, addend = 0 },
+  { offset = 659, width = 4, type = "DIR32", symbol = "??_C@_0O@LAEHDGPN@?$ICl?$ICr?5?$IDS?$IDV?$IDb?$IDN?$AA@", target = 4798396, addend = 0 },
+  { offset = 701, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 740, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 777, width = 4, type = "DIR32", symbol = "?g_text_font_default@@3PAUHFONT__@@A", target = 5110020, addend = 0 },
+  { offset = 784, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 821, width = 4, type = "DIR32", symbol = "?g_text_font_8@@3PAUHFONT__@@A", target = 5110024, addend = 0 },
+  { offset = 828, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 865, width = 4, type = "DIR32", symbol = "?g_text_font_0@@3PAUHFONT__@@A", target = 5110028, addend = 0 },
+  { offset = 872, width = 4, type = "DIR32", symbol = "??_C@_09LCOPKLB@?$ICl?$ICr?5?$JG?$LO?$JC?$KJ?$AA@", target = 4798424, addend = 0 },
+  { offset = 909, width = 4, type = "DIR32", symbol = "?g_text_font_4@@3PAUHFONT__@@A", target = 5110044, addend = 0 },
+  { offset = 916, width = 4, type = "DIR32", symbol = "?g_text_font_1@@3PAUHFONT__@@A", target = 5110032, addend = 0 },
+  { offset = 921, width = 4, type = "DIR32", symbol = "??_C@_09LCOPKLB@?$ICl?$ICr?5?$JG?$LO?$JC?$KJ?$AA@", target = 4798424, addend = 0 },
+  { offset = 960, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 997, width = 4, type = "DIR32", symbol = "?g_text_font_5@@3PAUHFONT__@@A", target = 5110048, addend = 0 },
+  { offset = 1004, width = 4, type = "DIR32", symbol = "??_C@_09LCOPKLB@?$ICl?$ICr?5?$JG?$LO?$JC?$KJ?$AA@", target = 4798424, addend = 0 },
+  { offset = 1041, width = 4, type = "DIR32", symbol = "?g_text_font_2@@3PAUHFONT__@@A", target = 5110036, addend = 0 },
+  { offset = 1048, width = 4, type = "DIR32", symbol = "??_C@_08FPOHBHLK@?$ID?$IB?$IDC?$ID?$IK?$IDI?$AA@", target = 4798412, addend = 0 },
+  { offset = 1085, width = 4, type = "DIR32", symbol = "?g_text_font_3@@3PAUHFONT__@@A", target = 5110040, addend = 0 },
+  { offset = 1092, width = 4, type = "DIR32", symbol = "??_C@_09LCOPKLB@?$ICl?$ICr?5?$JG?$LO?$JC?$KJ?$AA@", target = 4798424, addend = 0 },
+  { offset = 1129, width = 4, type = "DIR32", symbol = "?g_text_font_6@@3PAUHFONT__@@A", target = 5110052, addend = 0 },
+  { offset = 1141, width = 4, type = "DIR32", symbol = "?g_text_font_7@@3PAUHFONT__@@A", target = 5110056, addend = 0 },
+  { offset = 1147, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+]
+
 [units.reference-00459240]
 artifact_kind = "linked-pe"
 source = "src/TextHelper.cpp"

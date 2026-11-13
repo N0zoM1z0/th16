@@ -406,7 +406,7 @@ HARNESS_CALLED bool TextHelper::invert_alpha(i32 rows, i32 y)
 }
 
 // FUNCTION: TH16 0x458d60
-static int CALLBACK find_meiryo(const LOGFONTA *font, const TEXTMETRICA *metric, DWORD type, LPARAM param)
+int CALLBACK find_meiryo(const LOGFONTA *font, const TEXTMETRICA *metric, DWORD type, LPARAM param)
 {
     if (strcmp((const char *)((ENUMLOGFONTEXA *)font)->elfFullName, "\x83\x81\x83" "C\x83\x8a\x83I") == 0)
     {

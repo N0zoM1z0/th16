@@ -750,6 +750,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00458520,TextHelper::release_buffer,reference-00458520,local-strict-pass,122,122,122,.analysis/reference-audit.json
 0x004585A0,TextHelper::try_allocate_buffer,reference-004585a0,local-strict-pass,388,388,388,.analysis/reference-audit.json
 0x00458C80,TextHelper::invert_alpha,reference-00458c80,local-strict-pass,210,210,210,.analysis/reference-audit.json
+0x00458D60,find_meiryo,reference-00458d60,local-strict-pass,80,80,80,.analysis/reference-audit.json
+0x00458DB0,create_fonts,reference-00458db0,local-strict-pass,1155,1155,1155,.analysis/reference-audit.json
 0x00459240,draw_text,reference-00459240,local-strict-pass,868,868,868,.analysis/reference-audit.json
 0x004595B0,window_debug_log,reference-004595b0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x004595C0,AnmManager::release_textures,reference-004595c0,local-strict-pass,126,126,126,.analysis/reference-audit.json
