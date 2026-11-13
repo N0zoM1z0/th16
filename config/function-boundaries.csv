@@ -294,7 +294,7 @@ address,size,span_end,state,evidence
 0x00417790,272,0x0041789F,provisional,.analysis/reference-audit.json
 0x004178A0,130,0x00417921,strict-compared,.analysis/reference-audit.json
 0x00417930,650,0x00417BB9,strict-compared,.analysis/reference-audit.json
-0x00417BC0,418,0x00417D61,provisional,.analysis/reference-audit.json
+0x00417BC0,418,0x00417D61,strict-compared,.analysis/reference-audit.json
 0x00417D70,368,0x00417EDF,provisional,.analysis/reference-audit.json
 0x00417EE0,5,0x00417EE4,strict-compared,.analysis/reference-audit.json
 0x00417EF0,5,0x00417EF4,strict-compared,.analysis/reference-audit.json
@@ -1835,7 +1835,7 @@ address,size,span_end,state,evidence
 0x004884C0,453,0x00488684,provisional,ghidra-initial-import
 0x00488690,254,0x0048878D,provisional,ghidra-initial-import
 0x00488790,605,0x004889EC,provisional,ghidra-initial-import
-0x00488A00,2991,0x004895AE,provisional,ghidra-initial-import
+0x00488A00,253,0x00488AFC,provisional,ghidra-initial-import
 0x00488B6C,9,0x00488B74,provisional,ghidra-initial-import
 0x00488BB0,68,0x00488BF3,provisional,ghidra-initial-import
 0x00488BF4,67,0x00488C36,provisional,ghidra-initial-import
@@ -1852,6 +1852,7 @@ address,size,span_end,state,evidence
 0x00489324,9,0x0048932C,provisional,ghidra-initial-import
 0x0048932D,157,0x004893C9,provisional,ghidra-initial-import
 0x0048945F,151,0x004894F5,provisional,ghidra-initial-import
+0x004894F6,185,0x004895AE,provisional,ghidra-initial-import
 0x004895B0,24,0x004895C7,provisional,ghidra-initial-import
 0x004895CE,1334,0x00489B03,provisional,ghidra-initial-import
 0x00489B10,24,0x00489B27,provisional,ghidra-initial-import

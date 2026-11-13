@@ -234,6 +234,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00417700,Spellcard::initialize,reference-00417700,local-strict-pass,131,131,131,.analysis/reference-audit.json
 0x004178A0,Spellcard::create,reference-004178a0,local-strict-pass,130,130,130,.analysis/reference-audit.json
 0x00417930,Spellcard::on_tick_body,reference-00417930,local-strict-pass,650,650,650,.analysis/reference-audit.json
+0x00417BC0,Spellcard::measure_real_time,reference-00417bc0,local-strict-pass,418,418,418,.analysis/reference-audit.json
 0x00417EE0,Spellcard::on_tick_callback,reference-00417ee0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00417EF0,Spellcard::on_draw_callback,reference-00417ef0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00417F00,Spellcard::start,reference-00417f00,local-strict-pass,1007,1007,1007,.analysis/reference-audit.json

@@ -1,6 +1,7 @@
 # Current handoff
 
-Updated 2026-11-13 after complete static interpreter, laser and menu trials.
+Updated 2026-11-13 after exact spellcard-clock verification and complete
+Boss, animation-clock, entry-timer and supervisor source trials.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,6 +18,35 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
+The complete **418-byte** `Spellcard::measure_real_time` at `0x00417BC0`
+is now **exact**, including all 107 original instructions and 14 linked fields.
+Game C++ source is unchanged: independent complete `_floor` and closed x87
+fmod-family identities resolve the two missing fields. The latter verifies
+1,179 code bytes and 190 data bytes before exposing only `__CIfmod` at parent
+offset 10. Six ordinary complete math-runtime bindings receive no primary
+credit. The original `_floor` range is corrected to 253 bytes with two
+explicit tail edges to a separately reviewed 185-byte fallback. No original
+instruction is discarded. The primary strict replay rules are unchanged.
+All 101 static controls pass; no game code is run or emulated. See
+[spellcard clock and math-runtime identities](knowledge/math-runtime-identities.md).
+Keep `.analysis/math-runtime-work/`, including complete original CFGs,
+support proofs, all control logs, refused initial runs and final regression.
+
+Three entry-timer forms, three supervisor exit forms, two Boss damage-result
+aggregate layouts and one seven-file animation-clock array form fail to
+produce a new complete exact owner and are restored. The clock array leaves
+all native code unchanged. Do not repeat them as new hypotheses; see the
+same review's rejected-trial table. Keep `.analysis/anm-entry-timer-work/`,
+`.analysis/surface-exit-work/`, `.analysis/boss-local-sample-work/` and
+`.analysis/anm-clock-array-work/`. Final regression retains all prior 893
+exact owners, all 956 previous unit definitions, all 1,719 native owners
+(527,136 bytes), addresses/extents, relocations and the entire raw `.text`.
+Current totals are **894 exact / 63 mismatch / 258 incomplete**, with
+**182,748 exact primary bytes and 957 units**; PDB age is **569**.
+All six formerly unresolved math fields in `AnmVm::run` are now bound, but
+its complete 14,141-byte candidate still differs from the 14,177-byte
+original. Boss logic and the large interpreter remain active source targets.
+
 Three complete laser-rectangle forms, two full options-cursor forms and
 fourteen main animation-interpreter forms are rejected and restored, with
 **no new exact credit**. Original laser/cursor CFGs reach all 451/1,369
@@ -30,7 +60,7 @@ Keep `.analysis/laser-rectangle-copy-work/`, `.analysis/menu-search-result-work/
 and `.analysis/anm-interpreter-results-work/`, including the failed full-owner
 regression evidence. Restoration preserves all 1,215 results, 956 units,
 all 1,719 native owners (527,136 bytes), addresses/extents/relocations and
-raw `.text`. Game source is unchanged from `e5c5bd9`; current PDB age is **558**.
+raw `.text`. Game source is unchanged from `e5c5bd9`; that checkpoint's PDB age is **558**.
 
 Eight camera-sky source forms and three Boss damage-query forms are rejected
 and restored, with **no new exact credit**. The complete 1,623-byte camera-sky
@@ -237,11 +267,15 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **893 exact, 63 mismatch, 259 incomplete** among 1,215
-annotations: **182,330 exact primary bytes and 956 retained comparison units**.
-All 893 exact owners and all 1,215 annotation results/diagnostics remain
-unchanged from `4e01372`, apart from current build identities. Every unit
-definition, original boundary and address is unchanged. All 1,719 complete
+The canonical report is **894 exact, 63 mismatch, 258 incomplete** among 1,215
+annotations: **182,748 exact primary bytes and 957 retained comparison units**.
+All 893 previous exact owners and 956 prior unit definitions remain unchanged
+from `489ae61`. Only the complete Spellcard clock gains exact credit. Four
+other diagnostics advance but remain incomplete: `_floorf` reaches its PDB
+source-owner refusal; both curve-node functions still lack `__CIatan2`;
+`AnmVm::run` fails its complete extent. The other 1,210 annotation results and
+diagnostics are unchanged, apart from current build identities. Runtime floor
+boundaries are independently corrected; no game boundary changes. All 1,719 complete
 candidate owners remain raw-identical (527,136 bytes), with unchanged
 addresses/extents, all image base relocations and the entire raw `.text`.
 The Boss logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
@@ -250,7 +284,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `80da752f1d593ebbb54bc5fecf92210566c8ba0ed0acb6e05ce1e4659e99259d`.
-PDB age is **558**. The final incremental build, strict replay and progress check
+PDB age is **569**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -259,6 +293,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Exact spellcard clock and math-runtime identities](knowledge/math-runtime-identities.md) | Complete 418-byte Spellcard clock exact; closed 1,179-byte code / 190-byte data runtime support, 101 static controls; prior 893 exact preserved; Boss/clock/entry/supervisor source trials restored |
 | [Complete interpreter, laser and cursor trials](knowledge/interpreter-and-laser-complete-owner-trials.md) | Full 14,177-byte interpreter, 1,968-byte laser and 5,034-byte menu trials rejected/restored; full-owner check catches camera regression; all 893 exact retained |
 | [Camera-sky and Boss query boundaries](knowledge/camera-sky-and-boss-query-trials.md) | Complete 408-instruction camera-sky CFG; eight camera and three Boss query forms rejected/restored; all 893 exact results and complete native code preserved |
 | [Dialogue position-array context](knowledge/dialogue-position-array-exact.md) | Complete 1,223-byte dialogue constructor exact, all 287 instructions and 33 fields; all prior 892 exact and other 1,718 native owners preserved; Boss/bomb trials restored |

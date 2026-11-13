@@ -22,3 +22,23 @@ offset = 848
 witness_parent = 0x0045b130
 witness_parent_sha256 = "2c7915ea74b359f705a467b0c48771f024cec15f57d49f096a6c048f4e5f2694"
 witnesses = [0x0045b190, 0x0045b1a6]
+
+[objects.fmod]
+profile = "msvc-x86-fmod-v1"
+evidence = "docs/knowledge/math-runtime-identities.md"
+fastflag_address = 0x4a6d74
+witness_parent = 0x417bc0
+witness_parent_sha256 = "70224c81600e64720b75cbe54c557cc1cc839016d6cd08b59d9f2499510b3aea"
+witnesses = [0x417c2a]
+fmod_address = 0x487ac0
+fmod_sha256 = "41f152956e8d11ba890a15ad6c2b987f512bc6e8c6001956644475a84aa2c472"
+fmod_data_address = 0x494940
+fmod_data_sha256 = "9a41f64837ff9be1abe36c659137814bda255e8063033f4d4220d8702869871f"
+dispatch_address = 0x485590
+dispatch_sha256 = "4f0f69b548c07e763fd056ecdb618a43d6afc7f15806d3201e2f8a8c711a5486"
+dispatch_data_address = 0x490320
+dispatch_data_sha256 = "3b309b6b555d7793fe96ff9f2ec2f5d75254ff87c5f2028dfdbfba2c8b5361ee"
+c_dispatch_address = 0x488bb0
+c_dispatch_sha256 = "16a7fcec7ed04d55cb296277514c0cf1cffed5f7365874026644c3e135058a63"
+c_dispatch_data_address = 0x494ea0
+c_dispatch_data_sha256 = "f3bdc6621362bc6a44394cef3193941e482d8d3188d2bee69ee40fd3077a8d9a"

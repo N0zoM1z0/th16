@@ -100,3 +100,9 @@ __xmm@00000003000000020000000100000000,0x4947b0,16,literal,baed642339816affb3fe8
 ?g_sound_effect_table@@3PAUSoundEffectData@@A,0x4a2a30,1656,sound-data-aggregate-v1,413e5aefc66ad1ee481191873a2a0e2ac1ebd36523c1255117133124330c2b47,0x45e15a,lea-movsx,docs/knowledge/audio-scalar-and-sound-data.md,,
 _strncmp,0x479a70,120,runtime-function,c923bf31b24d07f22afe18ee5c90b749e93929f8266c6a2adf118294970fb490,,,docs/knowledge/audio-release-strncmp.md,libucrt.lib,
 __real@43e80000,0x4946b4,4,literal,1dfab8fd1d6bbf2a4b473ea29fa395087cbfb6f62ebd1dd5374fd1c905721254,0x4074c4,movss,docs/knowledge/masked-effect-exact.md,,
+__libm_sse2_acos_precise,0x487af0,1311,runtime-function,cde77cbea75b61975d6602f176fb331ef25e1ced29764b75aef9ff2358ff3702,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,1312
+__libm_sse2_atan_precise,0x488010,747,runtime-function,b3bdd2f18646712c47ec5210191c1df6a93aacc6a9b301228366fc4662e95fe6,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,748
+___acrt_has_user_matherr,0x47b8c6,25,runtime-function,a6c4d02e61681d5541166ae3ae10306ae655e8e17ced3ce4044b348124f7e76b,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,25
+__87except,0x486086,267,runtime-function,dce76aaef1bd3b348ced284d4c09231f12d6e9222b5b9e0a6372abf4f2dc4c8f,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,267
+__floor_default,0x4894f6,185,runtime-function,3fb31e92fe32781cc19c4f4890083a2dadb921786c7720c01d59b6ee0b00b5af,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,185
+_floor,0x488a00,253,runtime-function,333e798a828e3a7d1de02413a8b8a8fd4ba2e6ae5c73de3b1d0af955c3df9ad2,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,253

@@ -584,7 +584,8 @@ class Context:
                  ROOT / "scripts/eh_array_constructor.py",
                  ROOT / "scripts/eh_terminate.py",
                  ROOT / "scripts/static_identity.py", ROOT / "config/static-functions.toml",
-                 ROOT / "scripts/runtime_identity.py", ROOT / "config/runtime-interiors.toml",
+                 ROOT / "scripts/runtime_identity.py", ROOT / "scripts/runtime_fmod.py",
+                 ROOT / "config/runtime-interiors.toml",
                  ROOT / "scripts/runtime_isa.py", ROOT / "config/runtime-globals.toml",
                  ROOT / "scripts/sound_data_identity.py",
                  ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]

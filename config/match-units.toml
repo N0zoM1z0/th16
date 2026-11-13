@@ -5231,6 +5231,35 @@ linkages = [
   { offset = 620, width = 4, type = "DIR32", symbol = "?g_MainBomb@@3PAVBombInf@@A", target = 4877736, addend = 0 },
 ]
 
+[units.reference-00417bc0]
+artifact_kind = "linked-pe"
+source = "src/Spellcard.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?measure_real_time@Spellcard@@SAXXZ"
+object = "Spellcard.obj"
+candidate_address = 4624832
+target_address = 4291520
+size = 418
+compare_size = 418
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Spellcard@@3PAUSpellcard@@A", target = 4877744, addend = 0 },
+  { offset = 31, width = 4, type = "REL32", symbol = "?get_runtime@@YQNXZ", target = 4567344, addend = 0 },
+  { offset = 75, width = 4, type = "REL32", symbol = "?get_runtime@@YQNXZ", target = 4567344, addend = 0 },
+  { offset = 97, width = 4, type = "DIR32", symbol = "__real@3f9119ce075f6fd2", target = 4801792, addend = 0 },
+  { offset = 107, width = 4, type = "REL32", symbol = "__CIfmod", target = 4750026, addend = 0 },
+  { offset = 128, width = 4, type = "DIR32", symbol = "__real@3f8119ce075f6fd2", target = 4801760, addend = 0 },
+  { offset = 150, width = 4, type = "DIR32", symbol = "__real@3f9119ce075f6fd2", target = 4801792, addend = 0 },
+  { offset = 185, width = 4, type = "REL32", symbol = "_floor", target = 4753920, addend = 0 },
+  { offset = 251, width = 4, type = "DIR32", symbol = "__real@4059000000000000", target = 4801944, addend = 0 },
+  { offset = 290, width = 4, type = "DIR32", symbol = "?g_GameThread@@3PAUGameThread@@A", target = 4877780, addend = 0 },
+  { offset = 320, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 0 },
+  { offset = 328, width = 4, type = "DIR32", symbol = "?g_ReplayManager@@3PAUReplayManager@@A", target = 4878088, addend = 0 },
+  { offset = 360, width = 4, type = "DIR32", symbol = "?g_ReplayManager@@3PAUReplayManager@@A", target = 4878088, addend = 0 },
+  { offset = 387, width = 4, type = "REL32", symbol = "?is_time_code_bad@Spellcard@@QAEHXZ", target = 4289840, addend = 0 },
+]
+
 [units.reference-00417ee0]
 artifact_kind = "linked-pe"
 source = "src/Spellcard.cpp"

@@ -294,7 +294,7 @@ address,size,span_end,current_name,proposed_name,module,status,match_percent,cal
 0x00417790,272,0x0041789F,FUN_00417790,Spellcard::~Spellcard,Spellcard,candidate,0.00,,,false,src/Spellcard.cpp,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
 0x004178A0,130,0x00417921,FUN_004178a0,Spellcard::create,Spellcard,local-strict-pass,100.00,,,false,src/Spellcard.cpp,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
 0x00417930,650,0x00417BB9,FUN_00417930,Spellcard::on_tick_body,Spellcard,local-strict-pass,100.00,,,false,src/Spellcard.cpp,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
-0x00417BC0,418,0x00417D61,FUN_00417bc0,Spellcard::measure_real_time,Spellcard,candidate,0.00,,,false,src/Spellcard.cpp,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
+0x00417BC0,418,0x00417D61,FUN_00417bc0,Spellcard::measure_real_time,Spellcard,local-strict-pass,100.00,,,false,src/Spellcard.cpp,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
 0x00417D70,368,0x00417EDF,FUN_00417d70,Spellcard::on_draw_body,Spellcard,candidate,0.00,,,false,src/Spellcard.cpp,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
 0x00417EE0,5,0x00417EE4,reviewed_00417ee0,Spellcard::on_tick_callback,Spellcard,local-strict-pass,100.00,__fastcall,,true,src/Spellcard.cpp,Original registration/transfer and complete dense CFG reviewed; docs/knowledge/registered-callbacks.md,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
 0x00417EF0,5,0x00417EF4,reviewed_00417ef0,Spellcard::on_draw_callback,Spellcard,local-strict-pass,100.00,__fastcall,,true,src/Spellcard.cpp,Original registration/transfer and complete dense CFG reviewed; docs/knowledge/registered-callbacks.md,review,Imported candidate; source origin remains under review. See .analysis/reference-audit.json.
@@ -1835,7 +1835,7 @@ address,size,span_end,current_name,proposed_name,module,status,match_percent,cal
 0x004884C0,453,0x00488684,FUN_004884c0,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x00488690,254,0x0048878D,__libm_sse2_sqrt_precise,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x00488790,605,0x004889EC,FUN_00488790,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
-0x00488A00,2991,0x004895AE,FUN_00488a00,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
+0x00488A00,253,0x00488AFC,FUN_00488a00,_floor,CRT,unclassified,0.00,,,false,,Original-only complete 253-byte CFG with two explicit fallback tail edges; docs/knowledge/math-runtime-identities.md,review,
 0x00488B6C,9,0x00488B74,FUN_00488b6c,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x00488BB0,68,0x00488BF3,__cintrindisp2,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x00488BF4,67,0x00488C36,__cintrindisp1,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
@@ -1852,6 +1852,7 @@ address,size,span_end,current_name,proposed_name,module,status,match_percent,cal
 0x00489324,9,0x0048932C,FUN_00489324,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x0048932D,157,0x004893C9,FUN_0048932d,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x0048945F,151,0x004894F5,FUN_0048945f,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
+0x004894F6,185,0x004895AE,reviewed_004894f6,__floor_default,CRT,unclassified,0.00,,,false,,Original-only complete 185-byte fallback CFG; docs/knowledge/math-runtime-identities.md,review,
 0x004895B0,24,0x004895C7,FUN_004895b0,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x004895CE,1334,0x00489B03,FUN_004895ce,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
 0x00489B10,24,0x00489B27,FUN_00489b10,,,unclassified,0.00,,,false,,Ghidra 12.1.3 auto-analysis candidate; boundary unreviewed,,
