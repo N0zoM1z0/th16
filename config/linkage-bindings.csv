@@ -143,3 +143,4 @@ __real@80000000,0x494704,4,literal,6d58692645c9d1cfaf13541cbd258f86193ef63c2f1d3
 ??_C@_0L@KJHIMBAP@?$JC?$KH?$JA?m?$IJ?B?$JE?2?$IBI?$AA@,0x493634,11,string-literal,2b9f334a0c96f379595cf288b500b90b4849b794a65fec792d68ec85d7938903,0x456550,movq,docs/knowledge/reviewed-linkages.md,,
 ??_C@_01KICIPPFI@?2?$AA@,0x493890,2,string-literal,1472d0645f552820b5472b91341c2d9a118c8a96f4a72758d6aeeb14c10a1107,0x45a80a,mov,docs/knowledge/reviewed-linkages.md,,
 ??_C@_03PMGGPEJJ@?$CFd?6?$AA@,0x493894,4,string-literal,1db63eee8bd423af09ec044e2fdbf0ebd48cfbb5557e6729b846b5593ab3aeb2,0x45a811,push,docs/knowledge/reviewed-linkages.md,,
+__real@3c800000,0x494400,4,literal,4efb856a85ce3cd60020d80d64475630ab731c6b6a31198ed4417c6dfd1829c2,0x428c82,mulss,docs/knowledge/reviewed-linkages.md,,
