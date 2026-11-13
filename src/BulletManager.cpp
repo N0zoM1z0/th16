@@ -756,7 +756,6 @@ void Bullet::run_ex()
             ex_state[1].timer.set_value(0);
             ex_state[1].ints[0] = ex->a;
             bullet_sincosmul((Float3 *)&ex_state[1].floats[5], ex_state[1].floats[1], ex_state[1].floats[0]);
-        play_sound:
             if (ex_index != 0 && bounce_sound >= 0)
             {
                 g_SoundManager.play_sound_centered(bounce_sound, 0);
@@ -769,7 +768,11 @@ void Bullet::run_ex()
             ex_state[2].floats[1] = ex->s;
             ex_state[2].timer.set_value(0);
             ex_state[2].ints[0] = ex->a;
-            goto play_sound;
+            if (ex_index != 0 && bounce_sound >= 0)
+            {
+                g_SoundManager.play_sound_centered(bounce_sound, 0);
+            }
+            break;
         case BULLET_EX_ANGLE:
         {
             active_ex_flags |= BULLET_EX_ANGLE;
@@ -1063,21 +1066,23 @@ void Bullet::run_ex()
             ex_index++;
             continue;
         case BULLET_EX_VELTIME:
+            // The original copies both angle arms into temporaries as here,
+            // but LTCG inlined ZunAngle(f32) at this site only.
             active_ex_flags |= BULLET_EX_VELTIME;
             ex_state[10].floats[0] = (ex->r - speed) / (f32)ex->a;
-            if (ex->s <= -999990.0f)
-            {
-                ex_state[10].floats[1] = angle;
-            }
-            else
-            {
-                ex_state[10].floats[1] =
-                    wrap_angle(ex->s >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m : ex->s);
-            }
+            ex_state[10].floats[1] =
+                (ex->s <= -999990.0f
+                     ? angle_ref()
+                     : ZunAngle(ex->s >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m : ex->s))
+                    .value;
             ex_state[10].timer.reset_inline();
             ex_state[10].ints[0] = ex->a;
             bullet_sincosmul((Float3 *)&ex_state[10].floats[5], ex_state[10].floats[1], ex_state[10].floats[0]);
-            goto play_sound;
+            if (ex_index != 0 && bounce_sound >= 0)
+            {
+                g_SoundManager.play_sound_centered(bounce_sound, 0);
+            }
+            break;
         case BULLET_EX_SAVE:
             *(D3DXVECTOR3 *)&ex_state[12].floats[2] = pos;
             ex_state[12].floats[1] = angle;
