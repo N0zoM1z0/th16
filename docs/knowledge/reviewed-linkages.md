@@ -448,3 +448,10 @@ are bound too, making `create` and `BombAyaAInf::on_tick` exact.
 entries and the deleting destructor. `__purecall` (`0x00476DA0`, 26 bytes,
 `libvcruntime.lib`, candidate contribution 27 bytes including its INT3 pad)
 is a reviewed runtime function, so both Pbg deleting destructors are exact.
+
+Ambiguous string payloads bound by their original PUSH witnesses: `"+%d"`
+(`0x00491D54`), `"$"` (`0x0049203C`), the empty string `""` (`0x00492275`,
+a NUL in padding after `"main"`), `"th16.dat"` (`0x0049257C`, also the tail
+of `"scoreth16.dat"`), `"r"` (`0x004937B0`) and `"1.00a"` (`0x00492D24`).
+Spellcard's body draw, the ending script VM, `fade_out_bgm` and both Arcfile
+openers become exact.
