@@ -23393,6 +23393,22 @@ link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBAS
 linkages = [
 ]
 
+[units.reference-00474510]
+artifact_kind = "linked-pe"
+source = "src/EclRunContext.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+object = "EclRunContext.obj"
+candidate_address = 4343376
+target_address = 4670736
+size = 32
+compare_size = 32
+reviewed_static = "ecl_context"
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+]
+
 [units.reference-00474740]
 artifact_kind = "linked-pe"
 source = "src/EclRunContext.cpp"

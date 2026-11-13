@@ -1,8 +1,9 @@
 # Current handoff
 
-Updated 2026-11-13 after complete orb/laser-hit source trials and recovery of
-the laser endpoint Z operands. The preceding nine atan2-dependent exact owners
-are preserved.
+Updated 2026-11-13 after eight complete ECL interpreter source trials and
+independent closure of its private sincos dependency. All game-source trials
+are restored; the large interpreter remains incomplete. The preceding laser
+endpoint repair and nine atan2-dependent exact owners are preserved.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -18,6 +19,42 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+Current totals are **904 exact / 67 mismatch / 244 incomplete**, **185,816 exact
+primary bytes** and **971 units**, PDB age **600**. The only new exact owner is
+the existing 32-byte private `ecl_sincosmul` at `0x00474510`, qualified to
+`src/EclRunContext.cpp` and independently checked by the existing verifier.
+The complete **7,046-byte** `EclRunContext::ecl_run` at `0x00472030` now has
+zero unbound linked fields, but its **6,942-byte** candidate still fails the
+complete extent. No large function becomes exact in this checkpoint.
+
+The original-only CFG accounts for all **1,645 reachable instructions**, both
+returns, 67 switch targets and the 94-byte opcode map. Eight source forms are
+restored: interpolation destination reference, separate integer results,
+logical float NOT, direct SETF tag predicates, integer predicate ternaries,
+union-valued floating pop, reordered arithmetic cases and shared float operands.
+The last form reduces a diagnostic unequal-block count but loses fifteen
+previously correct operands while recovering only five; do not retain it or
+treat that score as exact progress. See
+[complete ECL order and private-callee review](knowledge/ecl-interpreter-order-and-private-callee.md).
+
+All **903 previous exact results and 970 previous unit definitions** are
+preserved. All **1,719 source-qualified native owners (527,136 raw bytes)**,
+their addresses/extents, base relocations and complete raw `.text` are unchanged
+from `f976acb`. No game C++ source change is retained in this continuation.
+The source input remains
+`ef45258398eb6fe5c3cb4fd560aed06455b5f5695cfb4d398602eb739e51ccc5`.
+All 34 static identity controls, the canonical strict writer, progress reader
+and complete restoration regression pass. No game runtime or emulation is used.
+
+Keep `.analysis/ecl-interpreter-order-work/`, including baseline/final and all
+eight trial images, source snapshots, full owner packets, original CFG,
+qualified private proof, static controls and final regression. The same private
+symbol in `EnemyEcl.obj` remains a separate unresolved identity; do not alias it
+to this lower helper. Continue substantial source work on the remaining
+interpreter/Boss layouts. Source-origin review is open; Factory is unsubmitted.
+
+## Preceding laser checkpoint (PDB 591)
 
 The complete **1,409-byte** `sht_on_hit_laser` improves from **910 to 912
 matching bytes**, still **mismatch**, with all 41 linked fields verified.

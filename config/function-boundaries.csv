@@ -1183,7 +1183,7 @@ address,size,span_end,state,evidence
 0x004743A0,139,0x0047442A,provisional,.analysis/reference-audit.json
 0x00474430,176,0x004744DF,strict-compared,.analysis/reference-audit.json
 0x004744E0,39,0x00474506,strict-compared,.analysis/reference-audit.json
-0x00474510,32,0x0047452F,provisional,.analysis/reference-audit.json
+0x00474510,32,0x0047452F,strict-compared,.analysis/reference-audit.json
 0x00474530,523,0x0047473A,provisional,.analysis/reference-audit.json
 0x00474740,132,0x004747C3,strict-compared,.analysis/reference-audit.json
 0x004747D0,50,0x00474801,strict-compared,.analysis/reference-audit.json

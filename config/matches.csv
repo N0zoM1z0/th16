@@ -964,6 +964,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00474330,EclRunContext::get_int_arg_ptr,reference-00474330,mismatch,98,98,97,.analysis/reference-audit.json
 0x00474430,SptInf::create_async,reference-00474430,local-strict-pass,176,176,176,.analysis/reference-audit.json
 0x004744E0,SptInf::lookup_async,reference-004744e0,local-strict-pass,39,39,39,.analysis/reference-audit.json
+0x00474510,ecl_sincosmul,reference-00474510,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x00474740,SptResourceInf::find_sub_by_name,reference-00474740,local-strict-pass,132,132,132,.analysis/reference-audit.json
 0x004747D0,EclRunContext::get_subroutine_ptr,reference-004747d0,local-strict-pass,50,50,50,.analysis/reference-audit.json
 0x00474810,EclStack::enter,reference-00474810,local-strict-pass,66,66,66,.analysis/reference-audit.json

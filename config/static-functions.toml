@@ -177,3 +177,27 @@ map_sha256 = "dd0b8e98fa0fb2c82caf89294ebbe84d24dd62825ae44008002b261f711179b3"
 targets_address = 0x462cb8
 targets_count = 53
 targets_sha256 = "9b45fb4f20c3af34a4b5ab3a0fbdf64e7d3e47c309fa6e8b22d4615d10a6cdd3"
+
+[functions.ecl_context]
+profile = "x87-sincos-scale-v1"
+source = "src/EclRunContext.cpp"
+symbol = "?ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x474510
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x472030
+witness = 0x473408
+parent_sha256 = "4d8e3e5bbe1ec2487a7819d47c3c3c526fdcb9da197183e25cc407586f6c307c"
+
+[functions.ecl_context.witness_dispatch]
+profile = "bounded-byte-remap-v1"
+guard = 0x4720b3
+branch = 0x4720b6
+remap = 0x4720bc
+dispatch = 0x4720c3
+map_address = 0x473b58
+map_count = 94
+map_sha256 = "3e47aed4782e1237c67b2a8b7a335248a7cc23e591ad91f30ee9ab016033c4a1"
+targets_address = 0x473a4c
+targets_count = 67
+targets_sha256 = "354facb45d9a7e6f26c5ba128273b03b6cd6ee3e39162ce4dfd19bb700b7c81b"

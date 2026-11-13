@@ -14,6 +14,7 @@ outside this repository; never follow them when cleaning local outputs.
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
 | `.analysis/reference-audit.json` | Current fingerprinted results read by `scripts/progress.py` |
+| `.analysis/ecl-interpreter-order-work/` | PDB 591 baseline/PDB 600 restored image, eight full ECL source trials and images, original 1,645-instruction CFG, complete tables/map, source-qualified private helper proof, static controls and complete raw-image regression |
 | `.analysis/audio-release-baseline/` | Latest accepted checkpoint regression inputs, kept uncompressed |
 | `.analysis/audio-initialize-baseline/`, `.analysis/experiments/audio-initialize-unvalidated/` | Unvalidated initialization draft, its clean base and review notes |
 | `.analysis/enemy-motion-work/` | Boss, spellcard and projectile source trials, baseline report and final regression evidence |

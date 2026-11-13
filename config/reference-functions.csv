@@ -1184,7 +1184,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00471D90,dsutil_debug_log,src/DSUtil.cpp,?dsutil_debug_log@@YAXZZ,exact,,.analysis/reference-audit.json
 0x00471DA0,ecl_log,src/EclRunContext.cpp,?ecl_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x00471DB0,EclRunContext::call_sub,src/EclRunContext.cpp,?call_sub@EclRunContext@@QAEHPAU1@HH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00472030,EclRunContext::ecl_run,src/EclRunContext.cpp,?ecl_run@EclRunContext@@QAEHM@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00472030,EclRunContext::ecl_run,src/EclRunContext.cpp,?ecl_run@EclRunContext@@QAEHM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00473BC0,SptInf::run_ecl,src/EclRunContext.cpp,?run_ecl@SptInf@@QAEHM@Z,exact,,.analysis/reference-audit.json
 0x00473C90,EclRunContext::get_int_arg,src/EclRunContext.cpp,?get_int_arg@EclRunContext@@QAEHH@Z,incomplete,indirect jump requires reviewed switch/owned-data extents,.analysis/reference-audit.json
 0x00473D40,EclRunContext::get_float_arg,src/EclRunContext.cpp,?get_float_arg@EclRunContext@@QAEMH@Z,exact,,.analysis/reference-audit.json
@@ -1198,7 +1198,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004743A0,EclRunContext::get_float_arg_ptr,src/EclRunContext.cpp,?get_float_arg_ptr@EclRunContext@@QAEPAMH@Z,incomplete,indirect jump requires reviewed switch/owned-data extents,.analysis/reference-audit.json
 0x00474430,SptInf::create_async,src/EclRunContext.cpp,?create_async@SptInf@@QAEHHH@Z,exact,,.analysis/reference-audit.json
 0x004744E0,SptInf::lookup_async,src/EclRunContext.cpp,?lookup_async@SptInf@@QAEPAUEclRunContextList@@H@Z,exact,,.analysis/reference-audit.json
-0x00474510,ecl_sincosmul,src/EclRunContext.cpp,?ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
+0x00474510,ecl_sincosmul,src/EclRunContext.cpp,?ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
 0x00474530,SptResourceInf::load_ecl_data,src/EclRunContext.cpp,?load_ecl_data@SptResourceInf@@UAEHPAX@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00474740,SptResourceInf::find_sub_by_name,src/EclRunContext.cpp,?find_sub_by_name@SptResourceInf@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
 0x004747D0,EclRunContext::get_subroutine_ptr,src/EclRunContext.cpp,?get_subroutine_ptr@EclRunContext@@QAEPAUEclRawInstr@@XZ,exact,,.analysis/reference-audit.json
