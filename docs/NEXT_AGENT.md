@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after exact reconstruction of animation manager initialization.
+Updated 2026-11-13 after static WinMain and Boss source-context follow-up.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -16,6 +16,21 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+Ten complete WinMain forms and one Boss conditional/statistics form are
+rejected and restored, with **no new exact credit**. Fullscreen width/height
+snapshots recover original import caching but produce 2,935 bytes against
+2,919 original bytes. Result joins remain wrong. The combined input/predicate
+form recovers the original input sequence; helper/result/state/switch variants
+do not fix the full owner. The Boss form is 2,183/2,207 bytes and merges two
+original statistics writes. Do not repeat these as new hypotheses or relax
+the WinMain producer extent. See
+[complete static follow-up](knowledge/winmain-and-boss-static-followup.md).
+Keep `.analysis/winmain-static-work/` and
+`.analysis/boss-selection-followup-work/`. Final restoration preserves all
+1,215 results/diagnostics, 956 units, all 1,719 native owners (527,136 bytes),
+all addresses/extents/relocations and the entire raw `.text`. Source is
+unchanged from `5f3d25c`; current incremental PDB age is **504**.
 
 The complete **5,071-byte** `AnmManager::AnmManager` at `0x0046A3A0` is now
 **exact**, with all 164 fields and its unchanged 136-byte EH code / 76-byte
@@ -175,7 +190,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `326e30f1f12bd961bebf860a20069050474879caa1d4526c49690076d945d317`.
-PDB age is **492**. The final incremental build, strict replay and progress check
+PDB age is **504**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.

@@ -92,6 +92,8 @@ branch duplication and is not a solution merely because it inlines.
 
 `Enemy.cpp` is restored byte for byte. Keep `.analysis/music-comment-join-work/`,
 including the complete logic/motion packets and statistics-write diagnostic.
-A conditional-selection variant was prepared but never compiled; it grants
-no trial result or exact credit. The subsequent shared-constructor result is
-reviewed [separately](updatefunc-construction-exact.md).
+A conditional-selection variant was prepared but not compiled at that
+checkpoint. It is subsequently built and rejected at 2,183/2,207 bytes;
+see the [WinMain and Boss follow-up](winmain-and-boss-static-followup.md).
+The shared-constructor exact result is reviewed
+[separately](updatefunc-construction-exact.md).
