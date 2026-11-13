@@ -48,7 +48,7 @@ address,size,span_end,state,evidence
 0x00402DE0,61,0x00402E1C,strict-compared,.analysis/reference-audit.json
 0x00402E20,66,0x00402E61,strict-compared,.analysis/reference-audit.json
 0x00402E70,121,0x00402EE8,strict-compared,.analysis/reference-audit.json
-0x00402EF0,41,0x00402F18,provisional,.analysis/reference-audit.json
+0x00402EF0,41,0x00402F18,strict-compared,.analysis/reference-audit.json
 0x00402F20,11,0x00402F2A,strict-compared,.analysis/reference-audit.json
 0x00402F30,126,0x00402FAD,strict-compared,.analysis/reference-audit.json
 0x00402FB0,61,0x00402FEC,strict-compared,.analysis/reference-audit.json
@@ -142,7 +142,7 @@ address,size,span_end,state,evidence
 0x00409770,73,0x004097B8,strict-compared,.analysis/reference-audit.json
 0x004097C0,473,0x00409998,strict-compared,.analysis/reference-audit.json
 0x004099A0,994,0x00409D81,strict-compared,.analysis/reference-audit.json
-0x00409D90,25,0x00409DA8,provisional,.analysis/reference-audit.json
+0x00409D90,25,0x00409DA8,strict-compared,.analysis/reference-audit.json
 0x00409DB0,156,0x00409E4B,strict-compared,.analysis/reference-audit.json
 0x00409E50,319,0x00409F8E,provisional,.analysis/reference-audit.json
 0x00409F90,1144,0x0040A407,provisional,.analysis/reference-audit.json

@@ -66,7 +66,12 @@ NAME_MARKER = re.compile(r"//\s*(SYNTHETIC|LIBRARY):\s*TH16\s+(0x[0-9a-fA-F]+)")
 
 def sources():
     with (ROOT / "config/reference-sources.csv").open(newline="") as stream:
-        return [ROOT / row["local_path"] for row in csv.DictReader(stream) if row["local_path"].endswith(".cpp")]
+        paths = [ROOT / row["local_path"] for row in csv.DictReader(stream) if row["local_path"].endswith(".cpp")]
+    # The original emits the ThreadInf and Fog deleting destructors with their
+    # classes' own functions, so these modules link before the others that
+    # delete such objects (COMDATs land in the first referencing object).
+    first = [ROOT / "src" / name for name in ("Thread.cpp", "Stage.cpp")]
+    return [p for p in first if p in paths] + [p for p in paths if p not in first]
 
 
 def rel(p):

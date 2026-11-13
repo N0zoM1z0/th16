@@ -42,6 +42,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00402DE0,MenuHelper::push,reference-00402de0,local-strict-pass,61,61,61,.analysis/reference-audit.json
 0x00402E20,MenuHelper::pop,reference-00402e20,local-strict-pass,66,66,66,.analysis/reference-audit.json
 0x00402E70,MenuHelper::move_cursor,reference-00402e70,local-strict-pass,121,121,121,.analysis/reference-audit.json
+0x00402EF0,??_GThreadInf@@UAEPAXI@Z,reference-00402ef0,local-strict-pass,41,41,41,.analysis/reference-audit.json
 0x00402F20,ThreadInf::~ThreadInf,reference-00402f20,local-strict-pass,11,11,11,.analysis/reference-audit.json
 0x00402F30,ThreadInf::join_if_running,reference-00402f30,local-strict-pass,126,126,126,.analysis/reference-audit.json
 0x00402FB0,ThreadInf::restart,reference-00402fb0,local-strict-pass,61,61,61,.analysis/reference-audit.json
@@ -118,6 +119,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00409770,StageInner::~StageInner,reference-00409770,local-strict-pass,73,73,73,.analysis/reference-audit.json
 0x004097C0,Stage::load_data,reference-004097c0,local-strict-pass,473,473,473,.analysis/reference-audit.json
 0x004099A0,Stage::~Stage,reference-004099a0,local-strict-pass,994,994,994,.analysis/reference-audit.json
+0x00409D90,??_GFog@@QAEPAXI@Z,reference-00409d90,local-strict-pass,25,25,25,.analysis/reference-audit.json
 0x00409DB0,Stage::create,reference-00409db0,local-strict-pass,156,156,156,.analysis/reference-audit.json
 0x0040A410,Stage::on_draw_06,reference-0040a410,local-strict-pass,907,907,907,.analysis/reference-audit.json
 0x0040A7A0,Stage::on_tick_callback,reference-0040a7a0,local-strict-pass,5,5,5,.analysis/reference-audit.json
