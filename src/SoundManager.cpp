@@ -34,7 +34,7 @@ static_assert(sizeof(ThBgmFormat) == 0x34, "ThBgmFormat layout");
 static_assert(sizeof(SoundEffectData) == 0x14, "SoundEffectData layout");
 
 // GLOBAL: TH16 0x491a00
-const char *const g_sound_file_names[SOUND_FILE_COUNT] = {
+extern const char *const g_sound_file_names[SOUND_FILE_COUNT] = {
     "se_plst00.wav", "se_enep00.wav", "se_pldead00.wav", "se_power0.wav",
     "se_power1.wav", "se_tan00.wav", "se_tan01.wav", "se_tan02.wav",
     "se_ok00.wav", "se_cancel00.wav", "se_select00.wav", "se_gun00.wav",

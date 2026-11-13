@@ -12,7 +12,7 @@ DECOMP_NOINLINE int __CRTDECL _vsnprintf_l(char *buffer, size_t count, const cha
 
 // The height of each font draw_text knows, by font id.
 // GLOBAL: TH16 0x491b68
-const i32 g_text_font_heights[10] = {17, 17, 17, 17, 21, 21, 21, 21, 14, 12};
+extern const i32 g_text_font_heights[10] = {17, 17, 17, 17, 21, 21, 21, 21, 14, 12};
 
 // TODO: scheduling only: the original indexes the height table between the vsprintf pushes.
 // FUNCTION: TH16 0x46d990

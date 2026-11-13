@@ -1018,23 +1018,23 @@ i32 Player::tick_bullets()
 // focused item attraction box, the graze box, the unfocused attraction box
 // (also the item box) and the hitbox.
 // GLOBAL: TH16 0x492c68
-const f32 g_player_attract_radii[4] = {100.0f, 100.0f, 100.0f, 100.0f};
+extern const f32 g_player_attract_radii[4] = {100.0f, 100.0f, 100.0f, 100.0f};
 // GLOBAL: TH16 0x492c78
-const f32 g_player_graze_radii[4] = {5.0f, 5.0f, 5.0f, 5.0f};
+extern const f32 g_player_graze_radii[4] = {5.0f, 5.0f, 5.0f, 5.0f};
 // GLOBAL: TH16 0x492c88
-const f32 g_player_item_radii[4] = {60.0f, 60.0f, 60.0f, 60.0f};
+extern const f32 g_player_item_radii[4] = {60.0f, 60.0f, 60.0f, 60.0f};
 // GLOBAL: TH16 0x492c98
-const f32 g_player_hitbox_radii[4] = {3.0f, 3.0f, 3.0f, 3.0f};
+extern const f32 g_player_hitbox_radii[4] = {3.0f, 3.0f, 3.0f, 3.0f};
 // The shot type files: per character (pl01 is Marisa's) and per subseason.
 // GLOBAL: TH16 0x492ca8
-const char *const g_player_sht_names[4] = {"pl00.sht", "pl02.sht", "pl03.sht", "pl01.sht"};
+extern const char *const g_player_sht_names[4] = {"pl00.sht", "pl02.sht", "pl03.sht", "pl01.sht"};
 // GLOBAL: TH16 0x492cb8
-const char *const g_subseason_sht_names[5] = {"pl00sub.sht", "pl02sub.sht", "pl03sub.sht", "pl01sub.sht",
+extern const char *const g_subseason_sht_names[5] = {"pl00sub.sht", "pl02sub.sht", "pl03sub.sht", "pl01sub.sht",
                                               "pl04sub.sht"};
 // GLOBAL: TH16 0x492ccc
-const char *const g_player_anm_names[4] = {"pl00.anm", "pl02.anm", "pl03.anm", "pl01.anm"};
+extern const char *const g_player_anm_names[4] = {"pl00.anm", "pl02.anm", "pl03.anm", "pl01.anm"};
 // GLOBAL: TH16 0x492cdc
-const char *const g_subseason_anm_names[5] = {"pl00sub.anm", "pl02sub.anm", "pl03sub.anm", "pl01sub.anm",
+extern const char *const g_subseason_anm_names[5] = {"pl00sub.anm", "pl02sub.anm", "pl03sub.anm", "pl01sub.anm",
                                               "pl04sub.anm"};
 
 // Loads pl0X.anm/pl0Xsub.anm and the .sht files (or takes the cached
@@ -1164,7 +1164,7 @@ i32 Player::initialize()
 
 // The unit movement of each PlayerDirection.
 // GLOBAL: TH16 0x492c20
-const Int2 g_player_directions[9] = {{0, 0}, {0, -1}, {0, 1}, {-1, 0}, {1, 0}, {-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
+extern const Int2 g_player_directions[9] = {{0, 0}, {0, -1}, {0, 1}, {-1, 0}, {1, 0}, {-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
 
 // copy_vm_and_run as LTCG inlined it here.
 static __forceinline void player_set_script(Player *player, i32 script)
@@ -1379,13 +1379,13 @@ i32 g_main_option_layouts[4][8] = {
 // The options' ANM scripts: per subseason (in pl0Xsub.anm) and per
 // character (in pl0X.anm).
 // GLOBAL: TH16 0x492be0
-const i32 g_season_option_scripts[8] = {1, 1, 1, 0x12, 1, 0, 0, 0};
+extern const i32 g_season_option_scripts[8] = {1, 1, 1, 0x12, 1, 0, 0, 0};
 // GLOBAL: TH16 0x492c00
-const i32 g_main_option_scripts[4] = {8, 7, 11, 11};
+extern const i32 g_main_option_scripts[4] = {8, 7, 11, 11};
 // The look of the main options at full power (ExpHP:
 // PLAYER_OPTION_ANM_SCRIPT_IDS_2).
 // GLOBAL: TH16 0x492c10
-const i32 g_main_option_max_power_scripts[4] = {9, 8, 12, 13};
+extern const i32 g_main_option_max_power_scripts[4] = {9, 8, 12, 13};
 
 // AnmManager::interrupt_tree as LTCG inlined it here.
 static __forceinline void interrupt_tree_inline(AnmId id, i32 interrupt)

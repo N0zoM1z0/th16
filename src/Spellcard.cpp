@@ -29,7 +29,7 @@ Spellcard *g_Spellcard;
 // (#001 to #119) are listed in groups of their versions per difficulty;
 // the last slot is unused.
 // GLOBAL: TH16 0x491700
-const i8 g_spell_difficulty[0x78] = {
+extern const i8 g_spell_difficulty[0x78] = {
     // Main game: one line per card, in its Easy to Lunatic versions.
     DIFFICULTY_EASY, DIFFICULTY_NORMAL, DIFFICULTY_HARD, DIFFICULTY_LUNATIC, // #001-#004
     DIFFICULTY_EASY, DIFFICULTY_NORMAL, DIFFICULTY_HARD, DIFFICULTY_LUNATIC, // #005-#008

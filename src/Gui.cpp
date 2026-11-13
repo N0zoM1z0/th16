@@ -299,7 +299,7 @@ i32 __fastcall Gui::on_draw_2_callback(Gui *self)
 
 // The player's face script in its anm file, per character.
 // GLOBAL: TH16 0x492260
-static const i32 g_msg_player_face_scripts[4] = {26, 16, 22, 35};
+extern const i32 g_msg_player_face_scripts[4] = {26, 16, 22, 35};
 
 // ANM interrupts the dialogue sends to faces and text: fade out and go,
 // highlight a face (or show text), darken a face (or fade text out), shake

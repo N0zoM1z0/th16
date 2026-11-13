@@ -125,13 +125,13 @@ i32 __fastcall Ending::on_draw_callback(Ending *self)
 
 // Indexed by Ending::ending_index.
 // GLOBAL: TH16 0x491780
-const char *const g_ending_files[8] = {
+extern const char *const g_ending_files[8] = {
     "e01.msg", "e02.msg", "e03.msg", "e04.msg", "e05.msg", "e06.msg", "e07.msg", "e08.msg",
 };
 
 // Per difficulty (Easy also stands for the rest).
 // GLOBAL: TH16 0x4917a0
-const char *const g_staff_files[4] = {
+extern const char *const g_staff_files[4] = {
     "staff1.msg",
     "staff2.msg",
     "staff3.msg",

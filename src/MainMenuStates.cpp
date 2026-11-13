@@ -1009,7 +1009,7 @@ i32 TitleInf::do_practice_stage_select()
 // The unlock cheat typed on the player data screen ("ILOVEBEER", as
 // DirectInput key codes).
 // GLOBAL: TH16 0x4936d8
-const i32 g_cheat_code[9] = {0x17, 0x26, 0x18, 0x2f, 0x12, 0x30, 0x12, 0x12, 0x13};
+extern const i32 g_cheat_code[9] = {0x17, 0x26, 0x18, 0x2f, 0x12, 0x30, 0x12, 0x12, 0x13};
 // The keys newly pressed this frame (also scratch space for remapping
 // virtual keys to DirectInput key codes).
 // GLOBAL: TH16 0x4df940
@@ -1487,13 +1487,13 @@ HARNESS_CALLED i32 TitleInf::on_draw__spell_practice_histories()
 // GLOBAL: TH16 0x4918c0
 extern const char *const g_season_names[5] = {"Spring", "Summer", "Autumn", "Winter", "Full  "};
 // GLOBAL: TH16 0x491950
-const char *const g_difficulty_names[6] = {"Easy   ", "Normal ", "Hard   ", "Lunatic", "Extra  ", "O.D.   "};
+extern const char *const g_difficulty_names[6] = {"Easy   ", "Normal ", "Hard   ", "Lunatic", "Extra  ", "O.D.   "};
 extern const char *g_chara_names_short[4];
 extern const char *g_stage_names_short[10];
 // The characters of the name entry grid; the last three are drawn as the
 // special glyphs 0x81, 0x7f and 0x80.
 // GLOBAL: TH16 0x492840
-const char g_name_entry_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-=.,!?@:;[]()_/{}|~^#$%&*   ";
+extern const char g_name_entry_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-=.,!?@:;[]()_/{}|~^#$%&*   ";
 
 // The replay slot last played, where the replay menu starts.
 // GLOBAL: TH16 0x4a6f28

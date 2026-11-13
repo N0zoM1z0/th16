@@ -10,12 +10,12 @@ Globals g_Globals = {0, 0, 0, 0, 0, 0, 0, 0, 0, DIFFICULTY_NORMAL};
 // The scores (divided by 10) of the score extends, for the extra stage and
 // for the main game.
 // GLOBAL: TH16 0x4917c4
-const i32 g_score_extend_quotas_extra[7] = {
+extern const i32 g_score_extend_quotas_extra[7] = {
     1000000, 2000000, 4000000, 6000000, 8000000, 10000000, 1000000000,
 };
 
 // GLOBAL: TH16 0x491880
-const i32 g_score_extend_quotas_standard[11] = {
+extern const i32 g_score_extend_quotas_standard[11] = {
     500000, 1000000, 2000000, 4000000, 7000000, 10000000, 15000000, 25000000, 50000000, 100000000, 1000000000,
 };
 

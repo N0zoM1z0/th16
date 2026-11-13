@@ -957,7 +957,7 @@ i32 g_title_idle_frames;
 i32 g_demo_replay_index;
 
 // GLOBAL: TH16 0x49371c
-const char *const g_demo_replay_names[3] = {"demo/demo1.rpy", "demo/demo2.rpy", "demo/demo3.rpy"};
+extern const char *const g_demo_replay_names[3] = {"demo/demo1.rpy", "demo/demo2.rpy", "demo/demo3.rpy"};
 
 // Plays a demo replay after 30 idle seconds on the title screen, starts the
 // title BGM a few frames after it appears, and runs the current screen.

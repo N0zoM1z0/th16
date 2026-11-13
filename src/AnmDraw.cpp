@@ -45,7 +45,7 @@ static inline ZunColor *diffuse_of(i32 i)
 // The 0.5f render_sprite_2d's pixel snapping subtracts after rounding; a
 // constant of its own in the original, apart from the compiler's 0.5f.
 // GLOBAL: TH16 0x4941d8
-static const f32 g_pixel_center_offset = 0.5f;
+extern const f32 g_pixel_center_offset = 0.5f;
 
 // The quad in g_sprite_temp_buffer, moved by the camera offset, rounded to
 // pixel centers if flags bit 0 is set, culled against the viewport and

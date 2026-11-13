@@ -29,29 +29,29 @@ enum
 // (ExpHP's names; "fall" is autumn).
 
 // GLOBAL: TH16 0x491e70
-const i32 g_release_duration_doyou[7] = {0, 40, 40, 40, 40, 40, 40};
+extern const i32 g_release_duration_doyou[7] = {0, 40, 40, 40, 40, 40, 40};
 // GLOBAL: TH16 0x491e8c
-const f32 g_release_radius_2_doyou[7] = {0.0f, 30.0f, 30.0f, 30.0f, 30.0f, 30.0f, 30.0f};
+extern const f32 g_release_radius_2_doyou[7] = {0.0f, 30.0f, 30.0f, 30.0f, 30.0f, 30.0f, 30.0f};
 // GLOBAL: TH16 0x491eb0
-const f32 g_release_radius_doyou[7] = {0.0f, 50.0f, 52.0f, 54.0f, 56.0f, 58.0f, 60.0f};
+extern const f32 g_release_radius_doyou[7] = {0.0f, 50.0f, 52.0f, 54.0f, 56.0f, 58.0f, 60.0f};
 // GLOBAL: TH16 0x491ed4
-const i32 g_release_duration_fall[7] = {0, 40, 55, 70, 90, 110, 130};
+extern const i32 g_release_duration_fall[7] = {0, 40, 55, 70, 90, 110, 130};
 // GLOBAL: TH16 0x491ef0
-const f32 g_release_radius_2_fall[7] = {0.0f, 40.0f, 40.0f, 40.0f, 40.0f, 40.0f, 40.0f};
+extern const f32 g_release_radius_2_fall[7] = {0.0f, 40.0f, 40.0f, 40.0f, 40.0f, 40.0f, 40.0f};
 // GLOBAL: TH16 0x491f14
-const f32 g_release_radius_fall[7] = {0.0f, 60.0f, 60.0f, 60.0f, 60.0f, 60.0f, 60.0f};
+extern const f32 g_release_radius_fall[7] = {0.0f, 60.0f, 60.0f, 60.0f, 60.0f, 60.0f, 60.0f};
 // GLOBAL: TH16 0x491f38
-const i32 g_release_duration_summer[7] = {0, 30, 30, 30, 30, 30, 30};
+extern const i32 g_release_duration_summer[7] = {0, 30, 30, 30, 30, 30, 30};
 // GLOBAL: TH16 0x491f54
-const f32 g_release_radius_summer[7] = {0.0f, 40.0f, 42.0f, 44.0f, 46.0f, 48.0f, 50.0f};
+extern const f32 g_release_radius_summer[7] = {0.0f, 40.0f, 42.0f, 44.0f, 46.0f, 48.0f, 50.0f};
 // GLOBAL: TH16 0x491f78
-const i32 g_release_duration_winter[7] = {0, 30, 70, 110, 150, 170, 190};
+extern const i32 g_release_duration_winter[7] = {0, 30, 70, 110, 150, 170, 190};
 // GLOBAL: TH16 0x491f94
-const f32 g_release_radius_winter[7] = {0.0f, 30.0f, 35.0f, 40.0f, 45.0f, 50.0f, 60.0f};
+extern const f32 g_release_radius_winter[7] = {0.0f, 30.0f, 35.0f, 40.0f, 45.0f, 50.0f, 60.0f};
 // GLOBAL: TH16 0x491fb8
-const i32 g_release_duration_spring[7] = {0, 10, 13, 16, 20, 20, 20};
+extern const i32 g_release_duration_spring[7] = {0, 10, 13, 16, 20, 20, 20};
 // GLOBAL: TH16 0x491fd4
-const f32 g_release_radius_spring[7] = {0.0f, 60.0f, 100.0f, 140.0f, 190.0f, 240.0f, 300.0f};
+extern const f32 g_release_radius_spring[7] = {0.0f, 60.0f, 100.0f, 140.0f, 190.0f, 240.0f, 300.0f};
 
 // Doyou: 10 frames of invincibility; the circle deals 100 a frame.
 // FUNCTION: TH16 0x40e0f0

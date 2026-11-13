@@ -118,15 +118,15 @@ void ConfigData::set_defaults()
 
 // Credits per difficulty (none for extra and the sixth entry).
 // GLOBAL: TH16 0x492278
-static const i32 g_continues_per_difficulty[6] = {5, 5, 5, 5, 0, 0};
+extern const i32 g_continues_per_difficulty[6] = {5, 5, 5, 5, 0, 0};
 
 // The maximum point item value per difficulty, divided by 100.
 // GLOBAL: TH16 0x492290
-static const i32 g_max_piv_per_difficulty[6] = {500000, 500000, 500000, 500000, 500000, 1000000};
+extern const i32 g_max_piv_per_difficulty[6] = {500000, 500000, 500000, 500000, 500000, 1000000};
 
 // The starting point item value per difficulty, divided by 100.
 // GLOBAL: TH16 0x4922a8
-static const i32 g_initial_piv_per_difficulty[6] = {10000, 10000, 10000, 10000, 10000, 100000};
+extern const i32 g_initial_piv_per_difficulty[6] = {10000, 10000, 10000, 10000, 10000, 100000};
 
 // Takes on_tick_callback's address for thread_start. In the original the
 // callback is not entered with known 8-byte alignment (it jumps to

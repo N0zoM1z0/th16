@@ -25,7 +25,7 @@ ItemManager *g_ItemManager;
 // ??1ItemManagerInner@@QAE@XZ
 
 // GLOBAL: TH16 0x4917f8
-const i32 g_item_anm_scripts[17][2] = {
+extern const i32 g_item_anm_scripts[17][2] = {
     {-1, -1}, {112, 134}, {113, 135}, {114, 136}, {115, 137}, {116, 138},
     {117, 139}, {118, 140}, {119, 141}, {120, -1}, {121, -1}, {122, -1},
     {123, -1}, {124, -1}, {125, -1}, {-1, -1}, {129, -1},
@@ -105,7 +105,7 @@ ItemManager *ItemManager::create()
 
 // The PIV value of the bullet cancel items (types 9 to 14).
 // GLOBAL: TH16 0x4917e0
-static const f32 g_cancel_item_piv[6] = {5.0f, 10.0f, 20.0f, 30.0f, 40.0f, 50.0f};
+extern const f32 g_cancel_item_piv[6] = {5.0f, 10.0f, 20.0f, 30.0f, 40.0f, 50.0f};
 
 // Player::angle_to_player as LTCG inlined it into on_tick_body's state 4.
 static __forceinline f32 angle_to_player_inline(Float3 *pos)
