@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after static Float3 timer-result reconstruction (partial).
+Updated 2026-11-13 after static Boss hit-effect flag reconstruction (partial).
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,7 +17,17 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-The latest source work improves the complete **906-byte** `InterpFloat3::step`
+The latest source work restores separate damaged/suppression TESTs in the
+complete **2,207-byte** `EnemyData::step_logic` at `0x0041C330`. Its candidate
+changes **2,195 to 2,197 bytes**, still **incomplete**. Only the suppression
+expression narrows to u16; flags storage stays u32. The original 534-instruction
+CFG is fully traversed. Collision/flash instruction shapes now agree, but
+whole-owner damage selection, statistics, scaling and life-state registers
+remain open. Return-flow life helper and other failed trials are restored.
+See [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md)
+and preserve `.analysis/boss-damage-exact-work/`. No new exact credit.
+
+The preceding source work improves the complete **906-byte** `InterpFloat3::step`
 at `0x00406E10` from **413 to 899 matching bytes**, still **mismatch**. The
 retained inline float-result helper recovers the common timer join and Bezier
 register sequence. Two adjacent instructions remain reordered: original
@@ -32,8 +42,9 @@ at `0x004033F0`: 388 code instructions, two alignment bytes, all 31 target-table
 entries and all 131 links. Conditional result expressions recover the quadratic
 and sine result joins without new helpers or Oracle changes. See
 [complete easing dispatch](knowledge/easing-dispatch-exact.md). Bullet goal,
-movement and manager-root trials are restored. Only `src/Interp.cpp` retains
-game-source changes in this continuation. No game runtime or dynamic test runs.
+movement and manager-root trials are restored. Only `src/Interp.cpp` retained
+game-source changes in that exact continuation. No game runtime or dynamic
+test runs.
 
 The preceding static continuation adds an original-only complete CFG census for the
 21,408-byte upper ECL dispatcher: all 4,519 code instructions are reachable,
@@ -83,18 +94,17 @@ geometry trials are restored; see the Gui review for their rejected forms.
 The canonical report is **890 exact, 65 mismatch, 260 incomplete** among 1,215
 annotations: **175,386 exact primary bytes and 955 retained units**.
 All previous 890 exact owners and the other 1,214 annotation results/diagnostics
-remain unchanged, apart from current build identities. All other 954 unit
-definitions are identical; only the existing Float3 3.0f linkage offset moves
-from 561 to 560. Complete raw candidate regression preserves all other 1,718
-owners (526,227 bytes), their addresses/extents and all image relocations outside
-Float3. The strict comparison validates all six Float3 linked fields while
-retaining its mismatch result.
+remain unchanged, apart from current build identities. All 955 unit definitions
+and addresses are identical. Complete raw candidate regression preserves all
+other 1,718 owners (524,938 bytes), their addresses/extents and all image
+relocations outside the Boss logic owner. That owner remains incomplete;
+Float3 remains a complete 899/906 mismatch with all six fields validated.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`8e2f94db3add1b0ea77a336e1fea943348372cbf2246ff6908d2fdd26179b2c3`.
-PDB age is **420**. The final incremental build, strict replay and progress check
+`b6676dada1acc3f517c2070de87d75d3308c774a8025fb81cc8dcd70d89f98c0`.
+PDB age is **430**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -103,6 +113,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md) | Separate original TESTs restored in the full 2,197/2,207-byte candidate; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
 | [Float3 timer result join](knowledge/float3-timer-result-join.md) | Complete 906-byte owner improves from 413 to 899 matching bytes; two reordered instructions remain; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
 | [Complete easing dispatch](knowledge/easing-dispatch-exact.md) | Complete 1,692-byte exact owner: 388 code instructions, alignment, 31-entry table and 131 links; all 889 prior exact owners and other 1,718 complete candidate owners retained |
 | [Large ECL static source trials](knowledge/large-ecl-static-source-trials.md) | Original-only complete 4,519-instruction CFG and all three tables; all failed source forms restored; all 1,719 candidate owners preserved byte for byte; no new exact credit |
@@ -137,7 +148,16 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [Float3 timer result join](knowledge/float3-timer-result-join.md) first.
+Read [Boss hit-effect flag expression](knowledge/boss-hit-effect-flag-width.md)
+first. Only `Enemy.cpp` retains game-source changes in this continuation.
+Preserve `.analysis/boss-damage-exact-work/TRIALS.md`: the returned-life-pointer
+helper recovers ESI preservation but still changes collision allocation, so it
+is restored. A local owner alias, dialogue helper, scoped life reference and
+statistics staging also fail. Recover the complete damage selection/statistics
+and life-state registers without accepting instruction equivalence or changing
+extents. Keep the original complete 534-instruction CFG and both image sets.
+
+The preceding work is [Float3 timer result join](knowledge/float3-timer-result-join.md).
 Preserve its inline float-result join and the failed forms in
 `.analysis/vector-owner-work/TRIALS.md`. The remaining end-frame read/write
 ordering is not an acceptance exception. Float2/radial Bezier scheduling,

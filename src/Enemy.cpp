@@ -554,8 +554,7 @@ int __fastcall ecl_ext_damage_anm_hurtbox(EnemyData *enemy, int damage)
 // Bomb shields, damage from the player's shots and bombs (with the life
 // and time interrupts it can trigger), collision with the player and the
 // damage flash of the main VM.
-// TODO: complete-owner differences remain in frame alignment and collision
-// temporaries.
+// TODO: recover complete damage selection, statistics and life-state registers.
 // FUNCTION: TH16 0x41c330
 int EnemyData::step_logic()
 {
@@ -790,7 +789,9 @@ int EnemyData::step_logic()
                 vm->flags_lo &= ~ANM_VM_COLOR_MODE_MASK;
             }
         }
-        if ((flags_low & ENEMY_FLAG_DAMAGED) && !(flags_low & ENEMY_FLAG_NO_HIT_EFFECT))
+        // Keep hit-effect suppression on the low word of the flag value.
+        u32 damage_flags = flags_low;
+        if ((damage_flags & ENEMY_FLAG_DAMAGED) && !((u16)damage_flags & ENEMY_FLAG_NO_HIT_EFFECT))
         {
             vm->color_2.d3d = 0xff0000ff;
             vm->flags_lo = (vm->flags_lo & ~ANM_VM_COLOR_MODE_2) | ANM_VM_COLOR_MODE_1;
