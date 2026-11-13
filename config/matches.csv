@@ -586,7 +586,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043F6A0,PauseMenu::leave_paused,reference-0043f6a0,local-strict-pass,148,148,148,.analysis/reference-audit.json
 0x0043F740,PauseMenu::leave_game_over,reference-0043f740,local-strict-pass,74,74,74,.analysis/reference-audit.json
 0x0043F790,PauseMenu::leave_stage_end,reference-0043f790,local-strict-pass,74,74,74,.analysis/reference-audit.json
-0x0043F7E0,PauseMenu::begin_score_entry,reference-0043f7e0,mismatch,401,401,179,.analysis/reference-audit.json
+0x0043F7E0,PauseMenu::begin_score_entry,reference-0043f7e0,local-strict-pass,401,401,401,.analysis/reference-audit.json
 0x00440BD0,SoundManager::resume_sounds,reference-00440bd0,local-strict-pass,47,47,47,.analysis/reference-audit.json
 0x00440C00,MenuHelper::disable,reference-00440c00,local-strict-pass,88,88,88,.analysis/reference-audit.json
 0x00440C60,AnmManager::queue_screen_copy,reference-00440c60,local-strict-pass,100,100,100,.analysis/reference-audit.json
@@ -601,7 +601,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00443730,Player::on_draw_callback,reference-00443730,local-strict-pass,82,82,82,.analysis/reference-audit.json
 0x00443790,Player::read_sht_file,reference-00443790,local-strict-pass,162,162,162,.analysis/reference-audit.json
 0x00443840,Player::angle_to_player,reference-00443840,local-strict-pass,123,123,123,.analysis/reference-audit.json
-0x004439E0,Player::check_hit_circle,reference-004439e0,mismatch,258,258,181,.analysis/reference-audit.json
+0x004439E0,Player::check_hit_circle,reference-004439e0,mismatch,258,258,246,.analysis/reference-audit.json
 0x00443AF0,Player::check_hit_rotated_rect,reference-00443af0,local-strict-pass,469,469,469,.analysis/reference-audit.json
 0x00443CD0,Player::lose_life,reference-00443cd0,local-strict-pass,576,576,576,.analysis/reference-audit.json
 0x00443F10,Player::die,reference-00443f10,local-strict-pass,349,349,349,.analysis/reference-audit.json
