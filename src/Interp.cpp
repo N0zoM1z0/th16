@@ -330,17 +330,38 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step()
     return self->current;
 }
 
+// Advance the integer frame and return fractional time for one caller writeback.
+static inline f32 advance_interp_time(ZunTimer &time)
+{
+    f32 *speed = time.speed();
+    i32 cur = time.current;
+    f32 value;
+    time.previous = cur;
+    if (speed == NULL || (*speed > 0.99f && *speed < 1.01f))
+    {
+        cur++;
+        value = time.current_f + 1.0f;
+    }
+    else
+    {
+        value = time.current_f + *speed;
+        cur = (i32)value;
+    }
+    time.current = cur;
+    return value;
+}
+
 // The fields are read through a local copy of this: through this itself LTCG
 // gave the bezier terms other registers (1.0f in xmm5, the original's xmm6)
 // and took the operands of the adds in another order.
-// TODO: 97%; the timer tick adds current_f from memory into the speed's register and stores in each branch (tick() merges the stores but still adds into the speed's register).
+// TODO: recover the end-time load after the fractional-time writeback.
 // FUNCTION: TH16 0x406e10
 D3DXVECTOR3 InterpFloat3::step()
 {
     InterpFloat3 *self = this;
     if (self->end_time > 0)
     {
-        self->time.tick_mixed();
+        self->time.current_f = advance_interp_time(self->time);
         if (self->time.current >= self->end_time)
         {
             self->time.set(self->end_time);

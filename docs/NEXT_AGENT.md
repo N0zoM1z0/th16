@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after complete shared easing-dispatch reconstruction.
+Updated 2026-11-13 after static Float3 timer-result reconstruction (partial).
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -16,6 +16,16 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+The latest source work improves the complete **906-byte** `InterpFloat3::step`
+at `0x00406E10` from **413 to 899 matching bytes**, still **mismatch**. The
+retained inline float-result helper recovers the common timer join and Bezier
+register sequence. Two adjacent instructions remain reordered: original
+fractional-time store at offset `0x73`, then end-frame load at `0x78`; candidate
+loads at `0x73`, then stores at `0x76`. Do not normalize these seven differing
+bytes or claim new exact credit. All other interpolation trials are restored.
+See [Float3 timer result join](knowledge/float3-timer-result-join.md) and preserve
+`.analysis/vector-owner-work/`. No dynamic testing is used.
 
 The latest exact result is the complete **1,692-byte** `interp_common_methods`
 at `0x004033F0`: 388 code instructions, two alignment bytes, all 31 target-table
@@ -72,16 +82,19 @@ The preceding curve, Boss and async source work is retained. Five further natura
 geometry trials are restored; see the Gui review for their rejected forms.
 The canonical report is **890 exact, 65 mismatch, 260 incomplete** among 1,215
 annotations: **175,386 exact primary bytes and 955 retained units**.
-All previous 889 exact owners and all 954 unit definitions/addresses remain
-unchanged. Complete raw candidate regression preserves all other 1,718 owners
-(525,441 bytes), their addresses/extents and all image relocations outside the
-changed owner. The strict Oracle validates all 131 fields inside that owner.
+All previous 890 exact owners and the other 1,214 annotation results/diagnostics
+remain unchanged, apart from current build identities. All other 954 unit
+definitions are identical; only the existing Float3 3.0f linkage offset moves
+from 561 to 560. Complete raw candidate regression preserves all other 1,718
+owners (526,227 bytes), their addresses/extents and all image relocations outside
+Float3. The strict comparison validates all six Float3 linked fields while
+retaining its mismatch result.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`a830aa87cb06c813b647365844fd9dd051595cd493e86eb10adef28f7e5415ef`.
-PDB age is **403**. The final incremental build, strict replay and progress check
+`8e2f94db3add1b0ea77a336e1fea943348372cbf2246ff6908d2fdd26179b2c3`.
+PDB age is **420**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -90,6 +103,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Float3 timer result join](knowledge/float3-timer-result-join.md) | Complete 906-byte owner improves from 413 to 899 matching bytes; two reordered instructions remain; all 890 exact and other 1,718 candidate owners retained; no new exact credit |
 | [Complete easing dispatch](knowledge/easing-dispatch-exact.md) | Complete 1,692-byte exact owner: 388 code instructions, alignment, 31-entry table and 131 links; all 889 prior exact owners and other 1,718 complete candidate owners retained |
 | [Large ECL static source trials](knowledge/large-ecl-static-source-trials.md) | Original-only complete 4,519-instruction CFG and all three tables; all failed source forms restored; all 1,719 candidate owners preserved byte for byte; no new exact credit |
 | [ECL animation dispatch exact](knowledge/ecl-animation-dispatch-exact.md) | Complete 1,124-byte owner: 333 code instructions, alignment and complete 19-entry table; 62 fields; all 888 prior exact owners retained and all other 1,718 public owners preserved symbolically |
@@ -123,7 +137,15 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [complete easing dispatch](knowledge/easing-dispatch-exact.md) first.
+Read [Float3 timer result join](knowledge/float3-timer-result-join.md) first.
+Preserve its inline float-result join and the failed forms in
+`.analysis/vector-owner-work/TRIALS.md`. The remaining end-frame read/write
+ordering is not an acceptance exception. Float2/radial Bezier scheduling,
+Strange1 walker registers/boundary, Int3 SIB encoding and Angle frame allocation
+remain open. The tiny last differences do not justify artificial source or
+Oracle normalization. Keep substantial Boss/projectile owners in scope.
+
+The preceding exact work is [complete easing dispatch](knowledge/easing-dispatch-exact.md).
 The shared easing owner is exact; its old source TODO and wrong table mapping
 are resolved. Preserve `.analysis/bullet-tick-exact-work/`, including failed
 Bullet and easing forms before trying related source representations again.
