@@ -250,14 +250,16 @@ class SwitchOwnershipControls(unittest.TestCase):
             with self.subTest(address=hex(address)),self.assertRaisesRegex(Incomplete,'complete candidate owner'):
                 self.context.compare(unit)
             checked += 1
-        self.assertEqual(checked,25)
+        # The PDB-614 baseline already has 24 different direct-owner extents.
+        self.assertEqual(checked,24)
 
     def test_additional_or_multiple_dispatches_have_no_single_table_record(self):
         for address in (0x408650,0x40b3b0,0x412cb0,0x413860,0x41dcb0,
                         0x43ce10,0x43f980,0x44b5f0,0x45a450,0x468490):
             with self.subTest(address=hex(address)):
                 record = self.context.switch_owners.get(address)
-                self.assertTrue(record is None or record.get('profile')=='compound-bounded-v1')
+                self.assertTrue(record is None or ('dispatches' in record and record.get('profile') in
+                                {'compound-bounded-v1','compound-frame-store-v1'}))
 
     @classmethod
     def tearDownClass(cls):

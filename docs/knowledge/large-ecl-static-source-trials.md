@@ -1,5 +1,10 @@
 # Large ECL dispatch control flow and restored source trials
 
+The later [complete frame-store scope registration](upper-ecl-frame-store-scope.md)
+formally closes the original 21,408-byte ownership, including the interposed
+frame store. The generic-refusal and code-only boundary statements below are
+historical; the upper game-source candidate still remains incomplete.
+
 This investigation starts at `de396d9`. It runs only static compilation and
 complete original/candidate comparisons. All source trials are restored. It
 adds no exact function, linkage binding, boundary override or Oracle exception.

@@ -24,15 +24,21 @@ def compound_data_parts(record):
 
 def validate_compound_record(record):
     required = {"profile","target_address","code_size","size","dispatches","target_sha256","evidence"}
-    if (set(record) != required or record["profile"] != "compound-bounded-v1"
+    frame_profile = record.get("profile") == "compound-frame-store-v1"
+    if (set(record) != required or record["profile"] not in {"compound-bounded-v1", "compound-frame-store-v1"}
             or any(type(record[k]) is not int for k in ("target_address","code_size","size"))
             or not 0 < record["code_size"] < record["size"] or not record["evidence"]
             or not isinstance(record["dispatches"],list) or len(record["dispatches"]) < 2):
         raise ValueError("invalid explicit compound switch owner")
     sites = set()
+    frame_stores = 0
     for row in record["dispatches"]:
         keys = {"table_offset","case_count","guard_offset","dispatch_offset","case_offsets"}
-        if set(row) not in (keys,keys | {"remap_offset","remap_values"}):
+        row_keys = set(row)
+        if "frame_store_offset" in row_keys and frame_profile:
+            row_keys.remove("frame_store_offset")
+            frame_stores += 1
+        if row_keys not in (keys,keys | {"remap_offset","remap_values"}):
             raise ValueError("invalid compound dispatch fields")
         if (any(type(row[k]) is not int for k in keys-{"case_offsets"})
                 or not 0 <= row["guard_offset"] < row["dispatch_offset"] < record["code_size"]
@@ -40,6 +46,10 @@ def validate_compound_record(record):
                 or not isinstance(row["case_offsets"],list) or len(row["case_offsets"]) != row["case_count"]
                 or any(type(v) is not int or not 0 <= v < record["code_size"] for v in row["case_offsets"])):
             raise ValueError("invalid complete compound dispatch extent")
+        if "frame_store_offset" in row:
+            if ("remap_values" not in row or type(row["frame_store_offset"]) is not int
+                    or not row["guard_offset"] < row["frame_store_offset"] < row["dispatch_offset"]):
+                raise ValueError("invalid explicit remap frame-store site")
         sites.add(row["dispatch_offset"])
         if "remap_values" in row:
             values = row["remap_values"]
@@ -48,6 +58,8 @@ def validate_compound_record(record):
                     or any(type(v) is not int or not 0 <= v < min(row["case_count"],256) for v in values)
                     or max(values) != row["case_count"]-1):
                 raise ValueError("invalid complete compound remap extent")
+    if frame_profile and not frame_stores:
+        raise ValueError("frame-store profile requires an explicit remap store")
     cursor = record["code_size"]
     for part in compound_data_parts(record):
         if (not 0 <= part["offset"]-cursor <= 3
@@ -109,7 +121,62 @@ def inspect_switch(image, address, record):
     return instructions, dispatch, payload
 
 
-def inspect_dispatch(payload, address, record, instructions, *, same_remap_register=True):
+def inspect_frame_store(address, instructions, store, index_register):
+    """Prove one immediate store belongs to an established, stable GS/EH frame.
+
+    This recognizes a concrete x86 compiler prologue. It does not skip arbitrary
+    instructions or normalize the store's displacement, immediate or bytes.
+    """
+    if len(instructions) < 10:
+        raise ValueError("frame store lacks its complete GS/EH prologue")
+    prefix = instructions[:10]
+    p, base, state, handler, chain, saved, allocation, cookie, mix, home = prefix
+    if (p.bytes != b"\x55" or base.bytes != b"\x8b\xec"
+            or state.bytes != b"\x6a\xff"
+            or handler.mnemonic != "push" or len(handler.operands) != 1
+            or handler.operands[0].type != x86.X86_OP_IMM or handler.operands[0].size != 4
+            or chain.mnemonic != "mov" or len(chain.operands) != 2
+            or chain.operands[0].type != x86.X86_OP_REG or chain.operands[0].reg != x86.X86_REG_EAX
+            or chain.operands[1].type != x86.X86_OP_MEM or chain.operands[1].size != 4
+            or chain.operands[1].mem.segment != x86.X86_REG_FS
+            or chain.operands[1].mem.base or chain.operands[1].mem.index or chain.operands[1].mem.disp
+            or saved.bytes != b"\x50"
+            or allocation.mnemonic != "sub" or len(allocation.operands) != 2
+            or allocation.operands[0].type != x86.X86_OP_REG
+            or allocation.operands[0].reg != x86.X86_REG_ESP
+            or allocation.operands[1].type != x86.X86_OP_IMM
+            or allocation.operands[1].imm <= 0 or allocation.operands[1].imm % 4
+            or cookie.mnemonic != "mov" or len(cookie.operands) != 2
+            or cookie.operands[0].type != x86.X86_OP_REG or cookie.operands[0].reg != x86.X86_REG_EAX
+            or cookie.operands[1].type != x86.X86_OP_MEM or cookie.operands[1].size != 4
+            or cookie.operands[1].mem.segment or cookie.operands[1].mem.base or cookie.operands[1].mem.index
+            or mix.bytes != b"\x33\xc5" or home.bytes != b"\x89\x45\xf0"):
+        raise ValueError("frame store lacks its complete GS/EH prologue")
+    if index_register in {x86.X86_REG_EBP, x86.X86_REG_ESP}:
+        raise ValueError("frame store aliases its bounded index register")
+    if (store is None or store.mnemonic != "mov" or len(store.operands) != 2
+            or store.operands[0].type != x86.X86_OP_MEM or store.operands[0].size != 4
+            or store.operands[0].mem.segment or store.operands[0].mem.index
+            or store.operands[0].mem.base != x86.X86_REG_EBP
+            or store.operands[1].type != x86.X86_OP_IMM):
+        raise ValueError("remap frame store is not one EBP-relative immediate MOV")
+    displacement = store.operands[0].mem.disp
+    # Three EH words precede SUB ESP; the cookie occupies EBP-16 .. EBP-13.
+    if not -12-allocation.operands[1].imm <= displacement <= -20:
+        raise ValueError("remap frame store leaves its allocated local area")
+    for n, instruction in enumerate(instructions):
+        if x86.X86_REG_EBP not in instruction.regs_access()[1]:
+            continue
+        terminal_pop = (instruction.bytes == b"\x5d" and n+1 < len(instructions)
+                        and instructions[n+1].group(capstone.CS_GRP_RET))
+        if instruction.address != base.address and not terminal_pop:
+            raise ValueError("remap frame base is modified inside the owner")
+    # Prologue instructions cannot be entered from another block or table.
+    return set(range(address, home.address + home.size))
+
+
+def inspect_dispatch(payload, address, record, instructions, *, same_remap_register=True,
+                     frame_store=False):
     count = record["case_count"]
     by_address = {i.address: i for i in instructions}
     guard = by_address.get(address + record["guard_offset"])
@@ -142,6 +209,15 @@ def inspect_dispatch(payload, address, record, instructions, *, same_remap_regis
         index_register = remap.operands[0].reg
         if payload[record["remap_offset"]:record["remap_offset"]+bound_count] != bytes(record["remap_values"]):
             raise ValueError("switch remap differs from the complete reviewed byte map")
+    frame_entries = set()
+    if "frame_store_offset" in record:
+        if not frame_store or "remap_values" not in record:
+            raise ValueError("unreviewed interposed remap frame store")
+        store = by_address.get(next_address)
+        if next_address != address + record["frame_store_offset"]:
+            raise ValueError("remap frame store is not adjacent to its byte remap")
+        frame_entries = inspect_frame_store(address, instructions, store, index_register)
+        next_address += store.size
     if next_address != dispatch.address:
         raise ValueError("switch lacks its adjacent unsigned default branch")
     if dispatch.mnemonic != "jmp" or len(dispatch.operands) != 1:
@@ -153,7 +229,7 @@ def inspect_dispatch(payload, address, record, instructions, *, same_remap_regis
             or operand.mem.disp != address + record["table_offset"]):
         raise ValueError("switch dispatch does not address its complete owned table")
     # Neither the default branch nor dispatch may be entered without the cmp.
-    guarded_entries = set(range(branch.address, dispatch.address + dispatch.size))
+    guarded_entries = set(range(branch.address, dispatch.address + dispatch.size)) | frame_entries
     for instruction in instructions:
         if ((instruction.group(capstone.CS_GRP_JUMP) or instruction.group(capstone.CS_GRP_CALL))
                 and instruction.operands and instruction.operands[0].type == x86.X86_OP_IMM
@@ -192,7 +268,9 @@ def inspect_compound_switch(image, address, record):
         cursor = part["offset"]+part["width"]
     dispatches,forbidden,all_targets = set(),set(),set()
     for row in record["dispatches"]:
-        dispatch,guarded,entries = inspect_dispatch(payload,address,row,instructions,same_remap_register=False)
+        dispatch,guarded,entries = inspect_dispatch(
+            payload,address,row,instructions,same_remap_register=False,
+            frame_store=record["profile"] == "compound-frame-store-v1")
         dispatches.add(dispatch.address)
         forbidden.update(guarded)
         all_targets.update(entries)

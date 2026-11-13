@@ -14,6 +14,7 @@ outside this repository; never follow them when cleaning local outputs.
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
 | `.analysis/reference-audit.json` | Current fingerprinted results read by `scripts/progress.py` |
+| `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
 | `.analysis/large-owner-operands-work/` | PDB 600 baseline/PDB 614 restored image, twelve complete Boss/motion/menu/curve source trials, original 768-instruction music CFG, full scope/field census, trial images/snapshots and complete raw-image restoration |
 | `.analysis/ecl-interpreter-order-work/` | PDB 591 baseline/PDB 600 restored image, eight full ECL source trials and images, original 1,645-instruction CFG, complete tables/map, source-qualified private helper proof, static controls and complete raw-image regression |
 | `.analysis/audio-release-baseline/` | Latest accepted checkpoint regression inputs, kept uncompressed |

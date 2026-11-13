@@ -1,9 +1,9 @@
 # Current handoff
 
-Updated 2026-11-13 after twelve complete Boss, enemy-motion, menu and curve
-source trials. All game-source trials are restored; no new exact credit is
-added. The preceding private ECL dependency closure, laser endpoint repair
-and nine atan2-dependent exact owners are preserved.
+Updated 2026-11-13 after formal registration of the complete upper ECL owner
+and four restored source trials. All game-source trials are restored; no new
+exact credit is added. The preceding private ECL dependency closure, laser
+endpoint repair and nine atan2-dependent exact owners are preserved.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -19,6 +19,44 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+Current totals remain **904 exact / 67 mismatch / 244 incomplete**, **185,816
+exact primary bytes** and **971 unchanged units**, PDB age **619**. All 1,215
+annotation results/diagnostics and all 1,719 native owners (527,136 raw bytes),
+addresses/extents, base relocations and complete raw `.text` are preserved from
+`cd97ed6`. All trial game-source edits are restored; source input remains
+`ef45258398eb6fe5c3cb4fd560aed06455b5f5695cfb4d398602eb739e51ccc5`.
+No game runtime or emulation is used.
+
+The complete original **21,408-byte** `EnemyData::ecl_run_over_300` at
+`0x0041DCB0` is now formally registered, replacing its code-only 19,976-byte
+boundary. It owns all 4,519 reachable instructions, three dispatches, 182 target
+entries, the full 702-byte map and two alignment bytes. The next entry remains
+`0x00423050`; no other original boundary changes. New
+`compound-frame-store-v1` proves the single remap-adjacent immediate write into
+the established/stable GS/EH local frame. All store bytes remain executable
+comparison input. Old profiles/records retain their gates; all **40 simple and
+39 compound static controls** pass. See
+[complete upper ECL frame-store scope](knowledge/upper-ecl-frame-store-scope.md).
+
+This is complete ownership work, **not an exact game function**. The current
+upper candidate remains **21,316 bytes**, with frame `0x498` versus original
+`0x478`, seven unbound fields and further source/layout differences. No upper
+private callee is newly bound; do not alias its helper to the lower ECL producer.
+Four forms are restored: anmReset file/main-script staging, file-only staging,
+script-before-flag assignment, and explicit embedded position offsets. Their
+21,332-byte candidates recover local sequences but change surrounding code.
+Do not repeat these or mistake a spatial case block for an accepted owner.
+
+Keep `.analysis/upper-ecl-case-work/`, including all four source/image sets,
+complete tables/map/relocations, registered original-only CFG, registration,
+both initial/final control logs, preexisting count check and final canonical,
+progress and whole-image regression. The original generic-refusal statements
+in older handoffs are superseded for this specific frame-store profile.
+Continue substantial source reconstruction; source-origin review is open and
+Factory acceptance is unsubmitted. Preserve the incremental build graph.
+
+## Preceding large-owner lifetime checkpoint (PDB 614)
 
 Current totals remain **904 exact / 67 mismatch / 244 incomplete**, **185,816
 exact primary bytes** and **971 unchanged units**, PDB age **614**. All 1,215

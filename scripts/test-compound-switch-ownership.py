@@ -74,8 +74,8 @@ class CompoundSwitchControls(unittest.TestCase):
         unit=dict(target_address=address,candidate_address=address,size=record['size'],compare_size=record['size'])
         return context,unit,record
 
-    def test_all_nine_originals_have_complete_code_and_data(self):
-        self.assertEqual(len(self.records),9)
+    def test_all_ten_originals_have_complete_code_and_data(self):
+        self.assertEqual(len(self.records),10)
         for address,record in self.records.items():
             with self.subTest(address=hex(address)):
                 instructions,dispatches,payload=inspect_switch(self.context.target,address,record)
@@ -327,11 +327,142 @@ class CompoundSwitchControls(unittest.TestCase):
             with self.subTest(address=hex(address)),self.assertRaisesRegex(Incomplete,'complete candidate owner'):
                 self.context.compare(unit)
             count+=1
-        self.assertEqual(count,5)
+        self.assertEqual(count,6)
 
-    def test_memory_reload_and_interposed_store_shapes_remain_unreviewed(self):
+    def test_memory_reload_remains_unreviewed(self):
         self.assertNotIn(0x408650,self.context.switch_owners)
-        self.assertNotIn(0x41dcb0,self.context.switch_owners)
+
+    def frame_fixture(self, changes=None):
+        context,unit,record=self.fixture(0x41dcb0)
+        if changes:
+            context.target=ImageOverlay(context.target,{unit['target_address']+n:b
+                                                       for offset,raw in changes.items()
+                                                       for n,b in enumerate(raw,offset)})
+        return context,unit,record
+
+    def test_complete_upper_ecl_frame_store_is_explicitly_owned(self):
+        context,unit,record=self.frame_fixture()
+        self.assertEqual(record['profile'],'compound-frame-store-v1')
+        self.assertEqual(unit['size'],21408)
+        self.assertEqual(record['code_size'],19976)
+        self.assertEqual([r['case_count'] for r in record['dispatches']],[174,4,4])
+        self.assertEqual(len(record['dispatches'][0]['remap_values']),702)
+        self.assertEqual(record['dispatches'][0]['frame_store_offset'],151)
+        instructions,dispatches=validate_switch_owner(context,unit,record)
+        self.assertEqual(len(instructions),4519)
+        self.assertEqual(len(dispatches),3)
+
+    def test_frame_store_requires_its_profile_and_exact_site(self):
+        for change in ('old-profile','old-adjacency','missing','interior','branch','nested','unknown'):
+            record=copy.deepcopy(self.records[0x41dcb0]);row=record['dispatches'][0]
+            if change=='old-profile':record['profile']='compound-bounded-v1'
+            elif change=='old-adjacency':
+                record['profile']='compound-bounded-v1';del row['frame_store_offset']
+            elif change=='missing':del row['frame_store_offset']
+            elif change=='interior':row['frame_store_offset']+=1
+            elif change=='branch':row['frame_store_offset']=row['guard_offset']
+            elif change=='nested':record['dispatches'][1]['frame_store_offset']=10919
+            else:row['skip_store']=True
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                inspect_switch(self.context.target,0x41dcb0,record)
+
+    def test_frame_store_requires_the_established_gs_eh_prologue(self):
+        mutations={0:b'\x57',1:b'\x8b\xed',5:b'\x66\x68\x00\x00\x90',
+                   10:b'\x65',18:b'\xc4',28:b'\x33\xc0',32:b'\xec'}
+        for offset,raw in mutations.items():
+            context,unit,record=self.frame_fixture({offset:raw})
+            with self.subTest(offset=offset),self.assertRaises(ValueError):
+                inspect_switch(context.target,unit['target_address'],record)
+
+    def test_frame_base_cannot_be_reassigned_or_popped_early(self):
+        for raw in (b'\x8b\xe9',b'\x5d\x90'):
+            context,unit,record=self.frame_fixture({0x2d:raw})
+            with self.subTest(raw=raw.hex()),self.assertRaisesRegex(ValueError,'frame base'):
+                inspect_switch(context.target,unit['target_address'],record)
+
+    def test_interposed_instruction_cannot_write_a_register_flags_or_other_storage(self):
+        original=self.context.target.read_address(0x41dcb0+151,10)
+        mutations=[b'\xc7\x87'+original[2:],b'\x81'+original[1:],
+                   b'\x89\x85'+original[2:6]+b'\x90'*4,
+                   b'\xb8'+original[6:]+b'\x90'*5,
+                   b'\xc6\x85'+original[2:6]+b'\x88'+b'\x90'*3]
+        for raw in mutations:
+            context,unit,record=self.frame_fixture({151:raw})
+            with self.subTest(raw=raw.hex()),self.assertRaisesRegex(ValueError,'frame store'):
+                inspect_switch(context.target,unit['target_address'],record)
+
+    def test_store_cannot_cross_the_local_area_cookie_or_eh_words(self):
+        for displacement in (-0x485,-16,-12,-4,0,4):
+            context,unit,record=self.frame_fixture({153:struct.pack('<i',displacement)})
+            with self.subTest(displacement=displacement),self.assertRaisesRegex(ValueError,'local area'):
+                inspect_switch(context.target,unit['target_address'],record)
+        context,unit,record=self.frame_fixture({19:struct.pack('<I',0x400)})
+        with self.assertRaisesRegex(ValueError,'local area'):
+            inspect_switch(context.target,unit['target_address'],record)
+
+    def test_store_immediate_is_owned_code_and_remains_in_the_whole_hash(self):
+        context,unit,record=self.frame_fixture({157:b'\x89'})
+        # A different immediate does not change table ownership. Its raw bytes
+        # still fail the immutable complete original identity.
+        instructions,_,payload=inspect_switch(context.target,unit['target_address'],record)
+        self.assertEqual(len(instructions),4519)
+        self.assertNotEqual(hashlib.sha256(payload).hexdigest(),record['target_sha256'])
+        with self.assertRaisesRegex(ValueError,'extent hash mismatch'):
+            validate_switch_owner(context,unit,record)
+
+    def test_frame_store_and_prologue_cannot_be_entered_by_a_direct_branch(self):
+        for destination in (151,23):
+            context,unit,record=self.frame_fixture({0x4b:struct.pack('<b',destination-0x4c)})
+            with self.subTest(destination=destination),self.assertRaisesRegex(ValueError,'unguarded incoming'):
+                inspect_switch(context.target,unit['target_address'],record)
+
+    def test_nested_tables_cannot_enter_the_frame_store_or_prologue(self):
+        for destination in (151,17):
+            context,unit,record=self.frame_fixture();record=copy.deepcopy(record)
+            row=record['dispatches'][1];row['case_offsets'][0]=destination
+            context.target=ImageOverlay(context.target,{unit['target_address']+row['table_offset']+n:b
+                for n,b in enumerate(struct.pack('<I',unit['target_address']+destination))})
+            with self.subTest(destination=destination),self.assertRaisesRegex(ValueError,'another dispatch guard'):
+                inspect_switch(context.target,unit['target_address'],record)
+
+    def test_upper_ecl_all_three_unsigned_guards_remain_required(self):
+        context,unit,record=self.frame_fixture()
+        instructions,_,_=inspect_switch(context.target,unit['target_address'],record)
+        by={i.address:i for i in instructions}
+        for row in record['dispatches']:
+            guard=by[unit['target_address']+row['guard_offset']];branch=by[guard.address+guard.size]
+            offset=branch.address-unit['target_address']+(1 if branch.bytes[0]==0x0f else 0)
+            value=0x8f if branch.bytes[0]==0x0f else 0x7f
+            changed,_,_=self.frame_fixture({offset:bytes([value])})
+            with self.subTest(guard=row['guard_offset']),self.assertRaisesRegex(ValueError,'unsigned default'):
+                inspect_switch(changed.target,unit['target_address'],record)
+
+    def test_upper_ecl_map_and_alignment_are_complete(self):
+        for offset in (20672,21023,21373):
+            value=self.context.target.read_address(0x41dcb0+offset,1)[0]^1
+            context,unit,record=self.frame_fixture({offset:bytes([value])})
+            with self.subTest(offset=offset),self.assertRaisesRegex(ValueError,'reviewed byte map'):
+                inspect_switch(context.target,unit['target_address'],record)
+        context,unit,record=self.frame_fixture({21374:b'\x01'})
+        with self.assertRaisesRegex(ValueError,'alignment padding'):
+            inspect_switch(context.target,unit['target_address'],record)
+
+    def test_upper_ecl_every_target_entry_requires_its_relocation(self):
+        context,unit,record=self.frame_fixture()
+        entries={unit['target_address']+p['offset']+n for p in compound_data_parts(record)
+                 if p['kind']=='targets' for n in range(0,p['width'],4)}
+        self.assertEqual(len(entries),182)
+        for address in entries:
+            changed=copy.copy(context);changed.image=ImageOverlay(context.image,removed=[address])
+            with self.subTest(address=hex(address)),self.assertRaisesRegex(ValueError,'entry relocations'):
+                validate_switch_owner(changed,unit,record)
+
+    def test_upper_ecl_full_table_suffix_cannot_be_omitted_or_extended(self):
+        context,unit,record=self.frame_fixture()
+        for size in (19976,20672,21374,21376,21407,21409):
+            changed=dict(unit,size=size,compare_size=size)
+            with self.subTest(size=size),self.assertRaisesRegex(ValueError,'complete code and table'):
+                validate_switch_owner(context,changed,record)
 
     @classmethod
     def tearDownClass(cls):
