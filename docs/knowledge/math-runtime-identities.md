@@ -1,5 +1,10 @@
 # Exact spellcard clock and complete mathematical runtime identities
 
+The subsequent [closed atan2 review](atan2-runtime-identities.md) resolves the
+intrinsic dependency below, adds nine complete exact projectile/math owners
+and records the current curve mismatches. The counts in this document describe
+the earlier spellcard-clock checkpoint.
+
 The complete **418-byte** `Spellcard::measure_real_time` at `0x00417BC0`
 passes the strict local Oracle, including all 107 original instructions and
 14 linked fields (five REL32, nine DIR32). The original-only CFG reaches

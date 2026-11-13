@@ -42,3 +42,16 @@ c_dispatch_address = 0x488bb0
 c_dispatch_sha256 = "16a7fcec7ed04d55cb296277514c0cf1cffed5f7365874026644c3e135058a63"
 c_dispatch_data_address = 0x494ea0
 c_dispatch_data_sha256 = "f3bdc6621362bc6a44394cef3193941e482d8d3188d2bee69ee40fd3077a8d9a"
+
+[objects.atan2]
+profile = "msvc-x86-atan2-v1"
+evidence = "docs/knowledge/atan2-runtime-identities.md"
+entry_address = 0x487aa0
+entry_sha256 = "46e208ccd511c25653d499b1253a9ac347715b9923de27e9a197c879ce6562d7"
+math_address = 0x488b00
+math_sha256 = "61e4e14b3106d6fcac15a9570a0ad09e163e95c5fa938fb8bb89f24ce4b15837"
+data_address = 0x494e50
+data_sha256 = "c7f30e28366f6fdf593ccec089faebb1c943a4e9d7cea4312b5817071e6fb9d6"
+witness_parent = 0x4052a0
+witness_parent_sha256 = "bd9c688e9fe760c34cc2541fcc8740edb4f51c7eb0ba35c20e8b34e75c588b7b"
+witnesses = [0x4052c4]

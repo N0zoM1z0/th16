@@ -65,7 +65,8 @@ def readonly(image, address, size):
 def review_runtime_interiors(context, path):
     config = tomllib.loads(path.read_text())
     require(set(config) == {"objects"} and "ftol3" in config["objects"]
-            and set(config["objects"]) <= {"ftol3", "fmod"},
+            and set(config["objects"]) <= {"ftol3", "fmod", "atan2"}
+            and ("atan2" not in config["objects"] or "fmod" in config["objects"]),
             "unreviewed runtime contribution declaration")
     row = config["objects"]["ftol3"]
     require(set(row) == {"profile", "target_address", "code_size", "code_sha256", "data_address",
@@ -192,6 +193,12 @@ def review_runtime_interiors(context, path):
         require(not set(bindings) & set(extra), "duplicate runtime interior identity")
         bindings.update(extra)
         evidence["fmod"] = proof
+    if "atan2" in config["objects"]:
+        from runtime_atan2 import review_atan2
+        extra, proof = review_atan2(context, config["objects"]["atan2"], evidence["fmod"])
+        require(not set(bindings) & set(extra), "duplicate runtime interior identity")
+        bindings.update(extra)
+        evidence["atan2"] = proof
     return bindings, evidence
 
 

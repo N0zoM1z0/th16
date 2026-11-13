@@ -47,7 +47,7 @@ class RuntimeInteriorControls(unittest.TestCase):
             return review_runtime_interiors(context or self.context, path)
 
     def test_both_complete_contributions_and_entries_pass(self):
-        self.assertEqual(set(self.bindings), {"__dtoul3", "__ltod3", "__CIfmod"})
+        self.assertEqual(set(self.bindings), {"__dtoul3", "__ltod3", "__CIfmod", "__CIatan2"})
         self.assertEqual(self.bindings["__dtoul3"]["target"], 0x487910)
         self.assertEqual(self.bindings["__ltod3"]["target"], 0x487a70)
         self.assertTrue(self.evidence["complete_code_equal"])

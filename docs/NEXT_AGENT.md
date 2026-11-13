@@ -1,7 +1,7 @@
 # Current handoff
 
-Updated 2026-11-13 after exact spellcard-clock verification and complete
-Boss, animation-clock, entry-timer and supervisor source trials.
+Updated 2026-11-13 after nine complete projectile/math owners become exact
+through independent x87 atan2 identity, and full bomb/interpreter/curve trials.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,6 +17,35 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+Nine existing game-source candidates now pass complete exact replay, totaling
+**3,036 primary bytes, 741 original instructions and 89 linked fields**.
+They include `Bullet::step_ex_02` (555 bytes), `Bullet::step_ex_21` (507), both
+laser `step_ex_accel` owners (380 each), `sht_on_tick_homing` (467), bullet
+emission, player graze/angle and the atan2 wrapper. Game C++ source is unchanged.
+The closed `msvc-x86-atan2-v1` identity compares both 20-byte argument entries,
+a complete 168-byte assembler region and its 80-byte descriptor, reusing the
+already verified fmod dispatchers. Only `__CIatan2` at parent offset 10 is
+exposed. No runtime support receives primary credit or instruction-equivalence
+exception. All **117 static controls** and all nine standalone unit replays pass.
+See [complete atan2/projectile identities](knowledge/atan2-runtime-identities.md).
+Keep `.analysis/atan2-runtime-work/`, especially original-only scopes, complete
+contributions, control logs, baseline/final images and final regression.
+
+Four other functions become complete mismatches: Reimu orb update 959/1,148,
+bullet EX17 541/597, curve reverse-step 982/986 and laser-shot hit 910/1,409.
+The curve's four nonfield differences at offsets 770, 779, 787 and 791 remain
+unaccepted. Curve state remains 1,168/1,164 incomplete; ECL run still lacks two
+fields. All other 1,200 annotation results/diagnostics are unchanged. Two bomb
+reference forms, one full-ANM integer-result form and five curve-square/helper
+forms fail and are restored. Do not repeat them as new hypotheses. Keep
+`.analysis/reimu-orb-array-work/`, `.analysis/anm-integer-result-work/` and
+`.analysis/curve-square-result-work/`. All prior 894 exact owners and 957 unit
+definitions are retained; thirteen new complete units include four mismatches
+without exact credit. Current totals are **903 exact / 67 mismatch / 245
+incomplete**, **185,784 exact primary bytes and 970 units**, PDB age **579**.
+All 1,719 native owners (527,136 bytes), addresses/extents, relocations and raw
+`.text` remain unchanged. Boss logic and the large interpreter remain open.
 
 The complete **418-byte** `Spellcard::measure_real_time` at `0x00417BC0`
 is now **exact**, including all 107 original instructions and 14 linked fields.
@@ -41,8 +70,8 @@ same review's rejected-trial table. Keep `.analysis/anm-entry-timer-work/`,
 `.analysis/anm-clock-array-work/`. Final regression retains all prior 893
 exact owners, all 956 previous unit definitions, all 1,719 native owners
 (527,136 bytes), addresses/extents, relocations and the entire raw `.text`.
-Current totals are **894 exact / 63 mismatch / 258 incomplete**, with
-**182,748 exact primary bytes and 957 units**; PDB age is **569**.
+That checkpoint's totals were **894 exact / 63 mismatch / 258 incomplete**,
+with **182,748 exact primary bytes and 957 units**; PDB age was **569**.
 All six formerly unresolved math fields in `AnmVm::run` are now bound, but
 its complete 14,141-byte candidate still differs from the 14,177-byte
 original. Boss logic and the large interpreter remain active source targets.
@@ -267,15 +296,14 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **894 exact, 63 mismatch, 258 incomplete** among 1,215
-annotations: **182,748 exact primary bytes and 957 retained comparison units**.
-All 893 previous exact owners and 956 prior unit definitions remain unchanged
-from `489ae61`. Only the complete Spellcard clock gains exact credit. Four
-other diagnostics advance but remain incomplete: `_floorf` reaches its PDB
-source-owner refusal; both curve-node functions still lack `__CIatan2`;
-`AnmVm::run` fails its complete extent. The other 1,210 annotation results and
-diagnostics are unchanged, apart from current build identities. Runtime floor
-boundaries are independently corrected; no game boundary changes. All 1,719 complete
+The canonical report is **903 exact, 67 mismatch, 245 incomplete** among 1,215
+annotations: **185,784 exact primary bytes and 970 retained comparison units**.
+All 894 previous exact owners and 957 prior unit definitions remain unchanged
+from `5de0006`. Nine complete projectile/math owners gain exact credit. Four
+functions advance to complete mismatches and two other incomplete diagnostics
+advance; all other 1,200 annotation results and diagnostics remain unchanged,
+apart from current build identities. All original boundaries are unchanged
+in this continuation. The preceding floor boundary repair is retained. All 1,719 complete
 candidate owners remain raw-identical (527,136 bytes), with unchanged
 addresses/extents, all image base relocations and the entire raw `.text`.
 The Boss logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
@@ -284,7 +312,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `80da752f1d593ebbb54bc5fecf92210566c8ba0ed0acb6e05ce1e4659e99259d`.
-PDB age is **569**. The final incremental build, strict replay and progress check
+PDB age is **579**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -293,6 +321,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Complete atan2/projectile identities](knowledge/atan2-runtime-identities.md) | Nine complete owners exact, 3,036 bytes / 741 instructions / 89 fields; all prior 894 exact retained; 117 static controls; bomb/interpreter/curve source trials restored |
 | [Exact spellcard clock and math-runtime identities](knowledge/math-runtime-identities.md) | Complete 418-byte Spellcard clock exact; closed 1,179-byte code / 190-byte data runtime support, 101 static controls; prior 893 exact preserved; Boss/clock/entry/supervisor source trials restored |
 | [Complete interpreter, laser and cursor trials](knowledge/interpreter-and-laser-complete-owner-trials.md) | Full 14,177-byte interpreter, 1,968-byte laser and 5,034-byte menu trials rejected/restored; full-owner check catches camera regression; all 893 exact retained |
 | [Camera-sky and Boss query boundaries](knowledge/camera-sky-and-boss-query-trials.md) | Complete 408-instruction camera-sky CFG; eight camera and three Boss query forms rejected/restored; all 893 exact results and complete native code preserved |
