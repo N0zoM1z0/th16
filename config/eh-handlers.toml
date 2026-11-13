@@ -571,3 +571,51 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/gui-destructor-exact.md"
+
+[[handlers]]
+profile = "empty-eh3-saved-esi-edi-v1"
+source = "src/AnmManagerVms.cpp"
+parent_symbol = "??1AnmManager@@QAE@XZ"
+parent_target = 0x46b7d0
+parent_size = 297
+parent_sha256 = "7096026899fd628c19e63dbf9ba83794951fb9f1a65dad7ba81cc1a1eea7eb05"
+target = 0x48ab30
+size = 27
+target_sha256 = "67b24a6c2f1d0761e3f6c43bdd32e9e4400631f885a7050268c34bc4d503abcb"
+func_info_target = 0x49b6a0
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/sound-eh-vftables.md"
+
+[[handlers]]
+profile = "empty-eh3-two-locals-saved-esi-v1"
+source = "src/Spellcard.cpp"
+parent_symbol = "??1Spellcard@@QAE@XZ"
+parent_target = 0x417790
+parent_size = 272
+parent_sha256 = "75580971d70de8c242117739a21f4f96ba82309d296b4d36f4d35d6bac0b555b"
+target = 0x48a590
+size = 27
+target_sha256 = "3f4c2d41dfc8a7089642e6b96b90ab7622f0d7f6b87f5f8f29cf352a718ec696"
+func_info_target = 0x49b144
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-two-locals-saved-ebx-esi-edi-v1"
+source = "src/HelpManual.cpp"
+parent_symbol = "??1HelpManual@@QAE@XZ"
+parent_target = 0x42e910
+parent_size = 278
+parent_sha256 = "a4ec83622447718cb756af0bf03e50aff0f69d0351f52e93d4231331c9c245da"
+target = 0x48a790
+size = 27
+target_sha256 = "6cb577f2b9372c9ea38a96cf4545fed868a47087b358bbdae30c258caf962e78"
+func_info_target = 0x49b338
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"

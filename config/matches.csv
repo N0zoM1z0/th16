@@ -238,6 +238,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00417650,Gui::boss_timer_on_spell_end,reference-00417650,local-strict-pass,116,116,116,.analysis/reference-audit.json
 0x004176D0,count_spells_of_difficulty,reference-004176d0,local-strict-pass,46,46,46,.analysis/reference-audit.json
 0x00417700,Spellcard::initialize,reference-00417700,local-strict-pass,131,131,131,.analysis/reference-audit.json
+0x00417790,Spellcard::~Spellcard,reference-00417790,local-strict-pass,272,272,272,.analysis/reference-audit.json
 0x004178A0,Spellcard::create,reference-004178a0,local-strict-pass,130,130,130,.analysis/reference-audit.json
 0x00417930,Spellcard::on_tick_body,reference-00417930,local-strict-pass,650,650,650,.analysis/reference-audit.json
 0x00417BC0,Spellcard::measure_real_time,reference-00417bc0,local-strict-pass,418,418,418,.analysis/reference-audit.json
@@ -407,6 +408,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042E760,help_manual_load_anm,reference-0042e760,local-strict-pass,82,82,82,.analysis/reference-audit.json
 0x0042E7C0,help_manual_read_file,reference-0042e7c0,local-strict-pass,67,67,67,.analysis/reference-audit.json
 0x0042E810,HelpManual::initialize,reference-0042e810,local-strict-pass,243,243,243,.analysis/reference-audit.json
+0x0042E910,HelpManual::~HelpManual,reference-0042e910,local-strict-pass,278,278,278,.analysis/reference-audit.json
 0x0042EA30,HelpManual::create,reference-0042ea30,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x0042EA80,HelpManual::destroy,reference-0042ea80,local-strict-pass,34,34,34,.analysis/reference-audit.json
 0x0042EF90,HelpManual::on_tick_callback,reference-0042ef90,local-strict-pass,5,5,5,.analysis/reference-audit.json
@@ -836,6 +838,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046A3A0,AnmManager::AnmManager,reference-0046a3a0,local-strict-pass,5071,5071,5071,.analysis/reference-audit.json
 0x0046B770,AnmFastVm::AnmFastVm,reference-0046b770,local-strict-pass,22,22,22,.analysis/reference-audit.json
 0x0046B790,AnmFastVm::~AnmFastVm,reference-0046b790,local-strict-pass,61,61,61,.analysis/reference-audit.json
+0x0046B7D0,AnmManager::~AnmManager,reference-0046b7d0,local-strict-pass,297,297,297,.analysis/reference-audit.json
 0x0046B900,AnmManager::setup_vertex_buffer,reference-0046b900,local-strict-pass,1985,1985,1985,.analysis/reference-audit.json
 0x0046C920,AnmManager::load_texture_from_file,reference-0046c920,local-strict-pass,572,572,572,.analysis/reference-audit.json
 0x0046CD30,AnmManager::create_empty_texture,reference-0046cd30,local-strict-pass,72,72,72,.analysis/reference-audit.json

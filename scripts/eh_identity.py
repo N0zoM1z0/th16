@@ -15,6 +15,9 @@ _SAVED_REGISTER_PROFILES = {
     "empty-eh3-saved-esi-edi-v1": (bytes.fromhex("5657"), bytes.fromhex("5f5e"), b"", 0),
     "empty-eh3-three-locals-saved-ebx-esi-edi-v1": (
         bytes.fromhex("535657"), bytes.fromhex("5f5e5b"), bytes.fromhex("83ec0c"), 3),
+    "empty-eh3-two-locals-saved-ebx-esi-edi-v1": (
+        bytes.fromhex("535657"), bytes.fromhex("5f5e5b"), bytes.fromhex("83ec08"), 2),
+    "empty-eh3-two-locals-saved-esi-v1": (bytes.fromhex("56"), bytes.fromhex("5e"), bytes.fromhex("83ec08"), 2),
 }
 
 

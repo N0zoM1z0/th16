@@ -304,7 +304,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00417650,Gui::boss_timer_on_spell_end,src/Gui.cpp,?boss_timer_on_spell_end@Gui@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004176D0,count_spells_of_difficulty,src/Spellcard.cpp,?count_spells_of_difficulty@@YAHH@Z,exact,,.analysis/reference-audit.json
 0x00417700,Spellcard::initialize,src/Spellcard.cpp,?initialize@Spellcard@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x00417790,Spellcard::~Spellcard,src/Spellcard.cpp,??1Spellcard@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00417790,Spellcard::~Spellcard,src/Spellcard.cpp,??1Spellcard@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x004178A0,Spellcard::create,src/Spellcard.cpp,?create@Spellcard@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x00417930,Spellcard::on_tick_body,src/Spellcard.cpp,?on_tick_body@Spellcard@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00417BC0,Spellcard::measure_real_time,src/Spellcard.cpp,?measure_real_time@Spellcard@@SAXXZ,exact,,.analysis/reference-audit.json
@@ -502,7 +502,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042E760,help_manual_load_anm,src/HelpManual.cpp,?help_manual_load_anm@@YAXXZ,exact,,.analysis/reference-audit.json
 0x0042E7C0,help_manual_read_file,src/HelpManual.cpp,?help_manual_read_file@@YAXXZ,exact,,.analysis/reference-audit.json
 0x0042E810,HelpManual::initialize,src/HelpManual.cpp,?initialize@HelpManual@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0042E910,HelpManual::~HelpManual,src/HelpManual.cpp,??1HelpManual@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042E910,HelpManual::~HelpManual,src/HelpManual.cpp,??1HelpManual@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042EA30,HelpManual::create,src/HelpManual.cpp,?create@HelpManual@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x0042EA80,HelpManual::destroy,src/HelpManual.cpp,?destroy@HelpManual@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0042EAB0,HelpManual::on_tick_body,src/HelpManual.cpp,?on_tick_body@HelpManual@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -1052,7 +1052,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046A3A0,AnmManager::AnmManager,src/AnmRender.cpp,??0AnmManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046B770,AnmFastVm::AnmFastVm,src/AnmManagerVms.cpp,??0AnmFastVm@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046B790,AnmFastVm::~AnmFastVm,src/AnmManagerVms.cpp,??1AnmFastVm@@QAE@XZ,exact,,.analysis/reference-audit.json
-0x0046B7D0,AnmManager::~AnmManager,src/AnmManagerVms.cpp,??1AnmManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0046B7D0,AnmManager::~AnmManager,src/AnmManagerVms.cpp,??1AnmManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0046B900,AnmManager::setup_vertex_buffer,src/AnmLoader.cpp,?setup_vertex_buffer@AnmManager@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0046C0D0,AnmManager::convert_texture,src/AnmTexels.cpp,?convert_texture@AnmManager@@SGXPAUIDirect3DTexture9@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0046C8B0,AnmManager::reload_texture,src/AnmLoader.cpp,?reload_texture@AnmManager@@QAEHPAUAnmLoadedD3D@@PAXIHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

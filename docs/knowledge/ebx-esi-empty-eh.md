@@ -69,6 +69,17 @@ Both handlers also read node-16, but their full frames fail this profile.
 No new binding is installed for either parent. Cross-profile substitution is
 also explicitly rejected for all eleven reviewed saved-register parents.
 
+A 2026-11-13 follow-up adds two explicit table profiles with the same checks:
+`empty-eh3-two-locals-saved-esi-v1` for `Spellcard::~Spellcard`
+(`0x00417790`, 272 bytes, handler `0x0048A590`, node-16) and
+`empty-eh3-two-locals-saved-ebx-esi-edi-v1` for `HelpManual::~HelpManual`
+(`0x0042E910`, 278 bytes, handler `0x0048A790`, node-24). Both descriptors are
+the empty `19930522` FuncInfo with flags 5. `AnmManager::~AnmManager`
+(`0x0046B7D0`, 297 bytes, handler `0x0048AB30`) fits the unchanged saved
+ESI/EDI profile. All three parents now pass complete strict comparison. Bomb
+destruction (one local word, ESI/EDI) still lacks its vftable binding and
+remains unregistered.
+
 All three primary parents pass every byte, field and relocation: 292/345/228
 bytes, totaling 865. The 81 auxiliary code bytes and 108 metadata bytes receive
 no additional primary credit. No body interval is masked or shortened.

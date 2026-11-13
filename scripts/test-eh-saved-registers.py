@@ -250,7 +250,7 @@ class SavedEBXESIEHControls(SavedRegisterEHControls):
 
 class SavedESIEDIEHControls(SavedRegisterEHControls):
     PROFILE = "empty-eh3-saved-esi-edi-v1"
-    TARGETS = {0x470e10}
+    TARGETS = {0x470e10, 0x46b7d0}
     COOKIE_OFFSET = -12
     COOKIE_FIELD = 20
     COOKIE_SLOT_BYTE = 0xe8
@@ -314,6 +314,85 @@ class ThreeLocalSavedRegisterEHControls(SavedRegisterEHControls):
 
     def test_other_empty_frames_cannot_use_the_three_local_profile(self):
         for parent, size, handler in ((0x4264a0, 729, 0x48a6f0), (0x470e10, 179, 0x48abd0)):
+            with self.subTest(parent=parent), self.assertRaisesRegex(EHEvidenceError, "saved-register frame"):
+                inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
+
+
+class TwoLocalSavedRegisterEHControls(SavedRegisterEHControls):
+    PROFILE = "empty-eh3-two-locals-saved-ebx-esi-edi-v1"
+    TARGETS = {0x42e910}
+    COOKIE_OFFSET = -24
+    COOKIE_FIELD = 24
+    COOKIE_SLOT_BYTE = 0xdc
+    OTHER_COOKIE_BYTE = 0xe4
+    PREFIX_SIZE = 40
+
+    def test_identical_descriptor_or_handler_of_the_other_parent_is_rejected(self):
+        record = self.records[0]
+        proof = self.proof(record)
+        other = self.context.eh_handlers[("src/BulletManager.cpp", "??1BulletManager@@QAE@XZ")]
+        self.assertEqual(self.context.image.read_address(proof["descriptor"]["address"], 36),
+                         self.context.image.read_address(other["descriptor"]["address"], 36))
+        for address, destination in ((proof["handler"]["address"] + 18, other["descriptor"]["address"]),
+                                     (proof["parent_candidate"] + 6, other["handler"]["address"])):
+            with self.assertRaises(EHEvidenceError):
+                self.review(record, self.mutate("image", address, struct.pack("<I", destination)))
+
+    def test_handler_cannot_use_the_legacy_or_an_arbitrary_cookie_slot(self):
+        for record in self.records:
+            proof = self.proof(record)
+            for slot in (0xfc, self.OTHER_COOKIE_BYTE, 0xe0, 0xf0):
+                context = self.mutate("image", proof["handler"]["address"] + 9, bytes([slot]))
+                with self.subTest(slot=slot), self.assertRaises(EHEvidenceError):
+                    self.review(record, context)
+
+    def test_local_reservation_and_save_order_are_fixed(self):
+        record = self.records[0]
+        parent = self.proof(record)["parent_candidate"]
+        for address, payload in ((parent + 19, b"\x0c"), (parent + 19, b"\x04"),
+                                 (parent + 20, bytes.fromhex("565357"))):
+            with self.subTest(address=address, payload=payload), self.assertRaisesRegex(
+                    EHEvidenceError, "saved-register frame"):
+                self.review(record, self.mutate("image", address, payload))
+
+    def test_other_empty_frames_cannot_use_the_two_local_profile(self):
+        for parent, size, handler in ((0x427a20, 0, 0), (0x470e10, 179, 0x48abd0), (0x417790, 272, 0x48a590)):
+            if not size:
+                continue
+            with self.subTest(parent=parent), self.assertRaisesRegex(EHEvidenceError, "saved-register frame"):
+                inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
+
+
+class TwoLocalSavedESIEHControls(SavedRegisterEHControls):
+    PROFILE = "empty-eh3-two-locals-saved-esi-v1"
+    TARGETS = {0x417790}
+    COOKIE_OFFSET = -16
+    COOKIE_FIELD = 22
+    COOKIE_SLOT_BYTE = 0xe4
+    OTHER_COOKIE_BYTE = 0xec
+    PREFIX_SIZE = 38
+
+    def test_identical_descriptor_or_handler_of_the_other_parent_is_rejected(self):
+        record = self.records[0]
+        proof = self.proof(record)
+        other = self.context.eh_handlers[("src/BulletManager.cpp", "??1BulletManager@@QAE@XZ")]
+        self.assertEqual(self.context.image.read_address(proof["descriptor"]["address"], 36),
+                         self.context.image.read_address(other["descriptor"]["address"], 36))
+        for address, destination in ((proof["handler"]["address"] + 18, other["descriptor"]["address"]),
+                                     (proof["parent_candidate"] + 6, other["handler"]["address"])):
+            with self.assertRaises(EHEvidenceError):
+                self.review(record, self.mutate("image", address, struct.pack("<I", destination)))
+
+    def test_local_reservation_and_save_order_are_fixed(self):
+        record = self.records[0]
+        parent = self.proof(record)["parent_candidate"]
+        for address, payload in ((parent + 19, b"\x0c"), (parent + 19, b"\x04"), (parent + 20, b"\x57")):
+            with self.subTest(address=address, payload=payload), self.assertRaisesRegex(
+                    EHEvidenceError, "saved-register frame"):
+                self.review(record, self.mutate("image", address, payload))
+
+    def test_other_empty_frames_cannot_use_the_saved_esi_profile(self):
+        for parent, size, handler in ((0x42e910, 278, 0x48a790), (0x470e10, 179, 0x48abd0)):
             with self.subTest(parent=parent), self.assertRaisesRegex(EHEvidenceError, "saved-register frame"):
                 inspect_saved_register_frame(self.context.target, parent, size, handler, profile=self.PROFILE)
 
