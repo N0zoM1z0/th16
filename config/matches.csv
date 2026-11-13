@@ -132,6 +132,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040D580,BombInf::BombInf,reference-0040d580,local-strict-pass,113,113,113,.analysis/reference-audit.json
 0x0040D600,BombInf::initialize,reference-0040d600,local-strict-pass,261,261,261,.analysis/reference-audit.json
 0x0040D710,BombInf::~BombInf,reference-0040d710,local-strict-pass,377,377,377,.analysis/reference-audit.json
+0x0040D890,BombInf::create,reference-0040d890,local-strict-pass,460,460,460,.analysis/reference-audit.json
 0x0040DA60,BombInf::on_tick_callback,reference-0040da60,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040DA70,BombInf::on_draw_callback,reference-0040da70,local-strict-pass,22,22,22,.analysis/reference-audit.json
 0x0040DA90,BombInf::destroy_all,reference-0040da90,local-strict-pass,144,144,144,.analysis/reference-audit.json
@@ -149,6 +150,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040E6C0,EffectManager::next_index,reference-0040e6c0,local-strict-pass,110,110,110,.analysis/reference-audit.json
 0x0040E730,EffectManager::create_tracked,reference-0040e730,local-strict-pass,77,77,77,.analysis/reference-audit.json
 0x0040E780,BombAyaAInf::begin,reference-0040e780,mismatch,578,578,500,.analysis/reference-audit.json
+0x0040E9D0,BombAyaAInf::on_tick,reference-0040e9d0,local-strict-pass,524,524,524,.analysis/reference-audit.json
 0x0040EBE0,BombAyaAInf::on_draw,reference-0040ebe0,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x0040EBF0,BombAyaAInf::compute_damage,reference-0040ebf0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040EC00,BombAyaAInf::end_at_stage_clear,reference-0040ec00,local-strict-pass,1,1,1,.analysis/reference-audit.json
@@ -383,6 +385,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042B820,GuiMsgVm::show,reference-0042b820,local-strict-pass,514,514,514,.analysis/reference-audit.json
 0x0042BA30,GuiMsgVm::set_textbox,reference-0042ba30,local-strict-pass,242,242,242,.analysis/reference-audit.json
 0x0042BB30,GuiMsgVm::set_textbox_width,reference-0042bb30,local-strict-pass,171,171,171,.analysis/reference-audit.json
+0x0042BBE0,decode_msg_string,reference-0042bbe0,local-strict-pass,44,44,44,.analysis/reference-audit.json
 0x0042C1B0,Gui::hide_stage_clear_bonus,reference-0042c1b0,local-strict-pass,141,141,141,.analysis/reference-audit.json
 0x0042C240,show_stage_logo,reference-0042c240,local-strict-pass,53,53,53,.analysis/reference-audit.json
 0x0042C280,Gui::update_lives,reference-0042c280,local-strict-pass,266,266,266,.analysis/reference-audit.json

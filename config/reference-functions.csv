@@ -177,7 +177,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040D580,BombInf::BombInf,src/Bomb.cpp,??0BombInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0040D600,BombInf::initialize,src/Bomb.cpp,?initialize@BombInf@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0040D710,BombInf::~BombInf,src/Bomb.cpp,??1BombInf@@QAE@XZ,exact,,.analysis/reference-audit.json
-0x0040D890,BombInf::create,src/Bomb.cpp,?create@BombInf@@SAPAV1@XZ,incomplete,9 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0040D890,BombInf::create,src/Bomb.cpp,?create@BombInf@@SAPAV1@XZ,exact,,.analysis/reference-audit.json
 0x0040DA60,BombInf::on_tick_callback,src/Bomb.cpp,?on_tick_callback@BombInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0040DA70,BombInf::on_draw_callback,src/Bomb.cpp,?on_draw_callback@BombInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0040DA90,BombInf::destroy_all,src/Bomb.cpp,?destroy_all@BombInf@@SAXXZ,exact,,.analysis/reference-audit.json
@@ -197,7 +197,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040E6C0,EffectManager::next_index,src/EffectManager.cpp,?next_index@EffectManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0040E730,EffectManager::create_tracked,src/EffectManager.cpp,?create_tracked@EffectManager@@QAEHHPAUD3DXVECTOR3@@H@Z,exact,,.analysis/reference-audit.json
 0x0040E780,BombAyaAInf::begin,src/BombMain.cpp,?begin@BombAyaAInf@@UAEHXZ,mismatch,,.analysis/reference-audit.json
-0x0040E9D0,BombAyaAInf::on_tick,src/BombMain.cpp,?on_tick@BombAyaAInf@@UAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0040E9D0,BombAyaAInf::on_tick,src/BombMain.cpp,?on_tick@BombAyaAInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x0040EBE0,BombAyaAInf::on_draw,src/Bomb.cpp,?on_draw@BombAyaAInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x0040EBF0,BombAyaAInf::compute_damage,src/Bomb.cpp,?compute_damage@BombAyaAInf@@UAEHHH@Z,exact,,.analysis/reference-audit.json
 0x0040EC00,BombAyaAInf::end_at_stage_clear,src/Bomb.cpp,?end_at_stage_clear@BombAyaAInf@@UAEXXZ,exact,,.analysis/reference-audit.json
@@ -459,7 +459,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042B820,GuiMsgVm::show,src/Gui.cpp,?show@GuiMsgVm@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042BA30,GuiMsgVm::set_textbox,src/Gui.cpp,?set_textbox@GuiMsgVm@@QAEXMMMH@Z,exact,,.analysis/reference-audit.json
 0x0042BB30,GuiMsgVm::set_textbox_width,src/Gui.cpp,?set_textbox_width@GuiMsgVm@@QAEXMH@Z,exact,,.analysis/reference-audit.json
-0x0042BBE0,decode_msg_string,src/GuiMisc.cpp,?decode_msg_string@@YIPBDPBD@Z,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042BBE0,decode_msg_string,src/GuiMisc.cpp,?decode_msg_string@@YIPBDPBD@Z,exact,,.analysis/reference-audit.json
 0x0042BC10,Gui::update_score,src/Gui.cpp,?update_score@Gui@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0042BCF0,Gui::show_notice,src/Gui.cpp,?show_notice@Gui@@QAEXHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0042C070,Gui::show_stage_clear_bonus,src/Gui.cpp,?show_stage_clear_bonus@Gui@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

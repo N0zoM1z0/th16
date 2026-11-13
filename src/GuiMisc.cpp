@@ -4,7 +4,7 @@
 
 // decode_msg_string's result.
 // GLOBAL: TH16 0x4dfbd0
-static char s_buffer[0x80];
+char s_buffer[0x80];
 
 // Decodes an obfuscated dialogue or ending string into a static buffer:
 // each byte is XORed with a key that starts at 0x77 and grows by a step

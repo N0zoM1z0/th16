@@ -3138,6 +3138,64 @@ linkages = [
   { offset = 343, width = 4, type = "REL32", symbol = "_free", target = 4685746, addend = 0 },
 ]
 
+[units.reference-0040d890]
+artifact_kind = "linked-pe"
+source = "src/Bomb.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?create@BombInf@@SAPAV1@XZ"
+object = "Bomb.obj"
+candidate_address = 4288192
+target_address = 4249744
+size = 460
+compare_size = 460
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 5, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 20, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 11, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 24, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 38, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 53, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 59, width = 4, type = "DIR32", symbol = "??_7BombReimuAInf@@6B@", target = 4791868, addend = 0 },
+  { offset = 66, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 81, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 87, width = 4, type = "DIR32", symbol = "??_7BombMarisaAInf@@6B@", target = 4791840, addend = 0 },
+  { offset = 94, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 109, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 115, width = 4, type = "DIR32", symbol = "??_7BombAyaAInf@@6B@", target = 4791784, addend = 0 },
+  { offset = 122, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 137, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 143, width = 4, type = "DIR32", symbol = "??_7BombCirnoAInf@@6B@", target = 4791812, addend = 0 },
+  { offset = 152, width = 4, type = "REL32", symbol = "?initialize@BombInf@@QAEHH@Z", target = 4249088, addend = 0 },
+  { offset = 165, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 28, storage_name = "g_Globals", storage_size = 1120 },
+  { offset = 172, width = 4, type = "DIR32", symbol = "?g_MainBomb@@3PAVBombInf@@A", target = 4877736, addend = 0 },
+  { offset = 188, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4250188 },
+  { offset = 198, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 213, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 219, width = 4, type = "DIR32", symbol = "??_7BombMarisaSubInf@@6B@", target = 4791728, addend = 0 },
+  { offset = 234, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 249, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 255, width = 4, type = "DIR32", symbol = "??_7BombCirnoSubInf@@6B@", target = 4791700, addend = 0 },
+  { offset = 267, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 282, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 288, width = 4, type = "DIR32", symbol = "??_7BombAyaSubInf@@6B@", target = 4791672, addend = 0 },
+  { offset = 300, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 315, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 321, width = 4, type = "DIR32", symbol = "??_7BombAllSubInf@@6B@", target = 4791644, addend = 0 },
+  { offset = 333, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 348, width = 4, type = "REL32", symbol = "??0BombInf@@QAE@XZ", target = 4248960, addend = 0 },
+  { offset = 354, width = 4, type = "DIR32", symbol = "??_7BombReimuSubInf@@6B@", target = 4791756, addend = 0 },
+  { offset = 363, width = 4, type = "REL32", symbol = "?initialize@BombInf@@QAEHH@Z", target = 4249088, addend = 0 },
+  { offset = 378, width = 4, type = "REL32", symbol = "??1BombInf@@QAE@XZ", target = 4249360, addend = 0 },
+  { offset = 389, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+  { offset = 403, width = 4, type = "REL32", symbol = "??1BombInf@@QAE@XZ", target = 4249360, addend = 0 },
+  { offset = 414, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+  { offset = 431, width = 4, type = "DIR32", symbol = "?g_SubseasonBomb@@3PAVBombInf@@A", target = 4877732, addend = 0 },
+  { offset = 444, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4249972 },
+  { offset = 448, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4250005 },
+  { offset = 452, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4249936 },
+  { offset = 456, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4250038 },
+]
+
 [units.reference-0040da60]
 artifact_kind = "linked-pe"
 source = "src/Bomb.cpp"
@@ -3535,6 +3593,48 @@ linkages = [
   { offset = 441, width = 4, type = "REL32", symbol = "?create_func@UpdateFuncRegistry@@QAEPAUUpdateFunc@@P6IHPAX@Z@Z", target = 4200240, addend = 0 },
   { offset = 458, width = 4, type = "REL32", symbol = "?register_on_tick@UpdateFuncRegistry@@QAEHPAUUpdateFunc@@H@Z", target = 4199168, addend = 0 },
   { offset = 468, width = 4, type = "DIR32", symbol = "?on_cleanup@ScreenEffect@@SIHPAU1@@Z", target = 4575536, addend = 0 },
+]
+
+[units.reference-0040e9d0]
+artifact_kind = "linked-pe"
+source = "src/BombMain.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?on_tick@BombAyaAInf@@UAEHXZ"
+object = "BombMain.obj"
+candidate_address = 4291184
+target_address = 4254160
+size = 524
+compare_size = 524
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 7, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 21, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 30, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 45, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
+  { offset = 148, width = 4, type = "REL32", symbol = "?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z", target = 4649136, addend = 0 },
+  { offset = 166, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+  { offset = 189, width = 4, type = "REL32", symbol = "?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z", target = 4649136, addend = 0 },
+  { offset = 210, width = 4, type = "DIR32", symbol = "__real@42ec0000", target = 4802112, addend = 0 },
+  { offset = 218, width = 4, type = "DIR32", symbol = "__real@44200000", target = 4802260, addend = 0 },
+  { offset = 264, width = 4, type = "REL32", symbol = "?create_rect_damage_source@Player@@QAEHPAUD3DXVECTOR3@@MMMHH@Z", target = 4475680, addend = 0 },
+  { offset = 269, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 274, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
+  { offset = 280, width = 4, type = "DIR32", symbol = "__real@43400000", target = 4802144, addend = 0 },
+  { offset = 285, width = 4, type = "DIR32", symbol = "?g_replay_safe_rng@@3URng@@A", target = 4877704, addend = 0 },
+  { offset = 293, width = 4, type = "REL32", symbol = "?randf_0_to_1@Rng@@QAEMXZ", target = 4205680, addend = 0 },
+  { offset = 299, width = 4, type = "DIR32", symbol = "__real@43e00000", target = 4802224, addend = 0 },
+  { offset = 304, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
+  { offset = 324, width = 4, type = "REL32", symbol = "?next_index@EffectManager@@QAEHXZ", target = 4253376, addend = 0 },
+  { offset = 351, width = 4, type = "REL32", symbol = "?create_effect@EffectManager@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@PAUAnmVm@@@Z", target = 4295408, addend = 0 },
+  { offset = 373, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
+  { offset = 390, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
+  { offset = 396, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
+  { offset = 424, width = 4, type = "DIR32", symbol = "??_7BombAyaAInf@@6B@", target = 4791784, addend = 0 },
+  { offset = 457, width = 4, type = "REL32", symbol = "?cancel_rectangle_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@0MH@Z", target = 4288032, addend = 0 },
+  { offset = 475, width = 4, type = "REL32", symbol = "?cancel_in_rectangle@LaserManager@@QAEHPAUD3DXVECTOR3@@0MHH@Z", target = 4397392, addend = 0 },
+  { offset = 490, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+  { offset = 509, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
 ]
 
 [units.reference-0040ebe0]
@@ -9223,6 +9323,23 @@ linkages = [
   { offset = 97, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
   { offset = 129, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
   { offset = 152, width = 4, type = "REL32", symbol = "?search_children@AnmVm@@QAEPAU1@HH@Z", target = 4650256, addend = 0 },
+]
+
+[units.reference-0042bbe0]
+artifact_kind = "linked-pe"
+source = "src/GuiMisc.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?decode_msg_string@@YIPBDPBD@Z"
+object = "GuiMisc.obj"
+candidate_address = 4442976
+target_address = 4373472
+size = 44
+compare_size = 44
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 3, width = 4, type = "DIR32", symbol = "?s_buffer@@3PADA", target = 5110736, addend = 0 },
+  { offset = 38, width = 4, type = "DIR32", symbol = "?s_buffer@@3PADA", target = 5110736, addend = 0 },
 ]
 
 [units.reference-0042c1b0]

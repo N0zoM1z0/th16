@@ -440,4 +440,6 @@ verifier accepts displacement 4 only for a base entry; the class's own entry
 stays at 0 and candidate and target hierarchies must still be identical.
 `??_7AsciiInf@@6B@` (`0x00491CE0`, one slot), `??_7BombInf@@6B@`
 (`0x00491E58`, six slots) and `??_7TitleInf@@6B@` (`0x00493730`, one slot)
-are bound. Their three constructors become exact.
+are bound. Their three constructors become exact. The nine bomb class tables
+(`0x00491D5C`-`0x00491E3C`, six slots each) that `BombInf::create` installs
+are bound too, making `create` and `BombAyaAInf::on_tick` exact.
