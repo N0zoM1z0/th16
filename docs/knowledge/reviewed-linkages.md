@@ -455,3 +455,11 @@ a NUL in padding after `"main"`), `"th16.dat"` (`0x0049257C`, also the tail
 of `"scoreth16.dat"`), `"r"` (`0x004937B0`) and `"1.00a"` (`0x00492D24`).
 Spellcard's body draw, the ending script VM, `fade_out_bgm` and both Arcfile
 openers become exact.
+
+A string-literal witness may also be `MOV r32, imm` of the string's address
+or an absolute `MOV`/`MOVQ`/`MOVSD`/`MOVUPS` load of its first bytes (no base,
+index or segment, operand no wider than the string). This binds `"--------"`
+(`0x00492E0C`, `ScorefileChara::init`, now exact), `"data"` (`0x004941B8`), the
+GameWindow directory strings `"\"`/`"%d\n"` (`make_dirs_and_disable_screensaver`,
+now exact) and the Gui, MSG, spell-list and Boss strings whose original uses
+reference exactly one occurrence.

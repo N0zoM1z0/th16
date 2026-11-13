@@ -677,6 +677,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004492E0,ReplayStageData::ReplayStageData,reference-004492e0,local-strict-pass,53,53,53,.analysis/reference-audit.json
 0x00449320,ReplayStageData::~ReplayStageData,reference-00449320,local-strict-pass,41,41,41,.analysis/reference-audit.json
 0x00449350,ScorefileSection::compute_checksum,reference-00449350,local-strict-pass,98,98,98,.analysis/reference-audit.json
+0x004493C0,ScorefileChara::init,reference-004493c0,local-strict-pass,850,850,850,.analysis/reference-audit.json
 0x004497E0,Scorefile::Scorefile,reference-004497e0,local-strict-pass,145,145,145,.analysis/reference-audit.json
 0x00449880,Scorefile::load_sections,reference-00449880,local-strict-pass,374,374,374,.analysis/reference-audit.json
 0x00449A00,scorefile_save,reference-00449a00,local-strict-pass,624,624,624,.analysis/reference-audit.json
@@ -722,6 +723,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00455370,read_line,reference-00455370,local-strict-pass,92,92,92,.analysis/reference-audit.json
 0x00456060,spell_practice_row_seen,reference-00456060,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x004569A0,TitleInf::highlight_spell_row,reference-004569a0,local-strict-pass,119,119,119,.analysis/reference-audit.json
+0x00456D50,TitleInf::on_draw__spell_practice_histories,reference-00456d50,local-strict-pass,595,595,595,.analysis/reference-audit.json
 0x00456FB0,Arcfile::Arcfile,reference-00456fb0,local-strict-pass,30,30,30,.analysis/reference-audit.json
 0x00456FD0,Arcfile::~Arcfile,reference-00456fd0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00456FE0,Arcfile::open,reference-00456fe0,local-strict-pass,119,119,119,.analysis/reference-audit.json
@@ -765,6 +767,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00459830,_WinMain@16,reference-00459830,mismatch,2919,2919,900,.analysis/reference-audit.json
 0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,reference-0045a3a0,local-strict-pass,162,162,162,.analysis/reference-audit.json
 0x0045A450,window_proc,reference-0045a450,local-strict-pass,680,680,680,.analysis/reference-audit.json
+0x0045A700,GameWindow::make_dirs_and_disable_screensaver,reference-0045a700,local-strict-pass,409,409,409,.analysis/reference-audit.json
 0x0045A8A0,GameWindow::do_frame_sleeping,reference-0045a8a0,local-strict-pass,336,336,336,.analysis/reference-audit.json
 0x0045A9F0,GameWindow::update_window_sleeping,reference-0045a9f0,local-strict-pass,597,597,597,.analysis/reference-audit.json
 0x0045AC50,GameWindow::do_frame_frameskip,reference-0045ac50,local-strict-pass,416,416,416,.analysis/reference-audit.json

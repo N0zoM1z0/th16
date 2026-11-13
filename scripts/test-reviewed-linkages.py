@@ -476,6 +476,25 @@ class ReviewedLinkageControls(unittest.TestCase):
         with self.assertRaisesRegex(Incomplete, "instruction witness"):
             self.check_rows(rows)
 
+    def test_string_mov_and_load_witnesses_must_address_the_string_itself(self):
+        rows = copy.deepcopy(self.rows)
+        dashes = next(r for r in rows if r["symbol"] == "??_C@_08GGNFKEJM@?9?9?9?9?9?9?9?9?$AA@")
+        data = next(r for r in rows if r["symbol"] == "??_C@_04PJOLNDGD@data?$AA@")
+        self.assertTrue(self.check_rows(rows))
+        for row, address in ((dashes, "0x492e0d"), (data, "0x4941b9")):
+            # The same witness instructions no longer address the start.
+            changed = copy.deepcopy(rows)
+            target = next(r for r in changed if r["symbol"] == row["symbol"])
+            target["target_address"] = address
+            target["target_sha256"] = hashlib.sha256(self.context.target.read_address(
+                int(address, 0), int(row["size"]))).hexdigest()
+            with self.subTest(symbol=row["symbol"]), self.assertRaises(Incomplete):
+                self.check_rows(changed)
+        changed = copy.deepcopy(rows)
+        next(r for r in changed if r["symbol"] == data["symbol"])["witness_instruction"] = "0x45eb35"
+        with self.assertRaisesRegex(Incomplete, "instruction witness"):
+            self.check_rows(changed)
+
     def test_string_rejects_ambiguous_pdb_storage(self):
         context = copy.copy(self.context)
         context.data_contributions = copy.deepcopy(context.data_contributions)

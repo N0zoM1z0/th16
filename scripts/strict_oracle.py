@@ -240,10 +240,19 @@ def reviewed_linkages(context, path=None):
                 decoder.detail = True
                 instruction = next(decoder.disasm(context.target.read_address(witness, 16), witness), None)
                 memory_witness = literal_memory_witness(context, instruction, address, size)
-                string_witness = (instruction is not None and instruction.mnemonic == "push"
-                                  and len(instruction.operands) == 1
-                                  and instruction.operands[0].type == capstone.x86.X86_OP_IMM
-                                  and instruction.operands[0].imm == address)
+                # A string's original address enters code as a PUSH or MOV
+                # immediate, or as an absolute load of its first bytes.
+                operands = instruction.operands if instruction is not None else []
+                string_witness = instruction is not None and (
+                    (instruction.mnemonic == "push" and len(operands) == 1
+                     and operands[0].type == capstone.x86.X86_OP_IMM and operands[0].imm == address)
+                    or (instruction.mnemonic == "mov" and len(operands) == 2
+                        and operands[0].type == capstone.x86.X86_OP_REG and operands[0].size == 4
+                        and operands[1].type == capstone.x86.X86_OP_IMM and operands[1].imm == address)
+                    or (instruction.mnemonic in {"mov", "movq", "movsd", "movups"} and len(operands) == 2
+                        and operands[1].type == capstone.x86.X86_OP_MEM and not operands[1].mem.base
+                        and not operands[1].mem.index and not operands[1].mem.segment
+                        and operands[1].mem.disp == address and 0 < operands[1].size <= size))
                 if row["kind"] == "indexed-literal":
                     # The supported table is two doubles selected by a logical
                     # right shift of a 32-bit register by 31, immediately before
