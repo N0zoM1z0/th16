@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after projectile angle-consumer repairs and native dispatch guards.
+Updated 2026-11-13 after Boss restart call-context and ECL frame verification.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -12,8 +12,8 @@ elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. Source checkpoint
 `a9c0a41` restores the random-ring radius interpolation boundary and SSE arithmetic.
-The latest continuation retains scalar angle-consumer repairs in the large
-projectile transform dispatcher and adds native command/state guards. The shared
+The latest continuation restores the distinct Boss and ECL sub-call restart
+shapes. The preceding projectile angle-consumer repairs are retained. The shared
 expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. No new exact credit is claimed.
@@ -23,8 +23,8 @@ Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`6d14644784001cc244b22856267cfa70f3c826fd866445b665bc996b38112fb4`.
-PDB age is **316**. The final incremental build, strict replay and progress check
+`2790b5687dcf511fab390dea7d6299772fd015e6c966a192525f41222ecfe196`.
+PDB age is **322**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -33,6 +33,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Boss restart call context](knowledge/boss-restart-call-context.md) | Original out-of-line life restart and inline ECL call restart; 768 complete native calls per image and unchanged complete upper dispatcher; no new exact credit |
 | [Projectile angle consumers and native dispatch](knowledge/projectile-angle-consumers-and-native-dispatch.md) | Original direct angle-word store and shared float selection in the 5,500-byte dispatcher; 560 native calls agree, including 110 complete-state models; no new exact credit |
 | [ECL ring precision and active interpolation](knowledge/ecl-ring-precision-and-interpolation.md) | Original float sample boundary and SSE radius arithmetic; 120 historical position differences removed; 3,288 complete calls agree; no new exact credit |
 | [ECL expression exits](knowledge/ecl-expression-result-exits.md) | One result exit for 20 handlers; complete interpreter 7,370 to 6,950 bytes; 3,457 complete calls and 360 prefixes agree; wrong floating-negation draft rejected |
@@ -56,6 +57,43 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [Boss restart call context](knowledge/boss-restart-call-context.md) first.
+Starting checkpoint `4823bf3` is preserved. `SptInf::load_sub_by_name` now stays
+out of line, as in the original Boss life-interrupt call. ECL `call_sub` keeps
+its own direct restart and a stable VM pointer for the first-instruction check.
+The 52-byte callee remains exact with the same normalized unit hash. The Boss
+candidate changes **2,222 to 2,195 bytes** against 2,207 original bytes; the
+sub-call candidate changes **584 to 581 bytes**, with original 632 still a
+provisional span. Both callers remain incomplete.
+
+The final PDB-322 image passes **408 complete native sub-calls per image** on
+the original, immutable PDB-316 baseline and final candidate. There are 360
+independent complete-state models; the remaining 48 raw floating-result cases
+model every other observed byte and compare all output bits across images.
+A further **360 complete Boss dual-phase calls per image** pass their models.
+Two representative prefixes per image prove a live heap-backed async head
+before cleanup. Wrong frame and omitted-async controls reject on the original
+before baseline execution. The earlier progress commentary incorrectly said
+720 dual-phase calls per image; the actual report has 360.
+
+The 21,316-byte upper ECL dispatcher has zero differences after independently
+translating all 927 fields between baseline and final. This regression uses
+MAP identities, owner-local offsets and bounded PDB data owners; no Oracle
+binding is added. Its original comparison remains incomplete with seven
+unbound fields. New life-pointer, joined damage-credit and dialogue/pointer
+forms are restored; Enemy.cpp is byte-identical to the starting source.
+
+Strict replay and progress preserve **885/65/265**, 169,575 exact primary bytes
+and 950 units. The regenerated unit file changes only 550 candidate addresses;
+all other unit fields are unchanged. Preserve `.analysis/boss-interrupt-work/`,
+including both full images, raw complete scopes, typed layout, versioned
+models/drivers, controls, initial refused field-regression report and
+`final-regression.json`. Continue the remaining Boss statistics/life registers
+with the actual restart call now present; do not repeat the restored forms.
+Shipped Boss programs and resource/rendering behavior remain unproved.
+
+### Earlier projectile angle consumers and native dispatch
 
 Read [projectile angle consumers and native transform dispatch](knowledge/projectile-angle-consumers-and-native-dispatch.md)
 first. Starting checkpoint `5e499b5` is preserved. Two source repairs are retained

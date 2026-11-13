@@ -462,8 +462,10 @@ EclRunContextList *SptInf::lookup_async(i32 id)
     return NULL;
 }
 
+// The original keeps this named restart out of line. call_sub performs
+// its context restart directly before checking the first instruction.
 // FUNCTION: TH16 0x474890
-int SptInf::load_sub_by_name(const char *name)
+DECOMP_NOINLINE int SptInf::load_sub_by_name(const char *name)
 {
     context.current_context->cur_location.subroutine_index = file_manager->find_sub_by_name(name);
     context.current_context->cur_location.offset_from_first_instruction = 0;
@@ -605,8 +607,11 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
     const char *name = (const char *)&ins->args[1];
     EclRunContext *saved = vm->context.current_context;
     vm->context.current_context = dest;
-    vm->load_sub_by_name(name);
-    if (vm->context.current_context->current_instr() == NULL)
+    SptInf *call_vm = vm;
+    call_vm->context.current_context->cur_location.subroutine_index = call_vm->file_manager->find_sub_by_name(name);
+    call_vm->context.current_context->cur_location.offset_from_first_instruction = 0;
+    call_vm->context.current_context->time = 0.0f;
+    if (call_vm->context.current_context->current_instr() == NULL)
     {
         ecl_log(" error : \x96\xa2\x92\xe8\x8b`\x82\xcc\x8a\xd6\x90\x94\x96\xbc %s\n", name);
         cur_location.offset_from_first_instruction = -1;
