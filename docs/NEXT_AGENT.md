@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after exact reconstruction of the complete spellcard frame update.
+Updated 2026-11-13 after complete static offscreen-projectile source trials.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -16,6 +16,17 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+The latest static follow-up traverses all 327 original instructions of the
+complete 1,390-byte `Bullet::step_ex_08` and rejects/restores five source forms.
+Member-call timer, fractional-result/reference amount and Float4 cross/dot
+forms produce the same raw 1,382-byte candidate. Float2 direction-result and
+scalar SSE-product forms also fail the complete owner. No game-source change
+or new exact credit is retained. See the final section of
+[Boss and projectile motion trials](knowledge/boss-motion-source-trials.md).
+Keep `.analysis/bullet-offscreen-work/`. Restoration preserves all 1,215 results,
+956 units and all 1,719 native owners byte for byte, including all relocations
+and the entire raw `.text`.
 
 The complete **650-byte** `Spellcard::on_tick_body` at `0x00417930` is now
 **exact**, including all 167 reachable instructions and 17 linked fields
@@ -149,7 +160,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `0b4ce2bd4813b5d00ec1b2b6195a252d17684eb07e1bb8cf2a9e2201819119ea`.
-PDB age is **476**. The final incremental build, strict replay and progress check
+PDB age is **482**. The final incremental restoration, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.

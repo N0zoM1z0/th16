@@ -1,5 +1,9 @@
 # Boss and projectile motion source trials
 
+The later [complete spellcard frame update](spellcard-frame-update-exact.md)
+closes the spellcard owner as exact. Earlier counts and open items below are
+historical. The additional offscreen review at the end starts from `7e363a0`.
+
 This investigation starts at `0d53abd`, with 883 exact, 65 mismatch and 267
 incomplete annotations. It changes no Oracle rules, compiler profiles, owner
 boundaries or relocation treatment. The private evidence directory is
@@ -107,3 +111,35 @@ incomplete, with 167,817 exact primary bytes and 948 retained units.
 `scripts/progress.py` validates the current source, build, report and units.
 Source-origin review remains open; Factory acceptance is not submitted. No
 repository contents were pushed.
+
+## Complete offscreen follow-up from 7e363a0
+
+The original `Bullet::step_ex_08` is independently traversed over all **1,390
+bytes**: all 327 instructions are reachable, with five calls and returns at
+offsets 1371 and 1389. Two following `CC` bytes are outside the owner; the next
+entry is `Bullet::cancel` at `0x00416840`. Original SHA-256:
+`edf53f25364881c4123314bfd4588d6a572654278a9908733d7359202fe28b69`.
+
+Five new source forms are rejected and restored. A typed member-pointer timer
+call, a fractional-result helper with a const-reference amount and two Float4
+cross/dot result objects all produce the **same complete raw 1,382-byte
+candidate**. Do not repeat these forms expecting different local slots or a
+retained multiplication. An inline Float2 direction result around the unchanged
+private sin/cos helper produces 1,388 bytes with additional/reordered transfers.
+An explicit scalar SSE product retains multiplication but adds frame
+realignment and other changes, producing 1,490 bytes. No intrinsic, new helper
+or header/type change remains in maintained game source.
+
+Full static restoration preserves all **891 exact, 65 mismatch, 259 incomplete**
+results, **176,036 exact primary bytes**, all 956 unit definitions and all
+1,215 annotation results/diagnostics. All **1,719 complete candidate owners**
+are raw-identical (**527,136 bytes**), with unchanged addresses/extents, all
+base relocations and the entire raw `.text`. PDB age is **482**; source input
+is unchanged from `7e363a0`. No new exact credit, game runtime or emulation.
+Source-origin review remains open; Factory acceptance is not submitted.
+
+Preserve `.analysis/bullet-offscreen-work/`: baseline/final five-artifact sets,
+all five source snapshots/builds, complete packets, original-only CFG,
+identical-owner check, canonical replay and restoration regression. The first
+collector refuses an unverified companion tick scope before finishing its
+packet index; use `baseline-verified/` and the focused offscreen collector.
