@@ -523,7 +523,6 @@ void open_stage_end_menu()
     menu->menu_flags |= PAUSE_FROM_STAGE_END;
 }
 
-// TODO: ours folds the character offset into the practice index (one imul by 0xa63, scaled by 8); the original adds it to the pointer.
 // FUNCTION: TH16 0x43f7e0
 void PauseMenu::begin_score_entry()
 {
@@ -531,11 +530,11 @@ void PauseMenu::begin_score_entry()
     {
         if (g_Globals.game_mode != GAME_MODE_NORMAL)
         {
-            ScorefilePractice *practice = &g_Scorefile->characters[g_Globals.subshot + g_Globals.character]
-                                               .practices[g_Globals.difficulty][g_Globals.stage_num - 1];
-            if (practice->score < g_Globals.score)
+            ScorefilePractice *practices = g_Scorefile->characters[g_Globals.subshot + g_Globals.character].practices[0];
+            i32 stage = g_Globals.difficulty * 8 + g_Globals.stage_num - 1;
+            if (practices[stage].score < g_Globals.score)
             {
-                practice->score = g_Globals.score;
+                practices[stage].score = g_Globals.score;
             }
         }
         else

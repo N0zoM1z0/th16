@@ -226,9 +226,9 @@ HARNESS_CALLED i32 Player::check_hit_rect(Float3 *pos, Float3 *size, i32 graze_o
 
 // g_Gui is read into a local: that gives the distance its original
 // registers.
-// TODO: the original loads inner.pos.y before x, and puts the return 0 for
-// an open dialogue right after its test (a goto from the state test into it
-// changed nothing).
+// Separate state tests keep the shared return 0 after the dialogue test.
+// TODO: the original loads inner.pos.y before x (y-first scalar or member
+// assignments fix the order but move x and the radius copy to xmm3/xmm4).
 // FUNCTION: TH16 0x4439e0
 HARNESS_CALLED i32 Player::check_hit_circle(Float3 *pos, f32 radius, i32 graze_only)
 {
@@ -259,7 +259,15 @@ HARNESS_CALLED i32 Player::check_hit_circle(Float3 *pos, f32 radius, i32 graze_o
     {
         return 2;
     }
-    if (inner.state == PLAYER_STATE_DEAD || inner.state == PLAYER_STATE_HIT || inner.state == PLAYER_STATE_3)
+    if (inner.state == PLAYER_STATE_DEAD)
+    {
+        return 0;
+    }
+    if (inner.state == PLAYER_STATE_HIT)
+    {
+        return 0;
+    }
+    if (inner.state == PLAYER_STATE_3)
     {
         return 0;
     }
