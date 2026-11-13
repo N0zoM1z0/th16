@@ -384,6 +384,9 @@ class SptInf
     EclRunContextList async_list_head;
 
     DECOMP_NOINLINE SptInf();
+    // Resolve each argument against the currently selected context.
+    i32 get_int_arg(i32 index);
+    f32 get_float_arg(i32 index);
     void free_all_async();
     void reset_run_context();
     // 0x474430. Starts a new async context running the subroutine named by
@@ -416,4 +419,14 @@ inline EclRawInstr *EclRunContext::current_instr()
     // Instructions start after the subroutine's 0x10 byte header.
     return (EclRawInstr *)((u8 *)vm->file_manager->subroutines[cur_location.subroutine_index].bytecode + 0x10 +
                            cur_location.offset_from_first_instruction);
+}
+
+inline i32 SptInf::get_int_arg(i32 index)
+{
+    return context.current_context->get_int_arg(index);
+}
+
+inline f32 SptInf::get_float_arg(i32 index)
+{
+    return context.current_context->get_float_arg(index);
 }

@@ -398,7 +398,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0041DCB0,EnemyData::ecl_run_over_300,src/EnemyEcl.cpp,?ecl_run_over_300@EnemyData@@QAEHXZ,incomplete,7 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00423050,EnemyData::ecl_enm_create,src/Enemy.cpp,?ecl_enm_create@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00423260,EnemyData::ecl_anm_set_sprite,src/Enemy.cpp,?ecl_anm_set_sprite@EnemyData@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x004233A0,EnemyData::ecl_anm_vm_instr,src/Enemy.cpp,?ecl_anm_vm_instr@EnemyData@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x004233A0,EnemyData::ecl_anm_vm_instr,src/Enemy.cpp,?ecl_anm_vm_instr@EnemyData@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00423810,EnemyInf::get_int_global,src/Enemy.cpp,?get_int_global@EnemyInf@@UAEHH@Z,exact,,.analysis/reference-audit.json
 0x00423F80,EnemyInf::get_int_global_ptr,src/Enemy.cpp,?get_int_global_ptr@EnemyInf@@UAEPAHH@Z,exact,,.analysis/reference-audit.json
 0x00424110,EnemyInf::get_float_global,src/Enemy.cpp,?get_float_global@EnemyInf@@UAEMH@Z,exact,,.analysis/reference-audit.json

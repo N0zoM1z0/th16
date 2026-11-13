@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after complete spellcard startup source reconstruction.
+Updated 2026-11-13 after complete ECL animation-dispatch source reconstruction.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,7 +17,12 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-The latest exact result is the complete 1,007-byte `Spellcard::start`, including
+The latest exact result is the complete 1,124-byte
+`EnemyData::ecl_anm_vm_instr`, including 333 code instructions, its alignment
+byte, all 19 jump-table entries and all 62 linked fields. Live target/mode/time
+staging, per-read owner accessors and an explicit byte blend input recover the
+complete owner. See [ECL animation dispatch exact evidence](knowledge/ecl-animation-dispatch-exact.md).
+The preceding exact result is the complete 1,007-byte `Spellcard::start`, including
 289 instructions and all 46 linked fields. Source preserves the Boss selection
 across effect creation, reloads the stage table for flags and discards the two
 decoration class results at their call sites. See
@@ -45,18 +50,19 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **888 exact, 65 mismatch, 262 incomplete** among 1,215
-annotations: **172,570 exact primary bytes and 953 retained units**.
-All previous 887 exact owners and 952 unit definitions remain unchanged. The
-complete raw candidate regression preserves the other 1,718 linked public owners
-(526,102 bytes), including their addresses, extents and relocation records.
-Only `src/Spellcard.cpp` retains game-source changes in this continuation.
+The canonical report is **889 exact, 65 mismatch, 261 incomplete** among 1,215
+annotations: **173,694 exact primary bytes and 954 retained units**.
+All previous 888 exact owners and 953 unit semantics remain unchanged; 531
+retained unit addresses move. Complete symbolic candidate regression preserves
+the other 1,718 linked public owners (526,009 owner bytes), including full
+extents and relocation records, after independently translating address fields.
+Only `src/Enemy.cpp` and `src/Ecl.h` retain game-source changes in this continuation.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`22f67bfc320de562ce5d6a0df8de8c9ac780dd561ba0e0c1bdde9549999de22e`.
-PDB age is **374**. The final incremental build, strict replay and progress check
+`eb7dbf25d10b6a3ca0880708e8e2a40ad60c81d1c30e69e1bc664de4e965d725`.
+PDB age is **384**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -65,6 +71,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [ECL animation dispatch exact](knowledge/ecl-animation-dispatch-exact.md) | Complete 1,124-byte owner: 333 code instructions, alignment and complete 19-entry table; 62 fields; all 888 prior exact owners retained and all other 1,718 public owners preserved symbolically |
 | [Spellcard startup exact](knowledge/spellcard-start-exact.md) | Source repair produces the complete 1,007-byte exact owner; 289 instructions and all 46 fields; all previous exact owners and other 1,718 complete public owner payloads/relocations preserved |
 | [Gui destructor exact](knowledge/gui-destructor-exact.md) | Complete 640-byte owner, 172 instructions and all 40 linked fields; full private EH graph and three-local frame validated; all 886 previous exact owners retained; 134 static controls pass |
 | [Rectangle containment and edge storage](knowledge/rectangle-containment-and-edge-storage.md) | First containment pass explicitly inlined and four corner checks expanded; complete candidate 2,002 to 2,155 bytes vs 2,168 original; 32-byte edge identity reviewed; no new exact credit |

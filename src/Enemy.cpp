@@ -2133,16 +2133,15 @@ static inline void anm_set_scale_2(AnmVm *vm, f32 x, f32 y)
     vm->scale_2.y = y;
 }
 
-// TODO: register allocation: the original keeps full in ecx (reloading the context from it) and
-// spills vm, with this in edi and vm in ebx.
 // The ECL instructions that change one of the enemy's VMs (the slot is
 // always the first argument). The names are the usual thecl ones; ExpHP
-// groups them as 3xx__anmModify.
+// groups them as 3xx__anmModify. Targets and interpolation modes are read
+// before selecting the owner for the final time argument.
 // FUNCTION: TH16 0x4233a0
 void EnemyData::ecl_anm_vm_instr()
 {
     EclRawInstr *instr = full->context.current_context->current_instr();
-    i32 slot = full->context.current_context->get_int_arg(0);
+    i32 slot = full->get_int_arg(0);
     if ((u32)slot > 15)
     {
         return;
@@ -2156,84 +2155,102 @@ void EnemyData::ecl_anm_vm_instr()
     {
     // anmRotate(slot, angle)
     case ECL_OP_ANM_ROTATE:
-        vm->rotation.z = full->context.current_context->get_float_arg(1);
+        vm->rotation.z = full->get_float_arg(1);
         vm->flags_lo |= ANM_VM_ROTATION_CHANGED;
         break;
     // anmScale(slot, x, y). Here and in anmScale2 the original reads y
     // before x, as if the helper's arguments were evaluated right to left.
     case ECL_OP_ANM_SCALE:
     {
-        f32 y = full->context.current_context->get_float_arg(2);
-        f32 x = full->context.current_context->get_float_arg(1);
+        f32 y = full->get_float_arg(2);
+        f32 x = full->get_float_arg(1);
         anm_set_scale(vm, x, y);
         break;
     }
     // anmScale2(slot, x, y)
     case ECL_OP_ANM_SCALE2:
     {
-        f32 y = full->context.current_context->get_float_arg(2);
-        f32 x = full->context.current_context->get_float_arg(1);
+        f32 y = full->get_float_arg(2);
+        f32 x = full->get_float_arg(1);
         anm_set_scale_2(vm, x, y);
         break;
     }
     // anmScaleTime(slot, time, mode, x, y)
     case ECL_OP_ANM_SCALE_TIME:
-        vm->scale_to(full->context.current_context->get_int_arg(1), full->context.current_context->get_int_arg(2),
-                     full->context.current_context->get_float_arg(3), full->context.current_context->get_float_arg(4));
+    {
+        f32 y = full->get_float_arg(4);
+        f32 x = full->get_float_arg(3);
+        i32 mode = full->get_int_arg(2);
+        EnemyInf *time_owner = full;
+        vm->scale_to(time_owner->get_int_arg(1), mode, x, y);
         break;
+    }
     // anmColor(slot, r, g, b)
     case ECL_OP_ANM_COLOR:
-        anm_set_rgb1(vm, full->context.current_context->get_int_arg(1), full->context.current_context->get_int_arg(2),
-                     full->context.current_context->get_int_arg(3));
+        anm_set_rgb1(vm, full->get_int_arg(1), full->get_int_arg(2), full->get_int_arg(3));
         break;
     // anmColorTime(slot, time, mode, r, g, b)
     case ECL_OP_ANM_COLOR_TIME:
     {
         ZunColor color;
-        color.r = full->context.current_context->get_int_arg(3);
-        color.g = full->context.current_context->get_int_arg(4);
-        color.b = full->context.current_context->get_int_arg(5);
-        vm->fade_rgb1(full->context.current_context->get_int_arg(1), full->context.current_context->get_int_arg(2),
-                      &color);
+        color.r = full->get_int_arg(3);
+        color.g = full->get_int_arg(4);
+        color.b = full->get_int_arg(5);
+        i32 mode = full->get_int_arg(2);
+        EnemyInf *time_owner = full;
+        vm->fade_rgb1(time_owner->get_int_arg(1), mode, &color);
         break;
     }
     // anmAlpha(slot, alpha)
     case ECL_OP_ANM_ALPHA:
-        vm->color_1.a = full->context.current_context->get_int_arg(1);
+        vm->color_1.a = full->get_int_arg(1);
         break;
     // anmAlphaTime(slot, time, mode, alpha)
     case ECL_OP_ANM_ALPHA_TIME:
-        vm->fade_alpha1(full->context.current_context->get_int_arg(1), full->context.current_context->get_int_arg(2),
-                        full->context.current_context->get_int_arg(3));
+    {
+        i32 alpha = full->get_int_arg(3);
+        i32 mode = full->get_int_arg(2);
+        EnemyInf *time_owner = full;
+        vm->fade_alpha1(time_owner->get_int_arg(1), mode, alpha);
         break;
+    }
     // anmAlpha2(slot, alpha)
     case ECL_OP_ANM_ALPHA2:
-        vm->color_2.a = full->context.current_context->get_int_arg(1);
+        vm->color_2.a = full->get_int_arg(1);
         break;
     // anmAlpha2Time(slot, time, mode, alpha)
     case ECL_OP_ANM_ALPHA2_TIME:
-        vm->fade_alpha2(full->context.current_context->get_int_arg(1), full->context.current_context->get_int_arg(2),
-                        full->context.current_context->get_int_arg(3));
+    {
+        i32 alpha = full->get_int_arg(3);
+        i32 mode = full->get_int_arg(2);
+        EnemyInf *time_owner = full;
+        vm->fade_alpha2(time_owner->get_int_arg(1), mode, alpha);
         break;
+    }
     // anmPosTime(slot, time, mode, x, y)
     case ECL_OP_ANM_POS_TIME:
     {
         // y is read before x as in the original (random variables draw from the replay RNG).
-        f32 y = full->context.current_context->get_float_arg(4);
-        f32 x = full->context.current_context->get_float_arg(3);
+        f32 y = full->get_float_arg(4);
+        f32 x = full->get_float_arg(3);
         Float3 goal(x, y, 0.0f);
-        vm->set_pos_time(full->context.current_context->get_int_arg(1), full->context.current_context->get_int_arg(2),
-                         &anm_ids[full->context.current_context->get_int_arg(0)].find_or_clear()->entity_pos, &goal);
+        AnmVm *origin = anm_ids[full->get_int_arg(0)].find_or_clear();
+        i32 mode = full->get_int_arg(2);
+        EnemyInf *time_owner = full;
+        vm->set_pos_time(time_owner->get_int_arg(1), mode, &origin->entity_pos, &goal);
         break;
     }
     // anmLayer(slot, layer)
     case ECL_OP_ANM_LAYER:
-        vm->set_layer(full->context.current_context->get_int_arg(1));
+        vm->set_layer(full->get_int_arg(1));
         break;
     // anmBlendMode(slot, mode)
     case ECL_OP_ANM_BLEND_MODE:
-        ((AnmVmFlagsLoBits *)&vm->flags_lo)->blend_mode = (u8)full->context.current_context->get_int_arg(1);
+    {
+        u8 mode = full->get_int_arg(1);
+        ((AnmVmFlagsLoBits *)&vm->flags_lo)->blend_mode = mode;
         break;
+    }
     }
 }
 

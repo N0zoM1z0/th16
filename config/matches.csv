@@ -313,6 +313,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0041DCA0,EnemyInf::run_over_300,reference-0041dca0,local-strict-pass,11,11,11,.analysis/reference-audit.json
 0x00423050,EnemyData::ecl_enm_create,reference-00423050,local-strict-pass,518,518,518,.analysis/reference-audit.json
 0x00423260,EnemyData::ecl_anm_set_sprite,reference-00423260,local-strict-pass,317,317,317,.analysis/reference-audit.json
+0x004233A0,EnemyData::ecl_anm_vm_instr,reference-004233a0,local-strict-pass,1124,1124,1124,.analysis/reference-audit.json
 0x00423810,EnemyInf::get_int_global,reference-00423810,local-strict-pass,1900,1900,1900,.analysis/reference-audit.json
 0x00423F80,EnemyInf::get_int_global_ptr,reference-00423f80,local-strict-pass,391,391,391,.analysis/reference-audit.json
 0x00424110,EnemyInf::get_float_global,reference-00424110,local-strict-pass,2808,2808,2808,.analysis/reference-audit.json
