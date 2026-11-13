@@ -55,7 +55,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00402FF0,PosVel::update_secondary_fields,src/PosVel.cpp,?update_secondary_fields@PosVel@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00403110,PosVel::step,src/PosVel.cpp,?step@PosVel@@QAEXXZ,mismatch,,.analysis/reference-audit.json
 0x004033D0,PosVel::step_from_center,src/PosVel.cpp,?step_from_center@PosVel@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x004033F0,interp_common_methods,src/Interp.cpp,?interp_common_methods@@YAMHMM@Z,incomplete,reviewed switch ownership: switch table differs from the reviewed case mapping,.analysis/reference-audit.json
+0x004033F0,interp_common_methods,src/Interp.cpp,?interp_common_methods@@YAMHMM@Z,exact,,.analysis/reference-audit.json
 0x00403A90,collision_test_points_in_rect,src/Collision.cpp,?collision_test_points_in_rect@@YGHMMMMMPAUD3DXVECTOR2@@@Z,mismatch,,.analysis/reference-audit.json
 0x00403D30,collision_test_circle_rect,src/Collision.cpp,?collision_test_circle_rect@@YGHMMMMMMMM@Z,mismatch,,.analysis/reference-audit.json
 0x00403EC0,collision_segment_intersection,src/Collision.cpp,?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json

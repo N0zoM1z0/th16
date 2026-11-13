@@ -35,6 +35,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00402FF0,PosVel::update_secondary_fields,reference-00402ff0,local-strict-pass,276,276,276,.analysis/reference-audit.json
 0x00403110,PosVel::step,reference-00403110,mismatch,700,700,696,.analysis/reference-audit.json
 0x004033D0,PosVel::step_from_center,reference-004033d0,local-strict-pass,29,29,29,.analysis/reference-audit.json
+0x004033F0,interp_common_methods,reference-004033f0,local-strict-pass,1692,1692,1692,.analysis/reference-audit.json
 0x00403A90,collision_test_points_in_rect,reference-00403a90,mismatch,661,661,651,.analysis/reference-audit.json
 0x00403D30,collision_test_circle_rect,reference-00403d30,mismatch,400,400,243,.analysis/reference-audit.json
 0x00404220,collision_line_intersection,reference-00404220,local-strict-pass,982,982,982,.analysis/reference-audit.json

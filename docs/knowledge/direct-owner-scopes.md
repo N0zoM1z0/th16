@@ -63,6 +63,10 @@ lack bindings: BombInf::create (460 bytes, nine fields), EndingScriptVm::run
 (3,136 bytes, seven). These unresolved fields are not inferred from nearby
 addresses or matching annotations.
 
+The easing baseline below is superseded by the
+[complete exact source reconstruction](easing-dispatch-exact.md): its full
+1,692-byte owner and all 131 fields now pass without changing this scope record.
+
 `interp_common_methods` has a complete 1,692-byte original: 1,566 bytes of code,
 two alignment bytes and 31 target slots. The baseline candidate has the same
 complete size but a different case mapping, so it remains incomplete under

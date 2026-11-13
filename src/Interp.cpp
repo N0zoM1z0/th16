@@ -16,11 +16,8 @@ static inline f32 ease_in_back(f32 x, f32 a)
            (1.0f - a * a / ((1.0f - a) * (1.0f - a)));
 }
 
-// TODO: (reccmp 86%) most two-branch curves assign x and return it once, which the original's
-// registers show; in-out-2 returns from its else branch, which keeps 2.0f in xmm1 like the original.
-// Left: in-out-2's result is not moved back into xmm3 before the multiply, out-in-sine (original
-// result in xmm1, 0.5f loaded once in the else), and reccmp cannot name the original's addresses of
-// the constants only SSE code uses (the ease-back divisors), which count as differences.
+// Keep the piecewise quadratic and sine return expressions together;
+// splitting them into assignments changes the generated result paths.
 // FUNCTION: TH16 0x4033f0
 HARNESS_CALLED f32 interp_common_methods(i32 mode, f32 time, f32 end_time)
 {
@@ -45,15 +42,8 @@ HARNESS_CALLED f32 interp_common_methods(i32 mode, f32 time, f32 end_time)
         return 1.0f - (1.0f - x) * (1.0f - x) * (1.0f - x) * (1.0f - x);
     case INTERP_EASE_IN_OUT_2:
         x *= 2.0f;
-        if (x < 1.0f)
-        {
-            x = x * x;
-        }
-        else
-        {
-            return (2.0f - (2.0f - x) * (2.0f - x)) * 0.5f;
-        }
-        return x * 0.5f;
+        return x < 1.0f ? x * x * 0.5f
+                        : (2.0f - (2.0f - x) * (2.0f - x)) * 0.5f;
     case INTERP_EASE_OUT_IN_2:
         x *= 2.0f;
         if (x < 1.0f)
@@ -126,15 +116,8 @@ HARNESS_CALLED f32 interp_common_methods(i32 mode, f32 time, f32 end_time)
         return (1.0f - sinf(x * ZUN_PI * 0.5f)) * 0.5f + 0.5f;
     case INTERP_EASE_OUT_IN_SINE:
         x *= 2.0f;
-        if (x < 1.0f)
-        {
-            x = (1.0f - sinf(x * ZUN_PI * 0.5f + ZUN_PI / 2)) * 0.5f;
-        }
-        else
-        {
-            x = sinf((x - 1.0f) * ZUN_PI * 0.5f) * 0.5f + 0.5f;
-        }
-        return x;
+        return x < 1.0f ? (1.0f - sinf(x * ZUN_PI * 0.5f + ZUN_PI / 2)) * 0.5f
+                        : sinf((x - 1.0f) * ZUN_PI * 0.5f) * 0.5f + 0.5f;
     case INTERP_EASE_IN_BACK_A:
         return ease_in_back(x, 0.25f);
     case INTERP_EASE_IN_BACK_B:

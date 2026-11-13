@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after static large-ECL and curve source trials.
+Updated 2026-11-13 after complete shared easing-dispatch reconstruction.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -17,19 +17,27 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-The latest continuation adds an original-only complete CFG census for the
+The latest exact result is the complete **1,692-byte** `interp_common_methods`
+at `0x004033F0`: 388 code instructions, two alignment bytes, all 31 target-table
+entries and all 131 links. Conditional result expressions recover the quadratic
+and sine result joins without new helpers or Oracle changes. See
+[complete easing dispatch](knowledge/easing-dispatch-exact.md). Bullet goal,
+movement and manager-root trials are restored. Only `src/Interp.cpp` retains
+game-source changes in this continuation. No game runtime or dynamic test runs.
+
+The preceding static continuation adds an original-only complete CFG census for the
 21,408-byte upper ECL dispatcher: all 4,519 code instructions are reachable,
 with all 182 table destinations and the full opcode map retained. Owner-access,
 member-position, enemy-motion and curve reverse-step source trials still fail
 complete exact comparison and are restored. See
 [large ECL static source trials](knowledge/large-ecl-static-source-trials.md).
-There is no new exact credit. Full static restoration preserves all 1,719
+That continuation adds no exact credit. Its full static restoration preserves all 1,719
 candidate owners byte for byte (527,133 bytes), their addresses/extents, all
 image base relocations, all 954 units and all 1,215 annotation results and
 diagnostics. No game runtime or dynamic test is executed. Keep
 `.analysis/ecl-owner-work/` and `.analysis/curve-exact-work/`.
 
-The latest exact result is the complete 1,124-byte
+The preceding exact result is the complete 1,124-byte
 `EnemyData::ecl_anm_vm_instr`, including 333 code instructions, its alignment
 byte, all 19 jump-table entries and all 62 linked fields. Live target/mode/time
 staging, per-read owner accessors and an explicit byte blend input recover the
@@ -62,20 +70,18 @@ expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. Five further natural
 geometry trials are restored; see the Gui review for their rejected forms.
-The canonical report is **889 exact, 65 mismatch, 261 incomplete** among 1,215
-annotations: **173,694 exact primary bytes and 954 retained units**.
-All previous 888 exact owners and 953 unit semantics remain unchanged; 531
-retained unit addresses move. Complete symbolic candidate regression preserves
-the other 1,718 linked public owners (526,009 owner bytes), including full
-extents and relocation records, after independently translating address fields.
-The preceding exact continuation retains game-source changes only in
-`src/Enemy.cpp` and `src/Ecl.h`; the latest static trials retain none.
+The canonical report is **890 exact, 65 mismatch, 260 incomplete** among 1,215
+annotations: **175,386 exact primary bytes and 955 retained units**.
+All previous 889 exact owners and all 954 unit definitions/addresses remain
+unchanged. Complete raw candidate regression preserves all other 1,718 owners
+(525,441 bytes), their addresses/extents and all image relocations outside the
+changed owner. The strict Oracle validates all 131 fields inside that owner.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`eb7dbf25d10b6a3ca0880708e8e2a40ad60c81d1c30e69e1bc664de4e965d725`.
-PDB age is **391**. The final incremental build, strict replay and progress check
+`a830aa87cb06c813b647365844fd9dd051595cd493e86eb10adef28f7e5415ef`.
+PDB age is **403**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -84,6 +90,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Complete easing dispatch](knowledge/easing-dispatch-exact.md) | Complete 1,692-byte exact owner: 388 code instructions, alignment, 31-entry table and 131 links; all 889 prior exact owners and other 1,718 complete candidate owners retained |
 | [Large ECL static source trials](knowledge/large-ecl-static-source-trials.md) | Original-only complete 4,519-instruction CFG and all three tables; all failed source forms restored; all 1,719 candidate owners preserved byte for byte; no new exact credit |
 | [ECL animation dispatch exact](knowledge/ecl-animation-dispatch-exact.md) | Complete 1,124-byte owner: 333 code instructions, alignment and complete 19-entry table; 62 fields; all 888 prior exact owners retained and all other 1,718 public owners preserved symbolically |
 | [Spellcard startup exact](knowledge/spellcard-start-exact.md) | Source repair produces the complete 1,007-byte exact owner; 289 instructions and all 46 fields; all previous exact owners and other 1,718 complete public owner payloads/relocations preserved |
@@ -115,6 +122,20 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [complete easing dispatch](knowledge/easing-dispatch-exact.md) first.
+The shared easing owner is exact; its old source TODO and wrong table mapping
+are resolved. Preserve `.analysis/bullet-tick-exact-work/`, including failed
+Bullet and easing forms before trying related source representations again.
+The complete Bullet tick still owns 1,572 candidate bytes against 1,592 original
+bytes. Expanded movement/goal fields and removing the manager's link root do
+not recover its original frame and shared exits. The candidate manager lacks
+the original frame alignment, while the candidate Bullet tick adds its own;
+root removal alone does not explain or repair that difference. No failed
+source or root annotation is retained. Keep large Boss and projectile owners
+in scope; no dynamic testing is needed.
+
+The following geometry work describes an earlier continuation.
 
 Read [rectangle containment and edge storage](knowledge/rectangle-containment-and-edge-storage.md)
 first. Starting checkpoint `d77ba42` is preserved. `Collision.cpp` shares the
