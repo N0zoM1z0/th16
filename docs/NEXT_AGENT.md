@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after complete ECL animation-dispatch source reconstruction.
+Updated 2026-11-13 after static large-ECL and curve source trials.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -16,6 +16,18 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+The latest continuation adds an original-only complete CFG census for the
+21,408-byte upper ECL dispatcher: all 4,519 code instructions are reachable,
+with all 182 table destinations and the full opcode map retained. Owner-access,
+member-position, enemy-motion and curve reverse-step source trials still fail
+complete exact comparison and are restored. See
+[large ECL static source trials](knowledge/large-ecl-static-source-trials.md).
+There is no new exact credit. Full static restoration preserves all 1,719
+candidate owners byte for byte (527,133 bytes), their addresses/extents, all
+image base relocations, all 954 units and all 1,215 annotation results and
+diagnostics. No game runtime or dynamic test is executed. Keep
+`.analysis/ecl-owner-work/` and `.analysis/curve-exact-work/`.
 
 The latest exact result is the complete 1,124-byte
 `EnemyData::ecl_anm_vm_instr`, including 333 code instructions, its alignment
@@ -56,13 +68,14 @@ All previous 888 exact owners and 953 unit semantics remain unchanged; 531
 retained unit addresses move. Complete symbolic candidate regression preserves
 the other 1,718 linked public owners (526,009 owner bytes), including full
 extents and relocation records, after independently translating address fields.
-Only `src/Enemy.cpp` and `src/Ecl.h` retain game-source changes in this continuation.
+The preceding exact continuation retains game-source changes only in
+`src/Enemy.cpp` and `src/Ecl.h`; the latest static trials retain none.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `eb7dbf25d10b6a3ca0880708e8e2a40ad60c81d1c30e69e1bc664de4e965d725`.
-PDB age is **384**. The final incremental build, strict replay and progress check
+PDB age is **391**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -71,6 +84,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Large ECL static source trials](knowledge/large-ecl-static-source-trials.md) | Original-only complete 4,519-instruction CFG and all three tables; all failed source forms restored; all 1,719 candidate owners preserved byte for byte; no new exact credit |
 | [ECL animation dispatch exact](knowledge/ecl-animation-dispatch-exact.md) | Complete 1,124-byte owner: 333 code instructions, alignment and complete 19-entry table; 62 fields; all 888 prior exact owners retained and all other 1,718 public owners preserved symbolically |
 | [Spellcard startup exact](knowledge/spellcard-start-exact.md) | Source repair produces the complete 1,007-byte exact owner; 289 instructions and all 46 fields; all previous exact owners and other 1,718 complete public owner payloads/relocations preserved |
 | [Gui destructor exact](knowledge/gui-destructor-exact.md) | Complete 640-byte owner, 172 instructions and all 40 linked fields; full private EH graph and three-local frame validated; all 886 previous exact owners retained; 134 static controls pass |
