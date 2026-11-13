@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after exact reconstruction of dialogue VM construction.
+Updated 2026-11-13 after static Boss counter and complete stage-fog follow-up.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -16,6 +16,22 @@ Historical native evidence below is retained history, not the next workflow.
 Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
+
+Two Boss counter-layout forms and seven complete stage-fog forms are
+rejected and restored, with **no new exact credit**. Separating direct/other
+statistics fields leaves all native code unchanged with the retained dialogue
+`if`; conditional selection still exchanges damage registers. The complete
+2,156-byte original fog owner has all 522 instructions reachable. Scalar,
+vector-center and output/result forms preserve the 2,172-byte candidate;
+branch-local vectors also fail, even when the extent is 2,156 bytes (813
+matching bytes, all 56 links bound). Typed fog buffers change no native code.
+Do not repeat these as new hypotheses. See
+[Boss counter and stage-fog evidence](knowledge/boss-counter-and-stage-fog-trials.md).
+Keep `.analysis/boss-statistics-layout-work/` and
+`.analysis/stage-disc-fog-work/`. Final restoration preserves all 1,215 results,
+956 units, all 1,719 owners (527,136 bytes), all addresses/extents/relocations
+and the entire raw `.text`. Game source is unchanged from `4e01372`;
+current incremental PDB age is **525**.
 
 The complete **1,223-byte** `GuiMsgVm::GuiMsgVm` at `0x00429B20` is now
 **exact**, including all 287 original instructions and all 33 linked fields.
@@ -194,19 +210,18 @@ The preceding curve, Boss and async source work is retained. Five further natura
 geometry trials are restored; see the Gui review for their rejected forms.
 The canonical report is **893 exact, 63 mismatch, 259 incomplete** among 1,215
 annotations: **182,330 exact primary bytes and 956 retained comparison units**.
-All previous 892 exact owners and the other 1,214 annotation results/diagnostics
-remain unchanged, apart from current build identities. Every unit definition,
-original boundary and address is unchanged. All other 1,718 complete candidate
-owners remain raw-identical (525,913 bytes), with unchanged addresses/extents.
-All image base relocations and every raw .text byte outside the final 1,223-byte
-constructor are unchanged.
+All 893 exact owners and all 1,215 annotation results/diagnostics remain
+unchanged from `4e01372`, apart from current build identities. Every unit
+definition, original boundary and address is unchanged. All 1,719 complete
+candidate owners remain raw-identical (527,136 bytes), with unchanged
+addresses/extents, all image base relocations and the entire raw `.text`.
 The Boss logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `80da752f1d593ebbb54bc5fecf92210566c8ba0ed0acb6e05ce1e4659e99259d`.
-PDB age is **515**. The final incremental build, strict replay and progress check
+PDB age is **525**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.

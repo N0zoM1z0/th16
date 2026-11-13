@@ -105,3 +105,9 @@ candidate is 2,199/2,207 bytes and is restored. Keep
 `.analysis/boss-statistics-call-work/`. The subsequent
 [dialogue position-array result](dialogue-position-array-exact.md) changes no
 Boss logic bytes and adds no Boss exact credit.
+
+Separating the two statistics-array elements into named fields is also
+rejected and restored. With conditional dialogue selection it remains
+2,195/2,207 bytes; with the retained `if`, every native owner and the entire
+raw `.text` are unchanged. See
+[Boss counter and stage-fog trials](boss-counter-and-stage-fog-trials.md).
