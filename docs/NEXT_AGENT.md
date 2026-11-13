@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after ECL random-ring precision and active interpolation.
+Updated 2026-11-13 after Boss shot sharing trials and native rejection guards.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -10,10 +10,11 @@ running at this checkpoint. Read AGENTS.md before work.
 The exact-credit checkpoint is `a95321e` (curve laser initialization and the
 elliptical drop helper). Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
-position setup, spell-name traversal and difficulty dispatch. The current source
-continuation restores the random-ring radius interpolation boundary and SSE
-arithmetic. The shared expression exits, distinct arithmetic metadata behavior
-and floating negation are retained.
+position setup, spell-name traversal and difficulty dispatch. Source checkpoint
+`a9c0a41` restores the random-ring radius interpolation boundary and SSE arithmetic.
+The latest continuation adds native shot guards and restores every game-source
+trial. The shared expression exits, distinct arithmetic metadata behavior and
+floating negation are retained.
 The preceding curve, Boss and async source work is retained. No new exact credit is claimed.
 The canonical report is **885 exact, 65 mismatch, 265 incomplete** among 1,215
 annotations: **169,575 exact primary bytes and 950 retained units**.
@@ -22,7 +23,7 @@ Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
 `fdd04a2fec8a0c8faf41c88ff6f126d68bd243d79f1bb13c0c1a93557456051d`.
-PDB age is **288**. The final incremental build, strict replay and progress check
+PDB age is **296**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -53,6 +54,51 @@ report for current status. The full former handoff remains available through
 `python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md`.
 
 ## Current gameplay source work
+
+Read [Boss shot sharing and native rejection guards](knowledge/boss-shot-sharing-and-native-guards.md)
+first. Starting checkpoint `a9c0a41` is preserved. **No new game-source change is
+retained in this continuation.** Complete Boss statistics/dialogue and camera
+API forms fail to recover the original owners and are restored.
+
+The main new investigation is the complete `BulletManager::shoot_one` owner:
+**2,984 provisional original bytes versus 3,024 restored candidate bytes**,
+including both 52/44-byte switch tables. The original shares the layer-angle
+multiply/add for modes 2/3/4/5 and keeps random-speed mode 7 separate. Baseline
+has three groups. Goto trials produce 2,924/3,004-byte candidates, but both fail
+48 native NaN cases. The second has the correct graph and still reverses the
+last addition: player-angle payload `0x7fc03333` becomes spacing payload
+`0x7fc02222`. A scratch still fails; a small inline helper reproduces baseline.
+Recover the original accumulator operand with new type/call-context evidence;
+do not repeat these restored forms or accept graph/size alone.
+
+The restored image passes **978 complete native shoot_one calls per image** on
+the original, historical baseline and current candidate. These cover protected
+spawn rejection and real Bullet allocation/release list operations, plus empty
+free lists. All 13 modes, zero/negative counts, floating edge values, random
+state and unknown nonzero head-marker updates are checked. There are 471
+independently modeled result pairs (including three empty-list preservation
+cases); all other raw words remain in complete cross-image comparisons. Full
+accepted-spawn resource initialization and shipped Boss programs remain unproved.
+Two model controls reject on the original before candidate execution. A preserved
+wrong source image is rejected after the original/baseline pass one payload case.
+
+The final Enemy.cpp and BulletManager.cpp are byte-identical to `a9c0a41`.
+Complete restored Boss, motion and shot owner bytes also equal the baseline.
+Strict replay preserves **885/65/265**, 169,575 exact primary bytes and 950 units;
+canonical ledger/unit semantics and source input are unchanged. PDB age changes
+to 296 after the incremental restoration build. No broad earlier matrix is rerun.
+
+Preserve `.analysis/boss-accounting-work/`, especially `baseline-image/`,
+`final-image/`, `invalid-ring-image/`, all complete owner packets, typed probe,
+`native-shot-restored/`, corrected/versioned drivers, failed source snapshots,
+controls and `final-regression.json`. Earlier shared-ring PE images were not
+saved; their complete owner/native outputs remain, and must not be called
+retained executable replays. The initial random-speed model has nine failures
+because the original rounds the RNG product before adding the endpoint. The
+corrected model passes. The first sharing diagnostic refuses an incorrect
+mode-7 assumption on the original; retain that failed prototype as well.
+
+### Earlier ECL random-ring precision and active interpolation
 
 Read [ECL ring precision and active interpolation](knowledge/ecl-ring-precision-and-interpolation.md)
 first. Starting checkpoint `a088cca` is preserved. Random-ring instruction 93 now
