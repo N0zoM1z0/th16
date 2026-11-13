@@ -617,7 +617,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00445EE0,sht_on_tick_homing,reference-00445ee0,local-strict-pass,467,467,467,.analysis/reference-audit.json
 0x004460C0,sht_on_hit_spark_back,reference-004460c0,local-strict-pass,314,314,314,.analysis/reference-audit.json
 0x00446200,sht_on_init_laser,reference-00446200,local-strict-pass,83,83,83,.analysis/reference-audit.json
-0x00446870,sht_on_hit_laser,reference-00446870,mismatch,1409,1409,910,.analysis/reference-audit.json
+0x00446870,sht_on_hit_laser,reference-00446870,mismatch,1409,1409,912,.analysis/reference-audit.json
 0x00446E00,sht_on_tick_accelerate,reference-00446e00,local-strict-pass,30,30,30,.analysis/reference-audit.json
 0x00446E20,sht_on_hit_burst_rising,reference-00446e20,mismatch,349,349,333,.analysis/reference-audit.json
 0x00446F80,sht_on_hit_burst,reference-00446f80,local-strict-pass,339,339,339,.analysis/reference-audit.json

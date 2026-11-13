@@ -1,7 +1,8 @@
 # Current handoff
 
-Updated 2026-11-13 after nine complete projectile/math owners become exact
-through independent x87 atan2 identity, and full bomb/interpreter/curve trials.
+Updated 2026-11-13 after complete orb/laser-hit source trials and recovery of
+the laser endpoint Z operands. The preceding nine atan2-dependent exact owners
+are preserved.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -18,11 +19,35 @@ Partial source improvements and equivalent instructions are not exact credit.
 
 ## Authoritative checkpoint
 
-Nine existing game-source candidates now pass complete exact replay, totaling
+The complete **1,409-byte** `sht_on_hit_laser` improves from **910 to 912
+matching bytes**, still **mismatch**, with all 41 linked fields verified.
+`D3DXVec3Add(&end, &start, &end)` recovers the original endpoint Z load/add
+operand order. Only two raw candidate bytes change, at offsets **0x44A/0x450**;
+the full difference set strictly decreases. X/Y operands and other geometry,
+pointer-load, stack-slot and spark differences remain open. No new exact
+credit is added. Only `src/PlayerShot.cpp` retains game-source changes. See
+[laser endpoint and complete orb trials](knowledge/orb-and-laser-hit-source-trials.md).
+
+Six orb forms, eight other laser-hit forms and one curve sqrtf form are
+restored. The full 1,148-byte orb remains 959 matching; the complete 986-byte
+curve remains 982 matching. A consistent three-file pointer callback API
+trial leaves all 1,719 native owners unchanged, with eight renamed signatures;
+it is restored and should not be repeated as a code-generation hypothesis.
+Keep `.analysis/orb-and-laser-hit-work/`, `.analysis/shot-hit-pointer-work/`
+and `.analysis/curve-sqrt-interface-work/`, including failed compilation and
+complete-source trial evidence. All **903 exact results and 970 unit definitions**
+are retained. All other **1,718 native owners (525,727 bytes)**, all addresses,
+extents, relocations and raw `.text` outside the two operand bytes are unchanged.
+Current totals remain **903 exact / 67 mismatch / 245 incomplete**, **185,784
+exact primary bytes**, PDB age **591**. No game runtime or emulation is used.
+
+The preceding atan2 closure made nine existing game-source candidates pass
+complete exact replay, totaling
 **3,036 primary bytes, 741 original instructions and 89 linked fields**.
 They include `Bullet::step_ex_02` (555 bytes), `Bullet::step_ex_21` (507), both
 laser `step_ex_accel` owners (380 each), `sht_on_tick_homing` (467), bullet
-emission, player graze/angle and the atan2 wrapper. Game C++ source is unchanged.
+emission, player graze/angle and the atan2 wrapper. Game C++ source was unchanged
+at that checkpoint.
 The closed `msvc-x86-atan2-v1` identity compares both 20-byte argument entries,
 a complete 168-byte assembler region and its 80-byte descriptor, reusing the
 already verified fmod dispatchers. Only `__CIatan2` at parent offset 10 is
@@ -32,7 +57,7 @@ See [complete atan2/projectile identities](knowledge/atan2-runtime-identities.md
 Keep `.analysis/atan2-runtime-work/`, especially original-only scopes, complete
 contributions, control logs, baseline/final images and final regression.
 
-Four other functions become complete mismatches: Reimu orb update 959/1,148,
+At that checkpoint, four other functions became complete mismatches: Reimu orb update 959/1,148,
 bullet EX17 541/597, curve reverse-step 982/986 and laser-shot hit 910/1,409.
 The curve's four nonfield differences at offsets 770, 779, 787 and 791 remain
 unaccepted. Curve state remains 1,168/1,164 incomplete; ECL run still lacks two
@@ -42,10 +67,11 @@ forms fail and are restored. Do not repeat them as new hypotheses. Keep
 `.analysis/reimu-orb-array-work/`, `.analysis/anm-integer-result-work/` and
 `.analysis/curve-square-result-work/`. All prior 894 exact owners and 957 unit
 definitions are retained; thirteen new complete units include four mismatches
-without exact credit. Current totals are **903 exact / 67 mismatch / 245
+without exact credit. That checkpoint's totals were **903 exact / 67 mismatch / 245
 incomplete**, **185,784 exact primary bytes and 970 units**, PDB age **579**.
-All 1,719 native owners (527,136 bytes), addresses/extents, relocations and raw
-`.text` remain unchanged. Boss logic and the large interpreter remain open.
+That restoration preserved all 1,719 native owners (527,136 bytes),
+addresses/extents, relocations and raw `.text`. Boss logic and the large
+interpreter remain open.
 
 The complete **418-byte** `Spellcard::measure_real_time` at `0x00417BC0`
 is now **exact**, including all 107 original instructions and 14 linked fields.
@@ -298,21 +324,21 @@ The preceding curve, Boss and async source work is retained. Five further natura
 geometry trials are restored; see the Gui review for their rejected forms.
 The canonical report is **903 exact, 67 mismatch, 245 incomplete** among 1,215
 annotations: **185,784 exact primary bytes and 970 retained comparison units**.
-All 894 previous exact owners and 957 prior unit definitions remain unchanged
-from `5de0006`. Nine complete projectile/math owners gain exact credit. Four
-functions advance to complete mismatches and two other incomplete diagnostics
-advance; all other 1,200 annotation results and diagnostics remain unchanged,
-apart from current build identities. All original boundaries are unchanged
-in this continuation. The preceding floor boundary repair is retained. All 1,719 complete
-candidate owners remain raw-identical (527,136 bytes), with unchanged
-addresses/extents, all image base relocations and the entire raw `.text`.
+All 903 previous exact owners and 970 unit definitions remain unchanged from
+`34cb7fe`. No new exact credit is added. The laser hit's complete matched-byte
+count improves from 910 to 912; all other 1,214 annotation results and diagnostics
+remain unchanged, apart from current build identities. All original boundaries
+are unchanged. The preceding floor boundary repair is retained. All other
+1,718 complete candidate owners remain raw-identical (525,727 bytes), with
+unchanged addresses/extents and all image base relocations. The raw `.text`
+differs only at the two laser endpoint operand bytes.
 The Boss logic owner remains incomplete; Float3 remains a complete 899/906 mismatch.
 Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`80da752f1d593ebbb54bc5fecf92210566c8ba0ed0acb6e05ce1e4659e99259d`.
-PDB age is **579**. The final incremental build, strict replay and progress check
+`ef45258398eb6fe5c3cb4fd560aed06455b5f5695cfb4d398602eb739e51ccc5`.
+PDB age is **591**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -321,6 +347,7 @@ Recent reviewed work:
 
 | Review | Result |
 | --- | --- |
+| [Laser endpoint and complete orb trials](knowledge/orb-and-laser-hit-source-trials.md) | Full 1,409-byte hit owner improves 910 to 912 matching, still mismatch; two Z operand bytes recovered; all 903 exact and other 1,718 native owners preserved; fifteen other source forms restored |
 | [Complete atan2/projectile identities](knowledge/atan2-runtime-identities.md) | Nine complete owners exact, 3,036 bytes / 741 instructions / 89 fields; all prior 894 exact retained; 117 static controls; bomb/interpreter/curve source trials restored |
 | [Exact spellcard clock and math-runtime identities](knowledge/math-runtime-identities.md) | Complete 418-byte Spellcard clock exact; closed 1,179-byte code / 190-byte data runtime support, 101 static controls; prior 893 exact preserved; Boss/clock/entry/supervisor source trials restored |
 | [Complete interpreter, laser and cursor trials](knowledge/interpreter-and-laser-complete-owner-trials.md) | Full 14,177-byte interpreter, 1,968-byte laser and 5,034-byte menu trials rejected/restored; full-owner check catches camera regression; all 893 exact retained |

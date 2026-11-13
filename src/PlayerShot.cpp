@@ -693,9 +693,7 @@ i32 __fastcall sht_on_hit_laser(PlayerBullet *bullet, i32 enemy_pos, i32 enemy_s
         Float3 end;
         player_sincosmul(&end, bullet->pos.angle.value, bullet->laser_length);
         Float3 start = bullet->pos.pos;
-        end.x = start.x + end.x;
-        end.y = start.y + end.y;
-        end.z = start.z + end.z;
+        D3DXVec3Add(&end, &start, &end);
         Float3 velocity;
         player_sincosmul(&velocity, bullet->pos.angle.value, 64.0f);
         end.z = 0.0f;
