@@ -106,3 +106,6 @@ ___acrt_has_user_matherr,0x47b8c6,25,runtime-function,a6c4d02e61681d5541166ae3ae
 __87except,0x486086,267,runtime-function,dce76aaef1bd3b348ced284d4c09231f12d6e9222b5b9e0a6372abf4f2dc4c8f,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,267
 __floor_default,0x4894f6,185,runtime-function,3fb31e92fe32781cc19c4f4890083a2dadb921786c7720c01d59b6ee0b00b5af,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,185
 _floor,0x488a00,253,runtime-function,333e798a828e3a7d1de02413a8b8a8fd4ba2e6ae5c73de3b1d0af955c3df9ad2,,,docs/knowledge/math-runtime-identities.md,libucrt.lib,253
+??_7AsciiInf@@6B@,0x491ce0,4,vftable,c7eded6b9de508c7cc66339fbcb02ca581a7e2576be4976c42a4bc366dc1b140,,,docs/knowledge/reviewed-linkages.md,,
+??_7BombInf@@6B@,0x491e58,24,vftable,f003d5dde2e499adc9de493689fb6acb37bfa91f9903d50ab7c2f123134fa8d1,,,docs/knowledge/reviewed-linkages.md,,
+??_7TitleInf@@6B@,0x493730,4,vftable,cf84ce335b0e30ba53ec68f5f51ab9472f6d2e5a3dfd0fe14c6cebfab39f4b76,,,docs/knowledge/reviewed-linkages.md,,

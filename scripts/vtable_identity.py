@@ -110,7 +110,10 @@ def _review(context, row, candidate, reviewed):
                 fields = words(storage(image, base, 28))
                 if candidate_image:
                     owned(base, 28)
-                require(fields[2:5] == (0, 0xffffffff, 0) and fields[5] == 0x40,
+                # A base without its own vftable follows the derived class's
+                # vptr, at member displacement 4; the class itself stays at 0.
+                require(fields[2] in ((0,) if index == 0 else (0, 4))
+                        and fields[3:5] == (0xffffffff, 0) and fields[5] == 0x40,
                         "unsupported RTTI base displacement or attributes")
                 if index == 0:
                     require(fields[0] == own_type and fields[1] == count - 1 and fields[6] == address,

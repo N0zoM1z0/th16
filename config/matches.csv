@@ -80,7 +80,9 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00407900,anm_masked_effect_on_switch,reference-00407900,mismatch,336,336,291,.analysis/reference-audit.json
 0x00407A50,AnmVm::wipe_suffix,reference-00407a50,local-strict-pass,208,208,208,.analysis/reference-audit.json
 0x00407B20,AnmLoaded::copy_vm,reference-00407b20,local-strict-pass,225,225,225,.analysis/reference-audit.json
+0x00407C10,AsciiInf::AsciiInf,reference-00407c10,local-strict-pass,158,158,158,.analysis/reference-audit.json
 0x00407CB0,AsciiInf::initialize,reference-00407cb0,local-strict-pass,326,326,326,.analysis/reference-audit.json
+0x00407E00,AsciiInf::~AsciiInf,reference-00407e00,local-strict-pass,609,609,609,.analysis/reference-audit.json
 0x00408070,AsciiInf::on_tick_callback,reference-00408070,local-strict-pass,21,21,21,.analysis/reference-audit.json
 0x00408090,AsciiInf::on_draw_1_callback,reference-00408090,local-strict-pass,8,8,8,.analysis/reference-audit.json
 0x004080A0,AsciiInf::on_draw_2_callback,reference-004080a0,local-strict-pass,5,5,5,.analysis/reference-audit.json
@@ -127,7 +129,9 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040D550,BombInf::compute_damage,reference-0040d550,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040D560,BombInf::cancel_bullets,reference-0040d560,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0040D570,BombInf::end_at_stage_clear,reference-0040d570,local-strict-pass,1,1,1,.analysis/reference-audit.json
+0x0040D580,BombInf::BombInf,reference-0040d580,local-strict-pass,113,113,113,.analysis/reference-audit.json
 0x0040D600,BombInf::initialize,reference-0040d600,local-strict-pass,261,261,261,.analysis/reference-audit.json
+0x0040D710,BombInf::~BombInf,reference-0040d710,local-strict-pass,377,377,377,.analysis/reference-audit.json
 0x0040DA60,BombInf::on_tick_callback,reference-0040da60,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040DA70,BombInf::on_draw_callback,reference-0040da70,local-strict-pass,22,22,22,.analysis/reference-audit.json
 0x0040DA90,BombInf::destroy_all,reference-0040da90,local-strict-pass,144,144,144,.analysis/reference-audit.json
@@ -676,8 +680,10 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0044A850,Scorefile::any_cleared,reference-0044a850,local-strict-pass,142,142,142,.analysis/reference-audit.json
 0x0044A8E0,Scorefile::all_cleared,reference-0044a8e0,local-strict-pass,71,71,71,.analysis/reference-audit.json
 0x0044A930,Scorefile::unlock_all,reference-0044a930,local-strict-pass,178,178,178,.analysis/reference-audit.json
+0x0044A9F0,TitleInf::TitleInf,reference-0044a9f0,local-strict-pass,452,452,452,.analysis/reference-audit.json
 0x0044ABC0,TitleInf::thread_start,reference-0044abc0,local-strict-pass,173,173,173,.analysis/reference-audit.json
 0x0044AC70,TitleInf::initialize,reference-0044ac70,local-strict-pass,165,165,165,.analysis/reference-audit.json
+0x0044AD20,TitleInf::~TitleInf,reference-0044ad20,local-strict-pass,447,447,447,.analysis/reference-audit.json
 0x0044AEE0,TitleInf::create,reference-0044aee0,local-strict-pass,110,110,110,.analysis/reference-audit.json
 0x0044AF50,TitleInf::destroy,reference-0044af50,local-strict-pass,34,34,34,.analysis/reference-audit.json
 0x0044B530,TitleInf::on_draw,reference-0044b530,local-strict-pass,156,156,156,.analysis/reference-audit.json

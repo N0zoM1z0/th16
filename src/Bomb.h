@@ -5,6 +5,7 @@
 #include "AnmManager.h"
 #include "EnemyManager.h"
 #include "PosVel.h"
+#include "TaskInf.h"
 #include "UpdateFunc.h"
 #include "ZunTimer.h"
 #include "decomp.h"
@@ -23,7 +24,7 @@ struct BombReimuAOrbs;
 // -45) and shows the PIV its cancels earned.
 //
 // VTABLE: TH16 0x491e58
-class BombInf
+class BombInf : public TaskInf
 {
   public:
     // The constructor sets 2; nothing else uses it.

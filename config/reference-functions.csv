@@ -114,9 +114,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x00407900,anm_masked_effect_on_switch,src/AnmVmCallbacks.cpp,?anm_masked_effect_on_switch@@YIHPAUAnmVm@@H@Z,mismatch,,.analysis/reference-audit.json
 0x00407A50,AnmVm::wipe_suffix,src/AnmVm.cpp,?wipe_suffix@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00407B20,AnmLoaded::copy_vm,src/AnmVm.cpp,?copy_vm@AnmLoaded@@QAEXPAUAnmVm@@H@Z,exact,,.analysis/reference-audit.json
-0x00407C10,AsciiInf::AsciiInf,src/AsciiManager.cpp,??0AsciiInf@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00407C10,AsciiInf::AsciiInf,src/AsciiManager.cpp,??0AsciiInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00407CB0,AsciiInf::initialize,src/AsciiManager.cpp,?initialize@AsciiInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x00407E00,AsciiInf::~AsciiInf,src/AsciiManager.cpp,??1AsciiInf@@QAE@XZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00407E00,AsciiInf::~AsciiInf,src/AsciiManager.cpp,??1AsciiInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00408070,AsciiInf::on_tick_callback,src/AsciiManager.cpp,?on_tick_callback@AsciiInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x00408090,AsciiInf::on_draw_1_callback,src/AsciiManager.cpp,?on_draw_1_callback@AsciiInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x004080A0,AsciiInf::on_draw_2_callback,src/AsciiManager.cpp,?on_draw_2_callback@AsciiInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
@@ -174,9 +174,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040D550,BombInf::compute_damage,src/Bomb.cpp,?compute_damage@BombInf@@UAEHHH@Z,exact,,.analysis/reference-audit.json
 0x0040D560,BombInf::cancel_bullets,src/Bomb.cpp,?cancel_bullets@BombInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x0040D570,BombInf::end_at_stage_clear,src/Bomb.cpp,?end_at_stage_clear@BombInf@@UAEXXZ,exact,,.analysis/reference-audit.json
-0x0040D580,BombInf::BombInf,src/Bomb.cpp,??0BombInf@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0040D580,BombInf::BombInf,src/Bomb.cpp,??0BombInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0040D600,BombInf::initialize,src/Bomb.cpp,?initialize@BombInf@@QAEHH@Z,exact,,.analysis/reference-audit.json
-0x0040D710,BombInf::~BombInf,src/Bomb.cpp,??1BombInf@@QAE@XZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0040D710,BombInf::~BombInf,src/Bomb.cpp,??1BombInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0040D890,BombInf::create,src/Bomb.cpp,?create@BombInf@@SAPAV1@XZ,incomplete,9 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0040DA60,BombInf::on_tick_callback,src/Bomb.cpp,?on_tick_callback@BombInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0040DA70,BombInf::on_draw_callback,src/Bomb.cpp,?on_draw_callback@BombInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
@@ -832,10 +832,10 @@ address,name,source_file,symbol,result,reason,evidence
 0x0044A850,Scorefile::any_cleared,src/MainMenu.cpp,?any_cleared@Scorefile@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0044A8E0,Scorefile::all_cleared,src/MainMenu.cpp,?all_cleared@Scorefile@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0044A930,Scorefile::unlock_all,src/MainMenu.cpp,?unlock_all@Scorefile@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x0044A9F0,TitleInf::TitleInf,src/MainMenu.cpp,??0TitleInf@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0044A9F0,TitleInf::TitleInf,src/MainMenu.cpp,??0TitleInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0044ABC0,TitleInf::thread_start,src/MainMenu.cpp,?thread_start@TitleInf@@SGIXZ,exact,,.analysis/reference-audit.json
 0x0044AC70,TitleInf::initialize,src/MainMenu.cpp,?initialize@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0044AD20,TitleInf::~TitleInf,src/MainMenu.cpp,??1TitleInf@@QAE@XZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0044AD20,TitleInf::~TitleInf,src/MainMenu.cpp,??1TitleInf@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0044AEE0,TitleInf::create,src/MainMenu.cpp,?create@TitleInf@@SAPAV1@XZ,exact,,.analysis/reference-audit.json
 0x0044AF50,TitleInf::destroy,src/MainMenu.cpp,?destroy@TitleInf@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0044AF80,TitleInf::on_tick,src/MainMenu.cpp,?on_tick@TitleInf@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json

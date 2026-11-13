@@ -76,9 +76,11 @@ A 2026-11-13 follow-up adds two explicit table profiles with the same checks:
 (`0x0042E910`, 278 bytes, handler `0x0048A790`, node-24). Both descriptors are
 the empty `19930522` FuncInfo with flags 5. `AnmManager::~AnmManager`
 (`0x0046B7D0`, 297 bytes, handler `0x0048AB30`) fits the unchanged saved
-ESI/EDI profile. All three parents now pass complete strict comparison. Bomb
-destruction (one local word, ESI/EDI) still lacks its vftable binding and
-remains unregistered.
+ESI/EDI profile. All three parents now pass complete strict comparison. With
+the `TaskInf` vftables bound ([reviewed linkages](reviewed-linkages.md)),
+`AsciiInf::~AsciiInf` and `TitleInf::~TitleInf` use the two-local EBX/ESI/EDI
+profile, and `BombInf::~BombInf` (`0x0040D710`, one local word, node-16) uses
+the explicit `empty-eh3-local-saved-esi-edi-v1` profile; all three are exact.
 
 All three primary parents pass every byte, field and relocation: 292/345/228
 bytes, totaling 865. The 81 auxiliary code bytes and 108 metadata bytes receive

@@ -262,6 +262,20 @@ class VftableControls(unittest.TestCase):
         with self.assertRaisesRegex(Incomplete, "base displacement or attributes"):
             self.check(context=context)
 
+    def test_task_base_follows_the_vptr_only_at_displacement_four(self):
+        table = int(self.row(self.rows, "??_7AsciiInf@@6B@")["target_address"], 0)
+        self.assertTrue(self.check())
+        locator = self.locator(self.context.target, table)
+        hierarchy = self.words(self.context.target, locator, 5)[4]
+        array = self.words(self.context.target, hierarchy, 4)[3]
+        own, base = self.words(self.context.target, array, 2)
+        self.assertEqual(self.words(self.context.target, base + 8, 1)[0], 4)
+        for descriptor, displacement in ((base, 8), (own, 4)):
+            context = self.target_change(descriptor + 8, struct.pack("<I", displacement))
+            with self.subTest(displacement=displacement), self.assertRaisesRegex(
+                    Incomplete, "base displacement or attributes"):
+                self.check(context=context)
+
     def test_conflicting_callee_owners_are_rejected(self):
         slot = self.words(self.context.image, self.candidate(), 1)[0]
         context = copy.copy(self.context)

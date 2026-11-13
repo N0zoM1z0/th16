@@ -429,3 +429,15 @@ a memory access does not authorize it. Thirteen controls include complete
 wrong stride, wrong backedge, bypassing initialization or the limit, escaped
 cursor, out-of-bounds store and missing callee preservation evidence. No candidate or
 target extent is truncated or expanded for this result.
+
+## TaskInf vftables (2026-11-13)
+
+The original RTTI places the non-polymorphic `TaskInf` base after the derived
+vptr: member displacement 4 for `AsciiInf`, `BombInf` and its eight bomb
+classes, and `TitleInf`. The source therefore declares `TaskInf` without
+virtual functions (`src/TaskInf.h`) and `BombInf` derives from it. The
+verifier accepts displacement 4 only for a base entry; the class's own entry
+stays at 0 and candidate and target hierarchies must still be identical.
+`??_7AsciiInf@@6B@` (`0x00491CE0`, one slot), `??_7BombInf@@6B@`
+(`0x00491E58`, six slots) and `??_7TitleInf@@6B@` (`0x00493730`, one slot)
+are bound. Their three constructors become exact.

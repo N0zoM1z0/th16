@@ -4,18 +4,11 @@
 
 #include "AnmManager.h"
 #include "AnmVm.h"
+#include "TaskInf.h"
 #include "UpdateFunc.h"
 #include "ZunMath.h"
 #include "types.h"
 
-// Base of the game's task objects. The name is ZUN's, from RTTI; it has no
-// vtable of its own in the executable.
-class TaskInf
-{
-  public:
-    // Size of the whole object (AsciiInf: 0x19254, TitleInf: 0x5e00).
-    virtual u32 get_size() = 0;
-};
 
 // The fonts of ascii.anm (AsciiStr::font_id).
 enum AsciiFont

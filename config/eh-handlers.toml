@@ -619,3 +619,51 @@ func_info_size = 36
 func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
 eh_flags = 5
 evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-two-locals-saved-ebx-esi-edi-v1"
+source = "src/AsciiManager.cpp"
+parent_symbol = "??1AsciiInf@@QAE@XZ"
+parent_target = 0x407e00
+parent_size = 609
+parent_sha256 = "dcbb0af4c07b3893e6526d23dfde016500c46f907f9f60ef68b0608d1d351bf0"
+target = 0x48a3c0
+size = 27
+target_sha256 = "78b2f1ab61a19bf68e117af63f65a83804f5d5d44924c4245d578c867bfa04cb"
+func_info_target = 0x49af78
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-two-locals-saved-ebx-esi-edi-v1"
+source = "src/MainMenu.cpp"
+parent_symbol = "??1TitleInf@@QAE@XZ"
+parent_target = 0x44ad20
+parent_size = 447
+parent_sha256 = "65b7fbc81e10faf3d244650b00e338d5ae25ba3ee69592ee05198b863062fcfa"
+target = 0x48a960
+size = 27
+target_sha256 = "06b980663d8266edb50aaf6265302fdc94599f7982428011c52ccf640f6fd5e4"
+func_info_target = 0x49b520
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"
+
+[[handlers]]
+profile = "empty-eh3-local-saved-esi-edi-v1"
+source = "src/Bomb.cpp"
+parent_symbol = "??1BombInf@@QAE@XZ"
+parent_target = 0x40d710
+parent_size = 377
+parent_sha256 = "ed851d831fd5b5b77990ddc796c9aeb1a6ab87a38481bc50556ba0f38aa24f96"
+target = 0x48a4e0
+size = 27
+target_sha256 = "d4a602e00b27b1d27b158584a476f38ac0319fd7f2b2fe3d32c6da8880c5d525"
+func_info_target = 0x49b0a4
+func_info_size = 36
+func_info_sha256 = "deefb3473c3645d1b0e64473dc4d9122bd804dbeee0601d27662e64da29238e5"
+eh_flags = 5
+evidence = "docs/knowledge/ebx-esi-empty-eh.md"
