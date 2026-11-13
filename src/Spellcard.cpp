@@ -416,7 +416,7 @@ HARNESS_CALLED void Spellcard::measure_real_time()
 }
 #pragma fenv_access(off)
 
-// The complete owner still differs in timer dataflow and smoothing instruction scheduling.
+// The complete owner still differs in timer dataflow and title-loop alignment.
 // FUNCTION: TH16 0x417930
 i32 Spellcard::on_tick_body()
 {
@@ -464,8 +464,9 @@ i32 Spellcard::on_tick_body()
     // a pointer of its own, so boss_pos is read again for the adds instead
     // of reusing the loads of the subtractions (as in the original).
     D3DXVECTOR3 *p = &boss_pos;
-    Float2 delta = Float2(boss->enemy.final_pos.pos.x, boss->enemy.final_pos.pos.y) -
-                   Float2(boss_pos.x, boss_pos.y);
+    Float2 delta;
+    delta.x = boss->enemy.final_pos.pos.x - boss_pos.x;
+    delta.y = boss->enemy.final_pos.pos.y - boss_pos.y;
     f32 dz = boss->enemy.final_pos.pos.z - boss_pos.z;
     p->x = delta.x * 0.05f + p->x;
     p->y = delta.y * 0.05f + p->y;

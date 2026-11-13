@@ -232,7 +232,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004176D0,count_spells_of_difficulty,reference-004176d0,local-strict-pass,46,46,46,.analysis/reference-audit.json
 0x00417700,Spellcard::initialize,reference-00417700,local-strict-pass,131,131,131,.analysis/reference-audit.json
 0x004178A0,Spellcard::create,reference-004178a0,local-strict-pass,130,130,130,.analysis/reference-audit.json
-0x00417930,Spellcard::on_tick_body,reference-00417930,mismatch,650,650,451,.analysis/reference-audit.json
+0x00417930,Spellcard::on_tick_body,reference-00417930,mismatch,650,650,461,.analysis/reference-audit.json
 0x00417EE0,Spellcard::on_tick_callback,reference-00417ee0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00417EF0,Spellcard::on_draw_callback,reference-00417ef0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x004182F0,Spellcard::end,reference-004182f0,local-strict-pass,304,304,304,.analysis/reference-audit.json

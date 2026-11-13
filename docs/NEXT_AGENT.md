@@ -1,6 +1,6 @@
 # Current handoff
 
-Updated 2026-11-13 after the complete masked-animation callback became exact.
+Updated 2026-11-13 after static Boss and spellcard exact-source work.
 The user resumed reconstruction and explicitly prioritizes substantial enemy,
 boss and projectile functions over small helpers. No build or audit writer is
 running at this checkpoint. Read AGENTS.md before work.
@@ -24,9 +24,11 @@ elliptical drop helper. Source checkpoint `291be6e` recovers inline boss
 feedback and damage-source traversal. Checkpoint `a29e605` retains shared ECL
 position setup, spell-name traversal and difficulty dispatch. Source checkpoint
 `a9c0a41` restores the random-ring radius interpolation boundary and SSE arithmetic.
-The latest continuation resolves the masked callback's final literal through
-its original MOVSS witness. All new gameplay source trials are restored; the
-preceding Boss restart and projectile angle-consumer repairs are retained. The shared
+The preceding exact continuation resolves the masked callback's final literal
+through its original MOVSS witness. The current source checkpoint recovers the
+spellcard marker's complete component instruction order; its 650-byte owner
+remains a mismatch. Other new gameplay trials are restored. The preceding Boss
+restart and projectile angle-consumer repairs are retained. The shared
 expression exits, distinct arithmetic metadata behavior and floating negation
 are retained.
 The preceding curve, Boss and async source work is retained. One complete new
@@ -37,8 +39,8 @@ Source-origin review is **open**; Factory acceptance is **not submitted**.
 Use `.venv/bin/python scripts/progress.py` to verify current state.
 
 The source input is
-`2790b5687dcf511fab390dea7d6299772fd015e6c966a192525f41222ecfe196`.
-PDB age is **330**. The final incremental build, strict replay and progress check
+`8e6f8a51c048acafc5d94e82d9b66e2280b661bcdc3ca49150f22ad7c0922d24`.
+PDB age is **342**. The final incremental build, strict replay and progress check
 validate current source, artifact and comparison identities. Preserve the
 current incremental build, target, canonical report, Wine prefix, Ghidra project
 and pinned reference. No local outputs are cleaned during this continuation.
@@ -47,6 +49,7 @@ Recent accepted work:
 
 | Review | Result |
 | --- | --- |
+| [Spellcard marker component order](knowledge/spellcard-marker-component-order.md) | Complete 650-byte owner improves from 451 to 461 matching bytes; marker calculation instructions agree; timer and title-loop differences remain; no new exact credit |
 | [Masked-animation draw callback](knowledge/masked-effect-exact.md) | Complete 1,348-byte exact owner, all 57 linked fields; original 464.0f identity resolved through its fixed MOVSS read; no game-source change |
 | [Boss restart call context](knowledge/boss-restart-call-context.md) | Original out-of-line life restart and inline ECL call restart; 768 complete native calls per image and unchanged complete upper dispatcher; no new exact credit |
 | [Projectile angle consumers and native dispatch](knowledge/projectile-angle-consumers-and-native-dispatch.md) | Original direct angle-word store and shared float selection in the 5,500-byte dispatcher; 560 native calls agree, including 110 complete-state models; no new exact credit |
@@ -73,8 +76,33 @@ report for current status. The full former handoff remains available through
 
 ## Current gameplay source work
 
-Read [exact masked-animation draw callback](knowledge/masked-effect-exact.md)
-first. Starting checkpoint `f14ab14` is preserved. The complete
+Read [spellcard marker component order](knowledge/spellcard-marker-component-order.md)
+first. Starting checkpoint `408da53` is preserved. `Spellcard::on_tick_body`
+now assigns the planar delta's components directly. This recovers the original
+XYZ registers and full marker calculation order without a three-component
+local or added cookie. Its complete owner remains **650 bytes / 461 matching**,
+up from 451; all 17 fields are resolved. A subordinate 122-byte calculation
+check agrees through both existing identities and grants no separate credit.
+
+The remaining timer path folds `current_f` into XMM1, where the original at
+`0x004179ED` loads XMM0 first. That shorter path shifts the title-loop body and
+alignment. Branch-local accumulation gives the same wrong code; ordered member
+stores give 409 matching bytes. Both are restored. Depth-first loads and a full
+three-component delta also fail the complete owner and are restored.
+
+All new Boss damage/credit, conditional animation position and shared rotation
+trials are restored. No new binding, original boundary, compiler profile or
+Oracle rule is retained. Full strict replay changes only the spellcard owner's
+matching-byte result and preserves **886/65/264**, **170,923 exact primary bytes**
+and all **951 units**, byte-for-byte structurally unchanged. No game code runs.
+Preserve `.analysis/boss-static-work/`, particularly both complete artifact sets,
+failed source forms, complete packets and `retained-regression.json`. Continue
+static exact work on the remaining timer and substantial Boss/projectile owners.
+
+### Earlier masked-animation exact result
+
+Read [exact masked-animation draw callback](knowledge/masked-effect-exact.md).
+Starting checkpoint `f14ab14` is preserved. The complete
 `anm_on_draw_masked` owner at `0x004073A0` is now **1,348/1,348 exact**, with
 355 instructions and all 51 DIR32 / 6 REL32 fields checked. Its final unresolved
 field is the 464.0f literal at `0x004946B4`, fixed by the original MOVSS at
