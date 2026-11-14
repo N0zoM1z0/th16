@@ -332,7 +332,6 @@ HARNESS_CALLED i32 AnmManager::draw_circle(f32 x, f32 y, f32 radius, f32 angle, 
 
 // The outline of a circle of count segments around (x, y), as a line
 // strip starting at angle.
-// TODO: ours adds the y offset in the other operand order.
 // FUNCTION: TH16 0x469a00
 HARNESS_CALLED i32 AnmManager::draw_circle_outline(f32 x, f32 y, f32 radius, f32 angle, i32 count, D3DCOLOR color)
 {
@@ -348,10 +347,10 @@ HARNESS_CALLED i32 AnmManager::draw_circle_outline(f32 x, f32 y, f32 radius, f32
     {
         primitive_sincosmul((Float3 *)&vertices->pos, a, radius);
         vertices->pos.x = x + vertices->pos.x;
+        vertices->pos.y = y + vertices->pos.y;
         vertices->pos.z = 0.0f;
         vertices->pos.w = 1.0f;
         vertices->diffuse = color;
-        vertices->pos.y = y + vertices->pos.y;
         vertices++;
         a = wrap_angle(a + step);
     }
