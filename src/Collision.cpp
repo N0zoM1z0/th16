@@ -5,21 +5,21 @@
 
 // Whether a circle touches a w x h rectangle centered on (rect_x, rect_y)
 // and rotated by angle: the edges first, then the corners.
-// TODO: the rotation multiplies into the sine and cosine registers with the circle offsets from memory (the original loads the offsets), and the stack slots differ.
 // FUNCTION: TH16 0x403d30
 HARNESS_CALLED i32 __stdcall collision_test_circle_rect(f32 rect_x, f32 rect_y, f32 w, f32 h, f32 angle, f32 circle_x,
                                                         f32 circle_y, f32 radius)
 {
     // Move the circle into the rectangle's frame.
-    circle_x -= rect_x;
-    circle_y -= rect_y;
+    Float2 offset;
+    offset.x = circle_x - rect_x;
+    offset.y = circle_y - rect_y;
     angle = -angle;
     f32 s = zun_sinf(angle);
     f32 c = zun_cosf(angle);
-    f32 x = circle_x * c - circle_y * s;
-    f32 y = circle_x * s + circle_y * c;
-    f32 half_w = w * 0.5f;
+    f32 x = offset.x * c - offset.y * s;
+    f32 y = offset.x * s + offset.y * c;
     f32 abs_x = fabsf(x);
+    f32 half_w = w * 0.5f;
     if (half_w + radius >= abs_x && fabsf(y) <= h * 0.5f)
     {
         return 1;
