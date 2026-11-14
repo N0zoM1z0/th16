@@ -9,7 +9,7 @@ its counts and open-owner table are superseded.
 | Item | Value |
 | --- | --- |
 | HEAD | latest local `claude-opus-5.5-high: …` commit (nothing pushed) |
-| Strict audit | **1024 exact / 133 incomplete / 58 mismatch** of 1,215 annotations |
+| Strict audit | **1029 exact / 132 incomplete / 54 mismatch** of 1,215 annotations |
 | Build | incremental graph matches HEAD; no build or audit is running |
 
 Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
@@ -68,6 +68,17 @@ Already tried with no gain: `create_vm`, `create_vm_front`, `set_vm_script`
   offset local gives the original's load-then-multiply form
   (`collision_test_circle_rect`, `sht_on_hit_laser`). A `Float2` local adds
   alignment weight to callers; use `Float3` where that matters.
+- **Loop statement shapes** (probe first; `p/dc3.cpp`, `p/dv.cpp` reproduce
+  the real build): read `next` before `entry` in list walks
+  (`disable_vms_from_anm_file`); step the vertex pointer per vertex instead
+  of indexing `vertices[1]` (`draw_ring`); update `pos.y` right after
+  `pos.x` (`draw_circle_outline`); divide a loop step into its parameter in
+  place (`Fog::set_rect`); step an angle parameter through a local copy
+  (removes a `movaps` copy, but hoists the initial load in `draw_circle`).
+- Operand order of commutative float ops did not respond to source order in
+  `Unpause`, `write_sprite_corners__without_rot` or `kill_all_no_set_death`.
+- `HARNESS_CALLED` on single non-exact functions with callers (25 tried) and
+  placeholders on further padded functions gained only `InterpAngle::step`.
 - Trial tools: `perfunc.py`, `edtrial.py`, `hctrial.py`, `tryaudit.sh`.
 
 ## Best next leads
