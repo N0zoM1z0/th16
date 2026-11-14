@@ -14,27 +14,39 @@ void AnmLoaded::copy_vm_and_run(AnmVm *vm, i32 script)
 
 // The VM's position plus its root VM's, rotated with the root's rotation if
 // the VM asks for it.
-// TODO: recover the original stack context; the recursive temporary currently
-// introduces a GS cookie absent from the original function.
-// FUNCTION: TH16 0x40e490
-D3DXVECTOR3 AnmVm::world_pos()
+// world_pos's body. The original recurses through an inline helper like
+// this one: a direct recursion keeps LTCG from proving the 12-byte
+// temporary safe and adds a GS cookie the original lacks. Writing through
+// the caller's pointer makes it reload root_vm for the recursion, as the
+// original does.
+// TODO: the y component of the parent's position is added in the other
+// operand order.
+static __forceinline D3DXVECTOR3 *anm_vm_world_pos(AnmVm *vm, D3DXVECTOR3 *out)
 {
-    D3DXVECTOR3 result;
-    result = entity_pos + pos + pos_2;
-    if (root_vm != NULL && !(flags_hi & ANM_VM_NO_PARENT_POS))
+    *out = vm->entity_pos + vm->pos + vm->pos_2;
+    AnmVm *root = vm->root_vm;
+    if (root != NULL && !(vm->flags_hi & ANM_VM_NO_PARENT_POS))
     {
-        if (flags_hi & ANM_VM_ROTATE_WITH_PARENT)
+        if (vm->flags_hi & ANM_VM_ROTATE_WITH_PARENT)
         {
-            f32 s = zun_sinf(root_vm->rotation.z);
-            f32 c = zun_cosf(root_vm->rotation.z);
-            f32 x = result.x;
-            f32 y = result.y;
-            result.x = x * c - y * s;
-            result.y = y * c + x * s;
+            f32 s = zun_sinf(root->rotation.z);
+            f32 c = zun_cosf(root->rotation.z);
+            f32 x = out->x;
+            f32 y = out->y;
+            out->x = x * c - y * s;
+            out->y = y * c + x * s;
         }
-        result += root_vm->world_pos();
+        D3DXVECTOR3 parent_pos;
+        vm->root_vm->world_pos(&parent_pos);
+        *out += parent_pos;
     }
-    return result;
+    return out;
+}
+
+// FUNCTION: TH16 0x40e490
+DECOMP_NOINLINE D3DXVECTOR3 *AnmVm::world_pos(D3DXVECTOR3 *out)
+{
+    return anm_vm_world_pos(this, out);
 }
 
 // Creates a game-owned effect VM, optionally returning its allocated pointer.

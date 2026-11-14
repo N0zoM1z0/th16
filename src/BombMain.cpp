@@ -356,7 +356,8 @@ static __forceinline D3DXVECTOR3 beam_world_pos(AnmVm *vm)
             result.x = x * c - y * s;
             result.y = y * c + x * s;
         }
-        D3DXVECTOR3 parent_pos = vm->root_vm->world_pos();
+        D3DXVECTOR3 parent_pos;
+        vm->root_vm->world_pos(&parent_pos);
         result += parent_pos;
     }
     return result;

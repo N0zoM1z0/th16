@@ -90,7 +90,8 @@ i32 BombAllSubInf::on_tick()
         start_release_cooldown();
         return -1;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     g_Player->create_damage_source(&pos, vm->scale.x, 0.0f, 1, 100);
     cancel_bullets();
     return 0;
@@ -117,7 +118,8 @@ i32 BombAllSubInf::cancel_bullets()
     {
         return 0;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     g_BulletManager->cancel_radius_as_bomb(&pos, vm->scale.x, 4);
     g_LaserManager->cancel_in_radius_inline(&pos, vm->scale.x, 4, 1);
     return 0;
@@ -173,7 +175,8 @@ i32 BombAyaSubInf::on_tick()
     {
         vm_2->entity_pos = player->inner.pos;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     player->create_damage_source(&pos, vm->scale.x, 0.0f, 1, 30);
     cancel_bullets();
     return 0;
@@ -199,7 +202,8 @@ i32 BombAyaSubInf::cancel_bullets()
     {
         return 0;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     g_BulletManager->cancel_radius_as_bomb(&pos, vm->scale.x, 4);
     g_LaserManager->cancel_in_radius_inline(&pos, vm->scale.x, 4, 1);
     return 0;
@@ -246,7 +250,8 @@ i32 BombCirnoSubInf::on_tick()
         start_release_cooldown();
         return -1;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     g_Player->create_damage_source(&pos, vm->scale.x, 0.0f, 1, 100);
     cancel_bullets();
     return 0;
@@ -272,7 +277,8 @@ i32 BombCirnoSubInf::cancel_bullets()
     {
         return 0;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     g_BulletManager->cancel_radius_as_bomb(&pos, vm->scale.x, 4);
     g_LaserManager->cancel_in_radius_inline(&pos, vm->scale.x, 4, 1);
     return 0;
@@ -325,7 +331,8 @@ i32 BombMarisaSubInf::on_tick()
         start_release_cooldown();
         return -1;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     player->create_damage_source(&pos, vm->scale.x, 0.0f, 1, 9);
     cancel_bullets();
     return 0;
@@ -351,7 +358,8 @@ i32 BombMarisaSubInf::cancel_bullets()
     {
         return 0;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     g_BulletManager->cancel_radius_as_bomb(&pos, vm->scale.x, 4);
     g_LaserManager->cancel_in_radius_inline(&pos, vm->scale.x, 4, 1);
     return 0;
@@ -402,7 +410,8 @@ i32 BombReimuSubInf::on_tick()
         start_release_cooldown();
         return -1;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     player->create_damage_source(&pos, vm->scale.x, 0.0f, 1, 100);
     if (timer.current <= 15)
     {
@@ -431,7 +440,8 @@ i32 BombReimuSubInf::cancel_bullets()
     {
         return 0;
     }
-    D3DXVECTOR3 pos = vm->world_pos();
+    D3DXVECTOR3 pos;
+    vm->world_pos(&pos);
     g_BulletManager->cancel_radius_as_bomb(&pos, vm->scale.x, 4);
     g_LaserManager->cancel_in_radius_inline(&pos, vm->scale.x, 4, 1);
     return 0;

@@ -192,7 +192,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040E3B0,BombAllSubInf::compute_damage,src/BombSub.cpp,?compute_damage@BombAllSubInf@@UAEHHH@Z,exact,,.analysis/reference-audit.json
 0x0040E3C0,BombAllSubInf::cancel_bullets,src/BombSub.cpp,?cancel_bullets@BombAllSubInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x0040E480,BombAllSubInf::end_at_stage_clear,src/BombSub.cpp,?end_at_stage_clear@BombAllSubInf@@UAEXXZ,exact,,.analysis/reference-audit.json
-0x0040E490,AnmVm::world_pos,src/AnmManager.cpp,?world_pos@AnmVm@@QAE?AUD3DXVECTOR3@@XZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0040E490,AnmVm::world_pos,src/AnmManager.cpp,?world_pos@AnmVm@@QAEPAUD3DXVECTOR3@@PAU2@@Z,mismatch,,.analysis/reference-audit.json
 0x0040E5C0,AnmLoaded::create_vm,src/AnmManager.cpp,?create_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@MHH@Z,mismatch,,.analysis/reference-audit.json
 0x0040E6C0,EffectManager::next_index,src/EffectManager.cpp,?next_index@EffectManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0040E730,EffectManager::create_tracked,src/EffectManager.cpp,?create_tracked@EffectManager@@QAEHHPAUD3DXVECTOR3@@H@Z,exact,,.analysis/reference-audit.json

@@ -817,7 +817,7 @@ struct AnmVm
     // AnmVm::initialize).
     void wipe();
     // 0x40e490. Position including entity_pos and every parent's.
-    Float3 world_pos();
+    Float3 *world_pos(Float3 *out);
     // world_pos as Marisa's bomb has it inline.
     __forceinline Float3 world_pos_inline()
     {
@@ -836,7 +836,8 @@ struct AnmVm
                 result.x = x * c - y * s;
                 result.y = y * c + x * s;
             }
-            Float3 parent_pos = root_vm->world_pos();
+            Float3 parent_pos;
+            root_vm->world_pos(&parent_pos);
             result += parent_pos;
         }
         return result;

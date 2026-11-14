@@ -167,6 +167,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040E3B0,BombAllSubInf::compute_damage,reference-0040e3b0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040E3C0,BombAllSubInf::cancel_bullets,reference-0040e3c0,local-strict-pass,190,190,190,.analysis/reference-audit.json
 0x0040E480,BombAllSubInf::end_at_stage_clear,reference-0040e480,local-strict-pass,1,1,1,.analysis/reference-audit.json
+0x0040E490,AnmVm::world_pos,reference-0040e490,mismatch,297,297,289,.analysis/reference-audit.json
 0x0040E5C0,AnmLoaded::create_vm,reference-0040e5c0,mismatch,241,241,240,.analysis/reference-audit.json
 0x0040E6C0,EffectManager::next_index,reference-0040e6c0,local-strict-pass,110,110,110,.analysis/reference-audit.json
 0x0040E730,EffectManager::create_tracked,reference-0040e730,local-strict-pass,77,77,77,.analysis/reference-audit.json
