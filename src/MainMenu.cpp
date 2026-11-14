@@ -1392,12 +1392,54 @@ i32 TitleInf::do_title_screen()
             switch (menu.next_selection)
             {
             case TITLE_ITEM_START:
+                g_SoundManager.play_sound_centered(SE_OK00, 0);
+                AnmManager::interrupt_tree(anm_ids[0x65], 1);
+                anm_ids[0x65].id = 0;
+                AnmManager::interrupt_tree(comment_line_ids[8], 1);
+                set_substate(4);
+                return 1;
             case TITLE_ITEM_EXTRA_START:
+                g_SoundManager.play_sound_centered(SE_OK00, 0);
+                AnmManager::interrupt_tree(anm_ids[0x65], 1);
+                anm_ids[0x65].id = 0;
+                AnmManager::interrupt_tree(comment_line_ids[8], 1);
+                set_substate(4);
+                return 1;
             case TITLE_ITEM_PRACTICE_START:
+                g_SoundManager.play_sound_centered(SE_OK00, 0);
+                AnmManager::interrupt_tree(anm_ids[0x65], 1);
+                anm_ids[0x65].id = 0;
+                AnmManager::interrupt_tree(comment_line_ids[8], 1);
+                set_substate(4);
+                return 1;
             case TITLE_ITEM_SPELL_PRACTICE:
+                g_SoundManager.play_sound_centered(SE_OK00, 0);
+                AnmManager::interrupt_tree(anm_ids[0x65], 1);
+                anm_ids[0x65].id = 0;
+                AnmManager::interrupt_tree(comment_line_ids[8], 1);
+                set_substate(4);
+                return 1;
             case TITLE_ITEM_REPLAY:
+                g_SoundManager.play_sound_centered(SE_OK00, 0);
+                AnmManager::interrupt_tree(anm_ids[0x65], 1);
+                anm_ids[0x65].id = 0;
+                AnmManager::interrupt_tree(comment_line_ids[8], 1);
+                set_substate(4);
+                return 1;
             case TITLE_ITEM_PLAYER_DATA:
+                g_SoundManager.play_sound_centered(SE_OK00, 0);
+                AnmManager::interrupt_tree(anm_ids[0x65], 1);
+                anm_ids[0x65].id = 0;
+                AnmManager::interrupt_tree(comment_line_ids[8], 1);
+                set_substate(4);
+                return 1;
             case TITLE_ITEM_MUSIC_ROOM:
+                g_SoundManager.play_sound_centered(SE_OK00, 0);
+                AnmManager::interrupt_tree(anm_ids[0x65], 1);
+                anm_ids[0x65].id = 0;
+                AnmManager::interrupt_tree(comment_line_ids[8], 1);
+                set_substate(4);
+                return 1;
             case TITLE_ITEM_MANUAL:
                 g_SoundManager.play_sound_centered(SE_OK00, 0);
                 AnmManager::interrupt_tree(anm_ids[0x65], 1);
