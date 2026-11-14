@@ -301,6 +301,11 @@ static_assert(offsetof(BulletManager, cancel_count) == 0x1403b14, "BulletManager
 // bullet takes is written two ways: through a delta local in Bullet::cancel
 // and in one expression where clear_all inlines it; each matches its copy
 // (half_step_in_place is a constant at both call sites).
+static inline void bullet_set_blend_mode(AnmVm *vm, u32 mode)
+{
+    ((AnmVmFlagsLoBits *)&vm->flags_lo)->blend_mode = mode;
+}
+
 // ZunAngle's constructor as LTCG inlined it into run_ex's VELTIME.
 static __forceinline ZunAngle zun_angle_inline(f32 value)
 {
@@ -1049,15 +1054,15 @@ void Bullet::run_ex()
         case BULLET_EX_BLEND:
             if (ex->a == 2)
             {
-                ((AnmVmFlagsLoBits *)&vm0.flags_lo)->blend_mode = 2;
+                bullet_set_blend_mode(&vm0, 2);
             }
             else if (ex->a == 1)
             {
-                ((AnmVmFlagsLoBits *)&vm0.flags_lo)->blend_mode = 1;
+                bullet_set_blend_mode(&vm0, 1);
             }
             else
             {
-                ((AnmVmFlagsLoBits *)&vm0.flags_lo)->blend_mode = 0;
+                bullet_set_blend_mode(&vm0, 0);
             }
             ex_index++;
             continue;
