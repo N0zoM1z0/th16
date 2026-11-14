@@ -1360,7 +1360,7 @@ i32 Player::move()
         {
             vm->entity_pos = inner.pos;
         }
-        inner.timed_effect_timer.decrement(1.0f);
+        inner.timed_effect_timer.decrement(1);
         if (inner.timed_effect_timer.current <= 0)
         {
             AnmManager::interrupt_tree(inner.timed_effect_anm_id, 1);
@@ -1718,7 +1718,7 @@ i32 Player::on_tick_body()
         angle += source->angular_speed;
         source->angle = wrap_angle(angle);
         source->last_enemy_id = 0;
-        source->lifetime.decrement(1.0f);
+        source->lifetime.decrement(1);
         if (source->lifetime.current <= 0)
         {
             source->flags &= ~DAMAGE_SOURCE_ACTIVE;
@@ -1729,7 +1729,7 @@ i32 Player::on_tick_body()
     // player.
     if (inner.iframes.current > 0)
     {
-        inner.iframes.decrement(1.0f);
+        inner.iframes.decrement(1);
         if (inner.time_in_state.current != inner.time_in_state.previous && inner.time_in_state.current % 3 == 0)
         {
             vm.color_2.d3d = 0xff0000ff;

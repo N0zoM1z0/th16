@@ -365,8 +365,6 @@ i32 BombInf::can_activate()
     return 1;
 }
 
-// TODO: the inlined decrement lacks the original's multiply by 1.0f (see
-// ZunTimer::operator--).
 // FUNCTION: TH16 0x40de30
 void BombInf::draw()
 {
@@ -399,7 +397,7 @@ void BombInf::draw()
         g_AsciiManager->align_h = 1;
         g_AsciiManager->align_v = 1;
     }
-    release_bonus_timer.decrement(1.0f);
+    release_bonus_timer.decrement(1);
 }
 
 // FUNCTION: TH16 0x40e040

@@ -229,18 +229,21 @@ struct ZunTimer
     HARNESS_CALLED void operator++(int);
 
     // Count back by n frames, scaled by the speed multiplier unless it is
-    // close enough to 1.
-    void decrement(f32 n)
+    // close enough to 1. The negated count is a local used by both branches,
+    // as in operator-=: with a constant count that keeps the original's
+    // multiply of the speed by 1.0f.
+    void decrement(i32 frames)
     {
+        f32 delta = (f32)-frames;
         f32 *speed = this->speed();
         previous = current;
         if (speed != NULL && !(*speed > 0.99f && *speed < 1.01f))
         {
-            current_f -= *speed * n;
+            current_f += *speed * delta;
         }
         else
         {
-            current_f -= n;
+            current_f = current_f + delta;
         }
         current = (i32)current_f;
     }

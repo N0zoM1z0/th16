@@ -145,6 +145,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040D370,CameraSky::operator+,reference-0040d370,local-strict-pass,137,137,137,.analysis/reference-audit.json
 0x0040D400,CameraSky::CameraSky,reference-0040d400,local-strict-pass,88,88,88,.analysis/reference-audit.json
 0x0040D460,AnmLoaded::copy_vm_and_run,reference-0040d460,local-strict-pass,48,48,48,.analysis/reference-audit.json
+0x0040D490,ZunTimer::operator--,reference-0040d490,local-strict-pass,118,118,118,.analysis/reference-audit.json
 0x0040D510,??0Camera@@QAE@XZ,reference-0040d510,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0040D520,BombInf::begin,reference-0040d520,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0040D530,BombInf::on_tick,reference-0040d530,local-strict-pass,3,3,3,.analysis/reference-audit.json
@@ -162,6 +163,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040DB20,BombInf::activate,reference-0040db20,local-strict-pass,471,471,471,.analysis/reference-audit.json
 0x0040DD00,BombInf::update,reference-0040dd00,local-strict-pass,152,152,152,.analysis/reference-audit.json
 0x0040DDA0,BombInf::can_activate,reference-0040dda0,local-strict-pass,136,136,136,.analysis/reference-audit.json
+0x0040DE30,BombInf::draw,reference-0040de30,local-strict-pass,516,516,516,.analysis/reference-audit.json
 0x0040E040,BombInf::start_release_cooldown,reference-0040e040,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x0040E0F0,BombAllSubInf::begin,reference-0040e0f0,local-strict-pass,575,575,575,.analysis/reference-audit.json
 0x0040E330,BombAllSubInf::on_tick,reference-0040e330,local-strict-pass,102,102,102,.analysis/reference-audit.json
@@ -253,6 +255,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00415D80,Bullet::step_ex_12,reference-00415d80,mismatch,519,519,515,.analysis/reference-audit.json
 0x00415F90,Bullet::step_ex_17,reference-00415f90,mismatch,597,597,541,.analysis/reference-audit.json
 0x004161F0,Bullet::step_ex_19,reference-004161f0,local-strict-pass,223,223,223,.analysis/reference-audit.json
+0x004162D0,Bullet::step_ex_08,reference-004162d0,mismatch,1390,1390,1302,.analysis/reference-audit.json
 0x00416840,Bullet::cancel,reference-00416840,local-strict-pass,444,444,444,.analysis/reference-audit.json
 0x00416A00,gen_items_from_cancel,reference-00416a00,local-strict-pass,539,539,539,.analysis/reference-audit.json
 0x00416C20,BulletManager::cancel_radius,reference-00416c20,local-strict-pass,250,250,250,.analysis/reference-audit.json
@@ -546,6 +549,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004392C0,LaserCurveInf::step_ex_angle,reference-004392c0,mismatch,412,412,401,.analysis/reference-audit.json
 0x00439460,LaserCurveInf::step_ex_angle_accel,reference-00439460,mismatch,323,323,309,.analysis/reference-audit.json
 0x004395B0,LaserCurveInf::step_ex_accel,reference-004395b0,local-strict-pass,380,380,380,.analysis/reference-audit.json
+0x00439730,LaserCurveInf::step_ex_offscreen,reference-00439730,local-strict-pass,153,153,153,.analysis/reference-audit.json
 0x0043A2F0,LaserCurveInf::cancel_as_bomb_circle,reference-0043a2f0,local-strict-pass,812,812,812,.analysis/reference-audit.json
 0x0043A620,LaserCurveInf::cancel,reference-0043a620,local-strict-pass,307,307,307,.analysis/reference-audit.json
 0x0043A760,LaserCurveInf::touches_circle,reference-0043a760,local-strict-pass,219,219,219,.analysis/reference-audit.json

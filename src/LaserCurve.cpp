@@ -359,11 +359,10 @@ i32 LaserCurveInf::touches_circle(Float3 *pos, f32 radius)
 
 // Counts down ex_state[11]'s timer; when it runs out, flips ex_flags bit
 // 0x100 and returns 1.
-// TODO: the original keeps the multiply of the speed by 1.0f (see ZunTimer::operator--).
 // FUNCTION: TH16 0x439730
 i32 LaserCurveInf::step_ex_offscreen()
 {
-    ex_state[11].timer.decrement(1.0f);
+    ex_state[11].timer.decrement(1);
     if (ex_state[11].timer.current <= 0)
     {
         ex_flags ^= BULLET_EX_OFFSCREEN;

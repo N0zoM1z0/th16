@@ -1964,11 +1964,11 @@ HARNESS_CALLED i32 Bullet::on_tick()
 // HARNESS_CALLED: see Bullet::on_tick (otherwise it realigns its frame for
 // corner).
 // TODO: the original puts dir and corner at the top of the frame (ebp-0x10,
-// ebp-8), keeps the timer decrement's multiply by 1.0f, and adds half + pos.y.
+// ebp-8) and adds half + pos.y.
 // FUNCTION: TH16 0x4162d0
 HARNESS_CALLED i32 Bullet::step_ex_08()
 {
-    ex_state[11].timer.decrement(1.0f);
+    ex_state[11].timer.decrement(1);
     if (ex_state[11].ints[0] != 0 &&
         (outside_range(&pos.x, vm_sprite(&vm0)->sprite_width, -192.0f, 192.0f) ||
          outside_range(&pos.y, vm_sprite(&vm0)->sprite_height, 0.0f, 448.0f)))

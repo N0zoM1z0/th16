@@ -2957,7 +2957,7 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
 // full length, moving and shrinking to laser_new_arg_3), leaving the screen
 // once the two delay timers ran out, then the graze check and the VMs.
 // Nonzero once the laser is done.
-// TODO: the original keeps the * 1.0f of the inlined timer decrements, adds the tip offset's x component into its own register, and keeps the zero constant in xmm5 (ours xmm6).
+// TODO: the original adds the tip offset's x component into its own register, and keeps the zero constant in xmm5 (ours xmm6).
 // FUNCTION: TH16 0x432f40
 i32 LaserLineInf::on_tick()
 {
@@ -3014,7 +3014,7 @@ i32 LaserLineInf::on_tick()
             }
             else
             {
-                ex_state[5].timer.decrement(1.0f);
+                ex_state[5].timer.decrement(1);
             }
         }
         if (ex_invuln_remaining_frames != 0)
@@ -3052,11 +3052,11 @@ i32 LaserLineInf::on_tick()
     {
         if (offscreen_grace.current > 0)
         {
-            offscreen_grace.decrement(1.0f);
+            offscreen_grace.decrement(1);
         }
         if (timer_5b4.current > 0)
         {
-            timer_5b4.decrement(1.0f);
+            timer_5b4.decrement(1);
         }
     }
     else
@@ -3093,7 +3093,7 @@ i32 LaserLineInf::on_tick()
 // start), leaving the screen once every segment is off it.
 // The segments are indexed (segs[i], segs[i - 1]): the loop then walks them
 // with a pointer biased by -8 like the original's.
-// TODO: the original calls step_ex_accel through eax (ours edx), keeps 192 and 448 in swapped registers, keeps the * 1.0f of the inlined timer decrements and tests the first node for NULL (the for loop form keeps that test but differs more elsewhere).
+// TODO: the original calls step_ex_accel through eax (ours edx), keeps 192 and 448 in swapped registers, and tests the first node for NULL (the for loop form keeps that test but differs more elsewhere).
 // FUNCTION: TH16 0x4377d0
 i32 LaserCurveInf::on_tick()
 {
@@ -3154,7 +3154,7 @@ i32 LaserCurveInf::on_tick()
             }
             else
             {
-                ex_state[5].timer.decrement(1.0f);
+                ex_state[5].timer.decrement(1);
             }
         }
         if (ex_invuln_remaining_frames != 0)
@@ -3211,7 +3211,7 @@ i32 LaserCurveInf::on_tick()
     LaserCurveSegment *segment = (LaserCurveSegment *)segments;
     if (offscreen_grace.current > 0 || (ex_flags & BULLET_EX_OFFSCREEN))
     {
-        offscreen_grace.decrement(1.0f);
+        offscreen_grace.decrement(1);
     }
     else
     {

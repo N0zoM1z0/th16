@@ -166,7 +166,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040D370,CameraSky::operator+,src/Stage.cpp,??HCameraSky@@QBE?AU0@ABU0@@Z,exact,,.analysis/reference-audit.json
 0x0040D400,CameraSky::CameraSky,src/Stage.cpp,??0CameraSky@@QAE@MMMMMM@Z,exact,,.analysis/reference-audit.json
 0x0040D460,AnmLoaded::copy_vm_and_run,src/AnmManager.cpp,?copy_vm_and_run@AnmLoaded@@QAEXPAUAnmVm@@H@Z,exact,,.analysis/reference-audit.json
-0x0040D490,ZunTimer::operator--,src/ZunTimer.cpp,??FZunTimer@@QAEXH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0040D490,ZunTimer::operator--,src/ZunTimer.cpp,??FZunTimer@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0040D510,??0Camera@@QAE@XZ,src/Stage.cpp,??0Camera@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0040D520,BombInf::begin,src/Bomb.cpp,?begin@BombInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x0040D530,BombInf::on_tick,src/Bomb.cpp,?on_tick@BombInf@@UAEHXZ,exact,,.analysis/reference-audit.json
@@ -184,7 +184,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040DB20,BombInf::activate,src/Bomb.cpp,?activate@BombInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0040DD00,BombInf::update,src/Bomb.cpp,?update@BombInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0040DDA0,BombInf::can_activate,src/Bomb.cpp,?can_activate@BombInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x0040DE30,BombInf::draw,src/Bomb.cpp,?draw@BombInf@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0040DE30,BombInf::draw,src/Bomb.cpp,?draw@BombInf@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0040E040,BombInf::start_release_cooldown,src/Bomb.cpp,?start_release_cooldown@BombInf@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0040E0F0,BombAllSubInf::begin,src/BombSub.cpp,?begin@BombAllSubInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x0040E330,BombAllSubInf::on_tick,src/BombSub.cpp,?on_tick@BombAllSubInf@@UAEHXZ,exact,,.analysis/reference-audit.json
@@ -283,7 +283,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00415D80,Bullet::step_ex_12,src/BulletManager.cpp,?step_ex_12@Bullet@@QAEHXZ,mismatch,,.analysis/reference-audit.json
 0x00415F90,Bullet::step_ex_17,src/BulletManager.cpp,?step_ex_17@Bullet@@QAEHXZ,mismatch,,.analysis/reference-audit.json
 0x004161F0,Bullet::step_ex_19,src/BulletManager.cpp,?step_ex_19@Bullet@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x004162D0,Bullet::step_ex_08,src/BulletManager.cpp,?step_ex_08@Bullet@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x004162D0,Bullet::step_ex_08,src/BulletManager.cpp,?step_ex_08@Bullet@@QAEHXZ,mismatch,,.analysis/reference-audit.json
 0x00416840,Bullet::cancel,src/BulletManager.cpp,?cancel@Bullet@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x00416A00,gen_items_from_cancel,src/BulletManager.cpp,?gen_items_from_cancel@@YAXPAUD3DXVECTOR3@@H@Z,exact,,.analysis/reference-audit.json
 0x00416C20,BulletManager::cancel_radius,src/BulletManager.cpp,?cancel_radius@BulletManager@@QAEHPAUD3DXVECTOR3@@MH@Z,exact,,.analysis/reference-audit.json
@@ -618,7 +618,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004392C0,LaserCurveInf::step_ex_angle,src/Laser.cpp,?step_ex_angle@LaserCurveInf@@UAEHXZ,mismatch,,.analysis/reference-audit.json
 0x00439460,LaserCurveInf::step_ex_angle_accel,src/Laser.cpp,?step_ex_angle_accel@LaserCurveInf@@UAEHXZ,mismatch,,.analysis/reference-audit.json
 0x004395B0,LaserCurveInf::step_ex_accel,src/Laser.cpp,?step_ex_accel@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
-0x00439730,LaserCurveInf::step_ex_offscreen,src/LaserCurve.cpp,?step_ex_offscreen@LaserCurveInf@@UAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00439730,LaserCurveInf::step_ex_offscreen,src/LaserCurve.cpp,?step_ex_offscreen@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x004397D0,LaserCurveInf::cancel_as_bomb_rectangle,src/LaserCurve.cpp,?cancel_as_bomb_rectangle@LaserCurveInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00439D60,LaserCurveInf::sum_rect_damage,src/Laser.cpp,?sum_rect_damage@LaserCurveInf@@UAEHHHHHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0043A2F0,LaserCurveInf::cancel_as_bomb_circle,src/LaserCurve.cpp,?cancel_as_bomb_circle@LaserCurveInf@@UAEHPAUD3DXVECTOR3@@MHH@Z,exact,,.analysis/reference-audit.json
