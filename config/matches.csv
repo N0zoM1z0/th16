@@ -1022,7 +1022,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00474090,EclRunContext::pop_float_arg,reference-00474090,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00474180,EclRunContext::pop_int_arg_given_value,reference-00474180,local-strict-pass,179,179,179,.analysis/reference-audit.json
 0x00474240,EclRunContext::pop_float_arg_given_value,reference-00474240,local-strict-pass,229,229,229,.analysis/reference-audit.json
-0x00474330,EclRunContext::get_int_arg_ptr,reference-00474330,mismatch,98,98,97,.analysis/reference-audit.json
+0x00474330,EclRunContext::get_int_arg_ptr,reference-00474330,local-strict-pass,98,98,98,.analysis/reference-audit.json
 0x004743A0,EclRunContext::get_float_arg_ptr,reference-004743a0,local-strict-pass,139,139,139,.analysis/reference-audit.json
 0x00474430,SptInf::create_async,reference-00474430,local-strict-pass,176,176,176,.analysis/reference-audit.json
 0x004744E0,SptInf::lookup_async,reference-004744e0,local-strict-pass,39,39,39,.analysis/reference-audit.json

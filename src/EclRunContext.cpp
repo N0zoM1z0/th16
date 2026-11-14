@@ -291,7 +291,7 @@ HARNESS_CALLED i32 *EclRunContext::get_int_arg_ptr(int index)
         i32 value = ins->args[index].i;
         if (value >= 0)
         {
-            return (i32 *)((u8 *)stack.data + (stack.base_offset + value));
+            return stack.local_ptr(ins->args[index].i);
         }
         return vm->get_int_global_ptr(value);
     }
