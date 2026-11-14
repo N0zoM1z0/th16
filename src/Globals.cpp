@@ -184,7 +184,7 @@ void Globals::collect_bomb_fragment(i32 unused)
 // The extend notice.
 static inline void show_extend_notice()
 {
-    (g_Gui->*gui_show_notice_func())(0, GUI_NOTICE_EXTEND);
+    g_Gui->show_notice(0, GUI_NOTICE_EXTEND);
 }
 
 // Adds to the score (in units of 10), with an extra life and its notice for
