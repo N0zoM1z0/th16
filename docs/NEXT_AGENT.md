@@ -79,7 +79,13 @@ Already tried with no gain: `create_vm`, `create_vm_front`, `set_vm_script`
   `Unpause`, `write_sprite_corners__without_rot` or `kill_all_no_set_death`.
 - `HARNESS_CALLED` on single non-exact functions with callers (25 tried) and
   placeholders on further padded functions gained only `InterpAngle::step`.
-- Trial tools: `perfunc.py`, `edtrial.py`, `hctrial.py`, `tryaudit.sh`.
+- `Gui::on_tick_body` calls `zun_fabsf` in the original (ours inlines a
+  CRT `_fabsf` call there, emitted out of line from BulletManager.obj). Calling
+  `zun_fabsf` turns zun_fabsf itself into a thunk to `_fabsf`; adding a
+  `(f32)fabs` body as well breaks the EH GS allocation review. Unresolved.
+- Trial tools: `perfunc.py`, `edtrial.py`, `hctrial.py`, `swaptrial.py`,
+  `tryaudit.sh`; `p/ltcg2.sh` links probes with a non-LTCG `ext.obj` (CRT math
+  stubs), and probes may `#include "../../../src/X.h"` to reuse real types.
 
 ## Best next leads
 
