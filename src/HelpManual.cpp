@@ -196,6 +196,7 @@ static __forceinline i32 help_menu_moved(MenuHelper *m)
 // FUNCTION: TH16 0x42eab0
 DECOMP_NOINLINE i32 HelpManual::on_tick_body()
 {
+    DECOMP_DEAD_DOUBLE_0;
     D3DXVECTOR3 pos;
     pos.y = 0.0f;
     pos.z = 0.0f;

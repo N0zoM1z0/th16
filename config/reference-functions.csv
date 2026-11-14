@@ -462,7 +462,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042BBE0,decode_msg_string,src/GuiMisc.cpp,?decode_msg_string@@YIPBDPBD@Z,exact,,.analysis/reference-audit.json
 0x0042BC10,Gui::update_score,src/Gui.cpp,?update_score@Gui@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0042BCF0,Gui::show_notice,src/Gui.cpp,?show_notice@Gui@@QAEXHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0042C070,Gui::show_stage_clear_bonus,src/Gui.cpp,?show_stage_clear_bonus@Gui@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0042C070,Gui::show_stage_clear_bonus,src/Gui.cpp,?show_stage_clear_bonus@Gui@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0042C1B0,Gui::hide_stage_clear_bonus,src/Gui.cpp,?hide_stage_clear_bonus@Gui@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042C240,show_stage_logo,src/Gui.cpp,?show_stage_logo@@YAXXZ,exact,,.analysis/reference-audit.json
 0x0042C280,Gui::update_lives,src/Gui.cpp,?update_lives@Gui@@QAEXHI@Z,exact,,.analysis/reference-audit.json
@@ -505,7 +505,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042E910,HelpManual::~HelpManual,src/HelpManual.cpp,??1HelpManual@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042EA30,HelpManual::create,src/HelpManual.cpp,?create@HelpManual@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
 0x0042EA80,HelpManual::destroy,src/HelpManual.cpp,?destroy@HelpManual@@SAXXZ,exact,,.analysis/reference-audit.json
-0x0042EAB0,HelpManual::on_tick_body,src/HelpManual.cpp,?on_tick_body@HelpManual@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0042EAB0,HelpManual::on_tick_body,src/HelpManual.cpp,?on_tick_body@HelpManual@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0042EF90,HelpManual::on_tick_callback,src/HelpManual.cpp,?on_tick_callback@HelpManual@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0042EFA0,HelpManual::on_draw_callback,src/HelpManual.cpp,?on_draw_callback@HelpManual@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0042EFB0,AnmLoaded::create_ui_vm,src/HelpManual.cpp,?create_ui_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@H@Z,mismatch,,.analysis/reference-audit.json
@@ -690,7 +690,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043DCE0,supervisor_debug_log,src/Supervisor.cpp,?supervisor_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x0043DCF0,SoundManager::tick_bgm_fade,src/SoundManager.cpp,?tick_bgm_fade@SoundManager@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0043DDD0,score_extend_quota_out_of_line,src/Globals.cpp,?score_extend_quota_out_of_line@@YAHXZ,exact,,.analysis/reference-audit.json
-0x0043DDF0,Globals::add_power,src/Globals.cpp,?add_power@Globals@@QAEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0043DDF0,Globals::add_power,src/Globals.cpp,?add_power@Globals@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0043DE50,Globals::collect_season_item,src/Globals.cpp,?collect_season_item@Globals@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0043DEB0,Globals::init_season_level_delta,src/Globals.cpp,?init_season_level_delta@Globals@@QAEXHH@Z,exact,,.analysis/reference-audit.json
 0x0043DF20,get_season_gauge_fill_ratio,src/Globals.cpp,?get_season_gauge_fill_ratio@@YAMXZ,exact,,.analysis/reference-audit.json

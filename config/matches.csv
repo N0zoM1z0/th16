@@ -422,6 +422,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042BA30,GuiMsgVm::set_textbox,reference-0042ba30,local-strict-pass,242,242,242,.analysis/reference-audit.json
 0x0042BB30,GuiMsgVm::set_textbox_width,reference-0042bb30,local-strict-pass,171,171,171,.analysis/reference-audit.json
 0x0042BBE0,decode_msg_string,reference-0042bbe0,local-strict-pass,44,44,44,.analysis/reference-audit.json
+0x0042C070,Gui::show_stage_clear_bonus,reference-0042c070,local-strict-pass,312,312,312,.analysis/reference-audit.json
 0x0042C1B0,Gui::hide_stage_clear_bonus,reference-0042c1b0,local-strict-pass,141,141,141,.analysis/reference-audit.json
 0x0042C240,show_stage_logo,reference-0042c240,local-strict-pass,53,53,53,.analysis/reference-audit.json
 0x0042C280,Gui::update_lives,reference-0042c280,local-strict-pass,266,266,266,.analysis/reference-audit.json
@@ -461,9 +462,10 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042E910,HelpManual::~HelpManual,reference-0042e910,local-strict-pass,278,278,278,.analysis/reference-audit.json
 0x0042EA30,HelpManual::create,reference-0042ea30,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x0042EA80,HelpManual::destroy,reference-0042ea80,local-strict-pass,34,34,34,.analysis/reference-audit.json
+0x0042EAB0,HelpManual::on_tick_body,reference-0042eab0,local-strict-pass,1240,1240,1240,.analysis/reference-audit.json
 0x0042EF90,HelpManual::on_tick_callback,reference-0042ef90,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0042EFA0,HelpManual::on_draw_callback,reference-0042efa0,local-strict-pass,6,6,6,.analysis/reference-audit.json
-0x0042EFB0,AnmLoaded::create_ui_vm,reference-0042efb0,mismatch,217,217,165,.analysis/reference-audit.json
+0x0042EFB0,AnmLoaded::create_ui_vm,reference-0042efb0,mismatch,217,217,216,.analysis/reference-audit.json
 0x0042F090,BombInf::is_active_before,reference-0042f090,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x0042F0B0,ItemManager::ItemManager,reference-0042f0b0,local-strict-pass,160,160,160,.analysis/reference-audit.json
 0x0042F150,??1ItemManagerInner@@QAE@XZ,reference-0042f150,local-strict-pass,70,70,70,.analysis/reference-audit.json
@@ -620,6 +622,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043DCE0,supervisor_debug_log,reference-0043dce0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0043DCF0,SoundManager::tick_bgm_fade,reference-0043dcf0,local-strict-pass,217,217,217,.analysis/reference-audit.json
 0x0043DDD0,score_extend_quota_out_of_line,reference-0043ddd0,local-strict-pass,30,30,30,.analysis/reference-audit.json
+0x0043DDF0,Globals::add_power,reference-0043ddf0,local-strict-pass,93,93,93,.analysis/reference-audit.json
 0x0043DE50,Globals::collect_season_item,reference-0043de50,local-strict-pass,92,92,92,.analysis/reference-audit.json
 0x0043DEB0,Globals::init_season_level_delta,reference-0043deb0,local-strict-pass,99,99,99,.analysis/reference-audit.json
 0x0043DF20,get_season_gauge_fill_ratio,reference-0043df20,local-strict-pass,76,76,76,.analysis/reference-audit.json

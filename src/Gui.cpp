@@ -1059,6 +1059,7 @@ void Gui::update_score()
 // FUNCTION: TH16 0x42bcf0
 HARNESS_CALLED void Gui::show_notice(i32 bonus, i32 kind)
 {
+    DECOMP_DEAD_DOUBLE_1;
     switch (kind)
     {
     case GUI_NOTICE_SPELL_BONUS:
@@ -1202,6 +1203,7 @@ static __forceinline AnmId create_vm_inline(AnmLoaded *anm, i32 script, D3DXVECT
 // FUNCTION: TH16 0x42c070
 void Gui::show_stage_clear_bonus()
 {
+    DECOMP_DEAD_DOUBLE_0;
     Gui *gui = g_Gui;
     gui->overlay_ids[GUI_OVERLAY_STAGE_CLEAR_BONUS] =
         create_vm_inline(gui->front_anm, FRONT_ANM_STAGE_CLEAR_BONUS, NULL, 0.0f, -1);
