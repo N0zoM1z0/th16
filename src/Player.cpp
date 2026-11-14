@@ -1166,19 +1166,11 @@ i32 Player::initialize()
 // GLOBAL: TH16 0x492c20
 extern const Int2 g_player_directions[9] = {{0, 0}, {0, -1}, {0, 1}, {-1, 0}, {1, 0}, {-1, -1}, {1, -1}, {-1, 1}, {1, 1}};
 
-// copy_vm_and_run as LTCG inlined it here.
-static __forceinline void player_set_script(Player *player, i32 script)
-{
-    AnmVm *vm = &player->vm;
-    player->anm_file->copy_vm(vm, script);
-    vm->parent_vm = NULL;
-    vm->root_vm = NULL;
-    vm->run();
-}
-
-// TODO: the original realigns its frame (and esp, -8) and keeps the new
-// x velocity on the stack; ours does neither. The turn scripts already
-// cross-jump like the original's (three copy_vm/run sequences).
+// The turn scripts are written out: their run calls are move's own, which
+// makes it realign its frame for run like the original.
+// TODO: the original keeps the new x velocity on the stack, and its frame
+// is 4 bytes smaller. The turn scripts cross-jump like the original's
+// (three copy_vm/run sequences).
 // FUNCTION: TH16 0x441cf0
 i32 Player::move()
 {
@@ -1278,19 +1270,35 @@ i32 Player::move()
     i32 vy = (f32)(speed_y * dy - (i32)(inner.push_velocity.y * -128.0f)) * inner.speed_multiplier;
     if (vx < 0 && attempted_velocity.x >= 0)
     {
-        player_set_script(this, PLAYER_SCRIPT_TURN_LEFT);
+        AnmVm *vm = &this->vm;
+        anm_file->copy_vm(vm, PLAYER_SCRIPT_TURN_LEFT);
+        vm->parent_vm = NULL;
+        vm->root_vm = NULL;
+        vm->run();
     }
     if (vx > 0 && attempted_velocity.x <= 0)
     {
-        player_set_script(this, PLAYER_SCRIPT_TURN_RIGHT);
+        AnmVm *vm = &this->vm;
+        anm_file->copy_vm(vm, PLAYER_SCRIPT_TURN_RIGHT);
+        vm->parent_vm = NULL;
+        vm->root_vm = NULL;
+        vm->run();
     }
     else if (vx == 0 && attempted_velocity.x < 0)
     {
-        player_set_script(this, PLAYER_SCRIPT_LEFT_TO_IDLE);
+        AnmVm *vm = &this->vm;
+        anm_file->copy_vm(vm, PLAYER_SCRIPT_LEFT_TO_IDLE);
+        vm->parent_vm = NULL;
+        vm->root_vm = NULL;
+        vm->run();
     }
     if (vx == 0 && attempted_velocity.x > 0)
     {
-        player_set_script(this, PLAYER_SCRIPT_RIGHT_TO_IDLE);
+        AnmVm *vm = &this->vm;
+        anm_file->copy_vm(vm, PLAYER_SCRIPT_RIGHT_TO_IDLE);
+        vm->parent_vm = NULL;
+        vm->root_vm = NULL;
+        vm->run();
     }
     attempted_velocity.x = vx;
     attempted_velocity.y = vy;
