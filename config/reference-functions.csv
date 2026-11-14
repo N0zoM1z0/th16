@@ -517,10 +517,10 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042F260,ItemManager::initialize,src/Item.cpp,?initialize@ItemManager@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0042F2D0,ItemManager::~ItemManager,src/Item.cpp,??1ItemManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F440,ItemManager::create,src/Item.cpp,?create@ItemManager@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
-0x0042F4E0,ItemManager::on_tick_body,src/Item.cpp,?on_tick_body@ItemManager@@QAEHXZ,incomplete,5 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0042F4E0,ItemManager::on_tick_body,src/Item.cpp,?on_tick_body@ItemManager@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00430100,Item::collect_power,src/Item.cpp,?collect_power@Item@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004303A0,Item::collect_full_power,src/Item.cpp,?collect_full_power@Item@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004304A0,Item::collect_big_power,src/Item.cpp,?collect_big_power@Item@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x004303A0,Item::collect_full_power,src/Item.cpp,?collect_full_power@Item@@QAEXXZ,exact,,.analysis/reference-audit.json
+0x004304A0,Item::collect_big_power,src/Item.cpp,?collect_big_power@Item@@QAEXXZ,mismatch,,.analysis/reference-audit.json
 0x00430620,Item::collect_point,src/Item.cpp,?collect_point@Item@@QAEXXZ,mismatch,,.analysis/reference-audit.json
 0x004307A0,ItemManager::on_draw_body,src/Item.cpp,?on_draw_body@ItemManager@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x004308F0,ItemManager::on_tick_callback,src/Item.cpp,?on_tick_callback@ItemManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json

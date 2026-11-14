@@ -461,6 +461,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0042F260,ItemManager::initialize,reference-0042f260,local-strict-pass,106,106,106,.analysis/reference-audit.json
 0x0042F2D0,ItemManager::~ItemManager,reference-0042f2d0,local-strict-pass,360,360,360,.analysis/reference-audit.json
 0x0042F440,ItemManager::create,reference-0042f440,local-strict-pass,147,147,147,.analysis/reference-audit.json
+0x004303A0,Item::collect_full_power,reference-004303a0,local-strict-pass,254,254,254,.analysis/reference-audit.json
+0x004304A0,Item::collect_big_power,reference-004304a0,mismatch,373,373,372,.analysis/reference-audit.json
 0x00430620,Item::collect_point,reference-00430620,mismatch,384,384,383,.analysis/reference-audit.json
 0x004307A0,ItemManager::on_draw_body,reference-004307a0,local-strict-pass,329,329,329,.analysis/reference-audit.json
 0x004308F0,ItemManager::on_tick_callback,reference-004308f0,local-strict-pass,46,46,46,.analysis/reference-audit.json

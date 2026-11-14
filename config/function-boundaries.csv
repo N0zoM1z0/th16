@@ -519,8 +519,8 @@ address,size,span_end,state,evidence
 0x0042F440,147,0x0042F4D2,strict-compared,.analysis/reference-audit.json
 0x0042F4E0,3100,0x004300FB,provisional,.analysis/reference-audit.json
 0x00430100,665,0x00430398,provisional,.analysis/reference-audit.json
-0x004303A0,254,0x0043049D,provisional,.analysis/reference-audit.json
-0x004304A0,373,0x00430614,provisional,.analysis/reference-audit.json
+0x004303A0,254,0x0043049D,strict-compared,.analysis/reference-audit.json
+0x004304A0,373,0x00430614,strict-compared,.analysis/reference-audit.json
 0x00430620,384,0x0043079F,strict-compared,.analysis/reference-audit.json
 0x004307A0,329,0x004308E8,strict-compared,.analysis/reference-audit.json
 0x004308F0,46,0x0043091D,strict-compared,.analysis/reference-audit.json

@@ -119,21 +119,6 @@ static __forceinline f32 angle_to_player_inline(Float3 *pos)
     return (f32)atan2((double)dy, (double)dx);
 }
 
-// The original calls Player::angle_to_player in state 5 and has it inlined
-// in state 4. Written that way, on_tick_body compiles further from the
-// original (58.6% against 64.5%; it once also gave Item::init_anm a padded
-// frame, which the member pointer call below now prevents), so both go
-// through these out-of-line helpers until that is understood.
-static DECOMP_NOINLINE f32 item_angle_to_player(Float3 *pos)
-{
-    return g_Player->angle_to_player(pos);
-}
-
-static DECOMP_NOINLINE f32 item_angle_to_player_4(Float3 *pos)
-{
-    return angle_to_player_inline(pos);
-}
-
 // Item::init_anm as a member function pointer. ItemManager::on_tick_body
 // calls it through this: the call compiles to the original's direct call
 // but is not an edge in LTCG's call graph, so on_tick_body's early
@@ -144,10 +129,11 @@ static inline ItemInitAnmFunc item_init_anm_func()
     return &Item::init_anm;
 }
 
-// Whether an item has left the bottom or a side of the play area.
+// Whether an item has left the bottom or a side of the play area. fabsf's
+// UCRT body is spelled out: the original has it inline at all three uses.
 static __forceinline i32 item_offscreen(Item *item)
 {
-    return item->position.y > 472.0f || fabsf(item->position.x) >= 200.0f;
+    return item->position.y > 472.0f || (f32)fabs(item->position.x) >= 200.0f;
 }
 
 // Moves every item: delayed spawns (state 6), falling items (1), cancel
@@ -198,10 +184,7 @@ i32 ItemManager::on_tick_body()
             }
             if (item_offscreen(item))
             {
-                // release(), inlined here.
-                ItemList *head = item->node.head;
-                item->state = ITEM_STATE_FREE;
-                item->release_to(head);
+                item->release();
                 continue;
             }
             goto collect;
@@ -255,7 +238,7 @@ i32 ItemManager::on_tick_body()
         {
             goto autocollect;
         }
-        item_sincosmul(&item->velocity, item_angle_to_player(&item->position), item->speed_towards_player);
+        item_sincosmul(&item->velocity, g_Player->angle_to_player(&item->position), item->speed_towards_player);
         item->position += item->velocity * g_game_speed;
         if (item->speed_towards_player < 12.0f)
         {
@@ -332,7 +315,7 @@ i32 ItemManager::on_tick_body()
         {
             g_Globals.unk_dc = 8;
         }
-        item_sincosmul(&item->velocity, item_angle_to_player_4(&item->position), item->speed_towards_player);
+        item_sincosmul(&item->velocity, angle_to_player_inline(&item->position), item->speed_towards_player);
         item->position += item->velocity * g_game_speed;
         if (item->speed_towards_player < 12.0f)
         {
