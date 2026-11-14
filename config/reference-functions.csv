@@ -23,7 +23,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004017A0,UpdateFuncRegistry::unregister,src/UpdateFunc.cpp,?unregister@UpdateFuncRegistry@@QAEXPAUUpdateFunc@@@Z,exact,,.analysis/reference-audit.json
 0x00401850,get_joypad_capabilities,src/Input.cpp,?get_joypad_capabilities@@YAHXZ,exact,,.analysis/reference-audit.json
 0x004018E0,Supervisor::read_joypad,src/Supervisor.cpp,?read_joypad@Supervisor@@QAEII@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00401C30,get_controller_state,src/Input.cpp,?get_controller_state@@YAPAEXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00401C30,get_controller_state,src/Input.cpp,?get_controller_state@@YAPAEXZ,exact,,.analysis/reference-audit.json
 0x00401D50,Supervisor::read_keyboard_input,src/Input.cpp,?read_keyboard_input@Supervisor@@SAIXZ,exact,,.analysis/reference-audit.json
 0x00402130,get_keyboard_state,src/Input.cpp,?get_keyboard_state@@YAHPAE@Z,exact,,.analysis/reference-audit.json
 0x004021A0,clear_all_keydown_states,src/Input.cpp,?clear_all_keydown_states@@YAXXZ,exact,,.analysis/reference-audit.json
@@ -331,7 +331,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00418BA0,EffectManager::create_ui_effect,src/EffectManager.cpp,?create_ui_effect@EffectManager@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@PAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00418C60,anm_effect_4_on_draw,src/Fog.cpp,?anm_effect_4_on_draw@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00418C70,Fog::Fog,src/Fog.cpp,??0Fog@@QAE@HHH@Z,exact,,.analysis/reference-audit.json
-0x00418DF0,Fog::set_rect,src/Fog.cpp,?set_rect@Fog@@QAEXMMMM@Z,mismatch,,.analysis/reference-audit.json
+0x00418DF0,Fog::set_rect,src/Fog.cpp,?set_rect@Fog@@QAEXMMMM@Z,exact,,.analysis/reference-audit.json
 0x00418F40,Fog::update_vms,src/Fog.cpp,?update_vms@Fog@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00418FE0,AnmLoaded::create_ui_vm_at_origin,src/EffectManager.cpp,?create_ui_vm_at_origin@AnmLoaded@@QAE?AUAnmId@@HH@Z,exact,,.analysis/reference-audit.json
 0x004190B0,EndingScriptVm::~EndingScriptVm,src/Ending.cpp,??1EndingScriptVm@@QAE@XZ,exact,,.analysis/reference-audit.json
@@ -521,7 +521,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00430100,Item::collect_power,src/Item.cpp,?collect_power@Item@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004303A0,Item::collect_full_power,src/Item.cpp,?collect_full_power@Item@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004304A0,Item::collect_big_power,src/Item.cpp,?collect_big_power@Item@@QAEXXZ,mismatch,,.analysis/reference-audit.json
-0x00430620,Item::collect_point,src/Item.cpp,?collect_point@Item@@QAEXXZ,mismatch,,.analysis/reference-audit.json
+0x00430620,Item::collect_point,src/Item.cpp,?collect_point@Item@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004307A0,ItemManager::on_draw_body,src/Item.cpp,?on_draw_body@ItemManager@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x004308F0,ItemManager::on_tick_callback,src/Item.cpp,?on_tick_callback@ItemManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00430920,ItemManager::on_draw_1_callback,src/Item.cpp,?on_draw_1_callback@ItemManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
@@ -682,7 +682,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043D820,Supervisor::on_draw_38,src/Supervisor.cpp,?on_draw_38@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D870,Supervisor::on_draw_55,src/Supervisor.cpp,?on_draw_55@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D8B0,Supervisor::create_fog_vm,src/Supervisor.cpp,?create_fog_vm@Supervisor@@QAE?AUAnmId@@HH@Z,exact,,.analysis/reference-audit.json
-0x0043D970,Supervisor::setup_special_anms,src/Supervisor.cpp,?setup_special_anms@Supervisor@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0043D970,Supervisor::setup_special_anms,src/Supervisor.cpp,?setup_special_anms@Supervisor@@QAEXXZ,mismatch,,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,src/Supervisor.cpp,?release_surfaces@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043DC90,_tanf,src/Supervisor.cpp,_tanf,exact,,.analysis/reference-audit.json
 0x0043DCB0,___local_stdio_scanf_options,src/CrtInline.cpp,___local_stdio_scanf_options,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
@@ -697,7 +697,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043DF70,Globals::collect_extend,src/Globals.cpp,?collect_extend@Globals@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0043DFB0,Globals::collect_bomb,src/Globals.cpp,?collect_bomb@Globals@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0043DFF0,Globals::collect_bomb_fragment,src/Globals.cpp,?collect_bomb_fragment@Globals@@QAEXH@Z,exact,,.analysis/reference-audit.json
-0x0043E080,Globals::add_to_score,src/Globals.cpp,?add_to_score@Globals@@QAEXH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0043E080,Globals::add_to_score,src/Globals.cpp,?add_to_score@Globals@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0043E150,PauseMenu::set_state,src/PauseMenu.cpp,?set_state@PauseMenu@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0043E200,PauseMenu::set_substate,src/PauseMenu.cpp,?set_substate@PauseMenu@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0043E250,ScorefileChara::insert_score,src/PauseMenu.cpp,?insert_score@ScorefileChara@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -766,7 +766,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004460C0,sht_on_hit_spark_back,src/PlayerShot.cpp,?sht_on_hit_spark_back@@YIHPAUPlayerBullet@@HHMM@Z,exact,,.analysis/reference-audit.json
 0x00446200,sht_on_init_laser,src/PlayerShot.cpp,?sht_on_init_laser@@YIHPAUPlayerBullet@@@Z,exact,,.analysis/reference-audit.json
 0x00446260,sht_on_tick_laser,src/PlayerShot.cpp,?sht_on_tick_laser@@YIHPAUPlayerBullet@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00446870,sht_on_hit_laser,src/PlayerShot.cpp,?sht_on_hit_laser@@YIHPAUPlayerBullet@@HHMM@Z,mismatch,,.analysis/reference-audit.json
+0x00446870,sht_on_hit_laser,src/PlayerShot.cpp,?sht_on_hit_laser@@YIHPAUPlayerBullet@@HHMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00446E00,sht_on_tick_accelerate,src/PlayerShot.cpp,?sht_on_tick_accelerate@@YIHPAUPlayerBullet@@@Z,exact,,.analysis/reference-audit.json
 0x00446E20,sht_on_hit_burst_rising,src/PlayerShot.cpp,?sht_on_hit_burst_rising@@YIHPAUPlayerBullet@@HHMM@Z,mismatch,,.analysis/reference-audit.json
 0x00446F80,sht_on_hit_burst,src/PlayerShot.cpp,?sht_on_hit_burst@@YIHPAUPlayerBullet@@HHMM@Z,exact,,.analysis/reference-audit.json
@@ -842,37 +842,37 @@ address,name,source_file,symbol,result,reason,evidence
 0x0044B530,TitleInf::on_draw,src/MainMenu.cpp,?on_draw@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0044B5D0,TitleInf::on_tick_thunk,src/MainMenu.cpp,?on_tick_thunk@TitleInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0044B5E0,TitleInf::on_draw_thunk,src/MainMenu.cpp,?on_draw_thunk@TitleInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
-0x0044B5F0,TitleInf::do_title_screen,src/MainMenu.cpp,?do_title_screen@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0044B5F0,TitleInf::do_title_screen,src/MainMenu.cpp,?do_title_screen@TitleInf@@QAEHXZ,mismatch,,.analysis/reference-audit.json
 0x0044C570,TitleInf::do_options,src/MainMenu.cpp,?do_options@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0044C8C0,TitleInf::update_options_cursor,src/MainMenu.cpp,?update_options_cursor@TitleInf@@QAEXXZ,mismatch,,.analysis/reference-audit.json
+0x0044C8C0,TitleInf::update_options_cursor,src/MainMenu.cpp,?update_options_cursor@TitleInf@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0044DC70,TitleInf::update_options_sprites,src/MainMenu.cpp,?update_options_sprites@TitleInf@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0044E930,TitleInf::do_key_config,src/MainMenu.cpp,?do_key_config@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0044EC60,TitleInf::update_key_config_sprites,src/MainMenu.cpp,?update_key_config_sprites@TitleInf@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0044F710,TitleInf::set_key,src/MainMenu.cpp,?set_key@TitleInf@@QAEXHH@Z,exact,,.analysis/reference-audit.json
-0x0044F810,TitleInf::update_key_config_cursor,src/MainMenu.cpp,?update_key_config_cursor@TitleInf@@QAEXXZ,mismatch,,.analysis/reference-audit.json
-0x0044FE20,TitleInf::do_difficulty_select,src/MainMenuStates.cpp,?do_difficulty_select@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0044F810,TitleInf::update_key_config_cursor,src/MainMenu.cpp,?update_key_config_cursor@TitleInf@@QAEXXZ,exact,,.analysis/reference-audit.json
+0x0044FE20,TitleInf::do_difficulty_select,src/MainMenuStates.cpp,?do_difficulty_select@TitleInf@@QAEHXZ,incomplete,reviewed switch ownership: switch code is not completely decoded,.analysis/reference-audit.json
 0x004502C0,TitleInf::do_character_select,src/MainMenuStates.cpp,?do_character_select@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00450AF0,TitleInf::do_subseason_select,src/MainMenuStates.cpp,?do_subseason_select@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00450AF0,TitleInf::do_subseason_select,src/MainMenuStates.cpp,?do_subseason_select@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00450EF0,TitleInf::do_practice_stage_select,src/MainMenuStates.cpp,?do_practice_stage_select@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004513C0,TitleInf::on_draw__practice_stage_select,src/MainMenuStates.cpp,?on_draw__practice_stage_select@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00451560,TitleInf::load_replay_list,src/MainMenuStates.cpp,?load_replay_list@TitleInf@@SAXXZ,exact,,.analysis/reference-audit.json
 0x00451740,TitleInf::replay_list_thread,src/MainMenu.cpp,?replay_list_thread@TitleInf@@SAIPAX@Z,exact,,.analysis/reference-audit.json
-0x00451750,TitleInf::do_replay_menu,src/MainMenuStates.cpp,?do_replay_menu@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00451750,TitleInf::do_replay_menu,src/MainMenuStates.cpp,?do_replay_menu@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00451D50,TitleInf::on_draw__replay,src/MainMenuStates.cpp,?on_draw__replay@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00452330,TitleInf::do_player_data,src/MainMenuStates.cpp,?do_player_data@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00452C30,TitleInf::draw_spell_card_page,src/MainMenuStates.cpp,?draw_spell_card_page@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00453030,TitleInf::on_draw__player_data,src/MainMenuStates.cpp,?on_draw__player_data@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004532F0,TitleInf::do_score_name_entry,src/MainMenuStates.cpp,?do_score_name_entry@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004538B0,TitleInf::on_draw__score_name_entry,src/MainMenuStates.cpp,?on_draw__score_name_entry@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x00453C10,TitleInf::do_replay_save,src/MainMenuStates.cpp,?do_replay_save@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00453C10,TitleInf::do_replay_save,src/MainMenuStates.cpp,?do_replay_save@TitleInf@@QAEHXZ,incomplete,reviewed switch ownership: switch table differs from the reviewed case mapping,.analysis/reference-audit.json
 0x004541B0,TitleInf::on_draw__replay_save,src/MainMenuStates.cpp,?on_draw__replay_save@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004545A0,TitleInf::do_manual,src/MainMenuStates.cpp,?do_manual@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004546F0,TitleInf::do_music_room,src/MainMenuStates.cpp,?do_music_room@TitleInf@@QAEHXZ,mismatch,,.analysis/reference-audit.json
 0x00455330,skip_line,src/MainMenu.cpp,?skip_line@@YIPADPADPAH@Z,exact,,.analysis/reference-audit.json
 0x00455370,read_line,src/MainMenu.cpp,?read_line@@YIPADPAD0PAH@Z,exact,,.analysis/reference-audit.json
-0x004553D0,TitleInf::do_spell_practice_stage_select,src/MainMenuStates.cpp,?do_spell_practice_stage_select@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00455790,TitleInf::do_spell_practice_character,src/MainMenuStates.cpp,?do_spell_practice_character@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00455900,TitleInf::do_spell_practice_row,src/MainMenuStates.cpp,?do_spell_practice_row@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x004553D0,TitleInf::do_spell_practice_stage_select,src/MainMenuStates.cpp,?do_spell_practice_stage_select@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
+0x00455790,TitleInf::do_spell_practice_character,src/MainMenuStates.cpp,?do_spell_practice_character@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
+0x00455900,TitleInf::do_spell_practice_row,src/MainMenuStates.cpp,?do_spell_practice_row@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00455D50,TitleInf::do_spell_practice_subseason,src/MainMenuStates.cpp,?do_spell_practice_subseason@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00456060,spell_practice_row_seen,src/MainMenu.cpp,?spell_practice_row_seen@@YGHHH@Z,exact,,.analysis/reference-audit.json
 0x004560B0,TitleInf::load_spell_list,src/MainMenuStates.cpp,?load_spell_list@TitleInf@@QAEHHHPAHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -1003,7 +1003,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00463B30,AnmVm::step_interpolators,src/AnmVmRun.cpp,?step_interpolators@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00463D40,InterpFloat2::step,src/Interp.cpp,?step@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ,mismatch,,.analysis/reference-audit.json
 0x00464040,InterpAngle::reset_time,src/Interp.cpp,?reset_time@InterpAngle@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x00464080,InterpAngle::step,src/Interp.cpp,?step@InterpAngle@@QAE?AUZunAngle@@XZ,mismatch,,.analysis/reference-audit.json
+0x00464080,InterpAngle::step,src/Interp.cpp,?step@InterpAngle@@QAE?AUZunAngle@@XZ,exact,,.analysis/reference-audit.json
 0x004643B0,InterpInt::step,src/Interp.cpp,?step@InterpInt@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00464590,InterpInt3::step,src/Interp.cpp,?step@InterpInt3@@QAE?AUInt3@@XZ,mismatch,,.analysis/reference-audit.json
 0x00464930,anm_sincosmul_xy,src/AnmVmRun.cpp,?anm_sincosmul_xy@@YIXPAM0MM@Z,exact,,.analysis/reference-audit.json
@@ -1024,7 +1024,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004660B0,AnmVm::write_sprite_corners__with_z_rot,src/AnmDraw.cpp,?write_sprite_corners__with_z_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00466390,AnmManager::write_billboard_corners,src/AnmDraw.cpp,?write_billboard_corners@AnmManager@@SGHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00466820,AnmManager::draw_billboard_fog,src/AnmDraw.cpp,?draw_billboard_fog@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00466F00,AnmManager::build_world_matrix,src/AnmRender.cpp,?build_world_matrix@AnmManager@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00466F00,AnmManager::build_world_matrix,src/AnmRender.cpp,?build_world_matrix@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x004671B0,AnmManager::draw_mode_5,src/AnmRender.cpp,?draw_mode_5@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00467200,AnmManager::draw_sprite_fog,src/AnmDraw.cpp,?draw_sprite_fog@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00467410,AnmManager::draw_3d,src/AnmDraw.cpp,?draw_3d@AnmManager@@QAEHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
@@ -1039,8 +1039,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x00469570,AnmManager::draw_rect_bordered,src/AnmPrimitives.cpp,?draw_rect_bordered@AnmManager@@QAEHMMMMMKKHH@Z,exact,,.analysis/reference-audit.json
 0x00469640,AnmManager::draw_circle,src/AnmPrimitives.cpp,?draw_circle@AnmManager@@QAEHMMMMHKK@Z,mismatch,,.analysis/reference-audit.json
 0x00469890,AnmManager::draw_triangle_fan,src/AnmRender.cpp,?draw_triangle_fan@AnmManager@@QAEHHPAUD3DXVECTOR3@@PAUD3DXVECTOR2@@PATZunColor@@@Z,mismatch,,.analysis/reference-audit.json
-0x00469A00,AnmManager::draw_circle_outline,src/AnmPrimitives.cpp,?draw_circle_outline@AnmManager@@QAEHMMMMHK@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00469BD0,AnmManager::draw_ring,src/AnmPrimitives.cpp,?draw_ring@AnmManager@@QAEHMMMMMHK@Z,mismatch,,.analysis/reference-audit.json
+0x00469A00,AnmManager::draw_circle_outline,src/AnmPrimitives.cpp,?draw_circle_outline@AnmManager@@QAEHMMMMHK@Z,exact,,.analysis/reference-audit.json
+0x00469BD0,AnmManager::draw_ring,src/AnmPrimitives.cpp,?draw_ring@AnmManager@@QAEHMMMMMHK@Z,exact,,.analysis/reference-audit.json
 0x00469E00,primitive_sincosmul,src/AnmPrimitives.cpp,?primitive_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
 0x00469E20,anm_fan_init,src/AnmRender.cpp,?anm_fan_init@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0046A0B0,anm_on_tick_fan,src/AnmRender.cpp,?anm_on_tick_fan@@YIHPAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
@@ -1132,7 +1132,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046F130,AnmManager::interrupt_tree_and_run_out_of_line,src/AnmManagerVms.cpp,?interrupt_tree_and_run_out_of_line@AnmManager@@SGXUAnmId@@H@Z,exact,,.analysis/reference-audit.json
 0x0046F1C0,AnmManager::delete_vm,src/AnmManagerVms.cpp,?delete_vm@AnmManager@@QAEXUAnmId@@@Z,exact,,.analysis/reference-audit.json
 0x0046F220,AnmManager::mark_tree_for_delete,src/AnmManagerVms.cpp,?mark_tree_for_delete@AnmManager@@QAEXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
-0x0046F270,AnmManager::disable_vms_from_anm_file,src/AnmManagerVms.cpp,?disable_vms_from_anm_file@AnmManager@@QAEXPAUAnmLoaded@@@Z,mismatch,,.analysis/reference-audit.json
+0x0046F270,AnmManager::disable_vms_from_anm_file,src/AnmManagerVms.cpp,?disable_vms_from_anm_file@AnmManager@@QAEXPAUAnmLoaded@@@Z,exact,,.analysis/reference-audit.json
 0x0046F2E0,AnmId::find_or_clear,src/AnmManagerVms.cpp,?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ,exact,,.analysis/reference-audit.json
 0x0046F300,AnmId::show_tree,src/AnmManagerVms.cpp,?show_tree@AnmId@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0046F340,AnmId::hide_tree,src/AnmManagerVms.cpp,?hide_tree@AnmId@@QAEXXZ,exact,,.analysis/reference-audit.json
