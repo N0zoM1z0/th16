@@ -235,7 +235,6 @@ HARNESS_CALLED void AnmManager::mark_tree_for_delete(AnmVm *vm)
     }
 }
 
-// TODO: the original keeps the VM in ecx and the next node in edx (ours swaps them).
 // FUNCTION: TH16 0x46f270
 void AnmManager::disable_vms_from_anm_file(AnmLoaded *anm)
 {
@@ -246,24 +245,22 @@ void AnmManager::disable_vms_from_anm_file(AnmLoaded *anm)
     ZunList<AnmVm> *node = world_list_head;
     while (node != NULL)
     {
-        ZunList<AnmVm> *next;
+        ZunList<AnmVm> *next = node->next;
         AnmVm *vm = node->entry;
-        next = node->next;
         if (vm->anm_loaded_index == anm->slot_num)
         {
-            node->entry->mark_for_deletion();
+            vm->mark_for_deletion();
         }
         node = next;
     }
     node = ui_list_head;
     while (node != NULL)
     {
-        ZunList<AnmVm> *next;
+        ZunList<AnmVm> *next = node->next;
         AnmVm *vm = node->entry;
-        next = node->next;
         if (vm->anm_loaded_index == anm->slot_num)
         {
-            node->entry->mark_for_deletion();
+            vm->mark_for_deletion();
         }
         node = next;
     }
