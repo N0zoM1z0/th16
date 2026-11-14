@@ -675,7 +675,7 @@ HARNESS_CALLED i32 GuiMsgVm::run()
             AnmManager::interrupt_tree_and_run(player_face, instr()->args.i[0] + MSG_ANM_FACE_0);
             break;
         case MSG_BOSS_FACE:
-            AnmManager::interrupt_tree_and_run(enemy_faces[instr()->args.i[1]], instr()->args.i[0] + MSG_ANM_FACE_0);
+            AnmManager::interrupt_tree_and_run_out_of_line(enemy_faces[instr()->args.i[1]], instr()->args.i[0] + MSG_ANM_FACE_0);
             break;
         // Waits for the given time or a key (shot or enter). Holding shot or
         // skip in a skippable script ends the wait too.
