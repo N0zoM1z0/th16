@@ -167,7 +167,7 @@ address,name,module,source_file,notes
 0x0040D400,CameraSky::CameraSky,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D460,AnmLoaded::copy_vm_and_run,AnmManager,src/AnmManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D490,ZunTimer::operator--,ZunTimer,src/ZunTimer.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x0040D510,Camera::Camera,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0040D510,??0Camera@@QAE@XZ,Stage,src/Stage.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D520,BombInf::begin,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D530,BombInf::on_tick,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0040D540,BombInf::on_draw,Bomb,src/Bomb.cpp,Reference candidate; local comparison is separate from Factory acceptance.

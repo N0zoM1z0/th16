@@ -104,8 +104,10 @@ struct Camera
     CameraSky sky;
 
     // 0x40d510. Empty; g_Supervisor's static initializer calls it for each
-    // camera.
-    Camera();
+    // camera (the out-of-line copy is emitted with Stage.cpp).
+    Camera()
+    {
+    }
 };
 
 // 0x43c780. Recomputes a camera's matrices for a flat view of its viewport.

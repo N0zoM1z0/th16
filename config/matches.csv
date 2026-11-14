@@ -142,7 +142,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040D370,CameraSky::operator+,reference-0040d370,local-strict-pass,137,137,137,.analysis/reference-audit.json
 0x0040D400,CameraSky::CameraSky,reference-0040d400,local-strict-pass,88,88,88,.analysis/reference-audit.json
 0x0040D460,AnmLoaded::copy_vm_and_run,reference-0040d460,local-strict-pass,48,48,48,.analysis/reference-audit.json
-0x0040D510,Camera::Camera,reference-0040d510,local-strict-pass,3,3,3,.analysis/reference-audit.json
+0x0040D510,??0Camera@@QAE@XZ,reference-0040d510,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0040D520,BombInf::begin,reference-0040d520,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0040D530,BombInf::on_tick,reference-0040d530,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x0040D540,BombInf::on_draw,reference-0040d540,local-strict-pass,3,3,3,.analysis/reference-audit.json

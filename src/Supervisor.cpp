@@ -78,11 +78,6 @@ Config::Config()
     window_y = CW_USEDEFAULT;
 }
 
-// FUNCTION: TH16 0x40d510
-Camera::Camera()
-{
-}
-
 Supervisor::Supervisor()
 {
     memset(this, 0, sizeof(Supervisor));

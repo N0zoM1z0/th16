@@ -41,6 +41,11 @@ void StageInner::set_sky_interp(i32 end_time, i32 method, CameraSky *goal)
 // SYNTHETIC: TH16 0x409d90
 // Fog::`scalar deleting destructor'
 
+// Camera's empty inline constructor (Camera.h). Its out-of-line copy, which
+// g_Supervisor's initializer calls for each camera, comes from this file.
+// SYNTHETIC: TH16 0x40d510
+// Camera::Camera
+
 // Deletes the VMs and frees the buffers.
 // FUNCTION: TH16 0x409550
 Fog::~Fog()
