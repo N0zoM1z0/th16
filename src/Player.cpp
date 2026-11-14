@@ -1169,14 +1169,16 @@ extern const Int2 g_player_directions[9] = {{0, 0}, {0, -1}, {0, 1}, {-1, 0}, {1
 // copy_vm_and_run as LTCG inlined it here.
 static __forceinline void player_set_script(Player *player, i32 script)
 {
-    player->anm_file->copy_vm(&player->vm, script);
-    player->vm.parent_vm = NULL;
-    player->vm.root_vm = NULL;
-    player->vm.run();
+    AnmVm *vm = &player->vm;
+    player->anm_file->copy_vm(vm, script);
+    vm->parent_vm = NULL;
+    vm->root_vm = NULL;
+    vm->run();
 }
 
-// TODO: the original keeps 1.0f in xmm2; register allocation differs (the
-// frame already realigns with and esp, -8 like the original's).
+// TODO: the original realigns its frame (and esp, -8) and keeps the new
+// x velocity on the stack; ours does neither. The turn scripts already
+// cross-jump like the original's (three copy_vm/run sequences).
 // FUNCTION: TH16 0x441cf0
 i32 Player::move()
 {
@@ -1282,7 +1284,7 @@ i32 Player::move()
     {
         player_set_script(this, PLAYER_SCRIPT_TURN_RIGHT);
     }
-    if (vx == 0 && attempted_velocity.x < 0)
+    else if (vx == 0 && attempted_velocity.x < 0)
     {
         player_set_script(this, PLAYER_SCRIPT_LEFT_TO_IDLE);
     }
