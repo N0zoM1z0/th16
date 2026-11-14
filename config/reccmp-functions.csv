@@ -428,7 +428,7 @@ address,name,module,source_file,notes
 0x004260D0,PosVel::set_ellipse_angle,AnmVmEcl,src/AnmVmEcl.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00426160,AnmLoaded::create_vm_front,AnmVmEcl,src/AnmVmEcl.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00426240,sincosmul_ellipse,Enemy,src/Enemy.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x00426260,ecl_sincosmul,EnemyEcl,src/EnemyEcl.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00426260,enemy_ecl_sincosmul,EnemyEcl,src/EnemyEcl.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00426280,??_GFpsCounter@@QAEPAXI@Z,FpsCounter,src/FpsCounter.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004262F0,FpsCounter::update,FpsCounter,src/FpsCounter.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004263E0,FpsCounter::draw,FpsCounter,src/FpsCounter.cpp,Reference candidate; local comparison is separate from Factory acceptance.

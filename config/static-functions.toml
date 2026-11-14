@@ -201,3 +201,28 @@ map_sha256 = "3e47aed4782e1237c67b2a8b7a335248a7cc23e591ad91f30ee9ab016033c4a1"
 targets_address = 0x473a4c
 targets_count = 67
 targets_sha256 = "354facb45d9a7e6f26c5ba128273b03b6cd6ee3e39162ce4dfd19bb700b7c81b"
+
+[functions.enemy_ecl]
+profile = "x87-sincos-scale-v1"
+source = "src/EnemyEcl.cpp"
+symbol = "?enemy_ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z"
+target = 0x426260
+size = 32
+sha256 = "a50437b23b41970d8419b08c34293566d683282156f7ff73b7e73198b15bd19a"
+witness_parent = 0x41dcb0
+witness = 0x420b66
+parent_sha256 = "a54c0aa89cb80d8ec2e4d19986ce52dee63b69169a8c8888c33f7d0f90b0205c"
+
+[functions.enemy_ecl.witness_dispatch]
+profile = "bounded-byte-remap-v1"
+guard = 0x41dd35
+branch = 0x41dd3a
+remap = 0x41dd40
+interleaved = [0x41dd47]
+dispatch = 0x41dd51
+map_address = 0x422d70
+map_count = 702
+map_sha256 = "ac409d9df5b5fdbba150bb951f748cfe790cdbac91416aa534c44b757e0b3853"
+targets_address = 0x422ab8
+targets_count = 174
+targets_sha256 = "43d16f2f0489bda81ce1caddd117fc12a786e201b6cf17037e433b86362962c6"

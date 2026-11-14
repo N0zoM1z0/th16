@@ -31,22 +31,37 @@ def require(condition, message):
 
 def witness_dispatch(context, spec, by):
     """Review one bounded byte-remap edge for original witness paths only."""
-    require(set(spec) == {'profile','guard','branch','remap','dispatch','map_address','map_count',
-                         'map_sha256','targets_address','targets_count','targets_sha256'},
-            'unsupported private witness dispatch fields')
+    fields = {'profile','guard','branch','remap','dispatch','map_address','map_count',
+              'map_sha256','targets_address','targets_count','targets_sha256'}
+    require(set(spec) in (fields, fields|{'interleaved'}), 'unsupported private witness dispatch fields')
     require(spec['profile'] == 'bounded-byte-remap-v1', 'unreviewed private witness dispatch profile')
     sites = [spec[k] for k in ('guard','branch','remap','dispatch')]
     require(all(type(a) is int and a in by for a in sites), 'witness dispatch is not at instruction starts')
     guard, branch, remap, jump = [by[a] for a in sites]
+    # The scheduler may place frame-constant stores between the remap and the
+    # indirect jump. Each must be an explicit, adjacent `mov [ebp-N], imm32`:
+    # it writes neither a register nor control flow.
+    interleaved = spec.get('interleaved', [])
+    require(type(interleaved) is list and len(interleaved) <= 2
+            and all(type(a) is int and a in by for a in interleaved),
+            'witness dispatch interleaving is not at instruction starts')
+    for a in interleaved:
+        i = by[a]
+        require(i.mnemonic == 'mov' and len(i.operands) == 2
+                and i.operands[0].type == capstone.x86.X86_OP_MEM and i.operands[0].size == 4
+                and i.operands[0].mem.base == capstone.x86.X86_REG_EBP and not i.operands[0].mem.index
+                and i.operands[0].mem.disp < 0 and i.operands[1].type == capstone.x86.X86_OP_IMM,
+                'witness dispatch interleaving is not a frame-constant store')
     require(guard.mnemonic == 'cmp' and len(guard.operands) == 2
             and guard.operands[0].type == capstone.x86.X86_OP_REG and guard.operands[0].size == 4
             and guard.operands[1].type == capstone.x86.X86_OP_IMM, 'witness dispatch lacks an index bound')
     register = guard.operands[0].reg
-    require(type(spec['map_count']) is int and 0 < spec['map_count'] <= 256
+    require(type(spec['map_count']) is int and 0 < spec['map_count'] <= 4096
             and guard.operands[1].imm == spec['map_count']-1, 'witness dispatch map extent differs from bound')
     require(branch.mnemonic == 'ja' and branch.operands[0].type == capstone.x86.X86_OP_IMM
             and branch.operands[0].imm in by, 'witness dispatch requires an owned unsigned default')
-    require(all(a.address+a.size == b.address for a,b in zip((guard,branch,remap),(branch,remap,jump))),
+    chain = [guard, branch, remap] + [by[a] for a in interleaved] + [jump]
+    require(all(a.address+a.size == b.address for a,b in zip(chain,chain[1:])),
             'witness dispatch guard/remap sequence is not adjacent')
     require(remap.mnemonic == 'movzx' and remap.operands[0].type == capstone.x86.X86_OP_REG
             and remap.operands[0].reg == register and remap.operands[0].size == 4

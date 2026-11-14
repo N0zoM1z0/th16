@@ -95,7 +95,7 @@ void *g_ecl_unknown_634_funcs[1];
 // This file's copy of sincosmul (ZunAsm.h; TH16 keeps one per object
 // file).
 // FUNCTION: TH16 0x426260
-static void __fastcall ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
+static void __fastcall enemy_ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
 {
     ZUN_ASM_SINCOSMUL(dst, angle, radius);
 }
@@ -1515,7 +1515,7 @@ int EnemyData::ecl_run_over_300()
         i32 slot = get_int_arg(0);
         f32 angle = get_float_arg(1);
         Float3 offset;
-        ecl_sincosmul(&offset, angle, get_float_arg(2));
+        enemy_ecl_sincosmul(&offset, angle, get_float_arg(2));
         bullet_mgr_offsets[slot].xy.x = offset.x;
         bullet_mgr_offsets[slot].xy.y = offset.y;
         break;
