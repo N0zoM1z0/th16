@@ -86,6 +86,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004064E0,AnmVm::alloc_extra_data,reference-004064e0,local-strict-pass,35,35,35,.analysis/reference-audit.json
 0x00406510,anm_jagged_line_blue_init,reference-00406510,local-strict-pass,370,370,370,.analysis/reference-audit.json
 0x00406690,anm_jagged_line_on_tick,reference-00406690,local-strict-pass,455,455,455,.analysis/reference-audit.json
+0x00406860,anm_jagged_line_on_draw,reference-00406860,local-strict-pass,173,173,173,.analysis/reference-audit.json
 0x00406910,anm_jagged_line_on_destroy,reference-00406910,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00406920,anm_jagged_line_on_switch,reference-00406920,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00406930,anm_jagged_line_gray_init,reference-00406930,local-strict-pass,309,309,309,.analysis/reference-audit.json
@@ -399,6 +400,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004263E0,FpsCounter::draw,reference-004263e0,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x00426490,FpsCounter::on_draw_callback,reference-00426490,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x004264A0,GuiMsgVm::~GuiMsgVm,reference-004264a0,local-strict-pass,729,729,729,.analysis/reference-audit.json
+0x00426780,Gui::show_lights_out,reference-00426780,local-strict-pass,191,191,191,.analysis/reference-audit.json
 0x00426840,Spellcard::decode_time_code,reference-00426840,local-strict-pass,127,127,127,.analysis/reference-audit.json
 0x004268C0,Gui::Gui,reference-004268c0,local-strict-pass,569,569,569,.analysis/reference-audit.json
 0x00426B00,Gui::initialize,reference-00426b00,local-strict-pass,258,258,258,.analysis/reference-audit.json
@@ -413,6 +415,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00429B10,Gui::on_draw_2_callback,reference-00429b10,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x00429B20,GuiMsgVm::GuiMsgVm,reference-00429b20,local-strict-pass,1223,1223,1223,.analysis/reference-audit.json
 0x00429FF0,Gui::start_dialogue,reference-00429ff0,local-strict-pass,470,470,470,.analysis/reference-audit.json
+0x0042B480,GuiMsgVm::update_callout,reference-0042b480,local-strict-pass,356,356,356,.analysis/reference-audit.json
 0x0042B5F0,Gui::textbox_on_draw,reference-0042b5f0,local-strict-pass,21,21,21,.analysis/reference-audit.json
 0x0042B610,GuiMsgVm::hide,reference-0042b610,local-strict-pass,514,514,514,.analysis/reference-audit.json
 0x0042B820,GuiMsgVm::show,reference-0042b820,local-strict-pass,514,514,514,.analysis/reference-audit.json

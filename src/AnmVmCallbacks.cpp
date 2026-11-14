@@ -388,6 +388,7 @@ int __fastcall anm_jagged_line_on_tick(AnmVm *vm)
 // FUNCTION: TH16 0x406860
 int __fastcall anm_jagged_line_on_draw(AnmVm *vm)
 {
+    DECOMP_DEAD_DOUBLE_3;
     AnmJaggedLineData *data = (AnmJaggedLineData *)vm->extra_data;
     g_AnmManager->setup_render_state_for_vm(vm);
     Float3 pos;

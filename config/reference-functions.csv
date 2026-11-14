@@ -97,7 +97,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004064E0,AnmVm::alloc_extra_data,src/AnmVm.cpp,?alloc_extra_data@AnmVm@@QAEXI@Z,exact,,.analysis/reference-audit.json
 0x00406510,anm_jagged_line_blue_init,src/AnmVmCallbacks.cpp,?anm_jagged_line_blue_init@@YIHPAUAnmVm@@PAUD3DXVECTOR3@@@Z,exact,,.analysis/reference-audit.json
 0x00406690,anm_jagged_line_on_tick,src/AnmVmCallbacks.cpp,?anm_jagged_line_on_tick@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
-0x00406860,anm_jagged_line_on_draw,src/AnmVmCallbacks.cpp,?anm_jagged_line_on_draw@@YIHPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00406860,anm_jagged_line_on_draw,src/AnmVmCallbacks.cpp,?anm_jagged_line_on_draw@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00406910,anm_jagged_line_on_destroy,src/AnmVmCallbacks.cpp,?anm_jagged_line_on_destroy@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00406920,anm_jagged_line_on_switch,src/AnmVmCallbacks.cpp,?anm_jagged_line_on_switch@@YIHPAUAnmVm@@H@Z,exact,,.analysis/reference-audit.json
 0x00406930,anm_jagged_line_gray_init,src/AnmVmCallbacks.cpp,?anm_jagged_line_gray_init@@YIHPAUAnmVm@@PAUD3DXVECTOR3@@@Z,exact,,.analysis/reference-audit.json
@@ -434,7 +434,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004263E0,FpsCounter::draw,src/FpsCounter.cpp,?draw@FpsCounter@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00426490,FpsCounter::on_draw_callback,src/FpsCounter.cpp,?on_draw_callback@FpsCounter@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x004264A0,GuiMsgVm::~GuiMsgVm,src/Gui.cpp,??1GuiMsgVm@@QAE@XZ,exact,,.analysis/reference-audit.json
-0x00426780,Gui::show_lights_out,src/Gui.cpp,?show_lights_out@Gui@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00426780,Gui::show_lights_out,src/Gui.cpp,?show_lights_out@Gui@@SAXXZ,exact,,.analysis/reference-audit.json
 0x00426840,Spellcard::decode_time_code,src/Spellcard.cpp,?decode_time_code@Spellcard@@QAEXPAH0@Z,exact,,.analysis/reference-audit.json
 0x004268C0,Gui::Gui,src/Gui.cpp,??0Gui@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00426B00,Gui::initialize,src/Gui.cpp,?initialize@Gui@@QAEHXZ,exact,,.analysis/reference-audit.json
@@ -453,7 +453,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00429B20,GuiMsgVm::GuiMsgVm,src/Gui.cpp,??0GuiMsgVm@@QAE@PAX@Z,exact,,.analysis/reference-audit.json
 0x00429FF0,Gui::start_dialogue,src/Gui.cpp,?start_dialogue@Gui@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0042A1D0,GuiMsgVm::run,src/Gui.cpp,?run@GuiMsgVm@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x0042B480,GuiMsgVm::update_callout,src/Gui.cpp,?update_callout@GuiMsgVm@@QAEXPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0042B480,GuiMsgVm::update_callout,src/Gui.cpp,?update_callout@GuiMsgVm@@QAEXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0042B5F0,Gui::textbox_on_draw,src/Gui.cpp,?textbox_on_draw@Gui@@SIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0042B610,GuiMsgVm::hide,src/Gui.cpp,?hide@GuiMsgVm@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0042B820,GuiMsgVm::show,src/Gui.cpp,?show@GuiMsgVm@@QAEXXZ,exact,,.analysis/reference-audit.json

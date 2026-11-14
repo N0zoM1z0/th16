@@ -821,6 +821,7 @@ waiting:
 // FUNCTION: TH16 0x42b480
 void GuiMsgVm::update_callout(AnmVm *vm)
 {
+    DECOMP_DEAD_DOUBLE_2;
     i32 script = textbox_kind + FRONT_ANM_BUBBLE_BODY;
     if (get_vm_or_clear(textbox) == NULL)
     {
@@ -1811,6 +1812,7 @@ void Gui::setup_stage_hud()
 // FUNCTION: TH16 0x426780
 void Gui::show_lights_out()
 {
+    DECOMP_DEAD_DOUBLE_0;
     Gui *gui = g_Gui;
     gui->lights_out_id = gui->front_anm->create_vm_inline(FRONT_ANM_LIGHTS_OUT, NULL, 0.0f, -1);
 }
