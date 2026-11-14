@@ -11,6 +11,8 @@
 DECOMP_NOINLINE int __CRTDECL _vsnprintf_l(char *buffer, size_t count, const char *format, _locale_t locale, va_list args);
 // LIBRARY: TH16 0x405530 SYMBOL
 // ___local_stdio_printf_options
+// GLOBAL: TH16 0x4df930 SYMBOL
+// ?_OptionsStorage@?1??__local_stdio_printf_options@@9@4_KA
 // LIBRARY: TH16 0x405540 SYMBOL
 // __vsnprintf_l
 

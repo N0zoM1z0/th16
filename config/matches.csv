@@ -64,6 +64,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004054D0,from_polar,reference-004054d0,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x004054F0,_cosf,reference-004054f0,local-strict-pass,23,23,23,.analysis/reference-audit.json
 0x00405510,_sinf,reference-00405510,local-strict-pass,23,23,23,.analysis/reference-audit.json
+0x00405530,___local_stdio_printf_options,reference-00405530,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x00405540,__vsnprintf_l,reference-00405540,local-strict-pass,51,51,51,.analysis/reference-audit.json
 0x00405580,InputManager::detect_holds_and_repeats,reference-00405580,local-strict-pass,123,123,123,.analysis/reference-audit.json
 0x00405600,zun_log,reference-00405600,local-strict-pass,1,1,1,.analysis/reference-audit.json

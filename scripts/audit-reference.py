@@ -29,6 +29,11 @@ def markers():
             if not match:
                 continue
             kind, address = match.groups()
+            symbol = None
+            if kind == "GLOBAL" and re.search(r"TH16\s+0x[0-9a-fA-F]+\s+SYMBOL\b", line) and index + 1 < len(lines):
+                # Storage declared in an SDK header (a CRT inline function's
+                # local static) is named by its decorated symbol on the next line.
+                symbol = lines[index + 1].strip().lstrip("/").strip()
             following = []
             for next_line in lines[index + 1:index + 12]:
                 if next_line.strip().startswith("//"):
@@ -37,7 +42,7 @@ def markers():
                 if any(x in next_line for x in [";", "{", "="]):
                     break
             result[kind].append(dict(address=int(address, 16), source=path.relative_to(ROOT).as_posix(),
-                                     line=index + 1, declaration=" ".join(following)))
+                                     line=index + 1, declaration=" ".join(following), symbol=symbol))
     return result
 
 
@@ -58,6 +63,10 @@ def bindings(context, functions, annotations):
         add(row["symbol"], row["target"], "reviewed-complete-private-function")
     symbols = {r["symbol"] for r in context.publics}
     for row in annotations["GLOBAL"]:
+        if row["symbol"] is not None:
+            if row["symbol"] in symbols:
+                add(row["symbol"], row["address"], "source-global-symbol-annotation")
+            continue
         match = re.search(r"\b([A-Za-z_]\w*)\s*(?:\[[^\]]*\]\s*)*(?==|;|\()", row["declaration"])
         if not match:
             continue

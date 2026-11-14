@@ -1510,6 +1510,22 @@ linkages = [
   { offset = 11, width = 4, type = "REL32", symbol = "__libm_sse2_sin_precise", target = 4752576, addend = 0 },
 ]
 
+[units.reference-00405530]
+artifact_kind = "linked-pe"
+source = "src/GameErrorContext.cpp"
+output_dir = "build/reference-candidate"
+symbol = "___local_stdio_printf_options"
+object = "GameErrorContext.obj"
+candidate_address = 4216800
+target_address = 4216112
+size = 6
+compare_size = 6
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 1, width = 4, type = "DIR32", symbol = "?_OptionsStorage@?1??__local_stdio_printf_options@@9@4_KA", target = 5110064, addend = 0 },
+]
+
 [units.reference-00405540]
 artifact_kind = "linked-pe"
 source = "src/GameErrorContext.cpp"
