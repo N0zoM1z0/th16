@@ -1483,6 +1483,7 @@ void __fastcall anm_vm_interrupt_2(AnmVm *vm)
 // FUNCTION: TH16 0x42c920
 HARNESS_CALLED AnmId AnmLoaded::create_ui_effect(i32 script, i32 unused, AnmVm **out)
 {
+    decomp_want_aligned_stack();
     ENTER_CS(CS_ANM_MANAGER);
     vm_count++;
     AnmVm *vm = g_AnmManager->allocate_vm();

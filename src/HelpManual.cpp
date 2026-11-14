@@ -338,6 +338,7 @@ i32 __fastcall HelpManual::on_draw_callback(HelpManual *manual)
 // FUNCTION: TH16 0x42efb0
 HARNESS_CALLED AnmId AnmLoaded::create_ui_vm(i32 script, D3DXVECTOR3 *pos, i32 unused)
 {
+    decomp_want_aligned_stack();
     ENTER_CS(CS_ANM_MANAGER);
     vm_count++;
     AnmVm *vm = g_AnmManager->allocate_vm();

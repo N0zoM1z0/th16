@@ -28,6 +28,7 @@ static __forceinline AnmId fog_create_main_vm()
 // FUNCTION: TH16 0x418c70
 HARNESS_CALLED Fog::Fog(i32 unused_0, i32 points_per_strip, i32 unused_2)
 {
+    decomp_want_aligned_stack();
     if (g_Supervisor.arcade_surface_0 == NULL)
     {
         memset(this, 0, sizeof(Fog));

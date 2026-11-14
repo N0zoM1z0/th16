@@ -330,7 +330,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00418AF0,EffectManager::create_effect,src/EffectManager.cpp,?create_effect@EffectManager@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
 0x00418BA0,EffectManager::create_ui_effect,src/EffectManager.cpp,?create_ui_effect@EffectManager@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@PAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00418C60,anm_effect_4_on_draw,src/Fog.cpp,?anm_effect_4_on_draw@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
-0x00418C70,Fog::Fog,src/Fog.cpp,??0Fog@@QAE@HHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00418C70,Fog::Fog,src/Fog.cpp,??0Fog@@QAE@HHH@Z,exact,,.analysis/reference-audit.json
 0x00418DF0,Fog::set_rect,src/Fog.cpp,?set_rect@Fog@@QAEXMMMM@Z,mismatch,,.analysis/reference-audit.json
 0x00418F40,Fog::update_vms,src/Fog.cpp,?update_vms@Fog@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00418FE0,AnmLoaded::create_ui_vm_at_origin,src/EffectManager.cpp,?create_ui_vm_at_origin@AnmLoaded@@QAE?AUAnmId@@HH@Z,exact,,.analysis/reference-audit.json
@@ -477,7 +477,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042C890,anm_vm_interrupt_4_run,src/Gui.cpp,?anm_vm_interrupt_4_run@@YIXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0042C8C0,anm_vm_interrupt_4,src/Gui.cpp,?anm_vm_interrupt_4@@YIXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0042C8F0,anm_vm_interrupt_5,src/Gui.cpp,?anm_vm_interrupt_5@@YIXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
-0x0042C920,AnmLoaded::create_ui_effect,src/Gui.cpp,?create_ui_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
+0x0042C920,AnmLoaded::create_ui_effect,src/Gui.cpp,?create_ui_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0042C9F0,debug_log,src/GuiMisc.cpp,?debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x0042CA00,EnemyManager::reset_for_stage,src/EnemyManager.cpp,?reset_for_stage@EnemyManager@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0042CA80,Player::withdraw_options,src/Player.cpp,?withdraw_options@Player@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -508,7 +508,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0042EAB0,HelpManual::on_tick_body,src/HelpManual.cpp,?on_tick_body@HelpManual@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0042EF90,HelpManual::on_tick_callback,src/HelpManual.cpp,?on_tick_callback@HelpManual@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0042EFA0,HelpManual::on_draw_callback,src/HelpManual.cpp,?on_draw_callback@HelpManual@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
-0x0042EFB0,AnmLoaded::create_ui_vm,src/HelpManual.cpp,?create_ui_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@H@Z,mismatch,,.analysis/reference-audit.json
+0x0042EFB0,AnmLoaded::create_ui_vm,src/HelpManual.cpp,?create_ui_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@H@Z,exact,,.analysis/reference-audit.json
 0x0042F090,BombInf::is_active_before,src/Bomb.cpp,?is_active_before@BombInf@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0042F0B0,ItemManager::ItemManager,src/Item.cpp,??0ItemManager@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x0042F150,??1ItemManagerInner@@QAE@XZ,src/Item.cpp,??1ItemManagerInner@@QAE@XZ,exact,,.analysis/reference-audit.json
