@@ -20,6 +20,14 @@ FpsCounter::~FpsCounter()
     g_FpsCounter = NULL;
 }
 
+void FpsCounter::destroy()
+{
+    if (g_FpsCounter != NULL)
+    {
+        delete g_FpsCounter;
+    }
+}
+
 // Once a second: measures the frame rate (counting skipped frames), counts
 // measurements above 65 fps, and while a game runs (not loading or in a
 // menu) adds the second to the actual and expected frame totals that the

@@ -385,6 +385,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004260D0,PosVel::set_ellipse_angle,reference-004260d0,local-strict-pass,136,136,136,.analysis/reference-audit.json
 0x00426160,AnmLoaded::create_vm_front,reference-00426160,mismatch,224,224,223,.analysis/reference-audit.json
 0x00426240,sincosmul_ellipse,reference-00426240,local-strict-pass,32,32,32,.analysis/reference-audit.json
+0x00426280,??_GFpsCounter@@QAEPAXI@Z,reference-00426280,local-strict-pass,110,110,110,.analysis/reference-audit.json
 0x004262F0,FpsCounter::update,reference-004262f0,local-strict-pass,235,235,235,.analysis/reference-audit.json
 0x004263E0,FpsCounter::draw,reference-004263e0,local-strict-pass,174,174,174,.analysis/reference-audit.json
 0x00426490,FpsCounter::on_draw_callback,reference-00426490,local-strict-pass,5,5,5,.analysis/reference-audit.json

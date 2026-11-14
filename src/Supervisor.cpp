@@ -1022,10 +1022,7 @@ int Supervisor::teardown_everything()
         g_Supervisor.ver_file_data = NULL;
     }
     destroy_game_objects();
-    if (g_FpsCounter != NULL)
-    {
-        delete g_FpsCounter;
-    }
+    FpsCounter::destroy();
     AnmManager *anm = g_AnmManager;
     if (anm->vertex_buffer != NULL)
     {

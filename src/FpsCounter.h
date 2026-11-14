@@ -33,6 +33,10 @@ struct FpsCounter
     HARNESS_CALLED int update();
     int draw();
     static int __fastcall on_draw_callback(FpsCounter *counter);
+    // Deletes the counter if there is one. Inlined into
+    // Supervisor::teardown_everything; the deleting destructor it uses is
+    // emitted with this file's functions.
+    static void destroy();
 };
 
 extern FpsCounter *g_FpsCounter;

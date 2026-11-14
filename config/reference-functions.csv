@@ -429,7 +429,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00426160,AnmLoaded::create_vm_front,src/AnmVmEcl.cpp,?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z,mismatch,,.analysis/reference-audit.json
 0x00426240,sincosmul_ellipse,src/Enemy.cpp,?sincosmul_ellipse@@YIXPAUD3DXVECTOR3@@MMM@Z,exact,,.analysis/reference-audit.json
 0x00426260,ecl_sincosmul,src/EnemyEcl.cpp,?ecl_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,incomplete,symbol lacks one complete same-start PDB contribution,.analysis/reference-audit.json
-0x00426280,??_GFpsCounter@@QAEPAXI@Z,src/FpsCounter.cpp,??_GFpsCounter@@QAEPAXI@Z,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
+0x00426280,??_GFpsCounter@@QAEPAXI@Z,src/FpsCounter.cpp,??_GFpsCounter@@QAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x004262F0,FpsCounter::update,src/FpsCounter.cpp,?update@FpsCounter@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004263E0,FpsCounter::draw,src/FpsCounter.cpp,?draw@FpsCounter@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00426490,FpsCounter::on_draw_callback,src/FpsCounter.cpp,?on_draw_callback@FpsCounter@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
