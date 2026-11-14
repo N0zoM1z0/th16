@@ -301,6 +301,14 @@ static_assert(offsetof(BulletManager, cancel_count) == 0x1403b14, "BulletManager
 // bullet takes is written two ways: through a delta local in Bullet::cancel
 // and in one expression where clear_all inlines it; each matches its copy
 // (half_step_in_place is a constant at both call sites).
+// ZunAngle's constructor as LTCG inlined it into run_ex's VELTIME.
+static __forceinline ZunAngle zun_angle_inline(f32 value)
+{
+    ZunAngle angle;
+    angle.value = wrap_angle(value);
+    return angle;
+}
+
 static __forceinline i32 cancel_bullet(Bullet *bullet, i32 mode, BOOL half_step_in_place)
 {
     bullet->vm0.interrupt(1);
@@ -1067,13 +1075,13 @@ void Bullet::run_ex()
             continue;
         case BULLET_EX_VELTIME:
             // The original copies both angle arms into temporaries as here,
-            // but LTCG inlined ZunAngle(f32) at this site only.
+            // and LTCG inlined ZunAngle(f32) at this site only.
             active_ex_flags |= BULLET_EX_VELTIME;
             ex_state[10].floats[0] = (ex->r - speed) / (f32)ex->a;
             ex_state[10].floats[1] =
                 (ex->s <= -999990.0f
                      ? angle_ref()
-                     : ZunAngle(ex->s >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m : ex->s))
+                     : zun_angle_inline(ex->s >= 999990.0f ? g_Player->angle_to_player(&pos) + ex->m : ex->s))
                     .value;
             ex_state[10].timer.reset_inline();
             ex_state[10].ints[0] = ex->a;
