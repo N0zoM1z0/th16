@@ -96,7 +96,7 @@ enum AnmVmFlagsLo
     ANM_VM_COLOR_MODE_MASK = 3 << 17,
     ANM_VM_COLOR_MODE_1 = 1 << 17,
     ANM_VM_COLOR_MODE_2 = 2 << 17,
-    // AnmVm::run_script returns at once. Nothing in TH16 sets it.
+    // AnmVm::run returns at once. Nothing in TH16 sets it.
     ANM_VM_SCRIPT_DISABLED = 1 << 20,
     // Two bits each of horizontal and vertical anchoring (instruction 421):
     // 0 center, 1 left/top, 2 right/bottom.
@@ -268,7 +268,7 @@ enum AnmRenderMode
 };
 
 // ANM opcodes (names after ExpHP's truth, map/v8.anmm; the ones truth leaves
-// unnamed are named after what AnmVm::run_script does with them).
+// unnamed are named after what AnmVm::run does with them).
 enum AnmOpcode
 {
     // The end of a script: deletes the VM like delete.
@@ -845,8 +845,6 @@ struct AnmVm
     // 0x45f980. Nonzero once the script has ended (anm_masked_effect_on_tick
     // counts on it).
     i32 run();
-    // run without the game speed handling around it; inlined into run.
-    i32 run_script();
     // 0x4632f0. Rebuilds the vertex data that the special render modes
     // (9 to 25: textured circles and arcs, rings, cylinders) keep in
     // extra_data.

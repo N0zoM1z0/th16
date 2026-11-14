@@ -94,6 +94,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00406D80,AnmVm::set_layer,reference-00406d80,local-strict-pass,133,133,133,.analysis/reference-audit.json
 0x00406E10,InterpFloat3::step,reference-00406e10,mismatch,906,906,899,.analysis/reference-audit.json
 0x004071A0,anm_masked_effect_init,reference-004071a0,local-strict-pass,396,396,396,.analysis/reference-audit.json
+0x00407330,anm_masked_effect_on_tick,reference-00407330,local-strict-pass,100,100,100,.analysis/reference-audit.json
 0x004073A0,anm_on_draw_masked,reference-004073a0,local-strict-pass,1348,1348,1348,.analysis/reference-audit.json
 0x004078F0,anm_masked_effect_on_destroy,reference-004078f0,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00407900,anm_masked_effect_on_switch,reference-00407900,mismatch,336,336,291,.analysis/reference-audit.json
@@ -127,15 +128,14 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004099A0,Stage::~Stage,reference-004099a0,local-strict-pass,994,994,994,.analysis/reference-audit.json
 0x00409D90,??_GFog@@QAEPAXI@Z,reference-00409d90,local-strict-pass,25,25,25,.analysis/reference-audit.json
 0x00409DB0,Stage::create,reference-00409db0,local-strict-pass,156,156,156,.analysis/reference-audit.json
+0x00409E50,Stage::on_tick,reference-00409e50,local-strict-pass,319,319,319,.analysis/reference-audit.json
 0x0040A410,Stage::on_draw_06,reference-0040a410,local-strict-pass,907,907,907,.analysis/reference-audit.json
 0x0040A7A0,Stage::on_tick_callback,reference-0040a7a0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040A7B0,Stage::on_draw_03_callback,reference-0040a7b0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0040A7C0,Stage::on_draw_06_callback,reference-0040a7c0,local-strict-pass,8,8,8,.analysis/reference-audit.json
 0x0040AC30,Stage::load_std,reference-0040ac30,local-strict-pass,414,414,414,.analysis/reference-audit.json
 0x0040ADD0,Stage::start_std_vms,reference-0040add0,local-strict-pass,246,246,246,.analysis/reference-audit.json
-0x0040AED0,Stage::update_std_vms,reference-0040aed0,mismatch,154,154,130,.analysis/reference-audit.json
 0x0040AF70,Stage::draw_layer,reference-0040af70,local-strict-pass,883,883,883,.analysis/reference-audit.json
-0x0040B2F0,Stage::interrupt_vms,reference-0040b2f0,mismatch,179,179,139,.analysis/reference-audit.json
 0x0040C040,Stage::jump_to_label,reference-0040c040,local-strict-pass,141,141,141,.analysis/reference-audit.json
 0x0040C0D0,Stage::start_exit,reference-0040c0d0,local-strict-pass,315,315,315,.analysis/reference-audit.json
 0x0040C210,Stage::start_enter,reference-0040c210,local-strict-pass,110,110,110,.analysis/reference-audit.json
@@ -521,6 +521,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00431950,LaserManager::cancel_in_rectangle,reference-00431950,mismatch,142,142,66,.analysis/reference-audit.json
 0x004319E0,LaserManager::cancel_all,reference-004319e0,local-strict-pass,137,137,137,.analysis/reference-audit.json
 0x00431AF0,LaserManager::clear_all,reference-00431af0,local-strict-pass,55,55,55,.analysis/reference-audit.json
+0x00431B30,LaserLineInf::initialize,reference-00431b30,local-strict-pass,1132,1132,1132,.analysis/reference-audit.json
 0x00431FA0,LaserLineInf::on_sprite_set,reference-00431fa0,local-strict-pass,55,55,55,.analysis/reference-audit.json
 0x00432620,LaserLineInf::step_ex_bounce,reference-00432620,local-strict-pass,1534,1534,1534,.analysis/reference-audit.json
 0x00432C20,LaserLineInf::step_ex_angle,reference-00432c20,mismatch,412,412,401,.analysis/reference-audit.json
@@ -529,6 +530,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00433720,LaserLineInf::on_draw,reference-00433720,local-strict-pass,292,292,292,.analysis/reference-audit.json
 0x00433850,LaserLineInf::on_destroy,reference-00433850,local-strict-pass,3,3,3,.analysis/reference-audit.json
 0x00434F70,LaserLineInf::touches_circle,reference-00434f70,local-strict-pass,219,219,219,.analysis/reference-audit.json
+0x00435050,LaserInfiniteInf::initialize,reference-00435050,local-strict-pass,671,671,671,.analysis/reference-audit.json
 0x00435610,LaserInfiniteInf::check_graze_or_kill,reference-00435610,local-strict-pass,400,400,400,.analysis/reference-audit.json
 0x004357A0,LaserInfiniteInf::on_draw,reference-004357a0,local-strict-pass,205,205,205,.analysis/reference-audit.json
 0x00435870,LaserInfiniteInf::on_destroy,reference-00435870,local-strict-pass,3,3,3,.analysis/reference-audit.json
@@ -601,7 +603,6 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043D820,Supervisor::on_draw_38,reference-0043d820,local-strict-pass,74,74,74,.analysis/reference-audit.json
 0x0043D870,Supervisor::on_draw_55,reference-0043d870,local-strict-pass,57,57,57,.analysis/reference-audit.json
 0x0043D8B0,Supervisor::create_fog_vm,reference-0043d8b0,mismatch,186,186,183,.analysis/reference-audit.json
-0x0043D970,Supervisor::setup_special_anms,reference-0043d970,mismatch,693,693,682,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,reference-0043dc30,local-strict-pass,89,89,89,.analysis/reference-audit.json
 0x0043DC90,_tanf,reference-0043dc90,local-strict-pass,23,23,23,.analysis/reference-audit.json
 0x0043DCC0,Supervisor::release_dinput,reference-0043dcc0,local-strict-pass,25,25,25,.analysis/reference-audit.json
@@ -974,6 +975,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046EFA0,AnmManager::get_vm_with_id,reference-0046efa0,local-strict-pass,149,149,149,.analysis/reference-audit.json
 0x0046F040,AnmManager::get_snapshot_vm_with_id,reference-0046f040,local-strict-pass,102,102,102,.analysis/reference-audit.json
 0x0046F0B0,AnmManager::interrupt_tree,reference-0046f0b0,local-strict-pass,113,113,113,.analysis/reference-audit.json
+0x0046F130,AnmManager::interrupt_tree_and_run_out_of_line,reference-0046f130,local-strict-pass,134,134,134,.analysis/reference-audit.json
 0x0046F1C0,AnmManager::delete_vm,reference-0046f1c0,local-strict-pass,87,87,87,.analysis/reference-audit.json
 0x0046F220,AnmManager::mark_tree_for_delete,reference-0046f220,local-strict-pass,71,71,71,.analysis/reference-audit.json
 0x0046F270,AnmManager::disable_vms_from_anm_file,reference-0046f270,mismatch,112,112,105,.analysis/reference-audit.json

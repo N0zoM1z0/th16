@@ -1457,26 +1457,25 @@ void __fastcall anm_vm_interrupt_5(AnmVm *vm)
 }
 
 // The two digit VMs take their spell card look.
+// Interrupts a VM and runs it at once.
+static inline void anm_vm_interrupt_and_run(AnmVm *vm, i32 interrupt)
+{
+    vm->interrupt(interrupt);
+    vm->run();
+}
+
 // FUNCTION: TH16 0x4175d0
 HARNESS_CALLED void Gui::boss_timer_on_spell_start()
 {
-    AnmVm *vm = boss_timer_tens_vm;
-    vm->interrupt(2);
-    vm->run();
-    vm = boss_timer_ones_vm;
-    vm->interrupt(2);
-    vm->run();
+    anm_vm_interrupt_and_run(boss_timer_tens_vm, 2);
+    anm_vm_interrupt_and_run(boss_timer_ones_vm, 2);
 }
 
 // FUNCTION: TH16 0x417650
 HARNESS_CALLED void Gui::boss_timer_on_spell_end()
 {
-    AnmVm *vm = boss_timer_tens_vm;
-    vm->interrupt(3);
-    vm->run();
-    vm = boss_timer_ones_vm;
-    vm->interrupt(3);
-    vm->run();
+    anm_vm_interrupt_and_run(boss_timer_tens_vm, 3);
+    anm_vm_interrupt_and_run(boss_timer_ones_vm, 3);
 }
 
 // FUNCTION: TH16 0x4173c0

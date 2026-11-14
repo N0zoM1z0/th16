@@ -140,6 +140,14 @@ static __forceinline Fog *new_enemy_fog()
     return new Fog(0, 0x11, 0);
 }
 
+// anmPlay's extra steps go through this helper, like the original: a
+// direct AnmVm::run call in a loop would make ecl_run_over_300 realign its
+// frame for run's aligned-stack need.
+static inline void ecl_run_vm(AnmVm *vm)
+{
+    vm->run();
+}
+
 // The laser instructions and angleToPlayer, as forceinline helpers: the
 // original has them inline in ecl_run_over_300.
 
@@ -400,7 +408,7 @@ int EnemyData::ecl_run_over_300()
         AnmVm *vm = id.find_or_clear();
         for (i32 i = 0; i < full->context.current_context->get_int_arg(2); i++)
         {
-            vm->run();
+            ecl_run_vm(vm);
         }
         break;
     }

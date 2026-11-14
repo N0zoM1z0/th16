@@ -474,16 +474,41 @@ static inline void anm_rgb(AnmRgb *c, i32 r, i32 g, i32 b)
 // the on_tick and on_draw callbacks 4 and 6.
 int __fastcall anm_fan_init(AnmVm *vm);
 
-// The interpreter proper: runs the instructions due by the current time,
-// then steps everything that changes on its own. 1 once the VM should be
-// deleted.
-__forceinline i32 AnmVm::run_script()
+
+// Steps the VM by one frame, at the game speed scaled down by the
+// slowdown of the VM (or its root), then runs the instructions due and
+// steps everything that changes on its own. 1 once the VM should be
+// deleted. The interpreter is written inline as one function: its fmod and
+// trigonometry make run want an aligned stack, which its callers' frames
+// in the original show.
+// TODO: same cases and layout; differs in: 106/112 keep the store pointer in ecx (original eax), 121 stores the fmod result before the pointer test so 123 cross-jumps into its tail, 130/131 register use (the lerp multiplies t from memory), the GameThread check's branch sense and case 2 clearing eax itself instead of jumping to the final return 0.
+// FUNCTION: TH16 0x45f980
+i32 AnmVm::run()
 {
+    f32 saved_game_speed = g_game_speed;
+    if (flags_hi & ANM_VM_IGNORE_GAME_SPEED)
+    {
+        g_game_speed = 1.0f;
+    }
+    if (get_slowdown_factor_inline() > 0.0f)
+    {
+        g_game_speed = saved_game_speed - get_slowdown_factor_inline() * saved_game_speed;
+        if (g_game_speed < 0.0f)
+        {
+            g_game_speed = 0.0f;
+        }
+    }
+    if (index_of_on_tick != 0 && g_anm_on_tick_funcs[index_of_on_tick](this) != 0)
+    {
+        g_game_speed = saved_game_speed;
+        return 1;
+    }
     AnmRawInstr *ins;
     i32 result = 0;
     if (instr_offset < 0 || (flags_lo & ANM_VM_SCRIPT_DISABLED))
     {
-        return 0;
+        result = 0;
+        goto finish;
     }
     time_in_script++;
     if (pending_interrupt == 0)
@@ -491,7 +516,8 @@ __forceinline i32 AnmVm::run_script()
         if ((flags_hi & (ANM_VM_FREEZES_WITH_WORLD | ANM_VM_FREEZES_AFTER_FIRST_RUN)) == ANM_VM_FREEZES_WITH_WORLD &&
             g_GameThread != NULL && g_GameThread->flags.flag_1)
         {
-            return 0;
+            result = 0;
+            goto finish;
         }
     }
     else
@@ -1332,7 +1358,7 @@ __forceinline i32 AnmVm::run_script()
         // delete falls through: both end the script.
         case ANM_OP_STATIC:
             instr_offset = -1;
-            return result;
+            goto finish;
         }
         instr_offset += ins->offset_to_next;
     }
@@ -1364,37 +1390,13 @@ done:
     update_special_vertices();
     if (g_anm_on_wait_funcs[index_of_on_wait] != NULL && g_anm_on_wait_funcs[index_of_on_wait](this) != 0)
     {
-        return 1;
+        result = 1;
+        goto finish;
     }
     script_time.tick_split();
-    return 0;
-}
-
-// Steps the VM by one frame, at the game speed scaled down by the
-// slowdown of the VM (or its root). 1 once the VM should be deleted.
-// TODO: same cases and layout; differs in: 106/112 keep the store pointer in ecx (original eax), 121 stores the fmod result before the pointer test so 123 cross-jumps into its tail, 130/131 register use (the lerp multiplies t from memory), the GameThread check's branch sense and case 2 clearing eax itself instead of jumping to the final return 0.
-// FUNCTION: TH16 0x45f980
-i32 AnmVm::run()
-{
-    f32 saved_game_speed = g_game_speed;
-    if (flags_hi & ANM_VM_IGNORE_GAME_SPEED)
-    {
-        g_game_speed = 1.0f;
-    }
-    if (get_slowdown_factor_inline() > 0.0f)
-    {
-        g_game_speed = saved_game_speed - get_slowdown_factor_inline() * saved_game_speed;
-        if (g_game_speed < 0.0f)
-        {
-            g_game_speed = 0.0f;
-        }
-    }
-    if (index_of_on_tick != 0 && g_anm_on_tick_funcs[index_of_on_tick](this) != 0)
-    {
-        g_game_speed = saved_game_speed;
-        return 1;
-    }
-    i32 result = run_script();
+    result = 0;
+    goto finish;
+finish:
     g_game_speed = saved_game_speed;
     return result;
 }

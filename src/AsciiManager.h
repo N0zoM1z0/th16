@@ -39,7 +39,7 @@ enum AsciiAlign
 enum AsciiSprite
 {
     // Shown by a VM whose sprite mapping callback returns a negative sprite
-    // (AnmVm::run_script).
+    // (AnmVm::run).
     ASCII_SPRITE_FALLBACK = 0x102,
     // The popup digits (PopupManager), 0 first.
     ASCII_SPRITE_POPUP_DIGITS = 0x103,
