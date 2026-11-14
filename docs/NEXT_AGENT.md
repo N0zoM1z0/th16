@@ -41,7 +41,7 @@ placeholders restore that weight:
 Each placeholder was kept only when the full audit gained exact functions
 with no losses. They are in `create_effect`, `anm_jagged_line_on_draw`,
 `update_callout`, `show_lights_out`, `show_notice`, `show_stage_clear_bonus`,
-`HelpManual::on_tick_body`, `create_ui_effect`, `create_ui_vm` and `Fog::Fog`.
+`HelpManual::on_tick_body`, `create_ui_effect`, `create_ui_vm`, `Fog::Fog` and `InterpAngle::step`.
 `.analysis/claude-tools/placeholder_try.py ADDR SNIPPET...` automates the
 try/keep loop; it keeps the first snippet that gains with no losses.
 Already tried with no gain: `create_vm`, `create_vm_front`, `set_vm_script`

@@ -621,9 +621,11 @@ HARNESS_CALLED Int3 InterpInt3::step()
     return current;
 }
 
+// The alignment placeholder (decomp.h) gives the original's padded frame.
 // FUNCTION: TH16 0x464080
 HARNESS_CALLED ZunAngle InterpAngle::step()
 {
+    decomp_want_aligned_stack();
     if (end_time > 0)
     {
         time.tick();
