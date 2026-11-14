@@ -39,15 +39,16 @@ HARNESS_CALLED i32 EnemyManager::reset_for_stage(i32 unused)
 // enemy. The first loop walks the byte offset of the loaded_anms slots, which
 // gives the original's offset counter compared against the end; an index loop
 // counts down beside a pointer instead.
-// TODO: the original encodes the slot address as [offset + manager] (base and
-// index registers swapped).
+// The manager is read once into a local, which gives the original's
+// [offset + manager] slot address.
 // FUNCTION: TH16 0x4185b0
 void EnemyManager::destroy_all()
 {
+    AnmManager *anm = g_AnmManager;
     for (u32 off = offsetof(AnmManager, loaded_anms[10]); off < offsetof(AnmManager, loaded_anms[16]);
          off += sizeof(AnmLoaded *))
     {
-        g_AnmManager->disable_vms_from_anm_file(*(AnmLoaded **)((u8 *)g_AnmManager + off));
+        anm->disable_vms_from_anm_file(*(AnmLoaded **)((u8 *)anm + off));
     }
     EnemyList *node = active_enemy_list_head;
     while (node != NULL)

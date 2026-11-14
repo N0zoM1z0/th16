@@ -286,7 +286,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00418440,anm_vm_interrupt_3_run,reference-00418440,local-strict-pass,45,45,45,.analysis/reference-audit.json
 0x00418470,anm_vm_interrupt_2_run,reference-00418470,local-strict-pass,45,45,45,.analysis/reference-audit.json
 0x004184A0,ItemManager::destroy_all,reference-004184a0,local-strict-pass,259,259,259,.analysis/reference-audit.json
-0x004185B0,EnemyManager::destroy_all,reference-004185b0,mismatch,147,147,146,.analysis/reference-audit.json
+0x004185B0,EnemyManager::destroy_all,reference-004185b0,local-strict-pass,147,147,147,.analysis/reference-audit.json
 0x00418650,InputState::update,reference-00418650,local-strict-pass,160,160,160,.analysis/reference-audit.json
 0x004186F0,input_pressed_or_repeating,reference-004186f0,local-strict-pass,37,37,37,.analysis/reference-audit.json
 0x00418720,MenuHelper::set_cursor,reference-00418720,local-strict-pass,105,105,105,.analysis/reference-audit.json

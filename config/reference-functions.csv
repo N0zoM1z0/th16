@@ -317,7 +317,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00418440,anm_vm_interrupt_3_run,src/Gui.cpp,?anm_vm_interrupt_3_run@@YIXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00418470,anm_vm_interrupt_2_run,src/Gui.cpp,?anm_vm_interrupt_2_run@@YIXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x004184A0,ItemManager::destroy_all,src/Item.cpp,?destroy_all@ItemManager@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x004185B0,EnemyManager::destroy_all,src/EnemyManager.cpp,?destroy_all@EnemyManager@@QAEXXZ,mismatch,,.analysis/reference-audit.json
+0x004185B0,EnemyManager::destroy_all,src/EnemyManager.cpp,?destroy_all@EnemyManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00418650,InputState::update,src/Input.cpp,?update@InputState@@SAXXZ,exact,,.analysis/reference-audit.json
 0x004186F0,input_pressed_or_repeating,src/InputRepeat.cpp,?input_pressed_or_repeating@@YGHI@Z,exact,,.analysis/reference-audit.json
 0x00418720,MenuHelper::set_cursor,src/MenuHelper.cpp,?set_cursor@MenuHelper@@QAEHH@Z,exact,,.analysis/reference-audit.json
