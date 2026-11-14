@@ -136,6 +136,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0040AC30,Stage::load_std,reference-0040ac30,local-strict-pass,414,414,414,.analysis/reference-audit.json
 0x0040ADD0,Stage::start_std_vms,reference-0040add0,local-strict-pass,246,246,246,.analysis/reference-audit.json
 0x0040AF70,Stage::draw_layer,reference-0040af70,local-strict-pass,883,883,883,.analysis/reference-audit.json
+0x0040B2F0,Stage::interrupt_vms,reference-0040b2f0,local-strict-pass,179,179,179,.analysis/reference-audit.json
 0x0040C040,Stage::jump_to_label,reference-0040c040,local-strict-pass,141,141,141,.analysis/reference-audit.json
 0x0040C0D0,Stage::start_exit,reference-0040c0d0,local-strict-pass,315,315,315,.analysis/reference-audit.json
 0x0040C210,Stage::start_enter,reference-0040c210,local-strict-pass,110,110,110,.analysis/reference-audit.json

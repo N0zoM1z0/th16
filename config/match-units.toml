@@ -3158,6 +3158,25 @@ linkages = [
   { offset = 854, width = 4, type = "DIR32", symbol = "?g_Supervisor@@3USupervisor@@A", target = 4985040, addend = 2576, storage_name = "g_Supervisor", storage_size = 2624 },
 ]
 
+[units.reference-0040b2f0]
+artifact_kind = "linked-pe"
+source = "src/Stage.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?interrupt_vms@Stage@@QAEXH@Z"
+object = "Stage.obj"
+candidate_address = 4213456
+target_address = 4240112
+size = 179
+compare_size = 179
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 61, width = 4, type = "DIR32", symbol = "?g_anm_on_switch_funcs@@3QBQ6IHPAUAnmVm@@H@ZB", target = 4791052, addend = 0 },
+  { offset = 80, width = 4, type = "REL32", symbol = "?run@AnmVm@@QAEHXZ", target = 4585856, addend = 0 },
+  { offset = 128, width = 4, type = "DIR32", symbol = "?g_anm_on_switch_funcs@@3QBQ6IHPAUAnmVm@@H@ZB", target = 4791052, addend = 0 },
+  { offset = 155, width = 4, type = "REL32", symbol = "?run@AnmVm@@QAEHXZ", target = 4585856, addend = 0 },
+]
+
 [units.reference-0040c040]
 artifact_kind = "linked-pe"
 source = "src/Stage.cpp"

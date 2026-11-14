@@ -1038,14 +1038,12 @@ void Stage::interrupt_vms(i32 n)
         AnmVm *vm = vms;
         for (i32 i = 0; i < std->num_quads; i++, vm++)
         {
-            vm->interrupt(n);
-            vm->run();
+            vm->interrupt_and_run(n);
         }
     }
     for (i32 i = 0; i < 8; i++)
     {
-        inner.anm_vms[i].interrupt(n);
-        inner.anm_vms[i].run();
+        inner.anm_vms[i].interrupt_and_run(n);
     }
 }
 

@@ -155,7 +155,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040ADD0,Stage::start_std_vms,src/Stage.cpp,?start_std_vms@Stage@@SAXXZ,exact,,.analysis/reference-audit.json
 0x0040AED0,Stage::update_std_vms,src/Stage.cpp,?update_std_vms@Stage@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0040AF70,Stage::draw_layer,src/Stage.cpp,?draw_layer@Stage@@QAEHH@Z,exact,,.analysis/reference-audit.json
-0x0040B2F0,Stage::interrupt_vms,src/Stage.cpp,?interrupt_vms@Stage@@QAEXH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0040B2F0,Stage::interrupt_vms,src/Stage.cpp,?interrupt_vms@Stage@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0040B3B0,StageInner::run_std,src/Stage.cpp,?run_std@StageInner@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x0040C040,Stage::jump_to_label,src/Stage.cpp,?jump_to_label@Stage@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0040C0D0,Stage::start_exit,src/Stage.cpp,?start_exit@Stage@@QAEXXZ,exact,,.analysis/reference-audit.json
