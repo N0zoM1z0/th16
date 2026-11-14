@@ -608,13 +608,14 @@ i32 __fastcall anm_on_draw_fan(AnmVm *vm)
 // puts it, moved to the VM's position, in current_world_matrix.
 // TODO: ours aligns the frame to 16 for the spilled translation row (movaps); the original keeps an ebp frame with movups.
 // FUNCTION: TH16 0x466f00
-void AnmManager::build_world_matrix(AnmVm *vm)
+i32 AnmManager::build_world_matrix(AnmVm *vm)
 {
     D3DXMATRIX m;
     if (!(vm->flags_lo & ANM_VM_KEEP_WORLD_MATRIX))
     {
-        vm->world_matrix = vm->sprite_matrix;
-        vm->world_matrix._11 *= vm->scale_2.x * vm->scale.x;
+        D3DXMATRIX *world = &vm->world_matrix;
+        *world = vm->sprite_matrix;
+        world->_11 *= vm->scale_2.x * vm->scale.x;
         vm->world_matrix._22 *= vm->scale_2.y * vm->scale.y;
         vm->flags_lo &= ~ANM_VM_SCALE_CHANGED;
         Float3 rotation = *vm->get_total_rotation();
@@ -622,17 +623,17 @@ void AnmManager::build_world_matrix(AnmVm *vm)
         if (rotation.x != 0.0f)
         {
             D3DXMatrixRotationX(&rotation_matrix, rotation.x);
-            D3DXMatrixMultiply(&vm->world_matrix, &vm->world_matrix, &rotation_matrix);
+            D3DXMatrixMultiply(world, world, &rotation_matrix);
         }
         if (rotation.y != 0.0f)
         {
             D3DXMatrixRotationY(&rotation_matrix, rotation.y);
-            D3DXMatrixMultiply(&vm->world_matrix, &vm->world_matrix, &rotation_matrix);
+            D3DXMatrixMultiply(world, world, &rotation_matrix);
         }
         if (rotation.z != 0.0f)
         {
             D3DXMatrixRotationZ(&rotation_matrix, rotation.z);
-            D3DXMatrixMultiply(&vm->world_matrix, &vm->world_matrix, &rotation_matrix);
+            D3DXMatrixMultiply(world, world, &rotation_matrix);
         }
         vm->flags_lo &= ~ANM_VM_ROTATION_CHANGED;
     }
@@ -653,6 +654,7 @@ void AnmManager::build_world_matrix(AnmVm *vm)
         m._43 = parent->entity_pos.z + parent->pos.z + parent->pos_2.z + m._43;
     }
     current_world_matrix = m;
+    return 0;
 }
 
 // FUNCTION: TH16 0x4671b0

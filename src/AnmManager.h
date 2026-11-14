@@ -487,7 +487,8 @@ struct AnmManager
     // 0x466f00. Rebuilds the VM's world matrix (scale, then rotation)
     // unless ANM_VM_KEEP_WORLD_MATRIX, and puts it, moved to the VM's
     // position, in current_world_matrix.
-    void build_world_matrix(AnmVm *vm);
+    // Returns 0.
+    i32 build_world_matrix(AnmVm *vm);
     // 0x465280. Draws the quad in g_sprite_temp_buffer for a VM (flags:
     // AnmSpriteDrawFlags).
     i32 render_sprite_2d(AnmVm *vm, i32 flags);
