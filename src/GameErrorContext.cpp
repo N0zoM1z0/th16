@@ -5,6 +5,15 @@
 #include "CriticalSections.h"
 #include "GameErrorContext.h"
 
+// vsprintf's UCRT helper stays out of line, as in the other files that use
+// it. This file links first among them, so the out-of-line copy (and the
+// options getter it calls) come from here, as in the original.
+DECOMP_NOINLINE int __CRTDECL _vsnprintf_l(char *buffer, size_t count, const char *format, _locale_t locale, va_list args);
+// LIBRARY: TH16 0x405530 SYMBOL
+// ___local_stdio_printf_options
+// LIBRARY: TH16 0x405540 SYMBOL
+// __vsnprintf_l
+
 // GLOBAL: TH16 0x4a30a8
 GameErrorContext g_GameErrorContext;
 // SYNTHETIC: TH16 0x401010

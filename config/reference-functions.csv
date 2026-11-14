@@ -73,8 +73,8 @@ address,name,source_file,symbol,result,reason,evidence
 0x004054D0,from_polar,src/ZunMath.cpp,?from_polar@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
 0x004054F0,_cosf,src/PosVel.cpp,_cosf,exact,,.analysis/reference-audit.json
 0x00405510,_sinf,src/PosVel.cpp,_sinf,exact,,.analysis/reference-audit.json
-0x00405530,___local_stdio_printf_options,src/CrtInline.cpp,___local_stdio_printf_options,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
-0x00405540,__vsnprintf_l,src/CrtInline.cpp,__vsnprintf_l,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
+0x00405530,___local_stdio_printf_options,src/GameErrorContext.cpp,___local_stdio_printf_options,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00405540,__vsnprintf_l,src/GameErrorContext.cpp,__vsnprintf_l,exact,,.analysis/reference-audit.json
 0x00405580,InputManager::detect_holds_and_repeats,src/InputManager.cpp,?detect_holds_and_repeats@InputManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00405600,zun_log,src/Log.cpp,?zun_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x00405610,ZunList<void>::unlink,src/ZunList.cpp,?unlink@?$ZunList@X@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -132,7 +132,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00408FB0,AsciiInf::tick,src/AsciiManager.cpp,?tick@AsciiInf@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00409030,AsciiInf::get_size,src/AsciiManager.cpp,?get_size@AsciiInf@@UAEIXZ,exact,,.analysis/reference-audit.json
 0x00409040,AnmVm::set_sprite_uvs,src/AsciiManager.cpp,?set_sprite_uvs@AnmVm@@QAEXH@Z,exact,,.analysis/reference-audit.json
-0x004090D0,_sprintf,src/CrtInline.cpp,_sprintf,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
+0x004090D0,_sprintf,src/AsciiManager.cpp,_sprintf,exact,,.analysis/reference-audit.json
 0x004090F0,AnmVm::wipe,src/AnmVm.cpp,?wipe@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004093B0,AnmVm::~AnmVm,src/AnmVm.cpp,??1AnmVm@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x004093F0,AnmVm::AnmVm,src/AnmVm.cpp,??0AnmVm@@QAE@XZ,exact,,.analysis/reference-audit.json

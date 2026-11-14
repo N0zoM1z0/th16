@@ -12,6 +12,11 @@
 // leaves the NULL locale's slot filled with junk (push ecx).
 DECOMP_NOINLINE int __CRTDECL _vsnprintf_l(char *buffer, size_t count, const char *format, _locale_t locale, va_list args);
 
+// The out-of-line copy of the UCRT's inline sprintf comes from this file,
+// the first in link order to use it (create_number).
+// LIBRARY: TH16 0x4090d0 SYMBOL
+// _sprintf
+
 // GLOBAL: TH16 0x4a6d98
 AsciiInf *g_AsciiManager;
 

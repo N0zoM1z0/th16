@@ -73,8 +73,8 @@ address,name,module,source_file,notes
 0x004054D0,from_polar,ZunMath,src/ZunMath.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004054F0,_cosf,PosVel,src/PosVel.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405510,_sinf,PosVel,src/PosVel.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x00405530,___local_stdio_printf_options,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x00405540,__vsnprintf_l,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00405530,___local_stdio_printf_options,GameErrorContext,src/GameErrorContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00405540,__vsnprintf_l,GameErrorContext,src/GameErrorContext.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405580,InputManager::detect_holds_and_repeats,InputManager,src/InputManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405600,zun_log,Log,src/Log.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405610,ZunList<void>::unlink,ZunList,src/ZunList.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -132,7 +132,7 @@ address,name,module,source_file,notes
 0x00408FB0,AsciiInf::tick,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00409030,AsciiInf::get_size,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00409040,AnmVm::set_sprite_uvs,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x004090D0,_sprintf,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004090D0,_sprintf,AsciiManager,src/AsciiManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004090F0,AnmVm::wipe,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004093B0,AnmVm::~AnmVm,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004093F0,AnmVm::AnmVm,AnmVm,src/AnmVm.cpp,Reference candidate; local comparison is separate from Factory acceptance.

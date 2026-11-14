@@ -71,8 +71,10 @@ def sources():
     # classes' own functions, so these modules link before the others that
     # delete such objects (COMDATs land in the first referencing object).
     # PosVel.cpp, before Stage.cpp, provides the UCRT inline floorf, cosf and
-    # sinf copies, which the original places among the same early helpers.
-    first = [ROOT / "src" / name for name in ("Thread.cpp", "PosVel.cpp", "Stage.cpp")]
+    # sinf copies, which the original places among the same early helpers;
+    # GameErrorContext.cpp provides _vsnprintf_l and AsciiManager.cpp sprintf
+    # (both ahead of AnmLoader.cpp), matching where the original keeps them.
+    first = [ROOT / "src" / name for name in ("Thread.cpp", "PosVel.cpp", "Stage.cpp", "GameErrorContext.cpp", "AsciiManager.cpp")]
     return [p for p in first if p in paths] + [p for p in paths if p not in first]
 
 

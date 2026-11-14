@@ -64,6 +64,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004054D0,from_polar,reference-004054d0,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x004054F0,_cosf,reference-004054f0,local-strict-pass,23,23,23,.analysis/reference-audit.json
 0x00405510,_sinf,reference-00405510,local-strict-pass,23,23,23,.analysis/reference-audit.json
+0x00405540,__vsnprintf_l,reference-00405540,local-strict-pass,51,51,51,.analysis/reference-audit.json
 0x00405580,InputManager::detect_holds_and_repeats,reference-00405580,local-strict-pass,123,123,123,.analysis/reference-audit.json
 0x00405600,zun_log,reference-00405600,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00405610,ZunList<void>::unlink,reference-00405610,local-strict-pass,41,41,41,.analysis/reference-audit.json
@@ -113,6 +114,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00408EF0,AsciiInf::draw_group_1,reference-00408ef0,local-strict-pass,187,187,187,.analysis/reference-audit.json
 0x00409030,AsciiInf::get_size,reference-00409030,local-strict-pass,6,6,6,.analysis/reference-audit.json
 0x00409040,AnmVm::set_sprite_uvs,reference-00409040,local-strict-pass,131,131,131,.analysis/reference-audit.json
+0x004090D0,_sprintf,reference-004090d0,local-strict-pass,24,24,24,.analysis/reference-audit.json
 0x004090F0,AnmVm::wipe,reference-004090f0,local-strict-pass,704,704,704,.analysis/reference-audit.json
 0x004093B0,AnmVm::~AnmVm,reference-004093b0,local-strict-pass,61,61,61,.analysis/reference-audit.json
 0x004093F0,AnmVm::AnmVm,reference-004093f0,local-strict-pass,149,149,149,.analysis/reference-audit.json
