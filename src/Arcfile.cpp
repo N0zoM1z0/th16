@@ -307,6 +307,9 @@ HARNESS_CALLED ArcfileEntry *Arcfile::parse_directory(u8 *data, i32 count, u32 e
     ArcfileEntry *entries = new ArcfileEntry[count + 1];
     if (entries == NULL)
     {
+        // A no-op on NULL, but it gives the frame the original's second
+        // (destructor terminate) unwind state.
+        delete[] entries;
         return NULL;
     }
     u8 *cursor = data;

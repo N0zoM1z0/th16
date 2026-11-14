@@ -198,6 +198,9 @@ def review_handler(context, record, statics, pdb):
     if record.get("profile") == "gs-allocation-cleanup-v1":
         from eh_gs_allocation import review_gs_allocation
         return review_gs_allocation(context, record, statics, pdb)
+    if record.get("profile") == "array-allocation-cleanup-v1":
+        from eh_array_cleanup import review_array_cleanup
+        return review_array_cleanup(context, record, statics, pdb)
     if record.get("profile") == "bullet-array-constructor-v1":
         from eh_array_constructor import review_array_constructor
         return review_array_constructor(context, record, statics, pdb)

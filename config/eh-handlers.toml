@@ -750,3 +750,20 @@ func_info_size = 44
 func_info_sha256 = "1e2a48659d156e1b7c08b14382b7da241b1169a62dc9cb2cb49ac2923a4f9787"
 eh_flags = 1
 evidence = "docs/knowledge/audio-release-strncmp.md"
+
+[[handlers]]
+profile = "array-allocation-cleanup-v1"
+source = "src/Arcfile.cpp"
+parent_symbol = "?parse_directory@Arcfile@@QAEPAUArcfileEntry@@PAEHI@Z"
+parent_target = 0x004574b0
+parent_size = 362
+parent_sha256 = "321cb65ab858e9fec9f7ef1c89e4e3854a8973934579711809f2a0780468192f"
+target = 0x0048aa0d
+code_target = 0x0048a9e0
+size = 72
+target_sha256 = "98e0f70eb54065bebde225142ad3223985f07078c538cf722805df20303baca7"
+func_info_target = 0x0049b59c
+func_info_size = 52
+func_info_sha256 = "d90e56a4d8da15c0a2017fd7d1cff1e3a780068fd4e1e3ae77c02ce8f03e3293"
+eh_flags = 1
+evidence = "docs/knowledge/terminate-destructor-eh.md"

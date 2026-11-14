@@ -886,7 +886,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00457120,Arcfile::read_file,src/Arcfile.cpp,?read_file@Arcfile@@QAEPAEPBDPAE@Z,exact,,.analysis/reference-audit.json
 0x00457290,Arcfile::find_entry,src/Arcfile.cpp,?find_entry@Arcfile@@QAEPAUArcfileEntry@@PBD@Z,exact,,.analysis/reference-audit.json
 0x004572E0,Arcfile::read_directory,src/Arcfile.cpp,?read_directory@Arcfile@@QAE_NPBD@Z,exact,,.analysis/reference-audit.json
-0x004574B0,Arcfile::parse_directory,src/Arcfile.cpp,?parse_directory@Arcfile@@QAEPAUArcfileEntry@@PAEHI@Z,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x004574B0,Arcfile::parse_directory,src/Arcfile.cpp,?parse_directory@Arcfile@@QAEPAUArcfileEntry@@PAEHI@Z,exact,,.analysis/reference-audit.json
 0x00457620,Arcfile::dup_string,src/Arcfile.cpp,?dup_string@Arcfile@@SGPADPBD@Z,exact,,.analysis/reference-audit.json
 0x00457670,ArcfileEntry::~ArcfileEntry,src/Arcfile.cpp,??1ArcfileEntry@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00457690,ArcfileEntry::ArcfileEntry,src/Arcfile.cpp,??0ArcfileEntry@@QAE@XZ,exact,,.analysis/reference-audit.json

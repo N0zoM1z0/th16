@@ -19384,6 +19384,28 @@ linkages = [
   { offset = 439, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
 ]
 
+[units.reference-004574b0]
+artifact_kind = "linked-pe"
+source = "src/Arcfile.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?parse_directory@Arcfile@@QAEPAUArcfileEntry@@PAEHI@Z"
+object = "Arcfile.obj"
+candidate_address = 4315520
+target_address = 4551856
+size = 362
+compare_size = 362
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?parse_directory@Arcfile@@QAEPAUArcfileEntry@@PAEHI@Z", target = 4762125, addend = 0, eh_handler = true },
+  { offset = 24, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 81, width = 4, type = "REL32", symbol = "??_U@YAPAXI@Z", target = 4673858, addend = 0 },
+  { offset = 107, width = 4, type = "DIR32", symbol = "??1ArcfileEntry@@QAE@XZ", target = 4552304, addend = 0 },
+  { offset = 112, width = 4, type = "DIR32", symbol = "??0ArcfileEntry@@QAE@XZ", target = 4552336, addend = 0 },
+  { offset = 129, width = 4, type = "REL32", symbol = "??_L@YGXPAXIIP6EX0@Z1@Z", target = 4672680, addend = 0 },
+  { offset = 179, width = 4, type = "REL32", symbol = "_malloc", target = 4685735, addend = 0 },
+]
+
 [units.reference-00457620]
 artifact_kind = "linked-pe"
 source = "src/Arcfile.cpp"

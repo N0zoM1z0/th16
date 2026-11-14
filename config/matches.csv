@@ -768,6 +768,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00457120,Arcfile::read_file,reference-00457120,local-strict-pass,367,367,367,.analysis/reference-audit.json
 0x00457290,Arcfile::find_entry,reference-00457290,local-strict-pass,73,73,73,.analysis/reference-audit.json
 0x004572E0,Arcfile::read_directory,reference-004572e0,local-strict-pass,462,462,462,.analysis/reference-audit.json
+0x004574B0,Arcfile::parse_directory,reference-004574b0,local-strict-pass,362,362,362,.analysis/reference-audit.json
 0x00457620,Arcfile::dup_string,reference-00457620,local-strict-pass,68,68,68,.analysis/reference-audit.json
 0x00457670,ArcfileEntry::~ArcfileEntry,reference-00457670,local-strict-pass,26,26,26,.analysis/reference-audit.json
 0x00457690,ArcfileEntry::ArcfileEntry,reference-00457690,local-strict-pass,9,9,9,.analysis/reference-audit.json
