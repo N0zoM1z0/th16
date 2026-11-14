@@ -64,8 +64,8 @@ HARNESS_CALLED Fog::Fog(i32 unused_0, i32 points_per_strip, i32 unused_2)
 
 // Spreads the grid evenly over the rectangle (in game area coordinates),
 // with texture coordinates that sample the screen at each point.
-// TODO: before the loops the original converts strip_points - 1 after the
-// game area origin's y and divides after adding y; ours the other way round.
+// step_y is computed after the start position, as the original schedules it.
+// TODO: ours adds step_y to pos.y through a copy in xmm0, after the stores.
 // FUNCTION: TH16 0x418df0
 HARNESS_CALLED void Fog::set_rect(f32 x, f32 y, f32 width, f32 height)
 {
@@ -74,12 +74,12 @@ HARNESS_CALLED void Fog::set_rect(f32 x, f32 y, f32 width, f32 height)
         return;
     }
     f32 step_x = width / (f32)(strip_count - 1);
-    f32 step_y = height / (f32)(strip_points - 1);
-    D3DXVECTOR3 *point = (D3DXVECTOR3 *)points;
-    FogVertex *vertex = (FogVertex *)vertices;
     D3DXVECTOR3 pos;
     pos.x = (f32)g_game_2d_origin_x + x;
     pos.y = (f32)g_game_2d_origin_y + y;
+    f32 step_y = height / (f32)(strip_points - 1);
+    D3DXVECTOR3 *point = (D3DXVECTOR3 *)points;
+    FogVertex *vertex = (FogVertex *)vertices;
     pos.z = 0.0f;
     for (i32 i = 0; i < strip_count; i++)
     {

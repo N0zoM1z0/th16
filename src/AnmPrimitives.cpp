@@ -270,7 +270,9 @@ HARNESS_CALLED i32 AnmManager::draw_line(f32 x, f32 y, f32 length, f32 angle, D3
 // A filled circle of count segments around (x, y) as a triangle fan, its
 // color fading from the center to the edge, with fog off and the depth
 // test always passing.
-// TODO: the original adds the angle step right after the sincosmul call; ours after the stores, through xmm0.
+// The angle steps in a local copy: stepping the parameter itself adds the
+// step through a copy in xmm0 after the stores.
+// TODO: the original loads the angle right before the loop; ours earlier.
 // FUNCTION: TH16 0x469640
 HARNESS_CALLED i32 AnmManager::draw_circle(f32 x, f32 y, f32 radius, f32 angle, i32 count, D3DCOLOR center_color,
                                            D3DCOLOR edge_color)
@@ -288,16 +290,17 @@ HARNESS_CALLED i32 AnmManager::draw_circle(f32 x, f32 y, f32 radius, f32 angle, 
     vertices->pos.w = 1.0f;
     vertices++;
     f32 step = ZUN_2PI / count;
+    f32 a = angle;
     for (i32 i = 0; i < count + 1; i++)
     {
-        primitive_sincosmul((Float3 *)&vertices->pos, angle, radius);
+        primitive_sincosmul((Float3 *)&vertices->pos, a, radius);
         vertices->pos.x = vertices->pos.x + x;
         vertices->pos.z = 0.0f;
         vertices->pos.w = 1.0f;
         vertices->diffuse = edge_color;
         vertices->pos.y = vertices->pos.y + y;
         vertices++;
-        angle = wrap_angle(angle + step);
+        a = wrap_angle(a + step);
     }
     if (g_Supervisor.zwrite_enabled != 0)
     {
@@ -329,7 +332,7 @@ HARNESS_CALLED i32 AnmManager::draw_circle(f32 x, f32 y, f32 radius, f32 angle, 
 
 // The outline of a circle of count segments around (x, y), as a line
 // strip starting at angle.
-// TODO: ours loads x after the count test, adds the y offset in the other operand order and lacks one nop before a loop head; ebx now matches (supervisor_d3d_device()).
+// TODO: ours adds the y offset in the other operand order.
 // FUNCTION: TH16 0x469a00
 HARNESS_CALLED i32 AnmManager::draw_circle_outline(f32 x, f32 y, f32 radius, f32 angle, i32 count, D3DCOLOR color)
 {
@@ -340,16 +343,17 @@ HARNESS_CALLED i32 AnmManager::draw_circle_outline(f32 x, f32 y, f32 radius, f32
     flush_sprites();
     RenderVertex044 *vertices = primitive_write_cursor;
     f32 step = ZUN_2PI / count;
+    f32 a = angle;
     for (i32 i = 0; i < count + 1; i++)
     {
-        primitive_sincosmul((Float3 *)&vertices->pos, angle, radius);
+        primitive_sincosmul((Float3 *)&vertices->pos, a, radius);
         vertices->pos.x = x + vertices->pos.x;
         vertices->pos.z = 0.0f;
         vertices->pos.w = 1.0f;
         vertices->diffuse = color;
         vertices->pos.y = y + vertices->pos.y;
         vertices++;
-        angle = wrap_angle(angle + step);
+        a = wrap_angle(a + step);
     }
     if (g_AnmManager->last_color_op != ANM_COLOR_OP_DIFFUSE)
     {
@@ -373,7 +377,7 @@ HARNESS_CALLED i32 AnmManager::draw_circle_outline(f32 x, f32 y, f32 radius, f32
 
 // A ring of count segments around (x, y), width wide, as a triangle strip
 // starting at angle.
-// TODO: ours loads radius after the count test, addresses the second vertex through ecx and adds y in the other operand order; ebx now matches (supervisor_d3d_device()).
+// TODO: after the second sincosmul ours addresses the vertex through ecx (its argument), the original through the vertex pointer.
 // FUNCTION: TH16 0x469bd0
 HARNESS_CALLED i32 AnmManager::draw_ring(f32 x, f32 y, f32 radius, f32 width, f32 angle, i32 count, D3DCOLOR color)
 {
@@ -387,22 +391,23 @@ HARNESS_CALLED i32 AnmManager::draw_ring(f32 x, f32 y, f32 radius, f32 width, f3
     f32 inner = radius - half_width;
     f32 outer = half_width + radius;
     f32 step = ZUN_2PI / count;
+    f32 a = angle;
     for (i32 i = 0; i < count + 1; i++)
     {
-        primitive_sincosmul((Float3 *)&vertices[0].pos, angle, inner);
+        primitive_sincosmul((Float3 *)&vertices[0].pos, a, inner);
         vertices[0].pos.x = vertices[0].pos.x + x;
         vertices[0].pos.z = 0.0f;
         vertices[0].pos.w = 1.0f;
         vertices[0].diffuse = color;
         vertices[0].pos.y = vertices[0].pos.y + y;
-        primitive_sincosmul((Float3 *)&vertices[1].pos, angle, outer);
+        primitive_sincosmul((Float3 *)&vertices[1].pos, a, outer);
         vertices[1].pos.x = vertices[1].pos.x + x;
         vertices[1].pos.z = 0.0f;
         vertices[1].pos.w = 1.0f;
         vertices[1].diffuse = color;
         vertices[1].pos.y = vertices[1].pos.y + y;
         vertices += 2;
-        angle = wrap_angle(angle + step);
+        a = wrap_angle(a + step);
     }
     if (g_AnmManager->last_color_op != ANM_COLOR_OP_DIFFUSE)
     {
