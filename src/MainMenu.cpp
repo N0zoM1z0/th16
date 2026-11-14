@@ -285,7 +285,7 @@ i32 TitleInf::do_options()
     case 0:
         menu.num_choices = OPTIONS_ITEM_COUNT;
         menu.set_cursor(0);
-        anm_ids[1] = create_effect_via_pointer(title_anm, 1, -1, NULL);
+        anm_ids[1] = title_anm->create_effect(1, -1, NULL);
         update_options_sprites();
         set_substate(1);
     case 1:
@@ -564,7 +564,7 @@ i32 TitleInf::do_key_config()
     case 0:
         menu.num_choices = KEY_CONFIG_COUNT;
         menu.set_cursor(0);
-        anm_ids[2] = create_effect_via_pointer(title_anm, 2, -1, NULL);
+        anm_ids[2] = title_anm->create_effect(2, -1, NULL);
         set_substate(1);
         key_config[KEY_CONFIG_SHOT] = g_pad_mapping[PAD_SHOT];
         key_config[KEY_CONFIG_BOMB] = g_pad_mapping[PAD_BOMB];
@@ -1104,7 +1104,7 @@ i32 TitleInf::on_tick()
         else if (g_title_return_point == TITLE_RETURN_SPELL_PRACTICE)
         {
             ScreenEffect::create(SCREEN_EFFECT_HOLD, 30, 0, 0, 0, 0x54);
-            anm_ids[0x61] = create_effect_via_pointer(title_anm, 0x61, -1, NULL);
+            anm_ids[0x61] = title_anm->create_effect(0x61, -1, NULL);
             AnmManager::interrupt_tree_and_run(anm_ids[0x61], 3);
             set_state(TITLE_STATE_SPELL_PRACTICE_STAGE_SELECT);
             g_title_return_point = TITLE_RETURN_MAIN;
@@ -1114,7 +1114,7 @@ i32 TitleInf::on_tick()
         else if (g_title_return_point == TITLE_RETURN_PRACTICE)
         {
             ScreenEffect::create(SCREEN_EFFECT_HOLD, 30, 0, 0, 0, 0x54);
-            anm_ids[0x61] = create_effect_via_pointer(title_anm, 0x61, -1, NULL);
+            anm_ids[0x61] = title_anm->create_effect(0x61, -1, NULL);
             AnmManager::interrupt_tree_and_run(anm_ids[0x61], 3);
             set_state(TITLE_STATE_DIFFICULTY_SELECT);
             on_draw_func->flags |= UPDATE_FUNC_ACTIVE;
@@ -1274,20 +1274,20 @@ i32 TitleInf::do_title_screen()
         set_substate(1);
         if (menu_flags & TITLE_FIRST_SHOW)
         {
-            anm_ids[0x61] = create_effect_via_pointer(title_anm, 0x61, -1, NULL);
-            anm_ids[0x65] = create_effect_via_pointer(title_anm, 0x65, -1, NULL);
+            anm_ids[0x61] = title_anm->create_effect(0x61, -1, NULL);
+            anm_ids[0x65] = title_anm->create_effect(0x65, -1, NULL);
             menu_flags &= ~TITLE_FIRST_SHOW;
         }
         else
         {
             if (g_AnmManager->get_vm_with_id(anm_ids[0x61]) == NULL)
             {
-                anm_ids[0x61] = create_effect_via_pointer(title_anm, 0x61, -1, NULL);
+                anm_ids[0x61] = title_anm->create_effect(0x61, -1, NULL);
                 AnmManager::interrupt_tree_and_run(anm_ids[0x61], 2);
             }
             if (g_AnmManager->get_vm_with_id(anm_ids[0x65]) == NULL)
             {
-                anm_ids[0x65] = create_effect_via_pointer(title_anm, 0x65, -1, NULL);
+                anm_ids[0x65] = title_anm->create_effect(0x65, -1, NULL);
                 AnmManager::interrupt_tree_and_run(anm_ids[0x65], 2);
             }
             if (prev_state != TITLE_STATE_OPTIONS)
@@ -1299,10 +1299,10 @@ i32 TitleInf::do_title_screen()
     case 1:
         if (time_in_state.current == 120)
         {
-            anm_ids[0] = create_effect_via_pointer(title_anm, 0, -1, NULL);
+            anm_ids[0] = title_anm->create_effect(0, -1, NULL);
             if (get_vm_or_clear(comment_line_ids[8]) == NULL)
             {
-                comment_line_ids[8] = create_effect_via_pointer(title_v_anm, 0, -1, NULL);
+                comment_line_ids[8] = title_v_anm->create_effect(0, -1, NULL);
             }
             i32 i;
             for (i = 0; i < menu.next_selection; i++)
