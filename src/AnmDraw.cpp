@@ -605,7 +605,7 @@ i32 AnmManager::draw_sprite_fog(AnmVm *vm)
 }
 
 // Selects the VM's texture, flushing the batch first if it changes.
-static inline AnmLoadedSprite *set_texture_of_vm(AnmManager *mgr, AnmVm *vm)
+static __forceinline AnmLoadedSprite *set_texture_of_vm(AnmManager *mgr, AnmVm *vm)
 {
     AnmLoadedSprite *sprite = &g_AnmManager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id];
     if (mgr->last_texture_id != sprite->image_file_num_in_all)
@@ -620,7 +620,7 @@ static inline AnmLoadedSprite *set_texture_of_vm(AnmManager *mgr, AnmVm *vm)
 
 // Sets the texture matrix for the VM's UV scrolling and scale, unless the
 // last one set is still right.
-static inline void set_texture_transform_of_vm(AnmManager *mgr, AnmVm *vm, AnmLoadedSprite *sprite)
+static __forceinline void set_texture_transform_of_vm(AnmManager *mgr, AnmVm *vm, AnmLoadedSprite *sprite)
 {
     if (mgr->last_texture_matrix_sprite != (i32)sprite || vm->uv_scroll_pos.x != 0.0f || vm->uv_scroll_pos.x != 0.0f ||
         vm->uv_scale.x != 1.0f || vm->uv_scale.y != 1.0f)
@@ -635,7 +635,7 @@ static inline void set_texture_transform_of_vm(AnmManager *mgr, AnmVm *vm, AnmLo
     }
 }
 
-static inline void set_color_op_modulate()
+static __forceinline void set_color_op_modulate()
 {
     if (g_AnmManager->last_color_op != ANM_COLOR_OP_MODULATE)
     {
@@ -899,7 +899,13 @@ i32 AnmManager::draw_3d_vertex_strip(AnmVm *vm, RenderVertexXyzDiffuseTex *verti
     world._43 = vm->entity_pos.z + vm->pos.z + vm->pos_2.z;
     g_Supervisor.d3d_device->SetTransform(D3DTS_WORLD, &world);
     setup_render_state_for_vm(vm);
-    AnmLoadedSprite *sprite = set_texture_of_vm(this, vm);
+    // The batch was flushed on entry, so a texture change needs no flush.
+    AnmLoadedSprite *sprite = &g_AnmManager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id];
+    if (last_texture_id != sprite->image_file_num_in_all)
+    {
+        last_texture_id = sprite->image_file_num_in_all;
+        g_Supervisor.d3d_device->SetTexture(0, loaded_anms[last_texture_id >> 8]->d3d[(u8)last_texture_id].texture);
+    }
     set_texture_transform_of_vm(this, vm, sprite);
     if (last_vertex_setup != ANM_VERTEX_SETUP_3D_STRIP)
     {
