@@ -14,9 +14,9 @@ static void __fastcall primitive_sincosmul(Float3 *dst, f32 angle, f32 radius)
 // A width x height rectangle at (x, y) rotated by angle, anchored by
 // anchor_x and anchor_y (0 center, 1 left/top, 2 right/bottom), colored
 // color_1 on the left and color_2 on the right.
-// The left corners are assigned before the right ones (and the bottom
-// before the top): the order moves the corner registers closer to the
-// original's.
+// The left corners are assigned before the right ones, and the top before
+// the bottom except for centered anchoring: the order moves the corner
+// registers closer to the original's.
 // TODO: the float register allocation of the corner coordinates still differs (the original reuses height's stack slot) and sine and cosine trade stack slots.
 // FUNCTION: TH16 0x468c70
 HARNESS_CALLED i32 AnmManager::draw_rect(f32 x, f32 y, f32 width, f32 height, f32 angle, D3DCOLOR color_1,
@@ -56,12 +56,12 @@ HARNESS_CALLED i32 AnmManager::draw_rect(f32 x, f32 y, f32 width, f32 height, f3
         y0 = y1 = height * -0.5f;
         break;
     case ANM_ANCHOR_START:
-        y2 = y3 = height;
         y0 = y1 = 0.0f;
+        y2 = y3 = height;
         break;
     case ANM_ANCHOR_END:
-        y2 = y3 = 0.0f;
         y0 = y1 = -height;
+        y2 = y3 = 0.0f;
         break;
     }
     vertices[0].pos.x = x0 * c - y0 * s + x;
@@ -141,12 +141,12 @@ HARNESS_CALLED i32 AnmManager::draw_rect_outline(f32 x, f32 y, f32 width, f32 he
         y0 = y1 = height * -0.5f;
         break;
     case ANM_ANCHOR_START:
-        y2 = y3 = height;
         y0 = y1 = 0.0f;
+        y2 = y3 = height;
         break;
     case ANM_ANCHOR_END:
-        y2 = y3 = 0.0f;
         y0 = y1 = -height;
+        y2 = y3 = 0.0f;
         break;
     }
     vertices[0].pos.x = x0 * c - y0 * s + x;
