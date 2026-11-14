@@ -8,8 +8,8 @@ its counts and open-owner table are superseded.
 
 | Item | Value |
 | --- | --- |
-| HEAD | latest local `claude-opus-5.5: …` commit (nothing pushed) |
-| Strict audit | **1013 exact / 142 incomplete / 60 mismatch** of 1,215 annotations |
+| HEAD | latest local `claude-opus-5.5-high: …` commit (nothing pushed) |
+| Strict audit | **1024 exact / 133 incomplete / 58 mismatch** of 1,215 annotations |
 | Build | incremental graph matches HEAD; no build or audit is running |
 
 Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
@@ -19,7 +19,7 @@ Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
 ## Constraints
 
 - **Never push**, mirror or publish the repository. Local commits only, with
-  the message prefix `claude-opus-5.5: ` and the attribution line.
+  the message prefix `claude-opus-5.5-high: ` and the attribution line.
 - Do not use REA. Reference labels and percentages carry no authority.
 - Natural C/C++ source, with one approved exception (below). Run only the
   checks a change needs; no cold rebuilds unless a cache problem is proven.
@@ -48,6 +48,27 @@ Already tried with no gain: `create_vm`, `create_vm_front`, `set_vm_script`
 (costs `LaserCurveInf::initialize`), `cancel_in_radius`, `step_logic`,
 `BulletManager::on_tick_body`, `setup_stage_hud`, `sht_on_tick_laser`, and
 `on_tick` of LaserLineInf and LaserInfiniteInf.
+
+## Levers found 2026-11-14 (second session)
+
+- **Direct calls instead of member-pointer workarounds** gained 8 exact
+  (TitleInf states, title/cursor menus, the extend notice). Converting the
+  remaining `create_effect_via_pointer`, `gui_show_notice_func` and other
+  `->*` sites was tried per function; the rest lose.
+- **Helpers hide call weight**: twelve direct `AnmVm::run` calls made
+  `setup_special_anms` realign; a `__forceinline` start helper removed it.
+- **Caller-chain alignment knowledge**: a callee that realigns to 16 for a
+  spilled matrix row stops when it and its intermediate callers are
+  `HARNESS_CALLED` (an /INCLUDE'd function is a root of unknown alignment).
+  This made `build_world_matrix` exact. Applying it to other padded
+  functions and their callers gained nothing (`hctrial.py`).
+- **Return values**: `build_world_matrix` returns 0 in the original
+  (`xor eax, eax` before `ret`).
+- **Vector locals for rotations**: rotating through a `Float3`/`Float2`
+  offset local gives the original's load-then-multiply form
+  (`collision_test_circle_rect`, `sht_on_hit_laser`). A `Float2` local adds
+  alignment weight to callers; use `Float3` where that matters.
+- Trial tools: `perfunc.py`, `edtrial.py`, `hctrial.py`, `tryaudit.sh`.
 
 ## Best next leads
 
