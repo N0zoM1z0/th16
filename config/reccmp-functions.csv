@@ -63,7 +63,7 @@ address,name,module,source_file,notes
 0x00404600,collision_line_rect,Collision,src/Collision.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004049C0,collision_test_rect_rect,Collision,src/Collision.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405240,zun_fabsf,ZunMath,src/ZunMath.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x00405260,_floorf,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00405260,_floorf,PosVel,src/PosVel.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004052A0,zun_atan2f,ZunMath,src/ZunMath.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004052E0,ZunAngle::operator+,ZunAngle,src/ZunAngle.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405340,ZunAngle::ZunAngle,ZunAngle,src/ZunAngle.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -71,8 +71,8 @@ address,name,module,source_file,notes
 0x00405420,ZunAngle::operator+=,ZunAngle,src/ZunAngle.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405480,ZunAngle::operator=,ZunAngle,src/ZunAngle.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004054D0,from_polar,ZunMath,src/ZunMath.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x004054F0,_cosf,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x00405510,_sinf,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x004054F0,_cosf,PosVel,src/PosVel.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00405510,_sinf,PosVel,src/PosVel.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405530,___local_stdio_printf_options,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405540,__vsnprintf_l,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00405580,InputManager::detect_holds_and_repeats,InputManager,src/InputManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.

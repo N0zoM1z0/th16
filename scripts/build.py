@@ -70,7 +70,9 @@ def sources():
     # The original emits the ThreadInf and Fog deleting destructors with their
     # classes' own functions, so these modules link before the others that
     # delete such objects (COMDATs land in the first referencing object).
-    first = [ROOT / "src" / name for name in ("Thread.cpp", "Stage.cpp")]
+    # PosVel.cpp, before Stage.cpp, provides the UCRT inline floorf, cosf and
+    # sinf copies, which the original places among the same early helpers.
+    first = [ROOT / "src" / name for name in ("Thread.cpp", "PosVel.cpp", "Stage.cpp")]
     return [p for p in first if p in paths] + [p for p in paths if p not in first]
 
 

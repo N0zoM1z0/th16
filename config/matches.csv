@@ -54,6 +54,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00403D30,collision_test_circle_rect,reference-00403d30,mismatch,400,400,243,.analysis/reference-audit.json
 0x00404220,collision_line_intersection,reference-00404220,local-strict-pass,982,982,982,.analysis/reference-audit.json
 0x00405240,zun_fabsf,reference-00405240,local-strict-pass,25,25,25,.analysis/reference-audit.json
+0x00405260,_floorf,reference-00405260,local-strict-pass,55,55,55,.analysis/reference-audit.json
 0x004052A0,zun_atan2f,reference-004052a0,local-strict-pass,57,57,57,.analysis/reference-audit.json
 0x004052E0,ZunAngle::operator+,reference-004052e0,local-strict-pass,92,92,92,.analysis/reference-audit.json
 0x00405340,ZunAngle::ZunAngle,reference-00405340,local-strict-pass,77,77,77,.analysis/reference-audit.json
@@ -61,6 +62,8 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00405420,ZunAngle::operator+=,reference-00405420,local-strict-pass,88,88,88,.analysis/reference-audit.json
 0x00405480,ZunAngle::operator=,reference-00405480,local-strict-pass,77,77,77,.analysis/reference-audit.json
 0x004054D0,from_polar,reference-004054d0,local-strict-pass,32,32,32,.analysis/reference-audit.json
+0x004054F0,_cosf,reference-004054f0,local-strict-pass,23,23,23,.analysis/reference-audit.json
+0x00405510,_sinf,reference-00405510,local-strict-pass,23,23,23,.analysis/reference-audit.json
 0x00405580,InputManager::detect_holds_and_repeats,reference-00405580,local-strict-pass,123,123,123,.analysis/reference-audit.json
 0x00405600,zun_log,reference-00405600,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x00405610,ZunList<void>::unlink,reference-00405610,local-strict-pass,41,41,41,.analysis/reference-audit.json

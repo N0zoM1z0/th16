@@ -7,6 +7,18 @@
 // others; in this file the original calls it.
 DECOMP_NOINLINE float __CRTDECL atan2f(float, float);
 
+// The out-of-line copies of the UCRT's inline floorf, cosf and sinf come
+// from this file (zun_floorf, zun_cosf and zun_sinf), the first in link
+// order to use them.
+// LIBRARY: TH16 0x405260 SYMBOL
+// _floorf
+
+// LIBRARY: TH16 0x4054f0 SYMBOL
+// _cosf
+
+// LIBRARY: TH16 0x405510 SYMBOL
+// _sinf
+
 // FUNCTION: TH16 0x402ff0
 void PosVel::update_secondary_fields()
 {
