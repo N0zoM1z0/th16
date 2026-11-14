@@ -32,7 +32,6 @@ inline void AnmLoadedD3D::create_render_target(i32 width, i32 height)
     bytes_per_pixel = g_Supervisor.present_params.BackBufferFormat == D3DFMT_A8R8G8B8 ? 4 : 2;
 }
 
-// TODO: ours swaps esi and edi (the entry and the texture width); create_render_target's call through supervisor_d3d_device() gave it ebx back.
 // FUNCTION: TH16 0x459640
 HARNESS_CALLED void AnmManager::create_d3d_textures_for_loaded_anms()
 {
@@ -45,11 +44,10 @@ HARNESS_CALLED void AnmManager::create_d3d_textures_for_loaded_anms()
         }
         for (i32 j = 0; j < (*anm)->entry_count; j++)
         {
-            AnmLoadedD3D *d3d = &(*anm)->d3d[j];
-            if (*(u8 *)&d3d->flags & ANM_D3D_RENDER_TARGET)
+            if (*(u8 *)&(*anm)->d3d[j].flags & ANM_D3D_RENDER_TARGET)
             {
-                AnmRawEntry *entry = (AnmRawEntry *)d3d->entry;
-                d3d->create_render_target(entry->width, entry->height);
+                AnmRawEntry *entry = (AnmRawEntry *)(*anm)->d3d[j].entry;
+                (*anm)->d3d[j].create_render_target(entry->width, entry->height);
             }
         }
     }

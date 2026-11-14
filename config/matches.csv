@@ -795,7 +795,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00459240,draw_text,reference-00459240,local-strict-pass,868,868,868,.analysis/reference-audit.json
 0x004595B0,window_debug_log,reference-004595b0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x004595C0,AnmManager::release_textures,reference-004595c0,local-strict-pass,126,126,126,.analysis/reference-audit.json
-0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,reference-00459640,mismatch,190,190,181,.analysis/reference-audit.json
+0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,reference-00459640,local-strict-pass,190,190,190,.analysis/reference-audit.json
 0x00459700,AnmManager::take_screenshots,reference-00459700,local-strict-pass,293,293,293,.analysis/reference-audit.json
 0x00459830,_WinMain@16,reference-00459830,mismatch,2919,2919,900,.analysis/reference-audit.json
 0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,reference-0045a3a0,local-strict-pass,162,162,162,.analysis/reference-audit.json

@@ -921,7 +921,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00459240,draw_text,src/TextHelper.cpp,?draw_text@@YGXPAUtagRECT@@HHKKPBDPAUIDirect3DTexture9@@HHH@Z,exact,,.analysis/reference-audit.json
 0x004595B0,window_debug_log,src/GameWindow.cpp,?window_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x004595C0,AnmManager::release_textures,src/AnmTextures.cpp,?release_textures@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,src/AnmTextures.cpp,?create_d3d_textures_for_loaded_anms@AnmManager@@QAEXXZ,mismatch,,.analysis/reference-audit.json
+0x00459640,AnmManager::create_d3d_textures_for_loaded_anms,src/AnmTextures.cpp,?create_d3d_textures_for_loaded_anms@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00459700,AnmManager::take_screenshots,src/AnmTextures.cpp,?take_screenshots@AnmManager@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00459830,_WinMain@16,src/WinMain.cpp,_WinMain@16,mismatch,,.analysis/reference-audit.json
 0x0045A3A0,??_GUpdateFuncRegistry@@QAEPAXI@Z,src/WinMain.cpp,??_GUpdateFuncRegistry@@QAEPAXI@Z,exact,,.analysis/reference-audit.json
