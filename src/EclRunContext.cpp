@@ -1114,8 +1114,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 f32 y1 = get_float_arg(2);
                 f32 x2 = get_float_arg(3);
                 f32 y2 = get_float_arg(4);
-                f32 angle = atan2f(y2 - y1, x2 - x1);
-                *get_float_arg_ptr(0) = angle;
+                *get_float_arg_ptr(0) = atan2f(y2 - y1, x2 - x1);
                 break;
             }
             // Signed difference of two angles, wrapped once.
@@ -1123,18 +1122,14 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             {
                 f32 a = get_float_arg(1);
                 f32 b = get_float_arg(2);
-                f32 diff;
-                if (b - a > ZUN_PI)
+                f32 diff = b - a;
+                if (diff > ZUN_PI)
                 {
                     diff = b - (a + ZUN_2PI);
                 }
                 else if (a - b > ZUN_PI)
                 {
                     diff = b - (a - ZUN_2PI);
-                }
-                else
-                {
-                    diff = b - a;
                 }
                 *get_float_arg_ptr(0) = diff;
                 break;
