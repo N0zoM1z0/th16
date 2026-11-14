@@ -607,9 +607,8 @@ i32 __fastcall sht_on_tick_laser(PlayerBullet *bullet)
 // Marisa's laser hitting an enemy: cut it short at the enemy (pos, and
 // size for rectangles, else radius) and spray sparks along it.
 // The damage source is looked up in each branch, as the original does.
-// TODO: the rotation products take c and s as their destinations where the
-// original multiplies into dx and dy (which also makes it convert ry with
-// cvtps2pd), and enemy_pos is reloaded later.
+// TODO: the original keeps size in ecx and reloads enemy_pos into edx after
+// interrupt_tree; the distance subtractions are scheduled differently.
 // FUNCTION: TH16 0x446870
 i32 __fastcall sht_on_hit_laser(PlayerBullet *bullet, i32 enemy_pos, i32 enemy_size, f32 rotation, f32 radius)
 {
@@ -625,13 +624,14 @@ i32 __fastcall sht_on_hit_laser(PlayerBullet *bullet, i32 enemy_pos, i32 enemy_s
     {
         PlayerDamageSource *source = bullet->damage_source();
         f32 reach = source->height * 0.5f + radius;
-        f32 dx = pos->x - bullet->pos.pos.x;
-        f32 dy = pos->y - bullet->pos.pos.y;
+        Float2 d;
+        d.x = pos->x - bullet->pos.pos.x;
+        d.y = pos->y - bullet->pos.pos.y;
         f32 angle = -bullet->pos.angle.value;
         f32 s = zun_sinf(angle);
         f32 c = zun_cosf(angle);
-        f32 rx = dx * c - dy * s;
-        f32 ry = dy * c + dx * s;
+        f32 rx = d.x * c - d.y * s;
+        f32 ry = d.y * c + d.x * s;
         f32 length;
         if ((f32)fabs(ry) > reach || -reach > rx || (0.0f > rx && rx * rx + ry * ry > reach * reach))
         {

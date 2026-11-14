@@ -5,12 +5,14 @@
 
 // Whether a circle touches a w x h rectangle centered on (rect_x, rect_y)
 // and rotated by angle: the edges first, then the corners.
+// The offset is a Float3 local: a Float2 makes the bomb cancel callers realign.
+// TODO: the fabs mask and 0.5f trade xmm4 and xmm5 with the original.
 // FUNCTION: TH16 0x403d30
 HARNESS_CALLED i32 __stdcall collision_test_circle_rect(f32 rect_x, f32 rect_y, f32 w, f32 h, f32 angle, f32 circle_x,
                                                         f32 circle_y, f32 radius)
 {
     // Move the circle into the rectangle's frame.
-    Float2 offset;
+    Float3 offset;
     offset.x = circle_x - rect_x;
     offset.y = circle_y - rect_y;
     angle = -angle;
