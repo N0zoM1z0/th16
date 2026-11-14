@@ -685,7 +685,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043D970,Supervisor::setup_special_anms,src/Supervisor.cpp,?setup_special_anms@Supervisor@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,src/Supervisor.cpp,?release_surfaces@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043DC90,_tanf,src/Supervisor.cpp,_tanf,exact,,.analysis/reference-audit.json
-0x0043DCB0,___local_stdio_scanf_options,src/CrtInline.cpp,___local_stdio_scanf_options,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x0043DCB0,___local_stdio_scanf_options,src/CrtInline.cpp,___local_stdio_scanf_options,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
 0x0043DCC0,Supervisor::release_dinput,src/Supervisor.cpp,?release_dinput@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043DCE0,supervisor_debug_log,src/Supervisor.cpp,?supervisor_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x0043DCF0,SoundManager::tick_bgm_fade,src/SoundManager.cpp,?tick_bgm_fade@SoundManager@@SAXXZ,exact,,.analysis/reference-audit.json

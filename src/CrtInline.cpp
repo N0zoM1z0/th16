@@ -5,3 +5,5 @@
 
 // LIBRARY: TH16 0x43dcb0 SYMBOL
 // ___local_stdio_scanf_options
+// GLOBAL: TH16 0x4df938 SYMBOL
+// ?_OptionsStorage@?1??__local_stdio_scanf_options@@9@4_KA
