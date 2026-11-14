@@ -445,7 +445,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00427970,Gui::release_msg,src/Gui.cpp,?release_msg@Gui@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00427A20,Gui::~Gui,src/Gui.cpp,??1Gui@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00427CA0,Gui::create,src/Gui.cpp,?create@Gui@@SAPAU1@XZ,exact,,.analysis/reference-audit.json
-0x00427CF0,Gui::on_tick_body,src/Gui.cpp,?on_tick_body@Gui@@QAEHXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
+0x00427CF0,Gui::on_tick_body,src/Gui.cpp,?on_tick_body@Gui@@QAEHXZ,incomplete,2 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00428E70,Gui::on_draw_2_body,src/Gui.cpp,?on_draw_2_body@Gui@@QAEHXZ,incomplete,3 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00429AF0,Gui::on_tick_callback,src/Gui.cpp,?on_tick_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00429B00,Gui::on_draw_1_callback,src/Gui.cpp,?on_draw_1_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json

@@ -751,6 +751,10 @@ def linked_code_fields(
         operand = instruction.operands[0]
         if operand.type != X86_OP_IMM or not instruction.imm_size:
             continue
+        # A far transfer's selector:offset is never a link-resolved field;
+        # one only appears when jump-table data decodes as code.
+        if instruction.mnemonic in {"ljmp", "lcall"}:
+            continue
         destination = int(operand.imm) & 0xFFFFFFFF
         if address <= destination < address + size:
             continue

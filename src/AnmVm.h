@@ -912,7 +912,7 @@ struct AnmVm
 
     // The two above with their first level inlined, as LTCG did in some
     // callers.
-    void show_tree_inline()
+    __forceinline void show_tree_inline()
     {
         flags_lo |= ANM_VM_SHOWN;
         for (ZunList<AnmVm> *node = list_of_children.next; node != NULL; node = node->next)
