@@ -606,20 +606,25 @@ i32 __fastcall anm_on_draw_fan(AnmVm *vm)
 
 // Rebuilds the VM's world matrix (scale, then rotation) when needed and
 // puts it, moved to the VM's position, in current_world_matrix.
-// TODO: ours aligns the frame to 16 for the spilled translation row (movaps); the original keeps an ebp frame with movups.
+// HARNESS_CALLED, like its callers draw_mode_5 and draw_sprite_fog: as
+// /INCLUDE roots of unknown alignment they made it realign to 16 for the
+// spilled translation row. The locals are declared at the top so that m does
+// not share the rotation matrix's slot. _11 and the multiplies go through a
+// pointer, _22 through m[1][1]: that keeps the flag clear after both stores.
 // FUNCTION: TH16 0x466f00
-i32 AnmManager::build_world_matrix(AnmVm *vm)
+HARNESS_CALLED i32 AnmManager::build_world_matrix(AnmVm *vm)
 {
+    D3DXMATRIX rotation_matrix;
+    Float3 rotation;
     D3DXMATRIX m;
     if (!(vm->flags_lo & ANM_VM_KEEP_WORLD_MATRIX))
     {
         D3DXMATRIX *world = &vm->world_matrix;
         *world = vm->sprite_matrix;
         world->_11 *= vm->scale_2.x * vm->scale.x;
-        vm->world_matrix._22 *= vm->scale_2.y * vm->scale.y;
+        vm->world_matrix.m[1][1] *= vm->scale_2.y * vm->scale.y;
         vm->flags_lo &= ~ANM_VM_SCALE_CHANGED;
-        Float3 rotation = *vm->get_total_rotation();
-        D3DXMATRIX rotation_matrix;
+        rotation = *vm->get_total_rotation();
         if (rotation.x != 0.0f)
         {
             D3DXMatrixRotationX(&rotation_matrix, rotation.x);
@@ -658,7 +663,7 @@ i32 AnmManager::build_world_matrix(AnmVm *vm)
 }
 
 // FUNCTION: TH16 0x4671b0
-i32 AnmManager::draw_mode_5(AnmVm *vm)
+HARNESS_CALLED i32 AnmManager::draw_mode_5(AnmVm *vm)
 {
     build_world_matrix(vm);
     i32 result = render_sprite_2d(vm, 0);

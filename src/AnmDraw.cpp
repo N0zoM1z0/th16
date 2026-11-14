@@ -558,7 +558,7 @@ i32 AnmManager::draw_billboard_fog(AnmVm *vm_param)
 // register and operand order for the distance (the load order inside a
 // loop follows the loop form; see docs/findings.md).
 // FUNCTION: TH16 0x467200
-i32 AnmManager::draw_sprite_fog(AnmVm *vm)
+HARNESS_CALLED i32 AnmManager::draw_sprite_fog(AnmVm *vm)
 {
     build_world_matrix(vm);
     f32 fog_range = g_Supervisor.current_camera->sky.begin_distance - g_Supervisor.current_camera->sky.end_distance;
