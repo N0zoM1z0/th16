@@ -969,7 +969,7 @@ address,size,span_end,state,evidence
 0x0045D410,1,0x0045D410,strict-compared,.analysis/reference-audit.json
 0x0045D420,170,0x0045D4C9,strict-compared,.analysis/reference-audit.json
 0x0045D4D0,57,0x0045D508,strict-compared,.analysis/reference-audit.json
-0x0045D510,708,0x0045D7D3,provisional,.analysis/reference-audit.json
+0x0045D510,708,0x0045D7D3,strict-compared,.analysis/reference-audit.json
 0x0045D7E0,106,0x0045D849,strict-compared,.analysis/reference-audit.json
 0x0045D850,370,0x0045D9C1,strict-compared,.analysis/reference-audit.json
 0x0045D9D0,88,0x0045DA27,strict-compared,.analysis/reference-audit.json

@@ -59,6 +59,79 @@ _SINGLE_SPECS = {
     },
 }
 
+GS_SINGLE_PROFILE = "gs-single-state-terminate-v1"
+# One terminal state in a frame that also stores a GS cookie at EBP-16 after
+# its locals (SUB ESP, imm8) and saves ESI/EDI before pushing the EH cookie.
+# The handler checks both cookies. Every EBP and FS use is listed.
+_GS_SINGLE_SPECS = {
+    ("src/SoundManager.cpp", "?initialize@SoundManager@@QAEHPAUHWND__@@@Z"): {
+        "parent": 0x45d510, "size": 708, "locals": 0x54, "saves": bytes.fromhex("5657"),
+        "restores": bytes.fromhex("5f5e"), "ret": bytes.fromhex("c20400"), "flags": 1,
+        "frame": [(0, "55"), (1, "8bec"), (10, "64a100000000"), (25, "33c5"), (27, "8945f0"),
+                  (33, "8d45f4"), (36, "64a300000000"), (44, "8b4508"), (53, "8945b4"),
+                  (134, "8975a0"), (187, "ff75b4"), (223, "8d55b8"), (240, "0f1145dc"),
+                  (244, "668945e8"), (248, "8d45dc"), (251, "0f1145b8"), (255, "66c745ec0000"),
+                  (261, "0f1145c8"), (272, "c745d800000000"), (279, "c745b824000000"),
+                  (286, "c745bc08800000"), (293, "c745c000800000"), (300, "c745ea10000000"),
+                  (307, "c745dc01000200"), (314, "c745e044ac0000"), (321, "c745e410b10200"),
+                  (328, "8945c8"), (348, "8d55ac"), (354, "8d55a8"), (360, "8d55a4"),
+                  (364, "8d55b0"), (394, "ff75b0"), (407, "ff75ac"), (412, "ff75a8"),
+                  (415, "ff75a4"), (418, "ff75b0"), (439, "8b75b4"), (483, "8945b4"),
+                  (529, "ff45b4"), (568, "8b45b4"), (633, "c745fc00000000"), (679, "8b4df4"),
+                  (682, "64890d00000000"), (692, "8b4df0"), (695, "33cd"), (702, "8be5"),
+                  (704, "5d")],
+    },
+}
+_GS_HANDLER_SIZE = 37
+
+
+def _rel(target, end):
+    return struct.pack("<I", (target - end) & 0xFFFFFFFF)
+
+
+def inspect_gs_handler(image, address, info, check, frame_handler, eh_cookie):
+    """All 37 bytes: the EH and GS cookie checks, EAX FuncInfo and the EH3 tail."""
+    require(-128 <= eh_cookie < 0 and eh_cookie % 4 == 0, "unsupported EH GS handler cookie displacement")
+    expected = (bytes.fromhex("8b5424088d420c8b4a") + struct.pack("<b", eh_cookie) + bytes.fromhex("33c8e8")
+                + _rel(check, address + 17) + bytes.fromhex("8b4afc33c8e8") + _rel(check, address + 27)
+                + b"\xb8" + struct.pack("<I", info) + b"\xe9" + _rel(frame_handler, address + 37))
+    require(image.read_address(address, _GS_HANDLER_SIZE) == expected,
+            "EH GS handler differs from its complete two-cookie/FuncInfo/runtime graph")
+
+
+def inspect_gs_frame(image, parent, handler, check, spec):
+    """Registration, GS cookie and restoration, and every EBP/FS use of the parent."""
+    import capstone
+    prefix = (bytes.fromhex("558bec6aff68") + struct.pack("<I", handler) + bytes.fromhex("64a10000000050")
+              + b"\x83\xec" + struct.pack("<B", spec["locals"]) + b"\xa1"
+              + struct.pack("<I", load_config_cookie(image)) + bytes.fromhex("33c58945f0")
+              + spec["saves"] + bytes.fromhex("508d45f464a300000000"))
+    size, ret = spec["size"], spec["ret"]
+    head = bytes.fromhex("8b4df464890d0000000059") + spec["restores"] + bytes.fromhex("8b4df033cde8")
+    start = size - len(head) - 4 - 3 - len(ret)
+    suffix = head + _rel(check, parent + start + len(head) + 4) + bytes.fromhex("8be55d") + ret
+    require(image.read_address(parent, len(prefix)) == prefix
+            and image.read_address(parent + start, len(suffix)) == suffix,
+            "EH GS terminate parent registration, cookies or restoration differs")
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    decoder.detail = True
+    instructions = list(decoder.disasm(image.read_address(parent, size), parent))
+    require(sum(i.size for i in instructions) == size, "EH GS terminate parent decode is incomplete")
+    frame, returns = [], []
+    for instruction in instructions:
+        reads, writes = instruction.regs_access()
+        if capstone.x86.X86_REG_EBP in reads + writes or any(
+                op.type == capstone.x86.X86_OP_MEM and op.mem.segment == capstone.x86.X86_REG_FS
+                for op in instruction.operands):
+            frame.append((instruction.address - parent, instruction.bytes.hex()))
+        if instruction.group(capstone.CS_GRP_RET):
+            returns.append(instruction.address - parent)
+    require(frame == spec["frame"] and returns == [size - len(ret)],
+            "EH GS terminate parent states or protected frame uses differ")
+    # The EH cookie sits below the locals and saved registers, relative to
+    # the registration node at EBP-12.
+    return len(prefix), -(spec["locals"] + 4 * len(spec["saves"]) + 4)
+
 
 def inspect_frame(image, parent, handler, spec):
     import capstone
@@ -254,31 +327,34 @@ def review_terminate(context, record, statics, pdb):
     require(set(record) == {"profile", "source", "parent_symbol", "parent_target", "parent_size",
                             "parent_sha256", "target", "size", "target_sha256", "func_info_target",
                             "func_info_size", "func_info_sha256", "eh_flags", "evidence"}
-            and record["profile"] in (PROFILE, SINGLE_PROFILE), "unsupported EH terminate declaration")
+            and record["profile"] in (PROFILE, SINGLE_PROFILE, GS_SINGLE_PROFILE),
+            "unsupported EH terminate declaration")
     source, symbol = record["source"], record["parent_symbol"]
-    single = record["profile"] == SINGLE_PROFILE
-    spec = (_SINGLE_SPECS if single else _SPECS).get((source, symbol))
+    gs = record["profile"] == GS_SINGLE_PROFILE
+    single = record["profile"] == SINGLE_PROFILE or gs
+    spec = (_GS_SINGLE_SPECS if gs else _SINGLE_SPECS if single else _SPECS).get((source, symbol))
     states = 1 if single else 2
     data_size, map_size = 36 + states * 8, states * 8
     flags = spec.get("flags", 5) if spec is not None else 0
+    handler_size = _GS_HANDLER_SIZE if gs else 27
     require(spec is not None and (record["parent_target"], record["parent_size"], record["size"],
                                   record["func_info_size"], record["eh_flags"])
-            == (spec["parent"], spec["size"], 27, data_size, flags),
+            == (spec["parent"], spec["size"], handler_size, data_size, flags),
             "EH terminate requires its fixed complete parent and code/data graph")
-    if single:
+    if single and not gs:
         require(spec["locals"] == b"" and spec["cookie_offset"] == -4 - 4 * len(spec["saves"]),
                 "EH single-state cookie must follow the complete no-local saved-register frame")
     owner, parent = complete_game_entry(context, source, symbol, spec["parent"], spec["size"],
                                         record["parent_sha256"])
     target, info = record["target"], record["func_info_target"]
-    extent_hash(context.target, target, 27, record["target_sha256"])
+    extent_hash(context.target, target, handler_size, record["target_sha256"])
     metadata = extent_hash(context.target, info, data_size, record["func_info_sha256"])
-    for address, size, code in ((target, 27, True), (info, data_size, False)):
+    for address, size, code in ((target, handler_size, True), (info, data_size, False)):
         target_owner_section(context, address, size, code)
         require(not any(a < address + size and address <= int(r["span_end"], 0)
                         for a, r in context.boundaries.items()),
                 "EH terminate private owner overlaps an original function")
-    handler = private_owner(context, statics, pdb, "__ehhandler$" + symbol, source, 27, True)
+    handler = private_owner(context, statics, pdb, "__ehhandler$" + symbol, source, handler_size, True)
     descriptor = private_owner(context, statics, pdb, "__unwindtable$" + symbol, source, data_size, False,
                                internal_symbols={"__unwindtable$" + symbol: 0,
                                                  "__ehfuncinfo$" + symbol: map_size})
@@ -295,25 +371,33 @@ def review_terminate(context, record, statics, pdb):
             "EH terminate metadata differs from its complete one/two-state graph")
     for side, image, base, h, fi in ((0, context.target, spec["parent"], target, info),
                                     (1, context.image, parent, handler["address"], data + map_size)):
-        inspect_handler(image, h, fi, runtime["@__security_check_cookie@4"][side],
-                        runtime["___CxxFrameHandler3"][side], cookie_offset=spec["cookie_offset"])
-        prefix = inspect_frame(image, base, h, spec)
-    fields = linked_code_fields(context.image, context.publics, handler["address"], 27)
-    require(fields["decoded_bytes"] == 27 and fields["normalization_complete"]
-            and [(f["offset"], f["width"], f["type"]) for f in fields["fields"]]
-            == [(13, 4, "REL32"), (18, 4, "DIR32"), (23, 4, "REL32")],
+        check, frame_handler = runtime["@__security_check_cookie@4"][side], runtime["___CxxFrameHandler3"][side]
+        if gs:
+            prefix, eh_cookie = inspect_gs_frame(image, base, h, check, spec)
+            inspect_gs_handler(image, h, fi, check, frame_handler, eh_cookie)
+            spec_cookie = eh_cookie
+        else:
+            inspect_handler(image, h, fi, check, frame_handler, cookie_offset=spec["cookie_offset"])
+            prefix = inspect_frame(image, base, h, spec)
+    fields = linked_code_fields(context.image, context.publics, handler["address"], handler_size)
+    expected_fields = ([(13, 4, "REL32"), (23, 4, "REL32"), (28, 4, "DIR32"), (33, 4, "REL32")] if gs
+                       else [(13, 4, "REL32"), (18, 4, "DIR32"), (23, 4, "REL32")])
+    require(fields["decoded_bytes"] == handler_size and fields["normalization_complete"]
+            and [(f["offset"], f["width"], f["type"]) for f in fields["fields"]] == expected_fields,
             "EH terminate handler has unreviewed instruction fields")
-    check_relocations(context.image, handler["address"], 27, [18])
+    check_relocations(context.image, handler["address"], handler_size, [28 if gs else 18])
     check_relocations(context.image, data, data_size, list(range(4, map_size, 8)) + [map_size + 8])
-    check_relocations(context.image, parent, prefix, [6, prefix - 16])
-    suffix = 14 + len(spec.get("restores", bytes.fromhex("5f5e5b"))) + len(spec.get("ret", b"\xc3"))
+    check_relocations(context.image, parent, prefix, [6, 21] if gs else [6, prefix - 16])
+    suffix = (len(spec["restores"]) + 24 + len(spec["ret"]) if gs
+              else 14 + len(spec.get("restores", bytes.fromhex("5f5e5b"))) + len(spec.get("ret", b"\xc3")))
     check_relocations(context.image, parent + spec["size"] - suffix, suffix, [])
     descriptor.update(func_info_offset=map_size, unwind_offset=0,
                       internal_symbols={"__unwindtable$" + symbol: 0, "__ehfuncinfo$" + symbol: map_size})
     proof = dict(source=source, parent_symbol=symbol, parent_target=spec["parent"],
                 parent_size=spec["size"], parent_candidate=parent, target=target,
                 handler=handler, func_info_target=info, descriptor=descriptor,
-                profile=record["profile"], cookie_offset=spec["cookie_offset"], eh_flags=flags,
+                profile=record["profile"], cookie_offset=spec_cookie if gs else spec["cookie_offset"],
+                eh_flags=flags,
                 terminate=terminate, evidence=record["evidence"])
     if single:
         proof["producer_source"] = source

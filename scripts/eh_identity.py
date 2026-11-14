@@ -183,7 +183,8 @@ def review_handler(context, record, statics, pdb):
     if record.get("profile") == "aligned-audio-allocation-v1":
         from eh_aligned_audio import review_aligned_audio
         return review_aligned_audio(context, record, statics, pdb)
-    if record.get("profile") in ("two-state-terminate-v1", "single-state-terminate-v1"):
+    if record.get("profile") in ("two-state-terminate-v1", "single-state-terminate-v1",
+                                 "gs-single-state-terminate-v1"):
         from eh_terminate import review_terminate
         return review_terminate(context, record, statics, pdb)
     if record.get("profile") == "anm-manager-constructor-v1":

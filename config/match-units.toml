@@ -21614,6 +21614,49 @@ linkages = [
   { offset = 48, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22152, storage_name = "g_SoundManager", storage_size = 22168 },
 ]
 
+[units.reference-0045d510]
+artifact_kind = "linked-pe"
+source = "src/SoundManager.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?initialize@SoundManager@@QAEHPAUHWND__@@@Z"
+object = "SoundManager.obj"
+candidate_address = 4632512
+target_address = 4576528
+size = 708
+compare_size = 708
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 6, width = 4, type = "DIR32", symbol = "__ehhandler$?initialize@SoundManager@@QAEHPAUHWND__@@@Z", target = 4762192, addend = 0, eh_handler = true },
+  { offset = 21, width = 4, type = "DIR32", symbol = "___security_cookie", target = 4844108, addend = 0 },
+  { offset = 72, width = 4, type = "DIR32", symbol = "?g_sound_effect_table@@3PAUSoundEffectData@@A", target = 4860464, addend = 0 },
+  { offset = 106, width = 4, type = "DIR32", symbol = "__xmm@ffffffffffffffffffffffffffffffff", target = 4802720, addend = 0 },
+  { offset = 125, width = 4, type = "REL32", symbol = "??2@YAPAXI@Z", target = 4671916, addend = 0 },
+  { offset = 171, width = 4, type = "DIR32", symbol = "__imp__DirectSoundCreate8@12", target = 4763656, addend = 0 },
+  { offset = 210, width = 4, type = "REL32", symbol = "?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z", target = 4653648, addend = 0 },
+  { offset = 398, width = 4, type = "REL32", symbol = "_memset", target = 4684064, addend = 0 },
+  { offset = 474, width = 4, type = "DIR32", symbol = "__imp__SetTimer@16", target = 4764112, addend = 0 },
+  { offset = 487, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 6788, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 492, width = 4, type = "DIR32", symbol = "?g_sound_effect_table@@3PAUSoundEffectData@@A", target = 4860464, addend = 4 },
+  { offset = 498, width = 4, type = "DIR32", symbol = "?g_SoundManager@@3USoundManager@@A", target = 5086736, addend = 22144, storage_name = "g_SoundManager", storage_size = 22168 },
+  { offset = 516, width = 4, type = "DIR32", symbol = "?g_sound_file_names@@3QBQBDB", target = 4790784, addend = 0 },
+  { offset = 521, width = 4, type = "REL32", symbol = "?load@SoundBufferEntry@@QAEHPBD@Z", target = 4581776, addend = 0 },
+  { offset = 540, width = 4, type = "DIR32", symbol = "?g_anchor_corners_x@@3PAUAnmAnchorCorners@@A", target = 4862024, addend = 4, storage_name = "g_anchor_corners_x", storage_size = 48 },
+  { offset = 547, width = 4, type = "DIR32", symbol = "??_C@_0CH@OJAEAIPL@DirectSound?5?$IC?M?$JA?$LD?$IP?m?$IC?I?$IP?$IJ?$IK?z?$IJ?$LL?$IC?$LD?$IC?j?$IC?$NM@", target = 4800796, addend = 0 },
+  { offset = 552, width = 4, type = "DIR32", symbol = "?g_GameErrorContext@@3UGameErrorContext@@A", target = 4862120, addend = 0 },
+  { offset = 557, width = 4, type = "REL32", symbol = "?log@GameErrorContext@@QAAPBDPBDZZ", target = 4205008, addend = 0 },
+  { offset = 577, width = 4, type = "DIR32", symbol = "?g_sound_effect_table@@3PAUSoundEffectData@@A", target = 4860464, addend = 4 },
+  { offset = 584, width = 4, type = "DIR32", symbol = "?g_sound_file_names@@3QBQBDB", target = 4790784, addend = 0 },
+  { offset = 589, width = 4, type = "DIR32", symbol = "??_C@_0DH@FPNCNHFM@error?5?3?5Sound?5?$IDt?$ID?$EA?$IDC?$ID?$IL?$IC?$KK?$JD?G?$IC?$NN?$IN?$JO?$IC?$NP@", target = 4800740, addend = 0 },
+  { offset = 594, width = 4, type = "DIR32", symbol = "?g_GameErrorContext@@3UGameErrorContext@@A", target = 4862120, addend = 0 },
+  { offset = 599, width = 4, type = "REL32", symbol = "?log@GameErrorContext@@QAAPBDPBDZZ", target = 4205008, addend = 0 },
+  { offset = 609, width = 4, type = "DIR32", symbol = "??_C@_0CP@DEHFEOCC@DirectSound?5?$IDI?$IDu?$IDW?$IDF?$IDN?$IDg?$IC?L?$IP?$IJ?$IK?z?$IJ?$LL@", target = 4800692, addend = 0 },
+  { offset = 614, width = 4, type = "DIR32", symbol = "?g_GameErrorContext@@3UGameErrorContext@@A", target = 4862120, addend = 0 },
+  { offset = 619, width = 4, type = "REL32", symbol = "?log@GameErrorContext@@QAAPBDPBDZZ", target = 4205008, addend = 0 },
+  { offset = 662, width = 4, type = "REL32", symbol = "??3@YAXPAXI@Z", target = 4671967, addend = 0 },
+  { offset = 698, width = 4, type = "REL32", symbol = "@__security_check_cookie@4", target = 4671899, addend = 0 },
+]
+
 [units.reference-0045d7e0]
 artifact_kind = "linked-pe"
 source = "src/SoundManager.cpp"

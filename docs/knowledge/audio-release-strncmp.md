@@ -163,3 +163,7 @@ a single PUSH is not an ABI proof.
 and loader payloads, private contributions, return sites and cursor uses in
 `.analysis/audio-initialize-next-proof-inventory.json`. Both remaining
 requirements are explicitly unproven and receive zero primary credit.
+
+`SoundManager::initialize` (0x45d510) has the same single terminal state, in a
+GS-buffer frame: profile `gs-single-state-terminate-v1` (`scripts/eh_terminate.py`)
+fixes both cookie checks in its 37-byte handler and every EBP/FS use of the parent.

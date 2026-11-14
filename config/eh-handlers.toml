@@ -734,3 +734,19 @@ func_info_size = 44
 func_info_sha256 = "497b1024b920ca4d9cc022952f9e3d72edc1dff856e693fbcdf77a5b8c1613c5"
 eh_flags = 1
 evidence = "docs/knowledge/allocation-cleanup-eh.md"
+
+[[handlers]]
+profile = "gs-single-state-terminate-v1"
+source = "src/SoundManager.cpp"
+parent_symbol = "?initialize@SoundManager@@QAEHPAUHWND__@@@Z"
+parent_target = 0x0045d510
+parent_size = 708
+parent_sha256 = "c34b1827cdd70cc1c815cf99b428611c0b0e2b171c965685c59c1137d02cdb68"
+target = 0x0048aa50
+size = 37
+target_sha256 = "211827ecca8d78f13a3b62ad07cc53a8052ab0c232c03eaa89cf0ebd4f3ea856"
+func_info_target = 0x0049b5fc
+func_info_size = 44
+func_info_sha256 = "1e2a48659d156e1b7c08b14382b7da241b1169a62dc9cb2cb49ac2923a4f9787"
+eh_flags = 1
+evidence = "docs/knowledge/audio-release-strncmp.md"
