@@ -693,14 +693,17 @@ HARNESS_CALLED i32 GuiMsgVm::run()
                 {
                     goto waiting;
                 }
+                pause_timer.set_value(0);
+                next_text_line = 0;
+                text_cleared = 0;
             }
             else
             {
                 g_SoundManager.play_sound_centered(SE_PLST00, 0);
+                pause_timer.set_value(0);
+                next_text_line = 0;
+                text_cleared = 0;
             }
-            pause_timer.set_value(0);
-            next_text_line = 0;
-            text_cleared = 0;
             break;
         case MSG_ECL_RESUME:
             ecl_resume_timer = 1;
