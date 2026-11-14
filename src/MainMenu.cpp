@@ -963,7 +963,11 @@ extern const char *const g_demo_replay_names[3] = {"demo/demo1.rpy", "demo/demo2
 // title BGM a few frames after it appears, and runs the current screen.
 // The input test masks the low word (a u16 cast compares the word in
 // memory) and the timer ticks as tick_mixed.
-// TODO: the original computes the demo index as x % -3 would (imul 0x55555555; sub; sar 1); ours uses idiv, or the /3 magic through a local (also with % -3, x / -3 * 3, or % through an inline helper); it also calls the Supervisor members without this and keeps the replay info in ecx.
+// The demo index steps as `++` then `%= 3`, which gives the original's
+// imul 0x55555555 sequence ((x + 1) % 3 compiles to idiv).
+// TODO: the original spills the replay pointer to [ebp-4] (ours keeps it in
+// ebx), calls the Supervisor members without this and keeps the replay info
+// in ecx.
 // FUNCTION: TH16 0x44af80
 i32 TitleInf::on_tick()
 {
@@ -980,7 +984,8 @@ i32 TitleInf::on_tick()
             g_Globals.flags_hi_45c = (g_Globals.flags_hi_45c & ~GLOBALS_HI_2) | GLOBALS_HI_DEMO_PLAY;
             strcpy(g_current_replay_filename, g_demo_replay_names[g_demo_replay_index]);
             ReplayManager *replay = ReplayManager::create_from_file(g_current_replay_filename);
-            g_demo_replay_index = (g_demo_replay_index + 1) % 3;
+            g_demo_replay_index++;
+            g_demo_replay_index %= 3;
             i32 stage;
             for (stage = 0; stage < 8; stage++)
             {
