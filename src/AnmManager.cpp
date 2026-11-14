@@ -50,10 +50,11 @@ DECOMP_NOINLINE D3DXVECTOR3 *AnmVm::world_pos(D3DXVECTOR3 *out)
 }
 
 // Creates a game-owned effect VM, optionally returning its allocated pointer.
-// TODO: recover the original stack-alignment context from real calls.
+// The dead doubles (decomp.h) give it the original's aligned frame.
 // FUNCTION: TH16 0x406380
 DECOMP_NOINLINE AnmId AnmLoaded::create_effect(i32 script, i32 layer, AnmVm **out)
 {
+    DECOMP_DEAD_DOUBLE_3;
     ENTER_CS(CS_ANM_MANAGER);
     vm_count++;
     AnmVm *vm = g_AnmManager->allocate_vm();

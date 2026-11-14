@@ -91,7 +91,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00406240,AnmVm::set_pos_bezier,src/AnmVm.cpp,?set_pos_bezier@AnmVm@@QAEXHPAUD3DXVECTOR3@@000@Z,exact,,.analysis/reference-audit.json
 0x00406320,Rng::randf_neg_1_to_1_times_pi,src/Rng.cpp,?randf_neg_1_to_1_times_pi@Rng@@QAEMXZ,exact,,.analysis/reference-audit.json
 0x00406340,AnmVm::get_slowdown_factor,src/AnmVm.cpp,?get_slowdown_factor@AnmVm@@QAEMXZ,exact,,.analysis/reference-audit.json
-0x00406380,AnmLoaded::create_effect,src/AnmManager.cpp,?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00406380,AnmLoaded::create_effect,src/AnmManager.cpp,?create_effect@AnmLoaded@@QAE?AUAnmId@@HHPAPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x00406470,gather_sincosmul,src/AnmVmCallbacks.cpp,?gather_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
 0x00406490,ZunTimer::set_value,src/ZunTimer.cpp,?set_value@ZunTimer@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x004064E0,AnmVm::alloc_extra_data,src/AnmVm.cpp,?alloc_extra_data@AnmVm@@QAEXI@Z,exact,,.analysis/reference-audit.json
@@ -681,7 +681,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043D7C0,Supervisor::on_draw_39,src/Supervisor.cpp,?on_draw_39@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D820,Supervisor::on_draw_38,src/Supervisor.cpp,?on_draw_38@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0043D870,Supervisor::on_draw_55,src/Supervisor.cpp,?on_draw_55@Supervisor@@SIHPAX@Z,exact,,.analysis/reference-audit.json
-0x0043D8B0,Supervisor::create_fog_vm,src/Supervisor.cpp,?create_fog_vm@Supervisor@@QAE?AUAnmId@@HH@Z,mismatch,,.analysis/reference-audit.json
+0x0043D8B0,Supervisor::create_fog_vm,src/Supervisor.cpp,?create_fog_vm@Supervisor@@QAE?AUAnmId@@HH@Z,exact,,.analysis/reference-audit.json
 0x0043D970,Supervisor::setup_special_anms,src/Supervisor.cpp,?setup_special_anms@Supervisor@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,src/Supervisor.cpp,?release_surfaces@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043DC90,_tanf,src/Supervisor.cpp,_tanf,exact,,.analysis/reference-audit.json
@@ -754,9 +754,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x00444B20,Player::create_rect_damage_source,src/Player.cpp,?create_rect_damage_source@Player@@QAEHPAUD3DXVECTOR3@@MMMHH@Z,exact,,.analysis/reference-audit.json
 0x00444CF0,Player::do_graze,src/Player.cpp,?do_graze@Player@@QAEXPAUD3DXVECTOR3@@@Z,exact,,.analysis/reference-audit.json
 0x00444E10,PlayerBullet::create,src/PlayerShot.cpp,?create@PlayerBullet@@QAEHHHPAUPlayerInner@@@Z,exact,,.analysis/reference-audit.json
-0x00445360,Player::shoot_one_bullet,src/Player.cpp,?shoot_one_bullet@Player@@QAEHHHPAUPlayerInner@@@Z,mismatch,,.analysis/reference-audit.json
-0x00445470,Player::do_shooting,src/Player.cpp,?do_shooting@Player@@QAEHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004455D0,Player::tick_shooting_state,src/Player.cpp,?tick_shooting_state@Player@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00445360,Player::shoot_one_bullet,src/Player.cpp,?shoot_one_bullet@Player@@QAEHHHPAUPlayerInner@@@Z,exact,,.analysis/reference-audit.json
+0x00445470,Player::do_shooting,src/Player.cpp,?do_shooting@Player@@QAEHHH@Z,exact,,.analysis/reference-audit.json
+0x004455D0,Player::tick_shooting_state,src/Player.cpp,?tick_shooting_state@Player@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004456D0,Player::tick_bullets,src/Player.cpp,?tick_bullets@Player@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00445A30,Player::compute_damage_to_enemy,src/Player.cpp,?compute_damage_to_enemy@Player@@QAEHPAUD3DXVECTOR3@@0MMPAH0HH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00445D40,damage_source_on_hit_bullet,src/PlayerShot.cpp,?damage_source_on_hit_bullet@@YIHPAUPlayerDamageSource@@HHMM@Z,exact,,.analysis/reference-audit.json

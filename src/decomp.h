@@ -38,3 +38,33 @@
 // `this` in ecx and a float argument in xmm1, which no declarable convention
 // produces). The function must stay out of line for that, hence noinline.
 #define HARNESS_CALLED __declspec(noinline)
+
+// Placeholders, not ZUN's code. LTCG's stack-alignment pass weighs double
+// arithmetic before dead code is removed, and some original functions had
+// double work that was deleted afterwards; nothing of it survives in the
+// binary. These dead doubles restore that weight: in place they make the
+// function itself want an 8-aligned stack (each multiply adds weight), and
+// through decomp_want_aligned_stack, a call graph node of its own, they make
+// it a caller of a function that wants one.
+#define DECOMP_DEAD_DOUBLE_0 { double decomp_dead = 0.0; (void)decomp_dead; }
+#define DECOMP_DEAD_DOUBLE_1 { double decomp_dead = 0.0; decomp_dead = decomp_dead * 2.0; (void)decomp_dead; }
+#define DECOMP_DEAD_DOUBLE_2                                                                                         \
+    {                                                                                                                \
+        double decomp_dead = 0.0;                                                                                    \
+        decomp_dead = decomp_dead * 2.0;                                                                             \
+        decomp_dead = decomp_dead * 2.0;                                                                             \
+        (void)decomp_dead;                                                                                           \
+    }
+#define DECOMP_DEAD_DOUBLE_3                                                                                         \
+    {                                                                                                                \
+        double decomp_dead = 0.0;                                                                                    \
+        decomp_dead = decomp_dead * 2.0;                                                                             \
+        decomp_dead = decomp_dead * 2.0;                                                                             \
+        decomp_dead = decomp_dead * 2.0;                                                                             \
+        (void)decomp_dead;                                                                                           \
+    }
+static inline void decomp_want_aligned_stack()
+{
+    double decomp_dead = 0.0;
+    (void)decomp_dead;
+}

@@ -80,6 +80,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00406240,AnmVm::set_pos_bezier,reference-00406240,local-strict-pass,211,211,211,.analysis/reference-audit.json
 0x00406320,Rng::randf_neg_1_to_1_times_pi,reference-00406320,local-strict-pass,27,27,27,.analysis/reference-audit.json
 0x00406340,AnmVm::get_slowdown_factor,reference-00406340,local-strict-pass,49,49,49,.analysis/reference-audit.json
+0x00406380,AnmLoaded::create_effect,reference-00406380,local-strict-pass,236,236,236,.analysis/reference-audit.json
 0x00406470,gather_sincosmul,reference-00406470,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x00406490,ZunTimer::set_value,reference-00406490,local-strict-pass,68,68,68,.analysis/reference-audit.json
 0x004064E0,AnmVm::alloc_extra_data,reference-004064e0,local-strict-pass,35,35,35,.analysis/reference-audit.json
@@ -609,7 +610,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043D7C0,Supervisor::on_draw_39,reference-0043d7c0,local-strict-pass,94,94,94,.analysis/reference-audit.json
 0x0043D820,Supervisor::on_draw_38,reference-0043d820,local-strict-pass,74,74,74,.analysis/reference-audit.json
 0x0043D870,Supervisor::on_draw_55,reference-0043d870,local-strict-pass,57,57,57,.analysis/reference-audit.json
-0x0043D8B0,Supervisor::create_fog_vm,reference-0043d8b0,mismatch,186,186,183,.analysis/reference-audit.json
+0x0043D8B0,Supervisor::create_fog_vm,reference-0043d8b0,local-strict-pass,186,186,186,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,reference-0043dc30,local-strict-pass,89,89,89,.analysis/reference-audit.json
 0x0043DC90,_tanf,reference-0043dc90,local-strict-pass,23,23,23,.analysis/reference-audit.json
 0x0043DCC0,Supervisor::release_dinput,reference-0043dcc0,local-strict-pass,25,25,25,.analysis/reference-audit.json
@@ -669,7 +670,9 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00444B20,Player::create_rect_damage_source,reference-00444b20,local-strict-pass,461,461,461,.analysis/reference-audit.json
 0x00444CF0,Player::do_graze,reference-00444cf0,local-strict-pass,288,288,288,.analysis/reference-audit.json
 0x00444E10,PlayerBullet::create,reference-00444e10,local-strict-pass,1357,1357,1357,.analysis/reference-audit.json
-0x00445360,Player::shoot_one_bullet,reference-00445360,mismatch,264,264,256,.analysis/reference-audit.json
+0x00445360,Player::shoot_one_bullet,reference-00445360,local-strict-pass,264,264,264,.analysis/reference-audit.json
+0x00445470,Player::do_shooting,reference-00445470,local-strict-pass,352,352,352,.analysis/reference-audit.json
+0x004455D0,Player::tick_shooting_state,reference-004455d0,local-strict-pass,246,246,246,.analysis/reference-audit.json
 0x00445D40,damage_source_on_hit_bullet,reference-00445d40,local-strict-pass,211,211,211,.analysis/reference-audit.json
 0x00445E20,PlayerBullet::hit,reference-00445e20,local-strict-pass,170,170,170,.analysis/reference-audit.json
 0x00445ED0,sht_on_init_homing,reference-00445ed0,local-strict-pass,13,13,13,.analysis/reference-audit.json
