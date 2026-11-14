@@ -600,7 +600,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043D8B0,Supervisor::create_fog_vm,reference-0043d8b0,mismatch,186,186,183,.analysis/reference-audit.json
 0x0043D970,Supervisor::setup_special_anms,reference-0043d970,mismatch,693,693,682,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,reference-0043dc30,local-strict-pass,89,89,89,.analysis/reference-audit.json
-0x0043DC90,zun_tanf,reference-0043dc90,local-strict-pass,23,23,23,.analysis/reference-audit.json
+0x0043DC90,_tanf,reference-0043dc90,local-strict-pass,23,23,23,.analysis/reference-audit.json
 0x0043DCC0,Supervisor::release_dinput,reference-0043dcc0,local-strict-pass,25,25,25,.analysis/reference-audit.json
 0x0043DCE0,supervisor_debug_log,reference-0043dce0,local-strict-pass,1,1,1,.analysis/reference-audit.json
 0x0043DCF0,SoundManager::tick_bgm_fade,reference-0043dcf0,local-strict-pass,217,217,217,.analysis/reference-audit.json

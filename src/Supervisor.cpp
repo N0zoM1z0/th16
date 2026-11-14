@@ -304,8 +304,11 @@ HARNESS_CALLED void Supervisor::swap_transform_matrices(Camera *camera)
 }
 
 
-// The tanf from the CRT headers stays out of line (0x43dc90).
-DECOMP_NOINLINE float __CRTDECL tanf(float);
+// The CRT header's tanf stays out of line in camera_update_2d, its one
+// out-of-line caller; this file links ahead of the others using tanf, so the
+// copy comes from here, as in the original.
+// LIBRARY: TH16 0x43dc90 SYMBOL
+// _tanf
 
 // TODO: the original keeps x and y in registers across the tanf call and
 // stores them to eye and at afterwards as one packed pair (unpcklps, movq);

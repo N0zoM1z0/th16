@@ -74,7 +74,7 @@ def sources():
     # sinf copies, which the original places among the same early helpers;
     # GameErrorContext.cpp provides _vsnprintf_l and AsciiManager.cpp sprintf
     # (both ahead of AnmLoader.cpp), matching where the original keeps them.
-    first = [ROOT / "src" / name for name in ("Thread.cpp", "PosVel.cpp", "Stage.cpp", "GameErrorContext.cpp", "AsciiManager.cpp")]
+    first = [ROOT / "src" / name for name in ("Thread.cpp", "PosVel.cpp", "Stage.cpp", "GameErrorContext.cpp", "AsciiManager.cpp", "Supervisor.cpp")]
     return [p for p in first if p in paths] + [p for p in paths if p not in first]
 
 

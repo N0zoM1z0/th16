@@ -56,12 +56,6 @@ HARNESS_CALLED void __fastcall from_polar(Float3 *dst, f32 angle, f32 radius)
     ZUN_ASM_SINCOSMUL(dst, angle, radius);
 }
 
-// FUNCTION: TH16 0x43dc90
-HARNESS_CALLED f32 zun_tanf(f32 x)
-{
-    return tanf(x);
-}
-
 // FUNCTION: TH16 0x405240
 HARNESS_CALLED f32 zun_fabsf(f32 x)
 {
