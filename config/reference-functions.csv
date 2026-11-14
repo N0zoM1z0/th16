@@ -153,7 +153,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0040A7D0,StdObject::is_culled,src/Stage.cpp,?is_culled@StdObject@@QAEHPAUD3DXVECTOR3@@MPAUCamera@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x0040AC30,Stage::load_std,src/Stage.cpp,?load_std@Stage@@QAEHPBD@Z,exact,,.analysis/reference-audit.json
 0x0040ADD0,Stage::start_std_vms,src/Stage.cpp,?start_std_vms@Stage@@SAXXZ,exact,,.analysis/reference-audit.json
-0x0040AED0,Stage::update_std_vms,src/Stage.cpp,?update_std_vms@Stage@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0040AED0,Stage::update_std_vms,src/Stage.cpp,?update_std_vms@Stage@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0040AF70,Stage::draw_layer,src/Stage.cpp,?draw_layer@Stage@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0040B2F0,Stage::interrupt_vms,src/Stage.cpp,?interrupt_vms@Stage@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x0040B3B0,StageInner::run_std,src/Stage.cpp,?run_std@StageInner@@QAEHXZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json

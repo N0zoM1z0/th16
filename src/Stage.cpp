@@ -847,7 +847,7 @@ HARNESS_CALLED void Stage::start_std_vms()
 // Runs the VMs of objects still marked as running; unmarks objects whose
 // VMs have all finished.
 // FUNCTION: TH16 0x40aed0
-i32 Stage::update_std_vms()
+HARNESS_CALLED i32 Stage::update_std_vms()
 {
     for (i32 i = 0; i < std->num_objects; i++)
     {
