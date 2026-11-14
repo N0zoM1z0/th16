@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <d3dx9math.h>
+
 #include "Arcfile.h"
 #include "Crypt.h"
 #include "Lzss.h"
@@ -12,6 +14,12 @@ Arcfile g_Arcfile;
 // ??__Eg_Arcfile@@YAXXZ
 // SYNTHETIC: TH16 0x48ac10
 // ??__Fg_Arcfile@@YAXXZ
+
+// A zero vector that nothing writes (Interp.h); it follows g_Arcfile in the
+// original's data. With its definition in the whole-program build, LTCG
+// reloads it for each copy as the original does.
+// GLOBAL: TH16 0x4c10c8
+D3DXVECTOR2 g_zero_vec2;
 // Twenty more archives that nothing in TH16 opens; only their constructors
 // and destructors run.
 // GLOBAL: TH16 0x4d7ba0

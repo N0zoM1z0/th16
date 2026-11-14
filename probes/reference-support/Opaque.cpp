@@ -1,17 +1,11 @@
 // Definitions that link-time code generation must not see into. build.py
 // compiles probes/reference-support/ without /GL, so LTCG treats everything here as
 // external: it cannot read a global's value or inline a function's body.
-// Not ZUN's code apart from the globals (g_zero_vec2, g_stage_table).
+// Not ZUN's code apart from the global g_stage_table.
 #include <d3dx9math.h>
 
 #include "../../src/StageData.h"
 
-// A zero vector that nothing writes (Interp.h). The original loads it at
-// every use; with the definition in view LTCG would see that it is never
-// written and fold the loads into constant zeros (in the ECL radial and
-// ellipse interpolations).
-// GLOBAL: TH16 0x4c10c8
-D3DXVECTOR2 g_zero_vec2;
 
 // Takes the address of a value without doing anything with it. The harness
 // stand-ins in probes/reference-harness/ use it to make LTCG assume that a global's

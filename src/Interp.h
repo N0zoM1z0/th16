@@ -92,10 +92,7 @@ struct InterpFloat
 };
 
 // A zero vector that the ECL radial and ellipse interpolations copy their
-// bezier values from. Defined outside /GL in
-// probes/reference-support/Opaque.cpp; annotated here, where the audit
-// reads source markers.
-// GLOBAL: TH16 0x4c10c8
+// bezier values from (Arcfile.cpp).
 extern D3DXVECTOR2 g_zero_vec2;
 
 // InterpFloat for 2D vectors.
