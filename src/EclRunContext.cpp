@@ -281,7 +281,6 @@ HARNESS_CALLED f32 EclRunContext::pop_float_arg_given_value(int index, f32 value
     return value;
 }
 
-// TODO: the original adds the stack base address last (reccmp: effective match).
 // FUNCTION: TH16 0x474330
 HARNESS_CALLED i32 *EclRunContext::get_int_arg_ptr(int index)
 {

@@ -470,7 +470,6 @@ void GameWindow::set_resolution_from_config()
 
 // The window procedure (TH06: GameWindow_WindowProc). Alt+Enter and
 // maximizing switch between the windowed and fullscreen sizes.
-// TODO: the original keeps window in edx for the DefWindowProcA calls; ours pushes it from the stack.
 // FUNCTION: TH16 0x45a450
 LRESULT CALLBACK window_proc(HWND window, UINT message, WPARAM wparam, LPARAM lparam)
 {

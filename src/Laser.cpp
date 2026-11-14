@@ -2333,7 +2333,6 @@ i32 LaserInfiniteInf::initialize(void *params)
 }
 
 // Sets a beam up from its parameters.
-// TODO: in the inlined wipe the original schedules the flags_hi and/or one store later (an instruction scheduling difference only).
 // FUNCTION: TH16 0x43a860
 i32 LaserBeamInf::initialize(void *params)
 {

@@ -758,7 +758,6 @@ int __fastcall Supervisor::on_draw_55(void *arg)
     return 1;
 }
 
-// TODO: the original schedules the int_vars store between the flags and/or (ours stores it after the flags; split &=/|= or a bitfield are worse), and moves eax before pop edi after the loop.
 // FUNCTION: TH16 0x43d8b0
 HARNESS_CALLED AnmId Supervisor::create_fog_vm(i32 count, i32 script)
 {

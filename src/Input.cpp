@@ -49,11 +49,10 @@ void clear_all_keydown_states()
 u8 g_controller_data[0x80];
 
 // get_controller_state's body: the buttons of the first controller, from
-// winmm or DirectInput. As an inline helper it is a call graph node of its
-// own, which LTCG's stack alignment pass treats as a callee that wants an
-// aligned frame: get_controller_state then realigns through ebx with
-// ebp-relative locals like the original; written in place it realigns with
-// and esp, -8 and esp-relative locals.
+// winmm or DirectInput. The original realigns get_controller_state through
+// ebx with ebp-relative locals; with this inline helper ours does not
+// realign at all, and written in place it realigns with and esp, -8 and
+// esp-relative locals. Still open (see docs/NEXT_AGENT.md).
 static __forceinline u8 *controller_state()
 {
     JOYINFOEX info;

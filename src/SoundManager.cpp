@@ -218,7 +218,6 @@ inline CSoundManager::~CSoundManager()
     }
 }
 
-// TODO: code identical; the loop's end pointer is g_anchor_corners_x+4 in the original (0x4a304c), which reccmp cannot name: our data layout puts the anchor tables before g_sound_effect_table even when they are defined in this file.
 // Creates the DirectSound device (44.1 kHz 16-bit stereo), starts a silent
 // looping buffer and creates a buffer for every sound effect, waiting for
 // thread_load_sound_files to read each file.

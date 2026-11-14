@@ -557,7 +557,6 @@ i32 AnmManager::draw_billboard_fog(AnmVm *vm_param)
 // A while loop with the differences assigned x, y, z gives the original's
 // register and operand order for the distance (the load order inside a
 // loop follows the loop form; see docs/findings.md).
-// TODO: 99%; the loop end compares with g_sprite_temp_buffer's end, which our data layout follows with another global.
 // FUNCTION: TH16 0x467200
 i32 AnmManager::draw_sprite_fog(AnmVm *vm)
 {
