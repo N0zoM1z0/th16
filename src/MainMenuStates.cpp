@@ -144,10 +144,10 @@ i32 TitleInf::do_replay_save()
         }
         if (g_AnmManager->get_vm_with_id(anm_ids[0x61]) == NULL)
         {
-            anm_ids[0x61] = create_effect_via_pointer(title_anm, 0x61, -1, NULL);
+            anm_ids[0x61] = title_anm->create_effect(0x61, -1, NULL);
             AnmManager::interrupt_tree_and_run(anm_ids[0x61], 3);
         }
-        anm_ids[0x70] = create_effect_via_pointer(title_anm, 0x70, -1, NULL);
+        anm_ids[0x70] = title_anm->create_effect(0x70, -1, NULL);
         set_substate(1);
     case 1:
         if (time_in_state.current > 6)
@@ -358,7 +358,7 @@ i32 TitleInf::do_difficulty_select()
         menu.wraps = 0;
         AnmManager::interrupt_tree(anm_ids[script], 1);
         anm_ids[script].id = 0;
-        anm_ids[script] = create_effect_via_pointer(title_anm, script, -1, NULL);
+        anm_ids[script] = title_anm->create_effect(script, -1, NULL);
         AnmManager::interrupt_tree_and_run(anm_ids[script], 3);
         AnmManager::interrupt_tree(anm_ids[script], (i16)(menu.next_selection + 13));
         if (g_title_return_point == TITLE_RETURN_PRACTICE)
@@ -370,7 +370,7 @@ i32 TitleInf::do_difficulty_select()
             AnmManager::interrupt_tree(find_child_id(script, menu.next_selection + 0x74), 2);
             goto confirm;
         }
-        anm_ids[0x68] = create_effect_via_pointer(title_anm, 0x68, -1, NULL);
+        anm_ids[0x68] = title_anm->create_effect(0x68, -1, NULL);
         set_substate(1);
         if (g_Globals.difficulty < DIFFICULTY_EXTRA)
         {
@@ -542,7 +542,7 @@ i32 TitleInf::do_character_select()
         }
         if (g_AnmManager->get_vm_with_id(anm_ids[0x69]) == NULL)
         {
-            anm_ids[0x69] = create_effect_via_pointer(title_anm, 0x69, -1, NULL);
+            anm_ids[0x69] = title_anm->create_effect(0x69, -1, NULL);
         }
         if (g_AnmManager->get_vm_with_id(anm_ids[script]) == NULL)
         {
@@ -690,12 +690,12 @@ i32 TitleInf::do_subseason_select()
         }
         AnmManager::interrupt_tree(anm_ids[script], 1);
         anm_ids[script].id = 0;
-        anm_ids[script] = create_effect_via_pointer(title_anm, script, -1, NULL);
+        anm_ids[script] = title_anm->create_effect(script, -1, NULL);
         AnmManager::interrupt_tree_and_run(anm_ids[script], 3);
         AnmManager::interrupt_tree_and_run(anm_ids[script], (i16)(menu.next_selection + 7));
         AnmManager::interrupt_tree_and_run(anm_ids[script], (i16)(g_Globals.character + 31));
         set_substate(1);
-        anm_ids[0x6a] = create_effect_via_pointer(title_anm, 0x6a, -1, NULL);
+        anm_ids[0x6a] = title_anm->create_effect(0x6a, -1, NULL);
         if (g_title_return_point == TITLE_RETURN_PRACTICE)
         {
             menu.set_cursor(g_Globals.subseason);
@@ -839,7 +839,7 @@ i32 TitleInf::do_practice_stage_select()
     case 0:
         menu.num_choices = 6;
         menu.set_cursor(g_practice_last_stage);
-        anm_ids[0x71] = create_effect_via_pointer(title_anm, 0x71, -1, NULL);
+        anm_ids[0x71] = title_anm->create_effect(0x71, -1, NULL);
         set_substate(1);
         if (g_title_return_point == TITLE_RETURN_PRACTICE)
         {
@@ -1520,7 +1520,7 @@ i32 TitleInf::do_replay_menu()
         {
             submenu_ascii_id = g_AsciiManager->get_anm()->create_effect(0x13, -1, NULL);
         }
-        anm_ids[0x6c] = create_effect_via_pointer(title_anm, 0x6c, -1, NULL);
+        anm_ids[0x6c] = title_anm->create_effect(0x6c, -1, NULL);
         set_substate(1);
         memset(replays, 0, sizeof(replays));
         menu_flags &= ~(TITLE_STOP_REPLAY_LOADING | TITLE_REPLAYS_LOADED);
@@ -1528,7 +1528,7 @@ i32 TitleInf::do_replay_menu()
         thread.restart((ThreadStart)replay_list_thread, this);
         if (g_AnmManager->get_vm_with_id(anm_ids[0x61]) == NULL)
         {
-            anm_ids[0x61] = create_effect_via_pointer(title_anm, 0x61, -1, NULL);
+            anm_ids[0x61] = title_anm->create_effect(0x61, -1, NULL);
             AnmManager::interrupt_tree_and_run(anm_ids[0x61], 3);
         }
     }
@@ -2695,11 +2695,11 @@ i32 TitleInf::do_spell_practice_stage_select()
         menu.num_choices = 7;
         if (g_AnmManager->get_vm_with_id(anm_ids[0x11c]) == NULL)
         {
-            anm_ids[0x11c] = create_effect_via_pointer(title_anm, 0x11c, -1, NULL);
+            anm_ids[0x11c] = title_anm->create_effect(0x11c, -1, NULL);
         }
         if (g_AnmManager->get_vm_with_id(anm_ids[0xd7]) == NULL)
         {
-            anm_ids[0xd7] = create_effect_via_pointer(title_anm, 0xd7, -1, NULL);
+            anm_ids[0xd7] = title_anm->create_effect(0xd7, -1, NULL);
         }
         set_substate(1);
         if (g_spell_practice_last_stage >= 0)
@@ -2719,7 +2719,7 @@ i32 TitleInf::do_spell_practice_stage_select()
             // this tail (for matching).
             goto start_rows;
         }
-        anm_ids[0x71] = create_effect_via_pointer(title_anm, 0x71, -1, NULL);
+        anm_ids[0x71] = title_anm->create_effect(0x71, -1, NULL);
     case 1:
         if (time_in_state.current > 10)
         {
@@ -2857,11 +2857,11 @@ i32 TitleInf::do_spell_practice_row()
         menu.num_choices = row_counts[spell_stage];
         if (g_AnmManager->get_vm_with_id(anm_ids[0x6b]) == NULL)
         {
-            anm_ids[0x6b] = create_effect_via_pointer(title_anm, 0x6b, -1, NULL);
+            anm_ids[0x6b] = title_anm->create_effect(0x6b, -1, NULL);
         }
         if (g_AnmManager->get_vm_with_id(anm_ids[0xd8]) == NULL)
         {
-            anm_ids[0xd8] = create_effect_via_pointer(title_anm, 0xd8, -1, NULL);
+            anm_ids[0xd8] = title_anm->create_effect(0xd8, -1, NULL);
         }
         set_substate(1);
         for (i32 i = 0; i < 13 - row_counts[spell_stage]; i++)
@@ -2985,7 +2985,7 @@ i32 TitleInf::do_spell_practice_subseason()
         menu.set_cursor(0);
         if (g_AnmManager->get_vm_with_id(anm_ids[0xd9]) == NULL)
         {
-            anm_ids[0xd9] = create_effect_via_pointer(title_anm, 0xd9, -1, NULL);
+            anm_ids[0xd9] = title_anm->create_effect(0xd9, -1, NULL);
         }
         set_substate(1);
     case 1:
