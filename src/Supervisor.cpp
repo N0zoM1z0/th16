@@ -785,10 +785,20 @@ HARNESS_CALLED AnmId Supervisor::create_fog_vm(i32 count, i32 script)
     return id;
 }
 
+// Starts one of the arcade blit VMs on its own, with no parent.
+static __forceinline void start_arcade_vm(AnmLoaded *anm, AnmVm *vm, i32 script)
+{
+    anm->copy_vm(vm, script);
+    vm->parent_vm = NULL;
+    vm->root_vm = NULL;
+    vm->run();
+}
+
 // Points the arcade surfaces at text.anm's render target textures and
 // starts the VMs that draw them, picked by window width.
-// TODO: effective match only since AnmVm::run became real code: the last
-// flag `and` is scheduled after the pops in ours, before them in the original.
+// The VMs start through start_arcade_vm: with the twelve run calls written
+// out, run's wish for an aligned stack makes this function realign.
+// TODO: the original pops esi and edi before the last flag `and`; ours after.
 // FUNCTION: TH16 0x43d970
 void Supervisor::setup_special_anms()
 {
@@ -805,69 +815,24 @@ void Supervisor::setup_special_anms()
         {
             if (g_resolution_x == 640)
             {
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_0F);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_1a;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_1A);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_2c;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_2C);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_39;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_39);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
+                start_arcade_vm(text_anm, vm, TEXT_SCRIPT_BLIT_0F);
+                start_arcade_vm(text_anm, arcade_blit_vm_1a, TEXT_SCRIPT_BLIT_1A);
+                start_arcade_vm(text_anm, arcade_blit_vm_2c, TEXT_SCRIPT_BLIT_2C);
+                start_arcade_vm(text_anm, arcade_blit_vm_39, TEXT_SCRIPT_BLIT_39);
             }
             else if (g_resolution_x == 960)
             {
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_0F + 1);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_1a;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_1A + 1);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_2c;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_2C + 1);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_39;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_39 + 1);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
+                start_arcade_vm(text_anm, vm, TEXT_SCRIPT_BLIT_0F + 1);
+                start_arcade_vm(text_anm, arcade_blit_vm_1a, TEXT_SCRIPT_BLIT_1A + 1);
+                start_arcade_vm(text_anm, arcade_blit_vm_2c, TEXT_SCRIPT_BLIT_2C + 1);
+                start_arcade_vm(text_anm, arcade_blit_vm_39, TEXT_SCRIPT_BLIT_39 + 1);
             }
             else if (g_resolution_x == 1280)
             {
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_0F + 2);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_1a;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_1A + 2);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_2c;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_2C + 2);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
-                vm = arcade_blit_vm_39;
-                text_anm->copy_vm(vm, TEXT_SCRIPT_BLIT_39 + 2);
-                vm->parent_vm = NULL;
-                vm->root_vm = NULL;
-                vm->run();
+                start_arcade_vm(text_anm, vm, TEXT_SCRIPT_BLIT_0F + 2);
+                start_arcade_vm(text_anm, arcade_blit_vm_1a, TEXT_SCRIPT_BLIT_1A + 2);
+                start_arcade_vm(text_anm, arcade_blit_vm_2c, TEXT_SCRIPT_BLIT_2C + 2);
+                start_arcade_vm(text_anm, arcade_blit_vm_39, TEXT_SCRIPT_BLIT_39 + 2);
             }
         }
         if (g_screen_coord_scale == 1.5f)
