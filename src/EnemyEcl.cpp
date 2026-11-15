@@ -268,10 +268,6 @@ static __forceinline void ecl_angle_to_player(EnemyData *enemy)
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {
-    PosVel *position;
-    InterpStrange1 *position_interp;
-    f32 goal_x;
-    f32 goal_y;
     EclRawInstr *instr = full->context.current_context->current_instr();
     switch ((i16)instr->opcode)
     {
@@ -615,6 +611,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_TIME_OFFSET:
     case ECL_OP_MOVE_POS_REL_TIME_OFFSET:
     {
+        PosVel *position;
+        InterpStrange1 *position_interp;
+        f32 goal_x;
+        f32 goal_y;
         position = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos : &rel_pos;
         position_interp = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos_i : &rel_pos_i;
         goal_x = full->context.current_context->get_float_arg(2);
@@ -656,6 +656,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
+        PosVel *position;
+        InterpStrange1 *position_interp;
+        f32 goal_x;
+        f32 goal_y;
         position = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos : &rel_pos;
         position_interp = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos_i : &rel_pos_i;
         goal_x = full->context.current_context->get_float_arg(3);
@@ -686,16 +690,21 @@ int EnemyData::ecl_run_over_300()
         position_interp->flag_1d |= 1;
         position_interp->move_curve_mode = full->context.current_context->get_int_arg(2);
         position_interp->flag_1d |= 1;
-        goto ecl_move_curve_finish;
+        position_interp->initial = position->pos;
+        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : position->pos.x,
+                                       goal_y > -999999.0 ? goal_y : position->pos.y, 0.0f);
+        position_interp->reset_timer();
+        position->flags &= ~0xf;
+        break;
     }
     // moveBezier(time, b1x, b1y, x, y, b2x, b2y), moveBezierRel
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
     {
-        position = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
-        position_interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(3);
-        goal_y = full->context.current_context->get_float_arg(4);
+        PosVel *position = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
+        InterpStrange1 *position_interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
+        f32 goal_x = full->context.current_context->get_float_arg(3);
+        f32 goal_y = full->context.current_context->get_float_arg(4);
         position_interp->bezier_1.x = full->context.current_context->get_float_arg(1);
         position_interp->bezier_1.y = full->context.current_context->get_float_arg(2);
         position_interp->bezier_1.z = 0.0f;
@@ -705,15 +714,13 @@ int EnemyData::ecl_run_over_300()
         position_interp->end_time = full->context.current_context->get_int_arg(0);
         position_interp->method_for_3d = INTERP_BEZIER;
         position_interp->flag_1d &= ~1;
-        goto ecl_move_curve_finish;
-    }
-    ecl_move_curve_finish:
         position_interp->initial = position->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : position->pos.x,
                                        goal_y > -999999.0 ? goal_y : position->pos.y, 0.0f);
         position_interp->reset_timer();
         position->flags &= ~0xf;
         break;
+    }
     // moveVel(angle, speed) and the relative and
     // no-mirror (428, 430) forms. -999999 keeps the current value.
     case ECL_OP_MOVE_VEL:
