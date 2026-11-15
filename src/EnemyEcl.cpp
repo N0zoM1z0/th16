@@ -280,7 +280,7 @@ int EnemyData::ecl_run_over_300()
     InterpStrange1 *position_interp;
     f32 goal_x;
     f32 goal_y;
-    EclRawInstr *instr = full->context.current_context->current_instr();
+    register EclRawInstr *instr = full->context.current_context->current_instr();
     switch ((i16)instr->opcode)
     {
     // enmCreateF and its variants: only without a boss.
