@@ -78,6 +78,28 @@ i32 LaserInfiniteInf::touches_circle(Float3 *pos, f32 radius)
 }
 
 
+// Inline the manager's id lookup here; the other ECL callsites retain the
+// out-of-line leaf so its calling convention and byte layout stay unchanged.
+static __forceinline EnemyInf *find_enemy_by_id_for_laser(i32 id)
+{
+    EnemyInf *enemy = NULL;
+    if (id == 0)
+    {
+        return NULL;
+    }
+    EnemyList *node = g_EnemyManager->active_enemy_list_head;
+    while (node != NULL)
+    {
+        enemy = node->entry;
+        if (enemy->enemy_id == id)
+        {
+            return enemy;
+        }
+        node = node->next;
+    }
+    return enemy;
+}
+
 // One frame: et_ex, growth and rotation, following the boss (flag 1),
 // moving, then the warning (3), grow (4), full (2) and fade (5) states.
 // Nonzero once the laser is done.
@@ -134,7 +156,7 @@ i32 LaserInfiniteInf::on_tick()
     if (inner.flags & 1)
     {
         EnemyManager *mgr = g_EnemyManager;
-        if (mgr->find_enemy_by_id(mgr->inner.boss_ids[0]) != NULL)
+        if (find_enemy_by_id_for_laser(mgr->inner.boss_ids[0]) != NULL)
         {
             position = g_EnemyManager->get_boss(0)->enemy.final_pos.pos;
         }
