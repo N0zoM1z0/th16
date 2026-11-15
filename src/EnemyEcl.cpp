@@ -32,12 +32,30 @@ extern "C" void ecl_laser_infinite_inner_ctor_alias(void *);
 #pragma comment(linker, "/alternatename:_ecl_memset_alias=_memset")
 extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
+extern "C" i32 ecl_laser_cancel_in_radius_alias(Float3 *, i32, i32);
+#pragma comment(linker, "/alternatename:_ecl_laser_cancel_in_radius_alias=?cancel_in_radius@LaserManager@@QAEHPAUD3DXVECTOR3@@MHH@Z")
 
-// Keep XMM0 stores outside the large dispatcher so unrelated float-returning
-// cases retain the original SSE code generation.
-static __declspec(noinline) void __fastcall ecl_store_float_arg(EnemyData *enemy, i32 index, f32 *dest)
+// The target passes the radius in XMM2 while pos/mode/skip stay on the stack.
+// Keep that custom call convention isolated from the dispatcher's C++ float ABI.
+static __declspec(naked) i32 __stdcall ecl_cancel_laser_radius(Float3 *pos, f32 radius, i32 mode, i32 skip)
 {
-    *dest = enemy->get_float_arg(index);
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        movss xmm2, dword ptr [ebp + 0ch]
+        push dword ptr [ebp + 14h]
+        push dword ptr [ebp + 10h]
+        push dword ptr [ebp + 8]
+        call ecl_laser_cancel_in_radius_alias
+        mov esp, ebp
+        pop ebp
+        ret 10h
+    }
+}
+static __declspec(noinline) f32 __fastcall ecl_get_float_arg_for_et_ex(EnemyData *enemy, i32 index)
+{
+    return enemy->get_float_arg(index);
 }
 
 extern "C" f32 ecl_normalize_angle_alias(f32);
@@ -2093,8 +2111,6 @@ int EnemyData::ecl_run_over_300()
     {
         __asm
         {
-            mov esi, instr
-            mov dword ptr [ebp - 418h], esi
             push 0
             mov ecx, edi
             call ecl_enemy_get_int_arg_alias
@@ -2166,7 +2182,7 @@ int EnemyData::ecl_run_over_300()
             inc esi
             mov dword ptr [ecx + edi + 5d4h], eax
             mov ecx, 262h
-            mov eax, dword ptr [ebp - 418h]
+            mov eax, dword ptr [ebp - 0b4h]
             movzx eax, word ptr [eax + 4]
             cmp ax, cx
             je et_ex_full_ints
@@ -2190,21 +2206,20 @@ int EnemyData::ecl_run_over_300()
             inc esi
             mov dword ptr [ecx + edi + 5dch], eax
         et_ex_full_ints_done:
-            mov eax, dword ptr [ebp - 42ch]
-            lea eax, [edi + eax + 5c0h]
-            push eax
-            mov edx, esi
+            push esi
             mov ecx, edi
-            call ecl_store_float_arg
+            call ecl_get_float_arg_for_et_ex
+            mov eax, dword ptr [ebp - 42ch]
             inc esi
-            mov eax, dword ptr [ebp - 42ch]
-            lea eax, [edi + eax + 5c4h]
-            push eax
-            mov edx, esi
+            push esi
             mov ecx, edi
-            call ecl_store_float_arg
+            movss dword ptr [eax + edi + 5c0h], xmm0
+            call ecl_get_float_arg_for_et_ex
+            mov eax, dword ptr [ebp - 42ch]
             mov edx, 262h
-            mov eax, dword ptr [ebp - 418h]
+            inc esi
+            movss dword ptr [eax + edi + 5c4h], xmm0
+            mov eax, dword ptr [ebp - 0b4h]
             movzx ecx, word ptr [eax + 4]
             cmp cx, dx
             je et_ex_full_floats
@@ -2212,22 +2227,20 @@ int EnemyData::ecl_run_over_300()
             cmp cx, dx
             jne et_ex_full_floats_done
         et_ex_full_floats:
-            mov eax, dword ptr [ebp - 42ch]
-            lea eax, [edi + eax + 5c8h]
-            push eax
-            mov edx, esi
+            push esi
             mov ecx, edi
-            call ecl_store_float_arg
-            lea esi, [esi + 1]
+            call ecl_get_float_arg_for_et_ex
             mov eax, dword ptr [ebp - 42ch]
-            lea eax, [edi + eax + 5cch]
-            push eax
-            mov edx, esi
             mov ecx, edi
-            call ecl_store_float_arg
+            movss dword ptr [eax + edi + 5c8h], xmm0
+            lea eax, [esi + 1]
+            push eax
+            call ecl_get_float_arg_for_et_ex
+            mov eax, dword ptr [ebp - 42ch]
             mov edx, 264h
+            movss dword ptr [eax + edi + 5cch], xmm0
         et_ex_full_floats_done:
-            mov eax, dword ptr [ebp - 418h]
+            mov eax, dword ptr [ebp - 0b4h]
             movzx eax, word ptr [eax + 4]
             mov ecx, 263h
             cmp ax, cx
@@ -2559,7 +2572,7 @@ int EnemyData::ecl_run_over_300()
     {
         f32 radius = get_float_arg(0);
         g_BulletManager->cancel_radius(&final_pos.pos, radius, 1);
-        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 1, 1);
+        ecl_cancel_laser_radius(&final_pos.pos, radius, 1, 1);
         break;
     }
     // hitboxRect(w, h): a rectangular bullet-cancelling hitbox, rotated like
@@ -2578,7 +2591,7 @@ int EnemyData::ecl_run_over_300()
     {
         f32 radius = get_float_arg(0);
         g_BulletManager->cancel_radius(&final_pos.pos, radius, 0);
-        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 0, 1);
+        ecl_cancel_laser_radius(&final_pos.pos, radius, 0, 1);
         break;
     }
     // etCancel2(radius): etCancel that also takes protected bullets.
