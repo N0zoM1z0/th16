@@ -30,6 +30,8 @@ extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
 extern "C" f32 ecl_normalize_angle_alias(f32);
 #pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
+extern "C" i32 ecl_laser_allocate_new_laser_alias(i32, void *);
+#pragma comment(linker, "/alternatename:_ecl_laser_allocate_new_laser_alias=?allocate_new_laser@LaserManager@@QAEHHPAX@Z")
 extern "C" i32 ecl_bullet_shoot_alias(EnemyBulletShooter *);
 #pragma comment(linker, "/alternatename:_ecl_bullet_shoot_alias=?shoot_bullets@BulletManager@@QAEHPAUEnemyBulletShooter@@@Z")
 
@@ -470,13 +472,13 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
         movss xmm0, dword ptr [esi + edx + 8d8h]
         mov dword ptr [ebp - 0bch], eax
         lea eax, [ebp - 404h]
-        movss dword ptr [ebp - 3f4h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5bch]
         push eax
         push 2
+        movss dword ptr [ebp - 3f4h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5bch]
         movss dword ptr [ebp - 3e0h], xmm0
+        call ecl_laser_allocate_new_laser_alias
     }
-    g_LaserManager->allocate_new_laser(LASER_CURVE, &params);
 }
 
 // angleToPlayer(var, x, y)
