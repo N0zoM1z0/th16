@@ -1325,6 +1325,7 @@ i32 LaserLineInf::cancel_as_bomb_circle(Float3 *center, f32 radius, i32 mode, i3
         return 0;
     }
     Float3 origin = position;
+    register Float3 *center_ptr = center;
     i32 count = 0;
     f32 dist = 8.0f;
     i32 i = 0;
@@ -1342,7 +1343,7 @@ i32 LaserLineInf::cancel_as_bomb_circle(Float3 *center, f32 radius, i32 mode, i3
     radius = radius * radius;
     for (; hit_length >= dist + 8.0f; i++)
     {
-        if (!((center->x - pos.x) * (center->x - pos.x) + (center->y - pos.y) * (center->y - pos.y) > radius))
+        if (!((center_ptr->x - pos.x) * (center_ptr->x - pos.x) + (center_ptr->y - pos.y) * (center_ptr->y - pos.y) > radius))
         {
             count++;
             hit[i] = 1;
