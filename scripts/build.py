@@ -305,8 +305,13 @@ def annotated_functions():
                 decl += " " + nxt.strip()
                 if "(" in decl and decl.count("(") <= decl.count(")"):
                     break
-            name = decl.split("(", 1)[0].split()[-1].lstrip("*&")
-            m2 = re.search(r"\((.*)\)", decl)
+            # Function-level __declspec attributes precede the return type in
+            # MSVC declarations; strip them before extracting the symbol and
+            # parameter list (the first parentheses otherwise belong to the
+            # attribute, not the function).
+            decl_for_parse = re.sub(r"__declspec\s*\([^)]*\)", "", decl)
+            name = decl_for_parse.split("(", 1)[0].split()[-1].lstrip("*&")
+            m2 = re.search(r"\((.*)\)", decl_for_parse)
             params = param_types(m2.group(1)) if m2 else None
             found.append((int(m.group(1), 16), name, rel(src), "HARNESS_CALLED" in decl, params))
     return found
