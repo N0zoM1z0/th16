@@ -264,24 +264,84 @@ static __forceinline void ecl_laser_on(EnemyData *enemy)
 static __forceinline void ecl_laser_st_on(EnemyData *enemy)
 {
     LaserInfiniteInner params;
-    i32 idx = enemy->get_int_arg(0);
-    get_shot_origin_and_copy_ex(enemy, idx, &params.start_pos, params.ex);
-    params.type = enemy->bullet_props[idx].type;
-    params.color = enemy->bullet_props[idx].color;
-    params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
-    params.start_time = enemy->bullet_props[idx].laser_timing[0];
-    params.expand_time = enemy->bullet_props[idx].laser_timing[1];
-    params.speed = enemy->bullet_props[idx].spd1;
-    params.duration = enemy->bullet_props[idx].laser_timing[2];
-    params.laser_new_arg_1 = enemy->bullet_props[idx].pos.x;
-    params.shrink_time = enemy->bullet_props[idx].laser_timing[3];
-    params.flags = enemy->bullet_props[idx].flags | 2;
-    params.laser_new_arg_2 = enemy->bullet_props[idx].pos.y;
-    params.laser_new_arg_4 = enemy->bullet_props[idx].laser_new_arg_4;
-    params.shot_sfx = enemy->bullet_props[idx].shot_sfx;
-    params.distance = enemy->bullet_props[idx].distance;
-    params.shot_transform_sfx = enemy->bullet_props[idx].shot_transform_sfx;
-    params.laser_st_on_arg_1 = enemy->get_int_arg(1);
+    i32 idx;
+    i32 shooter_offset;
+    __asm
+    {
+        push 0
+        mov ecx, edi
+        call ecl_enemy_get_int_arg_alias
+        mov idx, eax
+        mov edx, edi
+        lea esi, [edi + 5c0h]
+        lea edi, [ebp - 3a8h]
+        lea ecx, [eax*8]
+        sub ecx, eax
+        lea eax, [eax + eax*2]
+        movss xmm0, dword ptr [edx + eax*4 + 3ea0h]
+        mov eax, idx
+        shl ecx, 7
+        add esi, ecx
+        mov shooter_offset, ecx
+        comiss xmm0, ecl_origin_threshold
+        mov ecx, 0c6h
+        lea eax, [eax + eax*2]
+        rep movsd
+        movss xmm1, dword ptr [edx + eax*4 + 3ddch]
+        jbe laser_st_on_relative_origin
+        movss xmm2, dword ptr [edx + eax*4 + 3e98h]
+        addss xmm2, dword ptr [edx + eax*4 + 3dd8h]
+        addss xmm1, dword ptr [edx + eax*4 + 3e9ch]
+        mov dword ptr [ebp - 400h], 0
+        jmp laser_st_on_origin_ready
+    laser_st_on_relative_origin:
+        movss xmm0, dword ptr [edx + eax*4 + 3de0h]
+        addss xmm0, dword ptr [edx + 4ch]
+        movss xmm2, dword ptr [edx + eax*4 + 3dd8h]
+        addss xmm2, dword ptr [edx + 44h]
+        addss xmm1, dword ptr [edx + 48h]
+        movss dword ptr [ebp - 440h], xmm0
+        mov eax, dword ptr [ebp - 440h]
+        mov dword ptr [ebp - 400h], eax
+    laser_st_on_origin_ready:
+        mov esi, shooter_offset
+        mov eax, dword ptr [esi + edx + 598h]
+        movss xmm0, dword ptr [esi + edx + 5ach]
+        mov dword ptr [ebp - 3b4h], eax
+        mov eax, dword ptr [esi + edx + 59ch]
+        mov dword ptr [ebp - 3b0h], eax
+        call ecl_normalize_angle_alias
+        mov eax, dword ptr [esi + edx + 8e8h]
+        mov ecx, edx
+        mov dword ptr [ebp - 3d8h], eax
+        mov eax, dword ptr [esi + edx + 8ech]
+        movss dword ptr [ebp - 3f0h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5b4h]
+        mov dword ptr [ebp - 3d4h], eax
+        mov eax, dword ptr [esi + edx + 8f0h]
+        movss dword ptr [ebp - 3dch], xmm0
+        movss xmm0, dword ptr [esi + edx + 5a0h]
+        mov dword ptr [ebp - 3d0h], eax
+        mov eax, dword ptr [esi + edx + 8f4h]
+        mov dword ptr [ebp - 3cch], eax
+        mov eax, dword ptr [esi + edx + 8f8h]
+        movss dword ptr [ebp - 3e4h], xmm0
+        or eax, 2
+        movss xmm0, dword ptr [esi + edx + 5a4h]
+        movss dword ptr [ebp - 3e8h], xmm0
+        movss xmm0, dword ptr [esi + edx + 8d8h]
+        mov dword ptr [ebp - 3ach], eax
+        mov eax, dword ptr [esi + edx + 908h]
+        movss dword ptr [ebp - 3e0h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5bch]
+        mov dword ptr [ebp - 3c8h], eax
+        mov eax, dword ptr [esi + edx + 90ch]
+        push 1
+        mov dword ptr [ebp - 3c4h], eax
+        movss dword ptr [ebp - 3bch], xmm0
+        call ecl_enemy_get_int_arg_alias
+        mov dword ptr [ebp - 3c0h], eax
+    }
     g_LaserManager->allocate_new_laser(LASER_INFINITE, &params);
 }
 
