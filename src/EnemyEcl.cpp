@@ -58,12 +58,14 @@ static inline f32 mirror_angle(f32 angle)
     return normalize_angle(ZUN_PI / 2 - normalize_angle(angle - ZUN_PI / 2));
 }
 
-// The argument for the current difficulty, out of four starting at first.
-#define ECL_DIFF_ARG(first)                                                                                        \
-    (g_Globals.difficulty == DIFFICULTY_EASY     ? (first)                                                         \
-     : g_Globals.difficulty == DIFFICULTY_NORMAL ? (first) + 1                                                     \
-     : g_Globals.difficulty == DIFFICULTY_HARD   ? (first) + 2                                                     \
-                                                 : (first) + 3)
+// The argument for the current difficulty, out of four starting at first:
+// one get_*_arg call per difficulty (the binary pushes each index in its
+// own branch before one shared call).
+#define ECL_DIFF_ARG(get, first)                                                                                   \
+    (g_Globals.difficulty == DIFFICULTY_EASY     ? get(first)                                                      \
+     : g_Globals.difficulty == DIFFICULTY_NORMAL ? get((first) + 1)                                                \
+     : g_Globals.difficulty == DIFFICULTY_HARD   ? get((first) + 2)                                                \
+                                                 : get((first) + 3))
 
 // The bitfields of EnemyLife::is_spell that ECL assigns.
 struct EnemyLifeSpellBits
@@ -505,7 +507,16 @@ int EnemyData::ecl_run_over_300()
         AnmId *id = &anm_ids[slot];
         delete_vm_and_clear(*id);
         AnmLoaded *anm = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        *id = anm->create_vm_front(n >= 0 ? anm_set_main + 5 + n : anm_set_main, anm_layers + 7, 0);
+        // One create call per script, as the binary's per-branch pushes show.
+        i32 layer = anm_layers + 7;
+        if (n >= 0)
+        {
+            *id = anm->create_vm_front(anm_set_main + 5 + n, layer, 0);
+        }
+        else
+        {
+            *id = anm->create_vm_front(anm_set_main, layer, 0);
+        }
         AnmVm *vm = id->find_or_clear();
         if (slot == 0)
         {
@@ -514,7 +525,7 @@ int EnemyData::ecl_run_over_300()
         }
         if (flags_low & ENEMY_FLAG_INTANGIBLE)
         {
-            anm_ids[slot].hide_tree();
+            id->hide_tree();
         }
         break;
     }
@@ -1584,16 +1595,16 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_SPEED_D:
     {
         i32 slot = get_int_arg(0);
-        bullet_props[slot].spd1 = get_float_arg(ECL_DIFF_ARG(1));
-        bullet_props[slot].spd2 = get_float_arg(ECL_DIFF_ARG(5));
+        bullet_props[slot].spd1 = ECL_DIFF_ARG(get_float_arg, 1);
+        bullet_props[slot].spd2 = ECL_DIFF_ARG(get_float_arg, 5);
         break;
     }
     // etCountD(slot, count x4, layers x4): etCount per difficulty.
     case ECL_OP_ET_COUNT_D:
     {
         i32 slot = get_int_arg(0);
-        bullet_props[slot].count = (u16)get_int_arg(ECL_DIFF_ARG(1));
-        bullet_props[slot].layers = (u16)get_int_arg(ECL_DIFF_ARG(5));
+        bullet_props[slot].count = ECL_DIFF_ARG((u16)get_int_arg, 1);
+        bullet_props[slot].layers = ECL_DIFF_ARG((u16)get_int_arg, 5);
         break;
     }
     // etSpeedR3(slot, speed1, speed2 x3): etSpeed by rank (low, mid, high).
