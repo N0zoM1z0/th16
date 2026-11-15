@@ -121,6 +121,27 @@ static __forceinline void get_shot_origin(EnemyData *enemy, i32 i, D3DXVECTOR3 *
     }
 }
 
+// The original stages the origin condition before copying the shooter's
+// BulletEx array, then finishes the selected origin branch. Keep that order
+// in the four laser constructors rather than computing the whole vector first.
+static __forceinline void get_shot_origin_and_copy_ex(EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
+{
+    bool has_origin = enemy->bullet_mgr_origins[i].z > 0.9f;
+    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
+    if (has_origin)
+    {
+        out->x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].xy.x;
+        out->y = enemy->bullet_mgr_origins[i].xy.y + enemy->bullet_mgr_offsets[i].xy.y;
+        out->z = 0.0f;
+    }
+    else
+    {
+        out->x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
+        out->y = enemy->bullet_mgr_offsets[i].xy.y + enemy->final_pos.pos.y;
+        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+    }
+}
+
 // setNext: the life at which interrupt index fires and, unless the life is
 // negative, its time and subroutine.
 static inline void set_next(EnemyInf *enemy, int index, int life, int time, const char *sub)
@@ -158,8 +179,7 @@ static __forceinline void ecl_laser_on(EnemyData *enemy)
 {
     LaserLineInner params;
     i32 idx = enemy->get_int_arg(0);
-    get_shot_origin(enemy, idx, &params.start_pos);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
+    get_shot_origin_and_copy_ex(enemy, idx, &params.start_pos, params.ex);
     params.bullet_type = enemy->bullet_props[idx].type;
     params.bullet_color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
@@ -180,8 +200,7 @@ static __forceinline void ecl_laser_st_on(EnemyData *enemy)
 {
     LaserInfiniteInner params;
     i32 idx = enemy->get_int_arg(0);
-    get_shot_origin(enemy, idx, &params.start_pos);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
+    get_shot_origin_and_copy_ex(enemy, idx, &params.start_pos, params.ex);
     params.type = enemy->bullet_props[idx].type;
     params.color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
@@ -206,8 +225,7 @@ static __forceinline void ecl_laser_beam_on(EnemyData *enemy)
 {
     LaserBeamInner params;
     i32 idx = enemy->get_int_arg(0);
-    get_shot_origin(enemy, idx, &params.start_pos);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
+    get_shot_origin_and_copy_ex(enemy, idx, &params.start_pos, params.ex);
     params.color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
     params.timing = enemy->bullet_props[idx].laser_timing[0];
@@ -223,8 +241,7 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
 {
     LaserCurveInner params;
     i32 idx = enemy->get_int_arg(0);
-    get_shot_origin(enemy, idx, &params.start_pos);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
+    get_shot_origin_and_copy_ex(enemy, idx, &params.start_pos, params.ex);
     params.type = enemy->bullet_props[idx].type;
     params.color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
