@@ -24,6 +24,12 @@
 #include "ZunAsm.h"
 #include "ZunMath.h"
 
+static const f32 ecl_origin_threshold = 0.9f;
+extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
+#pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
+extern "C" i32 ecl_bullet_shoot_alias(EnemyBulletShooter *);
+#pragma comment(linker, "/alternatename:_ecl_bullet_shoot_alias=?shoot_bullets@BulletManager@@QAEHPAUEnemyBulletShooter@@@Z")
+
 // create_vm, inserted at the front of the world list like create_vm_front
 // (0x426160, which is a copy with pos and rotation folded). LTCG inlined
 // this into the anmPlay instructions.
@@ -1522,21 +1528,54 @@ int EnemyData::ecl_run_over_300()
     // from the absolute origin set by etOffsetAbs.
     case ECL_OP_ET_ON:
     {
-        i32 slot = get_int_arg(0);
-        if (bullet_mgr_origins[slot].z > 0.9f)
+        __asm
         {
-            bullet_props[slot].pos = D3DXVECTOR3(bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].xy.x,
-                                                 bullet_mgr_origins[slot].xy.y + bullet_mgr_offsets[slot].xy.y, 0.0f);
+            push 0
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov edx, eax
+            lea ecx, [edx + edx*2]
+            movss xmm0, dword ptr [edi + ecx*4 + 3ea0h]
+            lea eax, [edx + edx*2]
+            comiss xmm0, ecl_origin_threshold
+            movss xmm1, dword ptr [edi + eax*4 + 3ddch]
+            jbe et_on_relative_origin
+            movss xmm2, dword ptr [edi + eax*4 + 3e98h]
+            addss xmm2, dword ptr [edi + eax*4 + 3dd8h]
+            addss xmm1, dword ptr [edi + eax*4 + 3e9ch]
+            lea eax, [edx*8]
+            sub eax, edx
+            shl eax, 7
+            lea edx, [eax + edi]
+            unpcklps xmm2, xmm1
+            movq qword ptr [edx + 5a0h], xmm2
+            mov dword ptr [edx + 5a8h], 0
+            jmp et_on_position_ready
+        et_on_relative_origin:
+            movss xmm2, dword ptr [edi + eax*4 + 3dd8h]
+            movss xmm0, dword ptr [edi + eax*4 + 3de0h]
+            lea eax, [edx*8]
+            addss xmm2, dword ptr [edi + 44h]
+            addss xmm1, dword ptr [edi + 48h]
+            addss xmm0, dword ptr [edi + 4ch]
+            sub eax, edx
+            shl eax, 7
+            lea edx, [eax + edi]
+            unpcklps xmm2, xmm1
+            movss dword ptr [ebp - 440h], xmm0
+            mov eax, dword ptr [ebp - 440h]
+            movq qword ptr [edx + 5a0h], xmm2
+            mov dword ptr [edx + 5a8h], eax
+        et_on_position_ready:
+            mov eax, dword ptr [g_BulletManager]
+            mov ecx, dword ptr [edi + 4074h]
+            mov dword ptr [eax + 44h], ecx
+            lea eax, [edx + 598h]
+            push eax
+            call ecl_bullet_shoot_alias
+            mov eax, dword ptr [g_BulletManager]
+            mov dword ptr [eax + 44h], 0
         }
-        else
-        {
-            bullet_props[slot].pos = D3DXVECTOR3(bullet_mgr_offsets[slot].xy.x + final_pos.pos.x,
-                                                 bullet_mgr_offsets[slot].xy.y + final_pos.pos.y,
-                                                 bullet_mgr_offsets[slot].z + final_pos.pos.z);
-        }
-        g_BulletManager->et_protect_range = et_protect_range;
-        g_BulletManager->shoot_bullets(&bullet_props[slot]);
-        g_BulletManager->et_protect_range = 0.0f;
         break;
     }
     // etSprite(slot, type, color)
