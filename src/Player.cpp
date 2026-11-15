@@ -180,7 +180,7 @@ HARNESS_CALLED f32 Player::angle_to_player(Float3 *pos)
     return (f32)atan2((double)dy, (double)dx);
 }
 
-// lo is computed before hi for the original's lo.y/hi.y registers.
+// lo is computed before hi (in both tests) for the original's lo.y/hi.y registers.
 // TODO: register allocation: the original keeps size in ecx and the player
 // in edx (moving it to ecx for die) and interleaves the half size products
 // with the position loads. Neither a Player local nor g_Player-> instead
@@ -196,8 +196,8 @@ HARNESS_CALLED i32 Player::check_hit_rect(Float3 *pos, Float3 *size, i32 graze_o
     {
         // A miss grazes within 24 pixels.
         half = D3DXVECTOR3(24.0f, 24.0f, 24.0f);
-        hi = *pos + half;
         lo = *pos - half;
+        hi = *pos + half;
         if (hurtbox.min_pos.x > hi.x || hurtbox.min_pos.y > hi.y || lo.x > hurtbox.max_pos.x ||
             lo.y > hurtbox.max_pos.y)
         {
