@@ -403,7 +403,7 @@ source = "src/EnemyEcl.cpp"
 size = 21408
 target_sha256 = "6c6f400ca422d9c14e06cb96d7656c71521a61c0f5e6e7dcc4693dab1c1afa49"
 result = "incomplete"
-candidate_size = 21260
+candidate_size = 21388
 
 [frontier."0x00425410"]
 symbol = "?ecl_ext_damage_anm_hurtbox@@YIHPAUEnemyData@@H@Z"

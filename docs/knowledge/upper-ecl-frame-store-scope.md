@@ -130,28 +130,33 @@ Nothing is pushed, published or deployed.
 
 ## Progress update (2026-11-15)
 
-The current candidate `EnemyData::ecl_run_over_300` PDB contribution is **21,260
+The current candidate `EnemyData::ecl_run_over_300` PDB contribution is **21,388
 bytes** against the independently reviewed **21,408-byte** target owner. The
-candidate contribution is 148 bytes shorter and is not an exact match. The
-current decoded code spans are 19,825 candidate bytes versus 19,976 target
-bytes; the remaining contribution tail is 1,435 versus 1,432 bytes, so the
-three-byte data-extent difference is also still unaccounted for.
+candidate is 20 bytes shorter and remains incomplete. The decoded code spans
+are **19,956 candidate bytes** versus **19,976 target bytes**; both contribution
+tails are **1,432 bytes**, so the remaining 20-byte difference is in code, not
+in the switch tables or alignment suffix. The candidate frame remains
+`0x478` bytes, matching the target.
 
-Two structural changes account for the latest progress:
+Recent source-level work has concentrated on the large dispatcher's real
+handlers rather than adding more tiny leaves:
 
-- `LaserInfiniteInner` is split into an inline data-initialization base and an
-  ECL-facing out-of-line constructor. This preserves the original constructor
-  call in the large ECL dispatcher while allowing `LaserInfiniteInf` to
-  initialize its embedded data before its `AnmVm` members. Both constructor
-  owners now pass strict comparison (30/30 and 81/81 bytes).
-- `MOVE_CURVE` and `MOVE_BEZIER` now branch to one shared interpolation tail,
-  restoring a common reset/flag-clear path rather than duplicating it in both
-  case bodies.
+- The four laser setup paths now stage the shot-origin test and `BulletEx`
+  copy in the original order. The focused opcode groups 402, 403, 411 and 413
+  now have candidate instruction counts 76, 82, 70 and 69, respectively,
+  against target counts 74, 80, 68 and 65.
+- `ET_ON` stages its position before the final writeback; its focused opcode
+  group is 41 instructions against 44 in the target.
+- The spell-name decoder now explicitly preserves the source-pointer delta;
+  its grouped opcode set is 67 instructions against 71 in the target.
+- Movement scratch was scoped to the movement opcodes. The Bezier group is
+  closer in normalized instruction order (78 versus 86 instructions), but
+  the curve group currently has a residual regression (102 versus 80). This
+  trade-off is not treated as exactness and remains an active target.
 
-The candidate parent now reserves the same `0x478`-byte frame as the target,
-and its GS-cookie handler displacement matches the target at `-0x484`. One
-important EH difference remains: the fog cleanup pointer is at EBP-`0x438`
-instead of EBP-`0x420`. The switch-case comparison still shows substantial
-register-allocation and instruction-order differences, especially in the
-movement/interpolation and high opcode groups. No strict exact credit is
-claimed for this function yet.
+The two laser constructor leaves and the piercing-damage leaf still pass their
+focused strict comparisons (30/30, 81/81 and 39/39 bytes). The large ECL owner
+has not received exact credit: its instruction ordering, register allocation,
+EH cleanup layout and several grouped opcode bodies still differ. No full cold
+replay was run for these incremental changes; only the affected source build
+and focused opcode/owner comparisons were used.
