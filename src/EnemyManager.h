@@ -114,7 +114,8 @@ struct EnemyManager
     static void kill_all_no_set_death();
     // Reaches the manager through g_EnemyManager; LTCG dropped this.
     HARNESS_CALLED BOOL is_enemy_alive(int id);
-    EnemyInf *find_enemy_by_id(int id);
+    // Reaches g_EnemyManager directly; callers do not pass this.
+    HARNESS_CALLED EnemyInf *find_enemy_by_id(int id);
     HARNESS_CALLED struct EnemyRef find_closest(D3DXVECTOR3 *pos, f32 max_dist);
     // 0x42ca00. Restarts the stage timer and forgets the enemy list, for
     // GameThread's thread_start. Called as g_EnemyManager->, with an

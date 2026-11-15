@@ -174,7 +174,7 @@ HARNESS_CALLED BOOL EnemyManager::is_enemy_alive(int id)
 
 // The live enemy with the given id, NULL if there is none.
 // FUNCTION: TH16 0x41a9c0
-EnemyInf *EnemyManager::find_enemy_by_id(int id)
+HARNESS_CALLED EnemyInf *EnemyManager::find_enemy_by_id(int id)
 {
     EnemyInf *enemy = NULL;
     if (id == 0)
