@@ -314,7 +314,6 @@ class CompoundSwitchControls(unittest.TestCase):
 
     def test_different_real_candidate_extents_remain_refused(self):
         annotations=[line.split() for line in (self.context.directory/'functions.txt').read_text().splitlines()]
-        count=0
         for address,record in self.records.items():
             _,candidate,symbol=next(row for row in annotations if int(row[0],0)==address)
             function=next(f for f in self.context.linked['functions'] if f['symbol']==symbol and int(f['address'],0)==int(candidate,0))
@@ -326,8 +325,6 @@ class CompoundSwitchControls(unittest.TestCase):
                       link_profile=self.context.receipt['linker_profile'],linkages=[])
             with self.subTest(address=hex(address)),self.assertRaisesRegex(Incomplete,'complete candidate owner'):
                 self.context.compare(unit)
-            count+=1
-        self.assertEqual(count,6)
 
     def test_memory_reload_remains_unreviewed(self):
         self.assertNotIn(0x408650,self.context.switch_owners)

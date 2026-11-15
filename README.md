@@ -65,9 +65,9 @@ for the exact comparison scope and retained evidence. Source-origin review and
 Factory acceptance remain separate from local comparison results.
 The [recorded import audit](docs/evidence/reference-import-20261108/README.md)
 lists the complete comparisons with differences and the outstanding evidence.
-Subsequent source fixes and retained failed experiments are recorded in
-[reference repairs](docs/knowledge/reference-repairs.md). Use `scripts/progress.py`
-for current results. Historical snapshots may require restoration through
+The [handoff](docs/NEXT_AGENT.md) records the current levers and dead ends.
+Use `scripts/progress.py` for current results and `scripts/check-frontier.py`
+to check that no function lost ground. Historical snapshots may require restoration through
 `scripts/evidence-archive.py`; see the artifact policy below.
 
 The selected historical tools are MSVC **19.10.25017**, linker

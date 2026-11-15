@@ -25,7 +25,8 @@ graph is an experiment, not a recovered production translation-unit partition.
 .venv/bin/python scripts/build.py
 .venv/bin/python scripts/audit-reference.py --write-units
 .venv/bin/python scripts/compare-linked-function.py reference-00401300
-.venv/bin/python scripts/test-strict-oracle.py
+.venv/bin/python scripts/check-frontier.py
+.venv/bin/python scripts/run-tests.py
 ```
 
 The individual unit name is an example; select one actually retained in

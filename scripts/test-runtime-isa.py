@@ -30,6 +30,7 @@ class ISAControls(unittest.TestCase):
         cls.pdb = pdb_section_contributions(cls.context.directory / 'th16.pdb')
         cls.statics = map_statics(cls.context.directory / 'th16.map')
         cls.bindings, cls.proof = review_isa(cls.context, cls.path)
+        cls.thunk = next(p['address'] for p in cls.context.publics if p['symbol'] == '_IsProcessorFeaturePresent@4')
 
     def review(self, context=None, text=None, pdb=None, statics=None):
         with tempfile.TemporaryDirectory(dir=ROOT / '.analysis') as directory:
@@ -85,7 +86,7 @@ class ISAControls(unittest.TestCase):
     def test_complete_initialized_mask_and_import_thunks_are_compared(self):
         for side, address, size in [('image', self.proof['enabled_candidate'], 4),
                                     ('target', self.proof['enabled_target'], 4),
-                                    ('image', 0x486a3a, 6), ('target', 0x486aaa, 6)]:
+                                    ('image', self.thunk, 6), ('target', 0x486aaa, 6)]:
             for offset in range(size):
                 with self.subTest(side=side, address=address, offset=offset), self.assertRaises(ValueError):
                     self.review(context=self.mutate(side, address + offset))
@@ -184,7 +185,7 @@ class ISAControls(unittest.TestCase):
         code = int(self.proof['initializer']['address'], 0)
         for remove, add in [([code+o], []) for o in self.proof['relocations']] + [
                 ([], [code+5]), ([], [code-1]), ([], [code+414]), ([], [self.proof['storage_candidate']+7]),
-                ([], [self.proof['enabled_candidate']-1]), ([0x486a3c], []), ([], [0x486a3c])]:
+                ([], [self.proof['enabled_candidate']-1]), ([self.thunk + 2], []), ([], [self.thunk + 2])]:
             context = copy.copy(self.context)
             context.image = Overlay(context.image, remove=remove, add=add)
             with self.subTest(remove=remove, add=add), self.assertRaises(ValueError): self.review(context=context)

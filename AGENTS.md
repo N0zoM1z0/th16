@@ -42,6 +42,8 @@ python3 scripts/ghidra.py function_context .analysis/context.txt 0x0047537B
 python3 scripts/compile-probe.py probes/toolchain-smoke.c -o build/probe.obj
 python3 scripts/msvc.py cl /?
 ./scripts/shared_runtime.py --describe wine
+.venv/bin/python scripts/check-frontier.py    # after audit-reference.py
+.venv/bin/python scripts/run-tests.py         # tooling controls, about 2 min
 ```
 
 For future reconstruction, write natural C/C++ source and compare the complete
