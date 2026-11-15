@@ -220,7 +220,7 @@ class LaserLineInf : public LaserDataInf
 // Parameters of an infinite laser, filled in by ECL before the laser is
 // created. Layout from ExpHP (zLaserInfiniteInner); his field names say
 // which BulletManager shooter field each one comes from.
-struct LaserInfiniteInner
+struct LaserInfiniteInnerData
 {
     D3DXVECTOR3 start_pos;
     // Moves the laser's origin each frame; set by ECL laserTrajectory (z
@@ -249,10 +249,25 @@ struct LaserInfiniteInner
     u32 flags;
     BulletEx ex[0x12];
 
-    // Inlined into LaserInfiniteInf's constructor; the out-of-line copy is
-    // at 0x411860.
-    LaserInfiniteInner();
 };
+
+// The embedded member's constructor is inlined at LaserInfiniteInf's
+// initialization point; the ECL temporary has a distinct out-of-line type.
+struct LaserInfiniteInnerInline : LaserInfiniteInnerData
+{
+    __forceinline LaserInfiniteInnerInline()
+    {
+        memset(this, 0, sizeof(*this));
+        speed = 8.0f;
+    }
+};
+struct LaserInfiniteInner : LaserInfiniteInnerData
+{
+    DECOMP_NOINLINE LaserInfiniteInner();
+};
+static_assert(sizeof(LaserInfiniteInnerData) == 0x378, "LaserInfiniteInnerData size");
+static_assert(sizeof(LaserInfiniteInner) == sizeof(LaserInfiniteInnerData), "LaserInfiniteInner size");
+static_assert(sizeof(LaserInfiniteInnerInline) == sizeof(LaserInfiniteInnerData), "LaserInfiniteInnerInline size");
 
 // A laser fixed at its origin that warns, widens, stays and shrinks
 // (ECL laserStOn). The name is ZUN's, from RTTI.
@@ -260,7 +275,7 @@ struct LaserInfiniteInner
 class LaserInfiniteInf : public LaserDataInf
 {
   public:
-    LaserInfiniteInner inner;
+    LaserInfiniteInnerInline inner;
     i32 unk_94c;
     AnmVm vm_950;
     AnmVm vm_f4c;

@@ -864,7 +864,7 @@ HARNESS_CALLED i32 LaserManager::clear_all(i32 mode, i32 skip_invuln)
 }
 
 // FUNCTION: TH16 0x411860
-LaserInfiniteInner::LaserInfiniteInner()
+DECOMP_NOINLINE LaserInfiniteInner::LaserInfiniteInner()
 {
     memset(this, 0, sizeof(LaserInfiniteInner));
     speed = 8.0f;
@@ -2281,7 +2281,7 @@ i32 LaserInfiniteInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32
 // FUNCTION: TH16 0x435050
 i32 LaserInfiniteInf::initialize(void *params)
 {
-    inner = *(LaserInfiniteInner *)params;
+    memcpy(&inner, params, sizeof(inner));
     bullet_type = inner.type;
     state = LASER_STATE_WARNING;
     kind = LASER_INFINITE;
