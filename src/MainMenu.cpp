@@ -962,7 +962,7 @@ extern const char *const g_demo_replay_names[3] = {"demo/demo1.rpy", "demo/demo2
 // Plays a demo replay after 30 idle seconds on the title screen, starts the
 // title BGM a few frames after it appears, and runs the current screen.
 // The input test masks the low word (a u16 cast compares the word in
-// memory) and the timer ticks as tick_mixed.
+// memory) and the timer ticks as tick_goto.
 // The demo index steps as `++` then `%= 3`, which gives the original's
 // imul 0x55555555 sequence ((x + 1) % 3 compiles to idiv).
 // TODO: the original spills the replay pointer to [ebp-4] (ours keeps it in
@@ -1191,7 +1191,7 @@ i32 TitleInf::on_tick()
         do_replay_save();
         break;
     }
-    time_in_state.tick_mixed();
+    time_in_state.tick_goto();
     return 1;
 }
 

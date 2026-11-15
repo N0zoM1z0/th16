@@ -1834,8 +1834,8 @@ i32 Player::on_tick_body()
         item_attract_box_unfocused.min_pos = inner.pos - item_attract_box_unfocused_halfsize;
         item_attract_box_unfocused.max_pos = inner.pos + item_attract_box_unfocused_halfsize;
     }
-    // tick_nested: the original keeps 1.0f in a register for the ticks.
-    inner.time_in_state.tick_nested();
+    // The stage ticks are tick_nested: the original keeps 1.0f in a register.
+    inner.time_in_state.tick_goto();
     inner.time_in_stage.tick_nested();
     inner.shot_time_in_stage.tick_nested();
     // Shooting: not during dialogue or before the stage's enemies run.

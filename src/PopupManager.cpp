@@ -78,8 +78,8 @@ int __fastcall PopupManager::on_draw_thunk(void *arg)
     return ((PopupManager *)arg)->on_draw();
 }
 
-// Both timers tick with tick_nested, which loads 1.0f into a register once
-// for the two loops like the original.
+// The popup timers tick with tick_nested (1.0f loaded into a register once,
+// like the original) and the strings' timers with tick.
 // TODO: the original addresses each string through its timer's current
 // field (ours through speed_index; tick_in_place in the second loop gives
 // current there but reccmp rates it lower), assigns the hoisted float
@@ -109,7 +109,7 @@ int PopupManager::on_tick()
     {
         if (str->active)
         {
-            str->time.tick_nested();
+            str->time.tick();
             if (str->time.current > 60)
             {
                 i32 alpha = (str->color >> 24) - 4;
