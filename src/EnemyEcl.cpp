@@ -605,8 +605,6 @@ int EnemyData::ecl_run_over_300()
         position_interp->bezier_2 = g_zero_vec;
         position_interp->method_for_3d = full->context.current_context->get_int_arg(1);
         position_interp->flag_1d &= ~1;
-    // Position and per-axis movement share the initial, goal and timer setup.
-    initialize_position_goal:
         position_interp->initial = position->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : position->pos.x, goal_y > -999999.0 ? goal_y : position->pos.y, 0.0f);
         position_interp->reset_timer();
@@ -650,7 +648,11 @@ int EnemyData::ecl_run_over_300()
         position_interp->flag_1d |= 1;
         position_interp->move_curve_mode = full->context.current_context->get_int_arg(2);
         position_interp->flag_1d |= 1;
-        goto initialize_position_goal;
+        position_interp->initial = position->pos;
+        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : position->pos.x, goal_y > -999999.0 ? goal_y : position->pos.y, 0.0f);
+        position_interp->reset_timer();
+        position->flags &= ~0xf;
+        break;
     }
     // moveBezier(time, b1x, b1y, x, y, b2x, b2y), moveBezierRel
     case ECL_OP_MOVE_BEZIER:
