@@ -705,9 +705,11 @@ int EnemyData::ecl_run_over_300()
         InterpStrange1 *position_interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
         f32 goal_x = full->context.current_context->get_float_arg(3);
         f32 goal_y = full->context.current_context->get_float_arg(4);
-        position_interp->bezier_1.x = full->context.current_context->get_float_arg(1);
-        position_interp->bezier_1.y = full->context.current_context->get_float_arg(2);
-        position_interp->bezier_1.z = 0.0f;
+        Float3 bezier_1;
+        bezier_1.x = full->context.current_context->get_float_arg(1);
+        bezier_1.y = full->context.current_context->get_float_arg(2);
+        bezier_1.z = 0.0f;
+        position_interp->bezier_1 = bezier_1;
         position_interp->bezier_2.x = full->context.current_context->get_float_arg(5);
         position_interp->bezier_2.y = full->context.current_context->get_float_arg(6);
         position_interp->bezier_2.z = 0.0f;
