@@ -206,8 +206,8 @@ static __forceinline void ecl_laser_beam_on(EnemyData *enemy)
 {
     LaserBeamInner params;
     i32 idx = enemy->get_int_arg(0);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     get_shot_origin(enemy, idx, &params.start_pos);
+    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     params.color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
     params.timing = enemy->bullet_props[idx].laser_timing[0];
@@ -223,8 +223,8 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
 {
     LaserCurveInner params;
     i32 idx = enemy->get_int_arg(0);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     get_shot_origin(enemy, idx, &params.start_pos);
+    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     params.type = enemy->bullet_props[idx].type;
     params.color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
