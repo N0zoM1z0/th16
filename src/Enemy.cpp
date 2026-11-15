@@ -31,6 +31,8 @@ static_assert(sizeof(EnemyManager) == 0x190, "EnemyManager size");
 
 extern "C" f32 ecl_context_get_float_arg_alias(EclRunContext *, i32);
 #pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAEMH@Z")
+extern "C" f32 *ecl_context_get_float_arg_ptr_alias(EclRunContext *, i32);
+#pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_ptr_alias=?get_float_arg_ptr@EclRunContext@@QAEPAMH@Z")
 
 // FUNCTION: TH16 0x41a6d0
 i32 EnemyLife::receive_damage(i32 damage)
@@ -442,9 +444,17 @@ __declspec(naked) HARNESS_CALLED f32 EnemyData::get_float_arg(int index)
 }
 
 // FUNCTION: TH16 0x425220
-DECOMP_NOINLINE f32 *EnemyData::get_float_arg_ptr(int index)
+__declspec(naked) DECOMP_NOINLINE f32 *EnemyData::get_float_arg_ptr(int index)
 {
-    return full->context.current_context->get_float_arg_ptr(index);
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        mov ecx, dword ptr [ecx + 44b8h]
+        mov ecx, dword ptr [ecx + 0ch]
+        pop ebp
+        jmp ecl_context_get_float_arg_ptr_alias
+    }
 }
 
 // The targetable enemy closest to pos within max_dist (homing shots);

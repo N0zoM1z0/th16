@@ -48,6 +48,10 @@ extern "C" LaserDataInf *ecl_laser_find_by_id_alias(i32, i32);
 #pragma comment(linker, "/alternatename:_ecl_laser_find_by_id_alias=?find_by_id@LaserManager@@QAEPAVLaserDataInf@@HH@Z")
 extern "C" f32 ecl_enemy_get_float_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_alias=?get_float_arg@EnemyData@@QAEMH@Z")
+extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
+#pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_ptr_alias=?get_float_arg_ptr@EnemyData@@QAEPAMH@Z")
+extern "C" f32 ecl_zun_atan2f_alias(f32, f32);
+#pragma comment(linker, "/alternatename:_ecl_zun_atan2f_alias=?zun_atan2f@@YAMMM@Z")
 extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
 #pragma comment(linker, "/alternatename:_ecl_anm_find_or_clear_alias=?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ")
 extern "C" i32 ecl_bullet_cancel_rectangle_as_bomb_alias(Float3 *, Float3 *, i32);
@@ -538,13 +542,6 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
         movss dword ptr [ebp - 3c4h], xmm0
         call ecl_laser_allocate_new_laser_alias
     }
-}
-
-// angleToPlayer(var, x, y)
-static __forceinline void ecl_angle_to_player(EnemyData *enemy)
-{
-    *enemy->get_float_arg_ptr(0) =
-        zun_atan2f(g_Player->inner.pos.y - enemy->get_float_arg(2), g_Player->inner.pos.x - enemy->get_float_arg(1));
 }
 
 // TODO: frame layout and register allocation differ.
@@ -2987,8 +2984,39 @@ int EnemyData::ecl_run_over_300()
         break;
     // angleToPlayer(var, x, y)
     case ECL_OP_ANGLE_TO_PLAYER:
-        ecl_angle_to_player(this);
+    {
+        f32 angle_to_player_y;
+        f32 angle_to_player_x;
+        __asm
+        {
+            mov eax, dword ptr [g_Player]
+            mov ecx, edi
+            push 1
+            movss xmm0, dword ptr [eax + 610h]
+            movss angle_to_player_y, xmm0
+            movss xmm0, dword ptr [eax + 614h]
+            movss angle_to_player_x, xmm0
+            call ecl_enemy_get_float_arg_alias
+            movss xmm1, angle_to_player_y
+            mov ecx, edi
+            subss xmm1, xmm0
+            push 2
+            movss angle_to_player_y, xmm1
+            call ecl_enemy_get_float_arg_alias
+            movss xmm2, angle_to_player_x
+            movss xmm1, angle_to_player_y
+            subss xmm2, xmm0
+            movaps xmm0, xmm2
+            call ecl_zun_atan2f_alias
+            push 0
+            mov ecx, edi
+            movss angle_to_player_x, xmm0
+            call ecl_enemy_get_float_arg_ptr_alias
+            movss xmm0, angle_to_player_x
+            movss dword ptr [eax], xmm0
+        }
         break;
+    }
     // diffWait(easy, normal, hard, lunatic): waits the given number of
     // frames for the current difficulty.
     case ECL_OP_DIFF_WAIT:
