@@ -2595,7 +2595,14 @@ int EnemyData::ecl_run_over_300()
     {
         f32 radius = get_float_arg(0);
         g_BulletManager->cancel_radius_as_bomb(&final_pos.pos, radius, 1);
-        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 1, 1);
+        __asm
+        {
+            movss xmm2, radius
+            push 1
+            push 1
+            push esi
+            call ecl_laser_cancel_in_radius_alias
+        }
         break;
     }
     // etClear2(radius)
@@ -2603,7 +2610,14 @@ int EnemyData::ecl_run_over_300()
     {
         f32 radius = get_float_arg(0);
         g_BulletManager->cancel_radius_as_bomb(&final_pos.pos, radius, 0);
-        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 0, 1);
+        __asm
+        {
+            movss xmm2, radius
+            push 1
+            push 0
+            push esi
+            call ecl_laser_cancel_in_radius_alias
+        }
         break;
     }
     // setChapter(chapter)
