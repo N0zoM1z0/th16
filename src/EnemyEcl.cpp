@@ -398,7 +398,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ANM_PLAY_ABS:
     {
         i32 file = full->context.current_context->get_int_arg(0);
-        g_EffectManager->track(g_EnemyManager->anim_statement_anms[file]->create_vm_front(full->context.current_context->get_int_arg(1), -1, 0));
+        i32 script = full->context.current_context->get_int_arg(1);
+        g_EffectManager->track(g_EnemyManager->anim_statement_anms[file]->create_vm_front(script, -1, 0));
         break;
     }
     // anm339(file, script, frames): anmPlayAbs, then runs the VM for some
@@ -466,14 +467,16 @@ int EnemyData::ecl_run_over_300()
     }
     // anmReset: back to the main script in slot 0.
     case ECL_OP_ANM_RESET:
+    {
         delete_vm_and_clear(anm_ids[0]);
-        anm_ids[0] =
-            g_EnemyManager->anim_statement_anms[selected_anm_index]->create_vm_front(anm_set_main, anm_layers + 7, 0);
+        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        anm_ids[0] = anm->create_vm_front(anm_set_main, anm_layers + 7, 0);
         flags_low &= ~ENEMY_FLAG_DIRECTIONAL_ANM;
         anm_slot_0_script = anm_set_main;
         anm_direction = 0;
         anm_slot_0_anm_index = selected_anm_index;
         break;
+    }
     // anmSelectedPlay(slot)
     case ECL_OP_ANM_SELECTED_PLAY:
     {
