@@ -685,7 +685,7 @@ address,name,module,source_file,notes
 0x0043D970,Supervisor::setup_special_anms,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043DC30,Supervisor::release_surfaces,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043DC90,_tanf,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x0043DCB0,___local_stdio_scanf_options,CrtInline,src/CrtInline.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x0043DCB0,___local_stdio_scanf_options,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043DCC0,Supervisor::release_dinput,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043DCE0,supervisor_debug_log,Supervisor,src/Supervisor.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x0043DCF0,SoundManager::tick_bgm_fade,SoundManager,src/SoundManager.cpp,Reference candidate; local comparison is separate from Factory acceptance.

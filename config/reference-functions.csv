@@ -417,7 +417,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004253F0,ecl_ext_damage_stored,src/Enemy.cpp,?ecl_ext_damage_stored@@YIHPAUEnemyData@@H@Z,exact,,.analysis/reference-audit.json
 0x00425410,ecl_ext_damage_anm_hurtbox,src/Enemy.cpp,?ecl_ext_damage_anm_hurtbox@@YIHPAUEnemyData@@H@Z,mismatch,,.analysis/reference-audit.json
 0x00425530,InterpFloat2::reset_timer,src/Interp.cpp,?reset_timer@InterpFloat2@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x00425570,InterpFloat2::step_radial_dist,src/Interp.cpp,?step_radial_dist@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ,mismatch,,.analysis/reference-audit.json
+0x00425570,InterpFloat2::step_radial_dist,src/Interp.cpp,?step_radial_dist@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00425870,InterpStrange1::reset_timer,src/Interp.cpp,?reset_timer@InterpStrange1@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004258B0,InterpStrange1::step,src/Interp.cpp,?step@InterpStrange1@@QAE?AUD3DXVECTOR3@@XZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00425D80,ZunList<void>::append,src/ZunList.cpp,?append@?$ZunList@X@@QAEXPAU1@@Z,exact,,.analysis/reference-audit.json
@@ -439,7 +439,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004268C0,Gui::Gui,src/Gui.cpp,??0Gui@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00426B00,Gui::initialize,src/Gui.cpp,?initialize@Gui@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00426C10,Gui::load_stage_files,src/Gui.cpp,?load_stage_files@Gui@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x00426D70,Gui::setup_stage_hud,src/Gui.cpp,?setup_stage_hud@Gui@@SAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00426D70,Gui::setup_stage_hud,src/Gui.cpp,?setup_stage_hud@Gui@@SAXXZ,exact,,.analysis/reference-audit.json
 0x00427730,Gui::release_stage_files,src/Gui.cpp,?release_stage_files@Gui@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00427950,??_GGuiMsgVm@@QAEPAXI@Z,src/Gui.cpp,??_GGuiMsgVm@@QAEPAXI@Z,exact,,.analysis/reference-audit.json
 0x00427970,Gui::release_msg,src/Gui.cpp,?release_msg@Gui@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -452,7 +452,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00429B10,Gui::on_draw_2_callback,src/Gui.cpp,?on_draw_2_callback@Gui@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x00429B20,GuiMsgVm::GuiMsgVm,src/Gui.cpp,??0GuiMsgVm@@QAE@PAX@Z,exact,,.analysis/reference-audit.json
 0x00429FF0,Gui::start_dialogue,src/Gui.cpp,?start_dialogue@Gui@@QAEXH@Z,exact,,.analysis/reference-audit.json
-0x0042A1D0,GuiMsgVm::run,src/Gui.cpp,?run@GuiMsgVm@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0042A1D0,GuiMsgVm::run,src/Gui.cpp,?run@GuiMsgVm@@QAEHXZ,incomplete,reviewed switch ownership: switch table lacks its reviewed alignment padding,.analysis/reference-audit.json
 0x0042B480,GuiMsgVm::update_callout,src/Gui.cpp,?update_callout@GuiMsgVm@@QAEXPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0042B5F0,Gui::textbox_on_draw,src/Gui.cpp,?textbox_on_draw@Gui@@SIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0042B610,GuiMsgVm::hide,src/Gui.cpp,?hide@GuiMsgVm@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -685,7 +685,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043D970,Supervisor::setup_special_anms,src/Supervisor.cpp,?setup_special_anms@Supervisor@@QAEXXZ,mismatch,,.analysis/reference-audit.json
 0x0043DC30,Supervisor::release_surfaces,src/Supervisor.cpp,?release_surfaces@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043DC90,_tanf,src/Supervisor.cpp,_tanf,exact,,.analysis/reference-audit.json
-0x0043DCB0,___local_stdio_scanf_options,src/CrtInline.cpp,___local_stdio_scanf_options,incomplete,PDB object differs from the declared source owner,.analysis/reference-audit.json
+0x0043DCB0,___local_stdio_scanf_options,src/Supervisor.cpp,___local_stdio_scanf_options,exact,,.analysis/reference-audit.json
 0x0043DCC0,Supervisor::release_dinput,src/Supervisor.cpp,?release_dinput@Supervisor@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043DCE0,supervisor_debug_log,src/Supervisor.cpp,?supervisor_debug_log@@YAXPBDZZ,exact,,.analysis/reference-audit.json
 0x0043DCF0,SoundManager::tick_bgm_fade,src/SoundManager.cpp,?tick_bgm_fade@SoundManager@@SAXXZ,exact,,.analysis/reference-audit.json
@@ -782,7 +782,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004475F0,ZunAngle::operator*,src/ZunAngle.cpp,??DZunAngle@@QBE?AU0@M@Z,exact,,.analysis/reference-audit.json
 0x00447650,ZunAngle::operator+,src/ZunAngle.cpp,??HZunAngle@@QBE?AU0@ABU0@@Z,exact,,.analysis/reference-audit.json
 0x004476B0,player_sincosmul,src/PlayerShot.cpp,?player_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
-0x004476D0,Player::set_position_subpixel,src/Player.cpp,?set_position_subpixel@Player@@QAEXPAUInt2@@@Z,mismatch,,.analysis/reference-audit.json
+0x004476D0,Player::set_position_subpixel,src/Player.cpp,?set_position_subpixel@Player@@QAEXPAUInt2@@@Z,exact,,.analysis/reference-audit.json
 0x00447760,ReplayManager::initialize,src/ReplayManager.cpp,?initialize@ReplayManager@@QAEHHPBD@Z,exact,,.analysis/reference-audit.json
 0x00447C80,ReplayManager::~ReplayManager,src/ReplayManager.cpp,??1ReplayManager@@QAE@XZ,incomplete,1 linked fields lack independent symbol/addend bindings,.analysis/reference-audit.json
 0x00447E20,ReplayManager::create,src/ReplayManager.cpp,?create@ReplayManager@@SAPAU1@H@Z,exact,,.analysis/reference-audit.json
@@ -1001,7 +1001,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004630F0,AnmVm::step_velocities,src/AnmVmRun.cpp,?step_velocities@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x004632F0,AnmVm::update_special_vertices,src/AnmVmRun.cpp,?update_special_vertices@AnmVm@@QAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00463B30,AnmVm::step_interpolators,src/AnmVmRun.cpp,?step_interpolators@AnmVm@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x00463D40,InterpFloat2::step,src/Interp.cpp,?step@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ,mismatch,,.analysis/reference-audit.json
+0x00463D40,InterpFloat2::step,src/Interp.cpp,?step@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00464040,InterpAngle::reset_time,src/Interp.cpp,?reset_time@InterpAngle@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00464080,InterpAngle::step,src/Interp.cpp,?step@InterpAngle@@QAE?AUZunAngle@@XZ,exact,,.analysis/reference-audit.json
 0x004643B0,InterpInt::step,src/Interp.cpp,?step@InterpInt@@QAEHXZ,exact,,.analysis/reference-audit.json

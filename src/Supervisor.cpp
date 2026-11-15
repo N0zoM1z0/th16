@@ -867,6 +867,22 @@ HARNESS_CALLED void Supervisor::release_surfaces()
     g_Supervisor.arcade_surface_0 = NULL;
 }
 
+// The CRT header's __local_stdio_scanf_options has its out-of-line copy among
+// this file's functions in the original, so this object referenced it, but no
+// code in the binary calls it except the CRT's startup. Placeholder for that
+// lost reference: an sscanf in a function nothing calls, which the linker
+// discards.
+// LIBRARY: TH16 0x43dcb0 SYMBOL
+// ___local_stdio_scanf_options
+// GLOBAL: TH16 0x4df938 SYMBOL
+// ?_OptionsStorage@?1??__local_stdio_scanf_options@@9@4_KA
+i32 decomp_supervisor_scanf_reference(const char *text)
+{
+    i32 value = 0;
+    sscanf(text, "%d", &value);
+    return value;
+}
+
 // FUNCTION: TH16 0x43dcc0
 void Supervisor::release_dinput()
 {
