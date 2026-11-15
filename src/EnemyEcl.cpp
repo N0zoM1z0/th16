@@ -32,6 +32,12 @@ extern "C" void ecl_laser_infinite_inner_ctor_alias(void *);
 #pragma comment(linker, "/alternatename:_ecl_memset_alias=_memset")
 extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
+extern "C" i32 ecl_context_get_int_arg_alias(i32);
+#pragma comment(linker, "/alternatename:_ecl_context_get_int_arg_alias=?get_int_arg@EclRunContext@@QAEHH@Z")
+extern "C" void ecl_spellcard_start_alias(i32, const char *, i32, i32);
+#pragma comment(linker, "/alternatename:_ecl_spellcard_start_alias=?start@Spellcard@@QAEXHPBDHH@Z")
+extern "C" void ecl_zun_timer_set_value_alias(i32);
+#pragma comment(linker, "/alternatename:_ecl_zun_timer_set_value_alias=?set_value@ZunTimer@@QAEXH@Z")
 extern "C" i32 ecl_laser_cancel_in_radius_alias(Float3 *, i32, i32);
 #pragma comment(linker, "/alternatename:_ecl_laser_cancel_in_radius_alias=?cancel_in_radius@LaserManager@@QAEHPAUD3DXVECTOR3@@MHH@Z")
 
@@ -545,7 +551,10 @@ int EnemyData::ecl_run_over_300()
     InterpStrange1 *position_interp;
     f32 goal_x;
     f32 goal_y;
-    register EclRawInstr *instr = full->context.current_context->current_instr();
+    // The target keeps the owning EnemyInf context in a frame local and
+    // reuses it across the large switch rather than reloading this->full.
+    EnemyInf *volatile full_owner = full;
+    register EclRawInstr *instr = full_owner->context.current_context->current_instr();
     __asm { lea eax, ecl_stack_reserve }
     switch ((i16)instr->opcode)
     {
@@ -568,28 +577,28 @@ int EnemyData::ecl_run_over_300()
         break;
     // anmSelect(file)
     case ECL_OP_ANM_SELECT:
-        selected_anm_index = full->context.current_context->get_int_arg(0);
+        selected_anm_index = full_owner->context.current_context->get_int_arg(0);
         break;
     // moveSetMirror(mirrored)
     case ECL_OP_MOVE_SET_MIRROR:
-        ((EnemyFlagsLow *)&flags_low)->mirrored = full->context.current_context->get_int_arg(0);
+        ((EnemyFlagsLow *)&flags_low)->mirrored = full_owner->context.current_context->get_int_arg(0);
         break;
     // lifeHide(hide)
     case ECL_OP_LIFE_HIDE:
-        g_EnemyManager->inner.life_bar_hidden = full->context.current_context->get_int_arg(0);
+        g_EnemyManager->inner.life_bar_hidden = full_owner->context.current_context->get_int_arg(0);
         break;
     // zIndex(layer)
     case ECL_OP_Z_INDEX:
-        anm_layers = full->context.current_context->get_int_arg(0);
+        anm_layers = full_owner->context.current_context->get_int_arg(0);
         break;
     // hitSound(sound)
     case ECL_OP_HIT_SOUND:
-        hit_sound = full->context.current_context->get_int_arg(0);
+        hit_sound = full_owner->context.current_context->get_int_arg(0);
         break;
     // scoreAdd(points)
     case ECL_OP_SCORE_ADD:
     {
-        i32 points = full->context.current_context->get_int_arg(0);
+        i32 points = full_owner->context.current_context->get_int_arg(0);
         g_Globals.add_to_score(points);
         g_PopupManager->generate_small_score_popup(&final_pos.pos, points, -1);
         break;
@@ -601,9 +610,9 @@ int EnemyData::ecl_run_over_300()
     // anmMove(slot, x, y): the offset of a slot's VM.
     case ECL_OP_ANM_MOVE:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
-        anm_pos_array[slot].x = full->context.current_context->get_float_arg(1);
-        anm_pos_array[slot].y = full->context.current_context->get_float_arg(2);
+        i32 slot = full_owner->context.current_context->get_int_arg(0);
+        anm_pos_array[slot].x = full_owner->context.current_context->get_float_arg(1);
+        anm_pos_array[slot].y = full_owner->context.current_context->get_float_arg(2);
         anm_pos_array[slot].z = 0.0f;
         break;
     }
@@ -625,15 +634,15 @@ int EnemyData::ecl_run_over_300()
         break;
     // unknown566: dies now.
     case ECL_OP_DIE_NOW:
-        if (full->die())
+        if (full_owner->die())
         {
             return 1;
         }
         break;
     // enm323(file, script): the death animation.
     case ECL_OP_DEATH_ANM:
-        death_anm_index = full->context.current_context->get_int_arg(0);
-        death_anm_script = full->context.current_context->get_int_arg(1);
+        death_anm_index = full_owner->context.current_context->get_int_arg(0);
+        death_anm_script = full_owner->context.current_context->get_int_arg(1);
         break;
     // die: the death sound and animation without dying.
     case ECL_OP_DIE:
@@ -657,7 +666,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // enm322(index, value)
     case ECL_OP_ANM_PARENT:
-        anm_parent_slot[full->context.current_context->get_int_arg(0)] = full->context.current_context->get_int_arg(1);
+        anm_parent_slot[full_owner->context.current_context->get_int_arg(0)] = full_owner->context.current_context->get_int_arg(1);
         break;
     // stageLogo
     case ECL_OP_STAGE_LOGO:
@@ -667,31 +676,31 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ANM_PLAY_POS:
     {
         // y is read before x as in the original (random variables draw from the replay RNG).
-        f32 y = full->context.current_context->get_float_arg(3);
-        f32 x = full->context.current_context->get_float_arg(2);
+        f32 y = full_owner->context.current_context->get_float_arg(3);
+        f32 x = full_owner->context.current_context->get_float_arg(2);
         Float3 pos = Float3(x, y, 0.0f) + final_pos.pos;
-        g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)], full->context.current_context->get_int_arg(1),
-                                                  &pos, full->context.current_context->get_float_arg(4)));
+        g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full_owner->context.current_context->get_int_arg(0)], full_owner->context.current_context->get_int_arg(1),
+                                                  &pos, full_owner->context.current_context->get_float_arg(4)));
         break;
     }
     // anmPlay(file, script)
     case ECL_OP_ANM_PLAY:
-        g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)], full->context.current_context->get_int_arg(1),
+        g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full_owner->context.current_context->get_int_arg(0)], full_owner->context.current_context->get_int_arg(1),
                                                   &final_pos.pos, 0.0f));
         break;
     // anmPlayHigh(file, script)
     case ECL_OP_ANM_PLAY_HIGH:
     {
-        i32 script = full->context.current_context->get_int_arg(1);
-        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)];
+        i32 script = full_owner->context.current_context->get_int_arg(1);
+        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[full_owner->context.current_context->get_int_arg(0)];
         g_EffectManager->track(anm->create_vm(script, &final_pos.pos, 0.0f, -1, 0));
         break;
     }
     // anmPlayAbs(file, script)
     case ECL_OP_ANM_PLAY_ABS:
     {
-        i32 file = full->context.current_context->get_int_arg(0);
-        i32 script = full->context.current_context->get_int_arg(1);
+        i32 file = full_owner->context.current_context->get_int_arg(0);
+        i32 script = full_owner->context.current_context->get_int_arg(1);
         g_EffectManager->track(g_EnemyManager->anim_statement_anms[file]->create_vm_front(script, -1, 0));
         break;
     }
@@ -699,11 +708,11 @@ int EnemyData::ecl_run_over_300()
     // frames at once.
     case ECL_OP_ANM_339:
     {
-        i32 file = full->context.current_context->get_int_arg(0);
-        AnmId id = g_EnemyManager->anim_statement_anms[file]->create_vm_front(full->context.current_context->get_int_arg(1), -1, 0);
+        i32 file = full_owner->context.current_context->get_int_arg(0);
+        AnmId id = g_EnemyManager->anim_statement_anms[file]->create_vm_front(full_owner->context.current_context->get_int_arg(1), -1, 0);
         g_EffectManager->track(id);
         AnmVm *vm = id.find_or_clear();
-        for (i32 i = 0; i < full->context.current_context->get_int_arg(2); i++)
+        for (i32 i = 0; i < full_owner->context.current_context->get_int_arg(2); i++)
         {
             ecl_run_vm(vm);
         }
@@ -712,13 +721,13 @@ int EnemyData::ecl_run_over_300()
     // anmPlayRotate(file, script, rotation)
     case ECL_OP_ANM_PLAY_ROTATE:
     {
-        AnmId id = create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)], full->context.current_context->get_int_arg(1),
+        AnmId id = create_vm_front_at(g_EnemyManager->anim_statement_anms[full_owner->context.current_context->get_int_arg(0)], full_owner->context.current_context->get_int_arg(1),
                                       &final_pos.pos, 0.0f);
         AnmVm *vm = id.find_or_clear();
         if (vm != NULL)
         {
             vm->entity_pos = final_pos.pos;
-            vm->rotation.z = full->context.current_context->get_float_arg(2);
+            vm->rotation.z = full_owner->context.current_context->get_float_arg(2);
             vm->flags_lo |= ANM_VM_ROTATION_CHANGED;
         }
         g_EffectManager->track(id);
@@ -727,15 +736,15 @@ int EnemyData::ecl_run_over_300()
     // anm334(effect)
     case ECL_OP_ANM_334:
     {
-        i32 effect = full->context.current_context->get_int_arg(0);
+        i32 effect = full_owner->context.current_context->get_int_arg(0);
         g_EffectManager->create_tracked(effect, &final_pos.pos, 0);
         break;
     }
     // anmSetMain(slot, script)
     case ECL_OP_ANM_SET_MAIN:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
-        i32 script = full->context.current_context->get_int_arg(1);
+        i32 slot = full_owner->context.current_context->get_int_arg(0);
+        i32 script = full_owner->context.current_context->get_int_arg(1);
         delete_vm_and_clear(anm_ids[slot]);
         anm_ids[slot] =
             g_EnemyManager->anim_statement_anms[selected_anm_index]->create_vm_front(script, anm_layers + 7, 0);
@@ -773,7 +782,7 @@ int EnemyData::ecl_run_over_300()
     // anmSelectedPlay(slot)
     case ECL_OP_ANM_SELECTED_PLAY:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
+        i32 slot = full_owner->context.current_context->get_int_arg(0);
         delete_vm_and_clear(anm_ids[slot]);
         anm_ids[slot] = g_EnemyManager->anim_statement_anms[selected_anm_index]->create_vm_front(anm_set_main + 5,
                                                                                                  anm_layers + 7, 0);
@@ -793,8 +802,8 @@ int EnemyData::ecl_run_over_300()
     // itself for negative n.
     case ECL_OP_ANM_316:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
-        i32 n = full->context.current_context->get_int_arg(1);
+        i32 slot = full_owner->context.current_context->get_int_arg(0);
+        i32 n = full_owner->context.current_context->get_int_arg(1);
         AnmId *id = &anm_ids[slot];
         delete_vm_and_clear(*id);
         AnmLoaded *anm = g_EnemyManager->anim_statement_anms[selected_anm_index];
@@ -823,8 +832,8 @@ int EnemyData::ecl_run_over_300()
     // anmSwitch(slot, interrupt)
     case ECL_OP_ANM_SWITCH:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
-        AnmManager::interrupt_tree(anm_ids[slot], (i16)full->context.current_context->get_int_arg(1));
+        i32 slot = full_owner->context.current_context->get_int_arg(0);
+        AnmManager::interrupt_tree(anm_ids[slot], (i16)full_owner->context.current_context->get_int_arg(1));
         break;
     }
     // moveReset: folds rel_pos into abs_pos and stops all movement.
@@ -853,8 +862,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS ? &abs_pos : &rel_pos;
-        f32 x = full->context.current_context->get_float_arg(0);
-        f32 y = full->context.current_context->get_float_arg(1);
+        f32 x = full_owner->context.current_context->get_float_arg(0);
+        f32 y = full_owner->context.current_context->get_float_arg(1);
         if (x > -999999.0)
         {
             pos_vel->pos.x = x;
@@ -873,9 +882,9 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_3D_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS_3D ? &abs_pos : &rel_pos;
-        f32 x = full->context.current_context->get_float_arg(0);
-        f32 y = full->context.current_context->get_float_arg(1);
-        f32 z = full->context.current_context->get_float_arg(2);
+        f32 x = full_owner->context.current_context->get_float_arg(0);
+        f32 y = full_owner->context.current_context->get_float_arg(1);
+        f32 z = full_owner->context.current_context->get_float_arg(2);
         pos_vel->pos.x += x;
         pos_vel->pos.y += y;
         pos_vel->pos.z += z;
@@ -893,9 +902,9 @@ int EnemyData::ecl_run_over_300()
                               ? offsetof(EnemyData, abs_pos)
                               : offsetof(EnemyData, rel_pos);
         position_interp = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(2);
-        goal_y = full->context.current_context->get_float_arg(3);
-        if (full->context.current_context->get_int_arg(0) <= 0)
+        goal_x = full_owner->context.current_context->get_float_arg(2);
+        goal_y = full_owner->context.current_context->get_float_arg(3);
+        if (full_owner->context.current_context->get_int_arg(0) <= 0)
         {
             position_interp->end_time = 0;
             break;
@@ -914,10 +923,10 @@ int EnemyData::ecl_run_over_300()
             goal_x = origin_x;
             goal_y = ((PosVel *)((u8 *)this + position_offset))->pos.y + goal_y;
         }
-        position_interp->end_time = full->context.current_context->get_int_arg(0);
+        position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
         position_interp->bezier_1 = g_zero_vec;
         position_interp->bezier_2 = g_zero_vec;
-        position_interp->method_for_3d = full->context.current_context->get_int_arg(1);
+        position_interp->method_for_3d = full_owner->context.current_context->get_int_arg(1);
         position_interp->flag_1d &= ~1;
         position_interp->initial = ((PosVel *)((u8 *)this + position_offset))->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : ((PosVel *)((u8 *)this + position_offset))->pos.x, goal_y > -999999.0 ? goal_y : ((PosVel *)((u8 *)this + position_offset))->pos.y, 0.0f);
@@ -936,9 +945,9 @@ int EnemyData::ecl_run_over_300()
                               ? offsetof(EnemyData, abs_pos)
                               : offsetof(EnemyData, rel_pos);
         position_interp = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(3);
-        goal_y = full->context.current_context->get_float_arg(4);
-        if (full->context.current_context->get_int_arg(0) <= 0)
+        goal_x = full_owner->context.current_context->get_float_arg(3);
+        goal_y = full_owner->context.current_context->get_float_arg(4);
+        if (full_owner->context.current_context->get_int_arg(0) <= 0)
         {
             position_interp->end_time = 0;
             break;
@@ -957,12 +966,12 @@ int EnemyData::ecl_run_over_300()
             goal_x = origin_x;
             goal_y = ((PosVel *)((u8 *)this + position_offset))->pos.y + goal_y;
         }
-        position_interp->end_time = full->context.current_context->get_int_arg(0);
+        position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
         position_interp->bezier_1 = g_zero_vec;
         position_interp->bezier_2 = g_zero_vec;
-        position_interp->method_for_1d = full->context.current_context->get_int_arg(1);
+        position_interp->method_for_1d = full_owner->context.current_context->get_int_arg(1);
         position_interp->flag_1d |= 1;
-        position_interp->move_curve_mode = full->context.current_context->get_int_arg(2);
+        position_interp->move_curve_mode = full_owner->context.current_context->get_int_arg(2);
         position_interp->flag_1d |= 1;
         position_interp->initial = ((PosVel *)((u8 *)this + position_offset))->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : ((PosVel *)((u8 *)this + position_offset))->pos.x,
@@ -977,17 +986,17 @@ int EnemyData::ecl_run_over_300()
     {
         position_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         position_interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(3);
-        goal_y = full->context.current_context->get_float_arg(4);
+        goal_x = full_owner->context.current_context->get_float_arg(3);
+        goal_y = full_owner->context.current_context->get_float_arg(4);
         Float3 bezier_1;
-        bezier_1.x = full->context.current_context->get_float_arg(1);
-        bezier_1.y = full->context.current_context->get_float_arg(2);
+        bezier_1.x = full_owner->context.current_context->get_float_arg(1);
+        bezier_1.y = full_owner->context.current_context->get_float_arg(2);
         bezier_1.z = 0.0f;
         Float3 bezier_2;
-        bezier_2.x = full->context.current_context->get_float_arg(5);
-        bezier_2.y = full->context.current_context->get_float_arg(6);
+        bezier_2.x = full_owner->context.current_context->get_float_arg(5);
+        bezier_2.y = full_owner->context.current_context->get_float_arg(6);
         bezier_2.z = 0.0f;
-        i32 end_time = full->context.current_context->get_int_arg(0);
+        i32 end_time = full_owner->context.current_context->get_int_arg(0);
         position_interp->flag_1d &= ~1;
         position_interp->bezier_1 = bezier_1;
         position_interp->end_time = end_time;
@@ -1008,8 +1017,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_VEL_REL_NM:
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_VEL || instr->opcode == ECL_OP_MOVE_VEL_NM ? &abs_pos : &rel_pos;
-        f32 angle = full->context.current_context->get_float_arg(0);
-        f32 speed = full->context.current_context->get_float_arg(1);
+        f32 angle = full_owner->context.current_context->get_float_arg(0);
+        f32 speed = full_owner->context.current_context->get_float_arg(1);
         if (angle > -999999.0)
         {
             if ((flags_low & ENEMY_FLAG_MIRRORED) && (instr->opcode == ECL_OP_MOVE_VEL || instr->opcode == ECL_OP_MOVE_VEL_REL))
@@ -1035,15 +1044,15 @@ int EnemyData::ecl_run_over_300()
         PosVel *pv = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM ? &abs_pos : &rel_pos;
         InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM ? &abs_angle_i : &rel_angle_i;
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM ? &abs_speed_i : &rel_speed_i;
-        f32 angle = full->context.current_context->get_float_arg(2);
-        f32 speed = full->context.current_context->get_float_arg(3);
-        if (full->context.current_context->get_int_arg(0) <= 0)
+        f32 angle = full_owner->context.current_context->get_float_arg(2);
+        f32 speed = full_owner->context.current_context->get_float_arg(3);
+        if (full_owner->context.current_context->get_int_arg(0) <= 0)
         {
             angle_i->end_time = 0;
             speed_i->end_time = 0;
             break;
         }
-        i32 mode = full->context.current_context->get_int_arg(1);
+        i32 mode = full_owner->context.current_context->get_int_arg(1);
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
             if (angle > -999999.0)
@@ -1088,7 +1097,7 @@ int EnemyData::ecl_run_over_300()
                 angle += ZUN_2PI;
             }
         }
-        angle_i->start(full->context.current_context->get_int_arg(0), mode, cur_angle, angle);
+        angle_i->start(full_owner->context.current_context->get_int_arg(0), mode, cur_angle, angle);
         speed_i->start(get_int_arg(0), mode, cur_speed, speed);
         pv->flags &= ~0xf;
         break;
@@ -1687,7 +1696,7 @@ int EnemyData::ecl_run_over_300()
         else
         {
             flags_low |= ENEMY_FLAG_BOSS;
-            g_EnemyManager->set_boss_id(boss_id, full);
+            g_EnemyManager->set_boss_id(boss_id, full_owner);
             own_boss_id = boss_id;
         }
         break;
@@ -2292,32 +2301,32 @@ int EnemyData::ecl_run_over_300()
             {
                 if (g_Globals.stage_num == 7 && g_Globals.chapter < 41)
                 {
-                    set_next(full, get_int_arg(0), 0, get_int_arg(2), "MBossDead");
+                    set_next(full_owner, get_int_arg(0), 0, get_int_arg(2), "MBossDead");
                 }
                 else
                 {
-                    set_next(full, get_int_arg(0), 0, get_int_arg(2), "BossDead");
+                    set_next(full_owner, get_int_arg(0), 0, get_int_arg(2), "BossDead");
                 }
             }
             else if (g_Globals.stage_num == 7 && g_Globals.chapter < 41)
             {
-                set_next(full, get_int_arg(0), 0, get_int_arg(2), "MBossBDead");
+                set_next(full_owner, get_int_arg(0), 0, get_int_arg(2), "MBossBDead");
             }
             else
             {
-                set_next(full, get_int_arg(0), 0, get_int_arg(2), "BossDead");
+                set_next(full_owner, get_int_arg(0), 0, get_int_arg(2), "BossDead");
             }
-            full->set_timeout(get_int_arg(0), "BossEscape");
+            full_owner->set_timeout(get_int_arg(0), "BossEscape");
         }
         else
         {
-            set_next(full, get_int_arg(0), get_int_arg(1), get_int_arg(2), sub);
+            set_next(full_owner, get_int_arg(0), get_int_arg(1), get_int_arg(2), sub);
         }
         break;
     }
     // setTimeout(index, sub).
     case ECL_OP_SET_TIMEOUT:
-        full->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
+        full_owner->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
         break;
     // setDeath(sub).
     case ECL_OP_SET_DEATH:
@@ -2375,41 +2384,95 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_SPELL_539:
     {
         char name[0x80];
-        i32 len = instr->args[3].i;
-        const char *src = (const char *)&instr->args[4];
-        u8 key = 0x77;
-        u8 step = 7;
-        i32 src_offset = (i32)(src - name);
-        for (i32 i = 0; i < len; i++)
+        __asm
         {
-            name[i] = name[i + src_offset] ^ key;
-            key += step;
-            step += 0x10;
+            mov edi, dword ptr [esi + 1ch]
+            lea ecx, [esi + 20h]
+            mov dword ptr [ebp - 41ch], edi
+            test edi, edi
+            mov edi, dword ptr [ebp - 0b4h]
+            mov ah, 77h
+            mov byte ptr [ebp - 449h], 7
+            jle spell_name_decoded
+            lea edx, [ebp - 90h]
+            sub ecx, edx
+            mov dl, byte ptr [ebp - 449h]
+            mov dword ptr [ebp - 420h], ecx
+            xor edi, edi
+            mov esi, ecx
+            nop
+        spell_decrypt_loop:
+            lea ecx, [ebp - 90h]
+            add ecx, edi
+            inc edi
+            mov al, byte ptr [ecx + esi]
+            xor al, ah
+            add ah, dl
+            add dl, 10h
+            mov byte ptr [ecx], al
+            cmp edi, dword ptr [ebp - 41ch]
+            jl spell_decrypt_loop
+        spell_name_decoded:
+            mov edi, dword ptr [ebp - 0b4h]
+            mov edx, dword ptr [ebp - 0b0h]
+            mov esi, dword ptr [ebp - 0b8h]
+            mov ecx, dword ptr [edx + 0ch]
+            push 0
+            call ecl_context_get_int_arg_alias
+            mov ecx, eax
+            movsx eax, word ptr [esi + 4]
+            mov dword ptr [ebp - 410h], ecx
+            sub eax, 219h
+            je spell_difficulty_537
+            sub eax, 1
+            je spell_difficulty_538
+            sub eax, 1
+            jne spell_difficulty_done
+            mov eax, dword ptr [g_Globals.difficulty]
+            add eax, -2
+            add ecx, eax
+            jmp spell_difficulty_done
+        spell_difficulty_538:
+            mov eax, dword ptr [g_Globals.difficulty]
+            dec eax
+            add ecx, eax
+            jmp spell_difficulty_done
+        spell_difficulty_537:
+            add ecx, dword ptr [g_Globals.difficulty]
+        spell_difficulty_done:
+            mov dword ptr [ebp - 410h], ecx
+            mov ecx, dword ptr [edi + 44b8h]
+            push 2
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            mov esi, eax
+            push 1
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            mov ecx, dword ptr [g_Spellcard]
+            push esi
+            push eax
+            lea eax, [ebp - 90h]
+            push eax
+            push dword ptr [ebp - 410h]
+            call ecl_spellcard_start_alias
+            or dword ptr [edi + 3f8ch], 1
+            mov eax, dword ptr [edi + 3f74h]
+            lea ecx, [eax*8]
+            sub ecx, eax
+            mov dword ptr [edi + 3f80h], ecx
         }
-        // The original inlines these three getters (0x473c90 through
-        // full), unlike the cases around.
-        i32 spell_id = full->context.current_context->get_int_arg(0);
-        switch ((i16)instr->opcode)
-        {
-        case ECL_OP_SPELL_537:
-            spell_id += g_Globals.difficulty;
-            break;
-        case ECL_OP_SPELL_538:
-            spell_id += g_Globals.difficulty - 1;
-            break;
-        case ECL_OP_SPELL_539:
-            spell_id += g_Globals.difficulty - 2;
-            break;
-        }
-        g_Spellcard->start(spell_id, name, full->context.current_context->get_int_arg(1),
-                           full->context.current_context->get_int_arg(2));
-        life.is_spell |= ENEMY_LIFE_SPELL;
-        life.current_scaled_by_seven = life.current * 7;
     }
         // fall through
     // timerReset().
     case ECL_OP_TIMER_RESET:
-        time_in_ecl.set_value(0);
+        __asm
+        {
+            push 0
+            lea ecx, [edi + 2bch]
+            call ecl_zun_timer_set_value_alias
+        }
         break;
     // spellMode(on).
     case ECL_OP_SPELL_MODE:
@@ -2775,7 +2838,7 @@ int EnemyData::ecl_run_over_300()
         {
             wait = lunatic;
         }
-        full->context.current_context->time -= wait;
+        full_owner->context.current_context->time -= wait;
         break;
     }
     // fog(radius, color): replaces the enemy's fog; radius 0 removes it.
