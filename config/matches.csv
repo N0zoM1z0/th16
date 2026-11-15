@@ -2,6 +2,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00401000,??__Eg_Arcfile@@YAXXZ,reference-00401000,local-strict-pass,12,12,12,.analysis/reference-audit.json
 0x00401010,??__Eg_GameErrorContext@@YAXXZ,reference-00401010,local-strict-pass,12,12,12,.analysis/reference-audit.json
 0x00401020,??__Eg_ZunMemory@@YAXXZ,reference-00401020,local-strict-pass,12,12,12,.analysis/reference-audit.json
+0x00401030,??__Eg_Supervisor@@YAXXZ,reference-00401030,local-strict-pass,194,194,194,.analysis/reference-audit.json
 0x00401100,??__Eg_static_player_inner@@YAXXZ,reference-00401100,local-strict-pass,10,10,10,.analysis/reference-audit.json
 0x00401110,??__Eg_arcfiles@@YAXXZ,reference-00401110,local-strict-pass,36,36,36,.analysis/reference-audit.json
 0x00401140,??__Eg_D3DThreadInf@@YAXXZ,reference-00401140,local-strict-pass,12,12,12,.analysis/reference-audit.json

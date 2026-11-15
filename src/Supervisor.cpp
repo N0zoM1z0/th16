@@ -57,6 +57,11 @@ static_assert(offsetof(Config, flags) == 0x2c, "Config::flags");
 static_assert(offsetof(GameWindow, save_dir) == 0x2d, "GameWindow::save_dir");
 static_assert(offsetof(SoundManager, bgm_dat_name) == 0x5560, "SoundManager::bgm_dat_name");
 
+// memset is a plain call here: as an intrinsic, the compiler folds the
+// constructor's memset and constant stores into g_Supervisor's static image
+// (they are dead under Supervisor's memset); the original's initializer keeps
+// them, before the Camera constructor calls.
+#pragma function(memset)
 Config::Config()
 {
     memset(this, 0, sizeof(Config));
@@ -78,6 +83,7 @@ Config::Config()
     window_y = CW_USEDEFAULT;
 }
 
+#pragma intrinsic(memset)
 Supervisor::Supervisor()
 {
     memset(this, 0, sizeof(Supervisor));
@@ -87,7 +93,6 @@ Supervisor::Supervisor()
 
 // GLOBAL: TH16 0x4c10d0
 Supervisor g_Supervisor;
-// TODO: the original keeps the Config constructor's memset and stores before the Camera constructor calls; ours drops them as overwritten by Supervisor's memset.
 // SYNTHETIC: TH16 0x401030
 // ??__Eg_Supervisor@@YAXXZ
 // SYNTHETIC: TH16 0x48ac40

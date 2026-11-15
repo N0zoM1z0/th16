@@ -2,7 +2,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00401000,??__Eg_Arcfile@@YAXXZ,src/Arcfile.cpp,??__Eg_Arcfile@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00401010,??__Eg_GameErrorContext@@YAXXZ,src/GameErrorContext.cpp,??__Eg_GameErrorContext@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00401020,??__Eg_ZunMemory@@YAXXZ,src/GameErrorContext.cpp,??__Eg_ZunMemory@@YAXXZ,exact,,.analysis/reference-audit.json
-0x00401030,??__Eg_Supervisor@@YAXXZ,src/Supervisor.cpp,??__Eg_Supervisor@@YAXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00401030,??__Eg_Supervisor@@YAXXZ,src/Supervisor.cpp,??__Eg_Supervisor@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00401100,??__Eg_static_player_inner@@YAXXZ,src/Player.cpp,??__Eg_static_player_inner@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00401110,??__Eg_arcfiles@@YAXXZ,src/Arcfile.cpp,??__Eg_arcfiles@@YAXXZ,exact,,.analysis/reference-audit.json
 0x00401140,??__Eg_D3DThreadInf@@YAXXZ,src/TextHelper.cpp,??__Eg_D3DThreadInf@@YAXXZ,exact,,.analysis/reference-audit.json
