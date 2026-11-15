@@ -722,11 +722,11 @@ int EnemyData::ecl_run_over_300()
         bezier_2.y = full->context.current_context->get_float_arg(6);
         bezier_2.z = 0.0f;
         i32 end_time = full->context.current_context->get_int_arg(0);
-        position_interp->bezier_1 = bezier_1;
-        position_interp->bezier_2 = bezier_2;
-        position_interp->end_time = end_time;
-        position_interp->method_for_3d = INTERP_BEZIER;
         position_interp->flag_1d &= ~1;
+        position_interp->bezier_1 = bezier_1;
+        position_interp->end_time = end_time;
+        position_interp->bezier_2 = bezier_2;
+        position_interp->method_for_3d = INTERP_BEZIER;
         position_interp->initial = ((PosVel *)((u8 *)this + position_offset))->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : ((PosVel *)((u8 *)this + position_offset))->pos.x,
                                        goal_y > -999999.0 ? goal_y : ((PosVel *)((u8 *)this + position_offset))->pos.y, 0.0f);
