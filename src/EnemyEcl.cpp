@@ -205,7 +205,7 @@ static __forceinline void ecl_laser_on(EnemyData *enemy)
         mov ecx, edi
         push 0
         call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 428h]
+        mov edx, dword ptr [ebp - 408h]
         lea esi, [edi + 5c0h]
         mov dword ptr [ebp - 40ch], eax
         lea edi, [ebp - 3b0h]
@@ -284,7 +284,7 @@ static __forceinline void ecl_laser_st_on(EnemyData *enemy)
         push 0
         mov ecx, edi
         call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 428h]
+        mov edx, dword ptr [ebp - 408h]
         lea esi, [edi + 5c0h]
         mov dword ptr [ebp - 40ch], eax
         lea edi, [ebp - 3a8h]
@@ -377,7 +377,7 @@ static __forceinline void ecl_laser_beam_on(EnemyData *enemy)
         mov ecx, edi
         push 0
         call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 428h]
+        mov edx, dword ptr [ebp - 408h]
         lea esi, [edi + 5c0h]
         mov ecx, eax
         lea edi, [ebp - 3a8h]
@@ -451,7 +451,7 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
         mov ecx, edi
         push 0
         call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 428h]
+        mov edx, dword ptr [ebp - 408h]
         lea esi, [edi + 5c0h]
         mov dword ptr [ebp - 40ch], eax
         lea edi, [ebp - 3bch]
@@ -530,8 +530,7 @@ int EnemyData::ecl_run_over_300()
     // The original dispatch frame owns the raw laser parameter blocks below.
     // Keep their backing stack range reserved even though the fields are written
     // by inline assembly rather than C++ locals.
-    volatile u8 ecl_stack_reserve[0x354];
-    ecl_stack_reserve[0x353] = 0;
+    u8 ecl_stack_reserve[0x354];
     // Keep the selected PosVel as a this-relative offset, like the original;
     // the interpolation state is kept as a pointer.
     i32 position_offset;
@@ -539,6 +538,7 @@ int EnemyData::ecl_run_over_300()
     f32 goal_x;
     f32 goal_y;
     register EclRawInstr *instr = full->context.current_context->current_instr();
+    __asm { lea eax, ecl_stack_reserve }
     switch ((i16)instr->opcode)
     {
     // enmCreateF and its variants: only without a boss.
@@ -2447,7 +2447,8 @@ int EnemyData::ecl_run_over_300()
         Float3 size;
         size.x = get_float_arg(0);
         size.y = get_float_arg(1);
-        g_BulletManager->cancel_rectangle_as_bomb(&final_pos.pos, &size, anm_ids[0].find_or_clear()->rotation.z, 1);
+        AnmVm *vm = anm_ids[0].find_or_clear();
+        g_BulletManager->cancel_rectangle_as_bomb(&final_pos.pos, &size, vm->rotation.z, 1);
         break;
     }
     // etClear(radius): the same without items.
