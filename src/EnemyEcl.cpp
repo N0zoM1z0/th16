@@ -14,6 +14,7 @@
 #include "Fog.h"
 #include "GameThread.h"
 #include "Laser.h"
+#include <intrin.h>
 #include "Player.h"
 #include "Rng.h"
 #include "ScreenEffect.h"
@@ -27,6 +28,8 @@
 static const f32 ecl_origin_threshold = 0.9f;
 extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
+extern "C" f32 ecl_normalize_angle_alias(f32);
+#pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
 extern "C" i32 ecl_bullet_shoot_alias(EnemyBulletShooter *);
 #pragma comment(linker, "/alternatename:_ecl_bullet_shoot_alias=?shoot_bullets@BulletManager@@QAEHPAUEnemyBulletShooter@@@Z")
 
@@ -184,20 +187,76 @@ static inline void ecl_run_vm(AnmVm *vm)
 static __forceinline void ecl_laser_on(EnemyData *enemy)
 {
     LaserLineInner params;
-    i32 idx = enemy->get_int_arg(0);
-    get_shot_origin_and_copy_ex(enemy, idx, &params.start_pos, params.ex);
-    params.bullet_type = enemy->bullet_props[idx].type;
-    params.bullet_color = enemy->bullet_props[idx].color;
-    params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
-    params.flags = enemy->bullet_props[idx].flags | 1;
-    params.speed = enemy->bullet_props[idx].spd1;
-    params.laser_new_arg_1 = enemy->bullet_props[idx].pos.x;
-    params.laser_new_arg_2 = enemy->bullet_props[idx].pos.y;
-    params.shot_sfx = enemy->bullet_props[idx].shot_sfx;
-    params.laser_new_arg_3 = enemy->bullet_props[idx].pos.z;
-    params.shot_transform_sfx = enemy->bullet_props[idx].shot_transform_sfx;
-    params.laser_new_arg_4 = enemy->bullet_props[idx].laser_new_arg_4;
-    params.distance = enemy->bullet_props[idx].distance;
+    i32 idx;
+    i32 shooter_offset;
+    __asm
+    {
+        push 0
+        mov ecx, edi
+        call ecl_enemy_get_int_arg_alias
+        mov idx, eax
+        mov edx, edi
+        lea esi, [edi + 5c0h]
+        lea edi, params.ex
+        lea ecx, [eax*8]
+        sub ecx, eax
+        lea eax, [eax + eax*2]
+        movss xmm0, dword ptr [edx + eax*4 + 3ea0h]
+        mov eax, idx
+        shl ecx, 7
+        add esi, ecx
+        mov shooter_offset, ecx
+        comiss xmm0, ecl_origin_threshold
+        mov ecx, 0c6h
+        lea eax, [eax + eax*2]
+        rep movsd
+        movss xmm1, dword ptr [edx + eax*4 + 3ddch]
+        jbe laser_on_relative_origin
+        movss xmm2, dword ptr [edx + eax*4 + 3e98h]
+        addss xmm2, dword ptr [edx + eax*4 + 3dd8h]
+        addss xmm1, dword ptr [edx + eax*4 + 3e9ch]
+        unpcklps xmm2, xmm1
+        movq qword ptr [ebp - 3e8h], xmm2
+        mov dword ptr [ebp - 3e0h], 0
+        jmp laser_on_origin_ready
+    laser_on_relative_origin:
+        movss xmm2, dword ptr [edx + eax*4 + 3dd8h]
+        movss xmm0, dword ptr [edx + eax*4 + 3de0h]
+        addss xmm2, dword ptr [edx + 44h]
+        addss xmm1, dword ptr [edx + 48h]
+        addss xmm0, dword ptr [edx + 4ch]
+        unpcklps xmm2, xmm1
+        movq qword ptr [ebp - 3e8h], xmm2
+        movss dword ptr [ebp - 3e0h], xmm0
+    laser_on_origin_ready:
+        mov esi, shooter_offset
+        mov eax, dword ptr [esi + edx + 598h]
+        movss xmm0, dword ptr [esi + edx + 5ach]
+        mov dword ptr [ebp - 3c4h], eax
+        mov eax, dword ptr [esi + edx + 59ch]
+        mov dword ptr [ebp - 3c0h], eax
+        call ecl_normalize_angle_alias
+        mov eax, dword ptr [esi + edx + 8f8h]
+        movss dword ptr [ebp - 3dch], xmm0
+        or eax, 1
+        movss xmm0, dword ptr [esi + edx + 5b4h]
+        movss dword ptr [ebp - 3c8h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5a0h]
+        movss dword ptr [ebp - 3d4h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5a4h]
+        mov dword ptr [ebp - 3b4h], eax
+        mov eax, dword ptr [esi + edx + 908h]
+        movss dword ptr [ebp - 3d8h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5a8h]
+        mov dword ptr [ebp - 98h], eax
+        mov eax, dword ptr [esi + edx + 90ch]
+        movss dword ptr [ebp - 3d0h], xmm0
+        movss xmm0, dword ptr [esi + edx + 8d8h]
+        mov dword ptr [ebp - 94h], eax
+        movss dword ptr [ebp - 3cch], xmm0
+        movss xmm0, dword ptr [esi + edx + 5bch]
+        movss dword ptr [ebp - 3bch], xmm0
+    }
     g_LaserManager->allocate_new_laser(LASER_LINE, &params);
 }
 
