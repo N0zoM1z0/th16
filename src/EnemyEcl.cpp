@@ -1960,10 +1960,10 @@ int EnemyData::ecl_run_over_300()
         const char *src = (const char *)&instr->args[4];
         u8 key = 0x77;
         u8 step = 7;
-        char *dest = name;
-        for (i32 i = 0; i < len; i++, dest++)
+        i32 src_offset = (i32)(src - name);
+        for (i32 i = 0; i < len; i++)
         {
-            *dest = src[i] ^ key;
+            name[i] = name[i + src_offset] ^ key;
             key += step;
             step += 0x10;
         }
