@@ -2536,9 +2536,9 @@ int EnemyData::ecl_run_over_300()
         Float3 offset;
         offset.x = get_float_arg(1);
         offset.y = get_float_arg(2);
-        offset.z = 0.0f;
         if (laser != NULL)
         {
+            offset.z = 0.0f;
             laser->position = offset;
         }
         break;
@@ -2550,9 +2550,9 @@ int EnemyData::ecl_run_over_300()
         Float3 trajectory;
         trajectory.x = get_float_arg(1);
         trajectory.y = get_float_arg(2);
-        trajectory.z = 0.0f;
         if (laser != NULL)
         {
+            trajectory.z = 0.0f;
             ((LaserInfiniteInf *)laser)->inner.velocity = trajectory;
         }
         break;
