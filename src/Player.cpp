@@ -497,8 +497,9 @@ HARNESS_CALLED void Player::set_position_subpixel(Int2 *pos)
 {
     inner.pos_subpixel.x = pos->x;
     inner.pos_subpixel.y = pos->y;
-    inner.pos.x = inner.pos_subpixel.x / 128.0f;
-    inner.pos.y = inner.pos_subpixel.y / 128.0f;
+    Int2 *sub = &inner.pos_subpixel;
+    inner.pos.x = sub->x / 128.0f;
+    inner.pos.y = sub->y / 128.0f;
     inner.main_options[0].should_instajump = 1;
     inner.main_options[1].should_instajump = 1;
     inner.main_options[2].should_instajump = 1;
