@@ -127,3 +127,31 @@ images/sources, complete scope/layout packets, registered original-only CFG,
 registration JSON, initial/final control logs, preexisting count check and
 canonical/progress/restoration reports. Retain the incremental build graph.
 Nothing is pushed, published or deployed.
+
+## Progress update (2026-11-15)
+
+The current candidate `EnemyData::ecl_run_over_300` PDB contribution is **21,260
+bytes** against the independently reviewed **21,408-byte** target owner. The
+candidate contribution is 148 bytes shorter and is not an exact match. The
+current decoded code spans are 19,825 candidate bytes versus 19,976 target
+bytes; the remaining contribution tail is 1,435 versus 1,432 bytes, so the
+three-byte data-extent difference is also still unaccounted for.
+
+Two structural changes account for the latest progress:
+
+- `LaserInfiniteInner` is split into an inline data-initialization base and an
+  ECL-facing out-of-line constructor. This preserves the original constructor
+  call in the large ECL dispatcher while allowing `LaserInfiniteInf` to
+  initialize its embedded data before its `AnmVm` members. Both constructor
+  owners now pass strict comparison (30/30 and 81/81 bytes).
+- `MOVE_CURVE` and `MOVE_BEZIER` now branch to one shared interpolation tail,
+  restoring a common reset/flag-clear path rather than duplicating it in both
+  case bodies.
+
+The candidate parent now reserves the same `0x478`-byte frame as the target,
+and its GS-cookie handler displacement matches the target at `-0x484`. One
+important EH difference remains: the fog cleanup pointer is at EBP-`0x438`
+instead of EBP-`0x420`. The switch-case comparison still shows substantial
+register-allocation and instruction-order differences, especially in the
+movement/interpolation and high opcode groups. No strict exact credit is
+claimed for this function yet.
