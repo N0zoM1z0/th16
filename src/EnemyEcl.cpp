@@ -158,8 +158,8 @@ static __forceinline void ecl_laser_on(EnemyData *enemy)
 {
     LaserLineInner params;
     i32 idx = enemy->get_int_arg(0);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     get_shot_origin(enemy, idx, &params.start_pos);
+    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     params.bullet_type = enemy->bullet_props[idx].type;
     params.bullet_color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
@@ -180,8 +180,8 @@ static __forceinline void ecl_laser_st_on(EnemyData *enemy)
 {
     LaserInfiniteInner params;
     i32 idx = enemy->get_int_arg(0);
-    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     get_shot_origin(enemy, idx, &params.start_pos);
+    memcpy(params.ex, enemy->bullet_props[idx].ex, sizeof(params.ex));
     params.type = enemy->bullet_props[idx].type;
     params.color = enemy->bullet_props[idx].color;
     params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
