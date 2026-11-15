@@ -411,18 +411,71 @@ static __forceinline void ecl_laser_beam_on(EnemyData *enemy)
 static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
 {
     LaserCurveInner params;
-    i32 idx = enemy->get_int_arg(0);
-    get_shot_origin_and_copy_ex(enemy, idx, &params.start_pos, params.ex);
-    params.type = enemy->bullet_props[idx].type;
-    params.color = enemy->bullet_props[idx].color;
-    params.ang_aim = normalize_angle(enemy->bullet_props[idx].ang_aim);
-    params.segment_count = enemy->bullet_props[idx].laser_timing[0];
-    params.unk_28 |= 1;
-    params.shot_sfx = enemy->bullet_props[idx].shot_sfx;
-    params.speed = enemy->bullet_props[idx].spd1;
-    params.shot_transform_sfx = enemy->bullet_props[idx].shot_transform_sfx;
-    params.laser_new_arg_4 = enemy->bullet_props[idx].laser_new_arg_4;
-    params.distance = enemy->bullet_props[idx].distance;
+    __asm
+    {
+        push 0
+        mov ecx, edi
+        call ecl_enemy_get_int_arg_alias
+        mov edx, edi
+        lea esi, [edi + 5c0h]
+        mov dword ptr [ebp - 40ch], eax
+        lea edi, [ebp - 3d8h]
+        lea ecx, [eax*8]
+        sub ecx, eax
+        lea eax, [eax + eax*2]
+        movss xmm0, dword ptr [edx + eax*4 + 3ea0h]
+        mov eax, dword ptr [ebp - 40ch]
+        shl ecx, 7
+        add esi, ecx
+        mov dword ptr [ebp - 420h], ecx
+        comiss xmm0, ecl_origin_threshold
+        mov ecx, 0c6h
+        lea eax, [eax + eax*2]
+        rep movsd
+        movss xmm1, dword ptr [edx + eax*4 + 3ddch]
+        jbe laser_curve_relative_origin
+        movss xmm2, dword ptr [edx + eax*4 + 3e98h]
+        addss xmm2, dword ptr [edx + eax*4 + 3dd8h]
+        addss xmm1, dword ptr [edx + eax*4 + 3e9ch]
+        mov dword ptr [ebp - 3fch], 0
+        jmp laser_curve_origin_ready
+    laser_curve_relative_origin:
+        movss xmm0, dword ptr [edx + eax*4 + 3de0h]
+        addss xmm0, dword ptr [edx + 4ch]
+        movss xmm2, dword ptr [edx + eax*4 + 3dd8h]
+        addss xmm2, dword ptr [edx + 44h]
+        addss xmm1, dword ptr [edx + 48h]
+        movss dword ptr [ebp - 440h], xmm0
+        mov eax, dword ptr [ebp - 440h]
+        mov dword ptr [ebp - 3fch], eax
+    laser_curve_origin_ready:
+        mov esi, dword ptr [ebp - 420h]
+        unpcklps xmm2, xmm1
+        movq qword ptr [ebp - 404h], xmm2
+        mov eax, dword ptr [esi + edx + 598h]
+        movss xmm0, dword ptr [esi + edx + 5ach]
+        mov dword ptr [ebp - 3ech], eax
+        mov eax, dword ptr [esi + edx + 59ch]
+        mov dword ptr [ebp - 3e8h], eax
+        call ecl_normalize_angle_alias
+        mov eax, dword ptr [esi + edx + 8e8h]
+        or dword ptr [ebp - 3dch], 1
+        mov dword ptr [ebp - 3e4h], eax
+        mov eax, dword ptr [esi + edx + 908h]
+        movss dword ptr [ebp - 3f8h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5b4h]
+        mov dword ptr [ebp - 0c0h], eax
+        mov eax, dword ptr [esi + edx + 90ch]
+        movss dword ptr [ebp - 3f0h], xmm0
+        movss xmm0, dword ptr [esi + edx + 8d8h]
+        mov dword ptr [ebp - 0bch], eax
+        lea eax, [ebp - 404h]
+        movss dword ptr [ebp - 3f4h], xmm0
+        movss xmm0, dword ptr [esi + edx + 5bch]
+        push eax
+        push 2
+        movss dword ptr [ebp - 3e0h], xmm0
+    }
     g_LaserManager->allocate_new_laser(LASER_CURVE, &params);
 }
 
