@@ -1372,12 +1372,11 @@ static inline AnmId find_child_id_of(AnmManager *anm, AnmId &id, i32 script)
 // if/else assigning the child moved it after the function's ret).
 static __forceinline AnmId find_child_id_inline_search(AnmId &id, i32 script)
 {
-    AnmId result;
     if (get_vm_or_clear(id) == NULL)
     {
-        result.id = 0;
-        return result;
+        return id;
     }
+    AnmId result;
     AnmVm *child = search_children_inline(get_vm_or_clear(id), script, 0);
     result.id = child != NULL ? child->id.id : 0;
     return result;
