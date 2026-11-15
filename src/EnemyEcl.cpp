@@ -32,6 +32,14 @@ extern "C" void ecl_laser_infinite_inner_ctor_alias(void *);
 #pragma comment(linker, "/alternatename:_ecl_memset_alias=_memset")
 extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
+
+// Keep XMM0 stores outside the large dispatcher so unrelated float-returning
+// cases retain the original SSE code generation.
+static __declspec(noinline) void __fastcall ecl_store_float_arg(EnemyData *enemy, i32 index, f32 *dest)
+{
+    *dest = enemy->get_float_arg(index);
+}
+
 extern "C" f32 ecl_normalize_angle_alias(f32);
 #pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
 extern "C" i32 ecl_laser_allocate_new_laser_alias(i32, void *);
@@ -2075,52 +2083,166 @@ int EnemyData::ecl_run_over_300()
         break;
     }
 
-    // etEx(et, ex_index, slot, type, a, b, r, s) and its variants: 610 adds
-    // c, d and m, n; 611 and 612 take the next free ex slot instead of an
-    // explicit index.
+    // etEx(et, ex_index, slot, type, a, b, r, s) and its full/next forms.
+    // Preserve the original register and frame flow: the four variants share
+    // one 521-byte handler in the dispatch body.
     case ECL_OP_ET_EX:
     case ECL_OP_ET_EX_FULL:
     case ECL_OP_ET_EX_NEXT:
     case ECL_OP_ET_EX_FULL_NEXT:
     {
-        i32 idx = get_int_arg(0);
-        if (idx >= 18 || idx < 0)
+        __asm
         {
-            idx = 0;
-        }
-        i32 n = instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT ? 1 : 2;
-        i32 ex_idx;
-        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
-        {
-            ex_idx = et_ex_index[idx];
-        }
-        else
-        {
-            ex_idx = get_int_arg(1);
-        }
-        bullet_props[idx].ex[ex_idx].slot = get_int_arg(n++);
-        bullet_props[idx].ex[ex_idx].type = get_int_arg(n++);
-        bullet_props[idx].ex[ex_idx].a = get_int_arg(n++);
-        bullet_props[idx].ex[ex_idx].b = get_int_arg(n++);
-        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
-        {
-            bullet_props[idx].ex[ex_idx].c = get_int_arg(n++);
-            bullet_props[idx].ex[ex_idx].d = get_int_arg(n++);
-        }
-        bullet_props[idx].ex[ex_idx].r = get_float_arg(n++);
-        bullet_props[idx].ex[ex_idx].s = get_float_arg(n++);
-        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
-        {
-            bullet_props[idx].ex[ex_idx].m = get_float_arg(n++);
-            bullet_props[idx].ex[ex_idx].n = get_float_arg(n++);
-        }
-        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
-        {
-            et_ex_index[idx]++;
-        }
-        else
-        {
-            et_ex_index[idx] = ex_idx + 1;
+            mov esi, instr
+            mov dword ptr [ebp - 418h], esi
+            push 0
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov dword ptr [ebp - 410h], eax
+            cmp eax, 12h
+            jge et_ex_bad_idx
+            test eax, eax
+            jns et_ex_idx_ok
+        et_ex_bad_idx:
+            xor eax, eax
+            mov dword ptr [ebp - 410h], eax
+        et_ex_idx_ok:
+            movzx ecx, word ptr [esi + 4]
+            mov esi, 263h
+            mov dword ptr [ebp - 420h], esi
+            lea edx, [esi + 1]
+            cmp cx, si
+            je et_ex_set_next_arg
+            mov esi, 2
+            cmp cx, dx
+            jne et_ex_arg_index_ready
+        et_ex_set_next_arg:
+            mov esi, 1
+        et_ex_arg_index_ready:
+            cmp cx, word ptr [ebp - 420h]
+            je et_ex_get_next_slot
+            cmp cx, dx
+            je et_ex_get_next_slot
+            push 1
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov edx, eax
+            mov dword ptr [ebp - 414h], eax
+            mov eax, dword ptr [ebp - 410h]
+            jmp et_ex_slot_ready
+        et_ex_get_next_slot:
+            mov edx, dword ptr [edi + eax*4 + 3d98h]
+            mov dword ptr [ebp - 414h], edx
+        et_ex_slot_ready:
+            lea ecx, [eax*8]
+            sub ecx, eax
+            imul eax, edx, 2ch
+            shl ecx, 7
+            mov dword ptr [ebp - 420h], ecx
+            push esi
+            add eax, ecx
+            mov ecx, edi
+            mov dword ptr [ebp - 42ch], eax
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 42ch]
+            inc esi
+            push esi
+            mov dword ptr [ecx + edi + 5e4h], eax
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 42ch]
+            inc esi
+            push esi
+            mov dword ptr [ecx + edi + 5e0h], eax
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 42ch]
+            inc esi
+            push esi
+            mov dword ptr [ecx + edi + 5d0h], eax
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 42ch]
+            inc esi
+            mov dword ptr [ecx + edi + 5d4h], eax
+            mov ecx, 262h
+            mov eax, dword ptr [ebp - 418h]
+            movzx eax, word ptr [eax + 4]
+            cmp ax, cx
+            je et_ex_full_ints
+            mov ecx, 264h
+            cmp ax, cx
+            jne et_ex_full_ints_done
+        et_ex_full_ints:
+            push esi
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 414h]
+            inc esi
+            add ecx, 22h
+            imul ecx, ecx, 2ch
+            push esi
+            add ecx, dword ptr [ebp - 420h]
+            mov dword ptr [ecx + edi], eax
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 42ch]
+            inc esi
+            mov dword ptr [ecx + edi + 5dch], eax
+        et_ex_full_ints_done:
+            mov eax, dword ptr [ebp - 42ch]
+            lea eax, [edi + eax + 5c0h]
+            push eax
+            mov edx, esi
+            mov ecx, edi
+            call ecl_store_float_arg
+            inc esi
+            mov eax, dword ptr [ebp - 42ch]
+            lea eax, [edi + eax + 5c4h]
+            push eax
+            mov edx, esi
+            mov ecx, edi
+            call ecl_store_float_arg
+            mov edx, 262h
+            mov eax, dword ptr [ebp - 418h]
+            movzx ecx, word ptr [eax + 4]
+            cmp cx, dx
+            je et_ex_full_floats
+            mov edx, 264h
+            cmp cx, dx
+            jne et_ex_full_floats_done
+        et_ex_full_floats:
+            mov eax, dword ptr [ebp - 42ch]
+            lea eax, [edi + eax + 5c8h]
+            push eax
+            mov edx, esi
+            mov ecx, edi
+            call ecl_store_float_arg
+            lea esi, [esi + 1]
+            mov eax, dword ptr [ebp - 42ch]
+            lea eax, [edi + eax + 5cch]
+            push eax
+            mov edx, esi
+            mov ecx, edi
+            call ecl_store_float_arg
+            mov edx, 264h
+        et_ex_full_floats_done:
+            mov eax, dword ptr [ebp - 418h]
+            movzx eax, word ptr [eax + 4]
+            mov ecx, 263h
+            cmp ax, cx
+            je et_ex_update_next
+            cmp ax, dx
+            je et_ex_update_next
+            mov ecx, dword ptr [ebp - 410h]
+            mov eax, dword ptr [ebp - 414h]
+            inc eax
+            mov dword ptr [edi + ecx*4 + 3d98h], eax
+            jmp et_ex_exit
+        et_ex_update_next:
+            mov ecx, dword ptr [ebp - 410h]
+            inc dword ptr [edi + ecx*4 + 3d98h]
+        et_ex_exit:
         }
         break;
     }
