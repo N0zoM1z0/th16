@@ -388,9 +388,12 @@ int EnemyData::ecl_run_over_300()
         break;
     // anmPlayHigh(file, script)
     case ECL_OP_ANM_PLAY_HIGH:
-        g_EffectManager->track(
-            g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)]->create_vm(full->context.current_context->get_int_arg(1), &final_pos.pos, 0.0f, -1, 0));
+    {
+        i32 script = full->context.current_context->get_int_arg(1);
+        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)];
+        g_EffectManager->track(anm->create_vm(script, &final_pos.pos, 0.0f, -1, 0));
         break;
+    }
     // anmPlayAbs(file, script)
     case ECL_OP_ANM_PLAY_ABS:
     {
