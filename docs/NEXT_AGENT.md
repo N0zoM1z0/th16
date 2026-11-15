@@ -9,7 +9,7 @@ its counts and open-owner table are superseded.
 | Item | Value |
 | --- | --- |
 | HEAD | latest local `claude-opus-5.5-high: …` commit (nothing pushed) |
-| Strict audit | **1029 exact / 132 incomplete / 54 mismatch** of 1,215 annotations |
+| Strict audit | **1033 exact / 131 incomplete / 51 mismatch** of 1,215 annotations |
 | Build | incremental graph matches HEAD; no build or audit is running |
 
 Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
@@ -86,6 +86,26 @@ Already tried with no gain: `create_vm`, `create_vm_front`, `set_vm_script`
 - Trial tools: `perfunc.py`, `edtrial.py`, `hctrial.py`, `swaptrial.py`,
   `tryaudit.sh`; `p/ltcg2.sh` links probes with a non-LTCG `ext.obj` (CRT math
   stubs), and probes may `#include "../../../src/X.h"` to reuse real types.
+
+## Levers found 2026-11-15
+
+- **CRT header inline providers**: a UCRT inline's out-of-line copy comes
+  from the first object whose IL references it, and the Oracle wants the
+  annotating file's object. `___local_stdio_scanf_options` sits among
+  Supervisor's functions in the original but nothing in the game calls it, so
+  `Supervisor.cpp` keeps an unreferenced `sscanf` placeholder
+  (`decomp_supervisor_scanf_reference`, discarded by the linker).
+- **memset as an intrinsic folds constructors into static data**: with the
+  intrinsic, `Config::Config`'s memset and constant stores (dead under
+  `Supervisor`'s memset) went into g_Supervisor's static image, and
+  g_Supervisor moved from .bss to .data. `#pragma function(memset)` around
+  `Config::Config` gives the original's initializer.
+- `Gui::show_notice` and `create_vm`/`create_vm_front` differ only in their
+  padded frames (`sub esp` 4 more): pad forms need known-aligned callers.
+  Direct `create_effect` calls in show_notice make it realign instead.
+- `do_spell_practice_subseason` and four other TitleInf states use the ebx
+  (`X`) realign form where the original uses the `R` form; cutting single
+  cases did not find the trigger.
 
 ## Best next leads
 
