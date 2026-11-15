@@ -666,12 +666,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        i16 curve_opcode = ECL_OP_MOVE_CURVE;
-        volatile i16 *curve_opcode_ptr = &curve_opcode;
-        position_offset = instr->opcode == *curve_opcode_ptr || instr->opcode == *curve_opcode_ptr + 4
+        position_offset = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET
                               ? offsetof(EnemyData, abs_pos)
                               : offsetof(EnemyData, rel_pos);
-        position_interp = instr->opcode == *curve_opcode_ptr || instr->opcode == *curve_opcode_ptr + 4 ? &abs_pos_i : &rel_pos_i;
+        position_interp = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos_i : &rel_pos_i;
         goal_x = full->context.current_context->get_float_arg(3);
         goal_y = full->context.current_context->get_float_arg(4);
         if (full->context.current_context->get_int_arg(0) <= 0)
@@ -679,7 +677,7 @@ int EnemyData::ecl_run_over_300()
             position_interp->end_time = 0;
             break;
         }
-        if (instr->opcode == *curve_opcode_ptr + 4 || instr->opcode == *curve_opcode_ptr + 5)
+        if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
         {
             f32 origin_x = ((PosVel *)((u8 *)this + position_offset))->pos.x;
             if (flags_low & ENEMY_FLAG_MIRRORED)
