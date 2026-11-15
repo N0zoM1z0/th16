@@ -84,7 +84,7 @@ new credit.
 Separate source statements do not establish pure intrinsic evaluation order.
 Do not repeat these forms or add floating-point pragmas, padding or dead locals
 to force register allocation. The previous edge-table cursor/GUID alias remains
-unaccepted, as recorded in [the rectangle review](rectangle-containment-and-edge-storage.md).
+unaccepted, as recorded in the rectangle review.
 
 ## Retained evidence
 

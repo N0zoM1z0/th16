@@ -286,7 +286,7 @@ i32 BombMarisaAInf::on_tick()
         marisa_sincosmul(&beam_pos, angle, 304.0f);
         // D3DXVec3Add here, not +=: like the original's third sum it loads
         // pos.x and adds beam_pos.x (the x order of each vector op follows
-        // the function's named-variable count, see docs/findings.md).
+        // the function's named-variable count).
         D3DXVec3Add(&beam_pos, &beam_pos, &pos);
         g_Player->get_damage_source(g_Player->create_rect_damage_source(&beam_pos, 512.0f, 256.0f, angle, 0, 20))
             ->flags |= DAMAGE_SOURCE_BOMB;

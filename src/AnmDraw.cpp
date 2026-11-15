@@ -556,7 +556,7 @@ i32 AnmManager::draw_billboard_fog(AnmVm *vm_param)
 
 // A while loop with the differences assigned x, y, z gives the original's
 // register and operand order for the distance (the load order inside a
-// loop follows the loop form; see docs/findings.md).
+// loop follows the loop form).
 // FUNCTION: TH16 0x467200
 HARNESS_CALLED i32 AnmManager::draw_sprite_fog(AnmVm *vm)
 {

@@ -1,8 +1,7 @@
 # Current handoff
 
-Updated 2026-11-14 for transfer to another agent. Read `AGENTS.md` first. The
-2026-11-13 handoff is in Git history (`git show 5481046:docs/NEXT_AGENT.md`);
-its counts and open-owner table are superseded.
+Updated 2026-11-15. Read `AGENTS.md` first. Older handoffs and the removed
+session logs are in Git history.
 
 ## Current checkpoint
 
@@ -10,10 +9,10 @@ its counts and open-owner table are superseded.
 | --- | --- |
 | HEAD | latest local `claude-opus-5.5-high: …` commit (nothing pushed) |
 | Strict audit | **1033 exact / 131 incomplete / 51 mismatch** of 1,215 annotations |
-| Build | incremental graph matches HEAD; no build or audit is running |
+| Build | incremental graph matches HEAD |
 
 Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
-`.venv/bin/python scripts/audit-reference.py`. Before committing, run
+`.venv/bin/python scripts/audit-reference.py`. Before committing a gain, run
 `audit-reference.py --write-units` once on the final build.
 
 ## Constraints
@@ -21,157 +20,108 @@ Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
 - **Never push**, mirror or publish the repository. Local commits only, with
   the message prefix `claude-opus-5.5-high: ` and the attribution line.
 - Do not use REA. Reference labels and percentages carry no authority.
-- Natural C/C++ source, with one approved exception (below). Run only the
-  checks a change needs; no cold rebuilds unless a cache problem is proven.
+- Natural C/C++ source. The exceptions below are user-approved placeholders,
+  clearly marked in the source. Run only the checks a change needs.
 
-### Approved alignment placeholders
+### Placeholders
 
-On 2026-11-14 the user explicitly approved clearly marked placeholder dead
-code for stack alignment. LTCG's double-alignment pass weighs double
-arithmetic **before** dead code is removed. Some original functions carried
-double work that was later deleted and left no trace in the binary. The
-placeholders restore that weight:
+LTCG's stack-alignment pass weighs double arithmetic **before** dead code is
+removed, and some original functions carried work that left no trace:
 
-- `DECOMP_DEAD_DOUBLE_0..3` (`src/decomp.h`): dead doubles in place. The
-  function itself wants an 8-aligned stack; each multiply adds weight.
+- `DECOMP_DEAD_DOUBLE_0..3` (`src/decomp.h`): dead doubles in place; the
+  function itself wants an 8-aligned stack.
 - `decomp_want_aligned_stack()`: a separate call-graph node with a dead
-  double. Calling it makes the function a caller of a node that wants
-  alignment, so it pads, or its callers realign.
+  double; callers pad, or their callers realign.
+- `decomp_supervisor_scanf_reference` (`src/Supervisor.cpp`): an unreferenced
+  `sscanf` user. It makes Supervisor.obj provide
+  `___local_stdio_scanf_options`, as in the original.
 
-Each placeholder was kept only when the full audit gained exact functions
-with no losses. They are in `create_effect`, `anm_jagged_line_on_draw`,
-`update_callout`, `show_lights_out`, `show_notice`, `show_stage_clear_bonus`,
-`HelpManual::on_tick_body`, `create_ui_effect`, `create_ui_vm`, `Fog::Fog` and `InterpAngle::step`.
-`.analysis/claude-tools/placeholder_try.py ADDR SNIPPET...` automates the
-try/keep loop; it keeps the first snippet that gains with no losses.
-Already tried with no gain: `create_vm`, `create_vm_front`, `set_vm_script`
-(costs `LaserCurveInf::initialize`), `cancel_in_radius`, `step_logic`,
-`BulletManager::on_tick_body`, `setup_stage_hud`, `sht_on_tick_laser`, and
-`on_tick` of LaserLineInf and LaserInfiniteInf.
+Placeholders were kept only when the full audit gained with no losses.
+`.analysis/claude-tools/placeholder_try.py ADDR SNIPPET...` automates that.
 
-## Levers found 2026-11-14 (second session)
+## Levers that worked
 
-- **Direct calls instead of member-pointer workarounds** gained 8 exact
-  (TitleInf states, title/cursor menus, the extend notice). Converting the
-  remaining `create_effect_via_pointer`, `gui_show_notice_func` and other
-  `->*` sites was tried per function; the rest lose.
-- **Helpers hide call weight**: twelve direct `AnmVm::run` calls made
-  `setup_special_anms` realign; a `__forceinline` start helper removed it.
-- **Caller-chain alignment knowledge**: a callee that realigns to 16 for a
-  spilled matrix row stops when it and its intermediate callers are
-  `HARNESS_CALLED` (an /INCLUDE'd function is a root of unknown alignment).
-  This made `build_world_matrix` exact. Applying it to other padded
-  functions and their callers gained nothing (`hctrial.py`).
-- **Return values**: `build_world_matrix` returns 0 in the original
-  (`xor eax, eax` before `ret`).
-- **Vector locals for rotations**: rotating through a `Float3`/`Float2`
-  offset local gives the original's load-then-multiply form
-  (`collision_test_circle_rect`, `sht_on_hit_laser`). A `Float2` local adds
-  alignment weight to callers; use `Float3` where that matters.
-- **Loop statement shapes** (probe first; `p/dc3.cpp`, `p/dv.cpp` reproduce
-  the real build): read `next` before `entry` in list walks
-  (`disable_vms_from_anm_file`); step the vertex pointer per vertex instead
-  of indexing `vertices[1]` (`draw_ring`); update `pos.y` right after
-  `pos.x` (`draw_circle_outline`); divide a loop step into its parameter in
-  place (`Fog::set_rect`); step an angle parameter through a local copy
-  (removes a `movaps` copy, but hoists the initial load in `draw_circle`).
-- Operand order of commutative float ops did not respond to source order in
-  `Unpause`, `write_sprite_corners__without_rot` or `kill_all_no_set_death`.
-- `HARNESS_CALLED` on single non-exact functions with callers (25 tried) and
-  placeholders on further padded functions gained only `InterpAngle::step`.
-- `Gui::on_tick_body` calls `zun_fabsf` in the original (ours inlines a
-  CRT `_fabsf` call there, emitted out of line from BulletManager.obj). Calling
-  `zun_fabsf` turns zun_fabsf itself into a thunk to `_fabsf`; adding a
-  `(f32)fabs` body as well breaks the EH GS allocation review. Unresolved.
-- Trial tools: `perfunc.py`, `edtrial.py`, `hctrial.py`, `swaptrial.py`,
-  `tryaudit.sh`; `p/ltcg2.sh` links probes with a non-LTCG `ext.obj` (CRT math
-  stubs), and probes may `#include "../../../src/X.h"` to reuse real types.
+- **Call graph and alignment**: direct calls instead of the member-pointer
+  workarounds (`create_effect_via_pointer`, `gui_show_notice_func`) where the
+  original realigns; `__forceinline` helpers hide call weight (a helper for
+  twelve `AnmVm::run` calls fixed `setup_special_anms`); `HARNESS_CALLED` on a
+  callee and its intermediate callers tells LTCG they are entered aligned
+  (`build_world_matrix`), since /INCLUDE'd functions are roots of unknown
+  alignment.
+- **COMDAT providers**: a CRT inline's out-of-line copy comes from the first
+  object in link order whose IL uses it; the Oracle wants the annotating
+  file's object (`scripts/build.py` orders the early files).
+- **Intrinsics**: with memset as an intrinsic the compiler folded
+  `Config::Config`'s stores into g_Supervisor's static image; `#pragma
+  function(memset)` around it restores the original initializer.
+- **Per-branch pushes**: where the original pushes a constant in each branch
+  before one shared call, write a ternary of calls (`ECL_DIFF_ARG` in
+  `src/EnemyEcl.cpp`) or an if/else of whole calls (anm316); arithmetic on the
+  argument index compiles to `setne`/`lea` instead.
+- **Statement shapes**: return a just-cleared value (`setup_stage_hud`);
+  evaluate call arguments into locals in the original's order (ECL cases);
+  push each arithmetic result in its own case (`ecl_run`); pointer-to-member
+  locals change scheduling (`set_position_subpixel`, `build_world_matrix`);
+  read `next` before `entry` in list walks; step vertex pointers per vertex;
+  divide a loop step into its parameter in place (`Fog::set_rect`); rotate
+  through a `Float3` offset local (a `Float2` adds alignment weight).
+- **Timer ticks**: `tick`, `tick_goto`, `tick_mixed`, `tick_nested` and
+  `tick_in_place` are equivalent; each gives different codegen.
+- **Globals**: a global defined outside /GL
+  (`probes/reference-support/Opaque.cpp`) changes alias analysis
+  (`g_zero_vec2` lives in `Arcfile.cpp`); local copies of globals can flip
+  SIB order (`destroy_all`).
+- **Dead code leaves EH states** (`parse_directory`'s NULL-path `delete[]`).
 
-## Levers found 2026-11-15
+## Open leads
 
-- **CRT header inline providers**: a UCRT inline's out-of-line copy comes
-  from the first object whose IL references it, and the Oracle wants the
-  annotating file's object. `___local_stdio_scanf_options` sits among
-  Supervisor's functions in the original but nothing in the game calls it, so
-  `Supervisor.cpp` keeps an unreferenced `sscanf` placeholder
-  (`decomp_supervisor_scanf_reference`, discarded by the linker).
-- **memset as an intrinsic folds constructors into static data**: with the
-  intrinsic, `Config::Config`'s memset and constant stores (dead under
-  `Supervisor`'s memset) went into g_Supervisor's static image, and
-  g_Supervisor moved from .bss to .data. `#pragma function(memset)` around
-  `Config::Config` gives the original's initializer.
-- `Gui::show_notice` and `create_vm`/`create_vm_front` differ only in their
-  padded frames (`sub esp` 4 more): pad forms need known-aligned callers.
-  Direct `create_effect` calls in show_notice make it realign instead.
-- `do_spell_practice_subseason` and four other TitleInf states use the ebx
-  (`X`) realign form where the original uses the `R` form; cutting single
-  cases did not find the trigger.
-
-## Best next leads
-
-1. **TitleInf menu states** (`do_title_screen`, `do_options`, about 15 `do_*`
-   states). They now differ only in their own realign. They reach
-   `create_effect` through `create_effect_via_pointer` (`AnmManager.h`), a
-   member-pointer workaround that hides the call from LTCG's call graph. That
-   workaround predates `create_effect`'s placeholder, so try direct
-   `->create_effect(...)` calls there. Do the same for any other
-   `create_effect_via_pointer` / `gui_show_notice_func` users whose original
-   realigns.
-2. **Alignment roots**: run `.analysis/claude-tools/alignroots.py` on a fresh
-   audit. It lists functions whose prologue form differs (`R` and-esp
-   realign, `X` ebx realign, `-` none) and whether their callees agree; only
-   rows with `0` mismatched callees are local roots. Open roots include
-   `get_controller_state`, `update_score`, `add_to_score`, `on_tick_record`,
-   `repopulate_options`, `Bullet::on_tick` (ours realigns,
-   `BulletManager::on_tick_body` should) and `draw_3d`.
-3. The remaining mismatches are mostly register allocation and scheduling:
-   one swapped register pair or one moved load in otherwise identical code.
-   Many look like compiler tie-breaks. Probe before editing (below).
-
-## Techniques that worked this session
-
-- **Probe first**: `.analysis/claude-tools/p/ltcg.sh file.cpp` plus
-  `p/lmd.py` build a single /GL+/LTCG file in seconds. Read inputs through
-  `*(T *volatile *)0x500000` and write outputs as volatile. Probes found:
-  - `ZunTimer::decrement` keeps the multiply by 1.0f only with a negated
-    `delta` local shared by both branches;
-  - `x++; x %= 3;` gives the original's 0x55555555 idiv-free sequence;
-  - `*o = 0; if (t > 0) *o = 1;` gives `cmovg`.
-- **Call-count gaps** (`calldiff.py`, `callseq.py`) found cross-jump and tail
-  merge differences: `MSG_BOSS_FACE`, and ecl_run's `ANGLE_DIFF` and
-  `MATH_ANGLE` stores.
-- **Global definition matters**: a global defined outside /GL
-  (`probes/reference-support/Opaque.cpp`) changes LTCG alias analysis.
-  `g_zero_vec2` moved to `Arcfile.cpp`. `g_stage_table` cannot move: the
-  `stage-table-v1` Oracle binding needs its current owner.
-- **Dead code leaves EH states**: `parse_directory`'s second (terminate)
-  unwind state came from a `delete[]` on a NULL path. It is reviewed by the
-  `array-allocation-cleanup-v1` profile (`scripts/eh_array_cleanup.py`).
-  `ehscan.py` finds no other EH state-count differences.
-- **Local copies flip SIB order** in some loops (`destroy_all`,
-  `create_d3d_textures_for_loaded_anms`).
+1. **Alignment roots**: `.analysis/claude-tools/alignroots.py` (after a fresh
+   audit) lists prologue-form differences (`R` and-esp, `X` ebx, `-` none).
+   Ours uses the `X` form where the original uses `R` in `do_options`,
+   `do_key_config`, `do_practice_stage_select`, `do_spell_practice_subseason`,
+   `do_spell_practice_difficulty` and `repopulate_options`; the trigger is
+   unknown. `Bullet::on_tick` realigns in ours, `BulletManager::on_tick_body`
+   in the original.
+2. **Padded frames** (original `sub esp` 4 larger): `show_notice`,
+   `create_vm`, `create_vm_front`, `interrupt_child_and_run`,
+   `cancel_in_radius`. A pad needs known-aligned callers; a placeholder makes
+   these realign instead.
+3. **Large owners**: `.analysis/claude-tools/cases.py ADDR [OPS]` compares
+   switch cases of `ecl_run_over_300` (0x41dcb0), `ecl_run` (0x472030) and
+   similar dispatchers; `calldiff.py` finds inlining and tail-merge gaps
+   (`ecl_run_over_300` calls `LaserInfiniteInner`'s constructor out of line in
+   the original).
+4. The rest are mostly register-allocation and scheduling tie-breaks. Probe
+   them first: `.analysis/claude-tools/p/ltcg2.sh file.cpp` builds one /GL
+   file in seconds (read inputs through `*(T *volatile *)0x500000`, write
+   outputs as volatile; probes may include `../../../src/X.h`).
 
 ## Tools (ignored `.analysis/claude-tools/`)
 
-`bc.sh ADDR...` (build + diff), `dd.py`, `symdiff.py ORIG SYMBOL N` (diff by
-candidate symbol), `rankdiff.py`, `calldiff.py`, `callseq.py`, `cases.py`,
-`bigdiff.py`, `frames.py`, `alignroots.py`, `ehscan.py`, `idiom.py`,
-`sibscan.py`, `swscan.py`, `cmpaudit.py`, `refcmp.py` / `refshow.py` (bodies
-that differ from the reference checkout), `placeholder_try.py`.
+`bc.sh` (incremental build), `tryaudit.sh` (build, audit, list gains and
+losses against `.analysis/reference-audit.json`), `dd.py ADDR` (diff),
+`score.py ADDR`, `cases.py`, `calldiff.py`, `callers.py`, `frames.py`,
+`alignroots.py`, `ehscan.py`, `placeholder_try.py`, `swaptrial.py`
+(adjacent-statement swaps), `ticktrial.py`, `hctrial.py`.
 
 ## Do not repeat
 
-The full list of dead ends is in the user memory note
-`ltcg-alignment-experiments.md`. In short:
-
-- `0.0` vs `0.0f` literals add no alignment weight.
-- Making `Bullet::on_tick` / `on_tick_body` HARNESS_CALLED or putting `run`
-  in helpers changes nothing.
-- Making `interrupt_child_and_run` HARNESS_CALLED makes the cursor functions
-  inline it.
-- `run_ex` DELAY/WAIT `or ecx, edx`: every rewrite fails because the case
-  constant propagates.
-- `SetVolume`'s two calls merge depending on which register holds the vtable.
-- The y/z operand reversal moves with context; treat it as a tie-break.
-- `___local_stdio_scanf_options` needs a scanf user in Supervisor.cpp that
-  no longer exists.
+- Statement-swap trials (`swaptrial.py`) over 31 mismatching functions found
+  no gains.
+- `#pragma function(memset)` on other memset users changes nothing.
+- Commutative operand order (`Unpause`, `kill_all_no_set_death`, the y/z
+  reversal in vector sums) and xmm register swaps (`ZunAngle::operator-`,
+  `rotate_points`) did not respond to source order, locals or branch shapes.
+- `0.0` vs `0.0f` literals add no alignment weight; double intrinsics in
+  `run` add none either.
+- `HARNESS_CALLED` on `interrupt_child_and_run` makes the cursor functions
+  inline it; on `update_options` it changes nothing. `update_options` keeps a
+  /GS cookie: a 12-byte local plus a by-value `AnmId` call with a second
+  argument gets one in probes.
+- `run_ex` DELAY/WAIT `or ecx, edx` and `LaserInfiniteInf::run_ex`'s ex/type
+  register swap resist every rewrite tried.
+- `SetVolume`/`SoundBufferEntry::play` tail merges follow the vtable register.
+- Address-taking `get_vm_with_id` (to block interprocedural register use)
+  loses three exact functions and fixes nothing.
+- In `ecl_run`, rewriting the sin/cos/sqrt cases with value locals turns off
+  tail duplication across the whole function.

@@ -1255,8 +1255,8 @@ i32 TitleInf::do_player_data()
 
 // Inline nodes between draw_spell_card_page and the variadic
 // AnmManager::draw_text_centered, which realigns its own frame. Called
-// directly, the call makes LTCG realign the page's frame too (early
-// alignment, see docs/findings.md); the original's does not.
+// directly, the call makes LTCG realign the page's frame too; the
+// original's does not.
 static inline void spell_page_text(AnmVm *vm, D3DCOLOR color, const char *text)
 {
     g_AnmManager->draw_text_centered(vm, color, 0, 0, 0, text);

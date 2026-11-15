@@ -196,7 +196,7 @@ struct GuiMsgVm
     // script time; -1 once the script has ended.
     // Matching workaround: safebuffers drops the /GS cookie ours gets for
     // the Float3 copies of the bubble position kept in memory; the original
-    // has none, for reasons not understood yet (docs/findings.md). Remove it
+    // has none, for reasons not understood yet. Remove it
     // once the cause is known.
     __declspec(safebuffers) HARNESS_CALLED i32 run();
 

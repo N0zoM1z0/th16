@@ -91,7 +91,7 @@ not authorize other virtual calls or bind a static device method address.
 At this checkpoint the shared constructor wrote through a volatile copy of
 `this` to retain otherwise overwritten initialization stores. Its original
 source spelling remains unproved. The later
-[shared constructor reconstruction](updatefunc-construction-exact.md)
+shared constructor reconstruction
 narrows existing volatile accesses and uses ordinary callback member initializers,
 closing the complete AnmManager owner. The earlier experiment below instead
 removed that qualification and moved the ordinary constructor body from the

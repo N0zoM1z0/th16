@@ -840,7 +840,6 @@ void Item::collect_big_power()
 // subtraction becomes the original's add of a negated product. It is the
 // same expression as get_piv_rounded (0x42c860), spelled out here so that
 // the form is visible.
-// TODO: the original's frame is 4 bytes larger (alignment padding).
 // FUNCTION: TH16 0x430620
 void Item::collect_point()
 {

@@ -1,6 +1,6 @@
 # AnmManager constructor EH aggregate
 
-The later [shared constructor source reconstruction](updatefunc-construction-exact.md)
+The later shared constructor source reconstruction
 closes this complete 5,071-byte parent as exact. The EH profile and original
 scope proofs below remain unchanged; the mismatch describes this earlier review.
 

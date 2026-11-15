@@ -20,7 +20,8 @@ that evidence is missing. Never remove an archive because its old path is absent
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
 | `.analysis/reference-audit.json` | Current fingerprinted results read by `scripts/progress.py` |
-| `.analysis/projectile-ex-source-work/` | Current PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
+| `.analysis/claude-tools/` | Current diagnostic scripts, LTCG probes (`p/`) and trial logs listed in the handoff |
+| `.analysis/projectile-ex-source-work/` | PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
 | `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
 | `.analysis/large-owner-operands-work/` | PDB 600 baseline/PDB 614 restored image, twelve complete Boss/motion/menu/curve source trials, original 768-instruction music CFG, full scope/field census, trial images/snapshots and complete raw-image restoration |
 | `.analysis/ecl-interpreter-order-work/` | PDB 591 baseline/PDB 600 restored image, eight full ECL source trials and images, original 1,645-instruction CFG, complete tables/map, source-qualified private helper proof, static controls and complete raw-image regression |
@@ -101,8 +102,8 @@ The private target, current audit, unit ledger and every file in the incremental
 build graph retain their pre-cleanup hashes. Wine/tool selectors, dependencies,
 analyzer project and pinned reference were not cleaned. The preceding source
 trial restoration finished first: PDB 624 preserves **904 exact / 67 mismatch /
-244 incomplete**, all 971 units and all 1,719 raw native owners. See
-[restoration evidence](knowledge/projectile-source-trials-handoff.md).
+244 incomplete**, all 971 units and all 1,719 raw native owners (the
+restoration report is in Git history).
 No cold build or Oracle rule change was performed for cleanup.
 
 ## Earlier handoff cleanup: 2026-11-12

@@ -1714,9 +1714,6 @@ static inline void set_entity_pos_xyz(AnmId id, f32 x, f32 y, f32 z)
 
 // Sets the HUD up for a stage: the life and bomb counters, the boss timer,
 // the stage logo, the demo and difficulty markers and the season gauge.
-// TODO: after the icon search the original shares the g_AnmManager reload between
-// the found and not-found exits (ours loads it in each), and has no nop before the
-// search loop.
 // FUNCTION: TH16 0x426d70
 void Gui::setup_stage_hud()
 {
@@ -2064,7 +2061,7 @@ i32 Gui::on_tick_body()
             vm->rotation.x = bar->shown * -ZUN_2PI;
             vm->flags_lo |= ANM_VM_ROTATION_CHANGED;
             // Separate floats: a Float3 local gets a /GS cookie in our
-            // build (see docs/findings.md).
+            // build.
             f32 pos_x = boss->enemy.final_pos.pos.x * 2.0f;
             f32 pos_y = boss->enemy.final_pos.pos.y * 2.0f;
             f32 pos_z = boss->enemy.final_pos.pos.z;

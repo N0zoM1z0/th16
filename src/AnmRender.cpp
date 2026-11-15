@@ -473,8 +473,7 @@ static void __fastcall fan_sincosmul(Float3 *dst, f32 angle, f32 radius)
 // The loop is a do/while counting up: it compiles to the same down-counter
 // as `for (i = 31; i != 0; i--)`, but only this form loads entity_pos.z
 // before pos.z in the vertex sum like the original (which operand MSVC
-// loads first there follows its internal numbering, not the operand order;
-// see docs/findings.md).
+// loads first there follows its internal numbering, not the operand order).
 // FUNCTION: TH16 0x469e20
 int __fastcall anm_fan_init(AnmVm *vm)
 {

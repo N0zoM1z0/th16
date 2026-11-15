@@ -1,8 +1,7 @@
 #pragma once
 
 // Macros for reproducing what ZUN's whole-program build (/GL + /LTCG) did to
-// individual functions. None of them is ZUN's; see docs/workflow.md,
-// "Whole-program optimization".
+// individual functions. None of them is ZUN's; see docs/NEXT_AGENT.md.
 
 // Link-time code generation decides inlining with the whole program in view,
 // and our build does not always reach the original's decision (callers

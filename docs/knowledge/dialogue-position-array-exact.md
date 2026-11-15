@@ -82,7 +82,7 @@ A Boss statistics helper with direct side effects and a void result is also
 rejected. Combined with conditional dialogue suppression, the complete logic
 owner is **2,199/2,207 bytes**. It preserves both statistics additions but still
 loads the manager too early and exchanges the damage registers. Both original
-source changes are restored; see [Boss hit-effect work](boss-hit-effect-flag-width.md).
+source changes are restored; see the Boss hit-effect work (Git history).
 
 The complete **1,145-byte** `BombReimuAInf::on_tick` at `0x00410DE0` is also
 reviewed: all **298 instructions** are reachable, with 19 calls, 34 branches

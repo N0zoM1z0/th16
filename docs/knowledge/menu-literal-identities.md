@@ -142,6 +142,6 @@ All five forms are rejected and restored. No forced-inlining attribute,
 initialization-order normalization or linkage exception is introduced. Keep
 `.analysis/music-comment-join-work/`: all sources, focused reports, original CFG,
 last music trial image and PDB-489 restoration regression. The separate later
-[shared callback constructor reconstruction](updatefunc-construction-exact.md)
+shared callback constructor reconstruction
 adds the complete AnmManager exact result; this music-room owner remains the
 same three-byte mismatch.
