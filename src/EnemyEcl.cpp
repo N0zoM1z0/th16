@@ -35,24 +35,6 @@ extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 extern "C" i32 ecl_laser_cancel_in_radius_alias(Float3 *, i32, i32);
 #pragma comment(linker, "/alternatename:_ecl_laser_cancel_in_radius_alias=?cancel_in_radius@LaserManager@@QAEHPAUD3DXVECTOR3@@MHH@Z")
 
-// The target passes the radius in XMM2 while pos/mode/skip stay on the stack.
-// Keep that custom call convention isolated from the dispatcher's C++ float ABI.
-static __declspec(naked) i32 __stdcall ecl_cancel_laser_radius(Float3 *pos, f32 radius, i32 mode, i32 skip)
-{
-    __asm
-    {
-        push ebp
-        mov ebp, esp
-        movss xmm2, dword ptr [ebp + 0ch]
-        push dword ptr [ebp + 14h]
-        push dword ptr [ebp + 10h]
-        push dword ptr [ebp + 8]
-        call ecl_laser_cancel_in_radius_alias
-        mov esp, ebp
-        pop ebp
-        ret 10h
-    }
-}
 static __declspec(noinline) f32 __fastcall ecl_get_float_arg_for_et_ex(EnemyData *enemy, i32 index)
 {
     return enemy->get_float_arg(index);
@@ -2572,7 +2554,14 @@ int EnemyData::ecl_run_over_300()
     {
         f32 radius = get_float_arg(0);
         g_BulletManager->cancel_radius(&final_pos.pos, radius, 1);
-        ecl_cancel_laser_radius(&final_pos.pos, radius, 1, 1);
+        __asm
+        {
+            movss xmm2, radius
+            push 1
+            push 1
+            push esi
+            call ecl_laser_cancel_in_radius_alias
+        }
         break;
     }
     // hitboxRect(w, h): a rectangular bullet-cancelling hitbox, rotated like
@@ -2591,7 +2580,14 @@ int EnemyData::ecl_run_over_300()
     {
         f32 radius = get_float_arg(0);
         g_BulletManager->cancel_radius(&final_pos.pos, radius, 0);
-        ecl_cancel_laser_radius(&final_pos.pos, radius, 0, 1);
+        __asm
+        {
+            movss xmm2, radius
+            push 1
+            push 0
+            push esi
+            call ecl_laser_cancel_in_radius_alias
+        }
         break;
     }
     // etCancel2(radius): etCancel that also takes protected bullets.
