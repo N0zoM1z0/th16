@@ -527,6 +527,11 @@ static __forceinline void ecl_angle_to_player(EnemyData *enemy)
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {
+    // The original dispatch frame owns the raw laser parameter blocks below.
+    // Keep their backing stack range reserved even though the fields are written
+    // by inline assembly rather than C++ locals.
+    volatile u8 ecl_stack_reserve[0x354];
+    ecl_stack_reserve[0x353] = 0;
     // Keep the selected PosVel as a this-relative offset, like the original;
     // the interpolation state is kept as a pointer.
     i32 position_offset;
