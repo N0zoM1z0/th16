@@ -171,9 +171,9 @@ Retained evidence includes:
 Focused reproduction:
 
 ```sh
-.venv/bin/python scripts/audit-reference.py --address 0x45e150 --address 0x45e1f0 --json .analysis/audio-sound-data-focused.json
-.venv/bin/python scripts/test-sound-data-identities.py
-.venv/bin/python scripts/progress.py
+scripts/repo-python scripts/audit-reference.py --address 0x45e150 --address 0x45e1f0 --json .analysis/audio-sound-data-focused.json
+scripts/repo-python scripts/test-sound-data-identities.py
+scripts/repo-python scripts/progress.py
 ```
 
 Do not run ledger readers/tests concurrently with audit-reference.py --write-units.

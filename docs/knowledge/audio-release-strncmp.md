@@ -133,10 +133,10 @@ Retained evidence:
 Reproduce the focused checks with:
 
 ```sh
-.venv/bin/python scripts/audit-reference.py --address 0x45d850 --address 0x45d9d0 --json .analysis/audio-release-focused.json
-.venv/bin/python scripts/test-eh-single-state.py
-.venv/bin/python scripts/test-reviewed-linkages.py
-.venv/bin/python scripts/progress.py
+scripts/repo-python scripts/audit-reference.py --address 0x45d850 --address 0x45d9d0 --json .analysis/audio-release-focused.json
+scripts/repo-python scripts/test-eh-single-state.py
+scripts/repo-python scripts/test-reviewed-linkages.py
+scripts/repo-python scripts/progress.py
 ```
 
 Do not run ledger readers/tests concurrently with audit-reference.py --write-units.

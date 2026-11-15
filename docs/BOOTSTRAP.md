@@ -62,7 +62,7 @@ result is `.analysis/factory-validation-result.json`.
 
 The toolchain smoke result is retained in `.analysis/toolchain-verification.log`.
 Disposable binaries were removed during handoff cleanup; rerun
-`python3 scripts/verify-toolchain.py --execute` to recreate
+`scripts/repo-python scripts/verify-toolchain.py --execute` to recreate
 `build/toolchain-smoke/`. The result covers tools and standalone test programs
 only. Both normal COFF and LTCG C/C++ variants compiled, linked resources into a
 PE32 image and ran under the dedicated Wine prefix, printing

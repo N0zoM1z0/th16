@@ -93,9 +93,9 @@ temporary expanded copy was then removed. Legacy archive reading also passed.
 The helper loads both completed dated indexes and supports nested paths:
 
 ```sh
-python3 scripts/evidence-archive.py list ecl-float-work
-python3 scripts/evidence-archive.py show handoff-next-agent-fe98fb8.md
-python3 scripts/evidence-archive.py restore ecl-float-work/native-baseline
+scripts/repo-python scripts/evidence-archive.py list ecl-float-work
+scripts/repo-python scripts/evidence-archive.py show handoff-next-agent-fe98fb8.md
+scripts/repo-python scripts/evidence-archive.py restore ecl-float-work/native-baseline
 ```
 
 The private target, current audit, unit ledger and every file in the incremental
@@ -126,10 +126,10 @@ Wine prefix, analyzer project and pinned checkout were not cleaned.
 Read or restore indexed evidence with the standard-library helper:
 
 ```sh
-python3 scripts/evidence-archive.py list audio-scalar
-python3 scripts/evidence-archive.py show audio-scalar-baseline/build/reference-candidate/build-receipt.json
-python3 scripts/evidence-archive.py restore audio-scalar-baseline
-python3 scripts/evidence-archive.py show handoff-next-agent-6427da9.md
+scripts/repo-python scripts/evidence-archive.py list audio-scalar
+scripts/repo-python scripts/evidence-archive.py show audio-scalar-baseline/build/reference-candidate/build-receipt.json
+scripts/repo-python scripts/evidence-archive.py restore audio-scalar-baseline
+scripts/repo-python scripts/evidence-archive.py show handoff-next-agent-6427da9.md
 ```
 
 `show` emits one file without restoring its directory. `restore` verifies the
@@ -181,7 +181,7 @@ suffix; those notes describe the original checkpoints.
 Cleanup removed the game-local Ghidra packed-database cache, old toolchain smoke
 binaries and standalone probe outputs at the top of `build/`. Their source,
 logs and actual Ghidra project are retained. Ghidra recreates its cache on use;
-`python3 scripts/verify-toolchain.py --execute` recreates smoke outputs.
+`scripts/repo-python scripts/verify-toolchain.py --execute` recreates smoke outputs.
 Regenerated caches and smoke outputs will consume storage again.
 
 That earlier operation reclaimed about **78 MiB** of allocated local storage. The exact

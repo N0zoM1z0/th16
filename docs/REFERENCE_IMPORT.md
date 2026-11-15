@@ -22,11 +22,11 @@ stand-in callers and `/INCLUDE` choices so their effects remain visible. This
 graph is an experiment, not a recovered production translation-unit partition.
 
 ```sh
-.venv/bin/python scripts/build.py
-.venv/bin/python scripts/audit-reference.py --write-units
-.venv/bin/python scripts/compare-linked-function.py reference-00401300
-.venv/bin/python scripts/check-frontier.py
-.venv/bin/python scripts/run-tests.py
+scripts/repo-python scripts/build.py
+scripts/repo-python scripts/audit-reference.py --write-units
+scripts/repo-python scripts/compare-linked-function.py reference-00401300
+scripts/repo-python scripts/check-frontier.py
+scripts/repo-python scripts/run-tests.py
 ```
 
 The individual unit name is an example; select one actually retained in
@@ -39,7 +39,7 @@ Focused comparison reuses the current build and checks its input identity.
 For an annotated owner without a retained unit, use a separate diagnostic:
 
 ```sh
-.venv/bin/python scripts/audit-reference.py --address 0x407900 --json .analysis/masked-switch-focused.json
+scripts/repo-python scripts/audit-reference.py --address 0x407900 --json .analysis/masked-switch-focused.json
 ```
 
 Repeat `--address` for a focused batch. All independent bindings remain available;

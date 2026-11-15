@@ -33,10 +33,10 @@ SHA-256 hashes in `config/toolchain-payloads.json`. Install them once into a
 Factory-owned shared location:
 
 ```sh
-python3 scripts/provision-toolchain.py --destination /path/to/factory/.factory/shared-tools/msvc-14.10.25017-v141-xp
+scripts/repo-python scripts/provision-toolchain.py --destination /path/to/factory/.factory/shared-tools/msvc-14.10.25017-v141-xp
 uv venv --python /usr/bin/python3 .venv
 uv pip install --python .venv/bin/python -r requirements.lock.txt
-python3 scripts/verify-toolchain.py --execute
+scripts/repo-python scripts/verify-toolchain.py --execute
 ```
 
 Provisioning requires `msiextract`, `cabextract` and optionally `aria2c`.

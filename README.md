@@ -1,90 +1,107 @@
-# TH16 reconstruction
+# 東方天空璋 ～ Hidden Star in Four Seasons
 
-Environment and analysis workspace for the original Japanese **TH16 v1.00a**.
-The supplied executable is pinned in `config/target.toml`. Imported reconstruction
-candidates are evaluated independently using the Factory/TH10 strict Oracle
-method. Upstream similarity scores and exact labels are not acceptance results.
-This repository is local-only: do not push branches, tags or repository contents.
-Start with the [current handoff](docs/NEXT_AGENT.md) and
-[knowledge index](docs/knowledge/README.md).
+Agent workflow: follow the highest-priority requirements in [AGENTS.md](AGENTS.md). Use incremental builds and focused complete-owner comparisons; prose edits need no build or audit.
 
-The 2026-11-13 handoff retains **904 exact / 67 mismatch / 244 incomplete**,
-185,816 exact primary bytes and 971 unit definitions. Source-origin review is
-open; Factory acceptance is unsubmitted. Use `scripts/progress.py` for current
-results. Reconstruction prioritizes complete static exact comparisons, including
-substantial Boss/interpreter/projectile owners; dynamic game testing is not the
-requested workflow. The active incremental build graph is preserved.
+<p align="center">
+  <img
+    src="resources/title-screen.png"
+    width="640"
+    alt="TH16 title artwork composited from the original title.anm textures">
+</p>
 
-The layout follows the local TH10 workspace:
+<p align="center">
+  <img src="resources/progress.svg" alt="TH16 reconstruction progress">
+</p>
 
-| Path | Purpose |
+This project reconstructs C++ source for the original Japanese TH16 version
+1.00a executable. The source is built with the historical MSVC 2017 (v141_xp)
+toolchain under whole-program optimization (/GL, /LTCG), and every annotated
+function is compared over its complete extent, including relocations, against
+the original by a local strict Oracle. Similarity scores and upstream labels
+grant no exact credit.
+
+## Exact target
+
+Supply your own legal copy at the ignored path `resources/th16.exe`.
+
+| Property | Required value |
 | --- | --- |
-| `resources/th16.exe` | Ignored canonical target |
-| `config/` | Target identity, tool locks and provisional ledgers |
-| `scripts/` | Target checks, compiler tools and Ghidra commands |
-| `probes/` | Toolchain smoke inputs and separate compiler-context support |
-| `src/` | Imported reconstruction candidates and subsequent maintained source |
-| `docs/` | Setup findings and handoff |
-| `_reference/johnthreekay-th16/` | Ignored upstream reference checkout |
-| `.tools/` | Ignored shared-tool selectors and game-owned Wine prefix |
-| `ghidra-project/`, `.analysis/`, `build/` | Ignored project, evidence and outputs |
+| Version | original Japanese 1.00a |
+| Size | `683,520` bytes |
+| SHA-256 | `c11776019f083978e66027e7394dafb1fb9543afca986f28049a49417e341929` |
+| MD5 | `cb9caf54ce5738f70086e783ec88fd2a` |
+| Image base | `0x00400000` |
+| Entry point | `0x0047537B` |
 
-`../game_exe/` contains the files extracted from the user-supplied archive,
-including the separate Chinese launcher. Tools select `resources/th16.exe`.
+The pinned [thcrap version database](https://github.com/thpatch/thcrap-tsa/blob/25acfe37f0bed5008eb8b94afc3d72679fd50384/base_tsa/versions.js)
+classifies this exact SHA-256 as `th16`, `v1.00a`, `(original)`; the Steam
+release and patched executables have different digests.
 
-## Use the configured environment
-
-```sh
-python3 scripts/verify-target.py
-python3 scripts/verify-toolchain.py --execute
-python3 scripts/ghidra.py check
-python3 scripts/ghidra.py function_context .analysis/entry.txt 0x0047537B
-python3 scripts/compile-probe.py probes/toolchain-smoke.c -o build/probe.obj
-python3 scripts/compile-probe.py probes/toolchain-smoke.cpp -o build/probe-ltcg.obj --ltcg
-python3 scripts/msvc.py link /?
+```bash
+scripts/repo-python scripts/verify-target.py
 ```
 
-To rebuild and evaluate the imported candidates:
+Original executables, game data, Ghidra projects, decompiler output, build
+outputs and downloaded tools are private and never committed. The title image
+above is composited from the game's own textures for identification only.
 
-```sh
-.venv/bin/python scripts/build.py
-.venv/bin/python scripts/audit-reference.py --write-units
-.venv/bin/python scripts/progress.py
+## Current status
+
+The strict audit currently reports **1,033 exact / 51 mismatch / 131
+incomplete** of 1,215 annotated functions (about 51% of annotated bytes). The
+largest remaining owners are the 21,408-byte enemy ECL dispatcher, the
+14,177-byte ANM VM interpreter, the 7,046-byte ECL interpreter and the
+5,436-byte bullet transform dispatcher. Source-origin review and Factory
+acceptance remain open.
+
+For a new agent, read [AGENTS.md](AGENTS.md), then the
+[handoff](docs/NEXT_AGENT.md) (current levers, open leads and dead ends) and the
+[knowledge index](docs/knowledge/README.md).
+
+Use `scripts/repo-python`; it selects an interpreter with the hash-pinned
+Capstone decoder from `config/tools.lock.toml`.
+
+```bash
+scripts/repo-python scripts/build.py                     # incremental LTCG build
+scripts/repo-python scripts/audit-reference.py --write-units
+scripts/repo-python scripts/check-frontier.py            # no function may lose ground
+scripts/repo-python scripts/progress.py --svg resources/progress.svg
+scripts/repo-python scripts/run-tests.py                 # tooling controls, about 2 min
 ```
 
 Incremental builds reuse objects by their source, included-header and compiler
 flag hashes, then perform a full LTCG link. Use `--clean` for a milestone or a
-demonstrated cache/dependency problem. For a retained unit, `scripts/compare-linked-function.py UNIT --require-cold`
-can require a cold receipt. The focused `audit-reference.py --address ...`
-command does not accept that flag.
-
-Game source lives in `src/`; imported compiler-context callers and opaque support
-are kept separately under `probes/reference-harness/` and
-`probes/reference-support/`. See [reference evaluation](docs/REFERENCE_IMPORT.md)
-for the exact comparison scope and retained evidence. Source-origin review and
-Factory acceptance remain separate from local comparison results.
-The [recorded import audit](docs/evidence/reference-import-20261108/README.md)
-lists the complete comparisons with differences and the outstanding evidence.
-The [handoff](docs/NEXT_AGENT.md) records the current levers and dead ends.
-Use `scripts/progress.py` for current results and `scripts/check-frontier.py`
-to check that no function lost ground. Historical snapshots may require restoration through
-`scripts/evidence-archive.py`; see the artifact policy below.
+demonstrated cache/dependency problem. Exact credit comes only from the strict
+comparison of a complete owner (`scripts/strict_oracle.py`, units in
+`config/match-units.toml`); `config/frontiers.toml` records the residual bytes
+of every function that is not exact yet.
 
 The selected historical tools are MSVC **19.10.25017**, linker
 **14.10.25017.0**, Windows **7.1A** SDK, UCRT **10.0.10240.0** and DirectX SDK
-**June 2010**. Ghidra **12.1.3**, Temurin JDK **21.0.12.1+1** and system Wine
-use Factory's shared launcher with game-local mutable state.
+**June 2010**. Ghidra **12.1.3**, Temurin JDK **21.0.12.1+1** and Wine are
+provided by the shared Touhou Reconstruction Factory launcher; see
+[shared tools](docs/SHARED_TOOLS.md) and [setup evidence](docs/BOOTSTRAP.md).
 
-`verify-toolchain.py --execute` builds and runs separate normal COFF and LTCG
-smoke programs, including a C unit, C++/STL, Win32/DirectX headers, resources and
-PE32 linking. These are tool availability checks. Per-unit production flags
-and the original translation-unit partition remain reconstruction hypotheses.
-The local comparison workflow is implemented in `scripts/strict_oracle.py`;
-its current profiles and artifact identities are recorded in the build receipt.
+## Project map
 
-See [setup evidence](docs/BOOTSTRAP.md), [shared tools](docs/SHARED_TOOLS.md)
-and [local artifact policy](docs/ARTIFACTS.md). The reference project's own
-scripts and documentation are credited in the setup notes.
+- [`AGENTS.md`](AGENTS.md) — mandatory session and evidence rules.
+- [`src/`](src) — reconstructed game source; [`src/decomp.h`](src/decomp.h)
+  holds the clearly marked compiler-context placeholders.
+- [`probes/`](probes) — toolchain smoke inputs, compiler-context callers and
+  opaque support kept outside the game source.
+- [`config/target.toml`](config/target.toml) — target identity and PE facts.
+- [`config/tools.lock.toml`](config/tools.lock.toml) — compiler, linker, SDK,
+  analyzer and linked-code decoder lock.
+- [`config/match-units.toml`](config/match-units.toml) — retained strict
+  comparison units; [`config/frontiers.toml`](config/frontiers.toml) — the
+  non-exact ratchet.
+- [`docs/NEXT_AGENT.md`](docs/NEXT_AGENT.md) — current handoff.
+- [`docs/REFERENCE_IMPORT.md`](docs/REFERENCE_IMPORT.md) — comparison scope and
+  the reference import.
+- [`docs/knowledge/`](docs/knowledge/README.md) — evidence cited by the Oracle
+  review profiles and the source.
+- [`docs/ARTIFACTS.md`](docs/ARTIFACTS.md) — private inputs, retained evidence
+  and cleanup policy.
 
 ## Credits
 
@@ -97,6 +114,12 @@ the upstream contributors. Their original project work is dedicated under
 remain the work of ZUN / Team Shanghai Alice; upstream also identifies its
 `DSUtil.cpp` as an adaptation of a Microsoft DirectX SDK sample.
 
-Our strict PE/MAP/PDB readers and Oracle method derive from the local
-MIT-licensed TH10 reconstruction and Touhou Reconstruction Factory series.
-The upstream comparison scripts are not used by the strict Oracle.
+Our strict PE/MAP/PDB readers and Oracle method derive from the MIT-licensed
+[TH10 reconstruction](https://github.com/N0zoM1z0/th10) and the Touhou
+Reconstruction Factory series. The upstream comparison scripts are not used by
+the strict Oracle.
+
+## License
+
+Repository-authored code and documentation are provided under the MIT License.
+This does not grant rights to the original game or its assets.

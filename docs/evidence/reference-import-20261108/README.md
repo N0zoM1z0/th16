@@ -3,7 +3,7 @@
 This historical record was generated from the initial imported-candidate audit
 of upstream commit
 `2b846da735ac71f68b1dc74e8194c8c8d98e2869`. The current result is available through
-`.venv/bin/python scripts/progress.py`. No upstream comparator result was used.
+`scripts/repo-python scripts/progress.py`. No upstream comparator result was used.
 
 | Local result | Candidates |
 | --- | ---: |

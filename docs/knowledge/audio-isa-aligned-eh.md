@@ -164,10 +164,10 @@ Useful retained evidence:
 Reproduce focused comparison and the new controls with:
 
 ```sh
-.venv/bin/python scripts/audit-reference.py --address 0x470320 --address 0x470680 --json .analysis/isa-aligned-focused.json
-.venv/bin/python scripts/test-runtime-isa.py
-.venv/bin/python scripts/test-eh-aligned-audio.py
-.venv/bin/python scripts/progress.py
+scripts/repo-python scripts/audit-reference.py --address 0x470320 --address 0x470680 --json .analysis/isa-aligned-focused.json
+scripts/repo-python scripts/test-runtime-isa.py
+scripts/repo-python scripts/test-eh-aligned-audio.py
+scripts/repo-python scripts/progress.py
 ```
 
 Do not run ledger readers/tests concurrently with audit-reference.py --write-units.

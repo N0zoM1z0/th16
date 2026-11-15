@@ -12,7 +12,7 @@ session logs are in Git history.
 | Build | incremental graph matches HEAD |
 
 Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
-`.venv/bin/python scripts/audit-reference.py` and `scripts/check-frontier.py`.
+`scripts/repo-python scripts/audit-reference.py` and `scripts/check-frontier.py`.
 The ratchet (`config/frontiers.toml`) fails when an exact function stops being
 exact, a mismatch gains a differing byte or becomes incomplete; record
 improvements with `check-frontier.py --update`. Before committing a gain, run
