@@ -2389,9 +2389,14 @@ int EnemyData::ecl_run_over_300()
     }
     // unknown560(x, y)
     case ECL_OP_UNKNOWN_560:
-        g_BulletManager->ecl_unknown_560.x = get_float_arg(0);
-        g_BulletManager->ecl_unknown_560.y = get_float_arg(1);
+    {
+        BulletManager *mgr = g_BulletManager;
+        f32 x = get_float_arg(0);
+        f32 y = get_float_arg(1);
+        mgr->ecl_unknown_560.x = x;
+        mgr->ecl_unknown_560.y = y;
         break;
+    }
     // spec0(max_time, count, min_count): the season item drop.
     case ECL_OP_SPEC0:
         drop_season.max_time = get_int_arg(0);
