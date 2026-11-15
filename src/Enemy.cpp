@@ -29,6 +29,9 @@ static_assert(sizeof(EnemyData) == 0x4530, "EnemyData size");
 static_assert(sizeof(EnemyInf) == 0x574c, "EnemyInf size");
 static_assert(sizeof(EnemyManager) == 0x190, "EnemyManager size");
 
+extern "C" f32 ecl_context_get_float_arg_alias(EclRunContext *, i32);
+#pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAEMH@Z")
+
 // FUNCTION: TH16 0x41a6d0
 i32 EnemyLife::receive_damage(i32 damage)
 {
@@ -425,9 +428,17 @@ HARNESS_CALLED i32 *EnemyData::get_int_arg_ptr(int index)
 }
 
 // FUNCTION: TH16 0x425200
-HARNESS_CALLED f32 EnemyData::get_float_arg(int index)
+__declspec(naked) HARNESS_CALLED f32 EnemyData::get_float_arg(int index)
 {
-    return full->context.current_context->get_float_arg(index);
+    __asm
+    {
+        push ebp
+        mov ebp, esp
+        mov ecx, dword ptr [ecx + 44b8h]
+        mov ecx, dword ptr [ecx + 0ch]
+        pop ebp
+        jmp ecl_context_get_float_arg_alias
+    }
 }
 
 // FUNCTION: TH16 0x425220
@@ -946,7 +957,8 @@ HARNESS_CALLED i32 EffectManager::track(AnmId id)
 // FUNCTION: TH16 0x41aa40
 HARNESS_CALLED LaserDataInf *LaserManager::find_by_id(i32 id, i32 unused)
 {
-    LaserDataInf *laser = list_head.next;
+    // The original resolves the list through the global manager, not this.
+    LaserDataInf *laser = g_LaserManager->list_head.next;
     if (id == 0)
     {
         return NULL;
