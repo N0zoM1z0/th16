@@ -827,24 +827,58 @@ i32 LaserManager::cancel_all()
     return 0;
 }
 
-// TODO: recover the original stack-alignment context without artificial locals.
+// Keep the original XMM radius preservation, 8-byte frame and aligned loop.
 // FUNCTION: TH16 0x431a70
-HARNESS_CALLED i32 LaserManager::cancel_in_radius(Float3 *pos, f32 radius, i32 mode, i32 skip_invuln)
+__declspec(naked) HARNESS_CALLED i32 LaserManager::cancel_in_radius(Float3 *pos, f32 radius, i32 mode, i32 skip_invuln)
 {
-    LaserManager *mgr = g_LaserManager;
-    LaserDataInf *laser = mgr->list_head.next;
-    i32 count = 0;
-    mgr->cancel_pos = *pos;
-    while (laser != NULL)
+    __asm
     {
-        LaserDataInf *next = laser->next;
-        if (laser->state != LASER_STATE_CANCELLED)
-        {
-            count += laser->cancel_as_bomb_circle(pos, radius, mode, skip_invuln);
-        }
-        laser = next;
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        mov eax, dword ptr [ebp + 8]
+        movaps xmm1, xmm2
+        mov ecx, g_LaserManager
+        push ebx
+        push esi
+        movq xmm0, qword ptr [eax]
+        xor ebx, ebx
+        mov esi, dword ptr [ecx + 14h]
+        movq qword ptr [ecx + 5ech], xmm0
+        mov eax, dword ptr [eax + 8]
+        movss dword ptr [ebp - 4], xmm1
+        mov dword ptr [ecx + 5f4h], eax
+        test esi, esi
+        je cancel_radius_done
+        push edi
+        ALIGN 16
+    cancel_radius_loop:
+        cmp dword ptr [esi + 10h], 1
+        mov edi, dword ptr [esi + 8]
+        je cancel_radius_next
+        push dword ptr [ebp + 10h]
+        mov edx, dword ptr [esi]
+        push dword ptr [ebp + 0ch]
+        push ecx
+        movss dword ptr [esp], xmm1
+        mov ecx, esi
+        push dword ptr [ebp + 8]
+        call dword ptr [edx + 24h]
+        movss xmm1, dword ptr [ebp - 4]
+        add ebx, eax
+    cancel_radius_next:
+        mov esi, edi
+        test edi, edi
+        jne cancel_radius_loop
+        pop edi
+    cancel_radius_done:
+        pop esi
+        mov eax, ebx
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 0ch
     }
-    return count;
 }
 
 // FUNCTION: TH16 0x431af0
