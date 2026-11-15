@@ -2135,11 +2135,16 @@ int EnemyData::ecl_run_over_300()
         chapter_count = 0;
         break;
     }
-    // rankF3(var, a, b, c): only two tiers survive in the binary.
+    // rankF3(var, a, b, c): the middle tier also reads a (so the binary has
+    // two copies; written as two tiers, LTCG hoists the pointer call).
     case ECL_OP_RANK_F3:
         if (g_Globals.rank >= 512)
         {
             *get_float_arg_ptr(0) = get_float_arg(2);
+        }
+        else if (g_Globals.rank >= -512)
+        {
+            *get_float_arg_ptr(0) = get_float_arg(0);
         }
         else
         {
@@ -2177,11 +2182,15 @@ int EnemyData::ecl_run_over_300()
         *get_float_arg_ptr(0) = (high - low) * (g_Globals.rank + 1024.0f) / 2048.0f + low;
         break;
     }
-    // rankI3(var, a, b, c)
+    // rankI3(var, a, b, c): the middle tier also reads a, as in rankF3.
     case ECL_OP_RANK_I3:
         if (g_Globals.rank >= 512)
         {
             *get_int_arg_ptr(0) = get_int_arg(2);
+        }
+        else if (g_Globals.rank >= -512)
+        {
+            *get_int_arg_ptr(0) = get_int_arg(0);
         }
         else
         {
