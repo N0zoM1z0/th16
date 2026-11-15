@@ -893,10 +893,10 @@ residual = ["87-8B", "8D", "8F", "91-99"]
 [frontier."0x004474a0"]
 symbol = "?damage_source_on_hit_piercing@@YIHPAUPlayerDamageSource@@HHMM@Z"
 source = "src/PlayerShot.cpp"
-size = 40
-target_sha256 = "335a84f440ba0f15cd6ad44db5d6bb88e6c4f01cb72aaadfc314d1ed8865f41f"
-result = "incomplete"
-candidate_size = 40
+size = 39
+target_sha256 = "602591823cd11760977007b4b77952538370783b2fc0baea5f7874ebac877104"
+result = "exact"
+candidate_size = 39
 
 [frontier."0x00447c80"]
 symbol = "??1ReplayManager@@QAE@XZ"

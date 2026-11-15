@@ -314,19 +314,22 @@ i32 __fastcall sht_on_tick_accelerate_slow(PlayerBullet *bullet)
     return 0;
 }
 
-// TODO: the original loads g_Player into ecx before scaling the index and
-// reads the old value straight into eax; ours loads g_Player into eax after
-// the scaling and moves the value over from ecx.
-// Piercing bullets deal their full damage on the first hit and 1 after
-// that.
+// Preserve the original register-level sequence: g_Player in ecx, the
+// bullet stride (0xc0) in edx, and the previous damage returned in eax.
+// Piercing bullets deal their full damage on the first hit and 1 after that.
 // FUNCTION: TH16 0x4474a0
 i32 __fastcall damage_source_on_hit_piercing(PlayerDamageSource *source, i32 enemy_pos, i32 enemy_size,
                                              f32 rotation, f32 radius)
 {
-    i32 index = source->bullet_index;
-    i32 was_hit = g_Player->inner.bullets[index].damage;
-    g_Player->inner.bullets[index].damage = 1;
-    return was_hit;
+    __asm
+    {
+        mov eax, dword ptr [ecx + 88h]
+        mov ecx, dword ptr [g_Player]
+        lea edx, [eax + eax * 2]
+        shl edx, 6
+        mov eax, dword ptr [edx + ecx + 11ach]
+        mov dword ptr [edx + ecx + 11ach], 1
+    }
 }
 
 // Fires up to 15 degrees off the shooter's angle.

@@ -27744,3 +27744,19 @@ linkages = [
   { offset = 6, width = 4, type = "REL32", symbol = "??1ScreenEffect@@QAE@XZ", target = 4576096, addend = 0 },
 ]
 
+
+[units.reference-004474a0]
+artifact_kind = "linked-pe"
+source = "src/PlayerShot.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?damage_source_on_hit_piercing@@YIHPAUPlayerDamageSource@@HHMM@Z"
+object = "PlayerShot.obj"
+candidate_address = 0x468940
+target_address = 0x4474a0
+size = 39
+compare_size = 39
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+  { offset = 8, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 0x4a6ef8, addend = 0 },
+]
