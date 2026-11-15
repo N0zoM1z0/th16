@@ -637,13 +637,13 @@ int EnemyData::ecl_run_over_300()
         if (instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET || instr->opcode == ECL_OP_MOVE_POS_REL_TIME_OFFSET)
         {
             f32 origin_x = ((PosVel *)((u8 *)this + position_offset))->pos.x;
-            if (flags_low & ENEMY_FLAG_MIRRORED)
+            if (!(flags_low & ENEMY_FLAG_MIRRORED))
             {
-                origin_x -= goal_x;
+                origin_x += goal_x;
             }
             else
             {
-                origin_x += goal_x;
+                origin_x -= goal_x;
             }
             goal_x = origin_x;
             goal_y = ((PosVel *)((u8 *)this + position_offset))->pos.y + goal_y;
