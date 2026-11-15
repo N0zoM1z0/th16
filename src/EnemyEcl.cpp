@@ -59,7 +59,7 @@ static __forceinline AnmId create_vm_front_at(AnmLoaded *file, i32 script, Float
 
 // pi - angle, wrapped: the direction mirrored about the vertical axis, for
 // mirrored enemies (ENEMY_FLAG_MIRRORED).
-static inline f32 mirror_angle(f32 angle)
+static __forceinline f32 mirror_angle(f32 angle)
 {
     return normalize_angle(ZUN_PI / 2 - normalize_angle(angle - ZUN_PI / 2));
 }
