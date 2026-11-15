@@ -1511,18 +1511,19 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_ON:
     {
         i32 slot = get_int_arg(0);
+        D3DXVECTOR3 pos;
         if (bullet_mgr_origins[slot].z > 0.9f)
         {
-            bullet_props[slot].pos =
-                D3DXVECTOR3(bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].xy.x,
-                            bullet_mgr_origins[slot].xy.y + bullet_mgr_offsets[slot].xy.y, 0.0f);
+            pos = D3DXVECTOR3(bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].xy.x,
+                              bullet_mgr_origins[slot].xy.y + bullet_mgr_offsets[slot].xy.y, 0.0f);
         }
         else
         {
-            bullet_props[slot].pos = D3DXVECTOR3(bullet_mgr_offsets[slot].xy.x + final_pos.pos.x,
-                                                 bullet_mgr_offsets[slot].xy.y + final_pos.pos.y,
-                                                 bullet_mgr_offsets[slot].z + final_pos.pos.z);
+            pos = D3DXVECTOR3(bullet_mgr_offsets[slot].xy.x + final_pos.pos.x,
+                              bullet_mgr_offsets[slot].xy.y + final_pos.pos.y,
+                              bullet_mgr_offsets[slot].z + final_pos.pos.z);
         }
+        bullet_props[slot].pos = pos;
         g_BulletManager->et_protect_range = et_protect_range;
         g_BulletManager->shoot_bullets(&bullet_props[slot]);
         g_BulletManager->et_protect_range = 0.0f;
