@@ -432,8 +432,11 @@ int EnemyData::ecl_run_over_300()
     }
     // anm334(effect)
     case ECL_OP_ANM_334:
-        g_EffectManager->create_tracked(full->context.current_context->get_int_arg(0), &final_pos.pos, 0);
+    {
+        i32 effect = full->context.current_context->get_int_arg(0);
+        g_EffectManager->create_tracked(effect, &final_pos.pos, 0);
         break;
+    }
     // anmSetMain(slot, script)
     case ECL_OP_ANM_SET_MAIN:
     {
@@ -496,10 +499,11 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = full->context.current_context->get_int_arg(0);
         i32 n = full->context.current_context->get_int_arg(1);
-        delete_vm_and_clear(anm_ids[slot]);
-        anm_ids[slot] = g_EnemyManager->anim_statement_anms[selected_anm_index]->create_vm_front(
-            n >= 0 ? anm_set_main + n + 5 : anm_set_main, anm_layers + 7, 0);
-        AnmVm *vm = anm_ids[slot].find_or_clear();
+        AnmId *id = &anm_ids[slot];
+        delete_vm_and_clear(*id);
+        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        *id = anm->create_vm_front(n >= 0 ? anm_set_main + 5 + n : anm_set_main, anm_layers + 7, 0);
+        AnmVm *vm = id->find_or_clear();
         if (slot == 0)
         {
             final_sprite_size.x = vm->scale.y * vm->sprite_size.y;
