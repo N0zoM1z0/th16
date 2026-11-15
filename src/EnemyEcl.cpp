@@ -32,6 +32,8 @@ extern "C" f32 ecl_normalize_angle_alias(f32);
 #pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
 extern "C" i32 ecl_laser_allocate_new_laser_alias(i32, void *);
 #pragma comment(linker, "/alternatename:_ecl_laser_allocate_new_laser_alias=?allocate_new_laser@LaserManager@@QAEHHPAX@Z")
+extern "C" const void *ecl_laser_data_vftable;
+#pragma comment(linker, "/alternatename:_ecl_laser_data_vftable=??_7LaserDataInf@@6B@")
 extern "C" i32 ecl_bullet_shoot_alias(EnemyBulletShooter *);
 #pragma comment(linker, "/alternatename:_ecl_bullet_shoot_alias=?shoot_bullets@BulletManager@@QAEHPAUEnemyBulletShooter@@@Z")
 
@@ -2382,10 +2384,14 @@ int EnemyData::ecl_run_over_300()
     // unknown714(id, value): laser method_8.
     case ECL_OP_LASER_714:
     {
-        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
+        register LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
-            laser->method_8(get_int_arg(1));
+            i32 arg = get_int_arg(1);
+            if ((const void *)*(const void **)laser != (const void *)&ecl_laser_data_vftable)
+            {
+                laser->method_8(arg);
+            }
         }
         break;
     }
