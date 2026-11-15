@@ -27347,6 +27347,21 @@ linkages = [
   { offset = 139, width = 4, type = "DIR32", symbol = "__real@c1000000", target = 4802368, addend = 0 },
 ]
 
+[units.reference-00473e40]
+artifact_kind = "linked-pe"
+source = "src/EclRunContext.cpp"
+output_dir = "build/reference-candidate"
+symbol = "?get_int_arg_given_value@EclRunContext@@QAEHHH@Z"
+object = "EclRunContext.obj"
+candidate_address = 4370384
+target_address = 4668992
+size = 175
+compare_size = 175
+profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
+link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
+linkages = [
+]
+
 [units.reference-00473ef0]
 artifact_kind = "linked-pe"
 source = "src/EclRunContext.cpp"

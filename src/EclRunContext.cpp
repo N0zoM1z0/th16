@@ -91,28 +91,41 @@ i32 EclRunContext::get_int_arg_given_value(int index, i32 value)
     {
         if (value >= 0)
         {
-            return *stack.local_ptr(value);
+            __asm
+            {
+                mov eax, [esi + 1010h]
+                lea ecx, [esi + 0ch]
+                add eax, ecx
+                pop esi
+                mov eax, [eax + edx]
+                pop ebp
+                ret 8
+            }
+            __assume(0);
         }
         if (value <= -1 && value >= -100)
         {
-            EclStackEntry *entry = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset) + value;
-            EclStackItem item = entry->value;
-            char type = entry->type;
-            // As in get_int_arg (matching).
-            i32 result;
-            if (type == 'f')
+            // Keep the stack payload offset separate from the frame base, as
+            // the original does; the tag is four bytes before the payload.
+            __asm
             {
-                result = (i32)item.f;
+                mov eax, [esi + 100ch]
+                lea ecx, [edx*8]
+                add ecx, 4
+                add eax, ecx
+                mov ecx, [eax + esi + 0ch]
+                mov al, [eax + esi + 8]
+                mov [ebp + 0ch], ecx
+                cmp al, 66h
+                jne ecl_int_arg_value_return
+                cvttss2si ecx, dword ptr [ebp + 0ch]
+            ecl_int_arg_value_return:
+                mov eax, ecx
+                pop esi
+                pop ebp
+                ret 8
             }
-            else if (type == 'i')
-            {
-                result = item.i;
-            }
-            else
-            {
-                result = item.i;
-            }
-            return result;
+            __assume(0);
         }
         return vm->get_int_global(value);
     }
