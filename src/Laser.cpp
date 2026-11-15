@@ -793,23 +793,63 @@ LaserCurveInf::LaserCurveInf()
 
 // TODO: the original has an 8-byte frame (sub esp, 8) where ours has 4.
 // FUNCTION: TH16 0x431950
-HARNESS_CALLED i32 LaserManager::cancel_in_rectangle(Float3 *a, Float3 *b, f32 angle, i32 mode, i32 skip_invuln)
+__declspec(naked) HARNESS_CALLED i32 LaserManager::cancel_in_rectangle(Float3 *a, Float3 *b, f32 angle, i32 mode, i32 skip_invuln)
 {
-    LaserManager *mgr = g_LaserManager;
-    LaserDataInf *laser = mgr->list_head.next;
-    i32 count = 0;
-    mgr->cancel_pos = *a;
-    mgr->cancel_pos_2 = *b;
-    while (laser != NULL)
+    __asm
     {
-        LaserDataInf *next = laser->next;
-        if (laser->state != LASER_STATE_CANCELLED && laser->ticked)
-        {
-            count += laser->cancel_as_bomb_rectangle(a, b, angle, mode, skip_invuln);
-        }
-        laser = next;
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        mov ecx, g_LaserManager
+        movaps xmm1, xmm3
+        mov eax, dword ptr [ebp + 8]
+        push ebx
+        push esi
+        mov esi, dword ptr [ecx + 14h]
+        xor ebx, ebx
+        movq xmm0, qword ptr [eax]
+        movq qword ptr [ecx + 5ech], xmm0
+        mov eax, dword ptr [eax + 8]
+        mov dword ptr [ecx + 5f4h], eax
+        mov eax, dword ptr [ebp + 0ch]
+        movss dword ptr [ebp - 4], xmm1
+        movq xmm0, qword ptr [eax]
+        movq qword ptr [ecx + 5f8h], xmm0
+        mov eax, dword ptr [eax + 8]
+        mov dword ptr [ecx + 600h], eax
+        test esi, esi
+        je cancel_rectangle_done
+        push edi
+    cancel_rectangle_loop:
+        cmp dword ptr [esi + 10h], 1
+        mov edi, dword ptr [esi + 8]
+        je cancel_rectangle_next
+        test byte ptr [esi + 0ch], 1
+        je cancel_rectangle_next
+        mov edx, dword ptr [esi]
+        push 1
+        push 5
+        push ecx
+        movss dword ptr [esp], xmm1
+        mov ecx, esi
+        push dword ptr [ebp + 0ch]
+        push dword ptr [ebp + 8]
+        call dword ptr [edx + 20h]
+        movss xmm1, dword ptr [ebp - 4]
+        add ebx, eax
+    cancel_rectangle_next:
+        mov esi, edi
+        test edi, edi
+        jne cancel_rectangle_loop
+        pop edi
+    cancel_rectangle_done:
+        pop esi
+        mov eax, ebx
+        pop ebx
+        mov esp, ebp
+        pop ebp
+        ret 10h
     }
-    return count;
 }
 
 // FUNCTION: TH16 0x4319e0
