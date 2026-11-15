@@ -960,7 +960,7 @@ CameraSky InterpCameraSky::step()
 {
     if (end_time > 0)
     {
-        time.tick();
+        time.tick_nested();
         if (time.current >= end_time)
         {
             time.set(end_time);
