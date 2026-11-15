@@ -8,6 +8,15 @@ documentation and commit messages in English. The Japanese game title is the
 only non-English exception in maintained code, comments and documentation.
 Use ordinary Markdown for findings.
 
+The common Factory workflow is
+`/home/pentester/coding/codex_ida/touhou-reconstruction-factory/docs/agent-autonomy.md`.
+Its lightweight requirements take priority over older broad-CI, document-hash
+and reporting rules. Use existing scripts and affected checks; avoid extra
+frameworks, validators and tests that freeze prose or progress totals.
+Write fluent, direct notes connecting the finding, evidence and next action.
+Remove filler, circular repetition and defensive-claim boilerplate; state
+relevant uncertainty once.
+
 ## Publication
 
 On 2026-11-15 the user published this repository as the public
@@ -65,7 +74,13 @@ commit `2b846da735ac71f68b1dc74e8194c8c8d98e2869`. Its target hash matches ours.
 Its source and reported progress remain reference material until independently
 reviewed. Preserve its original checkout.
 
-Use the one shared Factory service when deployment is requested. The staged
-registration is `.analysis/factory-registration.toml`; local validation uses
-`.analysis/factory-validation.toml`. The bootstrap does not activate or restart
-the live service. See `docs/SHARED_TOOLS.md` and `docs/BOOTSTRAP.md`.
+Use the existing shared Factory service with repository ID `th16` and native
+Ghidra provider `th16-ghidra`. Other registered games are readable under
+`/references/<id>` in Factory shells. Shared tools also work locally through
+`scripts/shared_runtime.py`.
+
+The ignored `.analysis/factory-registration.toml` and
+`.analysis/factory-validation.toml` retain the operator registration and local
+validation inputs. Registration changes load on the next call; coordinate any
+service-code restart with active Web work. See `docs/SHARED_TOOLS.md` and the
+historical setup in `docs/BOOTSTRAP.md`.

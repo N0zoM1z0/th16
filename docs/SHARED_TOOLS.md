@@ -48,13 +48,16 @@ because the compiler's persistent PDB server can keep stdout pipes open.
 
 ## Factory registration
 
-`.analysis/factory-registration.toml` contains the private `th16` repository and
-`th16-ghidra` native provider blocks. `.analysis/factory-validation.toml` is an
-isolated one-game configuration used to validate discovery and an entry-function
-query. Factory state/evidence live outside the game repository. The shared
-service configuration and endpoint have not been changed.
+Use repository ID `th16` and native Ghidra provider `th16-ghidra` through the
+existing shared Factory endpoint. Factory shells expose other registered source
+worktrees read-only at `/references/<id>`; other games can read this repository
+at `/references/th16`. Local scripts and MCP calls use the same shared tools
+and this game's own prefix and project.
 
-Activation is a separate operator step: merge the reviewed blocks into the
-existing private service configuration, retain shared runtime/compiler mounts,
-coordinate active jobs, and restart at a safe boundary. Use the existing single
-Factory endpoint. The inventory adapter imports provisional boundaries only.
+`.analysis/factory-registration.toml` retains the private registration blocks.
+`.analysis/factory-validation.toml` is an isolated one-game configuration for
+local discovery and query checks. Factory state and evidence live outside the
+game repository. The inventory adapter imports provisional boundaries.
+
+Registration changes load on the next Factory call without restarting the
+service. Coordinate any implementation restart with active Web work.
