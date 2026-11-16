@@ -606,20 +606,32 @@ i32 AnmVm::run()
             break;
         }
         case ANM_OP_FSET_ADD:
-            *ANM_FLOAT_PTR(0) = ANM_FLOAT(1) + ANM_FLOAT(2);
+        {
+            f32 lhs = ANM_FLOAT(1);
+            f32 rhs = ANM_FLOAT(2);
+            *ANM_FLOAT_PTR(0) = lhs + rhs;
             break;
+        }
         case ANM_OP_ISET_SUB:
             *ANM_INT_PTR(0) = ANM_INT(1) - ANM_INT(2);
             break;
         case ANM_OP_FSET_SUB:
-            *ANM_FLOAT_PTR(0) = ANM_FLOAT(1) - ANM_FLOAT(2);
+        {
+            f32 lhs = ANM_FLOAT(1);
+            f32 rhs = ANM_FLOAT(2);
+            *ANM_FLOAT_PTR(0) = lhs - rhs;
             break;
+        }
         case ANM_OP_ISET_MUL:
             *ANM_INT_PTR(0) = ANM_INT(1) * ANM_INT(2);
             break;
         case ANM_OP_FSET_MUL:
-            *ANM_FLOAT_PTR(0) = ANM_FLOAT(1) * ANM_FLOAT(2);
+        {
+            f32 lhs = ANM_FLOAT(1);
+            f32 rhs = ANM_FLOAT(2);
+            *ANM_FLOAT_PTR(0) = lhs * rhs;
             break;
+        }
         case ANM_OP_ISET_DIV:
         {
             i32 a = ANM_INT(1);
@@ -633,8 +645,12 @@ i32 AnmVm::run()
             break;
         }
         case ANM_OP_FSET_DIV:
-            *ANM_FLOAT_PTR(0) = ANM_FLOAT(1) / ANM_FLOAT(2);
+        {
+            f32 lhs = ANM_FLOAT(1);
+            f32 rhs = ANM_FLOAT(2);
+            *ANM_FLOAT_PTR(0) = lhs / rhs;
             break;
+        }
         case ANM_OP_ISET_MOD:
         {
             i32 a = ANM_INT(1);
@@ -648,8 +664,13 @@ i32 AnmVm::run()
             break;
         }
         case ANM_OP_FSET_MOD:
-            anm_store_float(this, ins, 0, fmodf(ANM_FLOAT(1), ANM_FLOAT(2)));
+        {
+            // The floating remainder call evaluates its divisor first.
+            f32 rhs = ANM_FLOAT(2);
+            f32 lhs = ANM_FLOAT(1);
+            anm_store_float(this, ins, 0, fmodf(lhs, rhs));
             break;
+        }
         case ANM_OP_IADD:
         {
             i32 value = ANM_INT(1);
