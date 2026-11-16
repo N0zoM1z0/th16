@@ -797,27 +797,61 @@ int EnemyData::ecl_run_over_300()
     // anmSetMain(slot, script)
     case ECL_OP_ANM_SET_MAIN:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
-        i32 script = full->context.current_context->get_int_arg(1);
-        delete_vm_and_clear(anm_ids[slot]);
-        anm_ids[slot] =
-            g_EnemyManager->anim_statement_anms[selected_anm_index]->create_vm_front(script, anm_layers + 7, 0);
-        AnmVm *vm = anm_ids[slot].find_or_clear();
-        if (slot == 0)
+        __asm
         {
-            final_sprite_size.x = vm->scale.y * vm->sprite_size.y;
-            final_sprite_size.y = vm->scale.x * vm->sprite_size.x;
-        }
-        if (flags_low & ENEMY_FLAG_INTANGIBLE)
-        {
-            anm_ids[slot].hide_tree();
-        }
-        if (slot == 0)
-        {
-            flags_low |= ENEMY_FLAG_DIRECTIONAL_ANM;
-            anm_slot_0_script = anm_set_main = script;
-            anm_direction = 0;
-            anm_slot_0_anm_index = selected_anm_index;
+            mov ecx, dword ptr [edx + 0ch]
+            push 0
+            call ecl_context_get_int_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            mov esi, eax
+            push 1
+            mov dword ptr [ebp - 414h], esi
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            push dword ptr [edi + esi*4 + 124h]
+            lea esi, [edi + esi*4]
+            mov dword ptr [ebp - 410h], eax
+            call ecl_anm_delete_vm_alias
+            mov ecx, dword ptr [g_EnemyManager]
+            mov dword ptr [esi + 124h], 0
+            mov eax, dword ptr [edi + 27ch]
+            mov edx, dword ptr [edi + 264h]
+            add eax, 7
+            push ecx
+            push eax
+            push dword ptr [ebp - 410h]
+            mov ecx, dword ptr [ecx + edx*4 + 164h]
+            lea eax, [ebp - 420h]
+            push eax
+            call ecl_anm_create_vm_front_alias
+            lea ecx, [esi + 124h]
+            mov eax, dword ptr [eax]
+            mov dword ptr [esi + 124h], eax
+            call ecl_anm_find_or_clear_alias
+            cmp dword ptr [ebp - 414h], 0
+            jne ecl_anm_set_main_sprite_ready
+            movss xmm0, dword ptr [eax + 74h]
+            mulss xmm0, dword ptr [eax + 54h]
+            movss dword ptr [edi + 3f58h], xmm0
+            movss xmm0, dword ptr [eax + 70h]
+            mulss xmm0, dword ptr [eax + 50h]
+            movss dword ptr [edi + 3f5ch], xmm0
+        ecl_anm_set_main_sprite_ready:
+            test byte ptr [edi + 4060h], 20h
+            je ecl_anm_set_main_visibility_ready
+            lea ecx, [esi + 124h]
+            call ecl_anm_hide_tree_alias
+        ecl_anm_set_main_visibility_ready:
+            cmp dword ptr [ebp - 414h], 0
+            jne ecl_anm_set_main_done
+            mov eax, dword ptr [ebp - 410h]
+            or dword ptr [edi + 4060h], 100000h
+            mov dword ptr [edi + 270h], eax
+            mov dword ptr [edi + 26ch], eax
+            mov eax, dword ptr [edi + 264h]
+            mov dword ptr [edi + 274h], 0
+            mov dword ptr [edi + 268h], eax
+        ecl_anm_set_main_done:
         }
         break;
     }
@@ -1046,10 +1080,30 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        const bool use_absolute = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET;
-        position_offset = use_absolute ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
-        position_interp = use_absolute ? &abs_pos_i : &rel_pos_i;
-        goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        __asm
+        {
+            mov position_interp, 1b2h
+            mov eax, 1b6h
+            cmp cx, word ptr position_interp
+            je ecl_move_curve_absolute_offset
+            mov position_offset, 0cch
+            cmp cx, ax
+            jne ecl_move_curve_offset_done
+        ecl_move_curve_absolute_offset:
+            mov position_offset, 88h
+        ecl_move_curve_offset_done:
+            cmp cx, word ptr position_interp
+            je ecl_move_curve_absolute_interp
+            cmp cx, ax
+            mov eax, 360h
+            jne ecl_move_curve_interp_done
+        ecl_move_curve_absolute_interp:
+            mov eax, 2f8h
+        ecl_move_curve_interp_done:
+            mov position_interp, eax
+        }
+        goal_x = full_owner->context.current_context->get_float_arg(
+            (position_interp = (InterpStrange1 *)((u8 *)this + (u32)position_interp), EclFloatArgIndex{3}));
         goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
