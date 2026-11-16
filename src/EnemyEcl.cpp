@@ -218,18 +218,18 @@ static __forceinline void ecl_laser_on(EnemyData *enemy)
     const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
     memcpy(params.ex, shooter.ex, sizeof(params.ex));
     params.start_pos = ecl_laser_start_pos(enemy, slot);
-    params.ang_aim = normalize_angle(shooter.ang_aim);
-    params.laser_new_arg_2 = shooter.pos.y;
-    params.laser_new_arg_1 = shooter.pos.x;
-    params.laser_new_arg_3 = shooter.pos.z;
-    params.laser_new_arg_4 = shooter.laser_new_arg_4;
-    params.speed = shooter.spd1;
     params.bullet_type = shooter.type;
     params.bullet_color = shooter.color;
-    params.distance = shooter.distance;
+    params.ang_aim = normalize_angle(shooter.ang_aim);
     params.flags = shooter.flags | 1;
+    params.speed = shooter.spd1;
+    params.laser_new_arg_1 = shooter.pos.x;
+    params.laser_new_arg_2 = shooter.pos.y;
     params.shot_sfx = shooter.shot_sfx;
+    params.laser_new_arg_3 = shooter.pos.z;
     params.shot_transform_sfx = shooter.shot_transform_sfx;
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.distance = shooter.distance;
     g_LaserManager->allocate_new_laser(LASER_LINE, &params);
 }
 
