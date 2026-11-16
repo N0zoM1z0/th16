@@ -200,6 +200,10 @@ static inline void ecl_run_vm(AnmVm *vm)
 // The laser instructions and angleToPlayer, as forceinline helpers: the
 // original has them inline in ecl_run_over_300.
 
+static_assert(sizeof(EnemyBulletShooter) == 0x380, "ECL shooter stride");
+static_assert(sizeof(BulletEx) == 0x2c, "ECL transform stride");
+static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array offset");
+
 // The original dispatcher reuses one stack slot for all four laser
 // parameter records; only one ECL instruction executes per dispatch.
 union EclLaserParamsStorage
@@ -1858,24 +1862,34 @@ int EnemyData::ecl_run_over_300()
         {
             ex_index = get_int_arg(1);
         }
-        BulletEx *ex = &bullet_props[et].ex[ex_index];
-        ex->slot = get_int_arg(arg++);
-        ex->type = get_int_arg(arg++);
-        ex->a = get_int_arg(arg++);
-        ex->b = get_int_arg(arg++);
+        // All transform fields share one flattened shooter/transform offset
+        // across the argument reads below.
+        volatile i32 ex_offset = et * sizeof(EnemyBulletShooter) + ex_index * sizeof(BulletEx);
+        // Keep the member access typed while using the target's shared base.
+#define ECL_EX_INT(field) (*reinterpret_cast<i32 *>(reinterpret_cast<u8 *>(&bullet_props[0].ex[0]) + ex_offset + offsetof(BulletEx, field)))
+#define ECL_EX_FLOAT(field) (*reinterpret_cast<f32 *>(reinterpret_cast<u8 *>(&bullet_props[0].ex[0]) + ex_offset + offsetof(BulletEx, field)))
+        ECL_EX_INT(slot) = get_int_arg(arg++);
+        ECL_EX_INT(type) = get_int_arg(arg++);
+        ECL_EX_INT(a) = get_int_arg(arg++);
+        ECL_EX_INT(b) = get_int_arg(arg++);
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
-            ex->c = get_int_arg(arg++);
-            ex->d = get_int_arg(arg++);
+            // The c word uses the extended record base at index +0x22.
+            *reinterpret_cast<i32 *>(reinterpret_cast<u8 *>(this) +
+                                     et * sizeof(EnemyBulletShooter) +
+                                     (ex_index + 0x22) * sizeof(BulletEx)) = get_int_arg(arg++);
+            ECL_EX_INT(d) = get_int_arg(arg++);
         }
 
-        ex->r = get_float_arg(EclFloatArgIndex{arg++});
-        ex->s = get_float_arg(EclFloatArgIndex{arg++});
+        ECL_EX_FLOAT(r) = get_float_arg(EclFloatArgIndex{arg++});
+        ECL_EX_FLOAT(s) = get_float_arg(EclFloatArgIndex{arg++});
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
-            ex->m = get_float_arg(EclFloatArgIndex{arg++});
-            ex->n = get_float_arg(EclFloatArgIndex{arg++});
+            ECL_EX_FLOAT(m) = get_float_arg(EclFloatArgIndex{arg++});
+            ECL_EX_FLOAT(n) = get_float_arg(EclFloatArgIndex{arg++});
         }
+#undef ECL_EX_INT
+#undef ECL_EX_FLOAT
 
         if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
