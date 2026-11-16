@@ -67,8 +67,6 @@ extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
 extern "C" void ecl_anm_hide_tree_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_hide_tree_alias=?hide_tree@AnmId@@QAEXXZ")
 #pragma comment(linker, "/alternatename:_ecl_anm_find_or_clear_alias=?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ")
-extern "C" i32 ecl_spt_load_sub_by_name_alias();
-#pragma comment(linker, "/alternatename:_ecl_spt_load_sub_by_name_alias=?load_sub_by_name@SptInf@@QAEHPBD@Z")
 
 extern "C" f32 ecl_normalize_angle_alias(f32);
 #pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
@@ -2803,22 +2801,12 @@ int EnemyData::ecl_run_over_300()
             EnemyInf *boss = g_EnemyManager->get_boss(i);
             if (i != own_boss_id && boss != NULL)
             {
-                i32 interrupt_offset = index * sizeof(EnemyInterrupt);
-                if (boss->enemy.interrupts[index].life >= 0 &&
-                    boss->enemy.interrupts[index].sub_for_set_next != NULL)
+                EnemyInterrupt *interrupt = &boss->enemy.interrupts[index];
+                if (interrupt->life >= 0 && interrupt->sub_for_set_next != NULL)
                 {
                     boss->free_all_async();
                     boss->reset_run_context();
-                    // reset_run_context leaves the receiver in ECX; the
-                    // original immediately calls load_sub_by_name with it.
-                    __asm
-                    {
-                        mov eax, interrupt_offset
-                        add eax, 528ch
-                        add eax, esi
-                        push eax
-                        call ecl_spt_load_sub_by_name_alias
-                    }
+                    boss->load_sub_by_name(interrupt->sub_for_set_next);
                 }
             }
         }
