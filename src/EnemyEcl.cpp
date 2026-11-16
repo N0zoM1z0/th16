@@ -597,20 +597,20 @@ int EnemyData::ecl_run_over_300()
         break;
     // lifeHide(hide)
     case ECL_OP_LIFE_HIDE:
-        g_EnemyManager->inner.life_bar_hidden = full->context.current_context->get_int_arg(0);
+        g_EnemyManager->inner.life_bar_hidden = full_owner->context.current_context->get_int_arg(0);
         break;
     // zIndex(layer)
     case ECL_OP_Z_INDEX:
-        anm_layers = full->context.current_context->get_int_arg(0);
+        anm_layers = full_owner->context.current_context->get_int_arg(0);
         break;
     // hitSound(sound)
     case ECL_OP_HIT_SOUND:
-        hit_sound = full->context.current_context->get_int_arg(0);
+        hit_sound = full_owner->context.current_context->get_int_arg(0);
         break;
     // scoreAdd(points)
     case ECL_OP_SCORE_ADD:
     {
-        i32 points = full->context.current_context->get_int_arg(0);
+        i32 points = full_owner->context.current_context->get_int_arg(0);
         g_Globals.add_to_score(points);
         g_PopupManager->generate_small_score_popup(&final_pos.pos, points, -1);
         break;
@@ -1520,7 +1520,16 @@ int EnemyData::ecl_run_over_300()
     }
     // lifeMarker(index, life, color): a marker on the boss life bar.
     case ECL_OP_LIFE_MARKER:
-        g_Gui->set_boss_life_marker(own_boss_id, get_int_arg(0), get_float_arg(EclFloatArgIndex{1}) / life.maximum, get_int_arg(2));
+    {
+        // The target loads life.maximum before fetching the color, ratio and
+        // marker-life arguments, in that order.
+        i32 maximum = life.maximum;
+        i32 color = get_int_arg(2);
+        f32 ratio = get_float_arg(EclFloatArgIndex{1}) / maximum;
+        i32 marker_life = get_int_arg(0);
+        g_Gui->set_boss_life_marker(own_boss_id, marker_life, ratio, color);
+        break;
+    }
         break;
     // funcSet(index): a per-frame hook (g_ecl_func_sets).
     case ECL_OP_FUNC_SET:
@@ -2501,9 +2510,12 @@ int EnemyData::ecl_run_over_300()
         break;
     // unknown543(): removes the boss effect.
     case ECL_OP_HIDE_BOSS_EFFECT:
-        g_Spellcard->flags |= SPELLCARD_FLAG_10;
-        delete_vm_and_clear(g_Spellcard->boss_anm_id);
+    {
+        Spellcard *spellcard = g_Spellcard;
+        spellcard->flags |= SPELLCARD_FLAG_10;
+        delete_vm_and_clear(spellcard->boss_anm_id);
         break;
+    }
     // unknown567(on): the spell name at the bottom of the screen.
     case ECL_OP_SPELL_TEXT_AT_BOTTOM:
         ((SpellcardFlagBits *)&g_Spellcard->flags)->text_at_bottom = get_int_arg(0);
