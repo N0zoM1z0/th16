@@ -848,41 +848,12 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             // Integer arithmetic.
             case ECL_OP_ADD:
             {
-                // Keep the two tagged stack pops in the same register order as
-                // the original interpreter: first operand in edx, second in ecx.
-                __asm
-                {
-                    add dword ptr [edi + 100ch], -4
-                    mov eax, dword ptr [edi + 100ch]
-                    mov edx, dword ptr [edi + eax + 0ch]
-                    add eax, -4
-                    mov dword ptr [edi + 100ch], eax
-                    mov dword ptr [esp + 14h], edx
-                    mov al, byte ptr [edi + eax + 0ch]
-                    cmp al, 66h
-                    jne ecl_add_first_ready
-                    cvttss2si edx, dword ptr [esp + 14h]
-                ecl_add_first_ready:
-                    add dword ptr [edi + 100ch], -4
-                    mov eax, dword ptr [edi + 100ch]
-                    mov ecx, dword ptr [edi + eax + 0ch]
-                    add eax, -4
-                    mov dword ptr [edi + 100ch], eax
-                    mov dword ptr [esp + 14h], ecx
-                    mov al, byte ptr [edi + eax + 0ch]
-                    cmp al, 66h
-                    jne ecl_add_second_ready
-                    cvttss2si ecx, dword ptr [esp + 14h]
-                ecl_add_second_ready:
-                    add ecx, edx
-                    mov eax, dword ptr [edi + 100ch]
-                    mov byte ptr [edi + eax + 0ch], 69h
-                    add dword ptr [edi + 100ch], 4
-                    mov eax, dword ptr [edi + 100ch]
-                    mov dword ptr [edi + eax + 0ch], ecx
-                    add dword ptr [edi + 100ch], 4
-                    mov byte ptr [esi + 0ch], 0
-                }
+                // Pop the right operand first, then the left. A float-tagged
+                // stack entry is converted to int by pop_int().
+                i32 b = stack.pop_int();
+                i32 a = stack.pop_int();
+                stack.push_int(a + b);
+                ins->num_stack_refs = 0;
                 goto next_instr;
             }
             case ECL_OP_SUB:
