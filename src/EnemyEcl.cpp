@@ -96,8 +96,6 @@ extern "C" i32 ecl_laser_allocate_new_laser_alias(i32, void *);
 #pragma comment(linker, "/alternatename:_ecl_laser_allocate_new_laser_alias=?allocate_new_laser@LaserManager@@QAEHHPAX@Z")
 extern "C" const void *ecl_laser_data_vftable;
 #pragma comment(linker, "/alternatename:_ecl_laser_data_vftable=??_7LaserDataInf@@6B@")
-extern "C" i32 ecl_bullet_shoot_alias(EnemyBulletShooter *);
-#pragma comment(linker, "/alternatename:_ecl_bullet_shoot_alias=?shoot_bullets@BulletManager@@QAEHPAUEnemyBulletShooter@@@Z")
 
 // create_vm, inserted at the front of the world list like create_vm_front
 // (0x426160, which is a copy with pos and rotation folded). LTCG inlined
@@ -2116,58 +2114,31 @@ int EnemyData::ecl_run_over_300()
         bullet_mgr_origins[dst] = bullet_mgr_origins[src];
         break;
     }
-    // etOn(slot): fires the shooter from the enemy plus the offset, or
-    // from the absolute origin set by etOffsetAbs.
+    // etOn(slot): fires from an absolute origin when set, otherwise from
+    // the enemy's final position; both forms include the slot offset.
     case ECL_OP_ET_ON:
     {
-        __asm
+        i32 slot = get_int_arg(0);
+        EnemyBulletShooter *shooter = &bullet_props[slot];
+        BulletOffset *offset = &bullet_mgr_offsets[slot];
+        BulletOffset *origin = &bullet_mgr_origins[slot];
+
+        if (origin->z > ecl_origin_threshold)
         {
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov edx, eax
-            lea ecx, [edx + edx*2]
-            movss xmm0, dword ptr [edi + ecx*4 + 3ea0h]
-            lea eax, [edx + edx*2]
-            comiss xmm0, ecl_origin_threshold
-            movss xmm1, dword ptr [edi + eax*4 + 3ddch]
-            jbe et_on_relative_origin
-            movss xmm2, dword ptr [edi + eax*4 + 3e98h]
-            addss xmm2, dword ptr [edi + eax*4 + 3dd8h]
-            addss xmm1, dword ptr [edi + eax*4 + 3e9ch]
-            lea eax, [edx*8]
-            sub eax, edx
-            shl eax, 7
-            lea edx, [eax + edi]
-            unpcklps xmm2, xmm1
-            movq qword ptr [edx + 5a0h], xmm2
-            mov dword ptr [edx + 5a8h], 0
-            jmp et_on_position_ready
-        et_on_relative_origin:
-            movss xmm2, dword ptr [edi + eax*4 + 3dd8h]
-            movss xmm0, dword ptr [edi + eax*4 + 3de0h]
-            lea eax, [edx*8]
-            addss xmm2, dword ptr [edi + 44h]
-            addss xmm1, dword ptr [edi + 48h]
-            addss xmm0, dword ptr [edi + 4ch]
-            sub eax, edx
-            shl eax, 7
-            lea edx, [eax + edi]
-            unpcklps xmm2, xmm1
-            movss dword ptr [ebp - 440h], xmm0
-            mov eax, dword ptr [ebp - 440h]
-            movq qword ptr [edx + 5a0h], xmm2
-            mov dword ptr [edx + 5a8h], eax
-        et_on_position_ready:
-            mov eax, dword ptr [g_BulletManager]
-            mov ecx, dword ptr [edi + 4074h]
-            mov dword ptr [eax + 44h], ecx
-            lea eax, [edx + 598h]
-            push eax
-            call ecl_bullet_shoot_alias
-            mov eax, dword ptr [g_BulletManager]
-            mov dword ptr [eax + 44h], 0
+            shooter->pos.x = origin->xy.x + offset->xy.x;
+            shooter->pos.y = origin->xy.y + offset->xy.y;
+            shooter->pos.z = 0.0f;
         }
+        else
+        {
+            shooter->pos.x = final_pos.pos.x + offset->xy.x;
+            shooter->pos.y = final_pos.pos.y + offset->xy.y;
+            shooter->pos.z = final_pos.pos.z + offset->z;
+        }
+
+        g_BulletManager->et_protect_range = et_protect_range;
+        g_BulletManager->shoot_bullets(shooter);
+        g_BulletManager->et_protect_range = 0.0f;
         break;
     }
     // etSprite(slot, type, color)
@@ -2407,162 +2378,45 @@ int EnemyData::ecl_run_over_300()
         break;
     }
 
-    // etEx(et, ex_index, slot, type, a, b, r, s) and its full/next forms.
-    // Preserve the original register and frame flow: the four variants share
-    // one 521-byte handler in the dispatch body.
+    // etEx(et, ex_index, slot, type, a, b, r, s), plus full and next forms.
     case ECL_OP_ET_EX:
     case ECL_OP_ET_EX_FULL:
     case ECL_OP_ET_EX_NEXT:
     case ECL_OP_ET_EX_FULL_NEXT:
     {
-        __asm
+        i32 et = get_int_arg(0);
+        if (et < 0 || et >= 0x12)
         {
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov dword ptr [ebp - 410h], eax
-            cmp eax, 12h
-            jge et_ex_bad_idx
-            test eax, eax
-            jns et_ex_idx_ok
-        et_ex_bad_idx:
-            xor eax, eax
-            mov dword ptr [ebp - 410h], eax
-        et_ex_idx_ok:
-            movzx ecx, word ptr [esi + 4]
-            mov esi, 263h
-            mov dword ptr [ebp - 420h], esi
-            lea edx, [esi + 1]
-            cmp cx, si
-            je et_ex_set_next_arg
-            mov esi, 2
-            cmp cx, dx
-            jne et_ex_arg_index_ready
-        et_ex_set_next_arg:
-            mov esi, 1
-        et_ex_arg_index_ready:
-            cmp cx, word ptr [ebp - 420h]
-            je et_ex_get_next_slot
-            cmp cx, dx
-            je et_ex_get_next_slot
-            push 1
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov edx, eax
-            mov dword ptr [ebp - 414h], eax
-            mov eax, dword ptr [ebp - 410h]
-            jmp et_ex_slot_ready
-        et_ex_get_next_slot:
-            mov edx, dword ptr [edi + eax*4 + 3d98h]
-            mov dword ptr [ebp - 414h], edx
-        et_ex_slot_ready:
-            lea ecx, [eax*8]
-            sub ecx, eax
-            imul eax, edx, 2ch
-            shl ecx, 7
-            mov dword ptr [ebp - 420h], ecx
-            push esi
-            add eax, ecx
-            mov ecx, edi
-            mov dword ptr [ebp - 42ch], eax
-            call ecl_enemy_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 42ch]
-            inc esi
-            push esi
-            mov dword ptr [ecx + edi + 5e4h], eax
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 42ch]
-            inc esi
-            push esi
-            mov dword ptr [ecx + edi + 5e0h], eax
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 42ch]
-            inc esi
-            push esi
-            mov dword ptr [ecx + edi + 5d0h], eax
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 42ch]
-            inc esi
-            mov dword ptr [ecx + edi + 5d4h], eax
-            mov ecx, 262h
-            mov eax, dword ptr [ebp - 0b4h]
-            movzx eax, word ptr [eax + 4]
-            cmp ax, cx
-            je et_ex_full_ints
-            mov ecx, 264h
-            cmp ax, cx
-            jne et_ex_full_ints_done
-        et_ex_full_ints:
-            push esi
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 414h]
-            inc esi
-            add ecx, 22h
-            imul ecx, ecx, 2ch
-            push esi
-            add ecx, dword ptr [ebp - 420h]
-            mov dword ptr [ecx + edi], eax
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 42ch]
-            inc esi
-            mov dword ptr [ecx + edi + 5dch], eax
-        et_ex_full_ints_done:
-            push esi
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            mov eax, dword ptr [ebp - 42ch]
-            inc esi
-            push esi
-            mov ecx, edi
-            movss dword ptr [eax + edi + 5c0h], xmm0
-            call ecl_enemy_get_float_arg_alias
-            mov eax, dword ptr [ebp - 42ch]
-            mov edx, 262h
-            inc esi
-            movss dword ptr [eax + edi + 5c4h], xmm0
-            mov eax, dword ptr [ebp - 0b4h]
-            movzx ecx, word ptr [eax + 4]
-            cmp cx, dx
-            je et_ex_full_floats
-            mov edx, 264h
-            cmp cx, dx
-            jne et_ex_full_floats_done
-        et_ex_full_floats:
-            push esi
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            mov eax, dword ptr [ebp - 42ch]
-            mov ecx, edi
-            movss dword ptr [eax + edi + 5c8h], xmm0
-            lea eax, [esi + 1]
-            push eax
-            call ecl_enemy_get_float_arg_alias
-            mov eax, dword ptr [ebp - 42ch]
-            mov edx, 264h
-            movss dword ptr [eax + edi + 5cch], xmm0
-        et_ex_full_floats_done:
-            mov eax, dword ptr [ebp - 0b4h]
-            movzx eax, word ptr [eax + 4]
-            mov ecx, 263h
-            cmp ax, cx
-            je et_ex_update_next
-            cmp ax, dx
-            je et_ex_update_next
-            mov ecx, dword ptr [ebp - 410h]
-            mov eax, dword ptr [ebp - 414h]
-            inc eax
-            mov dword ptr [edi + ecx*4 + 3d98h], eax
-            jmp et_ex_exit
-        et_ex_update_next:
-            mov ecx, dword ptr [ebp - 410h]
-            inc dword ptr [edi + ecx*4 + 3d98h]
-        et_ex_exit:
+            et = 0;
         }
+
+        bool next = instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT;
+        bool full = instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT;
+        i32 ex_index = next ? et_ex_index[et] : get_int_arg(1);
+        BulletEx *ex = &bullet_props[et].ex[ex_index];
+
+        // Normal forms supply the transform index explicitly; NEXT forms
+        // use the shooter's current next-transform index and start at arg 1.
+        i32 arg = next ? 1 : 2;
+        ex->slot = get_int_arg(arg++);
+        ex->type = get_int_arg(arg++);
+        ex->a = get_int_arg(arg++);
+        ex->b = get_int_arg(arg++);
+        if (full)
+        {
+            ex->c = get_int_arg(arg++);
+            ex->d = get_int_arg(arg++);
+        }
+
+        ex->r = get_float_arg(EclFloatArgIndex{arg++});
+        ex->s = get_float_arg(EclFloatArgIndex{arg++});
+        if (full)
+        {
+            ex->m = get_float_arg(EclFloatArgIndex{arg++});
+            ex->n = get_float_arg(EclFloatArgIndex{arg++});
+        }
+
+        et_ex_index[et] = ex_index + 1;
         break;
     }
     // etExSubtract(et): steps the next free ex slot back.
