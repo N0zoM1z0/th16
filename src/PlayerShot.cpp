@@ -314,22 +314,25 @@ i32 __fastcall sht_on_tick_accelerate_slow(PlayerBullet *bullet)
     return 0;
 }
 
-// Preserve the original register-level sequence: g_Player in ecx, the
-// bullet stride (0xc0) in edx, and the previous damage returned in eax.
-// Piercing bullets deal their full damage on the first hit and 1 after that.
+// The native callback indexes 0xc0-byte bullets from the player object
+// and reads their damage at the original 0x11ac displacement.
+static_assert(sizeof(PlayerBullet) == 0xc0, "PlayerBullet stride");
+static_assert(offsetof(PlayerDamageSource, bullet_index) == 0x88, "Damage source bullet index");
+static_assert(offsetof(Player, inner) + offsetof(PlayerInner, bullets) + offsetof(PlayerBullet, damage) == 0x11ac,
+              "Player bullet damage offset");
+
+// Piercing bullets deal their full damage on the first hit and 1 on
+// subsequent hits. The source identifies its owning player bullet.
 // FUNCTION: TH16 0x4474a0
 i32 __fastcall damage_source_on_hit_piercing(PlayerDamageSource *source, i32 enemy_pos, i32 enemy_size,
                                              f32 rotation, f32 radius)
 {
-    __asm
-    {
-        mov eax, dword ptr [ecx + 88h]
-        mov ecx, dword ptr [g_Player]
-        lea edx, [eax + eax * 2]
-        shl edx, 6
-        mov eax, dword ptr [edx + ecx + 11ach]
-        mov dword ptr [edx + ecx + 11ach], 1
-    }
+    i32 bullet_index = source->bullet_index;
+    Player *player = g_Player;
+    PlayerBullet *bullet = &player->inner.bullets[bullet_index];
+    i32 previous_damage = bullet->damage;
+    bullet->damage = 1;
+    return previous_damage;
 }
 
 // Fires up to 15 degrees off the shooter's angle.
