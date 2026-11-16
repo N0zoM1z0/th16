@@ -239,24 +239,23 @@ static __forceinline void ecl_laser_st_on(EnemyData *enemy)
     LaserInfiniteInner params;
     i32 slot = enemy->get_int_arg(0);
     const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
-    memcpy(params.ex, shooter.ex, sizeof(params.ex));
-    params.start_pos = ecl_laser_start_pos(enemy, slot);
-    params.ang_aim = normalize_angle(shooter.ang_aim);
-    params.laser_new_arg_2 = shooter.pos.y;
-    params.laser_new_arg_1 = shooter.pos.x;
-    params.laser_new_arg_4 = shooter.laser_new_arg_4;
-    params.speed = shooter.spd1;
-    params.start_time = shooter.laser_timing[0];
-    params.expand_time = shooter.laser_timing[1];
-    params.duration = shooter.laser_timing[2];
-    params.shrink_time = shooter.laser_timing[3];
-    params.shot_sfx = shooter.shot_sfx;
-    params.shot_transform_sfx = shooter.shot_transform_sfx;
-    params.laser_st_on_arg_1 = enemy->get_int_arg(1);
-    params.distance = shooter.distance;
+    get_shot_origin_and_copy_ex(enemy, slot, &params.start_pos, params.ex);
     params.type = shooter.type;
     params.color = shooter.color;
+    params.ang_aim = normalize_angle(shooter.ang_aim);
+    params.start_time = shooter.laser_timing[0];
+    params.expand_time = shooter.laser_timing[1];
+    params.speed = shooter.spd1;
+    params.duration = shooter.laser_timing[2];
+    params.laser_new_arg_1 = shooter.pos.x;
+    params.shrink_time = shooter.laser_timing[3];
     params.flags = shooter.flags | 2;
+    params.laser_new_arg_2 = shooter.pos.y;
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.shot_sfx = shooter.shot_sfx;
+    params.distance = shooter.distance;
+    params.shot_transform_sfx = shooter.shot_transform_sfx;
+    params.laser_st_on_arg_1 = enemy->get_int_arg(1);
     g_LaserManager->allocate_new_laser(LASER_INFINITE, &params);
 }
 
