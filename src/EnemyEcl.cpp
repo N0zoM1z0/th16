@@ -743,9 +743,14 @@ int EnemyData::ecl_run_over_300()
     }
     // anmPlay(file, script)
     case ECL_OP_ANM_PLAY:
-        g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)], full->context.current_context->get_int_arg(1),
-                                                  &final_pos.pos, 0.0f));
+    {
+        i32 script = full_owner->context.current_context->get_int_arg(1);
+        i32 file_index = full->context.current_context->get_int_arg(0);
+        EnemyManager *enemy_manager = g_EnemyManager;
+        AnmLoaded *file = enemy_manager->anim_statement_anms[file_index];
+        g_EffectManager->track(create_vm_front_at(file, script, &final_pos.pos, 0.0f));
         break;
+    }
     // anmPlayHigh(file, script)
     case ECL_OP_ANM_PLAY_HIGH:
     {
