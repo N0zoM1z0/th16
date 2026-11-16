@@ -30,6 +30,17 @@ static const f32 ecl_die_distance_squared = 0.2f * 0.2f;
 static const f32 ecl_die_default_angle = -ZUN_PI / 2;
 static const double ecl_keep_coordinate_threshold = -999999.0;
 static const f32 ecl_pi_over_two = ZUN_PI / 2;
+static const f32 ecl_move_rand_quarter = 0.25f;
+static const f32 ecl_move_rand_third = 3.0f;
+static const f32 ecl_move_rand_pi = ZUN_PI;
+static const f32 ecl_move_rand_half_pi = ZUN_PI / 2;
+static const f32 ecl_move_rand_five_cents = 0.05f;
+static const double ecl_move_rand_five_cents_double = 0.05;
+static const f32 ecl_move_rand_neg_half_pi = -ZUN_PI / 2;
+static const f32 ecl_move_rand_neg_half_pi_low = -ZUN_PI / 2 - 0.05f;
+static const f32 ecl_move_rand_neg_half_pi_high = -ZUN_PI / 2 + 0.05f;
+static const f32 ecl_move_rand_pos_half_pi_low = ZUN_PI / 2 - 0.05f;
+static const f32 ecl_move_rand_pos_half_pi_high = ZUN_PI / 2 + 0.05f;
 static const f32 ecl_pi_value = ZUN_PI;
 static const f32 ecl_two_pi_value = ZUN_2PI;
 __declspec(align(16)) static const u32 ecl_float_sign_mask[4] = {0x80000000u, 0x80000000u, 0x80000000u, 0x80000000u};
@@ -66,6 +77,22 @@ extern "C" i32 ecl_effect_track_alias(AnmId);
 extern "C" void ecl_anm_create_vm_front_alias();
 extern "C" void ecl_interp_strange1_reset_timer_alias();
 extern "C" void ecl_posvel_set_angle_alias();
+extern "C" void ecl_rng_randf_neg_pi_alias();
+#pragma comment(linker, "/alternatename:_ecl_rng_randf_neg_pi_alias=?randf_neg_1_to_1_times_pi@Rng@@QAEMXZ")
+extern "C" void ecl_rng_rand_u16_alias();
+#pragma comment(linker, "/alternatename:_ecl_rng_rand_u16_alias=?rand_u16@Rng@@QAEGXZ")
+extern "C" void ecl_enemy_get_float_arg_raw_alias();
+#pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_raw_alias=?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z")
+extern "C" __declspec(naked) void ecl_abs_sse_alias()
+{
+    __asm
+    {
+        cvtss2sd xmm0, xmm0
+        andps xmm0, xmmword ptr [ecl_float_sign_mask]
+        cvtsd2ss xmm0, xmm0
+        ret
+    }
+}
 extern "C" void ecl_interp_float_reset_alias();
 #pragma comment(linker, "/alternatename:_ecl_interp_float_reset_alias=?reset@InterpFloat@@QAEXXZ")
 extern "C" void ecl_zun_fabsf_alias();
@@ -1983,70 +2010,173 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_RAND:
     case ECL_OP_MOVE_RAND_REL:
     {
-        PosVel *pos = instr->opcode == ECL_OP_MOVE_RAND ? &abs_pos : &rel_pos;
-        InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_angle_i : &rel_angle_i;
-        InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_speed_i : &rel_speed_i;
-        f32 angle;
-        if (move_limit_center.x - move_limit_size.x / 4.0f > final_pos.pos.x)
+        __asm
         {
-            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / 3.0f;
+            movss xmm2, dword ptr [edi + 3f68h]
+            mov esi, 19ch
+            mulss xmm2, dword ptr [ecl_move_rand_quarter]
+            cmp cx, si
+            mov edx, 88h
+            mov eax, 0cch
+            movss xmm1, dword ptr [edi + 3f60h]
+            cmove eax, edx
+            movss xmm3, dword ptr [edi + 44h]
+            mov edx, 3c8h
+            mov dword ptr [ebp - 438h], eax
+            movaps xmm0, xmm1
+            mov eax, 428h
+            subss xmm0, xmm2
+            cmove eax, edx
+            mov edx, 3f8h
+            add eax, edi
+            cmp cx, si
+            mov dword ptr [ebp - 40ch], eax
+            mov ecx, offset g_replay_safe_rng
+            mov eax, 458h
+            cmove eax, edx
+            add eax, edi
+            comiss xmm0, xmm3
+            mov dword ptr [ebp - 420h], eax
+            jbe ecl_move_rand_not_left
+            call ecl_rng_randf_neg_pi_alias
+            divss xmm0, dword ptr [ecl_move_rand_third]
+            jmp ecl_move_rand_x_ready
+        ecl_move_rand_not_left:
+            addss xmm1, xmm2
+            comiss xmm3, xmm1
+            jbe ecl_move_rand_middle
+            call ecl_rng_randf_neg_pi_alias
+            divss xmm0, dword ptr [ecl_move_rand_third]
+            addss xmm0, dword ptr [ecl_move_rand_pi]
+            call ecl_normalize_angle_alias
+            jmp ecl_move_rand_x_ready
+        ecl_move_rand_middle:
+            mov eax, dword ptr [g_Player]
+            movss xmm0, dword ptr [eax + 610h]
+            comiss xmm0, xmm3
+            jbe ecl_move_rand_player_left
+            call ecl_rng_randf_neg_pi_alias
+            mulss xmm0, dword ptr [ecl_move_rand_quarter]
+            mov ecx, offset g_replay_safe_rng
+            movss dword ptr [ebp - 42ch], xmm0
+            call ecl_rng_rand_u16_alias
+            xor edx, edx
+            movzx eax, ax
+            mov ecx, 3
+            movss xmm0, dword ptr [ebp - 42ch]
+            div ecx
+            test edx, edx
+            jne ecl_move_rand_x_ready
+            jmp ecl_move_rand_add_pi
+        ecl_move_rand_player_left:
+            call ecl_rng_randf_neg_pi_alias
+            mulss xmm0, dword ptr [ecl_move_rand_quarter]
+            mov ecx, offset g_replay_safe_rng
+            movss dword ptr [ebp - 42ch], xmm0
+            call ecl_rng_rand_u16_alias
+            xor edx, edx
+            movzx eax, ax
+            mov ecx, 3
+            movss xmm0, dword ptr [ebp - 42ch]
+            div ecx
+            test edx, edx
+            je ecl_move_rand_x_ready
+        ecl_move_rand_add_pi:
+            addss xmm0, dword ptr [ecl_move_rand_pi]
+        ecl_move_rand_x_ready:
+            movss dword ptr [ebp - 42ch], xmm0
+            movss xmm3, dword ptr [edi + 3f6ch]
+            mulss xmm3, dword ptr [ecl_move_rand_quarter]
+            movss xmm2, dword ptr [edi + 3f64h]
+            movss xmm4, dword ptr [edi + 48h]
+            movaps xmm1, xmm2
+            subss xmm1, xmm3
+            comiss xmm1, xmm4
+            jbe ecl_move_rand_not_above
+            call ecl_abs_sse_alias
+            movaps xmm2, xmm0
+            movss dword ptr [ebp - 42ch], xmm2
+            jmp ecl_move_rand_y_ready
+        ecl_move_rand_not_above:
+            addss xmm2, xmm3
+            comiss xmm4, xmm2
+            jbe ecl_move_rand_y_middle
+            call ecl_abs_sse_alias
+            movaps xmm2, xmm0
+            xorps xmm2, xmmword ptr [ecl_float_sign_mask]
+            movss dword ptr [ebp - 42ch], xmm2
+            jmp ecl_move_rand_y_ready
+        ecl_move_rand_y_middle:
+            movss xmm2, dword ptr [ebp - 42ch]
+        ecl_move_rand_y_ready:
+            movss xmm3, dword ptr [ecl_move_rand_half_pi]
+            movaps xmm0, xmm2
+            addss xmm0, xmm3
+            call ecl_abs_sse_alias
+            movss xmm1, dword ptr [ecl_move_rand_five_cents]
+            comiss xmm1, xmm0
+            jbe ecl_move_rand_check_positive_vertical
+            movss xmm0, dword ptr [ecl_move_rand_neg_half_pi]
+            comiss xmm0, xmm2
+            jbe ecl_move_rand_negative_vertical_high
+            movss xmm0, dword ptr [ecl_move_rand_neg_half_pi_low]
+            jmp ecl_move_rand_store_angle
+        ecl_move_rand_negative_vertical_high:
+            movss xmm0, dword ptr [ecl_move_rand_neg_half_pi_high]
+            jmp ecl_move_rand_store_angle
+        ecl_move_rand_check_positive_vertical:
+            movaps xmm0, xmm2
+            subss xmm0, xmm3
+            call ecl_abs_sse_alias
+            xorps xmm1, xmm1
+            cvtss2sd xmm1, xmm0
+            movsd xmm0, qword ptr [ecl_move_rand_five_cents_double]
+            comisd xmm0, xmm1
+            jbe ecl_move_rand_store_angle
+            comiss xmm3, xmm2
+            jbe ecl_move_rand_positive_vertical_high
+            movss xmm0, dword ptr [ecl_move_rand_pos_half_pi_low]
+            jmp ecl_move_rand_store_angle
+        ecl_move_rand_positive_vertical_high:
+            movss xmm0, dword ptr [ecl_move_rand_pos_half_pi_high]
+        ecl_move_rand_store_angle:
+            movss dword ptr [ebp - 42ch], xmm0
+            push 1
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            push 2
+            mov ecx, edi
+            mov esi, eax
+            call ecl_enemy_get_float_arg_raw_alias
+            push 0
+            mov ecx, edi
+            movss dword ptr [ebp - 41ch], xmm0
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 40ch]
+            movss xmm0, dword ptr [ebp - 42ch]
+            mov dword ptr [ecx + 28h], eax
+            mov dword ptr [ecx + 2ch], esi
+            mov dword ptr [ecx + 8], 0
+            mov dword ptr [ecx + 0ch], 0
+            movss dword ptr [ecx], xmm0
+            movss dword ptr [ecx + 4], xmm0
+            call ecl_interp_float_reset_alias
+            push 0
+            mov ecx, edi
+            call ecl_enemy_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 420h]
+            movss xmm0, dword ptr [ebp - 41ch]
+            mov dword ptr [ecx + 28h], eax
+            mov eax, dword ptr [ebp - 40ch]
+            mov dword ptr [ecx + 2ch], esi
+            mov dword ptr [ecx + 8], 0
+            mov dword ptr [ecx + 0ch], 0
+            movss dword ptr [ecx], xmm0
+            mov dword ptr [ecx + 4], 0
+            call ecl_interp_float_reset_alias
+            mov eax, dword ptr [ebp - 438h]
+            and dword ptr [eax + edi + 40h], 0fffffff0h
         }
-        else if (final_pos.pos.x > move_limit_center.x + move_limit_size.x / 4.0f)
-        {
-            angle = normalize_angle(g_replay_safe_rng.randf_neg_1_to_1_times_pi() / 3.0f + ZUN_PI);
-        }
-        else if (g_Player->inner.pos.x > final_pos.pos.x)
-        {
-            // Mostly towards the player.
-            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / 4.0f;
-            if (g_replay_safe_rng.rand_u16_in_range(3) == 0)
-            {
-                angle += ZUN_PI;
-            }
-        }
-        else
-        {
-            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / 4.0f;
-            if (g_replay_safe_rng.rand_u16_in_range(3) != 0)
-            {
-                angle += ZUN_PI;
-            }
-        }
-        if (move_limit_center.y - move_limit_size.y / 4.0f > final_pos.pos.y)
-        {
-            angle = zun_fabsf(angle);
-        }
-        else if (final_pos.pos.y > move_limit_center.y + move_limit_size.y / 4.0f)
-        {
-            angle = -zun_fabsf(angle);
-        }
-        // Keep away from straight up or down.
-        if (zun_fabsf(angle + ZUN_PI / 2) < 0.05f)
-        {
-            angle = -ZUN_PI / 2 > angle ? -ZUN_PI / 2 - 0.05f : -ZUN_PI / 2 + 0.05f;
-        }
-        else if (zun_fabsf(angle - ZUN_PI / 2) < 0.05)
-        {
-            angle = ZUN_PI / 2 > angle ? ZUN_PI / 2 - 0.05f : ZUN_PI / 2 + 0.05f;
-        }
-        i32 mode = get_int_arg(1);
-        f32 speed = get_float_arg(EclFloatArgIndex{2});
-        angle_i->end_time = get_int_arg(0);
-        angle_i->method = mode;
-        angle_i->bezier_1 = 0.0f;
-        angle_i->bezier_2 = 0.0f;
-        angle_i->initial = angle;
-        angle_i->goal = angle;
-        angle_i->reset();
-        speed_i->end_time = get_int_arg(0);
-        // ZUN's slip: the speed interpolator's method is never set.
-        angle_i->method = mode;
-        speed_i->bezier_1 = 0.0f;
-        speed_i->bezier_2 = 0.0f;
-        speed_i->initial = speed;
-        speed_i->goal = 0.0f;
-        speed_i->reset();
-        pos->flags &= ~0xf;
         break;
     }
     // lifeMarker(index, life, color): a marker on the boss life bar.
