@@ -731,15 +731,9 @@ i32 AnmVm::run()
         case ANM_OP_FSET_RAND:
         {
             f32 range = ANM_FLOAT(1);
-            f32 random = g_replay_unsafe_rng.randf_0_to_1();
-            f32 *destination = &ins->args[0].f;
-            bool is_variable = ANM_IS_VAR(0);
-            f32 value = random * range;
-            if (is_variable)
-            {
-                destination = get_float_var_ptr(destination);
-            }
-            *destination = value;
+            // Scale the RNG result before resolving the destination.
+            f32 value = g_replay_unsafe_rng.randf_0_to(range);
+            anm_store_float(this, ins, 0, value);
             break;
         }
         case ANM_OP_FSIN:
