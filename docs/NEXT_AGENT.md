@@ -8,8 +8,8 @@ the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-- main code HEAD entering this handoff: 32a5134, ordered ANM circle pointers.
-- The branch is 46 commits ahead of origin/main before this note; the worktree
+- main code HEAD entering this handoff: e5dae3e, shared ECL bullet firing origin.
+- The branch is 51 commits ahead of origin/main before this note; the worktree
   is clean before the documentation edit.
 - The historical broad reference audit and frontier metadata are stale for
   these changes. Do not cite their old exactness totals as current.
@@ -197,6 +197,53 @@ Full owner/relocation matching and the strict EH-parent provenance
 preflight remain unresolved. Keep using focused builds and local case
 inspection until the evidence gate can be satisfied. No full cold replay
 or push was run, and the private target and build artifacts remain ignored.
+
+## Further 2026-11-16 ECL dispatcher reconstruction
+
+This session resumed at clean HEAD 4415938, built only the affected
+candidate, and saved four natural C++ source checkpoints:
+
+- e5b41c4: the five SPELL opcode variants now decrypt only the
+  positive-length script bytes and use a native switch for the three
+  contiguous difficulty-adjusted spell IDs. The shared block's local
+  normalized case similarity rose from roughly 0.49 to 0.68.
+- 4654a8b: the ET_ON opcode constructs its absolute or enemy-relative
+  launch position as a Float3 instead of three unrelated writes. The
+  local block similarity rose from roughly 0.47 to 0.56.
+- 53cf666: the SPELL name decryptor advances the encrypted-source and
+  decoded-destination pointers together, matching the observed source
+  traversal more closely. The local ratio rose to roughly 0.71.
+- e5dae3e: ET_ON uses the existing typed get_shot_origin helper shared
+  with laser/bullet generation, removing duplicated branch logic; its
+  local ratio rose to roughly 0.60. The two cases are semantically
+  equivalent for the script's absolute-origin flag and offset.
+
+The final focused build completed successfully with 1166 annotated
+functions, 174/174 ECL dispatcher entries, and no full cold replay.
+The separate EclRunContext::ecl_run still reports 67/67 entries; its
+ADD case remains nonmatching (about 0.59 normalized similarity).
+These local counts and scores are diagnostic only; complete-owner
+boundaries, relocations and EH-parent provenance still require strict
+Oracle verification.
+
+Discarded experiments were evaluated in the same worktree and then
+rolled back: an explicit ANM CIRCLE_POS_RAND arithmetic factor changed
+the candidate to x87-heavy code, AnmVm::transform_coords vector-add
+variants worsened/failed to improve register order, an early texture
+cache in AnmManager::reload_texture reduced local similarity, and a
+rebound manager object in copy_screen_to_sprite did not improve it.
+A simplified FSET_RAND destination branch instead cross-jumped to the
+FSET_MOD tail (54-byte block against a 96-byte target); retain the
+dedicated natural C++ store path. Reversing named operands in the ECL
+integer ADD case did not improve its local match. No downgraded
+experiment was committed; all candidate evidence logs remain ignored
+under .analysis/.
+
+The next high-value problems are the full 21 KB upper ECL interpreter
+owner, the 14 KB AnmVm::run owner (particularly random circle and
+arithmetic tails), the four laser creation handlers and the unresolved
+EH-owner PDB preflight. Continue to work at both caller and leaf
+scope without ASM or artificial padding.
 
 ## Verification and next actions
 
