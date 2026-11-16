@@ -520,7 +520,7 @@ struct LaserManager
     // These reach the manager through g_LaserManager; LTCG drops this.
     i32 allocate_new_laser(i32 kind, void *params);
     HARNESS_CALLED i32 cancel_in_rectangle(Float3 *center, Float3 *size, f32 angle, i32 mode, i32 skip_invuln);
-    i32 cancel_all();
+    static i32 cancel_all();
     HARNESS_CALLED i32 cancel_in_radius(Float3 *pos, f32 radius, i32 mode, i32 skip_invuln);
     HARNESS_CALLED i32 clear_all(i32 mode, i32 skip_invuln);
     // 0x41aa40. The laser with the given id, NULL if there is none. The

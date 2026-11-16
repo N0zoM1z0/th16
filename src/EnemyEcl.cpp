@@ -1530,7 +1530,6 @@ int EnemyData::ecl_run_over_300()
         g_Gui->set_boss_life_marker(own_boss_id, marker_life, ratio, color);
         break;
     }
-        break;
     // funcSet(index): a per-frame hook (g_ecl_func_sets).
     case ECL_OP_FUNC_SET:
         func_from_ecl_func_set = (void *)g_ecl_func_sets[get_int_arg(0)];
@@ -2980,7 +2979,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // reset: cancels every laser.
     case ECL_OP_RESET:
-        g_LaserManager->cancel_all();
+        LaserManager::cancel_all();
         break;
     // bombShield(on, anm_script)
     case ECL_OP_BOMB_SHIELD:
