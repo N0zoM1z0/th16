@@ -825,11 +825,12 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_VEL_TIME_NM:
     case ECL_OP_MOVE_VEL_REL_TIME_NM:
     {
-        bool absolute = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM;
-        bool mirror = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_REL_TIME;
-        PosVel *pv = absolute ? &abs_pos : &rel_pos;
-        InterpFloat *angle_i = absolute ? &abs_angle_i : &rel_angle_i;
-        InterpFloat *speed_i = absolute ? &abs_speed_i : &rel_speed_i;
+        PosVel *pv = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
+                      instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_pos : &rel_pos;
+        InterpFloat *angle_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
+                                 instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_angle_i : &rel_angle_i;
+        InterpFloat *speed_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
+                                 instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_speed_i : &rel_speed_i;
         f32 angle = get_float_arg(EclFloatArgIndex{2});
         f32 speed = get_float_arg(EclFloatArgIndex{3});
         if (get_int_arg(0) <= 0)
@@ -843,7 +844,9 @@ int EnemyData::ecl_run_over_300()
         {
             if (angle > -999999.0)
             {
-                if ((flags_low & ENEMY_FLAG_MIRRORED) && mirror)
+                if ((flags_low & ENEMY_FLAG_MIRRORED) &&
+                    (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
+                     instr->opcode == ECL_OP_MOVE_VEL_REL_TIME))
                 {
                     angle = mirror_angle(angle);
                 }
@@ -861,7 +864,9 @@ int EnemyData::ecl_run_over_300()
         {
             if (angle > -999999.0)
             {
-                if ((flags_low & ENEMY_FLAG_MIRRORED) && mirror)
+                if ((flags_low & ENEMY_FLAG_MIRRORED) &&
+                    (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
+                     instr->opcode == ECL_OP_MOVE_VEL_REL_TIME))
                 {
                     angle = -angle;
                 }
