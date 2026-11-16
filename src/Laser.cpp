@@ -793,7 +793,7 @@ LaserCurveInf::LaserCurveInf()
 
 // FUNCTION: TH16 0x431950
 HARNESS_CALLED i32 LaserManager::cancel_in_rectangle(Float3 *a, Float3 *b, f32 angle,
-                                                      i32 mode, i32 skip_invuln)
+                                                      i32 /*mode*/, i32 /*skip_invuln*/)
 {
     LaserManager *mgr = g_LaserManager;
     i32 cancelled = 0;
@@ -805,7 +805,9 @@ HARNESS_CALLED i32 LaserManager::cancel_in_rectangle(Float3 *a, Float3 *b, f32 a
         LaserDataInf *next = laser->next;
         if (laser->state != LASER_STATE_CANCELLED && laser->ticked)
         {
-            cancelled += laser->cancel_as_bomb_rectangle(a, b, angle, mode, skip_invuln);
+            // This entry point is used by bomb cancellation. LTCG folded
+            // its mode and protection parameters at both target call sites.
+            cancelled += laser->cancel_as_bomb_rectangle(a, b, angle, CANCEL_BOMB, 1);
         }
         laser = next;
     }
