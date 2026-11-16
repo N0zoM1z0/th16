@@ -5,6 +5,10 @@
 #include "EnemyManager.h"
 #include "Laser.h"
 
+// The laser tick's scale conversion reads these exact sprite fields.
+static_assert(offsetof(AnmLoadedSprite, sprite_height) == 0x34, "ANM sprite height");
+static_assert(offsetof(AnmLoadedSprite, sprite_width) == 0x38, "ANM sprite width");
+
 // FUNCTION: TH16 0x435870
 i32 LaserInfiniteInf::on_destroy()
 {
@@ -205,32 +209,16 @@ i32 LaserInfiniteInf::on_tick()
         break;
     }
     check_graze_or_kill(0);
-    __asm
-    {
-        mov eax, dword ptr [ebx + 96ch]
-        lea edi, [ebx + 950h]
-        mov esi, dword ptr [g_AnmManager]
-        mov edx, dword ptr [edi + 20h]
-        movss xmm0, dword ptr [ebx + 74h]
-        shl edx, 4
-        mov ecx, dword ptr [esi + eax*4 + 184f4f0h]
-        add edx, dword ptr [edi + 20h]
-        mov eax, dword ptr [ecx + 11ch]
-        mov ecx, edi
-        divss xmm0, dword ptr [eax + edx*4 + 38h]
-        or dword ptr [edi + 530h], 8
-        movss dword ptr [edi + 50h], xmm0
-        mov eax, dword ptr [edi + 1ch]
-        movss xmm0, dword ptr [ebx + 70h]
-        mov edx, dword ptr [esi + eax*4 + 184f4f0h]
-        mov esi, dword ptr [edi + 20h]
-        shl esi, 4
-        add esi, dword ptr [edi + 20h]
-        mov eax, dword ptr [edx + 11ch]
-        divss xmm0, dword ptr [eax + esi*4 + 34h]
-        or dword ptr [edi + 530h], 8
-        movss dword ptr [edi + 54h], xmm0
-    }
+    // Scale the infinite laser's VM by its sprite dimensions: its hitbox
+    // width maps to the sprite width and its length to the sprite height.
+    // Recompute both after the collision check; each marks the VM dirty.
+    AnmVm *vm = &vm_950;
+    f32 scale_x = width / g_AnmManager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id].sprite_width;
+    vm->flags_lo |= ANM_VM_SCALE_CHANGED;
+    vm->scale.x = scale_x;
+    f32 scale_y = hit_length / g_AnmManager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id].sprite_height;
+    vm->flags_lo |= ANM_VM_SCALE_CHANGED;
+    vm->scale.y = scale_y;
     vm_950.run();
     if (unk_7c == 0.0f)
     {
