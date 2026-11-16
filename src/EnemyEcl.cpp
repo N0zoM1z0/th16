@@ -59,8 +59,6 @@ extern "C" i32 ecl_bullet_cancel_radius_as_bomb_alias(Float3 *, i32);
 #pragma comment(linker, "/alternatename:_ecl_bullet_cancel_radius_as_bomb_alias=?cancel_radius_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@MH@Z")
 extern "C" f32 __vectorcall ecl_enemy_get_float_arg_alias(EnemyData *, EclFloatArgIndex);
 #pragma comment(linker, "/alternatename:ecl_enemy_get_float_arg_alias@@8=?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z")
-extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
-#pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_ptr_alias=?get_float_arg_ptr@EnemyData@@QAEPAMH@Z")
 extern "C" void ecl_anm_delete_vm_alias();
 extern "C" void ecl_anm_interrupt_tree_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_interrupt_tree_alias=?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z")
@@ -71,8 +69,6 @@ extern "C" void ecl_anm_create_vm_front_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
 extern "C" void ecl_context_get_float_arg_alias();
 #pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z")
-extern "C" f32 __vectorcall ecl_zun_atan2f_alias(f32, f32);
-#pragma comment(linker, "/alternatename:ecl_zun_atan2f_alias@@8=?zun_atan2f@@YQMMM@Z")
 extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
 extern "C" void ecl_anm_hide_tree_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_hide_tree_alias=?hide_tree@AnmId@@QAEXXZ")
@@ -2907,36 +2903,12 @@ int EnemyData::ecl_run_over_300()
     // angleToPlayer(var, x, y)
     case ECL_OP_ANGLE_TO_PLAYER:
     {
-        f32 angle_to_player_y;
-        f32 angle_to_player_x;
-        __asm
-        {
-            mov eax, dword ptr [g_Player]
-            mov ecx, edi
-            push 1
-            movss xmm0, dword ptr [eax + 610h]
-            movss angle_to_player_y, xmm0
-            movss xmm0, dword ptr [eax + 614h]
-            movss angle_to_player_x, xmm0
-            call ecl_enemy_get_float_arg_alias
-            movss xmm1, angle_to_player_y
-            mov ecx, edi
-            subss xmm1, xmm0
-            push 2
-            movss angle_to_player_y, xmm1
-            call ecl_enemy_get_float_arg_alias
-            movss xmm2, angle_to_player_x
-            movss xmm1, angle_to_player_y
-            subss xmm2, xmm0
-            movaps xmm0, xmm2
-            call ecl_zun_atan2f_alias
-            push 0
-            mov ecx, edi
-            movss angle_to_player_x, xmm0
-            call ecl_enemy_get_float_arg_ptr_alias
-            movss xmm0, angle_to_player_x
-            movss dword ptr [eax], xmm0
-        }
+        f32 player_x = g_Player->inner.pos.x;
+        f32 player_y = g_Player->inner.pos.y;
+        f32 x = get_float_arg(EclFloatArgIndex{1});
+        f32 y = get_float_arg(EclFloatArgIndex{2});
+        f32 angle = zun_atan2f(player_y - y, player_x - x);
+        *get_float_arg_ptr(0) = angle;
         break;
     }
     // diffWait(easy, normal, hard, lunatic): waits the given number of
