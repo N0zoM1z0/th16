@@ -1154,8 +1154,8 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 f32 angle = normalize_angle(get_float_arg(EclFloatArgIndex{4}));
                 f32 s = zun_sinf(angle);
                 f32 c = zun_cosf(angle);
-                f32 rx = x * c - y * s;
-                f32 ry = y * c + x * s;
+                volatile f32 rx = x * c - y * s;
+                volatile f32 ry = y * c + x * s;
                 *get_float_arg_ptr(0) = rx;
                 *get_float_arg_ptr(1) = ry;
                 break;
