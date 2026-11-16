@@ -319,8 +319,8 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step()
         f32 c_goal = t * t * (3.0f - 2.0f * t);
         f32 c_bezier_1 = (1.0f - t) * (1.0f - t) * t;
         f32 c_bezier_2 = (t - 1.0f) * t * t;
-        self->current = c_initial * self->initial + c_goal * self->goal + c_bezier_1 * self->bezier_1 +
-                        c_bezier_2 * self->bezier_2;
+        self->current = self->initial * c_initial + self->goal * c_goal + self->bezier_1 * c_bezier_1 +
+                        self->bezier_2 * c_bezier_2;
     }
     else
     {
