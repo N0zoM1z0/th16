@@ -1286,27 +1286,58 @@ int EnemyData::ecl_run_over_300()
             position_interp->end_time = 0;
             break;
         }
-        if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
+        __asm
         {
-            f32 origin_x = ((PosVel *)((u8 *)this + position_offset))->pos.x;
-            if (!(flags_low & ENEMY_FLAG_MIRRORED))
-            {
-                origin_x += goal_x;
-            }
-            else
-            {
-                origin_x -= goal_x;
-            }
-            goal_x = origin_x;
-            goal_y = ((PosVel *)((u8 *)this + position_offset))->pos.y + goal_y;
+            movzx eax, word ptr [esi + 4]
+            mov ecx, 1b6h
+            cmp ax, cx
+            je ecl_move_curve_apply_offset
+            mov ecx, 1b7h
+            cmp ax, cx
+            jne ecl_move_curve_offset_applied
+        ecl_move_curve_apply_offset:
+            test dword ptr [edi + 4060h], 80000h
+            mov eax, position_offset
+            movss xmm0, dword ptr [eax + edi]
+            jne ecl_move_curve_mirrored_offset
+            addss xmm0, goal_x
+            jmp ecl_move_curve_store_offset_x
+        ecl_move_curve_mirrored_offset:
+            subss xmm0, goal_x
+        ecl_move_curve_store_offset_x:
+            movss goal_x, xmm0
+            movss xmm0, dword ptr [eax + edi + 4]
+            addss xmm0, goal_y
+            movss goal_y, xmm0
+        ecl_move_curve_offset_applied:
+            mov ecx, dword ptr [edi + 44b8h]
+            push 0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            mov esi, position_interp
+            push 1
+            mov dword ptr [esi + 50h], eax
+            movq xmm0, qword ptr [g_zero_vec]
+            movq qword ptr [esi + 24h], xmm0
+            mov eax, dword ptr [g_zero_vec + 8]
+            mov dword ptr [esi + 2ch], eax
+            movq xmm0, qword ptr [g_zero_vec]
+            movq qword ptr [esi + 30h], xmm0
+            mov eax, dword ptr [g_zero_vec + 8]
+            mov dword ptr [esi + 38h], eax
+            mov ecx, dword ptr [edi + 44b8h]
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            or dword ptr [esi + 64h], 1
+            mov dword ptr [esi + 54h], eax
+            mov ecx, dword ptr [edi + 44b8h]
+            push 2
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            or dword ptr [esi + 64h], 1
+            mov edx, position_offset
+            mov dword ptr [esi + 58h], eax
         }
-        position_interp->end_time = full->context.current_context->get_int_arg(0);
-        position_interp->bezier_1 = g_zero_vec;
-        position_interp->bezier_2 = g_zero_vec;
-        position_interp->method_for_1d = full->context.current_context->get_int_arg(1);
-        position_interp->flag_1d |= 1;
-        position_interp->move_curve_mode = full->context.current_context->get_int_arg(2);
-        position_interp->flag_1d |= 1;
         position_interp->initial = ((PosVel *)((u8 *)this + position_offset))->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : ((PosVel *)((u8 *)this + position_offset))->pos.x,
                                        goal_y > -999999.0 ? goal_y : ((PosVel *)((u8 *)this + position_offset))->pos.y, 0.0f);
