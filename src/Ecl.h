@@ -247,7 +247,7 @@ struct EclRunContext
     EclRunContext();
     i32 get_int_arg(int index);
     i32 *get_int_arg_ptr(int index);
-    f32 get_float_arg(int index);
+    f32 LTCG_VECTORCALL get_float_arg(void *unused, int index);
     f32 *get_float_arg_ptr(int index);
 
     // The same for a value already read from the instruction.
@@ -428,5 +428,5 @@ inline i32 SptInf::get_int_arg(i32 index)
 
 inline f32 SptInf::get_float_arg(i32 index)
 {
-    return context.current_context->get_float_arg(index);
+    return context.current_context->get_float_arg(context.current_context->vm, index);
 }

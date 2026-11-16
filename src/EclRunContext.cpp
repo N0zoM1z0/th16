@@ -55,7 +55,7 @@ i32 EclRunContext::get_int_arg(int index)
 
 // The current instruction's float argument index, resolving variables.
 // FUNCTION: TH16 0x473d40
-HARNESS_CALLED f32 EclRunContext::get_float_arg(int index)
+HARNESS_CALLED f32 LTCG_VECTORCALL EclRunContext::get_float_arg(void *, int index)
 {
     EclRawInstr *ins = current_instr();
     if (ins->variable_mask & (1 << index))
@@ -822,7 +822,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 time -= get_int_arg(0);
                 break;
             case ECL_OP_WAITF:
-                time -= get_float_arg(0);
+                time -= get_float_arg(ins, 0);
                 break;
             case ECL_OP_STACK_ALLOC:
                 stack.enter(get_int_arg(0));
@@ -1091,9 +1091,9 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             // x, y = radius at angle
             case ECL_OP_MATH_CIRCLE_POS:
             {
-                f32 angle = normalize_angle(get_float_arg(2));
+                f32 angle = normalize_angle(get_float_arg(ins, 2));
                 Float3 pos;
-                ecl_sincosmul(&pos, angle, get_float_arg(3));
+                ecl_sincosmul(&pos, angle, get_float_arg(ins, 3));
                 *get_float_arg_ptr(0) = pos.x;
                 *get_float_arg_ptr(1) = pos.y;
                 break;
@@ -1101,39 +1101,39 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             // Squared length, length.
             case ECL_OP_NORM_SQ:
             {
-                f32 x = get_float_arg(1);
-                f32 y = get_float_arg(2);
+                f32 x = get_float_arg(ins, 1);
+                f32 y = get_float_arg(ins, 2);
                 *get_float_arg_ptr(0) = x * x + y * y;
                 break;
             }
             case ECL_OP_NORM:
             {
-                f32 x = get_float_arg(1);
-                f32 y = get_float_arg(2);
+                f32 x = get_float_arg(ins, 1);
+                f32 y = get_float_arg(ins, 2);
                 *get_float_arg_ptr(0) = sqrtf(x * x + y * y);
                 break;
             }
             case ECL_OP_VALID_RAD:
             {
-                f32 angle = normalize_angle(get_float_arg(0));
+                f32 angle = normalize_angle(get_float_arg(ins, 0));
                 *get_float_arg_ptr(0) = angle;
                 break;
             }
             // Angle from (x1, y1) to (x2, y2).
             case ECL_OP_MATH_ANGLE:
             {
-                f32 x1 = get_float_arg(1);
-                f32 y1 = get_float_arg(2);
-                f32 x2 = get_float_arg(3);
-                f32 y2 = get_float_arg(4);
+                f32 x1 = get_float_arg(ins, 1);
+                f32 y1 = get_float_arg(ins, 2);
+                f32 x2 = get_float_arg(ins, 3);
+                f32 y2 = get_float_arg(ins, 4);
                 *get_float_arg_ptr(0) = atan2f(y2 - y1, x2 - x1);
                 break;
             }
             // Signed difference of two angles, wrapped once.
             case ECL_OP_ANGLE_DIFF:
             {
-                f32 a = get_float_arg(1);
-                f32 b = get_float_arg(2);
+                f32 a = get_float_arg(ins, 1);
+                f32 b = get_float_arg(ins, 2);
                 f32 diff = b - a;
                 if (diff > ZUN_PI)
                 {
@@ -1149,9 +1149,9 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             // Rotate (x, y) by an angle.
             case ECL_OP_POINT_ROTATE:
             {
-                f32 x = get_float_arg(2);
-                f32 y = get_float_arg(3);
-                f32 angle = normalize_angle(get_float_arg(4));
+                f32 x = get_float_arg(ins, 2);
+                f32 y = get_float_arg(ins, 3);
+                f32 angle = normalize_angle(get_float_arg(ins, 4));
                 f32 s = zun_sinf(angle);
                 f32 c = zun_cosf(angle);
                 f32 rx = x * c - y * s;
@@ -1169,8 +1169,8 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 float_i[i].step();
                 float_i[i].end_time = get_int_arg(2);
                 float_i[i].method = get_int_arg(3);
-                f32 initial = get_float_arg(4);
-                f32 goal = get_float_arg(5);
+                f32 initial = get_float_arg(ins, 4);
+                f32 goal = get_float_arg(ins, 5);
                 float_i[i].initial = initial;
                 float_i[i].goal = goal;
                 *get_float_arg_ptr(1) = initial;
@@ -1187,13 +1187,13 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 float_i[i].step();
                 float_i[i].end_time = get_int_arg(2);
                 float_i[i].method = get_int_arg(3);
-                f32 initial = get_float_arg(4);
-                f32 goal = get_float_arg(5);
+                f32 initial = get_float_arg(ins, 4);
+                f32 goal = get_float_arg(ins, 5);
                 float_i[i].initial = initial;
                 float_i[i].goal = goal;
                 *get_float_arg_ptr(1) = initial;
-                f32 bezier_1 = get_float_arg(6);
-                f32 bezier_2 = get_float_arg(7);
+                f32 bezier_1 = get_float_arg(ins, 6);
+                f32 bezier_2 = get_float_arg(ins, 7);
                 float_i[i].bezier_1 = bezier_1;
                 float_i[i].bezier_2 = bezier_2;
                 float_i[i].reset();
@@ -1202,8 +1202,8 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             // Random point in a ring.
             case ECL_OP_RAND_RING_POS:
             {
-                f32 r1 = get_float_arg(2);
-                f32 r2 = get_float_arg(3);
+                f32 r1 = get_float_arg(ins, 2);
+                f32 r2 = get_float_arg(ins, 3);
                 f32 angle = g_replay_safe_rng.randf_neg_to(ZUN_PI);
                 f32 radius = ecl_lerp(r1, r2, g_replay_safe_rng.randf_neg_1_to_1());
                 Float3 pos;
