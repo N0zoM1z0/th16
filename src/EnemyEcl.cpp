@@ -718,10 +718,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        bool absolute = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET;
-        bool offset = instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET;
-        PosVel *pos_vel = absolute ? &abs_pos : &rel_pos;
-        InterpStrange1 *position_interp = absolute ? &abs_pos_i : &rel_pos_i;
+        PosVel *pos_vel = (instr->opcode == ECL_OP_MOVE_CURVE ||
+                           instr->opcode == ECL_OP_MOVE_CURVE_OFFSET) ? &abs_pos : &rel_pos;
+        InterpStrange1 *position_interp = (instr->opcode == ECL_OP_MOVE_CURVE ||
+                                            instr->opcode == ECL_OP_MOVE_CURVE_OFFSET) ? &abs_pos_i : &rel_pos_i;
         f32 goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 goal_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{4});
         i32 move_curve_duration = full_owner->context.current_context->get_int_arg(0);
@@ -731,7 +731,8 @@ int EnemyData::ecl_run_over_300()
             break;
         }
 
-        if (offset)
+        if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ||
+            instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
         {
             if (flags_low & ENEMY_FLAG_MIRRORED)
             {
