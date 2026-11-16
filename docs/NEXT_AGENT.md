@@ -1,197 +1,84 @@
-# Current handoff
+# Current TH16 reconstruction handoff
 
-Updated 2026-11-16. Read AGENTS.md first. This handoff supersedes the older
-agent-specific instructions and checkpoint figures; historical investigation
-notes remain in docs/knowledge/ and .analysis/.
+Updated 2026-11-16. Read AGENTS.md first. Keep local commits under the
+gpt-web: ... prefix; do not push without the user's request. Work in natural
+C/C++, without inline-assembly or padding substitutes. Preserve existing dirty
+work and the ignored .analysis/ evidence. Rebuild incrementally and compare
+the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-| Item | Current value |
-| --- | --- |
-| Branch | main |
-| Code checkpoint entering cleanup | 3f7371f — gpt-web: align ECL move-curve handler |
-| Source commits | 16 ahead of origin/main at the start of handoff cleanup |
-| Worktree | clean after the handoff commits |
-| Commit prefix | gpt-web: |
-| Publication | local commits only; do not push unless the user asks |
-| Candidate build | incremental; receipt timestamp 2026-11-16 14:37:07 UTC |
-| Build input SHA-256 | 1295c7d5a4a25471198017bc8be5b7a428286cd1f710c041d88396b0b3fa58b5 |
-| Latest saved strict audit | 2026-11-15 06:37:29 UTC; stale for the current candidate |
+- main code HEAD entering this handoff: 27af340, natural rectangular laser cancellation.
+- The branch is 24 commits ahead of origin/main before this note; the worktree
+  is clean before the documentation edit.
+- The historical broad reference audit and frontier metadata are stale for
+  these changes. Do not cite their old exactness totals as current.
+- Focused audit-reference.py --address 0x00431A70 is currently blocked during
+  EH preflight: "EH parent lacks one complete candidate PDB owner". This
+  prevents a strict receipt even for an unrelated small owner. Do not
+  misrepresent local instruction similarity as accepted exactness.
 
-The saved audit reports **1,033 exact / 51 mismatch / 131 incomplete** of 1,215
-annotations, but it predates all 16 commits made on 2026-11-16. It is not the
-current result. config/frontiers.toml was last refreshed on 2026-11-15 and is
-also historical until regenerated from a fresh audit. The progress report still
-lists Factory acceptance as not-submitted.
+## Large owner: EnemyData::ecl_run_over_300
 
-The current candidate was rebuilt incrementally at 14:37:07 UTC after the
-comment-only documentation correction in EnemyEcl.cpp. The build succeeded
-with existing C4244 (camera float-to-u8), C4101 (unused local name) and C4731
-(EclRunContext inline-assembly frame-pointer) warnings. No fresh whole-project audit,
-cold replay or accepted Factory snapshot has been recorded after the 2026-11-16
-source changes. scripts/progress.py deliberately refuses a stale report;
-run scripts/audit-reference.py before using totals or refreshing the frontier.
-Do not treat a successful incremental build or a case-level similarity score
-as strict exactness.
+- Target entry 0x0041DCB0. The separately reviewed dispatch/table boundary
+  is 21,408 bytes; the annotated function record includes a wider 21,516-byte
+  scope. Keep these distinct when comparing owners.
+- src/EnemyEcl.cpp now contains no inline assembly and no artificial
+  ecl_stack_reserve. Its former hand-coded EBP laser scratch frame is gone.
+  The dispatcher still has 174 target and 174 candidate dispatch entries.
+- Naturalized opcode families include MOVE_VEL, MOVE_VEL_TIME, MOVE_RAND,
+  MOVE_CURVE, MOVE_POS_TIME, MOVE_BEZIER, ET_ON, ET_EX, SPELL,
+  ANM_PLAY_HIGH/ABS/ROTATE, ANM_SET_MAIN/RESET/SELECTED_PLAY/316/SWITCH,
+  laser controls, ET_CANCEL/CLEAR variants, HITBOX_RECT and
+  BOSSES_INTERRUPT. EnemyData float argument wrappers were also
+  reconstructed in C++.
+- Four laser creation helpers now use LaserLineInner, LaserInfiniteInner,
+  LaserCurveInner and LaserBeamInner and share the natural
+  ecl_laser_start_pos() calculation. The Laser.h parameter layouts and
+  the original source/destination field offsets were checked. The laser
+  creation case ratios currently range about 0.54-0.63, so
+  complete-owner work remains.
+- Some naturalized handlers compile differently from the target. The focused
+  case extractor normalizes registers, address operands and branches; use it
+  only to find structural differences, not to assert a strict match.
+  Important remaining investigations include the timed velocity, timed
+  position and timed angle source expressions, ECL getter ordering, switch
+  frame allocation and the complete owner/PDB boundary.
 
-## Additional 2026-11-16 ANM owner work
+## Leaf functions: LaserManager cancellation
 
-The current branch has four further local checkpoints after the cleanup handoff:
+- LaserManager::cancel_in_radius (0x00431A70, 119 target bytes) and
+  LaserManager::cancel_in_rectangle (0x00431950) are now ordinary
+  C++ methods, not naked functions. src/Laser.cpp has no inline assembly.
+- The rectangle traversal skips cancelled or unticked lasers; the radius
+  traversal skips cancelled lasers. Both save the cancellation geometry,
+  traverse safely using next before a virtual call, and sum results.
+- After placing the manager list-head read before geometry stores, the local
+  register/address-normalized instruction-sequence ratios were approximately
+  0.964 (radius) and 0.970 (rectangle). The rectangular virtual call passes
+  mode 5 and skip-invulnerability 1 in the candidate, matching the target's
+  specialized call. These are not strict Oracle receipts.
 
-- 6d490ec — gpt-web: split ANM static and delete returns
-- 9ea537a — gpt-web: return directly from frozen ANM tick
-- e2acea5 — gpt-web: update ANM reconstruction handoff
-- dc07c3d — gpt-web: stage ANM random range in opcode handler
+## Second large owner: AnmVm::run
 
-The second large owner under active reconstruction is AnmVm::run at
-0x0045F980 (14,177 target bytes). The END/DELETE and STATIC paths are now
-separate natural C++ return paths. Focused disassembly shows the DELETE case body
-matches the target's four instructions; STATIC stores instr_offset = -1 and
-jumps to the shared zero-return epilogue instead of clearing EAX at the case
-entry. The frozen-world early exit also returns zero directly after restoring
-game speed. These are local source checkpoints, not a complete-owner strict
-pass.
+- Target 0x0045F980, 14,177 bytes. Prior natural C++ changes split
+  END/DELETE and STATIC return paths and restored the frozen-world early
+  return. FSET_RAND is partially aligned; its shared store tail and
+  FSET_MOD, opcode 106/112 and circle-position cases need more work.
+- For ANM only, the byte dispatch map is indexed by opcode + 1.
+  A direct opcode index selects the wrong blocks.
 
-The candidate was incrementally rebuilt at 2026-11-16 17:55 UTC after the ANM
-changes. The build succeeded. Its current build-input SHA-256 is
-415812a55ed2719ef398b3590ba33a86f15065390725dde38c7df24608a04850.
-No cold build or full replay was run. A focused audit-reference
---address 0x0045F980 attempt was blocked by the existing linked-EH-parent
-preflight because a required parent was not a unique complete candidate owner;
-there is no new Oracle result or exactness credit.
+## Verification and next actions
 
-Important dispatch detail: the ANM dispatcher remaps opcode + 1 through its
-byte table before the jump-table lookup. Focused case extraction must use that
-offset; indexing the table directly by opcode selects the wrong handlers.
-ANM opcode 123 (FSET_RAND) now stages randf_0_to_1 and multiplies by the
-script range in the opcode handler, matching the target's random-then-scale
-operation order. Its focused block is now 25 candidate instructions versus
-24 target instructions; the candidate still shares the final variable-store
-tail with FSET_MOD, so this is not exact. Continue with the FSET_MOD/FSET_RAND
-store tail and opcodes 106/112, while retaining the full AnmVm::run owner as
-the larger goal. The upper ECL dispatcher below remains the other major active
-owner.
+- Incremental scripts/repo-python scripts/build.py completed successfully
+  after each code group. No full cold replay was run.
+- Relevant upper ECL case diagnostics use
+  .venv/bin/python .analysis/claude-tools/cases.py 0x41dcb0 <indices>.
+  Current results are evidence for investigation, not exactness credit.
+- Restore the remaining natural-source/target mismatches in the two large
+  interpreters and related leaves. For complete-owner exactness, first resolve
+  the EH-parent provenance preflight without suppressing its evidence checks.
+  Keep artifacts in ignored .analysis/, and commit each coherent code result.
 
-No inline assembly or padding was added for this work. The temporary
-MOVE_ANGLE_TIME assembly experiment was fully reverted.
-
-## Main active owner: upper enemy ECL dispatcher
-
-EnemyData::ecl_run_over_300() is in src/EnemyEcl.cpp at target address
-0x0041DCB0. Its annotated target extent is 21,516 bytes. The separately
-reviewed original dispatch/table owner in
-docs/knowledge/upper-ecl-frame-store-scope.md is 21,408 bytes; those are
-different boundary records and must not be subtracted as if they were the same
-scope.
-
-The current candidate PDB contribution is at 0x004344C0, size 20,568 bytes.
-Its prologue allocates 0x474 bytes, while the target prologue allocates 0x478.
-The saved strict-audit row for this owner is incomplete and has no unit_sha256;
-there is no current complete-owner strict pass for it. The historical frame-store
-note describes the original boundary and static controls, not the current
-candidate layout.
-
-The focused case tool currently finds 174 target and 174 candidate dispatch
-targets. Its current non-perfect normalized instruction-sequence groups include:
-
-| Opcode group | Handler family | Ratio |
-| --- | --- | ---: |
-| [7] | ANM_PLAY | 0.94 |
-| [101, 103, 136, 137] | MOVE_POS_TIME variants | 0.86 |
-| [109, 111] | MOVE_CIRCLE_TIME variants | 0.85 |
-| [134, 135, 138, 139] | MOVE_CURVE variants | 0.95 |
-| [140, 142] | MOVE_ANGLE variants | 0.84 |
-| [141, 143] | MOVE_ANGLE_TIME variants | 0.85 |
-
-The case tool prints groups below 0.999; omitted groups match under that
-normalized case comparator. This is a diagnostic only: it normalizes registers
-and branch addresses, and does not compare the complete function extent,
-relocations, data tables or ownership. It does not grant Oracle credit.
-
-The 2026-11-16 source work substantially rewrote animation and movement
-handlers. The current case report no longer lists the groups for ANM_RESET,
-ANM_SET_MAIN, ANM_PLAY_ABS, ANM_PLAY_HIGH, ANM_PLAY_ROTATE,
-ANM_SELECTED_PLAY, ANM_316, ANM_SWITCH, MOVE_VEL, MOVE_VEL_TIME,
-MOVE_RAND or MOVE_BEZIER as non-perfect. Treat that only as a local
-instruction-sequence result, not as proof that the large owner is exact.
-
-### Recommended next work
-
-1. Continue with MOVE_ANGLE_TIME / MOVE_ANGLE_REL_TIME (groups 441/443,
-   case indices [141, 143]) and MOVE_ANGLE / MOVE_ANGLE_REL
-   (440/442, [140, 142]). These remain ordinary C++ in the dispatcher and
-   are still materially different from the target.
-2. Revisit MOVE_POS_TIME (401/403/436/437) after understanding the target's
-   reused stack slots and getter order. Earlier attempts to inline all getters,
-   jump across C++ switch scopes, or overlay frame locals regressed other cases;
-   those experiments were restored. The current selector plus first-getter
-   sequence is the stable checkpoint.
-3. Improve MOVE_CURVE (434/435/438/439) beyond its current 0.95 case score.
-   The selector/getter and interpolation setup are partly inline assembly, but
-   the shared initial/goal/reset tail and complete owner frame still differ.
-4. Revisit ANM_PLAY (307) after the movement work; it remains at 0.94.
-5. Once a complete owner scope and comparison unit are available, use the strict
-   Oracle on the affected owner. Do not infer exactness from cases.py.
-
-Useful source locations: MOVE_POS_TIME around line 1178, MOVE_CURVE around
-1243, MOVE_BEZIER around 1351, MOVE_VEL around 1449, MOVE_VEL_TIME around
-1518, and MOVE_ANGLE_TIME around 1723. Line numbers may move.
-
-## Recent committed work
-
-The 16 local commits since the previous checkpoint cover:
-
-- ANM_SELECTED_PLAY, ANM_RESET, ANM_SET_MAIN, ANM_PLAY_ABS,
-  ANM_PLAY_HIGH, ANM_PLAY_ROTATE, ANM_316 and ANM_SWITCH;
-- MOVE_BEZIER, MOVE_VEL, MOVE_VEL_TIME, MOVE_RAND and MOVE_CURVE.
-
-The commits are local checkpoints, not accepted Oracle receipts. Keep future
-commit messages in the user's requested gpt-web: ... format.
-
-## Workflow and retained tools
-
-- Use scripts/repo-python for project scripts and the pinned interpreter.
-- Use scripts/repo-python scripts/build.py for incremental builds.
-- Use .venv/bin/python .analysis/claude-tools/cases.py 0x41dcb0 for the
-  current switch-case diagnostic. It depends on the saved audit to resolve the
-  owner symbol, so refresh that audit before relying on it after annotation or
-  unit-ledger changes.
-- scripts/audit-reference.py refreshes the local strict report;
-  scripts/progress.py and scripts/check-frontier.py require that report to
-  match current inputs.
-- Avoid --clean and whole-project replay for ordinary iterations. The user
-  explicitly prefers affected-owner work and multiple local checkpoints.
-- Keep build/reference-candidate/ intact: its objects, dependencies, PDB,
-  MAP, receipt and symbol-discovery cache support incremental work.
-- Keep resources/th16.exe, .venv/, .tools/wine/, ghidra-project/ and the
-  pinned _reference/johnthreekay-th16/ checkout. See docs/ARTIFACTS.md before
-  any further cleanup.
-- Historical .analysis/claude-tools audit JSON, source snapshots, trial logs
-  and diagnostic binaries are now gzip-compressed. The cleanup index
-  .analysis/cleanup-handoff-20261116.json records hashes and restore metadata;
-  use gzip -dc to restore an individual file. exp.json and cur-audit.json are
-  old audit snapshots, not current results; they remain uncompressed because
-  tryaudit.sh and moved.py read those literal paths. build.log also remains
-  uncompressed as a build-success sentinel.
-- Most generated p/ and fp/ probe outputs were removed; their source probes
-  and generators remain. The two p/mbi.exe and p/mbi.map outputs were retained
-  because no matching C++ source was found.
-
-## Historical findings worth retaining
-
-- Direct calls and __forceinline helpers can change LTCG alignment and
-  inlining; pointer-to-member workarounds often alter register scheduling.
-- Where the original pushes a different constant in each branch before one
-  shared call, preserve whole branch-specific calls rather than computing an
-  argument index arithmetically.
-- Read call arguments into locals in the original order when the call sequence
-  matters. Statement shape, temporary type and local lifetime can change
-  register allocation and frame alignment.
-- COMDAT providers depend on link order; a CRT inline's out-of-line copy may
-  come from the first object whose IL uses it.
-- Intrinsic treatment can fold static initialization; pragma function around
-  the affected operation can restore the original initializer.
-- Dead code can retain EH states and affect frame layout.
-- Historical dead ends and source trials are preserved in the dated .analysis/
-  evidence archives; do not replay their expected counts as if they described
-  this checkpoint.
+The latest code checkpoints, newest first, are 27af340, 5a6da44,
+0331370, 795435f, 83bb3f0, ebb3ed9, 7f27400, and 9cb005b.
