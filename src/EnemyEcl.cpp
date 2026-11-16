@@ -74,8 +74,6 @@ extern "C" void ecl_anm_interrupt_tree_alias();
 extern "C" i32 ecl_effect_track_alias(AnmId);
 #pragma comment(linker, "/alternatename:_ecl_effect_track_alias=?track@EffectManager@@QAEHUAnmId@@@Z")
 extern "C" void ecl_anm_create_vm_front_alias();
-extern "C" void ecl_interp_strange1_reset_timer_alias();
-#pragma comment(linker, "/alternatename:_ecl_interp_strange1_reset_timer_alias=?reset_timer@InterpStrange1@@QAEXXZ")
 #pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
 extern "C" void ecl_context_get_float_arg_alias();
 #pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z")
@@ -1244,7 +1242,7 @@ int EnemyData::ecl_run_over_300()
     {
         bool absolute = instr->opcode == ECL_OP_MOVE_BEZIER;
         PosVel *pos_vel = absolute ? &abs_pos : &rel_pos;
-        position_interp = absolute ? &abs_pos_i : &rel_pos_i;
+        InterpStrange1 *position_interp = absolute ? &abs_pos_i : &rel_pos_i;
 
         f32 goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 goal_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{4});
