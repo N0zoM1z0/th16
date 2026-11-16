@@ -3089,8 +3089,11 @@ int EnemyData::ecl_run_over_300()
         break;
     // enmAlive(var, id)
     case ECL_OP_ENM_ALIVE:
-        *get_int_arg_ptr(0) = g_EnemyManager->is_enemy_alive(get_int_arg(1));
+    {
+        i32 alive = g_EnemyManager->is_enemy_alive(get_int_arg(1));
+        *get_int_arg_ptr(0) = alive;
         break;
+    }
     // enmPos(var_x, var_y, id)
     case ECL_OP_ENM_POS:
     {
