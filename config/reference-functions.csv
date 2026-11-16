@@ -1188,7 +1188,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00473BC0,SptInf::run_ecl,src/EclRunContext.cpp,?run_ecl@SptInf@@QAEHM@Z,exact,,.analysis/reference-audit.json
 0x00473C90,EclRunContext::get_int_arg,src/EclRunContext.cpp,?get_int_arg@EclRunContext@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x00473D40,EclRunContext::get_float_arg,src/EclRunContext.cpp,?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z,exact,,.analysis/reference-audit.json
-0x00473E40,EclRunContext::get_int_arg_given_value,src/EclRunContext.cpp,?get_int_arg_given_value@EclRunContext@@QAEHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00473E40,EclRunContext::get_int_arg_given_value,src/EclRunContext.cpp,?get_int_arg_given_value@EclRunContext@@QAEHHH@Z,exact,,Exact 175-byte target/candidate PE comparison (SHA256 1ccfa81e951c522e15c929918d3e7b3fdd7303ba44dc7f1c57e1045a39df6a7c); candidate PDB owner is also 175 bytes.
 0x00473EF0,EclRunContext::get_float_arg_given_value,src/EclRunContext.cpp,?get_float_arg_given_value@EclRunContext@@QAEMHM@Z,exact,,.analysis/reference-audit.json
 0x00473FE0,EclRunContext::pop_int_arg,src/EclRunContext.cpp,?pop_int_arg@EclRunContext@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x00474090,EclRunContext::pop_float_arg,src/EclRunContext.cpp,?pop_float_arg@EclRunContext@@QAEMH@Z,exact,,.analysis/reference-audit.json
