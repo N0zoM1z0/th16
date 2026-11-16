@@ -430,31 +430,15 @@ HARNESS_CALLED i32 *EnemyData::get_int_arg_ptr(int index)
 }
 
 // FUNCTION: TH16 0x425200
-__declspec(naked) HARNESS_CALLED f32 LTCG_VECTORCALL EnemyData::get_float_arg(EclFloatArgIndex index)
+HARNESS_CALLED f32 LTCG_VECTORCALL EnemyData::get_float_arg(EclFloatArgIndex index)
 {
-    __asm
-    {
-        push ebp
-        mov ebp, esp
-        mov ecx, dword ptr [ecx + 44b8h]
-        mov ecx, dword ptr [ecx + 0ch]
-        pop ebp
-        jmp ecl_context_get_float_arg_alias
-    }
+    return full->context.current_context->get_float_arg(index);
 }
 
 // FUNCTION: TH16 0x425220
-__declspec(naked) DECOMP_NOINLINE f32 *EnemyData::get_float_arg_ptr(int index)
+DECOMP_NOINLINE f32 *EnemyData::get_float_arg_ptr(int index)
 {
-    __asm
-    {
-        push ebp
-        mov ebp, esp
-        mov ecx, dword ptr [ecx + 44b8h]
-        mov ecx, dword ptr [ecx + 0ch]
-        pop ebp
-        jmp ecl_context_get_float_arg_ptr_alias
-    }
+    return full->context.current_context->get_float_arg_ptr(index);
 }
 
 // The targetable enemy closest to pos within max_dist (homing shots);
