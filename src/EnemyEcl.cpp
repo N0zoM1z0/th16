@@ -2102,7 +2102,7 @@ int EnemyData::ecl_run_over_300()
         ((EnemyFlagsLow *)&flags_low)->mirrored = get_int_arg(0);
         break;
     // spell(id, time_limit, boss_index, name) and its per-difficulty forms.
-    // The name bytes following args[3] are encrypted in the raw instruction.
+    // The script supplies encrypted name bytes directly after its arguments.
     case ECL_OP_SPELL:
     case ECL_OP_SPELL_528:
     case ECL_OP_SPELL_537:
@@ -2111,35 +2111,28 @@ int EnemyData::ecl_run_over_300()
     {
         char name[0x80];
         i32 name_length = instr->args[3].i;
-        if (name_length <= 0)
+        const u8 *encrypted_name = reinterpret_cast<const u8 *>(&instr->args[4]);
+        u8 key = 0x77;
+        u8 key_step = 7;
+        for (i32 i = 0; i < name_length; i++)
         {
-            name[0] = '\0';
-        }
-        else
-        {
-            const u8 *encrypted_name = reinterpret_cast<const u8 *>(&instr->args[4]);
-            u8 key = 0x77;
-            u8 key_step = 7;
-            for (i32 i = 0; i < name_length; i++)
-            {
-                name[i] = (char)(encrypted_name[i] ^ key);
-                key = (u8)(key + key_step);
-                key_step = (u8)(key_step + 0x10);
-            }
+            name[i] = (char)(encrypted_name[i] ^ key);
+            key = (u8)(key + key_step);
+            key_step = (u8)(key_step + 0x10);
         }
 
         i32 spell_id = full_owner->context.current_context->get_int_arg(0);
-        if (instr->opcode == ECL_OP_SPELL_537)
+        switch ((i16)instr->opcode)
         {
+        case ECL_OP_SPELL_537:
             spell_id += g_Globals.difficulty;
-        }
-        else if (instr->opcode == ECL_OP_SPELL_538)
-        {
+            break;
+        case ECL_OP_SPELL_538:
             spell_id += g_Globals.difficulty - 1;
-        }
-        else if (instr->opcode == ECL_OP_SPELL_539)
-        {
+            break;
+        case ECL_OP_SPELL_539:
             spell_id += g_Globals.difficulty - 2;
+            break;
         }
 
         i32 time_limit = full_owner->context.current_context->get_int_arg(2);
