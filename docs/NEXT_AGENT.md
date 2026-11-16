@@ -8,8 +8,8 @@ the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-- main code HEAD entering this handoff: 5b59bd7, natural ECL expression stack addition.
-- The branch is 30 commits ahead of origin/main before this note; the worktree
+- main code HEAD entering this handoff: dcd922d, directly reloaded ECL transform opcode.
+- The branch is 39 commits ahead of origin/main before this note; the worktree
   is clean before the documentation edit.
 - The historical broad reference audit and frontier metadata are stale for
   these changes. Do not cite their old exactness totals as current.
@@ -79,11 +79,12 @@ the affected owner, not the whole cold replay.
   assembly), and 5b59bd7 (the ADD opcode of EclRunContext::ecl_run
   is natural stack.pop_int / stack.push_int arithmetic).
 - AnmVm::run still has 134 target and candidate dispatch entries.
-  The FSET_RAND candidate now draws and scales before resolving the
-  output pointer. The compiler cross-jumps to the FSET_MOD write tail;
-  target opcode 123 has a separate 96-byte block, while the current
-  candidate entry contains a shorter 54-byte prelude. This is
-  meaningful semantic restoration, not byte identity.
+  FSET_RAND draws and scales before resolving the output pointer. In
+  63127c5 the compiler cross-jumped into the FSET_MOD write tail,
+  yielding a 54-byte prelude. The subsequent 0357108 checkpoint stages
+  the output destination separately: it now has a dedicated 102-byte,
+  25-instruction case versus the 96-byte, 24-instruction target case.
+  Its register allocation and source layout remain unresolved.
 - ANM circle position opcode 130 now has explicit input/output
   evaluation order. The current target and candidate blocks measure
   146 and 150 bytes respectively. FSET arithmetic opcodes 113, 115,
@@ -106,6 +107,48 @@ the affected owner, not the whole cold replay.
   build graph. The branch has not been pushed and no full cold replay
   was run. Full strict Oracle work remains blocked by the existing
   EH-parent PDB ownership preflight, not by the local case comparator.
+
+## Subsequent 2026-11-16 interpreter reconstruction
+
+Eight additional C++ checkpoints from the latest session are:
+
+- c7738ef: ET_EX/FULL/NEXT/FULL_NEXT use direct opcode cases to choose
+  argument starts, additional transform fields and next-slot updates.
+  This improved their shared case ratio from about 0.48 to 0.82.
+- 0357108: restores a dedicated FSET_RAND result-store path in
+  AnmVm::run instead of the former FSET_MOD cross-jump.
+- b0a7192: updates MOVE_VEL_TIME to read the duration and store each
+  interpolator's initial, end time, method, bezier tangents and goal in
+  the target-observed order; the case ratio rose from ~0.59 to ~0.71.
+- 7b47342: LaserManager::cancel_in_rectangle passes the target's fixed
+  CANCEL_BOMB and protected-laser arguments (5, 1) to the virtual
+  cancel call, rather than passing through unused function parameters.
+  Target Ghidra showed the two hardcoded values and the function's
+  bomb callers; this is a semantic correction in a leaf.
+- 0a85e4b: MOVE_CURVE selectors evaluate opcode predicates directly
+  instead of maintaining separate booleans; ratio rose ~0.64 to ~0.78.
+- e68be56: same direct-opcode selection for MOVE_POS_TIME variants;
+  ratio rose ~0.71 to ~0.83.
+- f56b83e: MOVE_VEL_TIME keeps the absolute and mirrored opcode tests
+  at each use instead of cached booleans; ratio rose ~0.71 to ~0.82.
+- dcd922d: ET_EX rereads the opcode at each decision after getters;
+  ratio improved further from ~0.82 to ~0.85.
+
+All these changes use ordinary typed C++ with no ASM or padding. Each
+was compiled with the existing incremental build and compared only by
+the relevant case diagnostics. Current ECL case extraction still
+reports 174 target and 174 candidate dispatch entries; recent local
+ratios include MOVE_POS_TIME 0.84, MOVE_VEL_TIME 0.82, MOVE_CURVE 0.78
+and ET_EX 0.85. Their differences are real and none is strict exact.
+The laser creation cases remain around 0.54-0.63 and need substantial
+future work. An experimental change to the multiplication operand
+order of ANM circle interpolation did not improve codegen and was
+reverted before commit. No cold replay or push was run.
+
+The saved broad strict audit still predates this work and the
+EH-parent candidate PDB ownership preflight remains the known blocker
+for targeted strict audit. Do not bypass that evidence requirement.
+The existing ignored .analysis/ build logs contain incremental proof.
 
 ## Verification and next actions
 
