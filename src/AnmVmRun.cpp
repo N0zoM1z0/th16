@@ -753,14 +753,7 @@ i32 AnmVm::run()
         {
             f32 range = ANM_FLOAT(1);
             f32 random = g_replay_unsafe_rng.randf_0_to_1();
-            f32 *destination = &ins->args[0].f;
-            bool is_variable = ANM_IS_VAR(0);
-            f32 value = random * range;
-            if (is_variable)
-            {
-                destination = get_float_var_ptr(destination);
-            }
-            *destination = value;
+            *ANM_FLOAT_PTR(0) = random * range;
             break;
         }
         case ANM_OP_FSIN:
