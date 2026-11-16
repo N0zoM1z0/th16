@@ -1929,14 +1929,13 @@ int EnemyData::ecl_run_over_300()
             et = 0;
         }
 
-        u16 opcode = instr->opcode;
         i32 arg = 2;
-        if (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             arg = 1;
         }
         i32 ex_index;
-        if (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ex_index = et_ex_index[et];
         }
@@ -1949,7 +1948,7 @@ int EnemyData::ecl_run_over_300()
         ex->type = get_int_arg(arg++);
         ex->a = get_int_arg(arg++);
         ex->b = get_int_arg(arg++);
-        if (opcode == ECL_OP_ET_EX_FULL || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ex->c = get_int_arg(arg++);
             ex->d = get_int_arg(arg++);
@@ -1957,13 +1956,13 @@ int EnemyData::ecl_run_over_300()
 
         ex->r = get_float_arg(EclFloatArgIndex{arg++});
         ex->s = get_float_arg(EclFloatArgIndex{arg++});
-        if (opcode == ECL_OP_ET_EX_FULL || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ex->m = get_float_arg(EclFloatArgIndex{arg++});
             ex->n = get_float_arg(EclFloatArgIndex{arg++});
         }
 
-        if (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             et_ex_index[et]++;
         }
