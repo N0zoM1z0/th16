@@ -780,15 +780,15 @@ int EnemyData::ecl_run_over_300()
                                  instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_angle_i : &rel_angle_i;
         InterpFloat *speed_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
                                  instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_speed_i : &rel_speed_i;
-        f32 angle = get_float_arg(EclFloatArgIndex{2});
-        f32 speed = get_float_arg(EclFloatArgIndex{3});
-        if (get_int_arg(0) <= 0)
+        f32 angle = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        if (full->context.current_context->get_int_arg(0) <= 0)
         {
             angle_i->end_time = 0;
             speed_i->end_time = 0;
             break;
         }
-        i32 mode = get_int_arg(1);
+        i32 mode = full->context.current_context->get_int_arg(1);
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
             if (angle > -999999.0)
@@ -846,7 +846,7 @@ int EnemyData::ecl_run_over_300()
 
         // The two interpolators each read their own duration, then write
         // initial, duration, method, tangents and goal before resetting.
-        i32 angle_duration = get_int_arg(0);
+        i32 angle_duration = full->context.current_context->get_int_arg(0);
         angle_i->initial = initial_angle;
         angle_i->end_time = angle_duration;
         angle_i->method = mode;
@@ -855,7 +855,7 @@ int EnemyData::ecl_run_over_300()
         angle_i->goal = angle;
         angle_i->reset();
 
-        i32 speed_duration = get_int_arg(0);
+        i32 speed_duration = full->context.current_context->get_int_arg(0);
         speed_i->initial = initial_speed;
         speed_i->end_time = speed_duration;
         speed_i->method = mode;
