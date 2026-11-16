@@ -34,6 +34,41 @@ run scripts/audit-reference.py before using totals or refreshing the frontier.
 Do not treat a successful incremental build or a case-level similarity score
 as strict exactness.
 
+## Additional 2026-11-16 ANM owner work
+
+The current branch has two further local checkpoints after the cleanup handoff:
+
+- 6d490ec — gpt-web: split ANM static and delete returns
+- 9ea537a — gpt-web: return directly from frozen ANM tick
+
+The second large owner under active reconstruction is AnmVm::run at
+0x0045F980 (14,177 target bytes). The END/DELETE and STATIC paths are now
+separate natural C++ return paths. Focused disassembly shows the DELETE case body
+matches the target's four instructions; STATIC stores instr_offset = -1 and
+jumps to the shared zero-return epilogue instead of clearing EAX at the case
+entry. The frozen-world early exit also returns zero directly after restoring
+game speed. These are local source checkpoints, not a complete-owner strict
+pass.
+
+The candidate was incrementally rebuilt at 2026-11-16 17:52 UTC after the two
+ANM changes and restoration of unsuccessful experiments. The build succeeded.
+Its current build-input SHA-256 is
+0e695d1b27701ecb2b0d74549dcd95060e6942e682747c45e58b05e6a818e851.
+No cold build or full replay was run. A focused audit-reference
+--address 0x0045F980 attempt was blocked by the existing linked-EH-parent
+preflight because a required parent was not a unique complete candidate owner;
+there is no new Oracle result or exactness credit.
+
+Important dispatch detail: the ANM dispatcher remaps opcode + 1 through its
+byte table before the jump-table lookup. Focused case extraction must use that
+offset; indexing the table directly by opcode selects the wrong handlers.
+The next useful ANM cases to examine are 106/112 and 121/123, while retaining
+the full AnmVm::run owner as the larger goal. The upper ECL dispatcher below
+remains the other major active owner.
+
+No inline assembly or padding was added for this work. The temporary
+MOVE_ANGLE_TIME assembly experiment was fully reverted.
+
 ## Main active owner: upper enemy ECL dispatcher
 
 EnemyData::ecl_run_over_300() is in src/EnemyEcl.cpp at target address
