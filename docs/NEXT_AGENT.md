@@ -8,8 +8,8 @@ the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-- main code HEAD entering this handoff: e5dae3e, shared ECL bullet firing origin.
-- The branch is 51 commits ahead of origin/main before this note; the worktree
+- main code HEAD entering this handoff: bdf7a7b, natural infinite-laser VM scaling.
+- The branch is 57 commits ahead of origin/main before this note; the worktree
   is clean before the documentation edit.
 - The historical broad reference audit and frontier metadata are stale for
   these changes. Do not cite their old exactness totals as current.
@@ -244,6 +244,65 @@ owner, the 14 KB AnmVm::run owner (particularly random circle and
 arithmetic tails), the four laser creation handlers and the unresolved
 EH-owner PDB preflight. Continue to work at both caller and leaf
 scope without ASM or artificial padding.
+
+## Additional ECL movement and natural callback reconstruction
+
+Five coherent natural C++ source commits followed the preceding ECL handoff:
+
+- d86e4d0: the ECL MOVE_BEZIER / MOVE_BEZIER_REL cases select both the
+  PosVel and InterpStrange1 directly from the instruction opcode rather
+  than caching a boolean. The focused local case sequence improved
+  from about 0.62 to 0.78.
+- ccaf438: MOVE_RAND / MOVE_RAND_REL use direct opcode tests for their
+  position, angle interpolation and speed interpolation. Their
+  joint focused ratio rose from about 0.76 to 0.86.
+- ed70707: the four MOVE_VEL variants use the original double-precision
+  -999999.0 sentinel comparison, rather than rounding the sentinel to
+  float before comparison. Local ratio rose from about 0.75 to 0.85.
+  This also preserves the precision of the sentinel boundary.
+- f84ba72: damage_source_on_hit_piercing (target 0x004474A0, 39
+  bytes) no longer contains inline assembly. The hit callback finds
+  the owning PlayerBullet through the source's bullet_index, returns
+  its old damage, and changes subsequent hits to 1. The structure
+  assertions check the 0xc0 bullet stride, source index at 0x88,
+  and player-relative bullet damage at 0x11ac. Its linked candidate
+  is 37 bytes, not the former exact assembler sequence; the old
+  local-strict-pass annotation in config/functions.csv is stale.
+- bdf7a7b: LaserInfiniteInf::on_tick (target 0x004352F0, 800 bytes)
+  now has typed C++ for the formerly hand-assembled last part.
+  The VM's scale.x is laser width divided by the ANM sprite width
+  (sprite field +0x38); scale.y is laser hit_length divided by sprite
+  height (+0x34). Each writes ANM_VM_SCALE_CHANGED. Target disassembly
+  confirmed these respective offsets; source static_asserts guard
+  the sprite layout. The native target has 210 instructions in the
+  800-byte scope; this candidate currently has about 207 and its
+  address-normalized local sequence ratio is about 0.84. It is not
+  strictly exact. Neither src/PlayerShot.cpp nor
+  src/LaserInfinite.cpp now contains direct inline assembly.
+
+Incremental scripts/repo-python scripts/build.py passed for each code
+change, still producing 1166 annotated functions. The upper ECL
+dispatcher remains 174 target and 174 candidate table entries.
+These are local diagnostic observations only, not complete-owner
+receipts. The existing EH-parent PDB ownership preflight remains a
+separate blocker for strict audit. No full cold replay or push.
+
+Evaluated but reverted: switching the ECL drop-item x product's
+commutative operand order left the compiled leaf unchanged;
+staging Y/Z arithmetic in AnmVm::transform_coords left its 0.93
+local ratio unchanged; adding an extra named snapshot id in
+AnmManager::restore_snapshot degraded its local ratio from about
+0.98 to 0.76; separating the ANM FSET_RAND destination into
+explicit two-branch stores generated a larger 108-byte opcode
+case than its 96-byte target and was reverted. The ignored
+.analysis/ logs retain the focused build evidence.
+
+High-value next investigations: restore more of the large ECL
+movement families and laser creation handlers; improve the
+ANM random circle and FSET_RAND owners; continue checking the
+natural LaserInfiniteInf::on_tick against the full original
+owner and its relocations. Do not reintroduce ASM or unused
+padding solely to obtain instruction equality.
 
 ## Verification and next actions
 
