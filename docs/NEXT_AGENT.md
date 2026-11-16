@@ -524,3 +524,52 @@ without suppressing its checks.
 
 The latest code checkpoints, newest first, are 27af340, 5a6da44,
 0331370, 795435f, 83bb3f0, ebb3ed9, 7f27400, and 9cb005b.
+
+## Timed ECL movement getter reconstruction (2026-11-17)
+
+Two additional code checkpoints restore call and operand scheduling in the
+large EnemyData::ecl_run_over_300 dispatcher:
+
+- 8a601f7: MOVE_POS_TIME and its relative/offset variants now read the
+  second coordinate, duration and interpolation mode through full rather
+  than reusing the cached full_owner expression. The offset branch stages
+  the current X coordinate before testing the mirror flag and spells the
+  non-mirrored addition first. This restores the target's load-before-branch
+  and add/subtract branch layout. The complete four-opcode local group is
+  99 target / 98 candidate instructions, normalized ratio about 0.86.
+- 28f9d1d: MOVE_VEL_TIME and its relative/no-mirror variants read the
+  first angle through the cached owner context, then reload full for speed,
+  initial duration, mode, and both interpolator durations. The complete
+  four-opcode group is 160 target / 161 candidate instructions, normalized
+  ratio about 0.88 (the earlier getter form was about 0.82).
+
+The two changes are in the same large ECL owner and preserve the existing
+typed interpolator and PosVel operations. The dispatcher remains 174/174.
+MOVE_ANGLE_TIME remains at its prior local ratio (about 0.89); attempts to
+replace its typed pointers with byte-offset casts or pointer-to-member
+temporaries regressed and were reverted. Direct full-context getter changes
+for that opcode also regressed and were reverted.
+
+Further experiments reverted without commits:
+- MOVE_SPEED_TIME's positive-duration nesting and an explicit goto did not
+  improve its 61-byte case.
+- LaserInfiniteInf::on_tick's direct vm_950 field accesses and explicit
+  self-pointer did not improve its 800-byte owner. Rewriting its boss lookup
+  helper or inlining the list walk changed register/branch allocation in the
+  wrong direction; the original helper remains.
+- Replacing LaserInfiniteInf::run_ex's BulletEx pointer local with direct
+  array indexing did not change its already-low local ratio. Keep the existing
+  typed pointer form.
+
+Final incremental build: .analysis/2026-11-17-final-incremental-build.log
+completed successfully and produced 1166 annotated functions. Focused
+post-build checks: MOVE_POS_TIME 0.86, MOVE_VEL_TIME 0.88,
+MOVE_ANGLE_TIME 0.89; InterpFloat2::step and step_radial_dist each 0.949;
+InterpInt3::step 0.996. ANM FMUL's 19-instruction handler remains matched.
+No full cold replay, inline assembly, padding, or push was used.
+
+Next work: continue the large ECL dispatcher with MOVE_CIRCLE_TIME and
+MOVE_ELLIPSE_TIME, then revisit the remaining MOVE_ANGLE_TIME/ET_ON and
+laser-create handler differences. Keep the EH-parent PDB ownership preflight
+blocker visible; local case similarity is not strict owner or relocation
+certification.
