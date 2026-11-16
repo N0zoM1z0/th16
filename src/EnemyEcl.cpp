@@ -700,13 +700,13 @@ int EnemyData::ecl_run_over_300()
             push ecx
             push 3
             push ecx
+            mov ecx, dword ptr [g_EnemyManager]
             movss dword ptr [esp], xmm0
             push esi
             push eax
             lea eax, [ebp - 420h]
             push eax
             mov eax, dword ptr [edi + 3fech]
-            mov ecx, dword ptr [g_EnemyManager]
             mov ecx, dword ptr [ecx + eax*4 + 164h]
             call ecl_anm_create_vm_alias
         ecl_die_done:
