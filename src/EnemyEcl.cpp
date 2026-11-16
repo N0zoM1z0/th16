@@ -266,8 +266,9 @@ static __forceinline void ecl_laser_beam_on(EnemyData *enemy)
     LaserBeamInner params;
     i32 slot = enemy->get_int_arg(0);
     const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
-    memcpy(params.ex, shooter.ex, sizeof(params.ex));
-    params.start_pos = ecl_laser_start_pos(enemy, slot);
+    // Stage the origin choice before copying the transforms, then fill
+    // the laser's start position directly in the parameter object.
+    get_shot_origin_and_copy_ex(enemy, slot, &params.start_pos, params.ex);
     params.ang_aim = normalize_angle(shooter.ang_aim);
     params.length = shooter.pos.z;
     params.laser_new_arg_4 = shooter.laser_new_arg_4;
@@ -284,8 +285,9 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
     LaserCurveInner params;
     i32 slot = enemy->get_int_arg(0);
     const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
-    memcpy(params.ex, shooter.ex, sizeof(params.ex));
-    params.start_pos = ecl_laser_start_pos(enemy, slot);
+    // Stage the origin choice before copying the transforms, then fill
+    // the laser's start position directly in the parameter object.
+    get_shot_origin_and_copy_ex(enemy, slot, &params.start_pos, params.ex);
     params.ang_aim = normalize_angle(shooter.ang_aim);
     params.laser_new_arg_4 = shooter.laser_new_arg_4;
     params.speed = shooter.spd1;
