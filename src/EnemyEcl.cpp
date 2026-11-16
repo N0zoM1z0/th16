@@ -563,7 +563,8 @@ int EnemyData::ecl_run_over_300()
     f32 goal_y;
     // The target keeps the owning EnemyInf context in a frame local and
     // reuses it across the large switch rather than reloading this->full.
-    register EclRawInstr *instr = full->context.current_context->current_instr();
+    EnemyInf *volatile full_owner = full;
+    register EclRawInstr *instr = full_owner->context.current_context->current_instr();
     __asm { lea eax, ecl_stack_reserve }
     switch ((i16)instr->opcode)
     {
@@ -643,7 +644,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // unknown566: dies now.
     case ECL_OP_DIE_NOW:
-        if (full->die())
+        if (full_owner->die())
         {
             return 1;
         }
@@ -2325,7 +2326,7 @@ int EnemyData::ecl_run_over_300()
             {
                 set_next(full, get_int_arg(0), 0, get_int_arg(2), "BossDead");
             }
-            full->set_timeout(get_int_arg(0), "BossEscape");
+            full_owner->set_timeout(get_int_arg(0), "BossEscape");
         }
         else
         {
@@ -2335,7 +2336,7 @@ int EnemyData::ecl_run_over_300()
     }
     // setTimeout(index, sub).
     case ECL_OP_SET_TIMEOUT:
-        full->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
+        full_owner->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
         break;
     // setDeath(sub).
     case ECL_OP_SET_DEATH:
@@ -3042,7 +3043,7 @@ int EnemyData::ecl_run_over_300()
         {
             wait = lunatic;
         }
-        full->context.current_context->time -= wait;
+        full_owner->context.current_context->time -= wait;
         break;
     }
     // fog(radius, color): replaces the enemy's fog; radius 0 removes it.
