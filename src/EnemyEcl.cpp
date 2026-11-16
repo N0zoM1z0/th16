@@ -130,10 +130,36 @@ static void __fastcall enemy_ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
     ZUN_ASM_SINCOSMUL(dst, angle, radius);
 }
 
-// The original stages the origin condition before copying the shooter's
-// BulletEx array, then finishes the selected origin branch. Keep that order
-// in the four laser constructors rather than computing the whole vector first.
-static __forceinline void get_shot_origin_and_copy_ex(EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
+// The line and infinite laser constructors test the origin before copying
+// the transform array; beam and curve constructors copy it first. Preserve
+// those distinct target instruction orders while keeping both paths typed.
+static __forceinline void get_shot_origin_and_copy_ex_branch_first(
+    EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
+{
+    f32 x;
+    f32 y;
+    f32 z;
+    if (enemy->bullet_mgr_origins[i].z > 0.9f)
+    {
+        memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
+        y = enemy->bullet_mgr_offsets[i].xy.y;
+        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].xy.x;
+        y += enemy->bullet_mgr_origins[i].xy.y;
+        z = 0.0f;
+    }
+    else
+    {
+        memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
+        y = enemy->bullet_mgr_offsets[i].xy.y;
+        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
+        y += enemy->final_pos.pos.y;
+    }
+    *out = D3DXVECTOR3(x, y, z);
+}
+
+static __forceinline void copy_ex_and_get_shot_origin(
+    EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
     bool has_origin = enemy->bullet_mgr_origins[i].z > 0.9f;
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
@@ -2104,8 +2130,8 @@ int EnemyData::ecl_run_over_300()
         ::new (&laser_params_storage.line) LaserLineInner();
         i32 slot = get_int_arg(0);
         const EnemyBulletShooter &shooter = bullet_props[slot];
-        get_shot_origin_and_copy_ex(this, slot, &laser_params_storage.line.start_pos,
-                                    laser_params_storage.line.ex);
+        get_shot_origin_and_copy_ex_branch_first(
+            this, slot, &laser_params_storage.line.start_pos, laser_params_storage.line.ex);
         laser_params_storage.line.bullet_type = shooter.type;
         laser_params_storage.line.bullet_color = shooter.color;
         laser_params_storage.line.ang_aim = normalize_angle(shooter.ang_aim);
@@ -2127,7 +2153,8 @@ int EnemyData::ecl_run_over_300()
         ::new (&laser_params_storage.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
         const EnemyBulletShooter &shooter = bullet_props[slot];
-        get_shot_origin_and_copy_ex(this, slot, &laser_params_storage.infinite.start_pos, laser_params_storage.infinite.ex);
+        get_shot_origin_and_copy_ex_branch_first(
+            this, slot, &laser_params_storage.infinite.start_pos, laser_params_storage.infinite.ex);
         laser_params_storage.infinite.type = shooter.type;
         laser_params_storage.infinite.color = shooter.color;
         laser_params_storage.infinite.ang_aim = normalize_angle(shooter.ang_aim);
@@ -2153,7 +2180,8 @@ int EnemyData::ecl_run_over_300()
         ::new (&laser_params_storage.beam) LaserBeamInner();
         i32 slot = get_int_arg(0);
         const EnemyBulletShooter &shooter = bullet_props[slot];
-        get_shot_origin_and_copy_ex(this, slot, &laser_params_storage.beam.start_pos, laser_params_storage.beam.ex);
+        copy_ex_and_get_shot_origin(
+            this, slot, &laser_params_storage.beam.start_pos, laser_params_storage.beam.ex);
         laser_params_storage.beam.color = shooter.color;
         laser_params_storage.beam.ang_aim = normalize_angle(shooter.ang_aim);
         laser_params_storage.beam.timing = shooter.laser_timing[0];
@@ -2170,7 +2198,8 @@ int EnemyData::ecl_run_over_300()
         ::new (&laser_params_storage.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
         const EnemyBulletShooter &shooter = bullet_props[slot];
-        get_shot_origin_and_copy_ex(this, slot, &laser_params_storage.curve.start_pos, laser_params_storage.curve.ex);
+        copy_ex_and_get_shot_origin(
+            this, slot, &laser_params_storage.curve.start_pos, laser_params_storage.curve.ex);
         laser_params_storage.curve.type = shooter.type;
         laser_params_storage.curve.color = shooter.color;
         laser_params_storage.curve.ang_aim = normalize_angle(shooter.ang_aim);
