@@ -26,6 +26,8 @@
 #include "ZunMath.h"
 
 static const f32 ecl_origin_threshold = 0.9f;
+static const f32 ecl_die_distance_squared = 0.2f * 0.2f;
+static const f32 ecl_die_default_angle = -ZUN_PI / 2;
 extern "C" void *ecl_memset_alias(void *, i32, size_t);
 extern "C" void ecl_laser_infinite_inner_ctor_alias(void *);
 #pragma comment(linker, "/alternatename:_ecl_laser_infinite_inner_ctor_alias=??0LaserInfiniteInner@@QAE@XZ")
@@ -57,6 +59,8 @@ extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
 extern "C" i32 ecl_bullet_cancel_rectangle_as_bomb_alias(Float3 *, Float3 *, i32);
 extern "C" i32 ecl_spt_load_sub_by_name_alias();
 #pragma comment(linker, "/alternatename:_ecl_spt_load_sub_by_name_alias=?load_sub_by_name@SptInf@@QAEHPBD@Z")
+extern "C" void ecl_anm_create_vm_alias();
+#pragma comment(linker, "/alternatename:_ecl_anm_create_vm_alias=?create_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@MHH@Z")
 #pragma comment(linker, "/alternatename:_ecl_bullet_cancel_rectangle_as_bomb_alias=?cancel_rectangle_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@0MH@Z")
 
 extern "C" f32 ecl_normalize_angle_alias(f32);
@@ -662,18 +666,50 @@ int EnemyData::ecl_run_over_300()
         {
             g_SoundManager.play_sound_at_position(death_sound, final_pos.pos.x);
         }
-        if (death_anm_script >= 0)
+        // The distance uses last-hit minus current-position, while the
+        // angle points from the hit position toward the enemy. Preserve the
+        // original SSE register flow and pass its XMM0 result straight into
+        // AnmLoaded::create_vm.
+
+        __asm
         {
-            f32 angle = -ZUN_PI / 2;
-            Float3 *pos = &final_pos.pos;
-            // The distance uses last-hit minus current-position, while the
-            // angle points from the hit position toward the enemy.
-            if (!(0.2f * 0.2f > (last_damage_pos.x - pos->x) * (last_damage_pos.x - pos->x) +
-                              (last_damage_pos.y - pos->y) * (last_damage_pos.y - pos->y)))
-            {
-                angle = zun_atan2f(pos->y - last_damage_pos.y, pos->x - last_damage_pos.x);
-            }
-            g_EnemyManager->anim_statement_anms[death_anm_index]->create_vm(death_anm_script, pos, angle, 3, 0);
+            mov eax, dword ptr [edi + 3fe8h]
+            test eax, eax
+            js ecl_die_done
+            movss xmm0, dword ptr [edi + 284h]
+            lea esi, [edi + 44h]
+            movss xmm1, dword ptr [edi + 280h]
+            subss xmm0, dword ptr [esi + 4]
+            subss xmm1, dword ptr [esi]
+            mulss xmm0, xmm0
+            mulss xmm1, xmm1
+            addss xmm1, xmm0
+            movss xmm0, dword ptr [ecl_die_distance_squared]
+            comiss xmm0, xmm1
+            jbe ecl_die_calculate_angle
+            movss xmm0, dword ptr [ecl_die_default_angle]
+            jmp ecl_die_angle_ready
+        ecl_die_calculate_angle:
+            movss xmm1, dword ptr [esi]
+            movss xmm0, dword ptr [esi + 4]
+            subss xmm1, dword ptr [edi + 280h]
+            subss xmm0, dword ptr [edi + 284h]
+            call ecl_zun_atan2f_alias
+        ecl_die_angle_ready:
+            mov eax, dword ptr [edi + 3fe8h]
+            push ecx
+            push 3
+            push ecx
+            movss dword ptr [esp], xmm0
+            push esi
+            push eax
+            lea eax, [ebp - 420h]
+            push eax
+            mov eax, dword ptr [edi + 3fech]
+            mov ecx, dword ptr [g_EnemyManager]
+            mov ecx, dword ptr [ecx + eax*4 + 164h]
+            call ecl_anm_create_vm_alias
+        ecl_die_done:
         }
         break;
     // enm322(index, value)
