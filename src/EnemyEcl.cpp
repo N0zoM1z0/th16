@@ -1477,189 +1477,88 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_VEL_TIME_NM:
     case ECL_OP_MOVE_VEL_REL_TIME_NM:
     {
-        __asm
+        bool absolute = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM;
+        bool mirror = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_REL_TIME;
+        PosVel *pv = absolute ? &abs_pos : &rel_pos;
+        InterpFloat *angle_i = absolute ? &abs_angle_i : &rel_angle_i;
+        InterpFloat *speed_i = absolute ? &abs_speed_i : &rel_speed_i;
+        f32 angle = get_float_arg(EclFloatArgIndex{2});
+        f32 speed = get_float_arg(EclFloatArgIndex{3});
+        if (get_int_arg(0) <= 0)
         {
-            mov eax, 195h
-            mov dword ptr [ebp - 418h], 1adh
-            cmp cx, ax
-            je ecl_move_vel_time_absolute_pos
-            mov dword ptr [ebp - 410h], 0cch
-            cmp cx, word ptr [ebp - 418h]
-            jne ecl_move_vel_time_pos_selected
-        ecl_move_vel_time_absolute_pos:
-            mov dword ptr [ebp - 410h], 88h
-        ecl_move_vel_time_pos_selected:
-            cmp cx, ax
-            je ecl_move_vel_time_absolute_angle
-            mov eax, 428h
-            cmp cx, word ptr [ebp - 418h]
-            jne ecl_move_vel_time_angle_selected
-        ecl_move_vel_time_absolute_angle:
-            mov eax, 3c8h
-        ecl_move_vel_time_angle_selected:
-            add eax, edi
-            mov dword ptr [ebp - 414h], eax
-            mov eax, 195h
-            cmp cx, ax
-            je ecl_move_vel_time_absolute_speed
-            mov eax, 458h
-            cmp cx, word ptr [ebp - 418h]
-            jne ecl_move_vel_time_speed_selected
-        ecl_move_vel_time_absolute_speed:
-            mov eax, 3f8h
-        ecl_move_vel_time_speed_selected:
-            mov ecx, dword ptr [edx + 0ch]
-            add eax, edi
-            push 2
-            mov dword ptr [ebp - 438h], eax
-            call ecl_context_get_float_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            push 3
-            movss dword ptr [ebp - 42ch], xmm0
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_float_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            push 0
-            movss dword ptr [ebp - 418h], xmm0
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            test eax, eax
-            jg ecl_move_vel_time_has_duration
-            mov eax, dword ptr [ebp - 414h]
-            mov dword ptr [eax + 28h], 0
-            mov eax, dword ptr [ebp - 438h]
-            mov dword ptr [eax + 28h], 0
-            jmp ecl_move_vel_time_done
-        ecl_move_vel_time_has_duration:
-            mov ecx, dword ptr [edi + 44b8h]
-            push 1
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            movss xmm1, dword ptr [ebp - 42ch]
-            xorps xmm2, xmm2
-            movsd xmm4, qword ptr [ecl_keep_coordinate_threshold]
-            mov dword ptr [ebp - 40ch], eax
-            cvtps2pd xmm0, xmm1
-            cmp eax, 7
-            je ecl_move_vel_time_constant_mode
-            comisd xmm0, xmm4
-            jbe ecl_move_vel_time_keep_angle
-            test dword ptr [edi + 4060h], 80000h
-            je ecl_move_vel_time_angle_unmirrored
-            movzx eax, word ptr [esi + 4]
-            mov ecx, 195h
-            cmp ax, cx
-            je ecl_move_vel_time_mirror_angle
-            mov ecx, 197h
-            cmp ax, cx
-            jne ecl_move_vel_time_angle_unmirrored
-        ecl_move_vel_time_mirror_angle:
-            movss xmm3, dword ptr [ecl_pi_over_two]
-            subss xmm1, xmm3
-            movaps xmm0, xmm1
-            call ecl_normalize_angle_alias
-            subss xmm3, xmm0
-            movaps xmm0, xmm3
-            call ecl_normalize_angle_alias
-            mov eax, dword ptr [ebp - 410h]
-            jmp ecl_move_vel_time_store_angle
-        ecl_move_vel_time_angle_unmirrored:
-            mov eax, dword ptr [ebp - 410h]
-            jmp ecl_move_vel_time_store_angle
-        ecl_move_vel_time_keep_angle:
-            mov eax, dword ptr [ebp - 410h]
-            movss xmm0, dword ptr [eax + edi + 1ch]
-        ecl_move_vel_time_store_angle:
-            movss dword ptr [ebp - 42ch], xmm0
-            movss xmm0, dword ptr [ebp - 418h]
-            cvtps2pd xmm0, xmm0
-            comisd xmm0, xmm4
-            ja ecl_move_vel_time_values_ready
-            movss xmm0, dword ptr [eax + edi + 18h]
-            movss dword ptr [ebp - 418h], xmm0
-            jmp ecl_move_vel_time_values_ready
-        ecl_move_vel_time_constant_mode:
-            comisd xmm0, xmm4
-            jbe ecl_move_vel_time_constant_zero_angle
-            test dword ptr [edi + 4060h], 80000h
-            je ecl_move_vel_time_constant_angle_ready
-            movzx eax, word ptr [esi + 4]
-            mov ecx, 195h
-            cmp ax, cx
-            je ecl_move_vel_time_constant_mirror
-            mov ecx, 197h
-            cmp ax, cx
-            jne ecl_move_vel_time_constant_angle_ready
-        ecl_move_vel_time_constant_mirror:
-            xorps xmm1, xmmword ptr [ecl_float_sign_mask]
-        ecl_move_vel_time_constant_angle_ready:
-            movss dword ptr [ebp - 42ch], xmm1
-            jmp ecl_move_vel_time_constant_speed
-        ecl_move_vel_time_constant_zero_angle:
-            xorps xmm0, xmm0
-            movss dword ptr [ebp - 42ch], xmm0
-        ecl_move_vel_time_constant_speed:
-            movss xmm3, dword ptr [ebp - 418h]
-            cvtps2pd xmm0, xmm3
-            comisd xmm0, xmm4
-            jbe ecl_move_vel_time_zero_speed
-            movss dword ptr [ebp - 418h], xmm3
-            jmp ecl_move_vel_time_values_ready
-        ecl_move_vel_time_zero_speed:
-            movss dword ptr [ebp - 418h], xmm2
-        ecl_move_vel_time_values_ready:
-            mov esi, dword ptr [ebp - 410h]
-            movss xmm1, dword ptr [ebp - 42ch]
-            movss xmm0, dword ptr [esi + edi + 18h]
-            movss xmm2, dword ptr [esi + edi + 1ch]
-            movss dword ptr [ebp - 41ch], xmm0
-            movaps xmm0, xmm2
-            subss xmm0, xmm1
-            movss dword ptr [ebp - 410h], xmm2
-            call ecl_zun_fabsf_alias
-            comiss xmm0, dword ptr [ecl_pi_value]
-            jb ecl_move_vel_time_short_turn_done
-            comiss xmm1, xmm2
-            jbe ecl_move_vel_time_adjust_angle
-            addss xmm2, dword ptr [ecl_two_pi_value]
-            movss dword ptr [ebp - 410h], xmm2
-            jmp ecl_move_vel_time_short_turn_done
-        ecl_move_vel_time_adjust_angle:
-            addss xmm1, dword ptr [ecl_two_pi_value]
-            movss dword ptr [ebp - 42ch], xmm1
-        ecl_move_vel_time_short_turn_done:
-            mov ecx, dword ptr [edi + 44b8h]
-            push 0
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 414h]
-            movss xmm0, dword ptr [ebp - 410h]
-            movss dword ptr [ecx], xmm0
-            movss xmm0, dword ptr [ebp - 42ch]
-            mov dword ptr [ecx + 28h], eax
-            mov eax, dword ptr [ebp - 40ch]
-            mov dword ptr [ecx + 2ch], eax
-            mov dword ptr [ecx + 8], 0
-            mov dword ptr [ecx + 0ch], 0
-            movss dword ptr [ecx + 4], xmm0
-            call ecl_interp_float_reset_alias
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov ecx, dword ptr [ebp - 438h]
-            movss xmm0, dword ptr [ebp - 41ch]
-            movss dword ptr [ecx], xmm0
-            movss xmm0, dword ptr [ebp - 418h]
-            mov dword ptr [ecx + 28h], eax
-            mov eax, dword ptr [ebp - 40ch]
-            mov dword ptr [ecx + 2ch], eax
-            mov dword ptr [ecx + 8], 0
-            mov dword ptr [ecx + 0ch], 0
-            movss dword ptr [ecx + 4], xmm0
-            call ecl_interp_float_reset_alias
-            and dword ptr [esi + edi + 40h], 0fffffff0h
-        ecl_move_vel_time_done:
+            angle_i->end_time = 0;
+            speed_i->end_time = 0;
+            break;
         }
+        i32 mode = get_int_arg(1);
+        if (mode != INTERP_CONSTANT_VELOCITY)
+        {
+            if (angle > -999999.0)
+            {
+                if ((flags_low & ENEMY_FLAG_MIRRORED) && mirror)
+                {
+                    angle = mirror_angle(angle);
+                }
+            }
+            else
+            {
+                angle = pv->angle.value;
+            }
+            if (!(speed > -999999.0))
+            {
+                speed = pv->speed;
+            }
+        }
+        else
+        {
+            if (angle > -999999.0)
+            {
+                if ((flags_low & ENEMY_FLAG_MIRRORED) && mirror)
+                {
+                    angle = -angle;
+                }
+            }
+            else
+            {
+                angle = 0.0f;
+            }
+            if (!(speed > -999999.0))
+            {
+                speed = 0.0f;
+            }
+        }
+
+        f32 initial_angle = pv->angle.value;
+        f32 initial_speed = pv->speed;
+        if (zun_fabsf(initial_angle - angle) >= ZUN_PI)
+        {
+            if (!(angle > initial_angle))
+            {
+                angle += ZUN_2PI;
+            }
+            else
+            {
+                initial_angle += ZUN_2PI;
+            }
+        }
+
+        angle_i->initial = initial_angle;
+        angle_i->goal = angle;
+        angle_i->end_time = get_int_arg(0);
+        angle_i->method = mode;
+        angle_i->bezier_1 = 0.0f;
+        angle_i->bezier_2 = 0.0f;
+        angle_i->reset();
+
+        speed_i->initial = initial_speed;
+        speed_i->goal = speed;
+        speed_i->end_time = get_int_arg(0);
+        speed_i->method = mode;
+        speed_i->bezier_1 = 0.0f;
+        speed_i->bezier_2 = 0.0f;
+        speed_i->reset();
+
+        pv->flags &= ~0xf;
         break;
     }
     // moveAngle(angle). Mirrored whenever the flag is set.
