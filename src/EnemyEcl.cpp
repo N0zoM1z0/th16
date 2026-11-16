@@ -46,8 +46,8 @@ extern "C" i32 ecl_bullet_cancel_radius_as_bomb_alias(Float3 *, i32);
 #pragma comment(linker, "/alternatename:_ecl_bullet_cancel_radius_as_bomb_alias=?cancel_radius_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@MH@Z")
 extern "C" LaserDataInf *ecl_laser_find_by_id_alias(i32, i32);
 #pragma comment(linker, "/alternatename:_ecl_laser_find_by_id_alias=?find_by_id@LaserManager@@QAEPAVLaserDataInf@@HH@Z")
-extern "C" f32 ecl_enemy_get_float_arg_alias(EnemyData *, void *, i32);
-#pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_alias=?get_float_arg@EnemyData@@QAQMPAXH@Z")
+extern "C" f32 __vectorcall ecl_enemy_get_float_arg_alias(EnemyData *, EclFloatArgIndex);
+#pragma comment(linker, "/alternatename:ecl_enemy_get_float_arg_alias@@8=?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z")
 extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_ptr_alias=?get_float_arg_ptr@EnemyData@@QAEPAMH@Z")
 extern "C" f32 ecl_zun_atan2f_alias(f32, f32);
@@ -56,11 +56,6 @@ extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
 #pragma comment(linker, "/alternatename:_ecl_anm_find_or_clear_alias=?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ")
 extern "C" i32 ecl_bullet_cancel_rectangle_as_bomb_alias(Float3 *, Float3 *, i32);
 #pragma comment(linker, "/alternatename:_ecl_bullet_cancel_rectangle_as_bomb_alias=?cancel_rectangle_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@0MH@Z")
-
-static __declspec(noinline) f32 __fastcall ecl_get_float_arg_for_et_ex(EnemyData *enemy, i32 index)
-{
-    return enemy->get_float_arg(enemy->full, index);
-}
 
 extern "C" f32 ecl_normalize_angle_alias(f32);
 #pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
@@ -115,10 +110,10 @@ static __forceinline f32 mirror_angle(f32 angle)
                                                  : get((first) + 3))
 
 #define ECL_DIFF_FLOAT_ARG(first)                                                                                   \
-    (g_Globals.difficulty == DIFFICULTY_EASY     ? get_float_arg(full, first)                                 \
-     : g_Globals.difficulty == DIFFICULTY_NORMAL ? get_float_arg(full, (first) + 1)                           \
-     : g_Globals.difficulty == DIFFICULTY_HARD   ? get_float_arg(full, (first) + 2)                           \
-                                                 : get_float_arg(full, (first) + 3))
+    (g_Globals.difficulty == DIFFICULTY_EASY     ? get_float_arg(EclFloatArgIndex{first})                        \
+     : g_Globals.difficulty == DIFFICULTY_NORMAL ? get_float_arg(EclFloatArgIndex{(first) + 1})                  \
+     : g_Globals.difficulty == DIFFICULTY_HARD   ? get_float_arg(EclFloatArgIndex{(first) + 2})                  \
+                                                 : get_float_arg(EclFloatArgIndex{(first) + 3}))
 
 // The bitfields of EnemyLife::is_spell that ECL assigns.
 struct EnemyLifeSpellBits
@@ -626,8 +621,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ANM_MOVE:
     {
         i32 slot = full_owner->context.current_context->get_int_arg(0);
-        anm_pos_array[slot].x = full->context.current_context->get_float_arg(full, 1);
-        anm_pos_array[slot].y = full->context.current_context->get_float_arg(full, 2);
+        anm_pos_array[slot].x = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
+        anm_pos_array[slot].y = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         anm_pos_array[slot].z = 0.0f;
         break;
     }
@@ -691,11 +686,11 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ANM_PLAY_POS:
     {
         // y is read before x as in the original (random variables draw from the replay RNG).
-        f32 y = full->context.current_context->get_float_arg(full, 3);
-        f32 x = full->context.current_context->get_float_arg(full, 2);
+        f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         Float3 pos = Float3(x, y, 0.0f) + final_pos.pos;
         g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full_owner->context.current_context->get_int_arg(0)], full_owner->context.current_context->get_int_arg(1),
-                                                  &pos, full->context.current_context->get_float_arg(full, 4)));
+                                                  &pos, full->context.current_context->get_float_arg(EclFloatArgIndex{4})));
         break;
     }
     // anmPlay(file, script)
@@ -742,7 +737,7 @@ int EnemyData::ecl_run_over_300()
         if (vm != NULL)
         {
             vm->entity_pos = final_pos.pos;
-            vm->rotation.z = full->context.current_context->get_float_arg(full, 2);
+            vm->rotation.z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
             vm->flags_lo |= ANM_VM_ROTATION_CHANGED;
         }
         g_EffectManager->track(id);
@@ -877,8 +872,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS ? &abs_pos : &rel_pos;
-        f32 x = full->context.current_context->get_float_arg(full, 0);
-        f32 y = full->context.current_context->get_float_arg(full, 1);
+        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
+        f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         if (x > -999999.0)
         {
             pos_vel->pos.x = x;
@@ -897,9 +892,9 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_3D_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS_3D ? &abs_pos : &rel_pos;
-        f32 x = full->context.current_context->get_float_arg(full, 0);
-        f32 y = full->context.current_context->get_float_arg(full, 1);
-        f32 z = full->context.current_context->get_float_arg(full, 2);
+        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
+        f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
+        f32 z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         pos_vel->pos.x += x;
         pos_vel->pos.y += y;
         pos_vel->pos.z += z;
@@ -917,8 +912,8 @@ int EnemyData::ecl_run_over_300()
                               ? offsetof(EnemyData, abs_pos)
                               : offsetof(EnemyData, rel_pos);
         position_interp = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(full, 2);
-        goal_y = full->context.current_context->get_float_arg(full, 3);
+        goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full_owner->context.current_context->get_int_arg(0) <= 0)
         {
             position_interp->end_time = 0;
@@ -960,8 +955,8 @@ int EnemyData::ecl_run_over_300()
                               ? offsetof(EnemyData, abs_pos)
                               : offsetof(EnemyData, rel_pos);
         position_interp = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(full, 3);
-        goal_y = full->context.current_context->get_float_arg(full, 4);
+        goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         if (full_owner->context.current_context->get_int_arg(0) <= 0)
         {
             position_interp->end_time = 0;
@@ -1001,15 +996,15 @@ int EnemyData::ecl_run_over_300()
     {
         position_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         position_interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(full, 3);
-        goal_y = full->context.current_context->get_float_arg(full, 4);
+        goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         Float3 bezier_1;
-        bezier_1.x = full->context.current_context->get_float_arg(full, 1);
-        bezier_1.y = full->context.current_context->get_float_arg(full, 2);
+        bezier_1.x = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
+        bezier_1.y = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         bezier_1.z = 0.0f;
         Float3 bezier_2;
-        bezier_2.x = full->context.current_context->get_float_arg(full, 5);
-        bezier_2.y = full->context.current_context->get_float_arg(full, 6);
+        bezier_2.x = full->context.current_context->get_float_arg(EclFloatArgIndex{5});
+        bezier_2.y = full->context.current_context->get_float_arg(EclFloatArgIndex{6});
         bezier_2.z = 0.0f;
         i32 end_time = full_owner->context.current_context->get_int_arg(0);
         position_interp->flag_1d &= ~1;
@@ -1032,8 +1027,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_VEL_REL_NM:
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_VEL || instr->opcode == ECL_OP_MOVE_VEL_NM ? &abs_pos : &rel_pos;
-        f32 angle = full->context.current_context->get_float_arg(full, 0);
-        f32 speed = full->context.current_context->get_float_arg(full, 1);
+        f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
+        f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         if (angle > -999999.0)
         {
             if ((flags_low & ENEMY_FLAG_MIRRORED) && (instr->opcode == ECL_OP_MOVE_VEL || instr->opcode == ECL_OP_MOVE_VEL_REL))
@@ -1059,8 +1054,8 @@ int EnemyData::ecl_run_over_300()
         PosVel *pv = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM ? &abs_pos : &rel_pos;
         InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM ? &abs_angle_i : &rel_angle_i;
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM ? &abs_speed_i : &rel_speed_i;
-        f32 angle = full->context.current_context->get_float_arg(full, 2);
-        f32 speed = full->context.current_context->get_float_arg(full, 3);
+        f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full_owner->context.current_context->get_int_arg(0) <= 0)
         {
             angle_i->end_time = 0;
@@ -1122,7 +1117,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_ANGLE_REL:
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_ANGLE ? &abs_pos : &rel_pos;
-        f32 angle = get_float_arg(full, 0);
+        f32 angle = get_float_arg(EclFloatArgIndex{0});
         if (flags_low & ENEMY_FLAG_MIRRORED)
         {
             angle = mirror_angle(angle);
@@ -1137,7 +1132,7 @@ int EnemyData::ecl_run_over_300()
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_ANGLE_TIME ? &abs_pos : &rel_pos;
         InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_ANGLE_TIME ? &abs_angle_i : &rel_angle_i;
-        f32 angle = get_float_arg(full, 2);
+        f32 angle = get_float_arg(EclFloatArgIndex{2});
         if (get_int_arg(0) <= 0)
         {
             angle_i->end_time = 0;
@@ -1202,7 +1197,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_SPEED_REL:
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_SPEED ? &abs_pos : &rel_pos;
-        f32 speed = get_float_arg(full, 0);
+        f32 speed = get_float_arg(EclFloatArgIndex{0});
         if (speed > -999999.0)
         {
             pv->speed = speed;
@@ -1216,7 +1211,7 @@ int EnemyData::ecl_run_over_300()
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_SPEED_TIME ? &abs_pos : &rel_pos;
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_SPEED_TIME ? &abs_speed_i : &rel_speed_i;
-        f32 speed = get_float_arg(full, 2);
+        f32 speed = get_float_arg(EclFloatArgIndex{2});
         f32 initial = pv->speed;
         if (get_int_arg(0) <= 0)
         {
@@ -1242,10 +1237,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CIRCLE_REL:
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_CIRCLE ? &abs_pos : &rel_pos;
-        f32 angle = get_float_arg(full, 0);
-        f32 speed = get_float_arg(full, 1);
-        f32 radius = get_float_arg(full, 2);
-        f32 radial_speed = get_float_arg(full, 3);
+        f32 angle = get_float_arg(EclFloatArgIndex{0});
+        f32 speed = get_float_arg(EclFloatArgIndex{1});
+        f32 radius = get_float_arg(EclFloatArgIndex{2});
+        f32 radial_speed = get_float_arg(EclFloatArgIndex{3});
         if ((pv->flags & POSVEL_MODE_MASK) != POSVEL_MODE_CIRCLE)
         {
             pv->velocity = pv->pos;
@@ -1279,9 +1274,9 @@ int EnemyData::ecl_run_over_300()
         PosVel *pv = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_pos : &rel_pos;
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_speed_i : &rel_speed_i;
         InterpFloat2 *radial_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_radial_dist_i : &rel_radial_dist_i;
-        f32 speed = get_float_arg(full, 2);
-        f32 radius = get_float_arg(full, 3);
-        f32 radial_speed = get_float_arg(full, 4);
+        f32 speed = get_float_arg(EclFloatArgIndex{2});
+        f32 radius = get_float_arg(EclFloatArgIndex{3});
+        f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
         f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial_speed;
@@ -1309,8 +1304,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_ADD_REL:
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_ADD ? &abs_pos : &rel_pos;
-        f32 x = get_float_arg(full, 0);
-        f32 y = get_float_arg(full, 1);
+        f32 x = get_float_arg(EclFloatArgIndex{0});
+        f32 y = get_float_arg(EclFloatArgIndex{1});
         if (x > -999999.0)
         {
             pv->velocity.x = x;
@@ -1329,12 +1324,12 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_ELLIPSE_REL:
     {
         PosVel *pv = instr->opcode == ECL_OP_MOVE_ELLIPSE ? &abs_pos : &rel_pos;
-        f32 angle = get_float_arg(full, 0);
-        f32 speed = get_float_arg(full, 1);
-        f32 radius = get_float_arg(full, 2);
-        f32 radial_speed = get_float_arg(full, 3);
-        f32 ellipse_angle = get_float_arg(full, 4);
-        f32 ellipse_ratio = get_float_arg(full, 5);
+        f32 angle = get_float_arg(EclFloatArgIndex{0});
+        f32 speed = get_float_arg(EclFloatArgIndex{1});
+        f32 radius = get_float_arg(EclFloatArgIndex{2});
+        f32 radial_speed = get_float_arg(EclFloatArgIndex{3});
+        f32 ellipse_angle = get_float_arg(EclFloatArgIndex{4});
+        f32 ellipse_ratio = get_float_arg(EclFloatArgIndex{5});
         if ((pv->flags & POSVEL_MODE_MASK) != POSVEL_MODE_CIRCLE)
         {
             pv->velocity = pv->pos;
@@ -1378,11 +1373,11 @@ int EnemyData::ecl_run_over_300()
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_ELLIPSE_TIME ? &abs_speed_i : &rel_speed_i;
         InterpFloat2 *radial_i = instr->opcode == ECL_OP_MOVE_ELLIPSE_TIME ? &abs_radial_dist_i : &rel_radial_dist_i;
         InterpFloat2 *ellipse_i = instr->opcode == ECL_OP_MOVE_ELLIPSE_TIME ? &abs_ellipse_i : &rel_ellipse_i;
-        f32 speed = get_float_arg(full, 2);
-        f32 radius = get_float_arg(full, 3);
-        f32 radial_speed = get_float_arg(full, 4);
-        f32 ellipse_angle = get_float_arg(full, 5);
-        f32 ellipse_ratio = get_float_arg(full, 6);
+        f32 speed = get_float_arg(EclFloatArgIndex{2});
+        f32 radius = get_float_arg(EclFloatArgIndex{3});
+        f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
+        f32 ellipse_angle = get_float_arg(EclFloatArgIndex{5});
+        f32 ellipse_ratio = get_float_arg(EclFloatArgIndex{6});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
         f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial_speed;
@@ -1432,10 +1427,10 @@ int EnemyData::ecl_run_over_300()
     // rectangle (see update_final_pos).
     case ECL_OP_MOVE_LIMIT:
         flags_low |= ENEMY_FLAG_MOVE_LIMIT;
-        move_limit_center.x = get_float_arg(full, 0);
-        move_limit_center.y = get_float_arg(full, 1);
-        move_limit_size.x = get_float_arg(full, 2);
-        move_limit_size.y = get_float_arg(full, 3);
+        move_limit_center.x = get_float_arg(EclFloatArgIndex{0});
+        move_limit_center.y = get_float_arg(EclFloatArgIndex{1});
+        move_limit_size.x = get_float_arg(EclFloatArgIndex{2});
+        move_limit_size.y = get_float_arg(EclFloatArgIndex{3});
         break;
     // moveLimitReset().
     case ECL_OP_MOVE_LIMIT_RESET:
@@ -1444,7 +1439,7 @@ int EnemyData::ecl_run_over_300()
     // etProtectRange(radius), kept squared.
     case ECL_OP_ET_PROTECT_RANGE:
     {
-        f32 range = get_float_arg(full, 0);
+        f32 range = get_float_arg(EclFloatArgIndex{0});
         et_protect_range = range * range;
         break;
     }
@@ -1502,7 +1497,7 @@ int EnemyData::ecl_run_over_300()
             angle = ZUN_PI / 2 > angle ? ZUN_PI / 2 - 0.05f : ZUN_PI / 2 + 0.05f;
         }
         i32 mode = get_int_arg(1);
-        f32 speed = get_float_arg(full, 2);
+        f32 speed = get_float_arg(EclFloatArgIndex{2});
         angle_i->end_time = get_int_arg(0);
         angle_i->method = mode;
         angle_i->bezier_1 = 0.0f;
@@ -1523,7 +1518,7 @@ int EnemyData::ecl_run_over_300()
     }
     // lifeMarker(index, life, color): a marker on the boss life bar.
     case ECL_OP_LIFE_MARKER:
-        g_Gui->set_boss_life_marker(own_boss_id, get_int_arg(0), get_float_arg(full, 1) / life.maximum, get_int_arg(2));
+        g_Gui->set_boss_life_marker(own_boss_id, get_int_arg(0), get_float_arg(EclFloatArgIndex{1}) / life.maximum, get_int_arg(2));
         break;
     // funcSet(index): a per-frame hook (g_ecl_func_sets).
     case ECL_OP_FUNC_SET:
@@ -1550,8 +1545,8 @@ int EnemyData::ecl_run_over_300()
     // setHurtbox(w, h). The first call also counts the enemy as spawned in
     // the chapter.
     case ECL_OP_SET_HURTBOX:
-        hurtbox_size.x = get_float_arg(full, 0);
-        hurtbox_size.y = get_float_arg(full, 1);
+        hurtbox_size.x = get_float_arg(EclFloatArgIndex{0});
+        hurtbox_size.y = get_float_arg(EclFloatArgIndex{1});
         if (chapter_count == 0)
         {
             chapter_count = 1;
@@ -1560,8 +1555,8 @@ int EnemyData::ecl_run_over_300()
         break;
     // setHitbox(w, h)
     case ECL_OP_SET_HITBOX:
-        hitbox_size.x = get_float_arg(full, 0);
-        hitbox_size.y = get_float_arg(full, 1);
+        hitbox_size.x = get_float_arg(EclFloatArgIndex{0});
+        hitbox_size.y = get_float_arg(EclFloatArgIndex{1});
         break;
     // unknown569(count): how many enemies this one counts as in the chapter
     // statistics.
@@ -1594,11 +1589,11 @@ int EnemyData::ecl_run_over_300()
         break;
     // unknown564(angle): sets rotation.
     case ECL_OP_SET_ROTATION:
-        rotation = get_float_arg(full, 0);
+        rotation = get_float_arg(EclFloatArgIndex{0});
         break;
     // bombInvuln(multiplier): damage taken from bombs.
     case ECL_OP_BOMB_INVULN:
-        bomb_damage_multiplier = get_float_arg(full, 0);
+        bomb_damage_multiplier = get_float_arg(EclFloatArgIndex{0});
         break;
     // flagSet(flags)
     case ECL_OP_FLAG_SET:
@@ -1640,8 +1635,8 @@ int EnemyData::ecl_run_over_300()
     // dropArea(w, h)
     case ECL_OP_DROP_AREA:
     {
-        f32 w = get_float_arg(full, 0);
-        f32 h = get_float_arg(full, 1);
+        f32 w = get_float_arg(EclFloatArgIndex{0});
+        f32 h = get_float_arg(EclFloatArgIndex{1});
         drops.area.x = w;
         drops.area.y = h;
         break;
@@ -1762,10 +1757,10 @@ int EnemyData::ecl_run_over_300()
     // diffF(var, easy, normal, hard, lunatic)
     case ECL_OP_DIFF_F:
     {
-        f32 easy = get_float_arg(full, 1);
-        f32 normal = get_float_arg(full, 2);
-        f32 hard = get_float_arg(full, 3);
-        f32 lunatic = get_float_arg(full, 4);
+        f32 easy = get_float_arg(EclFloatArgIndex{1});
+        f32 normal = get_float_arg(EclFloatArgIndex{2});
+        f32 hard = get_float_arg(EclFloatArgIndex{3});
+        f32 lunatic = get_float_arg(EclFloatArgIndex{4});
         switch (g_Globals.difficulty)
         {
         case DIFFICULTY_EASY:
@@ -1882,17 +1877,17 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_OFFSET:
     {
         i32 slot = get_int_arg(0);
-        bullet_mgr_offsets[slot].xy.x = get_float_arg(full, 1);
-        bullet_mgr_offsets[slot].xy.y = get_float_arg(full, 2);
+        bullet_mgr_offsets[slot].xy.x = get_float_arg(EclFloatArgIndex{1});
+        bullet_mgr_offsets[slot].xy.y = get_float_arg(EclFloatArgIndex{2});
         break;
     }
     // etOffsetRad(slot, angle, dist)
     case ECL_OP_ET_OFFSET_RAD:
     {
         i32 slot = get_int_arg(0);
-        f32 angle = get_float_arg(full, 1);
+        f32 angle = get_float_arg(EclFloatArgIndex{1});
         Float3 offset;
-        enemy_ecl_sincosmul(&offset, angle, get_float_arg(full, 2));
+        enemy_ecl_sincosmul(&offset, angle, get_float_arg(EclFloatArgIndex{2}));
         bullet_mgr_offsets[slot].xy.x = offset.x;
         bullet_mgr_offsets[slot].xy.y = offset.y;
         break;
@@ -1901,7 +1896,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_DIST:
     {
         i32 slot = get_int_arg(0);
-        bullet_props[slot].distance = get_float_arg(full, 1);
+        bullet_props[slot].distance = get_float_arg(EclFloatArgIndex{1});
         break;
     }
     // etOffsetAbs(slot, x, y): fire from an absolute position; x below
@@ -1909,8 +1904,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_OFFSET_ABS:
     {
         i32 slot = get_int_arg(0);
-        bullet_mgr_origins[slot].xy.x = get_float_arg(full, 1);
-        bullet_mgr_origins[slot].xy.y = get_float_arg(full, 2);
+        bullet_mgr_origins[slot].xy.x = get_float_arg(EclFloatArgIndex{1});
+        bullet_mgr_origins[slot].xy.y = get_float_arg(EclFloatArgIndex{2});
         if (-990.0f > bullet_mgr_origins[slot].xy.x)
         {
             bullet_mgr_origins[slot].z = 0.0f;
@@ -1925,16 +1920,16 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_ANGLE:
     {
         i32 slot = get_int_arg(0);
-        bullet_props[slot].ang_aim = get_float_arg(full, 1);
-        bullet_props[slot].ang_bullet_dist = get_float_arg(full, 2);
+        bullet_props[slot].ang_aim = get_float_arg(EclFloatArgIndex{1});
+        bullet_props[slot].ang_bullet_dist = get_float_arg(EclFloatArgIndex{2});
         break;
     }
     // etSpeed(slot, speed1, speed2)
     case ECL_OP_ET_SPEED:
     {
         i32 slot = get_int_arg(0);
-        bullet_props[slot].spd1 = get_float_arg(full, 1);
-        bullet_props[slot].spd2 = get_float_arg(full, 2);
+        bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{1});
+        bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{2});
         break;
     }
     // etCount(slot, count, layers)
@@ -1967,18 +1962,18 @@ int EnemyData::ecl_run_over_300()
         i32 slot = get_int_arg(0);
         if (g_Globals.rank >= 512)
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 5);
-            bullet_props[slot].spd2 = get_float_arg(full, 6);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{5});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{6});
         }
         else if (g_Globals.rank >= -512)
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 3);
-            bullet_props[slot].spd2 = get_float_arg(full, 4);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{3});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{4});
         }
         else
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 1);
-            bullet_props[slot].spd2 = get_float_arg(full, 2);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{1});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{2});
         }
         break;
     }
@@ -1988,28 +1983,28 @@ int EnemyData::ecl_run_over_300()
         i32 slot = get_int_arg(0);
         if (g_Globals.rank >= 600)
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 9);
-            bullet_props[slot].spd2 = get_float_arg(full, 10);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{9});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{10});
         }
         else if (g_Globals.rank >= 200)
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 7);
-            bullet_props[slot].spd2 = get_float_arg(full, 8);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{7});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{8});
         }
         else if (g_Globals.rank >= -200)
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 5);
-            bullet_props[slot].spd2 = get_float_arg(full, 6);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{5});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{6});
         }
         else if (g_Globals.rank >= -600)
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 3);
-            bullet_props[slot].spd2 = get_float_arg(full, 4);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{3});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{4});
         }
         else
         {
-            bullet_props[slot].spd1 = get_float_arg(full, 1);
-            bullet_props[slot].spd2 = get_float_arg(full, 2);
+            bullet_props[slot].spd1 = get_float_arg(EclFloatArgIndex{1});
+            bullet_props[slot].spd2 = get_float_arg(EclFloatArgIndex{2});
         }
         break;
     }
@@ -2018,10 +2013,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_SPEED_R2:
     {
         i32 slot = get_int_arg(0);
-        f32 low1 = get_float_arg(full, 1);
-        f32 low2 = get_float_arg(full, 2);
-        f32 high1 = get_float_arg(full, 3);
-        f32 high2 = get_float_arg(full, 4);
+        f32 low1 = get_float_arg(EclFloatArgIndex{1});
+        f32 low2 = get_float_arg(EclFloatArgIndex{2});
+        f32 high1 = get_float_arg(EclFloatArgIndex{3});
+        f32 high2 = get_float_arg(EclFloatArgIndex{4});
         bullet_props[slot].spd1 = (high1 - low1) * (g_Globals.rank + 1024.0f) / 2048.0f + low1;
         bullet_props[slot].spd2 = (high2 - low2) * (g_Globals.rank + 1024.0f) / 2048.0f + low2;
         break;
@@ -2214,13 +2209,13 @@ int EnemyData::ecl_run_over_300()
         et_ex_full_ints_done:
             push esi
             mov ecx, edi
-            call ecl_get_float_arg_for_et_ex
+            call ecl_enemy_get_float_arg_alias
             mov eax, dword ptr [ebp - 42ch]
             inc esi
             push esi
             mov ecx, edi
             movss dword ptr [eax + edi + 5c0h], xmm0
-            call ecl_get_float_arg_for_et_ex
+            call ecl_enemy_get_float_arg_alias
             mov eax, dword ptr [ebp - 42ch]
             mov edx, 262h
             inc esi
@@ -2235,13 +2230,13 @@ int EnemyData::ecl_run_over_300()
         et_ex_full_floats:
             push esi
             mov ecx, edi
-            call ecl_get_float_arg_for_et_ex
+            call ecl_enemy_get_float_arg_alias
             mov eax, dword ptr [ebp - 42ch]
             mov ecx, edi
             movss dword ptr [eax + edi + 5c8h], xmm0
             lea eax, [esi + 1]
             push eax
-            call ecl_get_float_arg_for_et_ex
+            call ecl_enemy_get_float_arg_alias
             mov eax, dword ptr [ebp - 42ch]
             mov edx, 264h
             movss dword ptr [eax + edi + 5cch], xmm0
@@ -2287,10 +2282,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_LASER_NEW:
     {
         i32 idx = get_int_arg(0);
-        bullet_props[idx].pos.x = get_float_arg(full, 1);
-        bullet_props[idx].pos.y = get_float_arg(full, 2);
-        bullet_props[idx].pos.z = get_float_arg(full, 3);
-        bullet_props[idx].laser_new_arg_4 = get_float_arg(full, 4);
+        bullet_props[idx].pos.x = get_float_arg(EclFloatArgIndex{1});
+        bullet_props[idx].pos.y = get_float_arg(EclFloatArgIndex{2});
+        bullet_props[idx].pos.z = get_float_arg(EclFloatArgIndex{3});
+        bullet_props[idx].laser_new_arg_4 = get_float_arg(EclFloatArgIndex{4});
         break;
     }
     // laserTiming(et, start, expand, duration, shrink, flags): the infinite
@@ -2877,45 +2872,45 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_RANK_F3:
         if (g_Globals.rank >= 512)
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 2);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{2});
         }
         else if (g_Globals.rank >= -512)
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 0);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{0});
         }
         else
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 0);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{0});
         }
         break;
     // rankF5(var, a, b, c, d, e)
     case ECL_OP_RANK_F5:
         if (g_Globals.rank >= 600)
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 4);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{4});
         }
         else if (g_Globals.rank >= 200)
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 3);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{3});
         }
         else if (g_Globals.rank >= -200)
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 2);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{2});
         }
         else if (g_Globals.rank >= -400)
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 1);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{1});
         }
         else
         {
-            *get_float_arg_ptr(0) = get_float_arg(full, 0);
+            *get_float_arg_ptr(0) = get_float_arg(EclFloatArgIndex{0});
         }
         break;
     // rankF2(var, low, high): low at rank -1024, high at rank 1024.
     case ECL_OP_RANK_F2:
     {
-        f32 low = get_float_arg(full, 1);
-        f32 high = get_float_arg(full, 2);
+        f32 low = get_float_arg(EclFloatArgIndex{1});
+        f32 high = get_float_arg(EclFloatArgIndex{2});
         *get_float_arg_ptr(0) = (high - low) * (g_Globals.rank + 1024.0f) / 2048.0f + low;
         break;
     }
@@ -2986,7 +2981,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // gameSpeed(speed)
     case ECL_OP_GAME_SPEED:
-        g_game_speed = get_float_arg(full, 0);
+        g_game_speed = get_float_arg(EclFloatArgIndex{0});
         break;
     // angleToPlayer(var, x, y)
     case ECL_OP_ANGLE_TO_PLAYER:
@@ -3058,7 +3053,7 @@ int EnemyData::ecl_run_over_300()
             delete (Fog *)fog.fog_ptr;
         }
         fog.fog_ptr = NULL;
-        fog.fog_radius = get_float_arg(full, 0);
+        fog.fog_radius = get_float_arg(EclFloatArgIndex{0});
         fog.cur_radius = 16.0f;
         fog.fog_color = get_int_arg(1);
         *(ZunAngle *)&fog.wave_angle_x = 0.0f;
@@ -3080,7 +3075,7 @@ int EnemyData::ecl_run_over_300()
         i32 method = get_int_arg(1);
         ZunColor color;
         color.d3d = get_int_arg(2);
-        CameraSky sky(get_float_arg(full, 3), get_float_arg(full, 4), color.b, color.g, color.r, color.a);
+        CameraSky sky(get_float_arg(EclFloatArgIndex{3}), get_float_arg(EclFloatArgIndex{4}), color.b, color.g, color.r, color.a);
         g_Stage->inner.set_sky_interp(time, method, &sky);
         break;
     }
@@ -3157,8 +3152,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_UNKNOWN_560:
     {
         BulletManager *mgr = g_BulletManager;
-        f32 x = get_float_arg(full, 0);
-        f32 y = get_float_arg(full, 1);
+        f32 x = get_float_arg(EclFloatArgIndex{0});
+        f32 y = get_float_arg(EclFloatArgIndex{1});
         mgr->ecl_unknown_560.x = x;
         mgr->ecl_unknown_560.y = y;
         break;

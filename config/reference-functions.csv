@@ -409,7 +409,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00425010,EnemyInf::check_time_interrupts,src/Enemy.cpp,?check_time_interrupts@EnemyInf@@QAEPBDXZ,exact,,.analysis/reference-audit.json
 0x004251D0,EnemyData::get_int_arg,src/Enemy.cpp,?get_int_arg@EnemyData@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x004251F0,EnemyData::get_int_arg_ptr,src/Enemy.cpp,?get_int_arg_ptr@EnemyData@@QAEPAHH@Z,exact,,.analysis/reference-audit.json
-0x00425200,EnemyData::get_float_arg,src/Enemy.cpp,?get_float_arg@EnemyData@@QAEMH@Z,exact,,.analysis/reference-audit.json
+0x00425200,EnemyData::get_float_arg,src/Enemy.cpp,?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z,exact,,.analysis/reference-audit.json
 0x00425220,EnemyData::get_float_arg_ptr,src/Enemy.cpp,?get_float_arg_ptr@EnemyData@@QAEPAMH@Z,exact,,.analysis/reference-audit.json
 0x00425240,EnemyManager::find_closest,src/Enemy.cpp,?find_closest@EnemyManager@@QAE?AUEnemyRef@@PAUD3DXVECTOR3@@M@Z,exact,,.analysis/reference-audit.json
 0x004252D0,ecl_funcset_cancel_near_player,src/Enemy.cpp,?ecl_funcset_cancel_near_player@@YIHPAUEnemyData@@@Z,exact,,.analysis/reference-audit.json
@@ -1187,7 +1187,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00472030,EclRunContext::ecl_run,src/EclRunContext.cpp,?ecl_run@EclRunContext@@QAEHM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00473BC0,SptInf::run_ecl,src/EclRunContext.cpp,?run_ecl@SptInf@@QAEHM@Z,exact,,.analysis/reference-audit.json
 0x00473C90,EclRunContext::get_int_arg,src/EclRunContext.cpp,?get_int_arg@EclRunContext@@QAEHH@Z,exact,,.analysis/reference-audit.json
-0x00473D40,EclRunContext::get_float_arg,src/EclRunContext.cpp,?get_float_arg@EclRunContext@@QAEMH@Z,exact,,.analysis/reference-audit.json
+0x00473D40,EclRunContext::get_float_arg,src/EclRunContext.cpp,?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z,exact,,.analysis/reference-audit.json
 0x00473E40,EclRunContext::get_int_arg_given_value,src/EclRunContext.cpp,?get_int_arg_given_value@EclRunContext@@QAEHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00473EF0,EclRunContext::get_float_arg_given_value,src/EclRunContext.cpp,?get_float_arg_given_value@EclRunContext@@QAEMHM@Z,exact,,.analysis/reference-audit.json
 0x00473FE0,EclRunContext::pop_int_arg,src/EclRunContext.cpp,?pop_int_arg@EclRunContext@@QAEHH@Z,exact,,.analysis/reference-audit.json

@@ -29,8 +29,8 @@ static_assert(sizeof(EnemyData) == 0x4530, "EnemyData size");
 static_assert(sizeof(EnemyInf) == 0x574c, "EnemyInf size");
 static_assert(sizeof(EnemyManager) == 0x190, "EnemyManager size");
 
-extern "C" f32 ecl_context_get_float_arg_alias(EclRunContext *, void *, i32);
-#pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAQMPAXH@Z")
+extern "C" f32 ecl_context_get_float_arg_alias(EclRunContext *, EclFloatArgIndex);
+#pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z")
 extern "C" f32 *ecl_context_get_float_arg_ptr_alias(EclRunContext *, i32);
 #pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_ptr_alias=?get_float_arg_ptr@EclRunContext@@QAEPAMH@Z")
 
@@ -430,7 +430,7 @@ HARNESS_CALLED i32 *EnemyData::get_int_arg_ptr(int index)
 }
 
 // FUNCTION: TH16 0x425200
-__declspec(naked) HARNESS_CALLED f32 LTCG_VECTORCALL EnemyData::get_float_arg(void *, int index)
+__declspec(naked) HARNESS_CALLED f32 LTCG_VECTORCALL EnemyData::get_float_arg(EclFloatArgIndex index)
 {
     __asm
     {

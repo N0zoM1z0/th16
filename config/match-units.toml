@@ -8635,13 +8635,13 @@ linkages = [
   { offset = 105, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
   { offset = 110, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
   { offset = 161, width = 4, type = "DIR32", local = true, symbol = "<local>", target = 4339640 },
-  { offset = 177, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
-  { offset = 212, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
-  { offset = 233, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
-  { offset = 278, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
-  { offset = 299, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
-  { offset = 344, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
-  { offset = 365, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
+  { offset = 177, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
+  { offset = 212, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
+  { offset = 233, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
+  { offset = 278, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
+  { offset = 299, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
+  { offset = 344, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
+  { offset = 365, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
   { offset = 386, width = 4, type = "REL32", symbol = "?get_int_arg@EclRunContext@@QAEHH@Z", target = 4668560, addend = 0 },
   { offset = 414, width = 4, type = "REL32", symbol = "?get_int_arg@EclRunContext@@QAEHH@Z", target = 4668560, addend = 0 },
   { offset = 427, width = 4, type = "REL32", symbol = "?scale_to@AnmVm@@QAEXHHMM@Z", target = 4349984, addend = 0 },
@@ -8664,8 +8664,8 @@ linkages = [
   { offset = 786, width = 4, type = "REL32", symbol = "?get_int_arg@EclRunContext@@QAEHH@Z", target = 4668560, addend = 0 },
   { offset = 804, width = 4, type = "REL32", symbol = "?get_int_arg@EclRunContext@@QAEHH@Z", target = 4668560, addend = 0 },
   { offset = 812, width = 4, type = "REL32", symbol = "?fade_alpha2@AnmVm@@QAEXHHE@Z", target = 4349392, addend = 0 },
-  { offset = 835, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
-  { offset = 856, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
+  { offset = 835, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
+  { offset = 856, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
   { offset = 894, width = 4, type = "REL32", symbol = "?get_int_arg@EclRunContext@@QAEHH@Z", target = 4668560, addend = 0 },
   { offset = 905, width = 4, type = "REL32", symbol = "?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ", target = 4649696, addend = 0 },
   { offset = 923, width = 4, type = "REL32", symbol = "?get_int_arg@EclRunContext@@QAEHH@Z", target = 4668560, addend = 0 },
@@ -9261,16 +9261,16 @@ linkages = [
 artifact_kind = "linked-pe"
 source = "src/Enemy.cpp"
 output_dir = "build/reference-candidate"
-symbol = "?get_float_arg@EnemyData@@QAEMH@Z"
+symbol = "?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z"
 object = "Enemy.obj"
-candidate_address = 4391168
+candidate_address = 4391040
 target_address = 4346368
 size = 18
 compare_size = 18
 profile = ["/nologo", "/c", "/GS", "/GL", "/W3", "/Gy", "/Zc:wchar_t", "/Zi", "/Gm-", "/O2", "/Oy-", "/Zc:inline", "/fp:precise", "/Zc:forScope", "/Gd", "/Oi", "/MT", "/EHsc", "/FC", "/WX-", "/DWIN32", "/DNDEBUG", "/D_WINDOWS", "/D_USING_V110_SDK71_", "/D_MBCS", "/D_CRT_SECURE_NO_WARNINGS"]
 link_profile = ["/nologo", "/LTCG", "/INCREMENTAL:NO", "/NXCOMPAT", "/DYNAMICBASE:NO", "/FIXED:NO", "/MACHINE:X86", "/SAFESEH", "/OPT:REF", "/OPT:NOICF", "/SUBSYSTEM:WINDOWS,5.01", "/DEBUG"]
 linkages = [
-  { offset = 14, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAEMH@Z", target = 4668736, addend = 0 },
+  { offset = 14, width = 4, type = "REL32", symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z", target = 4668736, addend = 0 },
 ]
 
 [units.reference-00425220]
@@ -27332,9 +27332,9 @@ linkages = [
 artifact_kind = "linked-pe"
 source = "src/EclRunContext.cpp"
 output_dir = "build/reference-candidate"
-symbol = "?get_float_arg@EclRunContext@@QAEMH@Z"
+symbol = "?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z"
 object = "EclRunContext.obj"
-candidate_address = 4370112
+candidate_address = 4369920
 target_address = 4668736
 size = 244
 compare_size = 244

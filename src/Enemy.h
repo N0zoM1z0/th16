@@ -400,7 +400,7 @@ struct EnemyData
     int ecl_run_over_300();
     i32 get_int_arg(int index);
     i32 *get_int_arg_ptr(int index);
-    f32 LTCG_VECTORCALL get_float_arg(void *unused, int index);
+    f32 LTCG_VECTORCALL get_float_arg(EclFloatArgIndex index);
     f32 *get_float_arg_ptr(int index);
 };
 
