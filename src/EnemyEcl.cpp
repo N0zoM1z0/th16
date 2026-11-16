@@ -53,6 +53,8 @@ extern "C" f32 __vectorcall ecl_enemy_get_float_arg_alias(EnemyData *, EclFloatA
 extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_ptr_alias=?get_float_arg_ptr@EnemyData@@QAEPAMH@Z")
 extern "C" void ecl_anm_delete_vm_alias();
+extern "C" void ecl_anm_interrupt_tree_alias();
+#pragma comment(linker, "/alternatename:_ecl_anm_interrupt_tree_alias=?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z")
 #pragma comment(linker, "/alternatename:_ecl_anm_delete_vm_alias=?delete_vm@AnmManager@@QAEXUAnmId@@@Z")
 extern "C" i32 ecl_effect_track_alias(AnmId);
 #pragma comment(linker, "/alternatename:_ecl_effect_track_alias=?track@EffectManager@@QAEHUAnmId@@@Z")
@@ -1056,8 +1058,21 @@ int EnemyData::ecl_run_over_300()
     // anmSwitch(slot, interrupt)
     case ECL_OP_ANM_SWITCH:
     {
-        i32 slot = full_owner->context.current_context->get_int_arg(0);
-        AnmManager::interrupt_tree(anm_ids[slot], (i16)full->context.current_context->get_int_arg(1));
+        __asm
+        {
+            mov ecx, dword ptr [edx + 0ch]
+            push 0
+            call ecl_context_get_int_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            mov esi, eax
+            push 1
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            movsx ecx, ax
+            push ecx
+            push dword ptr [edi + esi*4 + 124h]
+            call ecl_anm_interrupt_tree_alias
+        }
         break;
     }
     // moveReset: folds rel_pos into abs_pos and stops all movement.
