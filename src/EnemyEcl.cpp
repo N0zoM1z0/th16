@@ -994,30 +994,62 @@ int EnemyData::ecl_run_over_300()
     // itself for negative n.
     case ECL_OP_ANM_316:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
-        i32 n = full->context.current_context->get_int_arg(1);
-        AnmId *id = &anm_ids[slot];
-        delete_vm_and_clear(*id);
-        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        // One create call per script, as the binary's per-branch pushes show.
-        i32 layer = anm_layers + 7;
-        if (n >= 0)
+        __asm
         {
-            *id = anm->create_vm_front(anm_set_main + 5 + n, layer, 0);
-        }
-        else
-        {
-            *id = anm->create_vm_front(anm_set_main, layer, 0);
-        }
-        AnmVm *vm = id->find_or_clear();
-        if (slot == 0)
-        {
-            final_sprite_size.x = vm->scale.y * vm->sprite_size.y;
-            final_sprite_size.y = vm->scale.x * vm->sprite_size.x;
-        }
-        if (flags_low & ENEMY_FLAG_INTANGIBLE)
-        {
-            id->hide_tree();
+            mov ecx, dword ptr [edx + 0ch]
+            push 0
+            call ecl_context_get_int_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            mov esi, eax
+            push 1
+            mov dword ptr [ebp - 438h], esi
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            add esi, 49h
+            mov dword ptr [ebp - 40ch], eax
+            push dword ptr [edi + esi*4]
+            lea esi, [edi + esi*4]
+            call ecl_anm_delete_vm_alias
+            mov eax, dword ptr [g_EnemyManager]
+            mov edx, dword ptr [ebp - 40ch]
+            mov dword ptr [esi], 0
+            mov ecx, dword ptr [edi + 264h]
+            mov ecx, dword ptr [eax + ecx*4 + 164h]
+            mov eax, dword ptr [edi + 27ch]
+            add eax, 7
+            push ecx
+            push eax
+            test edx, edx
+            js ecl_anm_316_main_script
+            mov eax, dword ptr [edi + 270h]
+            add edx, 5
+            add eax, edx
+            push eax
+            jmp ecl_anm_316_script_ready
+        ecl_anm_316_main_script:
+            push dword ptr [edi + 270h]
+        ecl_anm_316_script_ready:
+            lea eax, [ebp - 420h]
+            push eax
+            call ecl_anm_create_vm_front_alias
+            mov ecx, esi
+            mov eax, dword ptr [eax]
+            mov dword ptr [esi], eax
+            call ecl_anm_find_or_clear_alias
+            cmp dword ptr [ebp - 438h], 0
+            jne ecl_anm_316_sprite_ready
+            movss xmm0, dword ptr [eax + 74h]
+            mulss xmm0, dword ptr [eax + 54h]
+            movss dword ptr [edi + 3f58h], xmm0
+            movss xmm0, dword ptr [eax + 70h]
+            mulss xmm0, dword ptr [eax + 50h]
+            movss dword ptr [edi + 3f5ch], xmm0
+        ecl_anm_316_sprite_ready:
+            test byte ptr [edi + 4060h], 20h
+            je ecl_anm_316_done
+            mov ecx, esi
+            call ecl_anm_hide_tree_alias
+        ecl_anm_316_done:
         }
         break;
     }
