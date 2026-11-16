@@ -52,6 +52,8 @@ extern "C" f32 __vectorcall ecl_enemy_get_float_arg_alias(EnemyData *, EclFloatA
 #pragma comment(linker, "/alternatename:ecl_enemy_get_float_arg_alias@@8=?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z")
 extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_ptr_alias=?get_float_arg_ptr@EnemyData@@QAEPAMH@Z")
+extern "C" void ecl_anm_delete_vm_alias();
+#pragma comment(linker, "/alternatename:_ecl_anm_delete_vm_alias=?delete_vm@AnmManager@@QAEXUAnmId@@@Z")
 extern "C" void ecl_anm_create_vm_front_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
 extern "C" f32 __vectorcall ecl_zun_atan2f_alias(f32, f32);
@@ -834,12 +836,18 @@ int EnemyData::ecl_run_over_300()
     // anmSelectedPlay(slot)
     case ECL_OP_ANM_SELECTED_PLAY:
     {
-        i32 slot = full_owner->context.current_context->get_int_arg(0);
-        delete_vm_and_clear(anm_ids[slot]);
         u8 created_id_storage[sizeof(AnmId)];
         __asm
         {
-            lea ecx, [esi]
+            mov ecx, dword ptr [edx + 0ch]
+            push 0
+            call ecl_context_get_int_arg_alias
+            mov esi, eax
+            push dword ptr [edi + esi*4 + 124h]
+            lea eax, [edi + esi*4]
+            call ecl_anm_delete_vm_alias
+            mov dword ptr [edi + esi*4 + 124h], 0
+            lea ecx, [edi + esi*4]
             mov ecx, dword ptr [g_EnemyManager]
             mov eax, dword ptr [edi + 27ch]
             mov edx, dword ptr [edi + 264h]
@@ -853,14 +861,12 @@ int EnemyData::ecl_run_over_300()
             lea eax, created_id_storage
             push eax
             call ecl_anm_create_vm_front_alias
-            lea ecx, [esi + 124h]
+            lea ecx, [edi + 124h]
+            lea ecx, [ecx + esi*4]
             mov eax, dword ptr [eax]
             mov dword ptr [ecx], eax
-        }
-        __asm
-        {
             call ecl_anm_find_or_clear_alias
-            cmp esi, edi
+            test esi, esi
             jne ecl_anm_selected_play_vm_ready
             movss xmm0, dword ptr [eax + 74h]
             mulss xmm0, dword ptr [eax + 54h]
@@ -869,12 +875,10 @@ int EnemyData::ecl_run_over_300()
             mulss xmm0, dword ptr [eax + 50h]
             movss dword ptr [edi + 3f5ch], xmm0
         ecl_anm_selected_play_vm_ready:
-        }
-        __asm
-        {
             test byte ptr [edi + 4060h], 20h
             je ecl_anm_selected_play_done
-            lea ecx, [esi + 124h]
+            lea ecx, [edi + 124h]
+            lea ecx, [ecx + esi*4]
             call ecl_anm_hide_tree_alias
         ecl_anm_selected_play_done:
         }
