@@ -51,10 +51,6 @@ extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
 extern "C" i32 ecl_context_get_int_arg_alias(i32);
 #pragma comment(linker, "/alternatename:_ecl_context_get_int_arg_alias=?get_int_arg@EclRunContext@@QAEHH@Z")
-extern "C" void ecl_spellcard_start_alias(i32, const char *, i32, i32);
-#pragma comment(linker, "/alternatename:_ecl_spellcard_start_alias=?start@Spellcard@@QAEXHPBDHH@Z")
-extern "C" void ecl_zun_timer_set_value_alias(i32);
-#pragma comment(linker, "/alternatename:_ecl_zun_timer_set_value_alias=?set_value@ZunTimer@@QAEXH@Z")
 extern "C" i32 ecl_laser_cancel_in_radius_alias(Float3 *, i32, i32);
 #pragma comment(linker, "/alternatename:_ecl_laser_cancel_in_radius_alias=?cancel_in_radius@LaserManager@@QAEHPAUD3DXVECTOR3@@MHH@Z")
 extern "C" i32 ecl_bullet_cancel_radius_alias(Float3 *, i32);
@@ -687,50 +683,22 @@ int EnemyData::ecl_run_over_300()
         {
             g_SoundManager.play_sound_at_position(death_sound, final_pos.pos.x);
         }
-        // The distance uses last-hit minus current-position, while the
-        // angle points from the hit position toward the enemy. Preserve the
-        // original SSE register flow and pass its XMM0 result straight into
-        // AnmLoaded::create_vm.
-
-        __asm
+        if (death_anm_script >= 0)
         {
-            mov eax, dword ptr [edi + 3fe8h]
-            test eax, eax
-            js ecl_die_done
-            movss xmm0, dword ptr [edi + 284h]
-            lea esi, [edi + 44h]
-            movss xmm1, dword ptr [edi + 280h]
-            subss xmm0, dword ptr [esi + 4]
-            subss xmm1, dword ptr [esi]
-            mulss xmm0, xmm0
-            mulss xmm1, xmm1
-            addss xmm1, xmm0
-            movss xmm0, dword ptr [ecl_die_distance_squared]
-            comiss xmm0, xmm1
-            jbe ecl_die_calculate_angle
-            movss xmm0, dword ptr [ecl_die_default_angle]
-            jmp ecl_die_angle_ready
-        ecl_die_calculate_angle:
-            movss xmm1, dword ptr [esi]
-            movss xmm0, dword ptr [esi + 4]
-            subss xmm1, dword ptr [edi + 280h]
-            subss xmm0, dword ptr [edi + 284h]
-            call ecl_zun_atan2f_alias
-        ecl_die_angle_ready:
-            mov eax, dword ptr [edi + 3fe8h]
-            push ecx
-            push 3
-            push ecx
-            mov ecx, dword ptr [g_EnemyManager]
-            movss dword ptr [esp], xmm0
-            push esi
-            push eax
-            lea eax, [ebp - 420h]
-            push eax
-            mov eax, dword ptr [edi + 3fech]
-            mov ecx, dword ptr [ecx + eax*4 + 164h]
-            call ecl_anm_create_vm_alias
-        ecl_die_done:
+            // A nearby hit uses the default downward angle. Otherwise point
+            // the animation from the hit position toward the enemy.
+            f32 dx = last_damage_pos.x - final_pos.pos.x;
+            f32 dy = last_damage_pos.y - final_pos.pos.y;
+            f32 distance_squared = dx * dx + dy * dy;
+            f32 angle = ecl_die_default_angle;
+            if (!(distance_squared < ecl_die_distance_squared))
+            {
+                angle = zun_atan2f(final_pos.pos.y - last_damage_pos.y,
+                                   final_pos.pos.x - last_damage_pos.x);
+            }
+
+            AnmLoaded *anm = g_EnemyManager->anim_statement_anms[death_anm_index];
+            anm->create_vm(death_anm_script, &final_pos.pos, angle, 3, 0);
         }
         break;
     // enm322(index, value)
@@ -2543,9 +2511,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_FLAG_MIRROR:
         ((EnemyFlagsLow *)&flags_low)->mirrored = get_int_arg(0);
         break;
-    // spell(id, time_limit, boss_index, name) and its per-difficulty forms:
-    // 537 to 539 add the difficulty (minus 0, 1 or 2) to the id. The name
-    // is stored encrypted.
+    // spell(id, time_limit, boss_index, name) and its per-difficulty forms.
+    // The name bytes following args[3] are encrypted in the raw instruction.
     case ECL_OP_SPELL:
     case ECL_OP_SPELL_528:
     case ECL_OP_SPELL_537:
@@ -2553,95 +2520,48 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_SPELL_539:
     {
         char name[0x80];
-        __asm
+        i32 name_length = instr->args[3].i;
+        if (name_length <= 0)
         {
-            mov edi, dword ptr [esi + 1ch]
-            lea ecx, [esi + 20h]
-            mov dword ptr [ebp - 41ch], edi
-            test edi, edi
-            mov edi, dword ptr [ebp - 0b4h]
-            mov ah, 77h
-            mov byte ptr [ebp - 449h], 7
-            jle spell_name_decoded
-            lea edx, [ebp - 90h]
-            sub ecx, edx
-            mov dl, byte ptr [ebp - 449h]
-            mov dword ptr [ebp - 420h], ecx
-            xor edi, edi
-            mov esi, ecx
-            nop
-        spell_decrypt_loop:
-            lea ecx, [ebp - 90h]
-            add ecx, edi
-            inc edi
-            mov al, byte ptr [ecx + esi]
-            xor al, ah
-            add ah, dl
-            add dl, 10h
-            mov byte ptr [ecx], al
-            cmp edi, dword ptr [ebp - 41ch]
-            jl spell_decrypt_loop
-        spell_name_decoded:
-            mov edi, dword ptr [ebp - 0b4h]
-            mov edx, dword ptr [ebp - 0b0h]
-            mov esi, dword ptr [ebp - 0b8h]
-            mov ecx, dword ptr [edx + 0ch]
-            push 0
-            call ecl_context_get_int_arg_alias
-            mov ecx, eax
-            movsx eax, word ptr [esi + 4]
-            mov dword ptr [ebp - 410h], ecx
-            sub eax, 219h
-            je spell_difficulty_537
-            sub eax, 1
-            je spell_difficulty_538
-            sub eax, 1
-            jne spell_difficulty_done
-            mov eax, dword ptr [g_Globals.difficulty]
-            add eax, -2
-            add ecx, eax
-            jmp spell_difficulty_done
-        spell_difficulty_538:
-            mov eax, dword ptr [g_Globals.difficulty]
-            dec eax
-            add ecx, eax
-            jmp spell_difficulty_done
-        spell_difficulty_537:
-            add ecx, dword ptr [g_Globals.difficulty]
-        spell_difficulty_done:
-            mov dword ptr [ebp - 410h], ecx
-            mov ecx, dword ptr [edi + 44b8h]
-            push 2
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            mov esi, eax
-            push 1
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [g_Spellcard]
-            push esi
-            push eax
-            lea eax, [ebp - 90h]
-            push eax
-            push dword ptr [ebp - 410h]
-            call ecl_spellcard_start_alias
-            or dword ptr [edi + 3f8ch], 1
-            mov eax, dword ptr [edi + 3f74h]
-            lea ecx, [eax*8]
-            sub ecx, eax
-            mov dword ptr [edi + 3f80h], ecx
+            name[0] = '\0';
         }
+        else
+        {
+            const u8 *encrypted_name = reinterpret_cast<const u8 *>(&instr->args[4]);
+            u8 key = 0x77;
+            u8 key_step = 7;
+            for (i32 i = 0; i < name_length; i++)
+            {
+                name[i] = (char)(encrypted_name[i] ^ key);
+                key = (u8)(key + key_step);
+                key_step = (u8)(key_step + 0x10);
+            }
+        }
+
+        i32 spell_id = full_owner->context.current_context->get_int_arg(0);
+        if (instr->opcode == ECL_OP_SPELL_537)
+        {
+            spell_id += g_Globals.difficulty;
+        }
+        else if (instr->opcode == ECL_OP_SPELL_538)
+        {
+            spell_id += g_Globals.difficulty - 1;
+        }
+        else if (instr->opcode == ECL_OP_SPELL_539)
+        {
+            spell_id += g_Globals.difficulty - 2;
+        }
+
+        i32 time_limit = full_owner->context.current_context->get_int_arg(2);
+        i32 boss_index = full_owner->context.current_context->get_int_arg(1);
+        g_Spellcard->start(spell_id, name, time_limit, boss_index);
+        life.is_spell |= ENEMY_LIFE_SPELL;
+        life.current_scaled_by_seven = life.current * 7;
     }
         // fall through
     // timerReset().
     case ECL_OP_TIMER_RESET:
-        __asm
-        {
-            push 0
-            lea ecx, [edi + 2bch]
-            call ecl_zun_timer_set_value_alias
-        }
+        time_in_ecl.set_value(0);
         break;
     // spellMode(on).
     case ECL_OP_SPELL_MODE:
