@@ -287,16 +287,16 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
     // Stage the origin choice before copying the transforms, then fill
     // the laser's start position directly in the parameter object.
     get_shot_origin_and_copy_ex(enemy, slot, &params.start_pos, params.ex);
-    params.ang_aim = normalize_angle(shooter.ang_aim);
-    params.laser_new_arg_4 = shooter.laser_new_arg_4;
-    params.speed = shooter.spd1;
     params.type = shooter.type;
     params.color = shooter.color;
+    params.ang_aim = normalize_angle(shooter.ang_aim);
     params.segment_count = shooter.laser_timing[0];
-    params.distance = shooter.distance;
     params.unk_28 |= 1;
     params.shot_sfx = shooter.shot_sfx;
+    params.speed = shooter.spd1;
     params.shot_transform_sfx = shooter.shot_transform_sfx;
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.distance = shooter.distance;
     g_LaserManager->allocate_new_laser(LASER_CURVE, &params);
 }
 
