@@ -1355,10 +1355,12 @@ i32 AnmVm::run()
         case ANM_OP_DELETE:
             flags_lo &= ~ANM_VM_VISIBLE;
             result = 1;
-        // delete falls through: both end the script.
-        case ANM_OP_STATIC:
             instr_offset = -1;
             goto finish;
+        case ANM_OP_STATIC:
+            instr_offset = -1;
+            g_game_speed = saved_game_speed;
+            return 0;
         }
         instr_offset += ins->offset_to_next;
     }
