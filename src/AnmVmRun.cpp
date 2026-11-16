@@ -770,8 +770,16 @@ i32 AnmVm::run()
             *ANM_FLOAT_PTR(0) = add_normalize_angle(ANM_FLOAT(0), 0.0f);
             break;
         case ANM_OP_CIRCLE_POS:
-            anm_sincosmul_xy(ANM_FLOAT_PTR(0), ANM_FLOAT_PTR(1), ANM_FLOAT(2), ANM_FLOAT(3));
+        {
+            // The script reads radius and angle before resolving the two
+            // destinations. Resolve Y before X; both may name VM variables.
+            f32 radius = ANM_FLOAT(3);
+            f32 angle = ANM_FLOAT(2);
+            f32 *y = ANM_FLOAT_PTR(1);
+            f32 *x = ANM_FLOAT_PTR(0);
+            anm_sincosmul_xy(x, y, angle, radius);
             break;
+        }
         case ANM_OP_CIRCLE_POS_RAND:
         {
             f32 min = ANM_FLOAT(2);
