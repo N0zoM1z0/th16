@@ -29,6 +29,7 @@ static const f32 ecl_origin_threshold = 0.9f;
 static const f32 ecl_die_distance_squared = 0.2f * 0.2f;
 static const f32 ecl_die_default_angle = -ZUN_PI / 2;
 static const double ecl_keep_coordinate_threshold = -999999.0;
+static const f32 ecl_pi_over_two = ZUN_PI / 2;
 extern "C" void *ecl_memset_alias(void *, i32, size_t);
 extern "C" void ecl_laser_infinite_inner_ctor_alias(void *);
 #pragma comment(linker, "/alternatename:_ecl_laser_infinite_inner_ctor_alias=??0LaserInfiniteInner@@QAE@XZ")
@@ -61,6 +62,8 @@ extern "C" i32 ecl_effect_track_alias(AnmId);
 #pragma comment(linker, "/alternatename:_ecl_effect_track_alias=?track@EffectManager@@QAEHUAnmId@@@Z")
 extern "C" void ecl_anm_create_vm_front_alias();
 extern "C" void ecl_interp_strange1_reset_timer_alias();
+extern "C" void ecl_posvel_set_angle_alias();
+#pragma comment(linker, "/alternatename:_ecl_posvel_set_angle_alias=?set_angle@PosVel@@QAEXM@Z")
 #pragma comment(linker, "/alternatename:_ecl_interp_strange1_reset_timer_alias=?reset_timer@InterpStrange1@@QAEXXZ")
 #pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
 extern "C" void ecl_context_get_float_arg_alias();
@@ -1381,22 +1384,66 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_VEL_NM:
     case ECL_OP_MOVE_VEL_REL_NM:
     {
-        PosVel *pv = instr->opcode == ECL_OP_MOVE_VEL || instr->opcode == ECL_OP_MOVE_VEL_NM ? &abs_pos : &rel_pos;
-        f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
-        f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
-        if (angle > -999999.0)
+        __asm
         {
-            if ((flags_low & ENEMY_FLAG_MIRRORED) && (instr->opcode == ECL_OP_MOVE_VEL || instr->opcode == ECL_OP_MOVE_VEL_REL))
-            {
-                angle = mirror_angle(angle);
-            }
-            pv->set_angle(angle);
+            mov eax, 194h
+            cmp cx, ax
+            je ecl_move_vel_absolute
+            mov eax, 1ach
+            cmp cx, ax
+            mov eax, 0cch
+            jne ecl_move_vel_selected
+        ecl_move_vel_absolute:
+            mov eax, 88h
+        ecl_move_vel_selected:
+            mov ecx, dword ptr [edx + 0ch]
+            add eax, edi
+            push 0
+            mov dword ptr [ebp - 414h], eax
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 1
+            movss dword ptr [ebp - 40ch], xmm0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_float_arg_alias
+            movsd xmm5, qword ptr [ecl_keep_coordinate_threshold]
+            movaps xmm4, xmm0
+            movss xmm0, dword ptr [ebp - 40ch]
+            cvtps2pd xmm1, xmm0
+            comisd xmm1, xmm5
+            jbe ecl_move_vel_no_angle
+            test dword ptr [edi + 4060h], 80000h
+            je ecl_move_vel_set_angle
+            movzx eax, word ptr [esi + 4]
+            mov ecx, 194h
+            cmp ax, cx
+            je ecl_move_vel_mirror_angle
+            mov ecx, 196h
+            cmp ax, cx
+            jne ecl_move_vel_set_angle
+        ecl_move_vel_mirror_angle:
+            movss xmm3, dword ptr [ecl_pi_over_two]
+            subss xmm0, xmm3
+            call ecl_normalize_angle_alias
+            subss xmm3, xmm0
+            movaps xmm0, xmm3
+            call ecl_normalize_angle_alias
+        ecl_move_vel_set_angle:
+            mov ecx, dword ptr [ebp - 414h]
+            movaps xmm1, xmm0
+            call ecl_posvel_set_angle_alias
+            jmp ecl_move_vel_after_angle
+        ecl_move_vel_no_angle:
+            mov ecx, dword ptr [ebp - 414h]
+        ecl_move_vel_after_angle:
+            xorps xmm0, xmm0
+            cvtss2sd xmm0, xmm4
+            comisd xmm0, xmm5
+            jbe ecl_move_vel_no_speed
+            movss dword ptr [ecx + 18h], xmm4
+        ecl_move_vel_no_speed:
+            and dword ptr [ecx + 40h], 0fffffff0h
         }
-        if (speed > -999999.0)
-        {
-            pv->speed = speed;
-        }
-        pv->flags &= ~0xf;
         break;
     }
     // moveVelTime(time, mode, angle, speed). With mode 7
