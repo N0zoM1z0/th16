@@ -1904,31 +1904,41 @@ int EnemyData::ecl_run_over_300()
         break;
     }
 
-    // etEx(et, ex_index, slot, type, a, b, r, s), plus full and next forms.
+    // etEx(et, ex_index, slot, type, a, b, r, s), plus full and next
+    // forms. NEXT uses the shooter's next free transform; FULL supplies
+    // the additional c/d and m/n operands.
     case ECL_OP_ET_EX:
     case ECL_OP_ET_EX_FULL:
     case ECL_OP_ET_EX_NEXT:
     case ECL_OP_ET_EX_FULL_NEXT:
     {
         i32 et = get_int_arg(0);
-        if (et < 0 || et >= 0x12)
+        if (et >= 0x12 || et < 0)
         {
             et = 0;
         }
 
-        bool next = instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT;
-        bool full = instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT;
-        i32 ex_index = next ? et_ex_index[et] : get_int_arg(1);
+        u16 opcode = instr->opcode;
+        i32 arg = 2;
+        if (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        {
+            arg = 1;
+        }
+        i32 ex_index;
+        if (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        {
+            ex_index = et_ex_index[et];
+        }
+        else
+        {
+            ex_index = get_int_arg(1);
+        }
         BulletEx *ex = &bullet_props[et].ex[ex_index];
-
-        // Normal forms supply the transform index explicitly; NEXT forms
-        // use the shooter's current next-transform index and start at arg 1.
-        i32 arg = next ? 1 : 2;
         ex->slot = get_int_arg(arg++);
         ex->type = get_int_arg(arg++);
         ex->a = get_int_arg(arg++);
         ex->b = get_int_arg(arg++);
-        if (full)
+        if (opcode == ECL_OP_ET_EX_FULL || opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ex->c = get_int_arg(arg++);
             ex->d = get_int_arg(arg++);
@@ -1936,13 +1946,20 @@ int EnemyData::ecl_run_over_300()
 
         ex->r = get_float_arg(EclFloatArgIndex{arg++});
         ex->s = get_float_arg(EclFloatArgIndex{arg++});
-        if (full)
+        if (opcode == ECL_OP_ET_EX_FULL || opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ex->m = get_float_arg(EclFloatArgIndex{arg++});
             ex->n = get_float_arg(EclFloatArgIndex{arg++});
         }
 
-        et_ex_index[et] = ex_index + 1;
+        if (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        {
+            et_ex_index[et]++;
+        }
+        else
+        {
+            et_ex_index[et] = ex_index + 1;
+        }
         break;
     }
     // etExSubtract(et): steps the next free ex slot back.
