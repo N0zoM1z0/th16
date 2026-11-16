@@ -8,8 +8,8 @@ the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-- main code HEAD entering this handoff: 2e75ebf, vector death animation displacement.
-- The branch is 62 commits ahead of origin/main before this note; the worktree
+- main code HEAD entering this handoff: f1d808d, ANM randomized-circle operand ordering.
+- The branch is 68 commits ahead of origin/main before this note; the worktree
   is clean before the documentation edit.
 - The historical broad reference audit and frontier metadata are stale for
   these changes. Do not cite their old exactness totals as current.
@@ -360,6 +360,75 @@ the separate 14 KB AnmVm::run owner (especially its RAND and
 float-store operations), and natural caller/leaf improvements.
 Do not confuse the previously saved strict-provenance blocker
 with a successful exactness verification.
+
+## Further ECL and ANM interpreter reconstruction
+
+Five code checkpoints were added after the previous handoff:
+
+- 08dd9fa: the four ECL laser constructors now share one typed
+  EclLaserParamsStorage union. The constructor for the active laser type
+  initializes the corresponding union member, then the parameter block is
+  passed to allocate_new_laser. The build frame shrank from the previous
+  0xea8 candidate allocation to 0x498; target is 0x478. This is a
+  substantial stack reduction, not exact frame identity. The four laser
+  constructor blocks still differ from target.
+- ecc5a10: ET_EX uses a flattened shooter/transform offset with typed
+  BulletEx field accesses; FULL's c field follows the target's special
+  (ex_index + 0x22) record offset. The focused ET_EX family is now 133
+  candidate instructions versus 134 target instructions, local normalized
+  ratio about 0.91. The layout is guarded by source-level type offsets in
+  the later ET_ON checkpoint.
+- df130cb: ANM FSET_RAND now expresses the result as
+  *ANM_FLOAT_PTR(0) = random * range;. Its local block is 24 instructions
+  on both sides, ratio about 0.96. This is closer than the prior explicit
+  destination temporary.
+- fca5a51: ET_ON's origin calculation is inlined into the dispatcher and
+  the now-unused get_shot_origin helper is removed. Static assertions
+  verify BulletEx stride 0x2c, EnemyBulletShooter stride 0x380,
+  transform-array offset 0x28, and the combined EnemyData transform
+  base at 0x5c0. ET_ON improves from the old helper form's ratio about
+  0.60 to about 0.87 (44 target / 46 candidate instructions). It is not
+  exact; its branch-local z store and manager setup still differ.
+- f1d808d: CIRCLE_POS_RAND reads its lower bound into a volatile local
+  before reading the upper bound. This is behaviorally relevant:
+  ANM_VAR_RAND_UNSAFE consumes the unsafe RNG, so argument evaluation
+  order changes the random stream when either bound uses that variable.
+  The focused block is 50 instructions on both sides, ratio about 0.90
+  (prior compiler order was reversed and scored about 0.81).
+
+Current focused diagnostics after the final incremental build:
+- EnemyData::ecl_run_over_300: 174/174 dispatch entries.
+- ECL DIE: 41/41 instructions, local ratio about 0.98.
+- ECL ET_ON: 44/46 instructions, local ratio about 0.87.
+- ECL ET_EX family: 134/133 instructions, local ratio about 0.91.
+- ECL laser method 714: 19/19 instructions, local ratio about 0.79.
+- AnmVm::run FSET_RAND: 24/24 instructions, local ratio about 0.96.
+- AnmVm::run CIRCLE_POS_RAND: 50/50 instructions, local ratio about 0.90.
+
+The final scripts/repo-python scripts/build.py completed and produced
+1166 annotated functions. No full cold replay was run, and no new inline
+assembly or padding was introduced. These case ratios are local diagnostic
+comparisons, not strict owner or relocation receipts. The EH-parent PDB
+ownership preflight blocker above remains unresolved.
+
+Experiments reverted during this session:
+- ET_ON's direct per-component writes degraded its local ratio to about
+  0.60; a shooter-pointer temporary scored about 0.58. The retained
+  aggregate D3DXVECTOR3 assignments are the best tested natural form.
+- Reversing CIRCLE_POS_RAND's min/max source order is incorrect for the
+  target's RNG read order. Expanding anm_lerp into an explicit expression
+  added an instruction without improving the case. Making both bounds
+  volatile did not improve on the retained lower-bound-only ordering.
+- FSET_RAND volatile temporaries and explicit two-branch stores degraded
+  the block. Keep the single ANM_FLOAT_PTR lvalue assignment.
+- Shared laser storage and flattened ET_EX pointer arithmetic are retained;
+  do not replace them with assembler or padding to force byte counts.
+
+Next useful targets: reduce the remaining ET_ON branch-local z-store
+mismatch; investigate the four laser creation handlers against their complete
+owners; continue the large ANM run owner (especially modulo/store and
+circle handlers); and pursue the strict EH-parent provenance blocker
+without suppressing its checks.
 
 ## Verification and next actions
 
