@@ -603,9 +603,11 @@ static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
     }
 }
 
-// TODO: frame layout and register allocation differ.
-// The early argument getters are spelled out because LTCG inlined only those (its
-// inline budget ran out in moveVelTime), plus the three in the spell case.
+// TODO: the target allocates a 0x478-byte frame; the current candidate allocates
+// 0x474 bytes, and the prologue plus several branch register assignments still
+// differ. Explicit argument reads and x86 sequences are retained where they
+// preserve observed getter order, stack slots and register handoffs; MOVE_VEL_TIME
+// is now spelled out directly rather than relying on LTCG's former inline budget.
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {

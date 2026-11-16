@@ -1,4 +1,9 @@
-# Complete upper ECL frame-store ownership
+# Historical upper ECL frame-store ownership investigation
+
+This is a historical scope and verifier record, not a current candidate-status
+report. Its PDB ages, candidate sizes, audit totals and movement comparisons
+describe the 2026-11-13 through 2026-11-15 checkpoints. The 2026-11-16 source
+work is summarized in the current handoff.
 
 Starting checkpoint: `cd97ed6`, PDB age 614. The complete original
 `EnemyData::ecl_run_over_300` at `0x0041DCB0` is now formally registered as
@@ -128,12 +133,13 @@ registration JSON, initial/final control logs, preexisting count check and
 canonical/progress/restoration reports. Retain the incremental build graph.
 Nothing is pushed, published or deployed.
 
-## Progress update (2026-11-15)
+## Historical progress snapshot (2026-11-15)
 
-The current candidate `EnemyData::ecl_run_over_300` PDB contribution is **21,388
-bytes** against the independently reviewed **21,408-byte** target owner. The
-candidate is 20 bytes shorter and remains incomplete. The decoded code spans
-are **19,956 candidate bytes** versus **19,976 target bytes**; both contribution
+At that checkpoint, the candidate `EnemyData::ecl_run_over_300` PDB
+contribution was **21,388 bytes** against the independently reviewed
+**21,408-byte** target owner. That checkpoint's candidate was 20 bytes shorter
+and remained incomplete. The decoded code spans are **19,956 candidate bytes**
+versus **19,976 target bytes**; both contribution
 tails are **1,432 bytes**, so the remaining 20-byte difference is in code, not
 in the switch tables or alignment suffix. The candidate frame remains
 `0x478` bytes, matching the target.

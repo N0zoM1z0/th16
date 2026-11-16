@@ -10,7 +10,7 @@ Agent workflow: follow the highest-priority requirements in [AGENTS.md](AGENTS.m
 </p>
 
 <p align="center">
-  <img src="resources/progress.svg" alt="TH16 reconstruction progress">
+  <img src="resources/progress.svg" alt="Historical TH16 strict-audit snapshot from 2026-11-15; excludes 2026-11-16 source changes">
 </p>
 
 This project reconstructs C++ source for the original Japanese TH16 version
@@ -47,11 +47,19 @@ above is composited from the game's own textures for identification only.
 
 ## Current status
 
-The strict audit currently reports **1,033 exact / 51 mismatch / 131
-incomplete** of 1,215 annotated functions (about 51% of annotated bytes). The
-largest remaining owners are the 21,408-byte enemy ECL dispatcher, the
-14,177-byte ANM VM interpreter, the 7,046-byte ECL interpreter and the
-5,436-byte bullet transform dispatcher. Source-origin review and Factory
+The last saved strict-audit snapshot is dated **2026-11-15 06:37 UTC**:
+**1,033 exact / 51 mismatch / 131 incomplete** of 1,215 annotated functions
+(51.33% of annotated bytes). It predates the 16 local gpt-web commits made
+on 2026-11-16 and the current candidate build. These counts and the progress
+image are historical, not current results.
+
+The candidate was incrementally rebuilt on 2026-11-16 at 14:37 UTC. No fresh
+strict audit or accepted Factory replay has been recorded for that build; the
+progress report still lists Factory acceptance as not-submitted. The progress
+script refuses stale audit inputs. Refresh the audit before quoting project
+totals. See the
+[current handoff](docs/NEXT_AGENT.md) for the latest source changes, focused
+dispatcher diagnostics and remaining large-owner work. Source-origin review and Factory
 acceptance remain open.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the

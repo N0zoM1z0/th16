@@ -1,131 +1,156 @@
 # Current handoff
 
-Updated 2026-11-15. Read `AGENTS.md` first. Older handoffs and the removed
-session logs are in Git history.
+Updated 2026-11-16. Read AGENTS.md first. This handoff supersedes the older
+agent-specific instructions and checkpoint figures; historical investigation
+notes remain in docs/knowledge/ and .analysis/.
 
-## Current checkpoint
+## Repository checkpoint
 
-| Item | Value |
+| Item | Current value |
 | --- | --- |
-| HEAD | latest local `claude-opus-5.5-high: …` commit (nothing pushed) |
-| Strict audit | **1033 exact / 131 incomplete / 51 mismatch** of 1,215 annotations |
-| Build | incremental graph matches HEAD |
+| Branch | main |
+| Code checkpoint entering cleanup | 3f7371f — gpt-web: align ECL move-curve handler |
+| Source commits | 16 ahead of origin/main at the start of handoff cleanup |
+| Worktree | clean after the handoff commits |
+| Commit prefix | gpt-web: |
+| Publication | local commits only; do not push unless the user asks |
+| Candidate build | incremental; receipt timestamp 2026-11-16 14:37:07 UTC |
+| Build input SHA-256 | 1295c7d5a4a25471198017bc8be5b7a428286cd1f710c041d88396b0b3fa58b5 |
+| Latest saved strict audit | 2026-11-15 06:37:29 UTC; stale for the current candidate |
 
-Check with `.analysis/claude-tools/bc.sh` (incremental build) followed by
-`scripts/repo-python scripts/audit-reference.py` and `scripts/check-frontier.py`.
-The ratchet (`config/frontiers.toml`) fails when an exact function stops being
-exact, a mismatch gains a differing byte or becomes incomplete; record
-improvements with `check-frontier.py --update`. Before committing a gain, run
-`audit-reference.py --write-units` once on the final build. Tooling changes
-need `scripts/run-tests.py` (all `scripts/test-*.py` controls, about 2 min).
+The saved audit reports **1,033 exact / 51 mismatch / 131 incomplete** of 1,215
+annotations, but it predates all 16 commits made on 2026-11-16. It is not the
+current result. config/frontiers.toml was last refreshed on 2026-11-15 and is
+also historical until regenerated from a fresh audit. The progress report still
+lists Factory acceptance as not-submitted.
 
-## Constraints
+The current candidate was rebuilt incrementally at 14:37:07 UTC after the
+comment-only documentation correction in EnemyEcl.cpp. The build succeeded
+with existing C4244 (camera float-to-u8), C4101 (unused local name) and C4731
+(EclRunContext inline-assembly frame-pointer) warnings. No fresh whole-project audit,
+cold replay or accepted Factory snapshot has been recorded after the 2026-11-16
+source changes. scripts/progress.py deliberately refuses a stale report;
+run scripts/audit-reference.py before using totals or refreshing the frontier.
+Do not treat a successful incremental build or a case-level similarity score
+as strict exactness.
 
-- **Never push**, mirror or publish the repository. Local commits only, with
-  the message prefix `claude-opus-5.5-high: ` and the attribution line.
-- Do not use REA. Reference labels and percentages carry no authority.
-- Natural C/C++ source. The exceptions below are user-approved placeholders,
-  clearly marked in the source. Run only the checks a change needs.
+## Main active owner: upper enemy ECL dispatcher
 
-### Placeholders
+EnemyData::ecl_run_over_300() is in src/EnemyEcl.cpp at target address
+0x0041DCB0. Its annotated target extent is 21,516 bytes. The separately
+reviewed original dispatch/table owner in
+docs/knowledge/upper-ecl-frame-store-scope.md is 21,408 bytes; those are
+different boundary records and must not be subtracted as if they were the same
+scope.
 
-LTCG's stack-alignment pass weighs double arithmetic **before** dead code is
-removed, and some original functions carried work that left no trace:
+The current candidate PDB contribution is at 0x004344C0, size 20,568 bytes.
+Its prologue allocates 0x474 bytes, while the target prologue allocates 0x478.
+The saved strict-audit row for this owner is incomplete and has no unit_sha256;
+there is no current complete-owner strict pass for it. The historical frame-store
+note describes the original boundary and static controls, not the current
+candidate layout.
 
-- `DECOMP_DEAD_DOUBLE_0..3` (`src/decomp.h`): dead doubles in place; the
-  function itself wants an 8-aligned stack.
-- `decomp_want_aligned_stack()`: a separate call-graph node with a dead
-  double; callers pad, or their callers realign.
-- `decomp_supervisor_scanf_reference` (`src/Supervisor.cpp`): an unreferenced
-  `sscanf` user. It makes Supervisor.obj provide
-  `___local_stdio_scanf_options`, as in the original.
+The focused case tool currently finds 174 target and 174 candidate dispatch
+targets. Its current non-perfect normalized instruction-sequence groups include:
 
-Placeholders were kept only when the full audit gained with no losses.
-`.analysis/claude-tools/placeholder_try.py ADDR SNIPPET...` automates that.
+| Opcode group | Handler family | Ratio |
+| --- | --- | ---: |
+| [7] | ANM_PLAY | 0.94 |
+| [101, 103, 136, 137] | MOVE_POS_TIME variants | 0.86 |
+| [109, 111] | MOVE_CIRCLE_TIME variants | 0.85 |
+| [134, 135, 138, 139] | MOVE_CURVE variants | 0.95 |
+| [140, 142] | MOVE_ANGLE variants | 0.84 |
+| [141, 143] | MOVE_ANGLE_TIME variants | 0.85 |
 
-## Levers that worked
+The case tool prints groups below 0.999; omitted groups match under that
+normalized case comparator. This is a diagnostic only: it normalizes registers
+and branch addresses, and does not compare the complete function extent,
+relocations, data tables or ownership. It does not grant Oracle credit.
 
-- **Call graph and alignment**: direct calls instead of the member-pointer
-  workarounds (`create_effect_via_pointer`, `gui_show_notice_func`) where the
-  original realigns; `__forceinline` helpers hide call weight (a helper for
-  twelve `AnmVm::run` calls fixed `setup_special_anms`); `HARNESS_CALLED` on a
-  callee and its intermediate callers tells LTCG they are entered aligned
-  (`build_world_matrix`), since /INCLUDE'd functions are roots of unknown
-  alignment.
-- **COMDAT providers**: a CRT inline's out-of-line copy comes from the first
-  object in link order whose IL uses it; the Oracle wants the annotating
-  file's object (`scripts/build.py` orders the early files).
-- **Intrinsics**: with memset as an intrinsic the compiler folded
-  `Config::Config`'s stores into g_Supervisor's static image; `#pragma
-  function(memset)` around it restores the original initializer.
-- **Per-branch pushes**: where the original pushes a constant in each branch
-  before one shared call, write a ternary of calls (`ECL_DIFF_ARG` in
-  `src/EnemyEcl.cpp`) or an if/else of whole calls (anm316); arithmetic on the
-  argument index compiles to `setne`/`lea` instead.
-- **Statement shapes**: return a just-cleared value (`setup_stage_hud`);
-  evaluate call arguments into locals in the original's order (ECL cases);
-  push each arithmetic result in its own case (`ecl_run`); pointer-to-member
-  locals change scheduling (`set_position_subpixel`, `build_world_matrix`);
-  read `next` before `entry` in list walks; step vertex pointers per vertex;
-  divide a loop step into its parameter in place (`Fog::set_rect`); rotate
-  through a `Float3` offset local (a `Float2` adds alignment weight).
-- **Timer ticks**: `tick`, `tick_goto`, `tick_mixed`, `tick_nested` and
-  `tick_in_place` are equivalent; each gives different codegen.
-- **Globals**: a global defined outside /GL
-  (`probes/reference-support/Opaque.cpp`) changes alias analysis
-  (`g_zero_vec2` lives in `Arcfile.cpp`); local copies of globals can flip
-  SIB order (`destroy_all`).
-- **Dead code leaves EH states** (`parse_directory`'s NULL-path `delete[]`).
+The 2026-11-16 source work substantially rewrote animation and movement
+handlers. The current case report no longer lists the groups for ANM_RESET,
+ANM_SET_MAIN, ANM_PLAY_ABS, ANM_PLAY_HIGH, ANM_PLAY_ROTATE,
+ANM_SELECTED_PLAY, ANM_316, ANM_SWITCH, MOVE_VEL, MOVE_VEL_TIME,
+MOVE_RAND or MOVE_BEZIER as non-perfect. Treat that only as a local
+instruction-sequence result, not as proof that the large owner is exact.
 
-## Open leads
+### Recommended next work
 
-1. **Alignment roots**: `.analysis/claude-tools/alignroots.py` (after a fresh
-   audit) lists prologue-form differences (`R` and-esp, `X` ebx, `-` none).
-   Ours uses the `X` form where the original uses `R` in `do_options`,
-   `do_key_config`, `do_practice_stage_select`, `do_spell_practice_subseason`,
-   `do_spell_practice_difficulty` and `repopulate_options`; the trigger is
-   unknown. `Bullet::on_tick` realigns in ours, `BulletManager::on_tick_body`
-   in the original.
-2. **Padded frames** (original `sub esp` 4 larger): `show_notice`,
-   `create_vm`, `create_vm_front`, `interrupt_child_and_run`,
-   `cancel_in_radius`. A pad needs known-aligned callers; a placeholder makes
-   these realign instead.
-3. **Large owners**: `.analysis/claude-tools/cases.py ADDR [OPS]` compares
-   switch cases of `ecl_run_over_300` (0x41dcb0), `ecl_run` (0x472030) and
-   similar dispatchers; `calldiff.py` finds inlining and tail-merge gaps
-   (`ecl_run_over_300` calls `LaserInfiniteInner`'s constructor out of line in
-   the original).
-4. The rest are mostly register-allocation and scheduling tie-breaks. Probe
-   them first: `.analysis/claude-tools/p/ltcg2.sh file.cpp` builds one /GL
-   file in seconds (read inputs through `*(T *volatile *)0x500000`, write
-   outputs as volatile; probes may include `../../../src/X.h`).
+1. Continue with MOVE_ANGLE_TIME / MOVE_ANGLE_REL_TIME (groups 441/443,
+   case indices [141, 143]) and MOVE_ANGLE / MOVE_ANGLE_REL
+   (440/442, [140, 142]). These remain ordinary C++ in the dispatcher and
+   are still materially different from the target.
+2. Revisit MOVE_POS_TIME (401/403/436/437) after understanding the target's
+   reused stack slots and getter order. Earlier attempts to inline all getters,
+   jump across C++ switch scopes, or overlay frame locals regressed other cases;
+   those experiments were restored. The current selector plus first-getter
+   sequence is the stable checkpoint.
+3. Improve MOVE_CURVE (434/435/438/439) beyond its current 0.95 case score.
+   The selector/getter and interpolation setup are partly inline assembly, but
+   the shared initial/goal/reset tail and complete owner frame still differ.
+4. Revisit ANM_PLAY (307) after the movement work; it remains at 0.94.
+5. Once a complete owner scope and comparison unit are available, use the strict
+   Oracle on the affected owner. Do not infer exactness from cases.py.
 
-## Tools (ignored `.analysis/claude-tools/`)
+Useful source locations: MOVE_POS_TIME around line 1178, MOVE_CURVE around
+1243, MOVE_BEZIER around 1351, MOVE_VEL around 1449, MOVE_VEL_TIME around
+1518, and MOVE_ANGLE_TIME around 1723. Line numbers may move.
 
-`bc.sh` (incremental build), `tryaudit.sh` (build, audit, list gains and
-losses against `.analysis/reference-audit.json`), `dd.py ADDR` (diff),
-`score.py ADDR`, `cases.py`, `calldiff.py`, `callers.py`, `frames.py`,
-`alignroots.py`, `ehscan.py`, `placeholder_try.py`, `swaptrial.py`
-(adjacent-statement swaps), `ticktrial.py`, `hctrial.py`.
+## Recent committed work
 
-## Do not repeat
+The 16 local commits since the previous checkpoint cover:
 
-- Statement-swap trials (`swaptrial.py`) over 31 mismatching functions found
-  no gains.
-- `#pragma function(memset)` on other memset users changes nothing.
-- Commutative operand order (`Unpause`, `kill_all_no_set_death`, the y/z
-  reversal in vector sums) and xmm register swaps (`ZunAngle::operator-`,
-  `rotate_points`) did not respond to source order, locals or branch shapes.
-- `0.0` vs `0.0f` literals add no alignment weight; double intrinsics in
-  `run` add none either.
-- `HARNESS_CALLED` on `interrupt_child_and_run` makes the cursor functions
-  inline it; on `update_options` it changes nothing. `update_options` keeps a
-  /GS cookie: a 12-byte local plus a by-value `AnmId` call with a second
-  argument gets one in probes.
-- `run_ex` DELAY/WAIT `or ecx, edx` and `LaserInfiniteInf::run_ex`'s ex/type
-  register swap resist every rewrite tried.
-- `SetVolume`/`SoundBufferEntry::play` tail merges follow the vtable register.
-- Address-taking `get_vm_with_id` (to block interprocedural register use)
-  loses three exact functions and fixes nothing.
-- In `ecl_run`, rewriting the sin/cos/sqrt cases with value locals turns off
-  tail duplication across the whole function.
+- ANM_SELECTED_PLAY, ANM_RESET, ANM_SET_MAIN, ANM_PLAY_ABS,
+  ANM_PLAY_HIGH, ANM_PLAY_ROTATE, ANM_316 and ANM_SWITCH;
+- MOVE_BEZIER, MOVE_VEL, MOVE_VEL_TIME, MOVE_RAND and MOVE_CURVE.
+
+The commits are local checkpoints, not accepted Oracle receipts. Keep future
+commit messages in the user's requested gpt-web: ... format.
+
+## Workflow and retained tools
+
+- Use scripts/repo-python for project scripts and the pinned interpreter.
+- Use scripts/repo-python scripts/build.py for incremental builds.
+- Use .venv/bin/python .analysis/claude-tools/cases.py 0x41dcb0 for the
+  current switch-case diagnostic. It depends on the saved audit to resolve the
+  owner symbol, so refresh that audit before relying on it after annotation or
+  unit-ledger changes.
+- scripts/audit-reference.py refreshes the local strict report;
+  scripts/progress.py and scripts/check-frontier.py require that report to
+  match current inputs.
+- Avoid --clean and whole-project replay for ordinary iterations. The user
+  explicitly prefers affected-owner work and multiple local checkpoints.
+- Keep build/reference-candidate/ intact: its objects, dependencies, PDB,
+  MAP, receipt and symbol-discovery cache support incremental work.
+- Keep resources/th16.exe, .venv/, .tools/wine/, ghidra-project/ and the
+  pinned _reference/johnthreekay-th16/ checkout. See docs/ARTIFACTS.md before
+  any further cleanup.
+- Historical .analysis/claude-tools audit JSON, source snapshots, trial logs
+  and diagnostic binaries are now gzip-compressed. The cleanup index
+  .analysis/cleanup-handoff-20261116.json records hashes and restore metadata;
+  use gzip -dc to restore an individual file. exp.json and cur-audit.json are
+  old audit snapshots, not current results; they remain uncompressed because
+  tryaudit.sh and moved.py read those literal paths. build.log also remains
+  uncompressed as a build-success sentinel.
+- Most generated p/ and fp/ probe outputs were removed; their source probes
+  and generators remain. The two p/mbi.exe and p/mbi.map outputs were retained
+  because no matching C++ source was found.
+
+## Historical findings worth retaining
+
+- Direct calls and __forceinline helpers can change LTCG alignment and
+  inlining; pointer-to-member workarounds often alter register scheduling.
+- Where the original pushes a different constant in each branch before one
+  shared call, preserve whole branch-specific calls rather than computing an
+  argument index arithmetically.
+- Read call arguments into locals in the original order when the call sequence
+  matters. Statement shape, temporary type and local lifetime can change
+  register allocation and frame alignment.
+- COMDAT providers depend on link order; a CRT inline's out-of-line copy may
+  come from the first object whose IL uses it.
+- Intrinsic treatment can fold static initialization; pragma function around
+  the affected operation can restore the original initializer.
+- Dead code can retain EH states and affect frame layout.
+- Historical dead ends and source trials are preserved in the dated .analysis/
+  evidence archives; do not replay their expected counts as if they described
+  this checkpoint.

@@ -4,7 +4,10 @@ Start with [the current handoff](../NEXT_AGENT.md). Every file here is
 evidence that a config file, Oracle review profile or source comment names;
 counts inside them are those of the checkpoint they were written at. Historical
 session logs and source-trial reports were removed on 2026-11-15 and remain in
-Git history. Use `scripts/progress.py` for authoritative totals.
+Git history. scripts/progress.py reports authoritative totals only after
+audit-reference.py has refreshed the input-matched report; it refuses stale
+inputs. The saved report at this handoff is dated 2026-11-15 and predates the
+2026-11-16 source commits.
 
 | Topic | Files |
 | --- | --- |
