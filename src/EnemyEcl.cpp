@@ -888,20 +888,24 @@ int EnemyData::ecl_run_over_300()
             }
         }
 
+        // The two interpolators each read their own duration, then write
+        // initial, duration, method, tangents and goal before resetting.
+        i32 angle_duration = get_int_arg(0);
         angle_i->initial = initial_angle;
-        angle_i->goal = angle;
-        angle_i->end_time = get_int_arg(0);
+        angle_i->end_time = angle_duration;
         angle_i->method = mode;
         angle_i->bezier_1 = 0.0f;
         angle_i->bezier_2 = 0.0f;
+        angle_i->goal = angle;
         angle_i->reset();
 
+        i32 speed_duration = get_int_arg(0);
         speed_i->initial = initial_speed;
-        speed_i->goal = speed;
-        speed_i->end_time = get_int_arg(0);
+        speed_i->end_time = speed_duration;
         speed_i->method = mode;
         speed_i->bezier_1 = 0.0f;
         speed_i->bezier_2 = 0.0f;
+        speed_i->goal = speed;
         speed_i->reset();
 
         pv->flags &= ~0xf;
