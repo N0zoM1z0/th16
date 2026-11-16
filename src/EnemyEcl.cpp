@@ -54,7 +54,7 @@ extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_ptr_alias=?get_float_arg_ptr@EnemyData@@QAEPAMH@Z")
 extern "C" void ecl_anm_delete_vm_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_delete_vm_alias=?delete_vm@AnmManager@@QAEXUAnmId@@@Z")
-extern "C" void ecl_effect_track_alias();
+extern "C" i32 ecl_effect_track_alias(AnmId);
 #pragma comment(linker, "/alternatename:_ecl_effect_track_alias=?track@EffectManager@@QAEHUAnmId@@@Z")
 extern "C" void ecl_anm_create_vm_front_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
@@ -824,16 +824,20 @@ int EnemyData::ecl_run_over_300()
     // anmPlayRotate(file, script, rotation)
     case ECL_OP_ANM_PLAY_ROTATE:
     {
-        AnmId id = create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)], full->context.current_context->get_int_arg(1),
-                                      &final_pos.pos, 0.0f);
-        AnmVm *vm = id.find_or_clear();
+        register i32 id_value = create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)],
+                                          full_owner->context.current_context->get_int_arg(1), &final_pos.pos, 0.0f).id;
+        AnmVm *vm = ((AnmId *)&id_value)->find_or_clear();
         if (vm != NULL)
         {
             vm->entity_pos = final_pos.pos;
             vm->rotation.z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
             vm->flags_lo |= ANM_VM_ROTATION_CHANGED;
         }
-        g_EffectManager->track(id);
+        __asm
+        {
+            push id_value
+            call ecl_effect_track_alias
+        }
         break;
     }
     // anm334(effect)
