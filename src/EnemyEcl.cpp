@@ -1662,23 +1662,7 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         EnemyBulletShooter *shooter = &bullet_props[slot];
-        BulletOffset *offset = &bullet_mgr_offsets[slot];
-        BulletOffset *origin = &bullet_mgr_origins[slot];
-
-        Float3 shot_pos;
-        if (origin->z > ecl_origin_threshold)
-        {
-            shot_pos = Float3(origin->xy.x + offset->xy.x,
-                              origin->xy.y + offset->xy.y, 0.0f);
-        }
-        else
-        {
-            shot_pos = Float3(final_pos.pos.x + offset->xy.x,
-                              final_pos.pos.y + offset->xy.y,
-                              final_pos.pos.z + offset->z);
-        }
-        shooter->pos = shot_pos;
-
+        get_shot_origin(this, slot, &shooter->pos);
         g_BulletManager->et_protect_range = et_protect_range;
         g_BulletManager->shoot_bullets(shooter);
         g_BulletManager->et_protect_range = 0.0f;
