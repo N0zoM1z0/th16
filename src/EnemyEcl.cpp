@@ -563,7 +563,7 @@ int EnemyData::ecl_run_over_300()
     f32 goal_y;
     // The target keeps the owning EnemyInf context in a frame local and
     // reuses it across the large switch rather than reloading this->full.
-    EnemyInf *volatile full_owner = full;
+    register EnemyInf *full_owner = full;
     register EclRawInstr *instr = full_owner->context.current_context->current_instr();
     __asm { lea eax, ecl_stack_reserve }
     switch ((i16)instr->opcode)
@@ -892,7 +892,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_3D_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS_3D ? &abs_pos : &rel_pos;
-        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
+        f32 x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{0});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         f32 z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         volatile f32 *position = &pos_vel->pos.x;
@@ -954,7 +954,7 @@ int EnemyData::ecl_run_over_300()
         const bool use_absolute = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET;
         position_offset = use_absolute ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         position_interp = use_absolute ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
         goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
@@ -996,7 +996,7 @@ int EnemyData::ecl_run_over_300()
         const bool use_absolute = instr->opcode == ECL_OP_MOVE_BEZIER;
         position_offset = use_absolute ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         position_interp = use_absolute ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
         goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         Float3 bezier_1;
         bezier_1.x = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
