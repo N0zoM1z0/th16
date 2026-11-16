@@ -81,8 +81,7 @@ HARNESS_CALLED f32 LTCG_VECTORCALL EclRunContext::get_float_arg(EclFloatArgIndex
     return ins->args[index.value].f;
 }
 
-// TODO: the original computes the entry's value offset (value * 8 + 4) on its own and
-// addresses the type 4 bytes below it; ours folds the 4 into the displacement.
+// Resolves an integer argument that was already read from the bytecode.
 // FUNCTION: TH16 0x473e40
 i32 EclRunContext::get_int_arg_given_value(int index, i32 value)
 {
@@ -91,41 +90,27 @@ i32 EclRunContext::get_int_arg_given_value(int index, i32 value)
     {
         if (value >= 0)
         {
-            __asm
-            {
-                mov eax, [esi + 1010h]
-                lea ecx, [esi + 0ch]
-                add eax, ecx
-                pop esi
-                mov eax, [eax + edx]
-                pop ebp
-                ret 8
-            }
-            __assume(0);
+            return *stack.local_ptr(value);
         }
         if (value <= -1 && value >= -100)
         {
-            // Keep the stack payload offset separate from the frame base, as
-            // the original does; the tag is four bytes before the payload.
-            __asm
+            EclStackEntry *entry = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset) + value;
+            EclStackItem item = entry->value;
+            char type = entry->type;
+            i32 result;
+            if (type == 'f')
             {
-                mov eax, [esi + 100ch]
-                lea ecx, [edx*8]
-                add ecx, 4
-                add eax, ecx
-                mov ecx, [eax + esi + 0ch]
-                mov al, [eax + esi + 8]
-                mov [ebp + 0ch], ecx
-                cmp al, 66h
-                jne ecl_int_arg_value_return
-                cvttss2si ecx, dword ptr [ebp + 0ch]
-            ecl_int_arg_value_return:
-                mov eax, ecx
-                pop esi
-                pop ebp
-                ret 8
+                result = (i32)item.f;
             }
-            __assume(0);
+            else if (type == 'i')
+            {
+                result = item.i;
+            }
+            else
+            {
+                result = item.i;
+            }
+            return result;
         }
         return vm->get_int_global(value);
     }
