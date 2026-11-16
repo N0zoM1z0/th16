@@ -57,8 +57,6 @@ extern "C" i32 ecl_bullet_cancel_radius_alias(Float3 *, i32);
 #pragma comment(linker, "/alternatename:_ecl_bullet_cancel_radius_alias=?cancel_radius@BulletManager@@QAEHPAUD3DXVECTOR3@@MH@Z")
 extern "C" i32 ecl_bullet_cancel_radius_as_bomb_alias(Float3 *, i32);
 #pragma comment(linker, "/alternatename:_ecl_bullet_cancel_radius_as_bomb_alias=?cancel_radius_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@MH@Z")
-extern "C" LaserDataInf *ecl_laser_find_by_id_alias(i32, i32);
-#pragma comment(linker, "/alternatename:_ecl_laser_find_by_id_alias=?find_by_id@LaserManager@@QAEPAVLaserDataInf@@HH@Z")
 extern "C" f32 __vectorcall ecl_enemy_get_float_arg_alias(EnemyData *, EclFloatArgIndex);
 #pragma comment(linker, "/alternatename:ecl_enemy_get_float_arg_alias@@8=?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z")
 extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
@@ -82,16 +80,12 @@ extern "C" void ecl_anm_hide_tree_alias();
 extern "C" i32 ecl_bullet_cancel_rectangle_as_bomb_alias(Float3 *, Float3 *, i32);
 extern "C" i32 ecl_spt_load_sub_by_name_alias();
 #pragma comment(linker, "/alternatename:_ecl_spt_load_sub_by_name_alias=?load_sub_by_name@SptInf@@QAEHPBD@Z")
-extern "C" void ecl_anm_create_vm_alias();
-#pragma comment(linker, "/alternatename:_ecl_anm_create_vm_alias=?create_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@MHH@Z")
 #pragma comment(linker, "/alternatename:_ecl_bullet_cancel_rectangle_as_bomb_alias=?cancel_rectangle_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@0MH@Z")
 
 extern "C" f32 ecl_normalize_angle_alias(f32);
 #pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
 extern "C" i32 ecl_laser_allocate_new_laser_alias(i32, void *);
 #pragma comment(linker, "/alternatename:_ecl_laser_allocate_new_laser_alias=?allocate_new_laser@LaserManager@@QAEHHPAX@Z")
-extern "C" const void *ecl_laser_data_vftable;
-#pragma comment(linker, "/alternatename:_ecl_laser_data_vftable=??_7LaserDataInf@@6B@")
 
 // create_vm, inserted at the front of the world list like create_vm_front
 // (0x426160, which is a copy with pos and rotation folded). LTCG inlined
@@ -730,60 +724,22 @@ int EnemyData::ecl_run_over_300()
         g_EffectManager->track(create_vm_front_at(file, script, &final_pos.pos, 0.0f));
         break;
     }
-    // anmPlayHigh(file, script)
+    // anmPlayHigh(file, script): creates a VM at the enemy's current position.
     case ECL_OP_ANM_PLAY_HIGH:
     {
-        __asm
-        {
-            mov ecx, dword ptr [edx + 0ch]
-            push 1
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            mov esi, eax
-            push 0
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [g_EnemyManager]
-            mov ecx, dword ptr [ecx + eax*4 + 164h]
-            lea eax, [edi + 44h]
-            push ecx
-            push -1
-            push ecx
-            mov dword ptr [esp], 0
-            push eax
-            push esi
-            lea eax, [ebp - 420h]
-            push eax
-            call ecl_anm_create_vm_alias
-            push dword ptr [eax]
-            call ecl_effect_track_alias
-        }
+        i32 script = full->context.current_context->get_int_arg(1);
+        i32 file_index = full->context.current_context->get_int_arg(0);
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[file_index];
+        g_EffectManager->track(file->create_vm(script, &final_pos.pos, 0.0f, -1, 0));
         break;
     }
-    // anmPlayAbs(file, script)
+    // anmPlayAbs(file, script): creates a VM at the origin on the front list.
     case ECL_OP_ANM_PLAY_ABS:
     {
-        __asm
-        {
-            mov ecx, dword ptr [edx + 0ch]
-            push 0
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            mov esi, eax
-            push 1
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            push ecx
-            mov ecx, dword ptr [g_EnemyManager]
-            push -1
-            push eax
-            lea eax, [ebp - 40ch]
-            mov ecx, dword ptr [ecx + esi*4 + 164h]
-            push eax
-            call ecl_anm_create_vm_front_alias
-            push dword ptr [ebp - 40ch]
-            call ecl_effect_track_alias
-        }
+        i32 file_index = full->context.current_context->get_int_arg(0);
+        i32 script = full->context.current_context->get_int_arg(1);
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[file_index];
+        g_EffectManager->track(file->create_vm_front(script, -1, 0));
         break;
     }
     // anm339(file, script, frames): anmPlayAbs, then runs the VM for some
@@ -803,20 +759,18 @@ int EnemyData::ecl_run_over_300()
     // anmPlayRotate(file, script, rotation)
     case ECL_OP_ANM_PLAY_ROTATE:
     {
-        register i32 id_value = create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)],
-                                          full_owner->context.current_context->get_int_arg(1), &final_pos.pos, 0.0f).id;
-        AnmVm *vm = ((AnmId *)&id_value)->find_or_clear();
+        i32 script = full->context.current_context->get_int_arg(1);
+        i32 file_index = full->context.current_context->get_int_arg(0);
+        AnmId id = create_vm_front_at(g_EnemyManager->anim_statement_anms[file_index], script,
+                                      &final_pos.pos, 0.0f);
+        AnmVm *vm = id.find_or_clear();
         if (vm != NULL)
         {
             vm->entity_pos = final_pos.pos;
             vm->rotation.z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
             vm->flags_lo |= ANM_VM_ROTATION_CHANGED;
         }
-        __asm
-        {
-            push id_value
-            call ecl_effect_track_alias
-        }
+        g_EffectManager->track(id);
         break;
     }
     // anm334(effect)
@@ -2611,34 +2565,14 @@ int EnemyData::ecl_run_over_300()
     // laserStEnd(id): cancels every laser with the id.
     case ECL_OP_LASER_ST_END:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        while (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            mov esi, eax
-            test esi, esi
-            je laser_st_end_done
-        laser_st_end_loop:
-            mov edx, dword ptr [esi]
-            mov ecx, esi
-            push 0
-            push 0
-            call dword ptr [edx + 28h]
-            push ecx
-            push 0
-            mov ecx, edi
-            mov dword ptr [esi + 80h], 0
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            mov esi, eax
-            test esi, esi
-            jne laser_st_end_loop
-        laser_st_end_done:
+            laser->cancel(0, 0);
+            laser->id = 0;
+            id = get_int_arg(0);
+            laser = g_LaserManager->find_by_id(id, 0);
         }
         break;
     }
@@ -2646,177 +2580,82 @@ int EnemyData::ecl_run_over_300()
     // laserOffset(id, x, y)
     case ECL_OP_LASER_OFFSET:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        f32 x = get_float_arg(EclFloatArgIndex{1});
+        f32 y = get_float_arg(EclFloatArgIndex{2});
+        if (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            push 1
-            mov ecx, edi
-            mov esi, eax
-            call ecl_enemy_get_float_arg_alias
-            push 2
-            mov ecx, edi
-            movss dword ptr [ebp - 50h], xmm0
-            call ecl_enemy_get_float_arg_alias
-            movss dword ptr [ebp - 4ch], xmm0
-            test esi, esi
-            je laser_offset_done
-            movq xmm0, qword ptr [ebp - 50h]
-            mov dword ptr [ebp - 48h], 0
-            mov eax, dword ptr [ebp - 48h]
-            movq qword ptr [esi + 54h], xmm0
-            mov dword ptr [esi + 5ch], eax
-        laser_offset_done:
+            laser->position = Float3(x, y, 0.0f);
         }
         break;
     }
     // laserTrajectory(id, x, y): infinite lasers only.
     case ECL_OP_LASER_TRAJECTORY:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        f32 x = get_float_arg(EclFloatArgIndex{1});
+        f32 y = get_float_arg(EclFloatArgIndex{2});
+        if (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            push 1
-            mov ecx, edi
-            mov esi, eax
-            call ecl_enemy_get_float_arg_alias
-            push 2
-            mov ecx, edi
-            movss dword ptr [ebp - 50h], xmm0
-            call ecl_enemy_get_float_arg_alias
-            movss dword ptr [ebp - 4ch], xmm0
-            test esi, esi
-            je laser_trajectory_done
-            movq xmm0, qword ptr [ebp - 50h]
-            mov dword ptr [ebp - 48h], 0
-            mov eax, dword ptr [ebp - 48h]
-            movq qword ptr [esi + 5e0h], xmm0
-            mov dword ptr [esi + 5e8h], eax
-        laser_trajectory_done:
+            static_cast<LaserInfiniteInf *>(laser)->inner.velocity = Float3(x, y, 0.0f);
         }
         break;
     }
     // laserStLength(id, length)
     case ECL_OP_LASER_ST_LENGTH:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        if (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            mov esi, eax
-            test esi, esi
-            je laser_st_length_done
-            push 1
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            movss dword ptr [esi + 78h], xmm0
-        laser_st_length_done:
+            laser->length = get_float_arg(EclFloatArgIndex{1});
         }
         break;
     }
     // laserStWidth(id, width)
     case ECL_OP_LASER_ST_WIDTH:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        if (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            mov esi, eax
-            test esi, esi
-            je laser_st_width_done
-            push 1
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            movss dword ptr [esi + 74h], xmm0
-        laser_st_width_done:
+            laser->width = get_float_arg(EclFloatArgIndex{1});
         }
         break;
     }
     // laserStAngle(id, angle)
     case ECL_OP_LASER_ST_ANGLE:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        if (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            mov esi, eax
-            test esi, esi
-            je laser_st_angle_done
-            push 1
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            movss dword ptr [esi + 6ch], xmm0
-        laser_st_angle_done:
+            laser->angle = get_float_arg(EclFloatArgIndex{1});
         }
         break;
     }
     // laserStRotation(id, rotation): infinite lasers only.
     case ECL_OP_LASER_ST_ROTATION:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        if (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            mov esi, eax
-            test esi, esi
-            je laser_st_rotation_done
-            push 1
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            movss dword ptr [esi + 5f0h], xmm0
-        laser_st_rotation_done:
+            static_cast<LaserInfiniteInf *>(laser)->inner.laser_st_rotation =
+                get_float_arg(EclFloatArgIndex{1});
         }
         break;
     }
     // unknown714(id, value): laser method_8.
     case ECL_OP_LASER_714:
     {
-        __asm
+        i32 id = get_int_arg(0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        if (laser != NULL)
         {
-            push ecx
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            push eax
-            call ecl_laser_find_by_id_alias
-            mov esi, eax
-            test esi, esi
-            je laser_714_done
-            push 1
-            mov ecx, edi
-            call ecl_enemy_get_int_arg_alias
-            mov edx, dword ptr [esi]
-            cmp edx, offset ecl_laser_data_vftable
-            je laser_714_done
-            push eax
-            mov ecx, esi
-            call dword ptr [edx + 8]
-        laser_714_done:
+            laser->method_8(get_int_arg(1));
         }
         break;
     }
