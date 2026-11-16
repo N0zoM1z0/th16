@@ -603,7 +603,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // anmSelect(file)
     case ECL_OP_ANM_SELECT:
-        selected_anm_index = full->context.current_context->get_int_arg(0);
+        selected_anm_index = full_owner->context.current_context->get_int_arg(0);
         break;
     // moveSetMirror(mirrored)
     case ECL_OP_MOVE_SET_MIRROR:
