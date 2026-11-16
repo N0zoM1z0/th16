@@ -8,8 +8,8 @@ the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-- main code HEAD entering this handoff: bdf7a7b, natural infinite-laser VM scaling.
-- The branch is 57 commits ahead of origin/main before this note; the worktree
+- main code HEAD entering this handoff: 2e75ebf, vector death animation displacement.
+- The branch is 62 commits ahead of origin/main before this note; the worktree
   is clean before the documentation edit.
 - The historical broad reference audit and frontier metadata are stale for
   these changes. Do not cite their old exactness totals as current.
@@ -303,6 +303,63 @@ ANM random circle and FSET_RAND owners; continue checking the
 natural LaserInfiniteInf::on_tick against the full original
 owner and its relocations. Do not reintroduce ASM or unused
 padding solely to obtain instruction equality.
+
+## ECL method guard, movement reset, and death effect reconstruction
+
+This session made four C++ code checkpoints in the 21 KB
+EnemyData::ecl_run_over_300 owner:
+
+- 04844ae: ECL laser method opcode 714 evaluates argument 1 after the
+  lookup and only invokes the virtual method for non-infinite lasers.
+  Target assembly compares its object's vtable against
+  LaserInfiniteInf::vftable after argument evaluation. The natural
+  representation checks kind != LASER_INFINITE, which corresponds to
+  the four initialized concrete laser kinds. This fixes an omitted
+  behavior guard, not just scheduling. Local block ratio rose from
+  about 0.67 to 0.79; both blocks now have 19 instructions.
+- 47218d2: MOVE_RESET folds the first component of rel_pos into
+  abs_pos with the target-observed source operand order and maintains
+  natural component-wise addition for y and z. Directly after this
+  change the local block ratio was 0.97; after changes elsewhere in
+  the same large owner and a final incremental rebuild it is 0.92.
+  This demonstrates that linked global register scheduling alters
+  these normalized local measurements; do not report 0.97 as the
+  current final score.
+- 76116c4: DIE now calculates vertical distance before horizontal
+  distance, checks the squared distance against the nearby-hit
+  threshold and explicitly chooses the downward fallback angle
+  only in the nearby branch. The local ratio rose from about
+  0.66 to 0.79.
+- 2e75ebf: DIE's distant-hit direction uses a natural Float3
+  difference (final_pos.pos - last_damage_pos), then atan2(y, x).
+  This generated 41 instructions, the same number as the target,
+  and improved local normalized ratio from about 0.79 to 0.98.
+  The remaining normalized difference is an equivalent source
+  addressing form (base+0x48 versus final-position pointer+4);
+  this is not proof of strict byte identity.
+
+Re-ran incremental scripts/repo-python scripts/build.py after the
+last source rollback; the candidate still contains 1166 annotated
+functions. ECL has 174/174 dispatch entries and local scoped ratios
+of approximately 0.79 (opcode 714), 0.92 (MOVE_RESET) and 0.98
+(DIE). The stricter owner/relocation/EH-parent audit remains
+unverified. No full cold replay, padding, inline ASM or push.
+
+Exploratory edits reverted without commits: an explicit local
+timeout index in ECL opcode 521 reduced its ratio; rewriting
+MOVE_SPEED_TIME as a positive branch made no difference;
+replacing LaserInfiniteInf::run_ex's BulletEx pointer with a
+reference made no difference (195-byte target versus 188-byte
+candidate, ratio ~0.77); naming a reusable Float3* for DIE's
+position reduced its local ratio to ~0.88. Keep these observations
+as starting points rather than treating the attempts as progress.
+Preserve the local ignored .analysis/ incremental build logs.
+
+Next work can pursue the large ECL ET_EX and laser-create blocks,
+the separate 14 KB AnmVm::run owner (especially its RAND and
+float-store operations), and natural caller/leaf improvements.
+Do not confuse the previously saved strict-provenance blocker
+with a successful exactness verification.
 
 ## Verification and next actions
 
