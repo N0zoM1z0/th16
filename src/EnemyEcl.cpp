@@ -776,96 +776,53 @@ int EnemyData::ecl_run_over_300()
         g_EffectManager->create_tracked(effect, &final_pos.pos, 0);
         break;
     }
-    // anmSetMain(slot, script)
+    // anmSetMain(slot, script): replace a slot and, for slot 0, establish
+    // the directional main animation and its sprite bounds.
     case ECL_OP_ANM_SET_MAIN:
     {
-        __asm
+        i32 slot = full->context.current_context->get_int_arg(0);
+        i32 script = full->context.current_context->get_int_arg(1);
+
+        g_AnmManager->delete_vm(anm_ids[slot]);
+        anm_ids[slot].id = 0;
+
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        anm_ids[slot] = file->create_vm_front(script, anm_layers + 7, 0);
+        AnmVm *vm = anm_ids[slot].find_or_clear();
+
+        if (slot == 0)
         {
-            mov ecx, dword ptr [edx + 0ch]
-            push 0
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            mov esi, eax
-            push 1
-            mov dword ptr [ebp - 414h], esi
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            push dword ptr [edi + esi*4 + 124h]
-            lea esi, [edi + esi*4]
-            mov dword ptr [ebp - 410h], eax
-            call ecl_anm_delete_vm_alias
-            mov ecx, dword ptr [g_EnemyManager]
-            mov dword ptr [esi + 124h], 0
-            mov eax, dword ptr [edi + 27ch]
-            mov edx, dword ptr [edi + 264h]
-            add eax, 7
-            push ecx
-            push eax
-            push dword ptr [ebp - 410h]
-            mov ecx, dword ptr [ecx + edx*4 + 164h]
-            lea eax, [ebp - 420h]
-            push eax
-            call ecl_anm_create_vm_front_alias
-            lea ecx, [esi + 124h]
-            mov eax, dword ptr [eax]
-            mov dword ptr [esi + 124h], eax
-            call ecl_anm_find_or_clear_alias
-            cmp dword ptr [ebp - 414h], 0
-            jne ecl_anm_set_main_sprite_ready
-            movss xmm0, dword ptr [eax + 74h]
-            mulss xmm0, dword ptr [eax + 54h]
-            movss dword ptr [edi + 3f58h], xmm0
-            movss xmm0, dword ptr [eax + 70h]
-            mulss xmm0, dword ptr [eax + 50h]
-            movss dword ptr [edi + 3f5ch], xmm0
-        ecl_anm_set_main_sprite_ready:
-            test byte ptr [edi + 4060h], 20h
-            je ecl_anm_set_main_visibility_ready
-            lea ecx, [esi + 124h]
-            call ecl_anm_hide_tree_alias
-        ecl_anm_set_main_visibility_ready:
-            cmp dword ptr [ebp - 414h], 0
-            jne ecl_anm_set_main_done
-            mov eax, dword ptr [ebp - 410h]
-            or dword ptr [edi + 4060h], 100000h
-            mov dword ptr [edi + 270h], eax
-            mov dword ptr [edi + 26ch], eax
-            mov eax, dword ptr [edi + 264h]
-            mov dword ptr [edi + 274h], 0
-            mov dword ptr [edi + 268h], eax
-        ecl_anm_set_main_done:
+            final_sprite_size.x = vm->sprite_size.y * vm->scale.y;
+            final_sprite_size.y = vm->sprite_size.x * vm->scale.x;
+        }
+        if (flags_low & ENEMY_FLAG_INTANGIBLE)
+        {
+            anm_ids[slot].hide_tree();
+        }
+        if (slot == 0)
+        {
+            flags_low |= ENEMY_FLAG_DIRECTIONAL_ANM;
+            anm_set_main = script;
+            anm_slot_0_script = script;
+            anm_slot_0_anm_index = selected_anm_index;
+            anm_direction = 0;
         }
         break;
     }
-    // anmReset: back to the main script in slot 0.
+    // anmReset: restore the main script in slot 0 and stop directional
+    // animation switching.
     case ECL_OP_ANM_RESET:
     {
-        u8 reset_created_id_storage[sizeof(AnmId)];
-        __asm
-        {
-            push dword ptr [edi + 124h]
-            call ecl_anm_delete_vm_alias
-            mov eax, dword ptr [g_EnemyManager]
-            mov dword ptr [edi + 124h], 0
-            mov ecx, dword ptr [edi + 264h]
-            mov ecx, dword ptr [eax + ecx*4 + 164h]
-            mov eax, dword ptr [edi + 27ch]
-            push ecx
-            add eax, 7
-            push eax
-            push dword ptr [edi + 270h]
-            lea eax, reset_created_id_storage
-            push eax
-            call ecl_anm_create_vm_front_alias
-            mov eax, dword ptr [eax]
-            mov dword ptr [edi + 124h], eax
-            mov eax, dword ptr [edi + 270h]
-            and dword ptr [edi + 4060h], 0fffeffffh
-            mov dword ptr [edi + 26ch], eax
-            mov eax, dword ptr [edi + 264h]
-            mov dword ptr [edi + 274h], 0
-            mov dword ptr [edi + 268h], eax
-        }
+        g_AnmManager->delete_vm(anm_ids[0]);
+        anm_ids[0].id = 0;
+
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        anm_ids[0] = file->create_vm_front(anm_set_main, anm_layers + 7, 0);
+
+        flags_low &= ~ENEMY_FLAG_DIRECTIONAL_ANM;
+        anm_slot_0_script = anm_set_main;
+        anm_slot_0_anm_index = selected_anm_index;
+        anm_direction = 0;
         break;
     }
     // anmSelectedPlay(slot)
