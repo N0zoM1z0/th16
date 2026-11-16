@@ -802,8 +802,16 @@ i32 AnmVm::run()
             // destinations. Resolve Y before X; both may name VM variables.
             f32 radius = ANM_FLOAT(3);
             f32 angle = ANM_FLOAT(2);
-            f32 *y = ANM_FLOAT_PTR(1);
-            f32 *x = ANM_FLOAT_PTR(0);
+            f32 *y = &ins->args[1].f;
+            if (ANM_IS_VAR(1))
+            {
+                y = get_float_var_ptr(y);
+            }
+            f32 *x = &ins->args[0].f;
+            if (ANM_IS_VAR(0))
+            {
+                x = get_float_var_ptr(x);
+            }
             anm_sincosmul_xy(x, y, angle, radius);
             break;
         }
