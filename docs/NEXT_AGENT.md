@@ -8,8 +8,8 @@ the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-- main code HEAD entering this handoff: f1d808d, ANM randomized-circle operand ordering.
-- The branch is 68 commits ahead of origin/main before this note; the worktree
+- main code HEAD entering this handoff: 1918b7a, radial interpolation vector operand ordering.
+- The branch is 73 commits ahead of origin/main before this note; the worktree
   is clean before the documentation edit.
 - The historical broad reference audit and frontier metadata are stale for
   these changes. Do not cite their old exactness totals as current.
@@ -428,6 +428,86 @@ Next useful targets: reduce the remaining ET_ON branch-local z-store
 mismatch; investigate the four laser creation handlers against their complete
 owners; continue the large ANM run owner (especially modulo/store and
 circle handlers); and pursue the strict EH-parent provenance blocker
+without suppressing its checks.
+
+## Per-laser order, ANM multiply, and interpolation leaf reconstruction
+
+Four natural C++ code checkpoints were added after the previous handoff:
+
+- 04ea9ef: split the laser origin/transform-copy helper into two typed
+  variants because the original has different instruction order by laser
+  kind. Line and infinite lasers test the origin before copying the
+  0xc6-DWORD BulletEx array; beam and curve lasers copy first. The four
+  ECL laser blocks now score about 0.75 (line), 0.72 (infinite),
+  0.71 (beam), and 0.71 (curve) in the local cases.py diagnostic.
+  Compared with the shared original helper, line and infinite improved
+  from about 0.70/0.68; beam/curve retain their earlier score. The
+  dispatcher remains 174/174. This is local codegen evidence, not a
+  strict full-owner receipt.
+- dd9150f: ANM FMUL now resolves its destination as a volatile float
+  pointer, reads the current value once, multiplies by the already-read
+  argument, and writes once. This keeps the natural read/modify/write
+  semantics while forcing the target's register order. The 70-byte
+  case block is now 19/19 instructions and its normalized instruction
+  sequence matches the target; the prior block was about 0.79.
+- 8b419b3: InterpFloat2::step (target 0x00463D40, 757 bytes) now uses
+  vector-first scalar multiplication in the Bezier expression:
+  initial * c_initial + goal * c_goal + bezier_1 * c_bezier_1 +
+  bezier_2 * c_bezier_2. The normalized local sequence rose from
+  about 0.879 to 0.949; candidate is 206 instructions / 755 bytes
+  versus target 207 / 757. The remaining mismatch is mostly Bezier
+  register allocation and a component-load order. Keep this source
+  form; scalar component assignments and vector accumulation
+  temporaries both regressed.
+- 1918b7a: InterpFloat2::step_radial_dist (target 0x00425570,
+  757 bytes) uses the same vector-first Bezier operand order and
+  improves from about 0.879 to 0.949 (206 candidate instructions /
+  755 bytes versus 207 / 757 target).
+
+Additional leaf verification: LaserManager::find_by_id (43 bytes)
+and divide_vec2_by_640_480 (62 bytes) were manually disassembled in
+target and candidate and their instruction sequences match after
+address relocation. AnmVm::get_float_var_ptr has jump-table layout
+that makes the generic cases.py switch parser report misleading
+case counts; its raw code/table must be inspected before treating
+those counts as real differences.
+
+InterpInt3::step (target 0x00464590, 926 bytes) is already very close:
+270 target / 270 candidate instructions, normalized local ratio about
+0.996. The only observed mismatch is a commutative LEA operand order
+(EDX+EBX versus EBX+EDX). Reversing the source addition in its constant
+acceleration branch made the local ratio worse (about 0.974), so that
+experiment was reverted. Do not force this one byte with inline
+assembly or padding.
+
+Final incremental scripts/repo-python scripts/build.py passed and
+produced 1166 annotated functions. The ECL dispatcher remains 174/174.
+Focused final ECL results include DIE 0.98, ET_ON 0.87, ET_EX 0.91,
+and the four laser blocks above. ANM FSET_RAND remains 0.96,
+CIRCLE_POS_RAND 0.90, and FMUL now matches its normalized case.
+The two InterpFloat2 leaves are each about 0.949. No full cold replay,
+new inline assembly, padding, or push was used. Strict owner and
+relocation certification is still blocked by the EH-parent PDB
+ownership preflight described above.
+
+Experiments reverted during this session:
+- Reversing InterpInt3's constant-acceleration vector addition operand
+  order did not fix the sole LEA operand mismatch and reduced the
+  local ratio.
+- InterpFloat2::step with tick_nested rather than tick_goto regressed
+  its owner; keep tick_goto.
+- Scalar per-component Bezier assignments and a chain of vector
+  accumulation temporaries both regressed InterpFloat2::step; keep
+  the vector-first single expression.
+- The ANM FMUL variants using non-volatile destination pointers,
+  reversed operand-resolution order, and volatile scalar temporaries
+  regressed. Keep the volatile destination pointer plus one current
+  value load.
+
+Next work: continue reducing the remaining ET_ON and laser creation
+handler differences in the ECL boss; investigate the remaining Bezier
+register scheduling in both InterpFloat2 leaves; continue ANM run's
+other arithmetic/control-flow cases; and pursue EH-parent PDB provenance
 without suppressing its checks.
 
 ## Verification and next actions
