@@ -825,54 +825,25 @@ int EnemyData::ecl_run_over_300()
         anm_direction = 0;
         break;
     }
-    // anmSelectedPlay(slot)
+    // anmSelectedPlay(slot): play the first alternate script of the current
+    // main ANM, retaining the visibility state of the enemy.
     case ECL_OP_ANM_SELECTED_PLAY:
     {
-        u8 created_id_storage[sizeof(AnmId)];
-        __asm
+        i32 slot = full->context.current_context->get_int_arg(0);
+        g_AnmManager->delete_vm(anm_ids[slot]);
+        anm_ids[slot].id = 0;
+
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        anm_ids[slot] = file->create_vm_front(anm_set_main + 5, anm_layers + 7, 0);
+        AnmVm *vm = anm_ids[slot].find_or_clear();
+        if (slot == 0)
         {
-            mov ecx, dword ptr [edx + 0ch]
-            push 0
-            call ecl_context_get_int_arg_alias
-            mov esi, eax
-            push dword ptr [edi + esi*4 + 124h]
-            lea eax, [edi + esi*4]
-            call ecl_anm_delete_vm_alias
-            mov dword ptr [edi + esi*4 + 124h], 0
-            lea ecx, [edi + esi*4]
-            mov ecx, dword ptr [g_EnemyManager]
-            mov eax, dword ptr [edi + 27ch]
-            mov edx, dword ptr [edi + 264h]
-            add eax, 7
-            push ecx
-            push eax
-            mov eax, dword ptr [edi + 270h]
-            mov ecx, dword ptr [ecx + edx*4 + 164h]
-            add eax, 5
-            push eax
-            lea eax, created_id_storage
-            push eax
-            call ecl_anm_create_vm_front_alias
-            lea ecx, [edi + 124h]
-            lea ecx, [ecx + esi*4]
-            mov eax, dword ptr [eax]
-            mov dword ptr [ecx], eax
-            call ecl_anm_find_or_clear_alias
-            test esi, esi
-            jne ecl_anm_selected_play_vm_ready
-            movss xmm0, dword ptr [eax + 74h]
-            mulss xmm0, dword ptr [eax + 54h]
-            movss dword ptr [edi + 3f58h], xmm0
-            movss xmm0, dword ptr [eax + 70h]
-            mulss xmm0, dword ptr [eax + 50h]
-            movss dword ptr [edi + 3f5ch], xmm0
-        ecl_anm_selected_play_vm_ready:
-            test byte ptr [edi + 4060h], 20h
-            je ecl_anm_selected_play_done
-            lea ecx, [edi + 124h]
-            lea ecx, [ecx + esi*4]
-            call ecl_anm_hide_tree_alias
-        ecl_anm_selected_play_done:
+            final_sprite_size.x = vm->sprite_size.y * vm->scale.y;
+            final_sprite_size.y = vm->sprite_size.x * vm->scale.x;
+        }
+        if (flags_low & ENEMY_FLAG_INTANGIBLE)
+        {
+            anm_ids[slot].hide_tree();
         }
         break;
     }
