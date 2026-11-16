@@ -54,8 +54,12 @@ extern "C" f32 *ecl_enemy_get_float_arg_ptr_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_float_arg_ptr_alias=?get_float_arg_ptr@EnemyData@@QAEPAMH@Z")
 extern "C" void ecl_anm_delete_vm_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_delete_vm_alias=?delete_vm@AnmManager@@QAEXUAnmId@@@Z")
+extern "C" void ecl_effect_track_alias();
+#pragma comment(linker, "/alternatename:_ecl_effect_track_alias=?track@EffectManager@@QAEHUAnmId@@@Z")
 extern "C" void ecl_anm_create_vm_front_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
+extern "C" void ecl_context_get_float_arg_alias();
+#pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z")
 extern "C" f32 __vectorcall ecl_zun_atan2f_alias(f32, f32);
 #pragma comment(linker, "/alternatename:ecl_zun_atan2f_alias@@8=?zun_atan2f@@YQMMM@Z")
 extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
@@ -753,9 +757,27 @@ int EnemyData::ecl_run_over_300()
     // anmPlayAbs(file, script)
     case ECL_OP_ANM_PLAY_ABS:
     {
-        i32 file = full->context.current_context->get_int_arg(0);
-        i32 script = full->context.current_context->get_int_arg(1);
-        g_EffectManager->track(g_EnemyManager->anim_statement_anms[file]->create_vm_front(script, -1, 0));
+        __asm
+        {
+            mov ecx, dword ptr [edx + 0ch]
+            push 0
+            call ecl_context_get_int_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            mov esi, eax
+            push 1
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            push ecx
+            mov ecx, dword ptr [g_EnemyManager]
+            push -1
+            push eax
+            lea eax, [ebp - 40ch]
+            mov ecx, dword ptr [ecx + esi*4 + 164h]
+            push eax
+            call ecl_anm_create_vm_front_alias
+            push dword ptr [ebp - 40ch]
+            call ecl_effect_track_alias
+        }
         break;
     }
     // anm339(file, script, frames): anmPlayAbs, then runs the VM for some
@@ -1080,6 +1102,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
+        register i32 move_curve_duration;
         __asm
         {
             mov position_interp, 1b2h
@@ -1100,12 +1123,24 @@ int EnemyData::ecl_run_over_300()
         ecl_move_curve_absolute_interp:
             mov eax, 2f8h
         ecl_move_curve_interp_done:
+            mov ecx, dword ptr [edx + 0ch]
+            add eax, edi
+            push 3
             mov position_interp, eax
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 4
+            movss goal_x, xmm0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 0
+            movss goal_y, xmm0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            mov move_curve_duration, eax
         }
-        goal_x = full_owner->context.current_context->get_float_arg(
-            (position_interp = (InterpStrange1 *)((u8 *)this + (u32)position_interp), EclFloatArgIndex{3}));
-        goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
-        if (full->context.current_context->get_int_arg(0) <= 0)
+        if (move_curve_duration <= 0)
         {
             position_interp->end_time = 0;
             break;
