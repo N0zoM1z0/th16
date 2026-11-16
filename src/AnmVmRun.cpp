@@ -709,7 +709,9 @@ i32 AnmVm::run()
         case ANM_OP_FMUL:
         {
             f32 value = ANM_FLOAT(1);
-            *ANM_FLOAT_PTR(0) *= value;
+            volatile f32 *destination = ANM_FLOAT_PTR(0);
+            f32 current = *destination;
+            *destination = current * value;
             break;
         }
         case ANM_OP_IDIV:
