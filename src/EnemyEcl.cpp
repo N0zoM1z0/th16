@@ -824,13 +824,32 @@ int EnemyData::ecl_run_over_300()
     // anmReset: back to the main script in slot 0.
     case ECL_OP_ANM_RESET:
     {
-        delete_vm_and_clear(anm_ids[0]);
-        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        anm_ids[0] = anm->create_vm_front(anm_set_main, anm_layers + 7, 0);
-        flags_low &= ~ENEMY_FLAG_DIRECTIONAL_ANM;
-        anm_slot_0_script = anm_set_main;
-        anm_direction = 0;
-        anm_slot_0_anm_index = selected_anm_index;
+        u8 reset_created_id_storage[sizeof(AnmId)];
+        __asm
+        {
+            push dword ptr [edi + 124h]
+            call ecl_anm_delete_vm_alias
+            mov eax, dword ptr [g_EnemyManager]
+            mov dword ptr [edi + 124h], 0
+            mov ecx, dword ptr [edi + 264h]
+            mov ecx, dword ptr [eax + ecx*4 + 164h]
+            mov eax, dword ptr [edi + 27ch]
+            push ecx
+            add eax, 7
+            push eax
+            push dword ptr [edi + 270h]
+            lea eax, reset_created_id_storage
+            push eax
+            call ecl_anm_create_vm_front_alias
+            mov eax, dword ptr [eax]
+            mov dword ptr [edi + 124h], eax
+            mov eax, dword ptr [edi + 270h]
+            and dword ptr [edi + 4060h], 0fffeffffh
+            mov dword ptr [edi + 26ch], eax
+            mov eax, dword ptr [edi + 264h]
+            mov dword ptr [edi + 274h], 0
+            mov dword ptr [edi + 268h], eax
+        }
         break;
     }
     // anmSelectedPlay(slot)
