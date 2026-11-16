@@ -806,7 +806,7 @@ int EnemyData::ecl_run_over_300()
                          : &rel_pos;
         f32 angle = get_float_arg(EclFloatArgIndex{0});
         f32 speed = get_float_arg(EclFloatArgIndex{1});
-        if (angle > -999999.0f)
+        if (angle > -999999.0)
         {
             if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                 (instr->opcode == ECL_OP_MOVE_VEL || instr->opcode == ECL_OP_MOVE_VEL_REL))
@@ -815,7 +815,7 @@ int EnemyData::ecl_run_over_300()
             }
             pv->set_angle(angle);
         }
-        if (speed > -999999.0f)
+        if (speed > -999999.0)
         {
             pv->speed = speed;
         }
