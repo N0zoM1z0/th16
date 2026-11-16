@@ -628,8 +628,8 @@ int EnemyData::ecl_run_over_300()
                                             instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET) ? &abs_pos_i : &rel_pos_i;
 
         f32 goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        f32 goal_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        if (full_owner->context.current_context->get_int_arg(0) <= 0)
+        f32 goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        if (full->context.current_context->get_int_arg(0) <= 0)
         {
             position_interp->end_time = 0;
             break;
@@ -638,21 +638,22 @@ int EnemyData::ecl_run_over_300()
         if (instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET ||
             instr->opcode == ECL_OP_MOVE_POS_REL_TIME_OFFSET)
         {
-            if (flags_low & ENEMY_FLAG_MIRRORED)
+            f32 current_x = pos_vel->pos.x;
+            if (!(flags_low & ENEMY_FLAG_MIRRORED))
             {
-                goal_x = pos_vel->pos.x - goal_x;
+                goal_x = current_x + goal_x;
             }
             else
             {
-                goal_x = pos_vel->pos.x + goal_x;
+                goal_x = current_x - goal_x;
             }
             goal_y = pos_vel->pos.y + goal_y;
         }
 
-        position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
+        position_interp->end_time = full->context.current_context->get_int_arg(0);
         position_interp->bezier_1 = g_zero_vec;
         position_interp->bezier_2 = g_zero_vec;
-        position_interp->method_for_3d = full_owner->context.current_context->get_int_arg(1);
+        position_interp->method_for_3d = full->context.current_context->get_int_arg(1);
         position_interp->flag_1d &= ~1;
         position_interp->initial = pos_vel->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : pos_vel->pos.x,
