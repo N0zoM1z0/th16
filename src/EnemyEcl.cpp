@@ -910,7 +910,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS ? &abs_pos : &rel_pos;
-        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
+        f32 x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{0});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         if (x > -999999.0)
         {
@@ -921,7 +921,7 @@ int EnemyData::ecl_run_over_300()
             pos_vel->pos.y = y;
         }
         pos_vel->flags &= ~0xf;
-        final_pos.pos = rel_pos.pos + abs_pos.pos;
+        final_pos.pos = abs_pos.pos + rel_pos.pos;
         update_final_pos();
         break;
     }
