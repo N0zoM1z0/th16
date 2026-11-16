@@ -28,8 +28,6 @@
 static const f32 ecl_origin_threshold = 0.9f;
 static const f32 ecl_die_distance_squared = 0.2f * 0.2f;
 static const f32 ecl_die_default_angle = -ZUN_PI / 2;
-static const double ecl_keep_coordinate_threshold = -999999.0;
-static const f32 ecl_pi_over_two = ZUN_PI / 2;
 static const f32 ecl_move_rand_quarter = 0.25f;
 static const f32 ecl_move_rand_third = 3.0f;
 static const f32 ecl_move_rand_pi = ZUN_PI;
@@ -41,38 +39,6 @@ static const f32 ecl_move_rand_neg_half_pi_low = -ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_neg_half_pi_high = -ZUN_PI / 2 + 0.05f;
 static const f32 ecl_move_rand_pos_half_pi_low = ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_pos_half_pi_high = ZUN_PI / 2 + 0.05f;
-static const f32 ecl_pi_value = ZUN_PI;
-static const f32 ecl_two_pi_value = ZUN_2PI;
-extern "C" void *ecl_memset_alias(void *, i32, size_t);
-extern "C" void ecl_laser_infinite_inner_ctor_alias(void *);
-#pragma comment(linker, "/alternatename:_ecl_laser_infinite_inner_ctor_alias=??0LaserInfiniteInner@@QAE@XZ")
-#pragma comment(linker, "/alternatename:_ecl_memset_alias=_memset")
-extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
-#pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
-extern "C" i32 ecl_context_get_int_arg_alias(i32);
-#pragma comment(linker, "/alternatename:_ecl_context_get_int_arg_alias=?get_int_arg@EclRunContext@@QAEHH@Z")
-extern "C" f32 __vectorcall ecl_enemy_get_float_arg_alias(EnemyData *, EclFloatArgIndex);
-#pragma comment(linker, "/alternatename:ecl_enemy_get_float_arg_alias@@8=?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z")
-extern "C" void ecl_anm_delete_vm_alias();
-extern "C" void ecl_anm_interrupt_tree_alias();
-#pragma comment(linker, "/alternatename:_ecl_anm_interrupt_tree_alias=?interrupt_tree@AnmManager@@SGXUAnmId@@H@Z")
-#pragma comment(linker, "/alternatename:_ecl_anm_delete_vm_alias=?delete_vm@AnmManager@@QAEXUAnmId@@@Z")
-extern "C" i32 ecl_effect_track_alias(AnmId);
-#pragma comment(linker, "/alternatename:_ecl_effect_track_alias=?track@EffectManager@@QAEHUAnmId@@@Z")
-extern "C" void ecl_anm_create_vm_front_alias();
-#pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
-extern "C" void ecl_context_get_float_arg_alias();
-#pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z")
-extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
-extern "C" void ecl_anm_hide_tree_alias();
-#pragma comment(linker, "/alternatename:_ecl_anm_hide_tree_alias=?hide_tree@AnmId@@QAEXXZ")
-#pragma comment(linker, "/alternatename:_ecl_anm_find_or_clear_alias=?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ")
-
-extern "C" f32 ecl_normalize_angle_alias(f32);
-#pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
-extern "C" i32 ecl_laser_allocate_new_laser_alias(i32, void *);
-#pragma comment(linker, "/alternatename:_ecl_laser_allocate_new_laser_alias=?allocate_new_laser@LaserManager@@QAEHHPAX@Z")
-
 // create_vm, inserted at the front of the world list like create_vm_front
 // (0x426160, which is a copy with pos and rotation folded). LTCG inlined
 // this into the anmPlay instructions.
@@ -229,346 +195,117 @@ static inline void ecl_run_vm(AnmVm *vm)
 // The laser instructions and angleToPlayer, as forceinline helpers: the
 // original has them inline in ecl_run_over_300.
 
-// laserOn(et): a line laser from the shooter's settings.
+// The four ECL laser creation commands use the shooter's offset, or the
+// explicitly selected absolute origin when it has been enabled.
+static __forceinline Float3 ecl_laser_start_pos(EnemyData *enemy, i32 slot)
+{
+    const BulletOffset &offset = enemy->bullet_mgr_offsets[slot];
+    const BulletOffset &origin = enemy->bullet_mgr_origins[slot];
+    if (origin.z > ecl_origin_threshold)
+    {
+        return Float3(origin.xy.x + offset.xy.x, origin.xy.y + offset.xy.y, 0.0f);
+    }
+    return Float3(offset.xy.x + enemy->final_pos.pos.x,
+                  offset.xy.y + enemy->final_pos.pos.y,
+                  offset.z + enemy->final_pos.pos.z);
+}
+
+// laserOn(et): create a straight laser from a shooter.
 static __forceinline void ecl_laser_on(EnemyData *enemy)
 {
-    __asm
-    {
-        push 358h
-        lea eax, [ebp - 3e8h]
-        push 0
-        push eax
-        call ecl_memset_alias
-        add esp, 0ch
-        mov ecx, edi
-        push 0
-        call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 0b0h]
-        lea esi, [edi + 5c0h]
-        mov dword ptr [ebp - 40ch], eax
-        lea edi, [ebp - 3b0h]
-        lea ecx, [eax*8]
-        sub ecx, eax
-        lea eax, [eax + eax*2]
-        movss xmm0, dword ptr [edx + eax*4 + 3ea0h]
-        mov eax, dword ptr [ebp - 40ch]
-        shl ecx, 7
-        add esi, ecx
-        mov dword ptr [ebp - 420h], ecx
-        comiss xmm0, ecl_origin_threshold
-        mov ecx, 0c6h
-        lea eax, [eax + eax*2]
-        rep movsd
-        movss xmm1, dword ptr [edx + eax*4 + 3ddch]
-        jbe laser_on_relative_origin
-        movss xmm2, dword ptr [edx + eax*4 + 3e98h]
-        addss xmm2, dword ptr [edx + eax*4 + 3dd8h]
-        addss xmm1, dword ptr [edx + eax*4 + 3e9ch]
-        mov dword ptr [ebp - 3e0h], 0
-        jmp laser_on_origin_ready
-    laser_on_relative_origin:
-        movss xmm0, dword ptr [edx + eax*4 + 3de0h]
-        addss xmm0, dword ptr [edx + 4ch]
-        movss xmm2, dword ptr [edx + eax*4 + 3dd8h]
-        addss xmm2, dword ptr [edx + 44h]
-        addss xmm1, dword ptr [edx + 48h]
-        movss dword ptr [ebp - 440h], xmm0
-        mov eax, dword ptr [ebp - 440h]
-        mov dword ptr [ebp - 3e0h], eax
-    laser_on_origin_ready:
-        mov esi, dword ptr [ebp - 420h]
-        unpcklps xmm2, xmm1
-        movq qword ptr [ebp - 3e8h], xmm2
-        mov eax, dword ptr [esi + edx + 598h]
-        movss xmm0, dword ptr [esi + edx + 5ach]
-        mov dword ptr [ebp - 3c4h], eax
-        mov eax, dword ptr [esi + edx + 59ch]
-        mov dword ptr [ebp - 3c0h], eax
-        call ecl_normalize_angle_alias
-        mov eax, dword ptr [esi + edx + 8f8h]
-        movss dword ptr [ebp - 3dch], xmm0
-        or eax, 1
-        movss xmm0, dword ptr [esi + edx + 5b4h]
-        movss dword ptr [ebp - 3c8h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5a0h]
-        movss dword ptr [ebp - 3d4h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5a4h]
-        mov dword ptr [ebp - 3b4h], eax
-        mov eax, dword ptr [esi + edx + 908h]
-        movss dword ptr [ebp - 3d8h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5a8h]
-        mov dword ptr [ebp - 98h], eax
-        mov eax, dword ptr [esi + edx + 90ch]
-        movss dword ptr [ebp - 3d0h], xmm0
-        movss xmm0, dword ptr [esi + edx + 8d8h]
-        mov dword ptr [ebp - 94h], eax
-        lea eax, [ebp - 3e8h]
-        movss dword ptr [ebp - 3cch], xmm0
-        movss xmm0, dword ptr [esi + edx + 5bch]
-        push eax
-        push 0
-        movss dword ptr [ebp - 3bch], xmm0
-        call ecl_laser_allocate_new_laser_alias
-    }
+    LaserLineInner params;
+    i32 slot = enemy->get_int_arg(0);
+    const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
+    memcpy(params.ex, shooter.ex, sizeof(params.ex));
+    params.start_pos = ecl_laser_start_pos(enemy, slot);
+    params.ang_aim = normalize_angle(shooter.ang_aim);
+    params.laser_new_arg_2 = shooter.pos.y;
+    params.laser_new_arg_1 = shooter.pos.x;
+    params.laser_new_arg_3 = shooter.pos.z;
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.speed = shooter.spd1;
+    params.bullet_type = shooter.type;
+    params.bullet_color = shooter.color;
+    params.distance = shooter.distance;
+    params.flags = shooter.flags | 1;
+    params.shot_sfx = shooter.shot_sfx;
+    params.shot_transform_sfx = shooter.shot_transform_sfx;
+    g_LaserManager->allocate_new_laser(LASER_LINE, &params);
 }
 
-// laserStOn(et, a): an infinite laser.
+// laserStOn(et, a): create an infinite laser with the shooter's timing.
 static __forceinline void ecl_laser_st_on(EnemyData *enemy)
 {
-    __asm
-    {
-        lea ecx, [ebp - 408h]
-        call ecl_laser_infinite_inner_ctor_alias
-        push 0
-        mov ecx, edi
-        call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 0b0h]
-        lea esi, [edi + 5c0h]
-        mov dword ptr [ebp - 40ch], eax
-        lea edi, [ebp - 3a8h]
-        lea ecx, [eax*8]
-        sub ecx, eax
-        lea eax, [eax + eax*2]
-        movss xmm0, dword ptr [edx + eax*4 + 3ea0h]
-        mov eax, dword ptr [ebp - 40ch]
-        shl ecx, 7
-        add esi, ecx
-        mov dword ptr [ebp - 420h], ecx
-        comiss xmm0, ecl_origin_threshold
-        mov ecx, 0c6h
-        lea eax, [eax + eax*2]
-        rep movsd
-        movss xmm1, dword ptr [edx + eax*4 + 3ddch]
-        jbe laser_st_on_relative_origin
-        movss xmm2, dword ptr [edx + eax*4 + 3e98h]
-        addss xmm2, dword ptr [edx + eax*4 + 3dd8h]
-        addss xmm1, dword ptr [edx + eax*4 + 3e9ch]
-        mov dword ptr [ebp - 400h], 0
-        jmp laser_st_on_origin_ready
-    laser_st_on_relative_origin:
-        movss xmm0, dword ptr [edx + eax*4 + 3de0h]
-        addss xmm0, dword ptr [edx + 4ch]
-        movss xmm2, dword ptr [edx + eax*4 + 3dd8h]
-        addss xmm2, dword ptr [edx + 44h]
-        addss xmm1, dword ptr [edx + 48h]
-        movss dword ptr [ebp - 440h], xmm0
-        mov eax, dword ptr [ebp - 440h]
-        mov dword ptr [ebp - 400h], eax
-    laser_st_on_origin_ready:
-        mov esi, dword ptr [ebp - 420h]
-        unpcklps xmm2, xmm1
-        movq qword ptr [ebp - 408h], xmm2
-        mov eax, dword ptr [esi + edx + 598h]
-        movss xmm0, dword ptr [esi + edx + 5ach]
-        mov dword ptr [ebp - 3b4h], eax
-        mov eax, dword ptr [esi + edx + 59ch]
-        mov dword ptr [ebp - 3b0h], eax
-        call ecl_normalize_angle_alias
-        mov eax, dword ptr [esi + edx + 8e8h]
-        mov ecx, edx
-        mov dword ptr [ebp - 3d8h], eax
-        mov eax, dword ptr [esi + edx + 8ech]
-        movss dword ptr [ebp - 3f0h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5b4h]
-        mov dword ptr [ebp - 3d4h], eax
-        mov eax, dword ptr [esi + edx + 8f0h]
-        movss dword ptr [ebp - 3dch], xmm0
-        movss xmm0, dword ptr [esi + edx + 5a0h]
-        mov dword ptr [ebp - 3d0h], eax
-        mov eax, dword ptr [esi + edx + 8f4h]
-        mov dword ptr [ebp - 3cch], eax
-        mov eax, dword ptr [esi + edx + 8f8h]
-        movss dword ptr [ebp - 3e4h], xmm0
-        or eax, 2
-        movss xmm0, dword ptr [esi + edx + 5a4h]
-        movss dword ptr [ebp - 3e8h], xmm0
-        movss xmm0, dword ptr [esi + edx + 8d8h]
-        mov dword ptr [ebp - 3ach], eax
-        mov eax, dword ptr [esi + edx + 908h]
-        movss dword ptr [ebp - 3e0h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5bch]
-        mov dword ptr [ebp - 3c8h], eax
-        mov eax, dword ptr [esi + edx + 90ch]
-        push 1
-        mov dword ptr [ebp - 3c4h], eax
-        movss dword ptr [ebp - 3bch], xmm0
-        call ecl_enemy_get_int_arg_alias
-        mov dword ptr [ebp - 3c0h], eax
-        lea eax, [ebp - 408h]
-        push eax
-        push 1
-        call ecl_laser_allocate_new_laser_alias
-    }
+    LaserInfiniteInner params;
+    i32 slot = enemy->get_int_arg(0);
+    const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
+    memcpy(params.ex, shooter.ex, sizeof(params.ex));
+    params.start_pos = ecl_laser_start_pos(enemy, slot);
+    params.ang_aim = normalize_angle(shooter.ang_aim);
+    params.laser_new_arg_2 = shooter.pos.y;
+    params.laser_new_arg_1 = shooter.pos.x;
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.speed = shooter.spd1;
+    params.start_time = shooter.laser_timing[0];
+    params.expand_time = shooter.laser_timing[1];
+    params.duration = shooter.laser_timing[2];
+    params.shrink_time = shooter.laser_timing[3];
+    params.shot_sfx = shooter.shot_sfx;
+    params.shot_transform_sfx = shooter.shot_transform_sfx;
+    params.laser_st_on_arg_1 = enemy->get_int_arg(1);
+    params.distance = shooter.distance;
+    params.type = shooter.type;
+    params.color = shooter.color;
+    params.flags = shooter.flags | 2;
+    g_LaserManager->allocate_new_laser(LASER_INFINITE, &params);
 }
 
-// A beam laser (ExpHP: unknown713).
+// A beam laser (ECL 713), with the id provided as the second argument.
 static __forceinline void ecl_laser_beam_on(EnemyData *enemy)
 {
-    __asm
-    {
-        push 354h
-        lea eax, [ebp - 3e4h]
-        push 0
-        push eax
-        call ecl_memset_alias
-        add esp, 0ch
-        mov ecx, edi
-        push 0
-        call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 0b0h]
-        lea esi, [edi + 5c0h]
-        mov ecx, eax
-        lea edi, [ebp - 3a8h]
-        mov dword ptr [ebp - 420h], ecx
-        lea eax, [ecx*8]
-        sub eax, ecx
-        mov ecx, 0c6h
-        shl eax, 7
-        add esi, eax
-        mov dword ptr [ebp - 41ch], eax
-        rep movsd
-        mov ecx, dword ptr [ebp - 420h]
-        lea eax, [ecx + ecx*2]
-        movss xmm0, dword ptr [edx + eax*4 + 3ea0h]
-        lea eax, [ecx + ecx*2]
-        comiss xmm0, ecl_origin_threshold
-        movss xmm2, dword ptr [edx + eax*4 + 3dd8h]
-        movss xmm1, dword ptr [edx + eax*4 + 3ddch]
-        jbe laser_beam_relative_origin
-        addss xmm2, dword ptr [edx + eax*4 + 3e98h]
-        addss xmm1, dword ptr [edx + eax*4 + 3e9ch]
-        mov dword ptr [ebp - 3dch], 0
-        jmp laser_beam_origin_ready
-    laser_beam_relative_origin:
-        movss xmm0, dword ptr [edx + eax*4 + 3de0h]
-        addss xmm0, dword ptr [edx + 4ch]
-        addss xmm2, dword ptr [edx + 44h]
-        addss xmm1, dword ptr [edx + 48h]
-        movss dword ptr [ebp - 440h], xmm0
-        mov eax, dword ptr [ebp - 440h]
-        mov dword ptr [ebp - 3dch], eax
-    laser_beam_origin_ready:
-        mov esi, dword ptr [ebp - 41ch]
-        unpcklps xmm2, xmm1
-        movq qword ptr [ebp - 3e4h], xmm2
-        mov eax, dword ptr [esi + edx + 59ch]
-        movss xmm0, dword ptr [esi + edx + 5ach]
-        mov dword ptr [ebp - 3b8h], eax
-        call ecl_normalize_angle_alias
-        mov eax, dword ptr [esi + edx + 8e8h]
-        mov ecx, edx
-        movss dword ptr [ebp - 3cch], xmm0
-        movss xmm0, dword ptr [esi + edx + 8d8h]
-        movss dword ptr [ebp - 3c0h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5a8h]
-        movss dword ptr [ebp - 3c4h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5bch]
-        push 1
-        mov dword ptr [ebp - 3b0h], eax
-        movss dword ptr [ebp - 3b4h], xmm0
-        call ecl_enemy_get_int_arg_alias
-        mov dword ptr [ebp - 3bch], eax
-        lea eax, [ebp - 3e4h]
-        push eax
-        push 3
-        call ecl_laser_allocate_new_laser_alias
-    }
+    LaserBeamInner params;
+    i32 slot = enemy->get_int_arg(0);
+    const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
+    memcpy(params.ex, shooter.ex, sizeof(params.ex));
+    params.start_pos = ecl_laser_start_pos(enemy, slot);
+    params.ang_aim = normalize_angle(shooter.ang_aim);
+    params.length = shooter.pos.z;
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.color = shooter.color;
+    params.distance = shooter.distance;
+    params.timing = shooter.laser_timing[0];
+    params.id = enemy->get_int_arg(1);
+    g_LaserManager->allocate_new_laser(LASER_BEAM, &params);
 }
 
-// laserCuOn(et): a curvy laser.
+// laserCuOn(et): a curvy laser carrying the shooter's transform sequence.
 static __forceinline void ecl_laser_cu_on(EnemyData *enemy)
 {
-    __asm
-    {
-        push 358h
-        lea eax, [ebp - 3e8h]
-        push 0
-        push eax
-        call ecl_memset_alias
-        add esp, 0ch
-        mov ecx, edi
-        push 0
-        call ecl_enemy_get_int_arg_alias
-        mov edx, dword ptr [ebp - 0b0h]
-        lea esi, [edi + 5c0h]
-        mov dword ptr [ebp - 40ch], eax
-        lea edi, [ebp - 3bch]
-        lea ecx, [eax*8]
-        sub ecx, eax
-        lea eax, [eax + eax*2]
-        movss xmm0, dword ptr [edx + eax*4 + 3ea0h]
-        mov eax, dword ptr [ebp - 40ch]
-        shl ecx, 7
-        add esi, ecx
-        mov dword ptr [ebp - 420h], ecx
-        comiss xmm0, ecl_origin_threshold
-        mov ecx, 0c6h
-        lea eax, [eax + eax*2]
-        rep movsd
-        movss xmm1, dword ptr [edx + eax*4 + 3ddch]
-        jbe laser_curve_relative_origin
-        movss xmm2, dword ptr [edx + eax*4 + 3e98h]
-        addss xmm2, dword ptr [edx + eax*4 + 3dd8h]
-        addss xmm1, dword ptr [edx + eax*4 + 3e9ch]
-        mov dword ptr [ebp - 3e0h], 0
-        jmp laser_curve_origin_ready
-    laser_curve_relative_origin:
-        movss xmm0, dword ptr [edx + eax*4 + 3de0h]
-        addss xmm0, dword ptr [edx + 4ch]
-        movss xmm2, dword ptr [edx + eax*4 + 3dd8h]
-        addss xmm2, dword ptr [edx + 44h]
-        addss xmm1, dword ptr [edx + 48h]
-        movss dword ptr [ebp - 440h], xmm0
-        mov eax, dword ptr [ebp - 440h]
-        mov dword ptr [ebp - 3e0h], eax
-    laser_curve_origin_ready:
-        mov esi, dword ptr [ebp - 420h]
-        unpcklps xmm2, xmm1
-        movq qword ptr [ebp - 3e8h], xmm2
-        mov eax, dword ptr [esi + edx + 598h]
-        movss xmm0, dword ptr [esi + edx + 5ach]
-        mov dword ptr [ebp - 3d0h], eax
-        mov eax, dword ptr [esi + edx + 59ch]
-        mov dword ptr [ebp - 3cch], eax
-        call ecl_normalize_angle_alias
-        mov eax, dword ptr [esi + edx + 8e8h]
-        or dword ptr [ebp - 3c0h], 1
-        mov dword ptr [ebp - 3c8h], eax
-        mov eax, dword ptr [esi + edx + 908h]
-        movss dword ptr [ebp - 3dch], xmm0
-        movss xmm0, dword ptr [esi + edx + 5b4h]
-        mov dword ptr [ebp - 0a4h], eax
-        mov eax, dword ptr [esi + edx + 90ch]
-        movss dword ptr [ebp - 3d4h], xmm0
-        movss xmm0, dword ptr [esi + edx + 8d8h]
-        mov dword ptr [ebp - 0a0h], eax
-        lea eax, [ebp - 3e8h]
-        movss dword ptr [ebp - 3d8h], xmm0
-        movss xmm0, dword ptr [esi + edx + 5bch]
-        push eax
-        push 2
-        movss dword ptr [ebp - 3c4h], xmm0
-        call ecl_laser_allocate_new_laser_alias
-    }
+    LaserCurveInner params;
+    i32 slot = enemy->get_int_arg(0);
+    const EnemyBulletShooter &shooter = enemy->bullet_props[slot];
+    memcpy(params.ex, shooter.ex, sizeof(params.ex));
+    params.start_pos = ecl_laser_start_pos(enemy, slot);
+    params.ang_aim = normalize_angle(shooter.ang_aim);
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.speed = shooter.spd1;
+    params.type = shooter.type;
+    params.color = shooter.color;
+    params.segment_count = shooter.laser_timing[0];
+    params.distance = shooter.distance;
+    params.unk_28 |= 1;
+    params.shot_sfx = shooter.shot_sfx;
+    params.shot_transform_sfx = shooter.shot_transform_sfx;
+    g_LaserManager->allocate_new_laser(LASER_CURVE, &params);
 }
 
-// TODO: the target allocates a 0x478-byte frame; the current candidate allocates
-// 0x474 bytes, and the prologue plus several branch register assignments still
-// differ. Explicit argument reads and x86 sequences are retained where they
-// preserve observed getter order, stack slots and register handoffs; MOVE_VEL_TIME
-// is now spelled out directly rather than relying on LTCG's former inline budget.
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {
-    // The original dispatch frame owns the raw laser parameter blocks below.
-    // Keep their backing stack range reserved even though the fields are written
-    // by inline assembly rather than C++ locals.
-    u8 ecl_stack_reserve[0x374];
     // The target keeps the owning EnemyInf context in a frame local and
     // reuses it across the large switch rather than reloading this->full.
     EnemyInf *full_owner = full;
     register EclRawInstr *instr = full_owner->context.current_context->current_instr();
-    __asm { lea eax, ecl_stack_reserve }
     switch ((i16)instr->opcode)
     {
     // enmCreateF and its variants: only without a boss.
