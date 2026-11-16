@@ -51,12 +51,6 @@ extern "C" i32 ecl_enemy_get_int_arg_alias(EnemyData *, i32);
 #pragma comment(linker, "/alternatename:_ecl_enemy_get_int_arg_alias=?get_int_arg@EnemyData@@QAEHH@Z")
 extern "C" i32 ecl_context_get_int_arg_alias(i32);
 #pragma comment(linker, "/alternatename:_ecl_context_get_int_arg_alias=?get_int_arg@EclRunContext@@QAEHH@Z")
-extern "C" i32 ecl_laser_cancel_in_radius_alias(Float3 *, i32, i32);
-#pragma comment(linker, "/alternatename:_ecl_laser_cancel_in_radius_alias=?cancel_in_radius@LaserManager@@QAEHPAUD3DXVECTOR3@@MHH@Z")
-extern "C" i32 ecl_bullet_cancel_radius_alias(Float3 *, i32);
-#pragma comment(linker, "/alternatename:_ecl_bullet_cancel_radius_alias=?cancel_radius@BulletManager@@QAEHPAUD3DXVECTOR3@@MH@Z")
-extern "C" i32 ecl_bullet_cancel_radius_as_bomb_alias(Float3 *, i32);
-#pragma comment(linker, "/alternatename:_ecl_bullet_cancel_radius_as_bomb_alias=?cancel_radius_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@MH@Z")
 extern "C" f32 __vectorcall ecl_enemy_get_float_arg_alias(EnemyData *, EclFloatArgIndex);
 #pragma comment(linker, "/alternatename:ecl_enemy_get_float_arg_alias@@8=?get_float_arg@EnemyData@@QAQMUEclFloatArgIndex@@@Z")
 extern "C" void ecl_anm_delete_vm_alias();
@@ -73,10 +67,8 @@ extern "C" AnmVm *ecl_anm_find_or_clear_alias(AnmId *);
 extern "C" void ecl_anm_hide_tree_alias();
 #pragma comment(linker, "/alternatename:_ecl_anm_hide_tree_alias=?hide_tree@AnmId@@QAEXXZ")
 #pragma comment(linker, "/alternatename:_ecl_anm_find_or_clear_alias=?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ")
-extern "C" i32 ecl_bullet_cancel_rectangle_as_bomb_alias(Float3 *, Float3 *, i32);
 extern "C" i32 ecl_spt_load_sub_by_name_alias();
 #pragma comment(linker, "/alternatename:_ecl_spt_load_sub_by_name_alias=?load_sub_by_name@SptInf@@QAEHPBD@Z")
-#pragma comment(linker, "/alternatename:_ecl_bullet_cancel_rectangle_as_bomb_alias=?cancel_rectangle_as_bomb@BulletManager@@QAEHPAUD3DXVECTOR3@@0MH@Z")
 
 extern "C" f32 ecl_normalize_angle_alias(f32);
 #pragma comment(linker, "/alternatename:_ecl_normalize_angle_alias=?normalize_angle@@YQMM@Z")
@@ -2536,123 +2528,48 @@ int EnemyData::ecl_run_over_300()
         }
         break;
     }
-    // etCancel(radius): cancels bullets and lasers around the enemy into
-    // items.
+    // etCancel(radius): cancel nearby bullets and lasers in mode 1.
     case ECL_OP_ET_CANCEL:
     {
-        f32 radius;
-        __asm
-        {
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            push 1
-            lea esi, [edi + 44h]
-            movss dword ptr radius, xmm0
-            push esi
-            movaps xmm2, xmm0
-            call ecl_bullet_cancel_radius_alias
-            movss xmm2, dword ptr radius
-            push 1
-            push 1
-            push esi
-            call ecl_laser_cancel_in_radius_alias
-        }
+        f32 radius = get_float_arg(EclFloatArgIndex{0});
+        g_BulletManager->cancel_radius(&final_pos.pos, radius, 1);
+        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 1, 1);
         break;
     }
-    // hitboxRect(w, h): a rectangular bullet-cancelling hitbox, rotated like
-    // the enemy's main sprite.
-    case ECL_OP_HITBOX_RECT:
-    {
-        __asm
-        {
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            push 1
-            mov ecx, edi
-            movss dword ptr [ebp - 78h], xmm0
-            call ecl_enemy_get_float_arg_alias
-            lea ecx, [edi + 124h]
-            movss dword ptr [ebp - 74h], xmm0
-            call ecl_anm_find_or_clear_alias
-            push 1
-            lea ecx, [ebp - 78h]
-            push ecx
-            movss xmm3, dword ptr [eax + 40h]
-            lea ecx, [edi + 44h]
-            push ecx
-            call ecl_bullet_cancel_rectangle_as_bomb_alias
-        }
-        break;
-    }
-    // etClear(radius): the same without items.
+    // etClear(radius): same area, but no cancel items.
     case ECL_OP_ET_CLEAR:
     {
-        f32 radius;
-        __asm
-        {
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            push 0
-            lea esi, [edi + 44h]
-            movss dword ptr radius, xmm0
-            push esi
-            movaps xmm2, xmm0
-            call ecl_bullet_cancel_radius_alias
-            movss xmm2, dword ptr radius
-            push 1
-            push 0
-            push esi
-            call ecl_laser_cancel_in_radius_alias
-        }
+        f32 radius = get_float_arg(EclFloatArgIndex{0});
+        g_BulletManager->cancel_radius(&final_pos.pos, radius, 0);
+        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 0, 1);
         break;
     }
-    // etCancel2(radius): etCancel that also takes protected bullets.
+    // etCancel2(radius): use the bullet cancel-as-bomb path.
     case ECL_OP_ET_CANCEL2:
     {
-        f32 radius;
-        __asm
-        {
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            push 1
-            lea esi, [edi + 44h]
-            movss dword ptr radius, xmm0
-            push esi
-            movaps xmm2, xmm0
-            call ecl_bullet_cancel_radius_as_bomb_alias
-            movss xmm2, dword ptr radius
-            push 1
-            push 1
-            push esi
-            call ecl_laser_cancel_in_radius_alias
-        }
+        f32 radius = get_float_arg(EclFloatArgIndex{0});
+        g_BulletManager->cancel_radius_as_bomb(&final_pos.pos, radius, 1);
+        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 1, 1);
         break;
     }
-    // etClear2(radius)
+    // etClear2(radius): protected-bullet variant without items.
     case ECL_OP_ET_CLEAR2:
     {
-        f32 radius;
-        __asm
-        {
-            push 0
-            mov ecx, edi
-            call ecl_enemy_get_float_arg_alias
-            push 0
-            lea esi, [edi + 44h]
-            movss dword ptr radius, xmm0
-            push esi
-            movaps xmm2, xmm0
-            call ecl_bullet_cancel_radius_as_bomb_alias
-            movss xmm2, dword ptr radius
-            push 1
-            push 0
-            push esi
-            call ecl_laser_cancel_in_radius_alias
-        }
+        f32 radius = get_float_arg(EclFloatArgIndex{0});
+        g_BulletManager->cancel_radius_as_bomb(&final_pos.pos, radius, 0);
+        g_LaserManager->cancel_in_radius(&final_pos.pos, radius, 0, 1);
+        break;
+    }
+    // hitboxRect(w, h): rectangular cancellation rotated with the enemy's
+    // main animation.
+    case ECL_OP_HITBOX_RECT:
+    {
+        f32 width = get_float_arg(EclFloatArgIndex{0});
+        f32 height = get_float_arg(EclFloatArgIndex{1});
+        Float3 size(width, height, 0.0f);
+        AnmVm *main_vm = anm_ids[0].find_or_clear();
+        g_BulletManager->cancel_rectangle_as_bomb(&final_pos.pos, &size,
+                                                  main_vm->rotation.z, 1);
         break;
     }
     // setChapter(chapter)
