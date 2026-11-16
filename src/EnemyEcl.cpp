@@ -26,6 +26,12 @@
 #include "ZunAsm.h"
 #include "ZunMath.h"
 
+static_assert(sizeof(BulletEx) == 0x2c, "ECL transform stride");
+static_assert(sizeof(EnemyBulletShooter) == 0x380, "ECL shooter stride");
+static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array offset");
+static_assert(offsetof(EnemyData, bullet_props) + offsetof(EnemyBulletShooter, ex) == 0x5c0,
+              "ECL transform array base");
+
 static const f32 ecl_origin_threshold = 0.9f;
 static const f32 ecl_die_distance_squared = 0.2f * 0.2f;
 static const f32 ecl_die_default_angle = -ZUN_PI / 2;
@@ -122,25 +128,6 @@ void *g_ecl_unknown_634_funcs[1];
 static void __fastcall enemy_ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
 {
     ZUN_ASM_SINCOSMUL(dst, angle, radius);
-}
-
-// Where shooter i fires from: its absolute origin plus the offset when the
-// origin is set (third component above 0.9), else the enemy's position plus
-// the offset. Written straight into the destination: a returned vector
-// would be a stack temporary, which makes LTCG align the frame.
-static __forceinline void get_shot_origin(EnemyData *enemy, i32 i, D3DXVECTOR3 *out)
-{
-    if (enemy->bullet_mgr_origins[i].z > 0.9f)
-    {
-        *out = D3DXVECTOR3(enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].xy.x,
-                           enemy->bullet_mgr_origins[i].xy.y + enemy->bullet_mgr_offsets[i].xy.y, 0.0f);
-    }
-    else
-    {
-        *out = D3DXVECTOR3(enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x,
-                           enemy->bullet_mgr_offsets[i].xy.y + enemy->final_pos.pos.y,
-                           enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z);
-    }
 }
 
 // The original stages the origin condition before copying the shooter's
@@ -1590,10 +1577,21 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_ON:
     {
         i32 slot = get_int_arg(0);
-        EnemyBulletShooter *shooter = &bullet_props[slot];
-        get_shot_origin(this, slot, &shooter->pos);
+        if (bullet_mgr_origins[slot].z > 0.9f)
+        {
+            bullet_props[slot].pos = D3DXVECTOR3(
+                bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].xy.x,
+                bullet_mgr_origins[slot].xy.y + bullet_mgr_offsets[slot].xy.y, 0.0f);
+        }
+        else
+        {
+            bullet_props[slot].pos = D3DXVECTOR3(
+                final_pos.pos.x + bullet_mgr_offsets[slot].xy.x,
+                final_pos.pos.y + bullet_mgr_offsets[slot].xy.y,
+                final_pos.pos.z + bullet_mgr_offsets[slot].z);
+        }
         g_BulletManager->et_protect_range = et_protect_range;
-        g_BulletManager->shoot_bullets(shooter);
+        g_BulletManager->shoot_bullets(&bullet_props[slot]);
         g_BulletManager->et_protect_range = 0.0f;
         break;
     }
