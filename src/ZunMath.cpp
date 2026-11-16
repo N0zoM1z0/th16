@@ -63,7 +63,7 @@ HARNESS_CALLED f32 zun_fabsf(f32 x)
 }
 
 // FUNCTION: TH16 0x4052a0
-HARNESS_CALLED f32 zun_atan2f(f32 y, f32 x)
+HARNESS_CALLED f32 LTCG_VECTORCALL zun_atan2f(f32 y, f32 x)
 {
     // atan2f's body: with enough callers in view LTCG stops inlining the
     // UCRT inline here.

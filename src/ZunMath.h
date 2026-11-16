@@ -92,7 +92,7 @@ inline f32 zun_floorf(f32 x)
 // fabsf (0x405240) and atan2f (0x4052a0) stay out-of-line wrappers of their
 // own, called from all over the game (ECL, the HUD).
 HARNESS_CALLED f32 zun_fabsf(f32 x);
-HARNESS_CALLED f32 zun_atan2f(f32 y, f32 x);
+HARNESS_CALLED f32 LTCG_VECTORCALL zun_atan2f(f32 y, f32 x);
 
 // normalize_angle's loop, for the many places that inline it (ZunAngle,
 // PosVel, the collision code). The original inlines it everywhere; ours

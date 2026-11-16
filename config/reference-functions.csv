@@ -64,7 +64,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004049C0,collision_test_rect_rect,src/Collision.cpp,?collision_test_rect_rect@@YGHMMMMMMMMMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00405240,zun_fabsf,src/ZunMath.cpp,?zun_fabsf@@YAMM@Z,exact,,.analysis/reference-audit.json
 0x00405260,_floorf,src/PosVel.cpp,_floorf,exact,,.analysis/reference-audit.json
-0x004052A0,zun_atan2f,src/ZunMath.cpp,?zun_atan2f@@YAMMM@Z,exact,,.analysis/reference-audit.json
+0x004052A0,zun_atan2f,src/ZunMath.cpp,?zun_atan2f@@YQMMM@Z,exact,,.analysis/reference-audit.json
 0x004052E0,ZunAngle::operator+,src/ZunAngle.cpp,??HZunAngle@@QBE?AU0@M@Z,exact,,.analysis/reference-audit.json
 0x00405340,ZunAngle::ZunAngle,src/ZunAngle.cpp,??0ZunAngle@@QAE@M@Z,exact,,.analysis/reference-audit.json
 0x00405390,ZunAngle::operator-,src/ZunAngle.cpp,??GZunAngle@@QBE?AU0@ABU0@@Z,mismatch,,.analysis/reference-audit.json

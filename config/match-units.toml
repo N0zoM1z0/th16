@@ -1141,7 +1141,7 @@ linkages = [
   { offset = 509, width = 4, type = "REL32", symbol = "?normalize_angle@@YQMM@Z", target = 4205968, addend = 0 },
   { offset = 523, width = 4, type = "REL32", symbol = "?from_polar@@YIXPAUD3DXVECTOR3@@MM@Z", target = 4216016, addend = 0 },
   { offset = 556, width = 4, type = "DIR32", symbol = "__real@00000000", target = 4801472, addend = 0 },
-  { offset = 598, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 598, width = 4, type = "REL32", symbol = "?zun_atan2f@@YQMMM@Z", target = 4215456, addend = 0 },
   { offset = 609, width = 4, type = "REL32", symbol = "??4ZunAngle@@QAEAAU0@M@Z", target = 4215936, addend = 0 },
   { offset = 621, width = 4, type = "DIR32", symbol = "__real@42c80000", target = 4802104, addend = 0 },
   { offset = 626, width = 4, type = "REL32", symbol = "_floorf", target = 4215392, addend = 0 },
@@ -1425,9 +1425,9 @@ linkages = [
 artifact_kind = "linked-pe"
 source = "src/ZunMath.cpp"
 output_dir = "build/reference-candidate"
-symbol = "?zun_atan2f@@YAMMM@Z"
+symbol = "?zun_atan2f@@YQMMM@Z"
 object = "ZunMath.obj"
-candidate_address = 4671280
+candidate_address = 4670016
 target_address = 4215456
 size = 57
 compare_size = 57
@@ -8448,7 +8448,7 @@ linkages = [
   { offset = 172, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
   { offset = 177, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
   { offset = 258, width = 4, type = "REL32", symbol = "?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ", target = 4649696, addend = 0 },
-  { offset = 350, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 350, width = 4, type = "REL32", symbol = "?zun_atan2f@@YQMMM@Z", target = 4215456, addend = 0 },
   { offset = 420, width = 4, type = "DIR32", symbol = "?g_AnmManager@@3PAUAnmManager@@A", target = 4984648, addend = 0 },
   { offset = 425, width = 4, type = "REL32", symbol = "?get_vm_with_id@AnmManager@@QAEPAUAnmVm@@UAnmId@@@Z", target = 4648864, addend = 0 },
   { offset = 482, width = 4, type = "REL32", symbol = "??FZunTimer@@QAEXH@Z", target = 4248720, addend = 0 },
@@ -8474,7 +8474,7 @@ linkages = [
   { offset = 29, width = 4, type = "REL32", symbol = "?play_sound_at_position@SoundManager@@QAEXHM@Z", target = 4579824, addend = 0 },
   { offset = 43, width = 4, type = "DIR32", symbol = "__real@bfc90fdb", target = 4802344, addend = 0 },
   { offset = 102, width = 4, type = "DIR32", symbol = "__real@3d23d70b", target = 4801564, addend = 0 },
-  { offset = 137, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 137, width = 4, type = "REL32", symbol = "?zun_atan2f@@YQMMM@Z", target = 4215456, addend = 0 },
   { offset = 154, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
   { offset = 178, width = 4, type = "REL32", symbol = "?create_vm@AnmLoaded@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@MHH@Z", target = 4253120, addend = 0 },
   { offset = 184, width = 4, type = "DIR32", symbol = "?g_EffectManager@@3PAUEffectManager@@A", target = 4877752, addend = 0 },
@@ -8717,7 +8717,7 @@ linkages = [
   { offset = 86, width = 4, type = "REL32", symbol = "?randf_neg_1_to_1@Rng@@QAEMXZ", target = 4205744, addend = 0 },
   { offset = 191, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
   { offset = 210, width = 4, type = "DIR32", symbol = "?g_Player@@3PAUPlayer@@A", target = 4878072, addend = 0 },
-  { offset = 301, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 301, width = 4, type = "REL32", symbol = "?zun_atan2f@@YQMMM@Z", target = 4215456, addend = 0 },
   { offset = 374, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 395, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 420, width = 4, type = "REL32", symbol = "?find_or_clear@AnmId@@QAEPAUAnmVm@@XZ", target = 4649696, addend = 0 },
@@ -8749,7 +8749,7 @@ linkages = [
   { offset = 939, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 968, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 997, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
-  { offset = 1026, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 1026, width = 4, type = "REL32", symbol = "?zun_atan2f@@YQMMM@Z", target = 4215456, addend = 0 },
   { offset = 1043, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 1242, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
   { offset = 1256, width = 4, type = "DIR32", symbol = "?g_EnemyManager@@3PAUEnemyManager@@A", target = 4877760, addend = 0 },
@@ -8950,9 +8950,9 @@ linkages = [
   { offset = 830, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 883, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 936, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
-  { offset = 961, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 961, width = 4, type = "REL32", symbol = "?zun_atan2f@@YQMMM@Z", target = 4215456, addend = 0 },
   { offset = 1002, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
-  { offset = 1093, width = 4, type = "REL32", symbol = "?zun_atan2f@@YAMMM@Z", target = 4215456, addend = 0 },
+  { offset = 1093, width = 4, type = "REL32", symbol = "?zun_atan2f@@YQMMM@Z", target = 4215456, addend = 0 },
   { offset = 1164, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 1217, width = 4, type = "REL32", symbol = "?get_boss@EnemyManager@@QAEPAVEnemyInf@@H@Z", target = 4289920, addend = 0 },
   { offset = 1269, width = 4, type = "DIR32", symbol = "?g_Globals@@3UGlobals@@A", target = 4872080, addend = 44, storage_name = "g_Globals", storage_size = 1120 },

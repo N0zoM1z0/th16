@@ -132,7 +132,7 @@ class Atan2Controls(unittest.TestCase):
         c.boundaries[0x4052a0]['span_end'] = '0x4052d7'; self.rejected(c)
 
     def test_intrinsic_field_requires_an_exact_rel32_call(self):
-        f = next(x for x in self.context.linked['functions'] if x['symbol'] == '?zun_atan2f@@YAMMM@Z')
+        f = next(x for x in self.context.linked['functions'] if x['symbol'] == '?zun_atan2f@@YQMMM@Z')
         field = dict(type='REL32', width=4, target=0x487aaa, offset=37)
         validate_runtime_field(self.context, f, field, self.bindings['__CIatan2'])
         for key, value in [('type', 'DIR32'), ('width', 8), ('addend', 1), ('local', True),
@@ -164,7 +164,7 @@ class Atan2Controls(unittest.TestCase):
 
     def wrapper_unit(self):
         c = self.context
-        symbol = '?zun_atan2f@@YAMMM@Z'
+        symbol = '?zun_atan2f@@YQMMM@Z'
         f = next(x for x in c.linked['functions'] if x['symbol'] == symbol)
         return dict(artifact_kind='linked-pe', source='src/ZunMath.cpp', output_dir='build/reference-candidate',
                     symbol=symbol, object='ZunMath.obj', candidate_address=int(f['address'], 0),
