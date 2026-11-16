@@ -36,10 +36,12 @@ as strict exactness.
 
 ## Additional 2026-11-16 ANM owner work
 
-The current branch has two further local checkpoints after the cleanup handoff:
+The current branch has four further local checkpoints after the cleanup handoff:
 
 - 6d490ec — gpt-web: split ANM static and delete returns
 - 9ea537a — gpt-web: return directly from frozen ANM tick
+- e2acea5 — gpt-web: update ANM reconstruction handoff
+- dc07c3d — gpt-web: stage ANM random range in opcode handler
 
 The second large owner under active reconstruction is AnmVm::run at
 0x0045F980 (14,177 target bytes). The END/DELETE and STATIC paths are now
@@ -50,10 +52,9 @@ entry. The frozen-world early exit also returns zero directly after restoring
 game speed. These are local source checkpoints, not a complete-owner strict
 pass.
 
-The candidate was incrementally rebuilt at 2026-11-16 17:52 UTC after the two
-ANM changes and restoration of unsuccessful experiments. The build succeeded.
-Its current build-input SHA-256 is
-0e695d1b27701ecb2b0d74549dcd95060e6942e682747c45e58b05e6a818e851.
+The candidate was incrementally rebuilt at 2026-11-16 17:55 UTC after the ANM
+changes. The build succeeded. Its current build-input SHA-256 is
+415812a55ed2719ef398b3590ba33a86f15065390725dde38c7df24608a04850.
 No cold build or full replay was run. A focused audit-reference
 --address 0x0045F980 attempt was blocked by the existing linked-EH-parent
 preflight because a required parent was not a unique complete candidate owner;
@@ -62,9 +63,14 @@ there is no new Oracle result or exactness credit.
 Important dispatch detail: the ANM dispatcher remaps opcode + 1 through its
 byte table before the jump-table lookup. Focused case extraction must use that
 offset; indexing the table directly by opcode selects the wrong handlers.
-The next useful ANM cases to examine are 106/112 and 121/123, while retaining
-the full AnmVm::run owner as the larger goal. The upper ECL dispatcher below
-remains the other major active owner.
+ANM opcode 123 (FSET_RAND) now stages randf_0_to_1 and multiplies by the
+script range in the opcode handler, matching the target's random-then-scale
+operation order. Its focused block is now 25 candidate instructions versus
+24 target instructions; the candidate still shares the final variable-store
+tail with FSET_MOD, so this is not exact. Continue with the FSET_MOD/FSET_RAND
+store tail and opcodes 106/112, while retaining the full AnmVm::run owner as
+the larger goal. The upper ECL dispatcher below remains the other major active
+owner.
 
 No inline assembly or padding was added for this work. The temporary
 MOVE_ANGLE_TIME assembly experiment was fully reverted.
