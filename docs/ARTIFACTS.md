@@ -19,8 +19,8 @@ that evidence is missing. Never remove an archive because its old path is absent
 | `.venv/` | Locked comparison dependencies |
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
-| `.analysis/reference-audit.json` | Current fingerprinted results read by `scripts/progress.py` |
-| `.analysis/claude-tools/` | Current diagnostic scripts, LTCG probes (`p/`) and trial logs listed in the handoff |
+| `.analysis/reference-audit.json` | Last saved fingerprinted results; stale against the 2026-11-16 candidate until audit-reference.py is rerun |
+| `.analysis/claude-tools/` | Diagnostic scripts and probe sources; historical audit/source/log/binary outputs are compressed, rebuildable probe outputs removed, active exp.json/cur-audit.json/build.log retained |
 | `.analysis/projectile-ex-source-work/` | PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
 | `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
 | `.analysis/large-owner-operands-work/` | PDB 600 baseline/PDB 614 restored image, twelve complete Boss/motion/menu/curve source trials, original 768-instruction music CFG, full scope/field census, trial images/snapshots and complete raw-image restoration |
@@ -70,7 +70,42 @@ Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
 
-## Current handoff cleanup: 2026-11-13
+## Current handoff cleanup: 2026-11-16
+
+This cleanup reclaimed **189,392,627 logical bytes** (about **180.6 MiB**) in
+.analysis/claude-tools. It compressed 449 historical files: 31 retired strict
+audit snapshots, 118 source snapshots/backups, 291 trial logs, and seven
+diagnostic/title artifacts plus two additional backup files. Their combined
+original size was **198,084,430 bytes**; the compressed copies occupy
+**18,766,121 bytes**. Every compressed file was decompressed and checked
+against its original SHA-256 and size before the source was removed.
+
+The old exp.json and cur-audit.json snapshots remain uncompressed because
+diagnostic helpers read them directly; they are historical and are not current
+audit results. build.log also remains uncompressed because existing scripts use
+it as a build-success sentinel. The canonical
+.analysis/reference-audit.json remains in place but is stale for the current
+candidate. The extracted dat/title.anm, old before.exe/map, callgraph
+cg.exe/pdb/map/dgml and historical source backups are retained as individual
+.gz files. Restore any one with gzip -dc COMPRESSED_PATH > ORIGINAL_PATH;
+the cleanup index records original hashes, modes and nanosecond timestamps.
+
+Rebuildable probe outputs were removed: 375 of the original 377 p/ object,
+executable and map outputs (two outputs without a matching retained source
+were kept), all four fp/ outputs, and two top-level vectorcall probe objects.
+Their source probes and generators remain. Twenty-three zero-byte abandoned
+scratch outputs were removed. The p/mbi.exe and p/mbi.map outputs were kept
+because no matching C++ source was present. The cleanup index is
+.analysis/cleanup-handoff-20261116.json.
+
+The incremental build graph, original target, title-screen image, Ghidra
+project, Wine/toolchain installation, pinned reference checkout and the large
+historical .analysis work directories were not removed. No cold build, full
+replay, Oracle or Factory acceptance operation was run as part of artifact
+cleanup. A subsequent incremental build refreshed the candidate after the
+comment-only source documentation correction.
+
+## Previous handoff cleanup: 2026-11-13
 
 This cleanup reclaimed **42.27 GiB** of allocated storage. `.analysis/` fell
 from **49.04 GiB to 6.77 GiB** at the cleanup checkpoint. Eighty-nine retired
