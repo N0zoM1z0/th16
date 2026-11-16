@@ -1056,7 +1056,7 @@ int EnemyData::ecl_run_over_300()
     // anmSwitch(slot, interrupt)
     case ECL_OP_ANM_SWITCH:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
+        i32 slot = full_owner->context.current_context->get_int_arg(0);
         AnmManager::interrupt_tree(anm_ids[slot], (i16)full->context.current_context->get_int_arg(1));
         break;
     }
