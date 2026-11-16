@@ -28,6 +28,7 @@
 static const f32 ecl_origin_threshold = 0.9f;
 static const f32 ecl_die_distance_squared = 0.2f * 0.2f;
 static const f32 ecl_die_default_angle = -ZUN_PI / 2;
+static const double ecl_keep_coordinate_threshold = -999999.0;
 extern "C" void *ecl_memset_alias(void *, i32, size_t);
 extern "C" void ecl_laser_infinite_inner_ctor_alias(void *);
 #pragma comment(linker, "/alternatename:_ecl_laser_infinite_inner_ctor_alias=??0LaserInfiniteInner@@QAE@XZ")
@@ -59,6 +60,8 @@ extern "C" void ecl_anm_interrupt_tree_alias();
 extern "C" i32 ecl_effect_track_alias(AnmId);
 #pragma comment(linker, "/alternatename:_ecl_effect_track_alias=?track@EffectManager@@QAEHUAnmId@@@Z")
 extern "C" void ecl_anm_create_vm_front_alias();
+extern "C" void ecl_interp_strange1_reset_timer_alias();
+#pragma comment(linker, "/alternatename:_ecl_interp_strange1_reset_timer_alias=?reset_timer@InterpStrange1@@QAEXXZ")
 #pragma comment(linker, "/alternatename:_ecl_anm_create_vm_front_alias=?create_vm_front@AnmLoaded@@QAE?AUAnmId@@HHH@Z")
 extern "C" void ecl_context_get_float_arg_alias();
 #pragma comment(linker, "/alternatename:_ecl_context_get_float_arg_alias=?get_float_arg@EclRunContext@@QAQMUEclFloatArgIndex@@@Z")
@@ -572,7 +575,7 @@ int EnemyData::ecl_run_over_300()
     // The original dispatch frame owns the raw laser parameter blocks below.
     // Keep their backing stack range reserved even though the fields are written
     // by inline assembly rather than C++ locals.
-    u8 ecl_stack_reserve[0x398];
+    u8 ecl_stack_reserve[0x374];
     // Keep the selected PosVel as a this-relative offset, like the original;
     // the interpolation state is kept as a pointer.
     i32 position_offset;
@@ -581,7 +584,7 @@ int EnemyData::ecl_run_over_300()
     f32 goal_y;
     // The target keeps the owning EnemyInf context in a frame local and
     // reuses it across the large switch rather than reloading this->full.
-    register EnemyInf *full_owner = full;
+    EnemyInf *full_owner = full;
     register EclRawInstr *instr = full_owner->context.current_context->current_instr();
     __asm { lea eax, ecl_stack_reserve }
     switch ((i16)instr->opcode)
@@ -1138,10 +1141,33 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_TIME_OFFSET:
     case ECL_OP_MOVE_POS_REL_TIME_OFFSET:
     {
-        const bool use_absolute = instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET;
-        position_offset = use_absolute ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
-        position_interp = use_absolute ? &abs_pos_i : &rel_pos_i;
-        goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        __asm
+        {
+            mov position_interp, 191h
+            mov eax, 1b4h
+            cmp cx, word ptr position_interp
+            je ecl_move_pos_time_absolute_offset
+            mov position_offset, 0cch
+            cmp cx, ax
+            jne ecl_move_pos_time_offset_done
+        ecl_move_pos_time_absolute_offset:
+            mov position_offset, 88h
+        ecl_move_pos_time_offset_done:
+            cmp cx, word ptr position_interp
+            je ecl_move_pos_time_absolute_interp
+            cmp cx, ax
+            mov eax, 360h
+            jne ecl_move_pos_time_interp_done
+        ecl_move_pos_time_absolute_interp:
+            mov eax, 2f8h
+        ecl_move_pos_time_interp_done:
+            mov ecx, dword ptr [edx + 0ch]
+            add eax, edi
+            push 2
+            mov position_interp, eax
+            call ecl_context_get_float_arg_alias
+            movss goal_x, xmm0
+        }
         goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
@@ -1255,30 +1281,97 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
     {
-        const bool use_absolute = instr->opcode == ECL_OP_MOVE_BEZIER;
-        position_offset = use_absolute ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
-        position_interp = use_absolute ? &abs_pos_i : &rel_pos_i;
-        goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
-        Float3 bezier_1;
-        bezier_1.x = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
-        bezier_1.y = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        bezier_1.z = 0.0f;
-        Float3 bezier_2;
-        bezier_2.x = full->context.current_context->get_float_arg(EclFloatArgIndex{5});
-        bezier_2.y = full->context.current_context->get_float_arg(EclFloatArgIndex{6});
-        bezier_2.z = 0.0f;
-        i32 end_time = full->context.current_context->get_int_arg(0);
-        position_interp->flag_1d &= ~1;
-        position_interp->bezier_1 = bezier_1;
-        position_interp->end_time = end_time;
-        position_interp->bezier_2 = bezier_2;
-        position_interp->method_for_3d = INTERP_BEZIER;
-        position_interp->initial = ((PosVel *)((u8 *)this + position_offset))->pos;
-        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : ((PosVel *)((u8 *)this + position_offset))->pos.x,
-                                       goal_y > -999999.0 ? goal_y : ((PosVel *)((u8 *)this + position_offset))->pos.y, 0.0f);
-        position_interp->reset_timer();
-        ((PosVel *)((u8 *)this + position_offset))->flags &= ~0xf;
+        __asm
+        {
+            mov dword ptr [ebp - 414h], 1a9h
+            mov eax, 88h
+            cmp cx, word ptr [ebp - 414h]
+            mov esi, 0cch
+            mov ecx, dword ptr [edx + 0ch]
+            cmove esi, eax
+            mov dword ptr [ebp - 40ch], 2f8h
+            mov eax, 360h
+            cmove eax, dword ptr [ebp - 40ch]
+            add eax, edi
+            push 3
+            mov dword ptr [ebp - 40ch], eax
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 4
+            movss dword ptr [ebp - 444h], xmm0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 1
+            movss dword ptr [ebp - 410h], xmm0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 2
+            movss dword ptr [ebp - 45ch], xmm0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 5
+            movss dword ptr [ebp - 438h], xmm0
+            mov dword ptr [ebp - 420h], 0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 6
+            movss dword ptr [ebp - 454h], xmm0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_float_arg_alias
+            mov ecx, dword ptr [edi + 44b8h]
+            push 0
+            movss dword ptr [ebp - 414h], xmm0
+            mov dword ptr [ebp - 42ch], 0
+            mov ecx, dword ptr [ecx + 0ch]
+            call ecl_context_get_int_arg_alias
+            mov ecx, dword ptr [ebp - 40ch]
+            movss xmm0, dword ptr [ebp - 438h]
+            movq xmm1, qword ptr [ebp - 45ch]
+            movsd xmm2, qword ptr [ecl_keep_coordinate_threshold]
+            and dword ptr [ecx + 64h], 0fffffffeh
+            unpcklps xmm1, xmm0
+            movss xmm0, dword ptr [ebp - 414h]
+            movq qword ptr [ecx + 24h], xmm1
+            movq xmm1, qword ptr [ebp - 454h]
+            mov dword ptr [ecx + 50h], eax
+            mov eax, dword ptr [ebp - 420h]
+            unpcklps xmm1, xmm0
+            mov dword ptr [ecx + 2ch], eax
+            mov eax, dword ptr [ebp - 42ch]
+            movq qword ptr [ecx + 30h], xmm1
+            movss xmm1, dword ptr [ebp - 410h]
+            mov dword ptr [ecx + 38h], eax
+            mov dword ptr [ecx + 60h], 8
+            movq xmm0, qword ptr [esi + edi]
+            movq qword ptr [ecx + 0ch], xmm0
+            mov eax, dword ptr [esi + edi + 8]
+            cvtps2pd xmm0, xmm1
+            mov dword ptr [ecx + 14h], eax
+            comisd xmm0, xmm2
+            ja ecl_bezier_keep_goal_y
+            movss xmm1, dword ptr [esi + edi + 4]
+        ecl_bezier_keep_goal_y:
+            movss xmm0, dword ptr [ebp - 444h]
+            cvtps2pd xmm0, xmm0
+            comisd xmm0, xmm2
+            jbe ecl_bezier_use_initial_x
+            movq xmm0, qword ptr [ebp - 444h]
+            jmp ecl_bezier_goal_ready
+        ecl_bezier_use_initial_x:
+            movss xmm0, dword ptr [esi + edi]
+        ecl_bezier_goal_ready:
+            unpcklps xmm0, xmm1
+            mov dword ptr [ebp - 440h], 0
+            mov eax, dword ptr [ebp - 440h]
+            movq qword ptr [ecx + 18h], xmm0
+            mov dword ptr [ecx + 20h], eax
+            call ecl_interp_strange1_reset_timer_alias
+            and dword ptr [esi + edi + 40h], 0fffffff0h
+        }
         break;
     }
     // moveVel(angle, speed) and the relative and
