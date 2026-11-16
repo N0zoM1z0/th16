@@ -419,8 +419,8 @@ int EnemyData::ecl_run_over_300()
             }
             else
             {
-                angle = zun_atan2f(final_pos.pos.y - last_damage_pos.y,
-                                   final_pos.pos.x - last_damage_pos.x);
+                Float3 displacement = final_pos.pos - last_damage_pos;
+                angle = zun_atan2f(displacement.y, displacement.x);
             }
 
             AnmLoaded *anm = g_EnemyManager->anim_statement_anms[death_anm_index];
