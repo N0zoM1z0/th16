@@ -847,87 +847,40 @@ int EnemyData::ecl_run_over_300()
         }
         break;
     }
-    // anm316(slot, n): script n + 5 of the main set, or the main script
-    // itself for negative n.
+    // anm316(slot, n): play the saved main script when n is negative;
+    // otherwise select its n-th alternate, starting at script + 5.
     case ECL_OP_ANM_316:
     {
-        __asm
+        i32 slot = full->context.current_context->get_int_arg(0);
+        i32 alternate = full->context.current_context->get_int_arg(1);
+        g_AnmManager->delete_vm(anm_ids[slot]);
+        anm_ids[slot].id = 0;
+
+        i32 script = anm_set_main;
+        if (alternate >= 0)
         {
-            mov ecx, dword ptr [edx + 0ch]
-            push 0
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            mov esi, eax
-            push 1
-            mov dword ptr [ebp - 438h], esi
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            add esi, 49h
-            mov dword ptr [ebp - 40ch], eax
-            push dword ptr [edi + esi*4]
-            lea esi, [edi + esi*4]
-            call ecl_anm_delete_vm_alias
-            mov eax, dword ptr [g_EnemyManager]
-            mov edx, dword ptr [ebp - 40ch]
-            mov dword ptr [esi], 0
-            mov ecx, dword ptr [edi + 264h]
-            mov ecx, dword ptr [eax + ecx*4 + 164h]
-            mov eax, dword ptr [edi + 27ch]
-            add eax, 7
-            push ecx
-            push eax
-            test edx, edx
-            js ecl_anm_316_main_script
-            mov eax, dword ptr [edi + 270h]
-            add edx, 5
-            add eax, edx
-            push eax
-            jmp ecl_anm_316_script_ready
-        ecl_anm_316_main_script:
-            push dword ptr [edi + 270h]
-        ecl_anm_316_script_ready:
-            lea eax, [ebp - 420h]
-            push eax
-            call ecl_anm_create_vm_front_alias
-            mov ecx, esi
-            mov eax, dword ptr [eax]
-            mov dword ptr [esi], eax
-            call ecl_anm_find_or_clear_alias
-            cmp dword ptr [ebp - 438h], 0
-            jne ecl_anm_316_sprite_ready
-            movss xmm0, dword ptr [eax + 74h]
-            mulss xmm0, dword ptr [eax + 54h]
-            movss dword ptr [edi + 3f58h], xmm0
-            movss xmm0, dword ptr [eax + 70h]
-            mulss xmm0, dword ptr [eax + 50h]
-            movss dword ptr [edi + 3f5ch], xmm0
-        ecl_anm_316_sprite_ready:
-            test byte ptr [edi + 4060h], 20h
-            je ecl_anm_316_done
-            mov ecx, esi
-            call ecl_anm_hide_tree_alias
-        ecl_anm_316_done:
+            script += alternate + 5;
+        }
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        anm_ids[slot] = file->create_vm_front(script, anm_layers + 7, 0);
+        AnmVm *vm = anm_ids[slot].find_or_clear();
+        if (slot == 0)
+        {
+            final_sprite_size.x = vm->sprite_size.y * vm->scale.y;
+            final_sprite_size.y = vm->sprite_size.x * vm->scale.x;
+        }
+        if (flags_low & ENEMY_FLAG_INTANGIBLE)
+        {
+            anm_ids[slot].hide_tree();
         }
         break;
     }
-    // anmSwitch(slot, interrupt)
+    // anmSwitch(slot, interrupt): interrupt the VM and its direct children.
     case ECL_OP_ANM_SWITCH:
     {
-        __asm
-        {
-            mov ecx, dword ptr [edx + 0ch]
-            push 0
-            call ecl_context_get_int_arg_alias
-            mov ecx, dword ptr [edi + 44b8h]
-            mov esi, eax
-            push 1
-            mov ecx, dword ptr [ecx + 0ch]
-            call ecl_context_get_int_arg_alias
-            movsx ecx, ax
-            push ecx
-            push dword ptr [edi + esi*4 + 124h]
-            call ecl_anm_interrupt_tree_alias
-        }
+        i32 slot = full->context.current_context->get_int_arg(0);
+        i32 interrupt = full->context.current_context->get_int_arg(1);
+        AnmManager::interrupt_tree(anm_ids[slot], (i16)interrupt);
         break;
     }
     // moveReset: folds rel_pos into abs_pos and stops all movement.
