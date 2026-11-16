@@ -1259,10 +1259,9 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_RAND:
     case ECL_OP_MOVE_RAND_REL:
     {
-        bool absolute = instr->opcode == ECL_OP_MOVE_RAND;
-        PosVel *pv = absolute ? &abs_pos : &rel_pos;
-        InterpFloat *angle_i = absolute ? &abs_angle_i : &rel_angle_i;
-        InterpFloat *speed_i = absolute ? &abs_speed_i : &rel_speed_i;
+        PosVel *pv = instr->opcode == ECL_OP_MOVE_RAND ? &abs_pos : &rel_pos;
+        InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_angle_i : &rel_angle_i;
+        InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_speed_i : &rel_speed_i;
 
         f32 current_x = final_pos.pos.x;
         f32 center_x = move_limit_center.x;
