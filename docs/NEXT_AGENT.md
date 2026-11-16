@@ -8,8 +8,8 @@ the affected owner, not the whole cold replay.
 
 ## Repository checkpoint
 
-- main code HEAD entering this handoff: dcd922d, directly reloaded ECL transform opcode.
-- The branch is 39 commits ahead of origin/main before this note; the worktree
+- main code HEAD entering this handoff: 32a5134, ordered ANM circle pointers.
+- The branch is 46 commits ahead of origin/main before this note; the worktree
   is clean before the documentation edit.
 - The historical broad reference audit and frontier metadata are stale for
   these changes. Do not cite their old exactness totals as current.
@@ -149,6 +149,54 @@ The saved broad strict audit still predates this work and the
 EH-parent candidate PDB ownership preflight remains the known blocker
 for targeted strict audit. Do not bypass that evidence requirement.
 The existing ignored .analysis/ build logs contain incremental proof.
+
+## Current laser creation and ANM circle follow-up
+
+The latest session committed six incremental natural C++ source checkpoints:
+
+- fc2ebaa: choose the original staged-origin-and-transform-copy idiom for
+  beam and curve laser creation, without regressing the line/infinite paths.
+- 7abbf59: put laser line shooter type/color before angle normalization,
+  and restore speed, position, sound and distance assignment order.
+  Focused line-case similarity rose from roughly 0.60 to 0.70.
+- df15b56: restore infinite laser shooter fields in the observed order,
+  including type/color, timing, speed, origin, flags and argument 1.
+  The relevant case ratio rose from about 0.54 to 0.65.
+- 181a5a1: stage curve laser type/color, segment count, flags, sounds,
+  speed and distance in the observed source sequence. The case ratio
+  rose from about 0.56 to 0.68.
+- 68bd661: compute laser origin coordinates locally and assign one
+  D3DXVECTOR3 after selecting the absolute or relative path; restore
+  beam laser color, angle, timing, length and distance order. The
+  infinite and curve cases now have the same local instruction counts
+  as the target, though they are not byte-equal. Beam's local
+  similarity is about 0.74 versus about 0.63 at session start.
+- 32a5134: in AnmVm::run's CIRCLE_POS opcode 130, read radius and angle
+  first, then explicitly resolve the Y destination followed by X.
+  This changed the candidate block to 146 bytes and 41 instructions,
+  exactly the target's block extent and count; normalized similarity
+  rose from about 0.83 to 0.951. The remaining discrepancy in the
+  scoped block is a stack displacement (target esp+0x10 versus
+  candidate esp+0xc), not proof of whole-owner exactness.
+
+The current incremental build succeeds and the ECL dispatcher still has
+174 target and 174 candidate entries. The current normalized laser case
+ratios are roughly 0.70 (straight), 0.68 (infinite), 0.71 (curve),
+and 0.74 (beam). These are local diagnostics, not strict acceptance.
+
+Rejected, uncommitted experiments: an early-loaded radial-speed local
+in LaserCurveInf::step_ex_angle_accel degraded its local sequence
+similarity (about 0.973 to 0.568) and was reverted. Explicitly
+separating the ECL typed stack payload offset in
+get_int_arg_given_value gave no gain (~0.934) and was reverted.
+AnmVm::transform_coords is approximately 0.93 locally with differing
+Y/Z operation operand order; it was only inspected. Do not reinstate
+these scheduling probes as padding or artificial fixes.
+
+Full owner/relocation matching and the strict EH-parent provenance
+preflight remain unresolved. Keep using focused builds and local case
+inspection until the evidence gate can be satisfied. No full cold replay
+or push was run, and the private target and build artifacts remain ignored.
 
 ## Verification and next actions
 
