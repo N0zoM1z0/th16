@@ -149,18 +149,22 @@ static __forceinline void get_shot_origin_and_copy_ex(EnemyData *enemy, i32 i, D
 {
     bool has_origin = enemy->bullet_mgr_origins[i].z > 0.9f;
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
+    f32 x;
+    f32 y;
+    f32 z;
     if (has_origin)
     {
-        out->x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].xy.x;
-        out->y = enemy->bullet_mgr_origins[i].xy.y + enemy->bullet_mgr_offsets[i].xy.y;
-        out->z = 0.0f;
+        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].xy.x;
+        y = enemy->bullet_mgr_origins[i].xy.y + enemy->bullet_mgr_offsets[i].xy.y;
+        z = 0.0f;
     }
     else
     {
-        out->x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
-        out->y = enemy->bullet_mgr_offsets[i].xy.y + enemy->final_pos.pos.y;
-        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
+        y = enemy->bullet_mgr_offsets[i].xy.y + enemy->final_pos.pos.y;
     }
+    *out = D3DXVECTOR3(x, y, z);
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
@@ -268,12 +272,12 @@ static __forceinline void ecl_laser_beam_on(EnemyData *enemy)
     // Stage the origin choice before copying the transforms, then fill
     // the laser's start position directly in the parameter object.
     get_shot_origin_and_copy_ex(enemy, slot, &params.start_pos, params.ex);
-    params.ang_aim = normalize_angle(shooter.ang_aim);
-    params.length = shooter.pos.z;
-    params.laser_new_arg_4 = shooter.laser_new_arg_4;
     params.color = shooter.color;
-    params.distance = shooter.distance;
+    params.ang_aim = normalize_angle(shooter.ang_aim);
     params.timing = shooter.laser_timing[0];
+    params.laser_new_arg_4 = shooter.laser_new_arg_4;
+    params.length = shooter.pos.z;
+    params.distance = shooter.distance;
     params.id = enemy->get_int_arg(1);
     g_LaserManager->allocate_new_laser(LASER_BEAM, &params);
 }
