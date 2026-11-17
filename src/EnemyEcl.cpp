@@ -2149,7 +2149,7 @@ int EnemyData::ecl_run_over_300()
             key_step = (u8)(key_step + 0x10);
         }
 
-        i32 spell_id = full_owner->context.current_context->get_int_arg(0);
+        i32 spell_id = full->context.current_context->get_int_arg(0);
         switch ((i16)instr->opcode)
         {
         case ECL_OP_SPELL_537:
