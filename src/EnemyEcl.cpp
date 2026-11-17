@@ -2166,7 +2166,7 @@ int EnemyData::ecl_run_over_300()
         i32 time_limit = full->context.current_context->get_int_arg(2);
         i32 boss_index = full->context.current_context->get_int_arg(1);
         g_Spellcard->start(spell_id, name, time_limit, boss_index);
-        life.is_spell |= ENEMY_LIFE_SPELL;
+        *(volatile u32 *)&life.is_spell |= ENEMY_LIFE_SPELL;
         life.current_scaled_by_seven = life.current * 7;
     }
         // fall through
