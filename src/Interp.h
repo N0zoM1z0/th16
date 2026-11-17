@@ -117,14 +117,14 @@ struct InterpFloat2
     // frame.
     __forceinline void start(i32 end_time, i32 method, f32 initial_x, f32 initial_y, f32 goal_x, f32 goal_y)
     {
-        this->end_time = end_time;
+        *(volatile i32 *)&this->end_time = end_time;
         bezier_1 = g_zero_vec2;
         bezier_2 = g_zero_vec2;
-        this->method = method;
-        initial.x = initial_x;
-        initial.y = initial_y;
-        goal.x = goal_x;
-        goal.y = goal_y;
+        *(volatile i32 *)&this->method = method;
+        *(volatile f32 *)&initial.x = initial_x;
+        *(volatile f32 *)&initial.y = initial_y;
+        *(volatile f32 *)&goal.x = goal_x;
+        *(volatile f32 *)&goal.y = goal_y;
         reset_timer();
     }
     // 0x425570. A second copy of step that the enemies' radial distance
