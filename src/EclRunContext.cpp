@@ -94,9 +94,10 @@ i32 EclRunContext::get_int_arg_given_value(int index, i32 value)
         }
         if (value <= -1 && value >= -100)
         {
-            EclStackEntry *entry = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset) + value;
-            EclStackItem item = entry->value;
-            char type = entry->type;
+            EclStackEntry *entries = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset);
+            EclStackItem *value_ptr = &entries[value].value;
+            EclStackItem item = *value_ptr;
+            char type = entries[value].type;
             i32 result;
             if (type == 'f')
             {
