@@ -584,7 +584,7 @@ int EnemyData::ecl_run_over_300()
         abs_pos.speed = 0.0f;
         rel_pos.velocity = g_zero_vec;
         abs_pos.velocity = g_zero_vec;
-        rel_pos.flags &= ~0xf;
+        (*(volatile u32 *)&rel_pos.flags) &= ~0xf;
         abs_pos.flags &= ~0xf;
         abs_pos_i.end_time = 0;
         rel_pos_i.end_time = 0;
