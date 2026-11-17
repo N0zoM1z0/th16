@@ -11,6 +11,8 @@
 #include "Supervisor.h"
 #include "ZunAsm.h"
 
+static_assert(offsetof(AnmVm, entity_pos) == 0x5e0, "AnmVm entity position layout");
+static_assert(offsetof(Camera, position_delta) == 0x104, "Camera follow offset layout");
 static_assert(offsetof(AnmVm, total_rotation) == 0x5f0, "AnmVm layout");
 static_assert(sizeof(AnmVm) == 0x5fc, "AnmVm layout");
 static_assert(sizeof(InterpInt3) == 0x58, "InterpInt3 layout");
