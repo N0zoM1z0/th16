@@ -39,7 +39,9 @@ HARNESS_CALLED AnmId AnmManager::insert_in_world_list_back(AnmVm *vm)
     {
         last_discriminator++;
     }
-    vm->id.id = (vm->fast_id & 0x1fff) | (last_discriminator << 13);
+    u32 fast_id = vm->fast_id;
+    u32 discriminator = last_discriminator;
+    vm->id.id = (fast_id & 0x1fff) | (discriminator << 13);
     return vm->id;
 }
 
@@ -63,7 +65,9 @@ HARNESS_CALLED AnmId AnmManager::insert_in_world_list_front(AnmVm *vm)
     {
         last_discriminator++;
     }
-    vm->id.id = (vm->fast_id & 0x1fff) | (last_discriminator << 13);
+    u32 fast_id = vm->fast_id;
+    u32 discriminator = last_discriminator;
+    vm->id.id = (fast_id & 0x1fff) | (discriminator << 13);
     return vm->id;
 }
 
@@ -87,7 +91,9 @@ HARNESS_CALLED AnmId AnmManager::insert_in_ui_list_back(AnmVm *vm)
     {
         last_discriminator++;
     }
-    vm->id.id = (vm->fast_id & 0x1fff) | (last_discriminator << 13);
+    u32 fast_id = vm->fast_id;
+    u32 discriminator = last_discriminator;
+    vm->id.id = (fast_id & 0x1fff) | (discriminator << 13);
     return vm->id;
 }
 
@@ -111,7 +117,9 @@ HARNESS_CALLED AnmId AnmManager::insert_in_ui_list_front(AnmVm *vm)
     {
         last_discriminator++;
     }
-    vm->id.id = (vm->fast_id & 0x1fff) | (last_discriminator << 13);
+    u32 fast_id = vm->fast_id;
+    u32 discriminator = last_discriminator;
+    vm->id.id = (fast_id & 0x1fff) | (discriminator << 13);
     return vm->id;
 }
 
