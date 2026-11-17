@@ -19,7 +19,7 @@ that evidence is missing. Never remove an archive because its old path is absent
 | `.venv/` | Locked comparison dependencies |
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
-| `.analysis/reference-audit.json` | Last saved fingerprinted results; stale against the 2026-11-16 candidate until audit-reference.py is rerun |
+| `.analysis/reference-audit.json` | Last saved fingerprinted 2026-11-15 results; stale against the 2026-11-17 candidate; strict audit refresh still needs EH-parent preflight resolution |
 | `.analysis/claude-tools/` | Diagnostic scripts and probe sources; historical audit/source/log/binary outputs are compressed, rebuildable probe outputs removed, active exp.json/cur-audit.json/build.log retained |
 | `.analysis/projectile-ex-source-work/` | PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
 | `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
@@ -70,7 +70,44 @@ Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
 
-## Current handoff cleanup: 2026-11-16
+## Current handoff cleanup: 2026-11-17
+
+Archived **62 retired, top-level native Boss, damage and laser fixture, output
+and expected-result files** from the five historical `.analysis/` directories:
+`boss-flow-work`, `boss-stats-work`, `boss-lifetimes-work`,
+`boss-damage-work` and `laser-core-work`. They were not part of the active
+build graph. Their original **3,770,298,368 allocated bytes** are represented
+by **22,265,856 allocated archive bytes**, reclaiming **3,748,032,512 bytes
+(approximately 3.49 GiB)**. The five directories retain their source trials,
+runner scripts, smaller logs, reviews and other historical evidence. This is
+archival, not deletion of unique evidence.
+
+Each original was independently hashed, compressed to
+`.analysis/archives/20261117/WORK/FILENAME.gz`, decompressed, then checked
+against its original **SHA-256 and byte count** before removal. Five ignored
+`.analysis/cleanup-handoff-20261117-WORK.json` indexes retain every original
+path, compressed path, hashes, mode, timestamp and allocated size. The index
+was written atomically **before** deleting its verified originals. A test
+restored a historical 23 MB output file, checked its hash, size, mode and
+nanosecond modification time, then discarded only that temporary restoration.
+
+The historical `check-native-protocol.py` scripts may require specific expanded
+files first. Restore just the evidence you need, not all five directories:
+
+```sh
+scripts/repo-python scripts/evidence-archive.py list boss-flow-work/native-boss
+scripts/repo-python scripts/evidence-archive.py restore boss-flow-work/native-boss-target-fixtures.bin
+# After investigation, avoid leaving unnecessary expanded historical copies.
+```
+
+The archive helper now reads all three index styles: older directory tarballs,
+the 2026-11-16 individual-gzip cleanup and these 2026-11-17 per-file gzip
+indexes. It refuses to overwrite an already existing restore destination.
+No original target, current executable/PDB/MAP, build object cache, Ghidra
+project, shared tools or pinned source checkout was removed. No cold build,
+full replay or new strict audit was run for the documentation and archival work.
+
+## Previous handoff cleanup: 2026-11-16
 
 This cleanup reclaimed **189,392,627 logical bytes** (about **180.6 MiB**) in
 .analysis/claude-tools. It compressed 449 historical files: 31 retired strict
@@ -105,7 +142,7 @@ replay, Oracle or Factory acceptance operation was run as part of artifact
 cleanup. A subsequent incremental build refreshed the candidate after the
 comment-only source documentation correction.
 
-## Previous handoff cleanup: 2026-11-13
+## Earlier handoff cleanup: 2026-11-13
 
 This cleanup reclaimed **42.27 GiB** of allocated storage. `.analysis/` fell
 from **49.04 GiB to 6.77 GiB** at the cleanup checkpoint. Eighty-nine retired
