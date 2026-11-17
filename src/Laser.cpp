@@ -3252,7 +3252,8 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
 {
     while (ex_index < 0x12)
     {
-        BulletEx *volatile ex_ptr = &inner.ex[ex_index];
+        register i32 index = ex_index;
+        BulletEx *volatile ex_ptr = &inner.ex[index];
         BulletEx *ex = ex_ptr;
         if (ex->type == 0)
         {
@@ -3277,7 +3278,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
             ex_state[1].timer.set_value(0);
             ex_state[1].ints[0] = ex->a;
             laser_sincosmul((Float3 *)&ex_state[1].floats[5], ex_state[1].floats[1], ex_state[1].floats[0]);
-            if (ex_index != 0 && inner.shot_transform_sfx >= 0)
+            if (index != 0 && inner.shot_transform_sfx >= 0)
             {
                 g_SoundManager.play_sound_centered(inner.shot_transform_sfx, 0);
             }
@@ -3288,7 +3289,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
             ex_state[2].floats[1] = ex->s;
             ex_state[2].timer.set_value(0);
             ex_state[2].ints[0] = ex->a;
-            if (ex_index != 0 && inner.shot_transform_sfx >= 0)
+            if (index != 0 && inner.shot_transform_sfx >= 0)
             {
                 g_SoundManager.play_sound_centered(inner.shot_transform_sfx, 0);
             }
