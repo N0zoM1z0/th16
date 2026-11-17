@@ -41,7 +41,9 @@ class LaserDataInf
     // While set, LaserManager only runs check_graze_or_kill on the laser
     // (like BULLET_FLAG_FROZEN).
     u32 frozen : 1;
-    u32 flags_rest : 28;
+    // BULLET_EX_FREEZE_SEGMENTS: keep curved-laser nodes stationary.
+    u32 segments_frozen : 1;
+    u32 flags_rest : 27;
     // A LaserState.
     i32 state;
     i32 kind;
@@ -129,18 +131,6 @@ class LaserDataInf
             next->prev = prev;
         }
     }
-};
-
-// LaserDataInf's flag word (after next) with the bit curvy lasers add.
-struct LaserDataFlagBits
-{
-    u32 ticked : 1;
-    u32 pending_delete : 2;
-    u32 frozen : 1;
-    // Curvy lasers: the segments stay where they are
-    // (BULLET_EX_FREEZE_SEGMENTS).
-    u32 segments_frozen : 1;
-    u32 rest : 27;
 };
 
 // Parameters of a straight laser. Layout from ExpHP (zLaserLineInner); his

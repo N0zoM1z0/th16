@@ -2789,7 +2789,7 @@ void LaserCurveInf::run_ex()
             }
             break;
         case BULLET_EX_FREEZE_SEGMENTS:
-            ((LaserDataFlagBits *)(&next + 1))->segments_frozen = ex->a;
+            segments_frozen = ex->a;
             break;
         case BULLET_EX_WAIT:
             if (ex->a > 0)
@@ -3169,7 +3169,7 @@ i32 LaserCurveInf::on_tick()
         }
     } while (again != 0);
     LaserCurveSegment *segs = (LaserCurveSegment *)segments;
-    if (!(flags_rest & 1))
+    if (!segments_frozen)
     {
         // volatile keeps the flag in its stack slot as in the original,
         // where out_length holds the register ours would give it.
