@@ -289,7 +289,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // lifeHide(hide)
     case ECL_OP_LIFE_HIDE:
-        g_EnemyManager->inner.life_bar_hidden = full_owner->context.current_context->get_int_arg(0);
+        g_EnemyManager->inner.life_bar_hidden = full->context.current_context->get_int_arg(0);
         break;
     // zIndex(layer)
     case ECL_OP_Z_INDEX:
