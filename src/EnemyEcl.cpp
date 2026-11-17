@@ -630,11 +630,11 @@ int EnemyData::ecl_run_over_300()
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS_3D ? &abs_pos : &rel_pos;
         f32 x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{0});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
-        volatile f32 z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        volatile f32 *position = &pos_vel->pos.x;
-        position[0] += x;
-        position[1] += y;
-        position[2] = z + position[2];
+        f32 z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        D3DXVECTOR2 *position_xy = (D3DXVECTOR2 *)&pos_vel->pos;
+        position_xy->x += x;
+        position_xy->y += y;
+        pos_vel->pos.z = z + pos_vel->pos.z;
         update_final_pos();
         break;
     }
