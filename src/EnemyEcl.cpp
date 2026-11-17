@@ -26,6 +26,7 @@
 #include "ZunAsm.h"
 #include "ZunMath.h"
 
+static_assert(offsetof(EnemyData, anm_ids) == 0x124, "ECL ANM id array offset");
 static_assert(sizeof(BulletEx) == 0x2c, "ECL transform stride");
 static_assert(sizeof(EnemyBulletShooter) == 0x380, "ECL shooter stride");
 static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array offset");
@@ -526,8 +527,12 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = full->context.current_context->get_int_arg(0);
         i32 alternate = full->context.current_context->get_int_arg(1);
-        g_AnmManager->delete_vm(anm_ids[slot]);
-        anm_ids[slot].id = 0;
+        volatile i32 anm_id_index = slot;
+        anm_id_index += 0x49;
+        AnmId *anm_id_array = reinterpret_cast<AnmId *>(this);
+        AnmId &anm_id = anm_id_array[anm_id_index];
+        g_AnmManager->delete_vm(anm_id);
+        anm_id.id = 0;
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
@@ -536,7 +541,6 @@ int EnemyData::ecl_run_over_300()
         {
             script += alternate + 5;
         }
-        AnmId &anm_id = anm_ids[slot];
         anm_id = file->create_vm_front(script, layer, 0);
         AnmVm *vm = anm_id.find_or_clear();
         if (slot == 0)
