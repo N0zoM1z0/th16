@@ -2612,7 +2612,8 @@ void LaserCurveInf::run_ex()
 {
     while (ex_index < 0x12)
     {
-        BulletEx *ex = &inner.ex[ex_index];
+        BulletEx *volatile ex_ptr = &inner.ex[ex_index];
+        BulletEx *ex = ex_ptr;
         if (ex->type == 0)
         {
             return;
