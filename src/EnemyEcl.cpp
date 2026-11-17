@@ -2433,7 +2433,10 @@ int EnemyData::ecl_run_over_300()
     {
         f32 width = get_float_arg(EclFloatArgIndex{0});
         f32 height = get_float_arg(EclFloatArgIndex{1});
-        Float3 size(width, height, 0.0f);
+        // Rectangle collision consumes width and height, not the Z component.
+        Float3 size;
+        size.x = width;
+        size.y = height;
         AnmVm *main_vm = anm_ids[0].find_or_clear();
         g_BulletManager->cancel_rectangle_as_bomb(&final_pos.pos, &size,
                                                   main_vm->rotation.z, 1);
