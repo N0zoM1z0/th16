@@ -490,8 +490,8 @@ int EnemyData::ecl_run_over_300()
             flags_low |= ENEMY_FLAG_DIRECTIONAL_ANM;
             anm_set_main = script;
             anm_slot_0_script = script;
-            anm_slot_0_anm_index = selected_anm_index;
             anm_direction = 0;
+            anm_slot_0_anm_index = selected_anm_index;
         }
         break;
     }
