@@ -1292,7 +1292,11 @@ int EnemyData::ecl_run_over_300()
         f32 left = center_x - half_width;
         f32 right = center_x + half_width;
         f32 angle;
-        if (left <= current_x)
+        if (left > current_x)
+        {
+            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / ecl_move_rand_third;
+        }
+        else
         {
             if (right < current_x)
             {
@@ -1316,10 +1320,6 @@ int EnemyData::ecl_run_over_300()
                     angle += ecl_move_rand_pi;
                 }
             }
-        }
-        else
-        {
-            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / ecl_move_rand_third;
         }
 
         f32 current_y = final_pos.pos.y;
