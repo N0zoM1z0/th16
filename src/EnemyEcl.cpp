@@ -576,7 +576,7 @@ int EnemyData::ecl_run_over_300()
     // moveReset: folds rel_pos into abs_pos and stops all movement.
     case ECL_OP_MOVE_RESET:
         // Fold the first axis with the relative displacement first.
-        abs_pos.pos.x = rel_pos.pos.x + abs_pos.pos.x;
+        abs_pos.pos.x = *(volatile f32 *)&rel_pos.pos.x + abs_pos.pos.x;
         abs_pos.pos.y += rel_pos.pos.y;
         abs_pos.pos.z += rel_pos.pos.z;
         rel_pos.pos = g_zero_vec;
