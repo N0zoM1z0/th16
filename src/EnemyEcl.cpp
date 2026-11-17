@@ -2285,9 +2285,12 @@ int EnemyData::ecl_run_over_300()
         const EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
             this, slot, &laser_params_storage.curve.start_pos, laser_params_storage.curve.ex);
-        laser_params_storage.curve.type = shooter.type;
-        laser_params_storage.curve.color = shooter.color;
-        laser_params_storage.curve.ang_aim = normalize_angle(shooter.ang_aim);
+        i32 type = shooter.type;
+        f32 ang_aim = shooter.ang_aim;
+        i32 color = shooter.color;
+        laser_params_storage.curve.type = type;
+        laser_params_storage.curve.color = color;
+        laser_params_storage.curve.ang_aim = normalize_angle(ang_aim);
         laser_params_storage.curve.segment_count = shooter.laser_timing[0];
         laser_params_storage.curve.unk_28 |= 1;
         laser_params_storage.curve.shot_sfx = shooter.shot_sfx;
