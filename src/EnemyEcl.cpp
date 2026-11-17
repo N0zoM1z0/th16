@@ -302,7 +302,7 @@ int EnemyData::ecl_run_over_300()
     // scoreAdd(points)
     case ECL_OP_SCORE_ADD:
     {
-        i32 points = full_owner->context.current_context->get_int_arg(0);
+        i32 points = full->context.current_context->get_int_arg(0);
         g_Globals.add_to_score(points);
         g_PopupManager->generate_small_score_popup(&final_pos.pos, points, -1);
         break;
