@@ -1174,7 +1174,15 @@ int EnemyData::ecl_run_over_300()
         f32 ellipse_ratio = get_float_arg(EclFloatArgIndex{6});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        volatile f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial_speed;
+        volatile f32 goal_radial_speed;
+        if (!(radial_speed > -999999.0))
+        {
+            goal_radial_speed = pv->radial_speed;
+        }
+        else
+        {
+            goal_radial_speed = radial_speed;
+        }
         volatile f32 goal_radius = radius > -999999.0 ? radius : pv->radial_dist;
         f32 initial_radius = pv->radial_dist;
         f32 initial_radial_speed = pv->radial_speed;
