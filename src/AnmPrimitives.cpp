@@ -272,7 +272,8 @@ HARNESS_CALLED i32 AnmManager::draw_line(f32 x, f32 y, f32 length, f32 angle, D3
 // test always passing.
 // The angle steps in a local copy: stepping the parameter itself adds the
 // step through a copy in xmm0 after the stores.
-// TODO: the original loads the angle right before the loop; ours earlier.
+// The first angle sample is scoped to a positive segment count, matching the
+// original's loop-entry check before the angle is read.
 // FUNCTION: TH16 0x469640
 HARNESS_CALLED i32 AnmManager::draw_circle(f32 x, f32 y, f32 radius, f32 angle, i32 count, D3DCOLOR center_color,
                                            D3DCOLOR edge_color)
@@ -290,17 +291,20 @@ HARNESS_CALLED i32 AnmManager::draw_circle(f32 x, f32 y, f32 radius, f32 angle, 
     vertices->pos.w = 1.0f;
     vertices++;
     f32 step = ZUN_2PI / count;
-    f32 a = angle;
-    for (i32 i = 0; i < count + 1; i++)
+    if (count + 1 > 0)
     {
-        primitive_sincosmul((Float3 *)&vertices->pos, a, radius);
-        vertices->pos.x = vertices->pos.x + x;
-        vertices->pos.z = 0.0f;
-        vertices->pos.w = 1.0f;
-        vertices->diffuse = edge_color;
-        vertices->pos.y = vertices->pos.y + y;
-        vertices++;
-        a = wrap_angle(a + step);
+        f32 a = angle;
+        for (i32 i = 0; i < count + 1; i++)
+        {
+            primitive_sincosmul((Float3 *)&vertices->pos, a, radius);
+            vertices->pos.x = vertices->pos.x + x;
+            vertices->pos.z = 0.0f;
+            vertices->pos.w = 1.0f;
+            vertices->diffuse = edge_color;
+            vertices->pos.y = vertices->pos.y + y;
+            vertices++;
+            a = wrap_angle(a + step);
+        }
     }
     if (g_Supervisor.zwrite_enabled != 0)
     {
