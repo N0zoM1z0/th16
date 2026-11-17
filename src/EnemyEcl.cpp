@@ -467,13 +467,14 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = full->context.current_context->get_int_arg(0);
         i32 script = full->context.current_context->get_int_arg(1);
+        AnmId &selected_vm = anm_ids[slot];
 
-        g_AnmManager->delete_vm(anm_ids[slot]);
-        anm_ids[slot].id = 0;
+        g_AnmManager->delete_vm(selected_vm);
+        selected_vm.id = 0;
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        anm_ids[slot] = file->create_vm_front(script, anm_layers + 7, 0);
-        AnmVm *vm = anm_ids[slot].find_or_clear();
+        selected_vm = file->create_vm_front(script, anm_layers + 7, 0);
+        AnmVm *vm = selected_vm.find_or_clear();
 
         if (slot == 0)
         {
@@ -482,7 +483,7 @@ int EnemyData::ecl_run_over_300()
         }
         if (flags_low & ENEMY_FLAG_INTANGIBLE)
         {
-            anm_ids[slot].hide_tree();
+            selected_vm.hide_tree();
         }
         if (slot == 0)
         {
