@@ -2264,7 +2264,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&laser_params_storage.beam) LaserBeamInner();
         i32 slot = get_int_arg(0);
-        const EnemyBulletShooter &shooter = bullet_props[slot];
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         copy_ex_and_get_shot_origin(
             this, slot, &laser_params_storage.beam.start_pos, laser_params_storage.beam.ex);
         i32 color = shooter.color;
