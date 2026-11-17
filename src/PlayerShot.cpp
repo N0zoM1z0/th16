@@ -388,7 +388,7 @@ i32 __fastcall sht_on_hit_burst_rising(PlayerBullet *bullet, i32 enemy_pos, i32 
         g_Player->get_damage_source(g_Player->create_damage_source(&bullet->pos.pos, 24.0f, 1.0f, 0x14, damage));
     source->hit_interval = 4;
     source->pos.speed = 0.3f;
-    source->pos.angle.value = -ZUN_PI / 2;
+    *(volatile f32 *)&source->pos.angle.value = -ZUN_PI / 2;
     AnmManager::interrupt_tree(bullet->anm_id, 1);
     bullet->state = PLAYER_BULLET_HIT;
     source = bullet->damage_source();
