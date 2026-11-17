@@ -227,14 +227,15 @@ HARNESS_CALLED i32 Player::check_hit_rect(Float3 *pos, Float3 *size, i32 graze_o
 // g_Gui is read into a local: that gives the distance its original
 // registers.
 // Separate state tests keep the shared return 0 after the dialogue test.
-// TODO: the original loads inner.pos.y before x (y-first scalar or member
-// assignments fix the order but move x and the radius copy to xmm3/xmm4).
+// Read the Y displacement before X; the squared-distance expression still
+// keeps the original X-then-Y accumulation and its register allocation.
 // FUNCTION: TH16 0x4439e0
 HARNESS_CALLED i32 Player::check_hit_circle(Float3 *pos, f32 radius, i32 graze_only)
 {
-    D3DXVECTOR3 d = inner.pos - *pos;
+    f32 dy = inner.pos.y - pos->y;
+    f32 dx = inner.pos.x - pos->x;
     f32 hitbox = sht_file->hitbox_radius;
-    f32 dist_sq = d.x * d.x + d.y * d.y;
+    f32 dist_sq = dx * dx + dy * dy;
     if (inner.flags & PLAYER_FLAG_SCALED)
     {
         hitbox *= player_scale * 3.6f;
