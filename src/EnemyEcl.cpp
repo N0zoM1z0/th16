@@ -428,8 +428,10 @@ int EnemyData::ecl_run_over_300()
     // frames at once.
     case ECL_OP_ANM_339:
     {
-        i32 file = full->context.current_context->get_int_arg(0);
-        AnmId id = g_EnemyManager->anim_statement_anms[file]->create_vm_front(full->context.current_context->get_int_arg(1), -1, 0);
+        i32 file_index = full->context.current_context->get_int_arg(0);
+        i32 script = full->context.current_context->get_int_arg(1);
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[file_index];
+        AnmId id = file->create_vm_front(script, -1, 0);
         g_EffectManager->track(id);
         AnmVm *vm = id.find_or_clear();
         for (i32 i = 0; i < full->context.current_context->get_int_arg(2); i++)
