@@ -1947,7 +1947,11 @@ i32 LaserCurveInf::check_graze_or_kill(i32 graze_only)
                 Float3 size(32.0f, 32.0f, 0.0f);
                 cancel_as_bomb_rectangle(&g_Player->inner.pos, &size, 0.0f, 0, 1);
             }
-            else if (result == 2 && !grazed && graze_timer.current % 3 == 0)
+            else if (result != 2 || grazed || graze_timer.current % 3 != 0)
+            {
+                continue;
+            }
+            else
             {
                 graze_pos = mid;
                 grazed = 1;
