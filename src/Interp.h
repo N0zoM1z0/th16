@@ -82,8 +82,9 @@ struct InterpFloat
     __forceinline void start(i32 end_time, i32 method, f32 initial, f32 goal)
     {
         this->initial = initial;
-        this->end_time = end_time;
-        this->method = method;
+        // ECL writes the mode before the duration; keep the field stores ordered.
+        *(volatile i32 *)&this->method = method;
+        *(volatile i32 *)&this->end_time = end_time;
         bezier_1 = 0.0f;
         bezier_2 = 0.0f;
         this->goal = goal;
