@@ -163,10 +163,13 @@ ReplayStageData::~ReplayStageData()
     node.prev = NULL;
 }
 
+// The status and character checksums start at the typed size field,
+// skipping the magic/version and the checksum stored in the header.
+static_assert(offsetof(ScorefileSection, size) == 8, "scorefile checksum payload offset");
 // FUNCTION: TH16 0x449350
 u32 ScorefileSection::compute_checksum(i32 size)
 {
-    u8 *data = (u8 *)this + 8;
+    u8 *data = (u8 *)&this->size;
     u32 sum = 0;
     for (i32 i = 0; i < size - 8; i++)
     {
