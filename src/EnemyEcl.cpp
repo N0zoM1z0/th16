@@ -749,8 +749,8 @@ int EnemyData::ecl_run_over_300()
         i32 duration = full->context.current_context->get_int_arg(0);
 
         position_interp->flag_1d &= ~1;
-        position_interp->bezier_1 = bezier_1;
         position_interp->end_time = duration;
+        position_interp->bezier_1 = bezier_1;
         position_interp->bezier_2 = bezier_2;
         position_interp->method_for_3d = INTERP_BEZIER;
         goto ecl_move_curve_finish;
