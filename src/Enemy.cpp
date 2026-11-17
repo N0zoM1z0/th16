@@ -907,13 +907,14 @@ void EnemyDrop::eject_extra_drops(D3DXVECTOR3 *pos)
                 Float3 item_pos;
                 sincosmul_ellipse(&item_pos, angle, area.x, area.y);
                 f32 dist = g_replay_safe_rng.randf_0_to_1() * 0.5f + 0.5f;
+                f32 center_x = pos->x;
                 // y is scaled first: the order of these assignments decides
                 // which product loads its operand early.
                 Float3 offset;
                 offset.y = item_pos.y * dist;
                 offset.x = *(volatile f32 *)&dist * item_pos.x;
                 offset.z = 0.0f;
-                item_pos.x = pos->x + offset.x;
+                item_pos.x = center_x + offset.x;
                 item_pos.y = pos->y + offset.y;
                 item_pos.z = pos->z + offset.z;
                 g_ItemManager->spawn_item(i + 1, &item_pos, 0, -ZUN_PI / 2, 2.2f, 0, 0);
