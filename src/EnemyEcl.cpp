@@ -543,21 +543,15 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = full->context.current_context->get_int_arg(0);
         i32 alternate = full->context.current_context->get_int_arg(1);
-        volatile i32 anm_id_index = slot;
-        anm_id_index += 0x49;
-        AnmId *anm_id_array = reinterpret_cast<AnmId *>(this);
-        AnmId &anm_id = anm_id_array[anm_id_index];
+        AnmId *volatile selected = &anm_ids[slot];
+        AnmId &anm_id = *selected;
         g_AnmManager->delete_vm(anm_id);
         anm_id.id = 0;
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
-        i32 script = anm_set_main;
-        if (alternate >= 0)
-        {
-            script += alternate + 5;
-        }
-        anm_id = file->create_vm_front(script, layer, 0);
+        anm_id = file->create_vm_front(alternate >= 0 ? anm_set_main + alternate + 5 : anm_set_main,
+                                       layer, 0);
         AnmVm *vm = anm_id.find_or_clear();
         if (slot == 0)
         {
