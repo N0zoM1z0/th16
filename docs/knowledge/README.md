@@ -6,8 +6,9 @@ counts inside them are those of the checkpoint they were written at. Historical
 session logs and source-trial reports were removed on 2026-11-15 and remain in
 Git history. scripts/progress.py reports authoritative totals only after
 audit-reference.py has refreshed the input-matched report; it refuses stale
-inputs. The saved report at this handoff is dated 2026-11-15 and predates the
-2026-11-16 source commits.
+inputs. The saved report is dated 2026-11-15 and predates both the
+2026-11-16 and 2026-11-17 source commits; none of its totals describe the
+current candidate.
 
 | Topic | Files |
 | --- | --- |

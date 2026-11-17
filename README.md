@@ -10,7 +10,7 @@ Agent workflow: follow the highest-priority requirements in [AGENTS.md](AGENTS.m
 </p>
 
 <p align="center">
-  <img src="resources/progress.svg" alt="Historical TH16 strict-audit snapshot from 2026-11-15; excludes 2026-11-16 source changes">
+  <img src="resources/progress.svg" alt="Historical TH16 strict-audit snapshot from 2026-11-15, not the current source">
 </p>
 
 This project reconstructs C++ source for the original Japanese TH16 version
@@ -47,20 +47,20 @@ above is composited from the game's own textures for identification only.
 
 ## Current status
 
-The last saved strict-audit snapshot is dated **2026-11-15 06:37 UTC**:
-**1,033 exact / 51 mismatch / 131 incomplete** of 1,215 annotated functions
-(51.33% of annotated bytes). It predates the 16 local gpt-web commits made
-on 2026-11-16 and the current candidate build. These counts and the progress
-image are historical, not current results.
+The latest **saved strict-audit snapshot** is dated **2026-11-15 06:37 UTC**:
+**1,033 exact / 51 mismatch / 131 incomplete** among 1,215 historical
+annotated units (51.33% of the then-annotated bytes). These numbers and the
+progress image are **historical**, not current results. The current
+incremental candidate (as of 2026-11-17) builds **1,166 annotated
+functions**; that is a separate build count, not a new strict-exactness total.
 
-The candidate was incrementally rebuilt on 2026-11-16 at 14:37 UTC. No fresh
-strict audit or accepted Factory replay has been recorded for that build; the
-progress report still lists Factory acceptance as not-submitted. The progress
-script refuses stale audit inputs. Refresh the audit before quoting project
-totals. See the
-[current handoff](docs/NEXT_AGENT.md) for the latest source changes, focused
-dispatcher diagnostics and remaining large-owner work. Source-origin review and Factory
-acceptance remain open.
+No subsequent accepted strict receipt has been recorded. The last known
+focused strict Oracle attempt was blocked by EH-parent PDB owner preflight
+(`EH parent lacks one complete candidate PDB owner`); do not turn local
+normalized-instruction similarities into exactness claims. The
+[current handoff](docs/NEXT_AGENT.md) gives the current source checkpoints,
+large-owner priorities and focused diagnostic commands. An audit must first
+be refreshed successfully before quoting new project-wide strict totals.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the
 [handoff](docs/NEXT_AGENT.md) (current levers, open leads and dead ends) and the
@@ -71,7 +71,7 @@ Capstone decoder from `config/tools.lock.toml`.
 
 ```bash
 scripts/repo-python scripts/build.py                     # incremental LTCG build
-scripts/repo-python scripts/audit-reference.py --write-units
+scripts/repo-python scripts/audit-reference.py --write-units  # after the strict preflight is resolved
 scripts/repo-python scripts/check-frontier.py            # no function may lose ground
 scripts/repo-python scripts/progress.py --svg resources/progress.svg
 scripts/repo-python scripts/run-tests.py                 # tooling controls, about 2 min
