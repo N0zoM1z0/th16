@@ -131,9 +131,9 @@ static void __fastcall enemy_ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
     ZUN_ASM_SINCOSMUL(dst, angle, radius);
 }
 
-// The line and infinite laser constructors test the origin before copying
-// the transform array; beam and curve constructors copy it first. Preserve
-// those distinct target instruction orders while keeping both paths typed.
+// The line, infinite and curve laser constructors test the origin before
+// copying the transform array; the beam constructor copies it first. Keep
+// those target instruction orders in separate typed helpers.
 static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
@@ -2277,7 +2277,7 @@ int EnemyData::ecl_run_over_300()
         ::new (&laser_params_storage.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
         const EnemyBulletShooter &shooter = bullet_props[slot];
-        copy_ex_and_get_shot_origin(
+        get_shot_origin_and_copy_ex_branch_first(
             this, slot, &laser_params_storage.curve.start_pos, laser_params_storage.curve.ex);
         laser_params_storage.curve.type = shooter.type;
         laser_params_storage.curve.color = shooter.color;
