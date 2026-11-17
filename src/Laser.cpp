@@ -2321,8 +2321,8 @@ i32 LaserInfiniteInf::initialize(void *params)
     {
         Float3 offset;
         laser_sincosmul(&offset, inner.ang_aim, inner.distance);
-        position.x += offset.x;
-        position.y += offset.y;
+        *(volatile f32 *)&position.x += offset.x;
+        *(volatile f32 *)&position.y += offset.y;
     }
     hit_length = inner.laser_new_arg_1;
     length = inner.speed;
