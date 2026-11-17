@@ -216,6 +216,9 @@ static inline void ecl_run_vm(AnmVm *vm)
 
 static_assert(sizeof(EnemyBulletShooter) == 0x380, "ECL shooter stride");
 static_assert(sizeof(BulletEx) == 0x2c, "ECL transform stride");
+static_assert(offsetof(EnemyData, bullet_props) + offsetof(EnemyBulletShooter, ex) +
+                  offsetof(BulletEx, c) == 0x5d8,
+              "ECL transform c field offset");
 static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array offset");
 
 // The original dispatcher reuses one stack slot for its mutually exclusive
@@ -1976,10 +1979,8 @@ int EnemyData::ecl_run_over_300()
         ECL_EX_INT(b) = get_int_arg(arg++);
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
-            // The c word uses the extended record base at index +0x22.
-            *reinterpret_cast<i32 *>(reinterpret_cast<u8 *>(this) +
-                                     et * sizeof(EnemyBulletShooter) +
-                                     (ex_index + 0x22) * sizeof(BulletEx)) = get_int_arg(arg++);
+            // The c word is part of the selected transform record.
+            bullet_props[et].ex[ex_index].c = get_int_arg(arg++);
             ECL_EX_INT(d) = get_int_arg(arg++);
         }
 
