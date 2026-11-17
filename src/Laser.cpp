@@ -966,8 +966,9 @@ i32 LaserCurveInf::step_ex_angle_accel()
             break;
         }
     }
+    f32 radial_growth = *(volatile f32 *)&st->floats[0];
     angle = a;
-    length += st->floats[0] * g_game_speed;
+    length += radial_growth * g_game_speed;
     laser_sincosmul(&tip_offset, angle, length);
     st->timer.tick();
     return 0;
