@@ -1321,16 +1321,16 @@ int EnemyData::ecl_run_over_300()
         f32 negative_vertical_distance = zun_fabsf(angle + ecl_move_rand_half_pi);
         if (negative_vertical_distance < ecl_move_rand_five_cents)
         {
-            angle = !(ecl_move_rand_neg_half_pi > angle) ? ecl_move_rand_neg_half_pi_high
-                                                          : ecl_move_rand_neg_half_pi_low;
+            angle = (ecl_move_rand_neg_half_pi > angle) ? ecl_move_rand_neg_half_pi_low
+                                                        : ecl_move_rand_neg_half_pi_high;
         }
         else
         {
             f32 positive_vertical_distance = zun_fabsf(angle - ecl_move_rand_half_pi);
             if ((double)positive_vertical_distance < ecl_move_rand_five_cents_double)
             {
-                angle = !(ecl_move_rand_half_pi > angle) ? ecl_move_rand_pos_half_pi_high
-                                                         : ecl_move_rand_pos_half_pi_low;
+                angle = (ecl_move_rand_half_pi > angle) ? ecl_move_rand_pos_half_pi_low
+                                                        : ecl_move_rand_pos_half_pi_high;
             }
         }
 
