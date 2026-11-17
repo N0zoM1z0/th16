@@ -545,7 +545,7 @@ D3DXVECTOR3 InterpStrange1::step()
                 // the new velocity is computed before current is set.
                 initial[i] = bezier_2[i] + initial[i];
                 f32 velocity = bezier_2[i] + goal[i];
-                current[i] = initial[i];
+                memcpy(&current[i], &initial[i], sizeof(f32));
                 bezier_2[i] = velocity;
             }
             else if (methods_1d[i] == INTERP_BEZIER)
