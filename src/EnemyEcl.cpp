@@ -1971,28 +1971,26 @@ int EnemyData::ecl_run_over_300()
         // across the argument reads below.
         volatile i32 ex_offset = et * sizeof(EnemyBulletShooter) + ex_index * sizeof(BulletEx);
         // Keep the member access typed while using the target's shared base.
-#define ECL_EX_INT(field) (*reinterpret_cast<i32 *>(reinterpret_cast<u8 *>(&bullet_props[0].ex[0]) + ex_offset + offsetof(BulletEx, field)))
-#define ECL_EX_FLOAT(field) (*reinterpret_cast<f32 *>(reinterpret_cast<u8 *>(&bullet_props[0].ex[0]) + ex_offset + offsetof(BulletEx, field)))
-        ECL_EX_INT(slot) = get_int_arg(arg++);
-        ECL_EX_INT(type) = get_int_arg(arg++);
-        ECL_EX_INT(a) = get_int_arg(arg++);
-        ECL_EX_INT(b) = get_int_arg(arg++);
+#define ECL_EX_FIELD(field) (reinterpret_cast<BulletEx *>(reinterpret_cast<u8 *>(&bullet_props[0].ex[0]) + ex_offset)->field)
+        ECL_EX_FIELD(slot) = get_int_arg(arg++);
+        ECL_EX_FIELD(type) = get_int_arg(arg++);
+        ECL_EX_FIELD(a) = get_int_arg(arg++);
+        ECL_EX_FIELD(b) = get_int_arg(arg++);
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             // The c word is part of the selected transform record.
             bullet_props[et].ex[ex_index].c = get_int_arg(arg++);
-            ECL_EX_INT(d) = get_int_arg(arg++);
+            ECL_EX_FIELD(d) = get_int_arg(arg++);
         }
 
-        ECL_EX_FLOAT(r) = get_float_arg(EclFloatArgIndex{arg++});
-        ECL_EX_FLOAT(s) = get_float_arg(EclFloatArgIndex{arg++});
+        ECL_EX_FIELD(r) = get_float_arg(EclFloatArgIndex{arg++});
+        ECL_EX_FIELD(s) = get_float_arg(EclFloatArgIndex{arg++});
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
-            ECL_EX_FLOAT(m) = get_float_arg(EclFloatArgIndex{arg++});
-            ECL_EX_FLOAT(n) = get_float_arg(EclFloatArgIndex{arg++});
+            ECL_EX_FIELD(m) = get_float_arg(EclFloatArgIndex{arg++});
+            ECL_EX_FIELD(n) = get_float_arg(EclFloatArgIndex{arg++});
         }
-#undef ECL_EX_INT
-#undef ECL_EX_FLOAT
+#undef ECL_EX_FIELD
 
         if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
