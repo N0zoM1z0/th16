@@ -1640,7 +1640,7 @@ int EnemyData::ecl_run_over_300()
             *get_float_arg_ptr(0) = lunatic;
             break;
         default:
-            *get_float_arg_ptr(0) = lunatic;
+            *full->context.current_context->get_float_arg_ptr(0) = lunatic;
             break;
         }
         break;
