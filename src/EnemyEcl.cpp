@@ -2139,10 +2139,12 @@ int EnemyData::ecl_run_over_300()
         const u8 *encrypted_name = reinterpret_cast<const u8 *>(&instr->args[4]);
         u8 key = 0x77;
         u8 key_step = 7;
+        // The encrypted input advances while the destination uses a frame
+        // index; this also keeps the original loop's key-update order.
         char *dest = name;
         for (i32 i = 0; i < name_length; i++)
         {
-            *dest++ = (char)(*encrypted_name++ ^ key);
+            dest[i] = (char)(*encrypted_name++ ^ key);
             key = (u8)(key + key_step);
             key_step = (u8)(key_step + 0x10);
         }
