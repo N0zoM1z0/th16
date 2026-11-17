@@ -691,9 +691,7 @@ int EnemyData::ecl_run_over_300()
         f32 goal_x;
         f32 goal_y;
         {
-            i16 curve_opcode = ECL_OP_MOVE_CURVE;
-            volatile i16 *curve_opcode_ptr = &curve_opcode;
-            position_offset = (instr->opcode == *curve_opcode_ptr ||
+            position_offset = (instr->opcode == ECL_OP_MOVE_CURVE ||
                                instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
                                   ? offsetof(EnemyData, abs_pos)
                                   : offsetof(EnemyData, rel_pos);
