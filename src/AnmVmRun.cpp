@@ -1420,10 +1420,13 @@ done:
     }
     if (flags_lo & ANM_VM_FOLLOW_CAMERA)
     {
-        // Through D3DXVec3Add and a pointer, for the original's operand
-        // order in each component.
+        // The camera offset is added component-wise to preserve the target's
+        // load and addition order in the first two coordinates.
         Float3 *p = &entity_pos;
-        D3DXVec3Add(p, p, &g_Supervisor.cameras[3].position_delta);
+        const Float3 *camera_delta = &g_Supervisor.cameras[3].position_delta;
+        p->x = p->x + camera_delta->x;
+        p->y = p->y + camera_delta->y;
+        p->z = p->z + camera_delta->z;
     }
     if (flags_hi & ANM_VM_UV_QUAD_FROM_CORNERS)
     {
