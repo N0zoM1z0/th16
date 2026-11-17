@@ -1464,7 +1464,7 @@ int EnemyData::ecl_run_over_300()
     // flagClear(flags)
     case ECL_OP_FLAG_CLEAR:
         flags_low &= ~get_int_arg(0);
-        if (!(flags_low & ENEMY_FLAG_INTANGIBLE))
+        if (!((EnemyFlagsLow *)&flags_low)->intangible)
         {
             for (i32 i = 0; i < 16; i++)
             {

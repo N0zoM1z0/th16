@@ -268,7 +268,9 @@ struct EnemyFlagsLow
     u32 unk_0 : 2;
     u32 no_offscreen_delete_x : 1;
     u32 no_offscreen_delete_y : 1;
-    u32 unk_4 : 8;
+    u32 unk_4 : 1;
+    u32 intangible : 1;
+    u32 unk_6 : 6;
     u32 rect_hitbox : 1;
     u32 unk_13 : 3;
     // Has been on screen; leaving it then deletes the enemy.
