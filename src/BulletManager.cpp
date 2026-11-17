@@ -1973,29 +1973,39 @@ HARNESS_CALLED i32 Bullet::step_ex_08()
         (outside_range(&pos.x, vm_sprite(&vm0)->sprite_width, -192.0f, 192.0f) ||
          outside_range(&pos.y, vm_sprite(&vm0)->sprite_height, 0.0f, 448.0f)))
     {
-        D3DXVECTOR3 dir;
-        D3DXVECTOR2 corner;
-        bullet_sincosmul_2(&dir, angle, 1.0f);
-        corner.x = (-384.0f - vm_sprite(&vm0)->sprite_width) * 0.5f - pos.x;
-        corner.y = 224.0f - (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f - pos.y;
-        D3DXVec2Normalize(&corner, &corner);
-        f32 cross_0 = dir.x * corner.y - dir.y * corner.x;
-        f32 dot_0 = dir.y * corner.y + dir.x * corner.x;
-        corner.x = (vm_sprite(&vm0)->sprite_width + 384.0f) * 0.5f - pos.x;
-        corner.y = 224.0f - (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f - pos.y;
-        D3DXVec2Normalize(&corner, &corner);
-        f32 cross_1 = dir.x * corner.y - dir.y * corner.x;
-        f32 dot_1 = dir.y * corner.y + dir.x * corner.x;
-        corner.x = (-384.0f - vm_sprite(&vm0)->sprite_width) * 0.5f - pos.x;
-        corner.y = (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f + 224.0f - pos.y;
-        D3DXVec2Normalize(&corner, &corner);
-        f32 cross_2 = dir.x * corner.y - dir.y * corner.x;
-        f32 dot_2 = dir.y * corner.y + dir.x * corner.x;
-        corner.x = (vm_sprite(&vm0)->sprite_width + 384.0f) * 0.5f - pos.x;
-        corner.y = (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f + 224.0f - pos.y;
-        D3DXVec2Normalize(&corner, &corner);
-        f32 cross_3 = dir.x * corner.y - dir.y * corner.x;
-        f32 dot_3 = dir.y * corner.y + dir.x * corner.x;
+        struct DirectionCornerFields
+        {
+            f32 direction_x;
+            f32 direction_y;
+            D3DXVECTOR2 corner;
+        };
+        union DirectionCornerScratch
+        {
+            D3DXVECTOR3 direction;
+            DirectionCornerFields fields;
+            DirectionCornerScratch() {}
+        } scratch;
+        bullet_sincosmul_2(&scratch.direction, angle, 1.0f);
+        scratch.fields.corner.x = (-384.0f - vm_sprite(&vm0)->sprite_width) * 0.5f - pos.x;
+        scratch.fields.corner.y = 224.0f - (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f - pos.y;
+        D3DXVec2Normalize(&scratch.fields.corner, &scratch.fields.corner);
+        f32 cross_0 = scratch.fields.direction_x * scratch.fields.corner.y - scratch.fields.direction_y * scratch.fields.corner.x;
+        f32 dot_0 = scratch.fields.direction_y * scratch.fields.corner.y + scratch.fields.direction_x * scratch.fields.corner.x;
+        scratch.fields.corner.x = (vm_sprite(&vm0)->sprite_width + 384.0f) * 0.5f - pos.x;
+        scratch.fields.corner.y = 224.0f - (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f - pos.y;
+        D3DXVec2Normalize(&scratch.fields.corner, &scratch.fields.corner);
+        f32 cross_1 = scratch.fields.direction_x * scratch.fields.corner.y - scratch.fields.direction_y * scratch.fields.corner.x;
+        f32 dot_1 = scratch.fields.direction_y * scratch.fields.corner.y + scratch.fields.direction_x * scratch.fields.corner.x;
+        scratch.fields.corner.x = (-384.0f - vm_sprite(&vm0)->sprite_width) * 0.5f - pos.x;
+        scratch.fields.corner.y = (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f + 224.0f - pos.y;
+        D3DXVec2Normalize(&scratch.fields.corner, &scratch.fields.corner);
+        f32 cross_2 = scratch.fields.direction_x * scratch.fields.corner.y - scratch.fields.direction_y * scratch.fields.corner.x;
+        f32 dot_2 = scratch.fields.direction_y * scratch.fields.corner.y + scratch.fields.direction_x * scratch.fields.corner.x;
+        scratch.fields.corner.x = (vm_sprite(&vm0)->sprite_width + 384.0f) * 0.5f - pos.x;
+        scratch.fields.corner.y = (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f + 224.0f - pos.y;
+        D3DXVec2Normalize(&scratch.fields.corner, &scratch.fields.corner);
+        f32 cross_3 = scratch.fields.direction_x * scratch.fields.corner.y - scratch.fields.direction_y * scratch.fields.corner.x;
+        f32 dot_3 = scratch.fields.direction_y * scratch.fields.corner.y + scratch.fields.direction_x * scratch.fields.corner.x;
         f32 best_left = -999.0f;
         if (0.0f >= cross_0 && dot_0 > best_left && dot_0 >= 0.0f)
         {
