@@ -1272,32 +1272,34 @@ int EnemyData::ecl_run_over_300()
         f32 left = center_x - half_width;
         f32 right = center_x + half_width;
         f32 angle;
-        if (left > current_x)
+        if (left <= current_x)
         {
-            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / ecl_move_rand_third;
-        }
-        else if (current_x > right)
-        {
-            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / ecl_move_rand_third;
-            angle += ecl_move_rand_pi;
-            angle = normalize_angle(angle);
-        }
-        else
-        {
-            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() * ecl_move_rand_quarter;
-            bool player_is_right = g_Player->inner.pos.x > current_x;
-            u16 side = g_replay_safe_rng.rand_u16() % 3;
-            if (!player_is_right)
+            if (right < current_x)
             {
-                if (side != 0)
+                angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / ecl_move_rand_third;
+                angle += ecl_move_rand_pi;
+                angle = normalize_angle(angle);
+            }
+            else if (g_Player->inner.pos.x > current_x)
+            {
+                angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() * ecl_move_rand_quarter;
+                if (g_replay_safe_rng.rand_u16() % 3 == 0)
                 {
                     angle += ecl_move_rand_pi;
                 }
             }
-            else if (side == 0)
+            else
             {
-                angle += ecl_move_rand_pi;
+                angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() * ecl_move_rand_quarter;
+                if (g_replay_safe_rng.rand_u16() % 3 != 0)
+                {
+                    angle += ecl_move_rand_pi;
+                }
             }
+        }
+        else
+        {
+            angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() / ecl_move_rand_third;
         }
 
         f32 current_y = final_pos.pos.y;
