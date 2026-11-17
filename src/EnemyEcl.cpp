@@ -2234,7 +2234,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&laser_params_storage.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
-        const EnemyBulletShooter &shooter = bullet_props[slot];
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
             this, slot, &laser_params_storage.infinite.start_pos, laser_params_storage.infinite.ex);
         i32 type = shooter.type;
