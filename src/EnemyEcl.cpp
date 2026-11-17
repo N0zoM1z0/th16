@@ -420,7 +420,8 @@ int EnemyData::ecl_run_over_300()
         i32 file_index = full->context.current_context->get_int_arg(0);
         i32 script = full->context.current_context->get_int_arg(1);
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[file_index];
-        g_EffectManager->track(file->create_vm_front(script, -1, 0));
+        AnmId created = file->create_vm_front(script, -1, 0);
+        g_EffectManager->track(created);
         break;
     }
     // anm339(file, script, frames): anmPlayAbs, then runs the VM for some
