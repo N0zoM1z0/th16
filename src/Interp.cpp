@@ -359,12 +359,14 @@ static inline f32 advance_interp_time(ZunTimer &time)
 D3DXVECTOR3 InterpFloat3::step()
 {
     InterpFloat3 *self = this;
+    i32 end_time;
     if (self->end_time > 0)
     {
         self->time.current_f = advance_interp_time(self->time);
-        if (self->time.current >= self->end_time)
+        end_time = self->end_time;
+        if (self->time.current >= end_time)
         {
-            self->time.set(self->end_time);
+            self->time.set(end_time);
             self->end_time = 0;
             if (self->method == INTERP_CONSTANT_VELOCITY || self->method == INTERP_CONSTANT_ACCEL)
             {
@@ -381,6 +383,10 @@ D3DXVECTOR3 InterpFloat3::step()
         }
         return self->goal;
     }
+    else
+    {
+        end_time = self->end_time;
+    }
     if (self->method == INTERP_CONSTANT_VELOCITY)
     {
         D3DXVECTOR3 tmp = self->initial;
@@ -396,7 +402,7 @@ D3DXVECTOR3 InterpFloat3::step()
     }
     else if (self->method == INTERP_BEZIER)
     {
-        f32 t = self->time.current_f / (f32)self->end_time;
+        f32 t = self->time.current_f / (f32)end_time;
         f32 c_initial = (t - 1.0f) * (t - 1.0f) * (2.0f * t + 1.0f);
         f32 c_goal = t * t * (3.0f - 2.0f * t);
         f32 c_bezier_1 = (1.0f - t) * (1.0f - t) * t;
@@ -406,7 +412,7 @@ D3DXVECTOR3 InterpFloat3::step()
     }
     else
     {
-        f32 x = interp_common_methods(self->method, self->time.current_f, (f32)self->end_time);
+        f32 x = interp_common_methods(self->method, self->time.current_f, (f32)end_time);
         self->current = (self->goal - self->initial) * x + self->initial;
     }
     return self->current;
