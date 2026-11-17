@@ -33,6 +33,37 @@ def safe_path(name):
     return Path(*path.parts)
 
 
+def indexed_records(index):
+    """Adapt both the directory archives and later per-file gzip cleanup indexes."""
+    if 'records' in index:
+        if index.get('status') != 'complete':
+            raise ValueError('Evidence cleanup is not complete')
+        return index['records']
+    if 'compressed_files' in index:
+        rows = []
+        for entry in index['compressed_files']:
+            if entry.get('verified_round_trip') is not True:
+                raise ValueError('Unverified compressed evidence in cleanup index')
+            prefix = '.analysis/'
+            original = entry['path']
+            archive = entry['compressed_path']
+            if not original.startswith(prefix) or not archive.startswith(prefix):
+                raise ValueError('Compressed evidence must be inside .analysis')
+            rows.append({
+                'kind': 'file',
+                'path': original[len(prefix):],
+                'archive': archive[len(prefix):],
+                'archive_sha256': entry['compressed_sha256'],
+                'original_bytes': entry['original_size'],
+                'archive_bytes': entry['compressed_size'],
+                'sha256': entry['original_sha256'],
+                'mode': entry['mode'],
+                'mtime_ns': entry['mtime_ns'],
+            })
+        return rows
+    raise ValueError('Unrecognized evidence cleanup index')
+
+
 def records(analysis):
     rows = []
     seen = set()
@@ -40,10 +71,7 @@ def records(analysis):
     if not indexes:
         raise ValueError('No evidence cleanup index found')
     for path in indexes:
-        index = json.loads(path.read_text())
-        if index['status'] != 'complete':
-            raise ValueError('Evidence cleanup is not complete')
-        for row in index['records']:
+        for row in indexed_records(json.loads(path.read_text())):
             if row['path'] in seen:
                 raise ValueError('Duplicate evidence path in cleanup indexes')
             seen.add(row['path'])
