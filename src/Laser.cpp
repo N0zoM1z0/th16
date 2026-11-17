@@ -1089,8 +1089,8 @@ i32 LaserLineInf::step_ex_angle()
             g_SoundManager.play_sound_centered(inner.shot_transform_sfx, 0);
         }
         f32 a = ex_state[3].floats[1] + angle;
-        ex_state[3].ints[2]++;
         len = ex_state[3].floats[0];
+        ++*(volatile i32 *)&ex_state[3].ints[2];
         length = len;
         angle = a;
         ex_state[3].timer.reset();
@@ -1128,8 +1128,8 @@ i32 LaserCurveInf::step_ex_angle()
             g_SoundManager.play_sound_centered(inner.shot_transform_sfx, 0);
         }
         f32 a = ex_state[3].floats[1] + angle;
-        ex_state[3].ints[2]++;
         len = ex_state[3].floats[0];
+        ++*(volatile i32 *)&ex_state[3].ints[2];
         length = len;
         angle = a;
         ex_state[3].timer.reset();
