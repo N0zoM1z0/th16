@@ -613,7 +613,8 @@ int EnemyData::ecl_run_over_300()
             pos_vel->pos.y = y;
         }
         pos_vel->flags &= ~0xf;
-        final_pos.pos = abs_pos.pos + rel_pos.pos;
+        // The original combines relative displacement first, then absolute position.
+        final_pos.pos = rel_pos.pos + abs_pos.pos;
         update_final_pos();
         break;
     }
