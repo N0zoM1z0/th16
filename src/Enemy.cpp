@@ -2257,6 +2257,13 @@ void EnemyData::ecl_anm_vm_instr()
     }
 }
 
+static __forceinline void add_camera_position_delta(D3DXVECTOR3 *position, const D3DXVECTOR3 *delta)
+{
+    position->x = position->x + delta->x;
+    position->y = *(const volatile f32 *)&delta->y + position->y;
+    position->z = position->z + delta->z;
+}
+
 // TODO: recover the original camera Y addition operand order.
 // FUNCTION: TH16 0x41bb50
 int EnemyData::step_interpolators()
@@ -2311,7 +2318,7 @@ int EnemyData::step_interpolators()
     abs_pos.step();
     if (flags_low & ENEMY_FLAG_4000000)
     {
-        rel_pos.pos += g_Supervisor.cameras[0].position_delta;
+        add_camera_position_delta(&rel_pos.pos, &g_Supervisor.cameras[0].position_delta);
     }
     rel_pos.step();
     update_final_pos();
