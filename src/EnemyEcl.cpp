@@ -529,14 +529,16 @@ int EnemyData::ecl_run_over_300()
         g_AnmManager->delete_vm(anm_ids[slot]);
         anm_ids[slot].id = 0;
 
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        i32 layer = anm_layers + 7;
         i32 script = anm_set_main;
         if (alternate >= 0)
         {
             script += alternate + 5;
         }
-        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        anm_ids[slot] = file->create_vm_front(script, anm_layers + 7, 0);
-        AnmVm *vm = anm_ids[slot].find_or_clear();
+        AnmId &anm_id = anm_ids[slot];
+        anm_id = file->create_vm_front(script, layer, 0);
+        AnmVm *vm = anm_id.find_or_clear();
         if (slot == 0)
         {
             final_sprite_size.x = vm->sprite_size.y * vm->scale.y;
@@ -544,7 +546,7 @@ int EnemyData::ecl_run_over_300()
         }
         if (flags_low & ENEMY_FLAG_INTANGIBLE)
         {
-            anm_ids[slot].hide_tree();
+            anm_id.hide_tree();
         }
         break;
     }
