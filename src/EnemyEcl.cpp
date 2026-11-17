@@ -2068,7 +2068,7 @@ int EnemyData::ecl_run_over_300()
             {
                 set_next(full, get_int_arg(0), 0, get_int_arg(2), "BossDead");
             }
-            full_owner->set_timeout(get_int_arg(0), "BossEscape");
+            full->set_timeout(get_int_arg(0), "BossEscape");
         }
         else
         {
