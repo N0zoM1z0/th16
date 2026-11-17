@@ -911,7 +911,7 @@ void EnemyDrop::eject_extra_drops(D3DXVECTOR3 *pos)
                 // which product loads its operand early.
                 Float3 offset;
                 offset.y = item_pos.y * dist;
-                offset.x = item_pos.x * dist;
+                offset.x = *(volatile f32 *)&dist * item_pos.x;
                 offset.z = 0.0f;
                 item_pos.x = pos->x + offset.x;
                 item_pos.y = pos->y + offset.y;
