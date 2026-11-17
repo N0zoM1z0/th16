@@ -2600,7 +2600,7 @@ int EnemyData::ecl_run_over_300()
         {
             wait = lunatic;
         }
-        full_owner->context.current_context->time -= wait;
+        full->context.current_context->time -= wait;
         break;
     }
     // fog(radius, color): replaces the enemy's fog; radius 0 removes it.
