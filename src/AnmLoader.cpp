@@ -273,13 +273,14 @@ HARNESS_CALLED i32 AnmManager::reload_texture(AnmLoadedD3D *d3d, void *data, u32
                                               i32 unused_4, i32 unused_5)
 {
     IDirect3DSurface9 *surface = NULL;
+    IDirect3DTexture9 *texture = d3d->texture;
 
     d3d->flags &= ~ANM_D3D_RENDER_TARGET;
     d3d->src_data_size = size;
-    d3d->texture->GetSurfaceLevel(0, &surface);
+    texture->GetSurfaceLevel(0, &surface);
     D3DXLoadSurfaceFromFileInMemory(surface, NULL, NULL, data, size, NULL, D3DX_FILTER_NONE, 0, NULL);
     surface->Release();
-    convert_texture(d3d->texture);
+    convert_texture(texture);
     d3d->bytes_per_pixel = 4;
     return 0;
 }
