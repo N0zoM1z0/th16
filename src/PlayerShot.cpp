@@ -329,9 +329,8 @@ i32 __fastcall damage_source_on_hit_piercing(PlayerDamageSource *source, i32 ene
 {
     i32 bullet_index = source->bullet_index;
     Player *player = g_Player;
-    PlayerBullet *bullet = &player->inner.bullets[bullet_index];
-    i32 previous_damage = bullet->damage;
-    bullet->damage = 1;
+    i32 previous_damage = player->inner.bullets[bullet_index].damage;
+    player->inner.bullets[bullet_index].damage = 1;
     return previous_damage;
 }
 
