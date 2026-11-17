@@ -358,8 +358,9 @@ int EnemyData::ecl_run_over_300()
         {
             // A nearby hit uses the default downward angle. Otherwise point
             // the animation from the hit position toward the enemy.
-            f32 dy = last_damage_pos.y - final_pos.pos.y;
-            f32 dx = last_damage_pos.x - final_pos.pos.x;
+            const Float3 *enemy_position = &final_pos.pos;
+            f32 dy = last_damage_pos.y - enemy_position->y;
+            f32 dx = last_damage_pos.x - enemy_position->x;
             f32 distance_squared = dy * dy + dx * dx;
             f32 angle;
             if (distance_squared < ecl_die_distance_squared)
