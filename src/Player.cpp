@@ -181,21 +181,26 @@ HARNESS_CALLED f32 Player::angle_to_player(Float3 *pos)
 }
 
 // lo is computed before hi (in both tests) for the original's lo.y/hi.y registers.
-// TODO: register allocation: the original keeps size in ecx and the player
-// in edx (moving it to ecx for die) and interleaves the half size products
-// with the position loads. Neither a Player local nor g_Player-> instead
-// of the folded this reproduces it.
+// Stage the half-width and position axes separately so the collision-bound
+// calculations retain the original's interleaved SIMD load order.
 // FUNCTION: TH16 0x4438c0
 HARNESS_CALLED i32 Player::check_hit_rect(Float3 *pos, Float3 *size, i32 graze_only)
 {
-    D3DXVECTOR3 half = *size * 0.5f;
-    D3DXVECTOR3 lo = *pos - half;
-    D3DXVECTOR3 hi = *pos + half;
+    f32 half_x = size->x * 0.5f;
+    f32 center_x = pos->x;
+    f32 half_y = size->y * 0.5f;
+    D3DXVECTOR3 lo;
+    D3DXVECTOR3 hi;
+    hi.x = center_x + half_x;
+    f32 center_y = pos->y;
+    lo.x = center_x - half_x;
+    lo.y = center_y - half_y;
+    hi.y = center_y + half_y;
     if (hurtbox.min_pos.x > hi.x || hurtbox.min_pos.y > hi.y || lo.x > hurtbox.max_pos.x ||
         lo.y > hurtbox.max_pos.y)
     {
         // A miss grazes within 24 pixels.
-        half = D3DXVECTOR3(24.0f, 24.0f, 24.0f);
+        D3DXVECTOR3 half(24.0f, 24.0f, 24.0f);
         lo = *pos - half;
         hi = *pos + half;
         if (hurtbox.min_pos.x > hi.x || hurtbox.min_pos.y > hi.y || lo.x > hurtbox.max_pos.x ||
