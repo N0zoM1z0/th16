@@ -241,7 +241,7 @@ i32 __fastcall ScreenEffect::on_tick_shake(ScreenEffect *self)
         return UPDATE_FUNC_CLEANUP;
     }
     self->timer.tick_goto();
-    i32 current_frame = *(volatile i32 *)&self->timer.current;
+    i32 current_frame = self->timer.current;
     if (current_frame >= self->arg_18)
     {
         return UPDATE_FUNC_CLEANUP;
