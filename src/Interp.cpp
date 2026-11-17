@@ -354,7 +354,8 @@ static inline f32 advance_interp_time(ZunTimer &time)
 // The fields are read through a local copy of this: through this itself LTCG
 // gave the bezier terms other registers (1.0f in xmm5, the original's xmm6)
 // and took the operands of the adds in another order.
-// TODO: recover the end-time load after the fractional-time writeback.
+// The original writes fractional time before reloading end_time. The
+// separate observable accesses preserve that order across LTCG.
 // FUNCTION: TH16 0x406e10
 D3DXVECTOR3 InterpFloat3::step()
 {
@@ -362,8 +363,8 @@ D3DXVECTOR3 InterpFloat3::step()
     i32 end_time;
     if (self->end_time > 0)
     {
-        self->time.current_f = advance_interp_time(self->time);
-        end_time = self->end_time;
+        *(volatile f32 *)&self->time.current_f = advance_interp_time(self->time);
+        end_time = *(volatile i32 *)&self->end_time;
         if (self->time.current >= end_time)
         {
             self->time.set(end_time);
