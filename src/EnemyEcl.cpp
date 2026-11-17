@@ -218,14 +218,23 @@ static_assert(sizeof(EnemyBulletShooter) == 0x380, "ECL shooter stride");
 static_assert(sizeof(BulletEx) == 0x2c, "ECL transform stride");
 static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array offset");
 
-// The original dispatcher reuses one stack slot for all four laser
-// parameter records; only one ECL instruction executes per dispatch.
+// The original dispatcher reuses one stack slot for its mutually exclusive
+// laser parameter records; the movement cases reuse that scratch area too.
+struct EclMovementScratch
+{
+    PosVel *position;
+    InterpStrange1 *position_interp;
+    f32 goal_x;
+    f32 goal_y;
+};
+
 union EclLaserParamsStorage
 {
     LaserLineInner line;
     LaserInfiniteInner infinite;
     LaserBeamInner beam;
     LaserCurveInner curve;
+    EclMovementScratch movement;
 
     EclLaserParamsStorage()
     {
@@ -240,6 +249,8 @@ static_assert(sizeof(LaserBeamInner) <= sizeof(EclLaserParamsStorage),
               "beam laser fits shared parameter storage");
 static_assert(sizeof(LaserCurveInner) <= sizeof(EclLaserParamsStorage),
               "curve laser fits shared parameter storage");
+static_assert(sizeof(EclMovementScratch) <= sizeof(EclLaserParamsStorage),
+              "movement scratch fits shared dispatcher storage");
 
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
@@ -675,74 +686,79 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        PosVel *pos_vel = (instr->opcode == ECL_OP_MOVE_CURVE ||
-                           instr->opcode == ECL_OP_MOVE_CURVE_OFFSET) ? &abs_pos : &rel_pos;
-        InterpStrange1 *position_interp = (instr->opcode == ECL_OP_MOVE_CURVE ||
-                                            instr->opcode == ECL_OP_MOVE_CURVE_OFFSET) ? &abs_pos_i : &rel_pos_i;
-        f32 goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        f32 goal_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{4});
-        i32 move_curve_duration = full_owner->context.current_context->get_int_arg(0);
-        if (move_curve_duration <= 0)
+        i32 position_offset;
+        InterpStrange1 *position_interp;
+        f32 goal_x;
+        f32 goal_y;
         {
-            position_interp->end_time = 0;
-            break;
-        }
-
-        if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ||
-            instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
-        {
-            if (flags_low & ENEMY_FLAG_MIRRORED)
+            position_offset = (instr->opcode == ECL_OP_MOVE_CURVE ||
+                               instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
+                                  ? offsetof(EnemyData, abs_pos)
+                                  : offsetof(EnemyData, rel_pos);
+            position_interp = (instr->opcode == ECL_OP_MOVE_CURVE ||
+                               instr->opcode == ECL_OP_MOVE_CURVE_OFFSET) ? &abs_pos_i : &rel_pos_i;
+            goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+            goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
+            i32 move_curve_duration = full->context.current_context->get_int_arg(0);
+            if (move_curve_duration <= 0)
             {
-                goal_x = pos_vel->pos.x - goal_x;
+                position_interp->end_time = 0;
+                break;
             }
-            else
-            {
-                goal_x = pos_vel->pos.x + goal_x;
-            }
-            goal_y = pos_vel->pos.y + goal_y;
-        }
 
-        position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
-        position_interp->bezier_1 = g_zero_vec;
-        position_interp->bezier_2 = g_zero_vec;
-        i32 mode_x = full_owner->context.current_context->get_int_arg(1);
-        position_interp->flag_1d |= 1;
-        position_interp->methods_1d[0] = mode_x;
-        i32 mode_y = full_owner->context.current_context->get_int_arg(2);
-        position_interp->flag_1d |= 1;
-        position_interp->methods_1d[1] = mode_y;
-        position_interp->initial = pos_vel->pos;
-        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : pos_vel->pos.x,
-                                       goal_y > -999999.0 ? goal_y : pos_vel->pos.y, 0.0f);
-        position_interp->reset_timer();
-        pos_vel->flags &= ~0xf;
-        break;
-    }
-    // moveBezier(time, b1x, b1y, x, y, b2x, b2y), moveBezierRel.
+            if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ||
+                instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
+            {
+                f32 current_x = ((PosVel *)((u8 *)this + position_offset))->pos.x;
+                if (flags_low & ENEMY_FLAG_MIRRORED)
+                {
+                    goal_x = current_x - goal_x;
+                }
+                else
+                {
+                    goal_x = current_x + goal_x;
+                }
+                goal_y = ((PosVel *)((u8 *)this + position_offset))->pos.y + goal_y;
+            }
+
+            position_interp->end_time = full->context.current_context->get_int_arg(0);
+            position_interp->bezier_1 = g_zero_vec;
+            position_interp->bezier_2 = g_zero_vec;
+            position_interp->method_for_1d = full->context.current_context->get_int_arg(1);
+            position_interp->flag_1d |= 1;
+            position_interp->move_curve_mode = full->context.current_context->get_int_arg(2);
+            position_interp->flag_1d |= 1;
+        }
+        goto ecl_move_curve_finish;
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
-    {
-        PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
-        InterpStrange1 *position_interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
-
-        f32 goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        f32 goal_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{4});
-        f32 bezier_1_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{1});
-        f32 bezier_1_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        f32 bezier_2_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{5});
-        f32 bezier_2_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{6});
-        i32 duration = full_owner->context.current_context->get_int_arg(0);
-
-        position_interp->flag_1d &= ~1;
-        position_interp->bezier_1 = Float3(bezier_1_x, bezier_1_y, 0.0f);
-        position_interp->end_time = duration;
-        position_interp->bezier_2 = Float3(bezier_2_x, bezier_2_y, 0.0f);
-        position_interp->method_for_3d = INTERP_BEZIER;
-        position_interp->initial = pos_vel->pos;
-        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : pos_vel->pos.x,
-                                       goal_y > -999999.0 ? goal_y : pos_vel->pos.y, 0.0f);
+        position_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos)
+                                                               : offsetof(EnemyData, rel_pos);
+        position_interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
+        goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        goal_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{4});
+        {
+            Float3 bezier;
+            bezier.x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{1});
+            bezier.y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
+            bezier.z = 0.0f;
+            position_interp->bezier_1 = bezier;
+            bezier.x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{5});
+            bezier.y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{6});
+            bezier.z = 0.0f;
+            position_interp->bezier_2 = bezier;
+            position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
+            position_interp->method_for_3d = INTERP_BEZIER;
+            position_interp->flag_1d &= ~1;
+        }
+        goto ecl_move_curve_finish;
+    ecl_move_curve_finish:
+        position_interp->initial = ((PosVel *)((u8 *)this + position_offset))->pos;
+        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : ((PosVel *)((u8 *)this + position_offset))->pos.x,
+                                       goal_y > -999999.0 ? goal_y : ((PosVel *)((u8 *)this + position_offset))->pos.y,
+                                       0.0f);
         position_interp->reset_timer();
-        pos_vel->flags &= ~0xf;
+        ((PosVel *)((u8 *)this + position_offset))->flags &= ~0xf;
         break;
     }
     // moveVel(angle, speed) and the relative and
