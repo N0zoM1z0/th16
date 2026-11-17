@@ -812,8 +812,9 @@ i32 AnmVm::run()
         }
         case ANM_OP_CIRCLE_POS_RAND:
         {
+            // Materialize both script-supplied bounds before drawing the angle and radius.
             volatile f32 min = ANM_FLOAT(2);
-            f32 max = ANM_FLOAT(3);
+            volatile f32 max = ANM_FLOAT(3);
             f32 angle = g_replay_unsafe_rng.randf_neg_1_to_1() * ZUN_PI;
             f32 random_radius = g_replay_unsafe_rng.randf_neg_1_to_1();
             f32 range = max - min;
