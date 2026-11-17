@@ -259,10 +259,7 @@ static_assert(sizeof(EclMovementScratch) <= sizeof(EclLaserParamsStorage),
 int EnemyData::ecl_run_over_300()
 {
     EclLaserParamsStorage laser_params_storage;
-    // The target keeps the owning EnemyInf context in a frame local and
-    // reuses it across the large switch rather than reloading this->full.
-    EnemyInf *full_owner = full;
-    register EclRawInstr *instr = full_owner->context.current_context->current_instr();
+    register EclRawInstr *instr = full->context.current_context->current_instr();
     switch ((i16)instr->opcode)
     {
     // enmCreateF and its variants: only without a boss.
@@ -341,7 +338,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // unknown566: dies now.
     case ECL_OP_DIE_NOW:
-        if (full_owner->die())
+        if (full->die())
         {
             return 1;
         }
@@ -402,7 +399,7 @@ int EnemyData::ecl_run_over_300()
     // anmPlay(file, script)
     case ECL_OP_ANM_PLAY:
     {
-        i32 script = full_owner->context.current_context->get_int_arg(1);
+        i32 script = full->context.current_context->get_int_arg(1);
         i32 file_index = full->context.current_context->get_int_arg(0);
         EnemyManager *enemy_manager = g_EnemyManager;
         AnmLoaded *file = enemy_manager->anim_statement_anms[file_index];
@@ -605,7 +602,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS ? &abs_pos : &rel_pos;
-        f32 x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{0});
+        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         if (x > -999999.0)
         {
@@ -628,7 +625,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_3D_REL:
     {
         PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_POS_3D ? &abs_pos : &rel_pos;
-        f32 x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{0});
+        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         f32 z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         D3DXVECTOR2 *position_xy = (D3DXVECTOR2 *)&pos_vel->pos;
@@ -650,7 +647,7 @@ int EnemyData::ecl_run_over_300()
         InterpStrange1 *position_interp = (instr->opcode == ECL_OP_MOVE_POS_TIME ||
                                             instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET) ? &abs_pos_i : &rel_pos_i;
 
-        f32 goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        f32 goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         f32 goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
@@ -811,7 +808,7 @@ int EnemyData::ecl_run_over_300()
                                  instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_angle_i : &rel_angle_i;
         InterpFloat *speed_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
                                  instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_speed_i : &rel_speed_i;
-        f32 angle = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
