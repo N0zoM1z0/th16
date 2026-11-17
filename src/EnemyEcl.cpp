@@ -293,7 +293,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // zIndex(layer)
     case ECL_OP_Z_INDEX:
-        anm_layers = full_owner->context.current_context->get_int_arg(0);
+        anm_layers = full->context.current_context->get_int_arg(0);
         break;
     // hitSound(sound)
     case ECL_OP_HIT_SOUND:
