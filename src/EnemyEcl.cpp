@@ -2163,8 +2163,8 @@ int EnemyData::ecl_run_over_300()
             break;
         }
 
-        i32 time_limit = full_owner->context.current_context->get_int_arg(2);
-        i32 boss_index = full_owner->context.current_context->get_int_arg(1);
+        i32 time_limit = full->context.current_context->get_int_arg(2);
+        i32 boss_index = full->context.current_context->get_int_arg(1);
         g_Spellcard->start(spell_id, name, time_limit, boss_index);
         life.is_spell |= ENEMY_LIFE_SPELL;
         life.current_scaled_by_seven = life.current * 7;
