@@ -2669,12 +2669,12 @@ int EnemyData::ecl_run_over_300()
             EnemyInf *boss = g_EnemyManager->get_boss(i);
             if (i != own_boss_id && boss != NULL)
             {
-                EnemyInterrupt *interrupt = &boss->enemy.interrupts[index];
-                if (interrupt->life >= 0 && interrupt->sub_for_set_next != NULL)
+                if (boss->enemy.interrupts[index].life >= 0 &&
+                    boss->enemy.interrupts[index].sub_for_set_next != NULL)
                 {
                     boss->free_all_async();
                     boss->reset_run_context();
-                    boss->load_sub_by_name(interrupt->sub_for_set_next);
+                    boss->load_sub_by_name(boss->enemy.interrupts[index].sub_for_set_next);
                 }
             }
         }
