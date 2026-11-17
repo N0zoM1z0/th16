@@ -711,13 +711,13 @@ int EnemyData::ecl_run_over_300()
                 instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
             {
                 f32 current_x = ((PosVel *)((u8 *)this + position_offset))->pos.x;
-                if (flags_low & ENEMY_FLAG_MIRRORED)
+                if (!(flags_low & ENEMY_FLAG_MIRRORED))
                 {
-                    goal_x = current_x - goal_x;
+                    goal_x = current_x + goal_x;
                 }
                 else
                 {
-                    goal_x = current_x + goal_x;
+                    goal_x = current_x - goal_x;
                 }
                 goal_y = ((PosVel *)((u8 *)this + position_offset))->pos.y + goal_y;
             }
