@@ -260,10 +260,8 @@ static_assert(sizeof(EclMovementScratch) <= sizeof(EclLaserParamsStorage),
 int EnemyData::ecl_run_over_300()
 {
     EclLaserParamsStorage laser_params_storage;
-    register EnemyInf *full_owner = full;
+    EnemyInf *volatile &full_owner = full;
     register EclRawInstr *instr = full_owner->context.current_context->current_instr();
-    // ECL calls can switch the holder's active context. Reload the member
-    // pointer at each argument access without making every holder access volatile.
     EclRunContext *volatile &current_context = full_owner->context.current_context;
     switch ((i16)instr->opcode)
     {
@@ -2075,7 +2073,7 @@ int EnemyData::ecl_run_over_300()
             {
                 set_next(full, get_int_arg(0), 0, get_int_arg(2), "BossDead");
             }
-            full->set_timeout(get_int_arg(0), "BossEscape");
+            full_owner->set_timeout(get_int_arg(0), "BossEscape");
         }
         else
         {
@@ -2085,7 +2083,7 @@ int EnemyData::ecl_run_over_300()
     }
     // setTimeout(index, sub).
     case ECL_OP_SET_TIMEOUT:
-        full->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
+        full_owner->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
         break;
     // setDeath(sub).
     case ECL_OP_SET_DEATH:
