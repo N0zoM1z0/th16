@@ -322,9 +322,10 @@ int EnemyData::ecl_run_over_300()
     // anmMove(slot, x, y): the offset of a slot's VM.
     case ECL_OP_ANM_MOVE:
     {
-        i32 slot = full_owner->context.current_context->get_int_arg(0);
-        anm_pos_array[slot].x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{1});
-        anm_pos_array[slot].y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        volatile SptInf *context_owner = full_owner;
+        i32 slot = context_owner->context.current_context->get_int_arg(0);
+        anm_pos_array[slot].x = context_owner->context.current_context->get_float_arg(EclFloatArgIndex{1});
+        anm_pos_array[slot].y = context_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
         anm_pos_array[slot].z = 0.0f;
         break;
     }
@@ -353,9 +354,12 @@ int EnemyData::ecl_run_over_300()
         break;
     // enm323(file, script): the death animation.
     case ECL_OP_DEATH_ANM:
-        death_anm_index = full_owner->context.current_context->get_int_arg(0);
-        death_anm_script = full_owner->context.current_context->get_int_arg(1);
+    {
+        volatile SptInf *context_owner = full_owner;
+        death_anm_index = context_owner->context.current_context->get_int_arg(0);
+        death_anm_script = context_owner->context.current_context->get_int_arg(1);
         break;
+    }
     // die: the death sound and animation without dying.
     case ECL_OP_DIE:
         if (death_sound >= 0)
