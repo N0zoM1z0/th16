@@ -317,6 +317,13 @@ struct EclSubroutinePtrs
 {
     const char *name;
     void *bytecode;
+
+    // Each bytecode pointer starts at a 16-byte subroutine header. Execution
+    // locations use byte offsets relative to the first instruction after it.
+    __forceinline EclRawInstr *instruction_at(i32 offset) const
+    {
+        return (EclRawInstr *)((u8 *)bytecode + 0x10 + offset);
+    }
 };
 
 // Bit of zero-initialized state at the end of SptResourceInf.
@@ -423,9 +430,8 @@ inline EclRawInstr *EclRunContext::current_instr()
     {
         return NULL;
     }
-    // Instructions start after the subroutine's 0x10 byte header.
-    return (EclRawInstr *)((u8 *)vm->file_manager->subroutines[cur_location.subroutine_index].bytecode + 0x10 +
-                           cur_location.offset_from_first_instruction);
+    return vm->file_manager->subroutines[cur_location.subroutine_index].instruction_at(
+        cur_location.offset_from_first_instruction);
 }
 
 inline i32 SptInf::get_int_arg(i32 index)

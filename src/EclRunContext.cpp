@@ -655,8 +655,8 @@ i32 SptInf::create_async(i32 id, i32 start)
 __forceinline f32 *EclRunContext::float_arg_ptr_at(EclLocation *loc, int index)
 {
     SptInf *vm = this->vm;
-    EclRawInstr *ins = (EclRawInstr *)((u8 *)vm->file_manager->subroutines[loc->subroutine_index].bytecode + 0x10 +
-                                       loc->offset_from_first_instruction);
+    EclRawInstr *ins = vm->file_manager->subroutines[loc->subroutine_index].instruction_at(
+        loc->offset_from_first_instruction);
     if (ins->variable_mask & (1 << index))
     {
         f32 value = ins->args[index].f;
@@ -684,8 +684,8 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     {
         return -1;
     }
-    EclRawInstr *ins = (EclRawInstr *)((u8 *)vm->file_manager->subroutines[cur_location.subroutine_index].bytecode +
-                                       0x10 + cur_location.offset_from_first_instruction);
+    EclRawInstr *ins = vm->file_manager->subroutines[cur_location.subroutine_index].instruction_at(
+        cur_location.offset_from_first_instruction);
     while (time >= (f32)ins->time)
     {
         if (ins->rank_mask & difficulty_mask)
