@@ -62,7 +62,9 @@ class LaserDataInf
     f32 hit_length;
     f32 width;
     f32 length;
-    f32 unk_7c;
+    // Distance from the original origin to the current visible start. It
+    // grows as the laser advances and is set when a hit clips its tail.
+    f32 start_offset;
     i32 id;
     BulletExState ex_state[0x12];
     // As Bullet::ex_index and active_ex_flags.

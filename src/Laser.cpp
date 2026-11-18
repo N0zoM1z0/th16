@@ -871,7 +871,7 @@ DECOMP_NOINLINE LaserInfiniteInner::LaserInfiniteInner()
     speed = 8.0f;
 }
 
-// Draws the laser body, the VM at its tip and, unless unk_7c is set, the
+// Draws the laser body, the VM at its tip and, unless start_offset is set, the
 // one at its origin.
 // FUNCTION: TH16 0x433720
 i32 LaserLineInf::on_draw()
@@ -905,7 +905,7 @@ i32 LaserLineInf::on_draw()
     tip->x += position.x;
     tip->y += position.y;
     g_AnmManager->draw_vm(&vm_1524);
-    if (unk_7c == 0.0f)
+    if (start_offset == 0.0f)
     {
         vm_f28.pos = position;
         g_AnmManager->draw_vm(&vm_f28);
@@ -1317,7 +1317,7 @@ i32 LaserLineInf::cancel_as_bomb_circle(Float3 *center, f32 radius, i32 mode, i3
                 return count;
             }
             inner.laser_new_arg_2 = hit_length;
-            unk_7c = (f32)j * 16.0f;
+            start_offset = (f32)j * 16.0f;
         }
         i32 run = 0;
         if (j < i)
@@ -1817,7 +1817,7 @@ i32 LaserInfiniteInf::on_draw()
     vm->flags_lo |= ANM_VM_ROTATION_CHANGED;
     vm->rotation.z = rotation;
     g_AnmManager->draw_vm(vm);
-    if (unk_7c == 0.0f)
+    if (start_offset == 0.0f)
     {
         vm_f4c.pos = position;
         g_AnmManager->draw_vm(&vm_f4c);
@@ -2077,7 +2077,7 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
                 return count;
             }
             inner.laser_new_arg_2 = hit_length;
-            unk_7c = (f32)j * 16.0f;
+            start_offset = (f32)j * 16.0f;
         }
         i32 run = 0;
         if (j < i)
@@ -3040,15 +3040,15 @@ i32 LaserLineInf::on_tick()
     }
     else
     {
-        unk_7c += length * g_game_speed;
+        start_offset += length * g_game_speed;
         // position += tip_offset * g_game_speed, through a temporary and
         // D3DXVec3Add with v first: g_game_speed is loaded once and the adds
         // take the original's operand order.
         Float3 v = tip_offset * g_game_speed;
         D3DXVec3Add(&position, &v, &position);
-        if (inner.laser_new_arg_3 > 0.0f && hit_length + unk_7c > inner.laser_new_arg_3)
+        if (inner.laser_new_arg_3 > 0.0f && hit_length + start_offset > inner.laser_new_arg_3)
         {
-            hit_length = inner.laser_new_arg_3 - unk_7c;
+            hit_length = inner.laser_new_arg_3 - start_offset;
             inner.laser_new_arg_2 = hit_length;
             if (0.0f >= hit_length)
             {
@@ -3087,7 +3087,7 @@ i32 LaserLineInf::on_tick()
     vm_92c.scale.y =
         hit_length / g_AnmManager->loaded_anms[vm_92c.anm_loaded_index]->sprites[vm_92c.sprite_id].sprite_height;
     vm_92c.run();
-    if (unk_7c == 0.0f)
+    if (start_offset == 0.0f)
     {
         vm_f28.run();
     }
@@ -3480,11 +3480,11 @@ i32 LaserLineInf::initialize(void *params)
     angle = inner.ang_aim;
     if (inner.laser_new_arg_1 > inner.laser_new_arg_2)
     {
-        unk_7c = 0.01f;
+        start_offset = 0.01f;
     }
     else
     {
-        unk_7c = 0.0f;
+        start_offset = 0.0f;
     }
     laser_sincosmul(&tip_offset, angle, length);
     ex_index = inner.start_transform;

@@ -220,7 +220,7 @@ i32 LaserInfiniteInf::on_tick()
     vm->flags_lo |= ANM_VM_SCALE_CHANGED;
     vm->scale.y = scale_y;
     vm_950.run();
-    if (unk_7c == 0.0f)
+    if (start_offset == 0.0f)
     {
         vm_f4c.run();
     }
