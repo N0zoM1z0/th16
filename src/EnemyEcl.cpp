@@ -261,6 +261,8 @@ int EnemyData::ecl_run_over_300()
     EclLaserParamsStorage laser_params_storage;
     register EnemyInf *full_owner = full;
     register EclRawInstr *instr = full_owner->context.current_context->current_instr();
+    // ECL calls can switch the holder's active context. Reload the member
+    // pointer at each argument access without making every holder access volatile.
     EclRunContext *volatile *current_context = &full_owner->context.current_context;
     switch ((i16)instr->opcode)
     {
