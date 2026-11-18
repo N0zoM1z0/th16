@@ -1589,9 +1589,14 @@ int EnemyData::ecl_run_over_300()
         no_hitbox_dur.set_value(get_int_arg(0));
         break;
     // unknown551(value): kills the enemies whose kill_group is value.
+    // Calling via the typed function pointer preserves the native stdcall
+    // boundary used by this function and the other entry points.
     case ECL_OP_KILL_GROUP:
-        EnemyManager::kill_all_in_group(get_int_arg(0));
+    {
+        void (__stdcall *kill_group)(i32) = &EnemyManager::kill_all_in_group;
+        kill_group(get_int_arg(0));
         break;
+    }
     // unknown571(): kills every enemy without running set_death.
     case ECL_OP_KILL_ALL_NO_DEATH:
         EnemyManager::kill_all_no_set_death();
