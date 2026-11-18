@@ -531,7 +531,7 @@ static void __fastcall ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
 HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 unused)
 {
     EclRawInstr *ins = current_instr();
-    i32 name_len = ins->args[0].i;
+    volatile i32 name_len = ins->args[0].i;
     i32 old_top = dest->stack.stack_offset;
     // The callee's locals start after the saved frame (four values).
     i32 locals = old_top + 0x10;
