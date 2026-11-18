@@ -81,8 +81,10 @@ struct EnemyBulletShooter
     // Bullets per layer and layers per shot.
     i16 count;
     i16 layers;
-    // An EtAimMode (only the low 16 bits count).
-    i32 aim_type;
+    // EtAimMode is encoded in the low 16 bits; keep the unused high half
+    // as an actual stored field to preserve the shooter's original layout.
+    u16 aim_type;
+    u16 aim_type_high;
     // 0x20: play shot_sfx.
     u32 sfx_flags;
     u32 shot_sfx;
@@ -96,6 +98,10 @@ struct EnemyBulletShooter
         shot_transform_sfx = -1;
     }
 };
+
+static_assert(offsetof(EnemyBulletShooter, aim_type) == 0x368,
+              "shooter aim mode offset");
+static_assert(sizeof(EnemyBulletShooter) == 0x380, "shooter binary layout");
 
 // A shooter's offset (etOffset) or absolute origin (etOffsetAbs). For
 // origins, z is 1 while the origin is set and 0 otherwise.

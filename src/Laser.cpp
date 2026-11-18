@@ -2750,7 +2750,7 @@ void LaserCurveInf::run_ex()
             u32 a = ex->a;
             shooter.pos.x += position.x;
             shooter.pos.z = 0.0f;
-            *(u16 *)&shooter.aim_type = (a >> 24) & 0x7f;
+            shooter.aim_type = (u16)((a >> 24) & 0x7f);
             shooter.type = (a >> 16) & 0xff;
             shooter.pos.y += position.y;
             shooter.color = (a >> 8) & 0xff;
@@ -3357,7 +3357,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
             u32 a = ex->a;
             shooter.pos.x += position.x;
             shooter.pos.z = 0.0f;
-            *(u16 *)&shooter.aim_type = (a >> 24) & 0x7f;
+            shooter.aim_type = (u16)((a >> 24) & 0x7f);
             shooter.type = (a >> 16) & 0xff;
             shooter.pos.y += position.y;
             shooter.color = (a >> 8) & 0xff;

@@ -510,7 +510,7 @@ i32 BulletManager::shoot_one(EnemyBulletShooter *props, i32 i, i32 layer, f32 an
         speed = props->spd1;
     }
     f32 x;
-    switch ((u16)props->aim_type)
+    switch (props->aim_type)
     {
     case ET_AIM_AT:
     case ET_AIM_ST:
@@ -526,7 +526,7 @@ i32 BulletManager::shoot_one(EnemyBulletShooter *props, i32 i, i32 layer, f32 an
         {
             angle *= -1.0f;
         }
-        if ((u16)props->aim_type == ET_AIM_AT)
+        if (props->aim_type == ET_AIM_AT)
         {
             angle += angle_to_player;
         }
@@ -581,7 +581,7 @@ i32 BulletManager::shoot_one(EnemyBulletShooter *props, i32 i, i32 layer, f32 an
         {
             angle *= -1.0f;
         }
-        if ((u16)props->aim_type == ET_AIM_AT_PYRAMID)
+        if (props->aim_type == ET_AIM_AT_PYRAMID)
         {
             angle += angle_to_player;
         }
@@ -951,7 +951,7 @@ void Bullet::run_ex()
         {
             EnemyBulletShooter props;
             props.pos = pos;
-            *(u16 *)&props.aim_type = ex->a;
+            props.aim_type = (u16)ex->a;
             props.start_transform = ex->b;
             props.count = ex->c;
             props.layers = ex->d;
