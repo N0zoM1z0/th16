@@ -853,26 +853,27 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 // stack entry is converted to int by pop_int().
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a + b);
-                ins->num_stack_refs = 0;
-                goto next_instr;
+                stack_result = a + b;
+                goto push_arithmetic_result;
             }
             case ECL_OP_SUB:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a - b);
-                ins->num_stack_refs = 0;
-                goto next_instr;
+                stack_result = a - b;
+                goto push_arithmetic_result;
             }
             case ECL_OP_MUL:
             {
                 i32 b = stack.pop_int();
                 i32 a = stack.pop_int();
-                stack.push_int(a * b);
+                stack_result = a * b;
+                goto push_arithmetic_result;
+            }
+            push_arithmetic_result:
+                stack.push_int(stack_result);
                 ins->num_stack_refs = 0;
                 goto next_instr;
-            }
             case ECL_OP_DIV:
             {
                 i32 b = stack.pop_int();
