@@ -143,10 +143,9 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     f32 x;
     f32 y;
     f32 z;
-    bool use_bullet_origin = enemy->bullet_mgr_origins[i].z > 0.9f;
-    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    if (use_bullet_origin)
+    if (enemy->bullet_mgr_origins[i].z > 0.9f)
     {
+        memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
         y = enemy->bullet_mgr_offsets[i].xy.y;
         x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].xy.x;
         y += enemy->bullet_mgr_origins[i].xy.y;
@@ -154,6 +153,7 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     }
     else
     {
+        memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
         y = enemy->bullet_mgr_offsets[i].xy.y;
         z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
@@ -161,7 +161,6 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     }
     *out = D3DXVECTOR3(x, y, z);
 }
-
 static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
