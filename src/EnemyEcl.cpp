@@ -2324,12 +2324,13 @@ int EnemyData::ecl_run_over_300()
     {
         i32 id = get_int_arg(0);
         LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
-        D3DXVECTOR2 position;
+        Float3 position;
         position.x = get_float_arg(EclFloatArgIndex{1});
         position.y = get_float_arg(EclFloatArgIndex{2});
+        position.z = 0.0f;
         if (laser != NULL)
         {
-            laser->position = Float3(position.x, position.y, 0.0f);
+            laser->position = position;
         }
         break;
     }
@@ -2338,12 +2339,13 @@ int EnemyData::ecl_run_over_300()
     {
         i32 id = get_int_arg(0);
         LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
-        D3DXVECTOR2 velocity;
+        Float3 velocity;
         velocity.x = get_float_arg(EclFloatArgIndex{1});
         velocity.y = get_float_arg(EclFloatArgIndex{2});
+        velocity.z = 0.0f;
         if (laser != NULL)
         {
-            static_cast<LaserInfiniteInf *>(laser)->inner.velocity = Float3(velocity.x, velocity.y, 0.0f);
+            static_cast<LaserInfiniteInf *>(laser)->inner.velocity = velocity;
         }
         break;
     }
