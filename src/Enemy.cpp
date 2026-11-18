@@ -1225,13 +1225,16 @@ void EnemyManager::kill_all()
 // FUNCTION: TH16 0x41da30
 HARNESS_CALLED void __stdcall EnemyManager::kill_all_in_group(i32 value)
 {
+    register i32 kill_group = value;
     EnemyManager *mgr = g_EnemyManager;
-    EnemyList *node = mgr->active_enemy_list_head;
+    // Keep the pending list link in memory while the kill group stays live.
+    EnemyList *volatile next;
+    register EnemyList *node = mgr->active_enemy_list_head;
     while (node != NULL)
     {
-        EnemyList *next = node->next;
+        next = node->next;
         EnemyInf *enemy = node->entry;
-        if ((!(enemy->enemy.flags_low & ENEMY_FLAGS_SURVIVE_KILL_ALL) || enemy->enemy.flags_low & ENEMY_FLAG_ALWAYS_KILLABLE) && enemy->enemy.kill_group == value)
+        if ((!(enemy->enemy.flags_low & ENEMY_FLAGS_SURVIVE_KILL_ALL) || enemy->enemy.flags_low & ENEMY_FLAG_ALWAYS_KILLABLE) && enemy->enemy.kill_group == kill_group)
         {
             enemy->enemy.drops.reset();
             enemy->enemy.last_damage_pos.x = 0.0f;
