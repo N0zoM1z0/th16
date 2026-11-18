@@ -133,6 +133,11 @@ static void __fastcall enemy_ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
     dst->x = radius * cosf(angle);
     dst->y = radius * sinf(angle);
 }
+typedef void(__fastcall *EnemyEclSincosmulFunc)(Float3 *dst, f32 angle, f32 radius);
+static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
+{
+    return &enemy_ecl_sincosmul;
+}
 
 // The line, infinite and curve laser constructors test the origin before
 // copying the transform array; the beam constructor copies it first. Keep
@@ -1737,7 +1742,7 @@ int EnemyData::ecl_run_over_300()
         i32 slot = get_int_arg(0);
         f32 angle = get_float_arg(EclFloatArgIndex{1});
         Float3 offset;
-        enemy_ecl_sincosmul(&offset, angle, get_float_arg(EclFloatArgIndex{2}));
+        enemy_ecl_sincosmul_func()(&offset, angle, get_float_arg(EclFloatArgIndex{2}));
         bullet_mgr_offsets[slot].xy.x = offset.x;
         bullet_mgr_offsets[slot].xy.y = offset.y;
         break;
