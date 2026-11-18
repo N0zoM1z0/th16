@@ -546,8 +546,14 @@ int __fastcall ecl_ext_damage_anm_hurtbox(EnemyData *enemy, int damage)
     else
     {
         pos.y += 24.0f;
-        Float2 size(vm->scale.x * 192.0f, vm->scale.y * 32.0f);
-        bar_damage = g_Player->compute_damage_to_enemy(&pos, (Float3 *)&size, vm->rotation.z, 0.0f, &hit, NULL, 0,
+        Float2 size;
+        size.x = vm->scale.x * 192.0f;
+        // Preserve the original order: store both size components before
+        // reading the VM rotation for the damage call.
+        volatile f32 &size_y = size.y;
+        size_y = vm->scale.y * 32.0f;
+        volatile f32 &rotation = vm->rotation.z;
+        bar_damage = g_Player->compute_damage_to_enemy(&pos, (Float3 *)&size, rotation, 0.0f, &hit, NULL, 0,
                                                        enemy->full->enemy_id);
         pos.y += 32.0f;
         circle_damage =
