@@ -2327,9 +2327,9 @@ int EnemyData::ecl_run_over_300()
         Float3 position;
         position.x = get_float_arg(EclFloatArgIndex{1});
         position.y = get_float_arg(EclFloatArgIndex{2});
-        position.z = 0.0f;
         if (laser != NULL)
         {
+            position.z = 0.0f;
             laser->position = position;
         }
         break;
@@ -2342,9 +2342,9 @@ int EnemyData::ecl_run_over_300()
         Float3 velocity;
         velocity.x = get_float_arg(EclFloatArgIndex{1});
         velocity.y = get_float_arg(EclFloatArgIndex{2});
-        velocity.z = 0.0f;
         if (laser != NULL)
         {
+            velocity.z = 0.0f;
             static_cast<LaserInfiniteInf *>(laser)->inner.velocity = velocity;
         }
         break;
