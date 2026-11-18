@@ -658,14 +658,15 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_TIME_OFFSET:
     case ECL_OP_MOVE_POS_REL_TIME_OFFSET:
     {
+        volatile EclRunContextHolder *context_owner = &full->context;
         PosVel *pos_vel = (instr->opcode == ECL_OP_MOVE_POS_TIME ||
                            instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET) ? &abs_pos : &rel_pos;
         InterpStrange1 *position_interp = (instr->opcode == ECL_OP_MOVE_POS_TIME ||
                                             instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET) ? &abs_pos_i : &rel_pos_i;
 
-        f32 goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        f32 goal_y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        if (full_owner->context.current_context->get_int_arg(0) <= 0)
+        f32 goal_x = context_owner->current_context->get_float_arg(EclFloatArgIndex{2});
+        f32 goal_y = context_owner->current_context->get_float_arg(EclFloatArgIndex{3});
+        if (context_owner->current_context->get_int_arg(0) <= 0)
         {
             position_interp->end_time = 0;
             break;
@@ -686,10 +687,10 @@ int EnemyData::ecl_run_over_300()
             goal_y = pos_vel->pos.y + goal_y;
         }
 
-        position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
+        position_interp->end_time = context_owner->current_context->get_int_arg(0);
         position_interp->bezier_1 = g_zero_vec;
         position_interp->bezier_2 = g_zero_vec;
-        position_interp->method_for_3d = full_owner->context.current_context->get_int_arg(1);
+        position_interp->method_for_3d = context_owner->current_context->get_int_arg(1);
         position_interp->flag_1d &= ~1;
         position_interp->initial = pos_vel->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : pos_vel->pos.x,
