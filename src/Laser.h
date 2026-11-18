@@ -542,7 +542,7 @@ struct LaserManager
     static i32 __fastcall on_draw_callback(LaserManager *mgr);
 
     // These reach the manager through g_LaserManager; LTCG drops this.
-    i32 allocate_new_laser(i32 kind, void *params);
+    static i32 __stdcall allocate_new_laser(i32 kind, void *params);
     HARNESS_CALLED i32 cancel_in_rectangle(Float3 *center, Float3 *size, f32 angle, i32 mode, i32 skip_invuln);
     static i32 cancel_all();
     HARNESS_CALLED i32 cancel_in_radius(Float3 *pos, f32 radius, i32 mode, i32 skip_invuln);
