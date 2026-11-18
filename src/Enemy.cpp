@@ -559,7 +559,7 @@ int __fastcall ecl_ext_damage_anm_hurtbox(EnemyData *enemy, int damage)
 // Bomb shields, damage from the player's shots and bombs (with the life
 // and time interrupts it can trigger), collision with the player and the
 // damage flash of the main VM.
-// TODO: recover complete damage selection, statistics and life-state registers.
+// Damage and life-state behavior is recovered; the remaining difference is register scheduling in the statistics and life-state tail.
 // FUNCTION: TH16 0x41c330
 int EnemyData::step_logic()
 {
@@ -652,33 +652,35 @@ int EnemyData::step_logic()
         }
         // Dialogue suppresses damage; the conditional also preserves the
         // target's branchless selection of the effective damage amount.
-        i32 dealt = g_Gui->msg == NULL ? damage : 0;
-        if (dealt > 0)
+        i32 effective_damage = g_Gui->msg == NULL ? damage : 0;
+        // Hit damage and non-hit damage feed separate counters. Lethal
+        // hit overflow contributes one quarter beyond the remaining life.
+        if (effective_damage > 0)
         {
             if (hit)
             {
-                if (dealt >= life.current)
+                if (effective_damage >= life.current)
                 {
-                    g_EnemyManager->inner.damage_this_frame[0] += (dealt - life.current) / 4 + life.current;
+                    g_EnemyManager->inner.damage_this_frame[0] += (effective_damage - life.current) / 4 + life.current;
                 }
                 else
                 {
-                    g_EnemyManager->inner.damage_this_frame[0] += dealt;
+                    g_EnemyManager->inner.damage_this_frame[0] += effective_damage;
                 }
             }
             else
             {
-                g_EnemyManager->inner.damage_this_frame[1] += dealt;
+                g_EnemyManager->inner.damage_this_frame[1] += effective_damage;
             }
         }
-        i32 life_damage = dealt;
+        i32 life_damage = effective_damage;
         if (g_MainBomb->in_use == 1 && bomb_damage_multiplier < 1.0f)
         {
-            if (dealt != 0 && 0.0f >= bomb_damage_multiplier)
+            if (effective_damage != 0 && 0.0f >= bomb_damage_multiplier)
             {
                 g_SoundManager.play_sound_at_position(SE_NODAMAGE, final_pos.pos.x);
             }
-            life_damage = dealt * bomb_damage_multiplier;
+            life_damage = effective_damage * bomb_damage_multiplier;
         }
         if (life_damage != 0)
         {
