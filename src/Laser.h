@@ -235,7 +235,8 @@ struct LaserInfiniteInnerData
     i32 shot_transform_sfx;
     i32 laser_st_on_arg_1;
     f32 distance;
-    u8 unk_50[4];
+    // Initial cursor into the 18-entry et_ex instruction sequence.
+    i32 initial_ex_index;
     i32 type;
     i32 color;
     u32 flags;
@@ -257,6 +258,8 @@ struct LaserInfiniteInner : LaserInfiniteInnerData
 {
     DECOMP_NOINLINE LaserInfiniteInner();
 };
+static_assert(offsetof(LaserInfiniteInnerData, initial_ex_index) == 0x50,
+              "infinite laser et_ex cursor offset");
 static_assert(sizeof(LaserInfiniteInnerData) == 0x378, "LaserInfiniteInnerData size");
 static_assert(sizeof(LaserInfiniteInner) == sizeof(LaserInfiniteInnerData), "LaserInfiniteInner size");
 static_assert(sizeof(LaserInfiniteInnerInline) == sizeof(LaserInfiniteInnerData), "LaserInfiniteInnerInline size");

@@ -1189,7 +1189,7 @@ void Bullet::run_ex()
                 params.flags = (d & 0xfd) | 2;
                 params.type = ex->b;
                 params.color = ex->c;
-                *(i32 *)params.unk_50 = (u8)(d >> 8);
+                params.initial_ex_index = (u8)(d >> 8);
                 params.ang_aim =
                     (ex->r <= -999990.0f ? angle_ref()
                                          : ZunAngle(ex->r >= 999990.0f ? g_Player->angle_to_player(&pos) : ex->r))

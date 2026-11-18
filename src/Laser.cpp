@@ -2331,7 +2331,7 @@ i32 LaserInfiniteInf::initialize(void *params)
     hit_length = inner.laser_new_arg_1;
     length = inner.speed;
     angle = inner.ang_aim;
-    ex_index = *(i32 *)inner.unk_50;
+    ex_index = inner.initial_ex_index;
     width = 2.0f;
     id = inner.laser_st_on_arg_1;
     graze_timer.reset();
