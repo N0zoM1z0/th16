@@ -364,7 +364,8 @@ struct LaserCurveInner
     // Number of segments (ExpHP: __bmgr_350).
     i32 segment_count;
     f32 distance;
-    i32 unk_28;
+    // Only ECL laserCuOn sets the low bit in this configuration word.
+    u32 creation_flags;
     BulletEx ex[0x12];
     i32 shot_sfx;
     i32 shot_transform_sfx;
@@ -381,6 +382,12 @@ struct LaserCurveInner
     }
 };
 
+enum LaserCurveCreationFlags
+{
+    LASER_CURVE_CREATED_BY_ECL = 1 << 0,
+};
+static_assert(offsetof(LaserCurveInner, creation_flags) == 0x28,
+              "curve laser configuration flags offset");
 static_assert(offsetof(LaserCurveInner, initial_ex_index) == 0x34c,
               "curve laser initial et_ex index offset");
 static_assert(sizeof(LaserCurveInner) == 0x358, "curve laser parameter layout");

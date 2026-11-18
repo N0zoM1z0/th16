@@ -2300,7 +2300,7 @@ int EnemyData::ecl_run_over_300()
         laser_params_storage.curve.color = color;
         laser_params_storage.curve.ang_aim = normalize_angle(ang_aim);
         laser_params_storage.curve.segment_count = shooter.laser_timing[0];
-        laser_params_storage.curve.unk_28 |= 1;
+        laser_params_storage.curve.creation_flags |= LASER_CURVE_CREATED_BY_ECL;
         laser_params_storage.curve.shot_sfx = shooter.shot_sfx;
         laser_params_storage.curve.speed = shooter.spd1;
         laser_params_storage.curve.shot_transform_sfx = shooter.shot_transform_sfx;
