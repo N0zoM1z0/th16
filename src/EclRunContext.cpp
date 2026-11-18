@@ -531,7 +531,7 @@ static void __fastcall ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
 HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 unused)
 {
     EclRawInstr *ins = current_instr();
-    volatile i32 name_len = ins->args[0].i;
+    i32 name_len = ins->args[0].i;
     i32 old_top = dest->stack.stack_offset;
     // The callee's locals start after the saved frame (four values).
     i32 locals = old_top + 0x10;
@@ -584,20 +584,21 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
             local++;
         } while (i < ins->param_count);
     }
-    i32 top = dest->stack.stack_offset;
+    volatile i32 &stack_offset = dest->stack.stack_offset;
+    i32 top = stack_offset;
     if (old_top != 0)
     {
-        dest->stack.stack_offset -= 4;
-        i32 value = *(i32 *)((u8 *)dest->stack.data + dest->stack.stack_offset);
-        dest->stack.stack_offset = old_top;
+        stack_offset -= 4;
+        i32 value = *(i32 *)((u8 *)dest->stack.data + stack_offset);
+        stack_offset = old_top;
         *(i32 *)((u8 *)dest->stack.data + old_top - 4) = value;
     }
     else
     {
-        dest->stack.stack_offset = 4;
+        stack_offset = 4;
     }
-    *(i32 *)((u8 *)dest->stack.data + dest->stack.stack_offset) = top;
-    dest->stack.stack_offset += 4;
+    *(i32 *)((u8 *)dest->stack.data + stack_offset) = top;
+    stack_offset += 4;
     // Where to return to.
     if (old_top != 0)
     {
