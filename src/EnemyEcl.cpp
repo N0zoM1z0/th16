@@ -100,15 +100,15 @@ static __forceinline f32 mirror_angle(f32 angle)
 struct EnemyLifeSpellBits
 {
     u32 active : 1;
-    u32 unk_1 : 31;
+    u32 reserved_1 : 31;
 };
 
 // The bitfields of Spellcard::flags that ECL assigns (xor/and/xor).
 struct SpellcardFlagBits
 {
-    u32 unk_0 : 8;
+    u32 reserved_0 : 8;
     u32 text_at_bottom : 1;
-    u32 unk_9 : 23;
+    u32 reserved_9 : 23;
 };
 
 extern EnemyFuncSetFunc const g_ecl_func_sets[3];
@@ -1427,7 +1427,7 @@ int EnemyData::ecl_run_over_300()
         hitbox_size.x = get_float_arg(EclFloatArgIndex{0});
         hitbox_size.y = get_float_arg(EclFloatArgIndex{1});
         break;
-    // unknown569(count): how many enemies this one counts as in the chapter
+    // chapterCount(count): how many enemies this one counts as in the chapter
     // statistics.
     case ECL_OP_CHAPTER_COUNT:
         if (chapter_count == 0)
@@ -1444,7 +1444,7 @@ int EnemyData::ecl_run_over_300()
             g_Globals.enemies_spawned_in_chapter += chapter_count - 1;
         }
         break;
-    // unknown570(): counts the enemy as destroyed now.
+    // countDestroyed(): counts the enemy as destroyed now.
     case ECL_OP_COUNT_DESTROYED:
         if (chapter_count != 0 && own_chapter == g_Globals.chapter)
         {
@@ -1452,11 +1452,11 @@ int EnemyData::ecl_run_over_300()
             chapter_count = 0;
         }
         break;
-    // unknown563(on)
+    // rectHitbox(on)
     case ECL_OP_RECT_HITBOX:
         ((EnemyFlagsLow *)&flags_low)->rect_hitbox = get_int_arg(0);
         break;
-    // unknown564(angle): sets rotation.
+    // setRotation(angle): sets rotation.
     case ECL_OP_SET_ROTATION:
         rotation = get_float_arg(EclFloatArgIndex{0});
         break;
@@ -1528,7 +1528,7 @@ int EnemyData::ecl_run_over_300()
                     drop_season.max_time +
                 drop_season.min_count;
         }
-    // unknown562(): drops everything now, in any mode.
+    // dropItemsAnyMode(): drops everything now, in any mode.
     case ECL_OP_DROP_ITEMS_ANY_MODE:
         drops.eject_all_drops(&final_pos.pos);
         break;
@@ -1584,11 +1584,11 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_SET_INVULN:
         set_invuln.set_value(get_int_arg(0));
         break;
-    // unknown541(time): no hitbox for a while.
+    // noHitboxTime(time): no hitbox for a while.
     case ECL_OP_NO_HITBOX_TIME:
         no_hitbox_dur.set_value(get_int_arg(0));
         break;
-    // unknown551(value): kills the enemies whose kill_group is value.
+    // killGroup(value): kills the enemies whose kill_group is value.
     // Calling via the typed function pointer preserves the native stdcall
     // boundary used by this function and the other entry points.
     case ECL_OP_KILL_GROUP:
@@ -1597,7 +1597,7 @@ int EnemyData::ecl_run_over_300()
         kill_group(get_int_arg(0));
         break;
     }
-    // unknown571(): kills every enemy without running set_death.
+    // killAllNoDeath(): kills every enemy without running set_death.
     case ECL_OP_KILL_ALL_NO_DEATH:
         EnemyManager::kill_all_no_set_death();
         break;
@@ -2193,7 +2193,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_SPELL_TIMEOUT:
         g_Spellcard->flags |= SPELLCARD_NO_BONUS_DECAY;
         break;
-    // unknown543(): removes the boss effect.
+    // hideBossEffect(): removes the boss effect.
     case ECL_OP_HIDE_BOSS_EFFECT:
     {
         Spellcard *spellcard = g_Spellcard;
@@ -2201,11 +2201,11 @@ int EnemyData::ecl_run_over_300()
         delete_vm_and_clear(spellcard->boss_anm_id);
         break;
     }
-    // unknown567(on): the spell name at the bottom of the screen.
+    // spellTextAtBottom(on): the spell name at the bottom of the screen.
     case ECL_OP_SPELL_TEXT_AT_BOTTOM:
         ((SpellcardFlagBits *)&g_Spellcard->flags)->text_at_bottom = get_int_arg(0);
         break;
-    // unknown544(on): ENEMY_FLAG_8000000.
+    // flag8000000(on): ENEMY_FLAG_8000000.
     case ECL_OP_FLAG_8000000:
         ((EnemyFlagsLow *)&flags_low)->flag_8000000 = get_int_arg(0);
         break;
@@ -2568,7 +2568,7 @@ int EnemyData::ecl_run_over_300()
         flags_low &= ~(ENEMY_FLAG_BOMBSHIELD_UP | ENEMY_FLAG_NO_HURTBOX);
         bombshield_off_anm_main = anm_set_main;
         break;
-    // unknown559(limit): the enemy limit.
+    // enemyLimit(limit): the enemy limit.
     case ECL_OP_ENEMY_LIMIT:
         g_EnemyManager->inner.enemy_limit = get_int_arg(0);
         break;
@@ -2636,7 +2636,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_CALL_STD:
         g_Stage->jump_to_label(get_int_arg(0));
         break;
-    // unknown557(time, method, color, begin, end): interpolates the stage
+    // stageFog(time, method, color, begin, end): interpolates the stage
     // fog (camera sky) towards the given distances and color.
     case ECL_OP_STAGE_FOG:
     {
@@ -2648,11 +2648,11 @@ int EnemyData::ecl_run_over_300()
         g_Stage->inner.set_sky_interp(time, method, &sky);
         break;
     }
-    // unknown549(flag)
+    // magentaFlash(flag)
     case ECL_OP_MAGENTA_FLASH:
         ((EnemyFlagsLow *)&flags_low)->magenta_flash = get_int_arg(0);
         break;
-    // unknown550(value)
+    // setKillGroup(value)
     case ECL_OP_SET_KILL_GROUP:
         kill_group = get_int_arg(0);
         break;
@@ -2671,7 +2671,7 @@ int EnemyData::ecl_run_over_300()
         *get_float_arg_ptr(1) = enemy->enemy.final_pos.pos.y;
         break;
     }
-    // unknown802(index): makes the other bosses jump to their interrupt
+    // bossesInterrupt(index): makes the other bosses jump to their interrupt
     // index's subroutine, if it has a life threshold.
     case ECL_OP_BOSSES_INTERRUPT:
     {
