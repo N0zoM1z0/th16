@@ -2307,14 +2307,12 @@ int EnemyData::ecl_run_over_300()
     // laserStEnd(id): cancels every laser with the id.
     case ECL_OP_LASER_ST_END:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         while (laser != NULL)
         {
             laser->cancel(0, 0);
             laser->id = 0;
-            id = get_int_arg(0);
-            laser = g_LaserManager->find_by_id(id, 0);
+            laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         }
         break;
     }
@@ -2322,8 +2320,7 @@ int EnemyData::ecl_run_over_300()
     // laserOffset(id, x, y)
     case ECL_OP_LASER_OFFSET:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         Float3 position;
         position.x = get_float_arg(EclFloatArgIndex{1});
         position.y = get_float_arg(EclFloatArgIndex{2});
@@ -2337,8 +2334,7 @@ int EnemyData::ecl_run_over_300()
     // laserTrajectory(id, x, y): infinite lasers only.
     case ECL_OP_LASER_TRAJECTORY:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         Float3 velocity;
         velocity.x = get_float_arg(EclFloatArgIndex{1});
         velocity.y = get_float_arg(EclFloatArgIndex{2});
@@ -2352,8 +2348,7 @@ int EnemyData::ecl_run_over_300()
     // laserStLength(id, length)
     case ECL_OP_LASER_ST_LENGTH:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
             laser->length = get_float_arg(EclFloatArgIndex{1});
@@ -2363,8 +2358,7 @@ int EnemyData::ecl_run_over_300()
     // laserStWidth(id, width)
     case ECL_OP_LASER_ST_WIDTH:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
             laser->width = get_float_arg(EclFloatArgIndex{1});
@@ -2374,8 +2368,7 @@ int EnemyData::ecl_run_over_300()
     // laserStAngle(id, angle)
     case ECL_OP_LASER_ST_ANGLE:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
             laser->angle = get_float_arg(EclFloatArgIndex{1});
@@ -2385,8 +2378,7 @@ int EnemyData::ecl_run_over_300()
     // laserStRotation(id, rotation): infinite lasers only.
     case ECL_OP_LASER_ST_ROTATION:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
             static_cast<LaserInfiniteInf *>(laser)->inner.laser_st_rotation =
@@ -2398,8 +2390,7 @@ int EnemyData::ecl_run_over_300()
     // this instruction, but its second argument is still evaluated.
     case ECL_OP_LASER_714:
     {
-        i32 id = get_int_arg(0);
-        LaserDataInf *laser = g_LaserManager->find_by_id(id, 0);
+        LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
             i32 value = get_int_arg(1);
