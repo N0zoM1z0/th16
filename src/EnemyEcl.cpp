@@ -2386,18 +2386,15 @@ int EnemyData::ecl_run_over_300()
         }
         break;
     }
-    // unknown714(id, value): laser method_8. Infinite lasers ignore
-    // this instruction, but its second argument is still evaluated.
+    // unknown714(id, value): laser method_8. Infinite lasers inherit the
+    // empty base implementation; dispatch still evaluates the second argument.
     case ECL_OP_LASER_714:
     {
         LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
             i32 value = get_int_arg(1);
-            if (laser->kind != LASER_INFINITE)
-            {
-                laser->method_8(value);
-            }
+            laser->method_8(value);
         }
         break;
     }
