@@ -1235,12 +1235,14 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     }
     time += speed;
 step_float_i:
-    for (i32 i = 0; i < 8; i++)
+    InterpFloat *interp = float_i;
+    EclLocation *location = float_i_locs;
+    for (i32 i = 0; i < 8; i++, interp++, location++)
     {
-        if (float_i[i].end_time != 0)
+        if (interp->end_time != 0)
         {
-            f32 *dst = float_arg_ptr_at(&float_i_locs[i], 1);
-            *dst = float_i[i].step();
+            f32 *dst = float_arg_ptr_at(location, 1);
+            *dst = interp->step();
         }
     }
     return 0;
