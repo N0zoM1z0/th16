@@ -288,6 +288,14 @@ class LaserInfiniteInf : public LaserDataInf
     virtual i32 check_graze_or_kill(i32 graze_only);
 };
 
+// Motion model of one curved-laser path node, as used by the et_ex handlers.
+enum LaserCurveMotionMode : i32
+{
+    LASER_CURVE_MOTION_STRAIGHT = 0,
+    LASER_CURVE_MOTION_ACCEL = 1,
+    LASER_CURVE_MOTION_ANGLE_ACCEL = 2,
+};
+
 // One stretch of a curvy laser's path: its head follows the nodes in
 // turn, and the segments retrace them.
 struct LaserCurveNode
@@ -297,9 +305,8 @@ struct LaserCurveNode
     // The node's stretch of the curve in time (end 999999 for the last).
     f32 start_time;
     f32 end_time;
-    // 0: straight at angle/speed, 1: velocity (or turning, see 0x438370),
-    // 2: speed and angle change by speed_delta/angle_delta.
-    i32 mode;
+    // Straight motion, speed/velocity acceleration, or angular acceleration.
+    LaserCurveMotionMode mode;
     Float3 velocity;
     Float3 start_pos;
     f32 angle;
@@ -336,6 +343,9 @@ struct LaserCurveNode
     // start_time on), with its speed and angle there.
     void get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, f32 time);
 };
+
+static_assert(offsetof(LaserCurveNode, mode) == 0x10, "curve node motion mode offset");
+static_assert(sizeof(LaserCurveNode) == 0x3c, "curve node binary layout");
 
 // Parameters of a curvy laser. Layout from ExpHP (zLaserCurveInner); his
 // field names say which BulletManager shooter field each one comes from.

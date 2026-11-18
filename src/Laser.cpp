@@ -2464,7 +2464,7 @@ i32 LaserCurveInf::initialize(void *params)
         laser_sincosmul(&nodes.velocity, angle, 1.0f);
         nodes.start_pos = position;
         nodes.velocity.z = 0.0f;
-        nodes.mode = 0;
+        nodes.mode = LASER_CURVE_MOTION_STRAIGHT;
         nodes.start_time = 0.0f;
         nodes.end_time = 999999.0f;
         ex_index = inner.initial_ex_index;
@@ -2637,7 +2637,7 @@ void LaserCurveInf::run_ex()
         case BULLET_EX_ACCEL:
         {
             LaserCurveNode *node = append_node((f32)ex->b);
-            node->mode = 1;
+            node->mode = LASER_CURVE_MOTION_ACCEL;
             node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
             node->start_pos.z = 0.0f;
             laser_sincosmul(&node->velocity, node->angle, 1.0f);
@@ -2648,7 +2648,7 @@ void LaserCurveInf::run_ex()
             {
                 node->end_time = (f32)ex->a + (f32)ex->b;
                 node = append_node(node->end_time);
-                node->mode = 0;
+                node->mode = LASER_CURVE_MOTION_STRAIGHT;
                 node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
                 node->start_pos.z = 0.0f;
                 laser_sincosmul(&node->velocity, node->angle, 1.0f);
@@ -2664,7 +2664,7 @@ void LaserCurveInf::run_ex()
         case BULLET_EX_ANGLE_ACCEL:
         {
             LaserCurveNode *node = append_node((f32)ex->b);
-            node->mode = 2;
+            node->mode = LASER_CURVE_MOTION_ANGLE_ACCEL;
             node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
             node->start_pos.z = 0.0f;
             laser_sincosmul(&node->velocity, node->angle, 1.0f);
@@ -2675,7 +2675,7 @@ void LaserCurveInf::run_ex()
             {
                 node->end_time = (f32)ex->a + (f32)ex->b;
                 node = append_node(node->end_time);
-                node->mode = 0;
+                node->mode = LASER_CURVE_MOTION_STRAIGHT;
                 node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
                 node->start_pos.z = 0.0f;
                 laser_sincosmul(&node->velocity, node->angle, 1.0f);
@@ -2817,12 +2817,12 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
 {
     switch (mode)
     {
-    case 0:
+    case LASER_CURVE_MOTION_STRAIGHT:
         *out_pos = *pos - velocity * this->speed;
         *out_speed = this->speed;
         *out_angle = this->angle;
         break;
-    case 1:
+    case LASER_CURVE_MOTION_ACCEL:
         if (-990.0f > angle_delta)
         {
             // The inline difference retains the original X multiplication operands.
@@ -2845,7 +2845,7 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
             *out_angle = atan2(sum.y, sum.x);
         }
         break;
-    case 2:
+    case LASER_CURVE_MOTION_ANGLE_ACCEL:
     {
         Float3 d;
         d.z = 0.0f;
@@ -2887,12 +2887,12 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
     f32 elapsed = time - start_time;
     switch (mode)
     {
-    case 0:
+    case LASER_CURVE_MOTION_STRAIGHT:
         *out_pos = start_pos + velocity * elapsed * speed;
         *out_speed = speed;
         *out_angle = angle;
         break;
-    case 1:
+    case LASER_CURVE_MOTION_ACCEL:
         if (-990.0f > angle_delta)
         {
             *out_pos = start_pos + velocity * (speed + speed + speed_delta * elapsed) * (elapsed + 1.0f) * 0.5f;
@@ -2916,7 +2916,7 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
             *out_angle = atan2(sum.y, sum.x);
         }
         break;
-    case 2:
+    case LASER_CURVE_MOTION_ANGLE_ACCEL:
     {
         Float3 pos = start_pos;
         f32 a = angle;
