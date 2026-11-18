@@ -2240,8 +2240,8 @@ int EnemyData::ecl_run_over_300()
             this, slot, &laser_params_storage.infinite.start_pos, laser_params_storage.infinite.ex);
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
-        i32 color = shooter.color;
         laser_params_storage.infinite.type = type;
+        i32 color = shooter.color;
         laser_params_storage.infinite.color = color;
         laser_params_storage.infinite.ang_aim = normalize_angle(ang_aim);
         laser_params_storage.infinite.start_time = shooter.laser_timing[0];
@@ -2290,8 +2290,8 @@ int EnemyData::ecl_run_over_300()
             this, slot, &laser_params_storage.curve.start_pos, laser_params_storage.curve.ex);
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
-        i32 color = shooter.color;
         laser_params_storage.curve.type = type;
+        i32 color = shooter.color;
         laser_params_storage.curve.color = color;
         laser_params_storage.curve.ang_aim = normalize_angle(ang_aim);
         laser_params_storage.curve.segment_count = shooter.laser_timing[0];
