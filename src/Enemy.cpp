@@ -657,11 +657,9 @@ int EnemyData::step_logic()
         {
             if (hit)
             {
-                i32 current_life = life.current;
-                if (dealt >= current_life)
+                if (dealt >= life.current)
                 {
-                    i32 damage_accounted = (dealt - current_life) / 4 + current_life;
-                    g_EnemyManager->inner.damage_this_frame[0] += damage_accounted;
+                    g_EnemyManager->inner.damage_this_frame[0] += (dealt - life.current) / 4 + life.current;
                 }
                 else
                 {
