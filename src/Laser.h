@@ -355,7 +355,8 @@ struct LaserCurveInner
     BulletEx ex[0x12];
     i32 shot_sfx;
     i32 shot_transform_sfx;
-    u8 unk_34c[0x350 - 0x34c];
+    // ECL et_ex cursor used to initialize a newly spawned curve laser.
+    i32 initial_ex_index;
     // Set when a bomb splits a laser: the node list and time the new piece
     // continues from.
     LaserCurveNode *source_nodes;
@@ -366,6 +367,10 @@ struct LaserCurveInner
         memset(this, 0, sizeof(*this));
     }
 };
+
+static_assert(offsetof(LaserCurveInner, initial_ex_index) == 0x34c,
+              "curve laser initial et_ex index offset");
+static_assert(sizeof(LaserCurveInner) == 0x358, "curve laser parameter layout");
 
 // One point of a curvy laser's body (LaserCurveInf::segments holds
 // segment_count of them).

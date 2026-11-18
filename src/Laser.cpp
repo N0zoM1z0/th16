@@ -2467,7 +2467,7 @@ i32 LaserCurveInf::initialize(void *params)
         nodes.mode = 0;
         nodes.start_time = 0.0f;
         nodes.end_time = 999999.0f;
-        ex_index = *(i32 *)inner.unk_34c;
+        ex_index = inner.initial_ex_index;
     }
     segments->offset = tip_offset;
     for (i32 i = 0; i < inner.segment_count; i++)
