@@ -166,20 +166,20 @@ static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    f32 x = enemy->bullet_mgr_offsets[i].xy.x;
-    f32 y = enemy->bullet_mgr_offsets[i].xy.y;
+    f32 x;
+    f32 y;
     f32 z;
     if (enemy->bullet_mgr_origins[i].z > 0.9f)
     {
-        x += enemy->bullet_mgr_origins[i].xy.x;
-        y += enemy->bullet_mgr_origins[i].xy.y;
+        x = enemy->bullet_mgr_offsets[i].xy.x + enemy->bullet_mgr_origins[i].xy.x;
+        y = enemy->bullet_mgr_offsets[i].xy.y + enemy->bullet_mgr_origins[i].xy.y;
         z = 0.0f;
     }
     else
     {
+        x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
+        y = enemy->bullet_mgr_offsets[i].xy.y + enemy->final_pos.pos.y;
         z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x += enemy->final_pos.pos.x;
-        y += enemy->final_pos.pos.y;
     }
     *out = D3DXVECTOR3(x, y, z);
 }
@@ -247,6 +247,10 @@ union EclLaserParamsStorage
     }
 };
 
+static_assert(alignof(LaserLineInner) == 4, "line params alignment");
+static_assert(alignof(LaserInfiniteInner) == 4, "infinite params alignment");
+static_assert(alignof(LaserBeamInner) == 4, "beam params alignment");
+static_assert(alignof(LaserCurveInner) == 4, "curve params alignment");
 static_assert(sizeof(EclLaserParamsStorage) == sizeof(LaserInfiniteInner),
               "shared ECL laser parameter storage");
 static_assert(sizeof(LaserLineInner) <= sizeof(EclLaserParamsStorage),
