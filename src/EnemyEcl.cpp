@@ -266,7 +266,7 @@ static_assert(sizeof(EclMovementScratch) <= sizeof(EclLaserParamsStorage),
 int EnemyData::ecl_run_over_300()
 {
     EclLaserParamsStorage laser_params_storage;
-    EnemyInf *volatile &full_owner = full;
+    register EnemyInf *full_owner = full;
     register EclRawInstr *instr = full_owner->context.current_context->current_instr();
     switch ((i16)instr->opcode)
     {
