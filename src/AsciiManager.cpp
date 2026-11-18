@@ -102,21 +102,28 @@ AsciiInf::~AsciiInf()
 // FUNCTION: TH16 0x408fb0
 void AsciiInf::tick()
 {
-    AsciiStr *dst = strings;
+    i32 i = 0;
     i32 kept = 0;
-    AsciiStr *src;
-    i32 i;
-    for (i = 0, src = strings; i < num_strings; i++, src++)
+    AsciiStr *dst = strings;
+    if (i < num_strings)
     {
-        if (--strings[i].remaining_time >= 0)
+        i32 *remaining_time = &dst->remaining_time;
+        AsciiStr *src = dst;
+        do
         {
-            if (kept != i)
+            if (--*remaining_time >= 0)
             {
-                *dst = *src;
+                if (kept != i)
+                {
+                    *dst = *src;
+                }
+                kept++;
+                dst++;
             }
-            kept++;
-            dst++;
-        }
+            i++;
+            src++;
+            remaining_time = (i32 *)((u8 *)remaining_time + sizeof(AsciiStr));
+        } while (i < num_strings);
     }
     num_strings = kept;
 }
