@@ -51,16 +51,20 @@ The latest **saved strict-audit snapshot** is dated **2026-11-15 06:37 UTC**:
 **1,033 exact / 51 mismatch / 131 incomplete** among 1,215 historical
 annotated units (51.33% of the then-annotated bytes). These numbers and the
 progress image are **historical**, not current results. The current
-incremental candidate (as of 2026-11-17) builds **1,166 annotated
+incremental candidate (built on 2026-11-18) builds **1,166 annotated
 functions**; that is a separate build count, not a new strict-exactness total.
+The build includes two intentional, uncommitted timer-experiment edits in
+`src/ScreenEffect.cpp` and `src/ZunTimer.h`; see the [current handoff](docs/NEXT_AGENT.md).
 
-No subsequent accepted strict receipt has been recorded. The last known
-focused strict Oracle attempt was blocked by EH-parent PDB owner preflight
-(`EH parent lacks one complete candidate PDB owner`); do not turn local
-normalized-instruction similarities into exactness claims. The
-[current handoff](docs/NEXT_AGENT.md) gives the current source checkpoints,
-large-owner priorities and focused diagnostic commands. An audit must first
-be refreshed successfully before quoting new project-wide strict totals.
+Factory inspection currently reports **0 imported Oracle results** and an
+`inventory-import-only` diagnostic, so accepted exactness and production
+closure are unknown. The last known local focused strict Oracle attempt was
+blocked by EH-parent PDB owner preflight (`EH parent lacks one complete
+candidate PDB owner`). Do not turn local normalized-instruction similarities
+into exactness claims. The [current handoff](docs/NEXT_AGENT.md) records the
+actual Git state, dirty timer experiment, large-owner measurements and focused
+commands. An audit must be refreshed and accepted before quoting new
+project-wide strict totals.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the
 [handoff](docs/NEXT_AGENT.md) (current levers, open leads and dead ends) and the

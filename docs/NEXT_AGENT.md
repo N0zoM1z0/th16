@@ -1,33 +1,47 @@
 # TH16 reconstruction: current agent handoff
 
-**Updated 2026-11-17.** Read [AGENTS.md](../AGENTS.md) before editing. Work in
+**Updated 2026-11-18.** Read [AGENTS.md](../AGENTS.md) before editing. Work in
 natural C/C++; do not use inline assembly, fake padding, or inert code to force
 machine-code similarity. Commit coherent improvements as `gpt-web: ...` and do
-not push unless the user requests it. Continue the existing dirty work if any;
-there is no other active editing agent to defer it to.
+not push unless the user requests it. This handoff is prepared for the incoming
+agent: preserve and inspect the two existing dirty timer files before editing;
+do not reset, overwrite or silently discard them.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest **game-source reconstruction** checkpoint before handoff maintenance:
-  `298a435` (`gpt-web: align paired ECL animation and hit-sound context reloads`).
-  `main` and `origin/main` were synchronized when this cleanup started. The
-  subsequent documentation/archival-tool commits are separate; use `git log`
-  and `git status -sb` for the actual HEAD rather than a frozen ahead-count.
-- The current incremental candidate has **1,166 annotated functions**. This
-  is a build/annotation count, **not** the population of the older strict
-  audit and **not** a count of exact matches.
-- The saved strict-audit/progress image dates to **2026-11-15** and is stale
-  for the current source. Its reported **1,033 exact / 51 mismatch / 131
-  incomplete** and **1,215 annotated units** belong only to that historical
-  snapshot. Do not present those totals as today's result.
-- The last known focused strict Oracle attempt was blocked in EH-owner
-  preflight with **"EH parent lacks one complete candidate PDB owner"**.
-  This blocker was not resolved or re-certified during the recent local
-  reconstruction sessions. A successful build or normalized ratio of `1.0`
-  is **not** an accepted strict complete-owner/relocation receipt.
+- Latest **game-source** checkpoint before this handoff cleanup:
+  `d3aecb675fca4ee69b82bde7d9041b587fbf6216`
+  (`gpt-web: avoid caching ECL context owner`, 2026-11-17 21:16 UTC).
+  `main` and `origin/main` were synchronized before the documentation work.
+  This handoff adds two documentation-only local commits; use `git log` and
+  `git status -sb` for the actual post-cleanup HEAD/ahead count. Neither commit
+  changes game source.
+- The worktree has exactly **two unstaged, uncommitted source changes**:
+  `src/ScreenEffect.cpp` and `src/ZunTimer.h`. There are no staged changes,
+  untracked files or conflicts. They implement an experimental
+  `ZunTimer::tick_goto_volatile(i32 *out_current)` used only by
+  `ScreenEffect::on_tick_shake`; see the dedicated section below. Treat this as
+  an unproven experiment, not a committed reconstruction improvement.
+- An incremental build of that exact dirty worktree succeeded on 2026-11-18:
+  **1,166 annotated functions**. This is a build/annotation count, not an
+  exactness count. The focused `on_tick_shake` diagnostic is 121 target / 121
+  candidate instructions, ratio **0.9917**, with one unmatched `push esi`.
+  This normalized diagnostic is not a strict receipt and has not yet been
+  compared against a clean-HEAD baseline for this experiment.
+- The saved strict-audit/progress image dates to **2026-11-15** and is stale.
+  Its **1,033 exact / 51 mismatch / 131 incomplete** and **1,215 annotated
+  units** are historical only; do not present them as today's result.
+- Factory inspection currently identifies the original Japanese v1.00a target,
+  but reports **0 imported Oracle results** and an `inventory-import-only`
+  diagnostic. Exactness, provenance acceptance and production closure are
+  therefore unknown in the current Factory registry. The last known local
+  strict Oracle attempt was blocked in EH-owner preflight by
+  **"EH parent lacks one complete candidate PDB owner"**; that historical
+  blocker has not been re-certified. A successful build or normalized ratio of
+  `1.0` is not an accepted complete-owner/relocation receipt.
 - `resources/th16.exe` is the private original Japanese v1.00a target;
-  `build/reference-candidate/` is the **current incremental** PE/MAP/PDB
-  and object/symbol cache. Keep both, together with `.tools/`, `.venv/`,
+  `build/reference-candidate/` is the current incremental PE/MAP/PDB and
+  object/symbol cache. Keep both, together with `.tools/`, `.venv/`,
   `ghidra-project/` and the pinned `_reference/` checkout.
 
 ## Immediate working commands
@@ -37,7 +51,9 @@ there is no other active editing agent to defer it to.
 scripts/repo-python scripts/build.py
 
 # Complete function comparison, register/address normalization: investigation only.
-scripts/repo-python .analysis/measure-leaf.py 0x435050 initialize@LaserInfiniteInf
+scripts/repo-python .analysis/measure-leaf.py 0x41dcb0 ecl_run_over_300@EnemyData
+scripts/repo-python .analysis/measure-leaf.py 0x4162d0 step_ex_08@Bullet
+scripts/repo-python .analysis/measure-leaf.py 0x45cd30 on_tick_shake@ScreenEffect
 scripts/repo-python .analysis/measure-leaf.py 0x41c330 step_logic@EnemyData
 
 # Locally scoped opcode-group differences in the two large interpreters.
@@ -58,49 +74,64 @@ no normalized differences; this is useful but does not prove byte exactness.
 
 ## Large owners: current frontier
 
-| Owner / source | Local finding and specific next issue |
-| --- | --- |
-| `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | **174/174 dispatch targets**. Roughly 21 KB owner. `MOVE_BEZIER` cases 125/126: 86 target vs 88 candidate instructions, ~0.91; `MOVE_CURVE` cases 134/135/138/139: 80/79, ~0.99. Laser creation cases 402/403/411/413 remain ~0.71–0.75; preserve their distinct origin-before-copy vs copy-before-origin logic. |
-| `AnmVm::run`, target `0x45f980`, `src/AnmVmRun.cpp` | **134/134 dispatch targets**. `FOLLOW_CAMERA` case 4 ~0.98, `FSET_RAND` case 124 ~0.96, random circle case 132 ~0.97. Remaining mismatches include x87 result lifetime, radial multiplication and source/load order. |
-| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | Complete owner locally ~0.817 (344 target/candidate normalized instructions). `BulletEx` cursor and indexed-address scheduling remain different; changing to volatile cursor/payload regressed badly. |
-| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | Complete owner locally ~0.860 (360 target / 363 candidate normalized instructions). Same cursor/payload scheduling problem. |
-| `EnemyData::step_logic`, target `0x41c330`, `src/Enemy.cpp` | 534 target / 530 candidate instructions, ~0.987. Current branchless dialogue-damage selection is an improvement; avoid earlier staged life/overkill changes that regressed it. |
+All ratios below come from local complete-function normalized instruction
+comparisons against the current incremental candidate. They are diagnostic
+only: they do not prove byte identity, relocation identity or Factory
+acceptance.
 
-The ECL owner's **dispatch map** and its **complete PDB owner** are different
-verification scopes: do not infer exactness from the dispatch coverage or the
-case ratios. Keep existing natural C++ branches, object layouts and typed
-calls; a local improvement that causes other cases to regress should be
-rechecked before committing.
+| Owner / source | Current local measurement and next issue |
+| --- | --- |
+| `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | 21,408 target / 21,456 candidate bytes; 4,562 / 5,435 normalized instructions; **0.8633**. Hard groups: laser cases 402/403/411/413 score about 0.73–0.77; Bezier 125/126 about 0.89; curve 134/135/138/139 about 0.98. `MOVE_POS_3D` 116/117 is about 0.90 and random movement 112/113 about 1.00. Continue with the four laser creation paths and preserve their distinct origin/copy order. |
+| `AnmVm::run`, target `0x45f980`, `src/AnmVmRun.cpp` | 14,177 / 14,208 bytes; 3,837 / 3,843 instructions; **0.9474**. Cases 4 (`FOLLOW_CAMERA`) ~0.98, 124 (`FSET_RAND`) ~0.96, and 132 (random circle) ~0.97. Remaining differences include x87 result lifetime, radial multiplication and load order. |
+| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | 1,588 / 1,600 bytes; 344 / 342 instructions; **0.9067**. Revisit `BulletEx` cursor and indexed-address scheduling without repeating known volatile cursor regressions. |
+| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | 1,548 / 1,552 bytes; 360 / 363 instructions; **0.9654**. The cursor/payload schedule still differs. |
+| `EnemyData::step_logic`, target `0x41c330`, `src/Enemy.cpp` | 2,207 / 2,208 bytes; 534 / 530 instructions; **0.9868**. Keep the branchless dialogue-damage selection; staged life/overkill rewrites previously regressed this owner. |
+| `Bullet::step_ex_08`, target `0x4162d0`, `src/BulletManager.cpp` | 1,390 / 1,424 bytes; 327 / 336 instructions; **0.8929**. The committed `DirectionCornerScratch` union models the direction/corner stack overlap naturally; continue investigating corner math and register scheduling. |
+| `EnemyData::step_interpolators`, target `0x41bb50`, `src/Enemy.cpp` | 1,692 / 1,696 bytes; 421 / 421 instructions; **0.9976**. The camera Y operand order checkpoint is committed. |
+| `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | 476 / 480 bytes; 121 / 121 instructions; **0.9917** on the dirty experiment, with one unmatched `push esi`. Compare against clean HEAD before deciding whether the new timer helper is worth keeping. |
+
+Focused ECL opcode diagnostics from the current build: cases 402/403/411/413
+(line/infinite/curve/beam laser) are 74/76 at 0.75, 80/84 at 0.73, 68/72 at
+0.77 and 65/67 at 0.74 respectively. These are inline case spans, not complete
+owners. The ECL dispatch map and its complete PDB owner are different scopes;
+never infer exactness from dispatch coverage or case ratios.
 
 ## Recent natural-source checkpoints
 
-The latest code work spans multiple sessions. For exact diffs consult
-`git show COMMIT`, not an old note's guessed source form.
+For exact diffs consult `git show COMMIT`, not an old note's guessed source
+form. The most relevant recent commits are:
 
-- `298a435`: coordinated live-context loads for `ANM_SELECT` and `HIT_SOUND`;
-  both short diagnostic blocks align when changed **together**, while editing
-  only one had disrupted other case allocation.
-- `a2c2cec`: spell-practice `SET_NEXT` reloads the live enemy before
-  registering BossEscape timeout; case 214 has no normalized difference.
-- `fbb42e5` after `aab16cb`: restored center-X and random-radius sampling
-  order in `EnemyDrop::eject_extra_drops`; complete local 138/138, 1.0.
-- `275d101`: live X/Y position updates in
-  `LaserInfiniteInf::initialize`; complete local 144/144, 1.0.
-- `195c942`, `e86f0b4`, `4fbdb15`: live context access for ECL `Z_INDEX`,
-  `SCORE_ADD`, `DIFF_WAIT`; each corresponding local block aligns.
-- `829f609`: Boss interrupt subroutine is reloaded after context reset;
-  the case 502 result improved to ~0.99.
-- `1b86ce2`, `8186f6f`: Bezier duration/VM slot lifetime work; still not
-  complete for the large ECL owner.
+- `d3aecb6`: avoid caching the ECL context owner in the large dispatcher.
+- `7e443aa`: preserve camera-delta Y operand order in
+  `EnemyData::step_interpolators`.
+- `2d1d02e`: recover the overlapping direction/corner scratch layout in
+  `Bullet::step_ex_08` using a natural C++ union/struct representation.
+- `5fdbbc2`, `7392f7f`: `MOVE_POS_3D` XY/Z operand-order experiments; inspect the
+  current source and focused case result before extending them.
+- `72f29c3`: restore the ECL random-movement boundary branch layout.
+- `298a435` and earlier: coordinated live-context loads for `ANM_SELECT` and
+  `HIT_SOUND`; case 214 `SET_NEXT`; Boss interrupt context reload; and earlier
+  ECL/ANM ownership work. These remain useful historical checkpoints.
 
-Useful already-aligned **local normalized** leaves: the four laser
-`initialize` variants (line 226/226, infinite 144/144, beam 145/145,
-curve 403/403), `Player::check_hit_rect` (76/76),
-`Player::check_hit_circle` (69/69), `InterpFloat3::step` (230/230),
-`EnemyDrop::eject_extra_drops` (138/138), both laser
-`step_ex_angle` functions (84/84), `sht_on_hit_burst_rising` (92/92)
-and the four `AnmManager` VM-list insertion functions (47/47 each).
-These numbers are **not** strict Oracle exactness credits.
+Useful already-aligned **local normalized** leaves from earlier sessions:
+the four laser `initialize` variants, `Player::check_hit_rect`,
+`Player::check_hit_circle`, `InterpFloat3::step`,
+`EnemyDrop::eject_extra_drops`, both laser `step_ex_angle` functions,
+`sht_on_hit_burst_rising`, and four `AnmManager` VM-list insertion functions.
+Re-measure before relying on any old ratio; none of these figures is a Factory
+exactness credit.
+
+## Current dirty timer experiment
+
+`src/ZunTimer.h` adds `tick_goto_volatile(i32 *out_current)`, duplicating the
+existing `tick_goto()` control flow but storing `current` through a volatile
+pointer before writing the output parameter. `src/ScreenEffect.cpp` calls it
+from `on_tick_shake` to try to place the current-frame store before a register
+spill. The current incremental build succeeds, but the focused comparison
+still has one unmatched `push esi`; no clean-HEAD A/B result or accepted receipt
+exists. Before retaining it, compare both versions using a reversible source
+swap/build/restore sequence, check timer semantics and other call sites, then
+keep or revert deliberately. Do not silently discard the two dirty files.
 
 ## Suggested next experiments
 
@@ -129,7 +160,10 @@ current acceptance. Additional source-qualified notes are under
 The 2026-11-17 storage cleanup compressed 62 old native Boss/damage/laser
 fixture/expected/output captures (five historical analysis directories) into
 verified, indexed `.analysis/archives/20261117/` gzip files, reclaiming
-about **3.49 GiB** without removing the current build graph or scripts.
+about **3.49 GiB** without removing the current build graph or scripts. The
+2026-11-18 cleanup also archived 13 unreferenced, byte-identical historical
+audit-report duplicates; see `cleanup-handoff-20261118.json` and the recovery
+instructions in [artifact retention](ARTIFACTS.md).
 The tests that used the expanded historical captures need their named files
 restored first. `scripts/evidence-archive.py` now handles both the legacy
 archive records and the 2026-11-16 per-file gzip index. See
