@@ -639,7 +639,7 @@ int EnemyData::step_logic()
         }
         if (func_from_ecl_flag_ext_dmg != NULL)
         {
-            damage += ((EnemyExtDamageFunc)func_from_ecl_flag_ext_dmg)(this, damage);
+            damage += func_from_ecl_flag_ext_dmg(this, damage);
         }
         if (pending_damage > 0)
         {
@@ -1048,7 +1048,7 @@ int EnemyData::on_tick()
     {
         return -1;
     }
-    if (func_from_ecl_func_set != NULL && ((EnemyFuncSetFunc)func_from_ecl_func_set)(this) != 0)
+    if (func_from_ecl_func_set != NULL && func_from_ecl_func_set(this) != 0)
     {
         return -1;
     }

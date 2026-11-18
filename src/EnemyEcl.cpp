@@ -1391,17 +1391,17 @@ int EnemyData::ecl_run_over_300()
     }
     // funcSet(index): a per-frame hook (g_ecl_func_sets).
     case ECL_OP_FUNC_SET:
-        func_from_ecl_func_set = (void *)g_ecl_func_sets[get_int_arg(0)];
+        func_from_ecl_func_set = g_ecl_func_sets[get_int_arg(0)];
         is_func_set_2 = 0;
         break;
     // funcSet2(index): the same, flagged as the second kind.
     case ECL_OP_FUNC_SET2:
-        func_from_ecl_func_set = (void *)g_ecl_func_sets[get_int_arg(0)];
+        func_from_ecl_func_set = g_ecl_func_sets[get_int_arg(0)];
         is_func_set_2 = 1;
         break;
     // flagExtDmg(index): a damage hook.
     case ECL_OP_FLAG_EXT_DMG:
-        func_from_ecl_flag_ext_dmg = (void *)g_ecl_ext_damage_funcs[get_int_arg(0)];
+        func_from_ecl_flag_ext_dmg = g_ecl_ext_damage_funcs[get_int_arg(0)];
         break;
     // setHitCheckCallback(index): overrides ordinary player collision testing.
     case ECL_OP_SET_HIT_CHECK_CALLBACK:

@@ -16,8 +16,11 @@
 class EnemyInf;
 struct EnemyData;
 
-// ECL 634 supplies an optional callback in place of ordinary hit checks.
-// Only the null callback is present in TH16's built-in table.
+// ECL-installed callbacks. Hook signatures are part of the EnemyData layout:
+// these are typed function pointers, not opaque user data.
+typedef int(__fastcall *EnemyExtDamageFunc)(EnemyData *enemy, int damage);
+typedef int(__fastcall *EnemyFuncSetFunc)(EnemyData *enemy);
+// ECL 634 replaces ordinary hit checks; TH16's built-in table only has NULL.
 typedef int(__fastcall *EnemyHitCheckFunc)(EnemyData *enemy);
 
 // ExpHP: zEnemyList.
@@ -372,9 +375,9 @@ struct EnemyData
     EnemyInf *full;
     EnemyFog fog;
     char set_death[0x40];
-    void *func_from_ecl_func_set;
+    EnemyFuncSetFunc func_from_ecl_func_set;
     u32 is_func_set_2;
-    void *func_from_ecl_flag_ext_dmg;
+    EnemyExtDamageFunc func_from_ecl_flag_ext_dmg;
     EnemyHitCheckFunc hit_check_callback;
     i32 own_chapter;
     // How many enemies this one counts as in the chapter statistics
@@ -807,12 +810,7 @@ enum EclVar
     ECL_VAR_SUBSEASON = -9903,
 };
 
-// Damage hooks ECL can install (EnemyData::func_from_ecl_flag_ext_dmg).
-typedef int(__fastcall *EnemyExtDamageFunc)(EnemyData *enemy, int damage);
-
-// Per-frame hooks ECL can install (EnemyData::func_from_ecl_func_set); a
-// nonzero result ends the enemy's tick.
-typedef int(__fastcall *EnemyFuncSetFunc)(EnemyData *enemy);
+// A nonzero ECL per-frame hook result ends the enemy's tick.
 
 // VTABLE: TH16 0x4921a8
 // An enemy: an ECL VM plus its state (ExpHP: zEnemy). The name is ZUN's,
