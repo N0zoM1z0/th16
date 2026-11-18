@@ -84,7 +84,8 @@ class LaserDataInf
     virtual void get_point(f32 distance, Float3 *out);
     // ExpHP: method_4.
     virtual void run_ex();
-    virtual void method_8(i32 arg);
+    // ECL 714: only beam lasers retain the low bit of this value.
+    virtual void set_beam_flag(i32 value);
     // Sets the laser up from the parameters given to allocate_new_laser.
     virtual i32 initialize(void *params);
     // Nonzero when the laser is done.
@@ -434,7 +435,8 @@ struct LaserBeamInner
     f32 distance;
     // The shooter's laser_timing[0].
     i32 timing;
-    u32 flag_38 : 1;
+    // Low bit written by ECL 714; its downstream meaning is still unknown.
+    u32 ecl_beam_flag : 1;
     u32 flags_38_rest : 31;
     BulletEx ex[0x12];
 
@@ -460,7 +462,8 @@ class LaserBeamInf : public LaserDataInf
 
     virtual void get_point(f32 distance, Float3 *out);
     virtual void run_ex();
-    virtual void method_8(i32 arg);
+    // ECL 714: only beam lasers retain the low bit of this value.
+    virtual void set_beam_flag(i32 value);
     virtual i32 initialize(void *params);
     virtual i32 on_tick();
     virtual i32 on_draw();

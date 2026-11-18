@@ -390,7 +390,7 @@ void LaserDataInf::run_ex()
 }
 
 // FUNCTION: TH16 0x430e30
-void LaserDataInf::method_8(i32 arg)
+void LaserDataInf::set_beam_flag(i32 value)
 {
 }
 
@@ -583,9 +583,9 @@ void LaserBeamInf::get_point(f32 distance, Float3 *out)
 }
 
 // FUNCTION: TH16 0x431310
-void LaserBeamInf::method_8(i32 arg)
+void LaserBeamInf::set_beam_flag(i32 value)
 {
-    inner.flag_38 = arg;
+    inner.ecl_beam_flag = value;
 }
 
 // Registers the tick and draw callbacks.

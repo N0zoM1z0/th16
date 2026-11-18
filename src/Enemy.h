@@ -656,8 +656,8 @@ enum EnemyEclOpcode
     ECL_OP_HITBOX_RECT = 712,
     // ExpHP: unknown713.
     ECL_OP_LASER_BEAM_ON = 713,
-    // ExpHP: unknown714.
-    ECL_OP_LASER_714 = 714,
+    // Sets the beam laser's ECL control bit; other laser kinds ignore it.
+    ECL_OP_LASER_BEAM_FLAG = 714,
     ECL_OP_ENM_CALL = 800,
     ECL_OP_ENM_POS = 801,
     // ExpHP: unknown802.

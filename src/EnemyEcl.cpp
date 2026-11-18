@@ -2391,15 +2391,15 @@ int EnemyData::ecl_run_over_300()
         }
         break;
     }
-    // unknown714(id, value): laser method_8. Infinite lasers inherit the
-    // empty base implementation; dispatch still evaluates the second argument.
-    case ECL_OP_LASER_714:
+    // Beam-flag(id, value): the beam override stores the low bit; other
+    // laser types inherit the no-op implementation.
+    case ECL_OP_LASER_BEAM_FLAG:
     {
         LaserDataInf *laser = g_LaserManager->find_by_id(get_int_arg(0), 0);
         if (laser != NULL)
         {
             i32 value = get_int_arg(1);
-            laser->method_8(value);
+            laser->set_beam_flag(value);
         }
         break;
     }
