@@ -4,6 +4,7 @@
 // effect 1 the gather effect (children flying in to the VM), effects 2 and 3
 // a jagged line that grows by a random segment each frame. ExpHP numbers
 // them by their callback index: effect_1 to effect_3.
+#include <math.h>
 #include <string.h>
 
 #include "AnmManager.h"
@@ -56,11 +57,13 @@ int __fastcall anm_gather_effect_init(AnmVm *vm, D3DXVECTOR3 *pos)
     return 0;
 }
 
-// The copy of sincosmul (ZunAsm.h) that the gather effect's object file has.
+// Keep the gather effect's polar-vector helper as a separate C++ function.
+// The original uses x87 fsincos; separate CRT trig calls can round differently.
 // FUNCTION: TH16 0x406470
-static void __fastcall gather_sincosmul(Float3 *dst, f32 angle, f32 radius)
+static DECOMP_NOINLINE void __fastcall gather_sincosmul(Float3 *dst, f32 angle, f32 radius)
 {
-    ZUN_ASM_SINCOSMUL(dst, angle, radius);
+    dst->x = radius * cosf(angle);
+    dst->y = radius * sinf(angle);
 }
 
 // Gives a new child VM its color and flight time.
