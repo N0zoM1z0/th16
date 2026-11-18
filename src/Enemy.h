@@ -428,7 +428,8 @@ enum EnemyEclOpcode
     ECL_OP_ANM_SELECTED_PLAY = 313,
     ECL_OP_ANM_PLAY_HIGH = 314,
     ECL_OP_ANM_PLAY_ROTATE = 315,
-    ECL_OP_ANM_316 = 316,
+    // (slot, n): n < 0 restores the main script; otherwise selects n + 5.
+    ECL_OP_ANM_PLAY_ALTERNATE = 316,
     ECL_OP_ANM_SWITCH = 317,
     ECL_OP_ANM_RESET = 318,
     ECL_OP_ANM_ROTATE = 319,
@@ -449,12 +450,14 @@ enum EnemyEclOpcode
     ECL_OP_ANM_ALPHA2 = 331,
     ECL_OP_ANM_ALPHA2_TIME = 332,
     ECL_OP_ANM_POS_TIME = 333,
-    ECL_OP_ANM_334 = 334,
+    // Creates an EffectManager-tracked effect at the enemy's final position.
+    ECL_OP_CREATE_TRACKED_EFFECT = 334,
     ECL_OP_ANM_SCALE2 = 335,
     ECL_OP_ANM_LAYER = 336,
     ECL_OP_ANM_BLEND_MODE = 337,
     ECL_OP_ANM_PLAY_POS = 338,
-    ECL_OP_ANM_339 = 339,
+    // (file, script, frames): create an ANM and advance it immediately.
+    ECL_OP_ANM_PLAY_PREWARM = 339,
     // ExpHP: anm340 (sets ENEMY_FLAG_DELETE on another enemy).
     ECL_OP_ENM_DELETE = 340,
     ECL_OP_MOVE_POS = 400,

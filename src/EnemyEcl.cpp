@@ -429,9 +429,9 @@ int EnemyData::ecl_run_over_300()
         g_EffectManager->track(created);
         break;
     }
-    // anm339(file, script, frames): anmPlayAbs, then runs the VM for some
+    // anmPlayPrewarm(file, script, frames): create the VM, then run it for some
     // frames at once.
-    case ECL_OP_ANM_339:
+    case ECL_OP_ANM_PLAY_PREWARM:
     {
         i32 file_index = current_context->get_int_arg(0);
         i32 script = current_context->get_int_arg(1);
@@ -462,8 +462,8 @@ int EnemyData::ecl_run_over_300()
         g_EffectManager->track(id);
         break;
     }
-    // anm334(effect)
-    case ECL_OP_ANM_334:
+    // createTrackedEffect(effect)
+    case ECL_OP_CREATE_TRACKED_EFFECT:
     {
         i32 effect = current_context->get_int_arg(0);
         g_EffectManager->create_tracked(effect, &final_pos.pos, 0);
@@ -542,9 +542,9 @@ int EnemyData::ecl_run_over_300()
         }
         break;
     }
-    // anm316(slot, n): play the saved main script when n is negative;
+    // anmPlayAlternate(slot, n): play the saved main script when n is negative;
     // otherwise select its n-th alternate, starting at script + 5.
-    case ECL_OP_ANM_316:
+    case ECL_OP_ANM_PLAY_ALTERNATE:
     {
         i32 slot = current_context->get_int_arg(0);
         i32 alternate = current_context->get_int_arg(1);
