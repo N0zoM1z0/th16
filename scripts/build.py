@@ -108,6 +108,11 @@ def compile_one(src, obj_dir, no_gl):
     obj = obj_dir / rel(src).with_suffix(".obj")
     obj.parent.mkdir(parents=True, exist_ok=True)
     flags = [f for f in CFLAGS if not ((no_gl or is_stub(src)) and f == "/GL")]
+    if no_gl:
+        # The symbol-only compile feeds keepalive discovery, not the final
+        # image. Disable auto-inlining there so source-local annotated
+        # functions remain visible to the COFF symbol scan.
+        flags.append("/Ob0")
     # Reuse the object while its inputs are unchanged: a build otherwise runs
     # cl twice for every file under Wine.
     stamp = obj.with_suffix(".dep")
