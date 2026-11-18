@@ -2720,14 +2720,15 @@ int EnemyData::ecl_run_over_300()
         }
         break;
     }
-    // unknown560(x, y)
-    case ECL_OP_UNKNOWN_560:
+    // Set shared bullet bounce dimensions. Nonpositive width uses the
+    // individual bullet's bounce rectangle instead.
+    case ECL_OP_BULLET_BOUNCE_RECT_SIZE:
     {
         BulletManager *mgr = g_BulletManager;
-        f32 x = get_float_arg(EclFloatArgIndex{0});
-        f32 y = get_float_arg(EclFloatArgIndex{1});
-        mgr->ecl_unknown_560.x = x;
-        mgr->ecl_unknown_560.y = y;
+        f32 width = get_float_arg(EclFloatArgIndex{0});
+        f32 height = get_float_arg(EclFloatArgIndex{1});
+        mgr->bounce_rect_size_override.width = width;
+        mgr->bounce_rect_size_override.height = height;
         break;
     }
     // spec0(max_time, count, min_count): the season item drop.

@@ -580,7 +580,8 @@ enum EnemyEclOpcode
     ECL_OP_FLAG_MIRROR = 558,
     // ExpHP: unknown559.
     ECL_OP_ENEMY_LIMIT = 559,
-    ECL_OP_UNKNOWN_560 = 560,
+    // (width, height): override the shared bullet-bounce rectangle dimensions.
+    ECL_OP_BULLET_BOUNCE_RECT_SIZE = 560,
     ECL_OP_DIE = 561,
     // ExpHP: unknown562.
     ECL_OP_DROP_ITEMS_ANY_MODE = 562,

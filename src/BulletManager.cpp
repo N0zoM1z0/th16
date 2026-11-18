@@ -137,8 +137,8 @@ void BulletManager::destroy_all()
     mgr->bullets[BULLET_COUNT].state = BULLET_STATE_SENTINEL;
     memset(mgr->anm_ids, 0, BULLET_COUNT * sizeof(AnmId));
     mgr->reset_lists();
-    mgr->ecl_unknown_560.x = 0.0f;
-    mgr->ecl_unknown_560.y = 0.0f;
+    mgr->bounce_rect_size_override.width = 0.0f;
+    mgr->bounce_rect_size_override.height = 0.0f;
     mgr->cancel_count = 0;
     mgr->bullet_count_canceled_by_bombs = 0;
 }
@@ -294,6 +294,8 @@ int __fastcall bullet_map_sprite(AnmVm *vm, i32 sprite)
 
 static_assert(offsetof(Bullet, cancel_script) == 0xc5c, "Bullet layout");
 static_assert(offsetof(Bullet, state_time) == 0x144c, "Bullet layout");
+static_assert(offsetof(BulletManager, bounce_rect_size_override) == 0x48,
+              "ECL 560 bounce rectangle offset");
 static_assert(offsetof(BulletManager, anm_ids) == 0x13ffc8c, "BulletManager layout");
 static_assert(offsetof(BulletManager, cancel_count) == 0x1403b14, "BulletManager layout");
 
@@ -1305,7 +1307,7 @@ i32 Bullet::step_ex_00()
 // FUNCTION: TH16 0x415790
 i32 Bullet::bounce_left()
 {
-    f32 width = g_BulletManager->ecl_unknown_560.x;
+    f32 width = g_BulletManager->bounce_rect_size_override.width;
     if (width <= 0.0f)
     {
         width = ex_state[4].floats[2];
@@ -1326,7 +1328,7 @@ i32 Bullet::bounce_left()
 // FUNCTION: TH16 0x4158d0
 i32 Bullet::bounce_right()
 {
-    f32 width = g_BulletManager->ecl_unknown_560.x;
+    f32 width = g_BulletManager->bounce_rect_size_override.width;
     if (width <= 0.0f)
     {
         width = ex_state[4].floats[2];
@@ -1347,7 +1349,7 @@ i32 Bullet::bounce_right()
 // FUNCTION: TH16 0x415a10
 i32 Bullet::bounce_top()
 {
-    f32 height = g_BulletManager->ecl_unknown_560.y;
+    f32 height = g_BulletManager->bounce_rect_size_override.height;
     if (height <= 0.0f)
     {
         height = ex_state[4].floats[3];
@@ -1367,7 +1369,7 @@ i32 Bullet::bounce_top()
 // FUNCTION: TH16 0x415ae0
 i32 Bullet::bounce_bottom()
 {
-    f32 height = g_BulletManager->ecl_unknown_560.y;
+    f32 height = g_BulletManager->bounce_rect_size_override.height;
     if (height <= 0.0f)
     {
         height = ex_state[4].floats[3];
@@ -1405,10 +1407,10 @@ static inline i32 outside_bounce_rect(D3DXVECTOR3 *p, f32 radius, f32 width, f32
 i32 Bullet::step_ex_06()
 {
     BulletManager *mgr = g_BulletManager;
-    if ((mgr->ecl_unknown_560.x <= 0.0f &&
+    if ((mgr->bounce_rect_size_override.width <= 0.0f &&
          outside_bounce_rect(&pos, 0.0f, ex_state[4].floats[2], ex_state[4].floats[3])) ||
-        (mgr->ecl_unknown_560.x > 0.0f &&
-         outside_bounce_rect(&pos, 0.0f, mgr->ecl_unknown_560.x, mgr->ecl_unknown_560.y)))
+        (mgr->bounce_rect_size_override.width > 0.0f &&
+         outside_bounce_rect(&pos, 0.0f, mgr->bounce_rect_size_override.width, mgr->bounce_rect_size_override.height)))
     {
         i32 bounced = 0;
         if (ex_state[4].ints[3] & 1)

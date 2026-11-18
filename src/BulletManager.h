@@ -269,6 +269,15 @@ struct Bullet
 // the bullet's type and color.
 int __fastcall bullet_map_sprite(AnmVm *vm, i32 sprite);
 
+// Shared bounce rectangle size from ECL 560. If width is nonpositive,
+// individual bullets use their own bounce width and height instead.
+struct BulletBounceRectSize
+{
+    f32 width;
+    f32 height;
+};
+static_assert(sizeof(BulletBounceRectSize) == sizeof(D3DXVECTOR2), "bounce rectangle size layout");
+
 // Owns every enemy bullet. ExpHP: zBulletManager.
 struct BulletManager
 {
@@ -281,7 +290,7 @@ struct BulletManager
     Bullet *layer_tails[BULLET_LAYER_COUNT];
     i32 bullet_count;
     f32 et_protect_range;
-    D3DXVECTOR2 ecl_unknown_560;
+    BulletBounceRectSize bounce_rect_size_override;
     u8 unk_50[8];
     i32 bullet_count_canceled_by_bombs;
     ZunList<Bullet> freelist_head;
