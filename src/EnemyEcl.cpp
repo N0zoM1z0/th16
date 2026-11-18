@@ -2096,7 +2096,7 @@ int EnemyData::ecl_run_over_300()
     }
     // setTimeout(index, sub).
     case ECL_OP_SET_TIMEOUT:
-        full_owner->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
+        full->set_timeout(get_int_arg(0), (const char *)&instr->args[2]);
         break;
     // setDeath(sub).
     case ECL_OP_SET_DEATH:
