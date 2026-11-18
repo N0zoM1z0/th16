@@ -1614,7 +1614,7 @@ i32 LaserCurveInf::sum_rect_damage(i32 a, i32 b, i32 c, i32 d, i32 e, i32 f)
         return 0;
     }
     i32 count = 0;
-    LaserCurveSegment *segment = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segment = segments;
     for (i32 i = 0; i < inner.segment_count; i++, segment++)
     {
         Float3 seg_pos = segment->pos;
@@ -1932,7 +1932,7 @@ i32 LaserCurveInf::check_graze_or_kill(i32 graze_only)
     i32 grazed = 0;
     f32 dist = 0.0f;
     Float3 graze_pos;
-    LaserCurveSegment *segment = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segment = segments;
     for (i32 i = 0; i < inner.segment_count - 1; i++, segment++)
     {
         Float3 mid;
@@ -2407,7 +2407,7 @@ i32 LaserCurveInf::initialize(void *params)
     ((AnmVmFlagsLoFields *)&vm_f28.flags_lo)->render_mode = 1;
     vm_f28.flags_hi = vm_f28.flags_hi & ~0x80000 | 0x40000;
     vertices = malloc(inner.segment_count * 0x38);
-    segments = malloc(inner.segment_count * sizeof(LaserCurveSegment));
+    segments = (LaserCurveSegment *)malloc(inner.segment_count * sizeof(LaserCurveSegment));
     position = inner.start_pos;
     if (inner.distance != 0.0f)
     {
@@ -2430,10 +2430,10 @@ i32 LaserCurveInf::initialize(void *params)
     tip_offset.z = 0.0f;
     for (i32 i = 0; i < inner.segment_count; i++)
     {
-        ((LaserCurveSegment *)segments)[i].pos = position;
-        *(Float3 *)((LaserCurveSegment *)segments)[i].unk_c = g_zero_vec;
-        ((LaserCurveSegment *)segments)[i].angle = inner.ang_aim;
-        ((LaserCurveSegment *)segments)[i].length = inner.speed;
+        segments[i].pos = position;
+        *(Float3 *)segments[i].unk_c = g_zero_vec;
+        segments[i].angle = inner.ang_aim;
+        segments[i].length = inner.speed;
     }
     segment_timer.set_f(inner.source_time);
     if (inner.source_nodes != NULL)
@@ -2468,13 +2468,13 @@ i32 LaserCurveInf::initialize(void *params)
         nodes.end_time = 999999.0f;
         ex_index = *(i32 *)inner.unk_34c;
     }
-    *(Float3 *)((LaserCurveSegment *)segments)->unk_c = tip_offset;
+    *(Float3 *)segments->unk_c = tip_offset;
     for (i32 i = 0; i < inner.segment_count; i++)
     {
         // prev_pos indexed from segments again (not segment[-1]): segments is
         // then loaded before i is scaled, as in the original.
-        LaserCurveSegment *segment = &((LaserCurveSegment *)segments)[i];
-        Float3 *prev_pos = &((LaserCurveSegment *)segments)[i - 1].pos;
+        LaserCurveSegment *segment = &segments[i];
+        Float3 *prev_pos = &segments[i - 1].pos;
         f32 *out_length = &segment->length;
         f32 prev_length = segment[-1].length;
         f32 prev_angle = segment[-1].angle;
@@ -2538,7 +2538,7 @@ i32 LaserCurveInf::on_draw()
 {
     f32 u = 0.0f;
     RenderVertex144 *vertex = (RenderVertex144 *)vertices;
-    LaserCurveSegment *segment = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segment = segments;
     for (i32 i = 0; i < inner.segment_count; i++, segment++, vertex++)
     {
         vertex->pos.w = 1.0f;
@@ -2595,7 +2595,7 @@ i32 LaserCurveInf::on_draw()
     g_AnmManager->draw_vertex_strip(&vm_92c, (RenderVertex144 *)vertices, inner.segment_count * 2);
     if (inner.segment_count >= segment_timer.current)
     {
-        vm_f28.pos = ((LaserCurveSegment *)segments)[inner.segment_count - 1].pos;
+        vm_f28.pos = segments[inner.segment_count - 1].pos;
         g_AnmManager->draw_vm(&vm_f28);
     }
     return 0;
@@ -3169,7 +3169,7 @@ i32 LaserCurveInf::on_tick()
             ex_invuln_remaining_frames--;
         }
     } while (again != 0);
-    LaserCurveSegment *segs = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segs = segments;
     if (!segments_frozen)
     {
         // volatile keeps the flag in its stack slot as in the original,
@@ -3215,7 +3215,7 @@ i32 LaserCurveInf::on_tick()
             }
         }
     }
-    LaserCurveSegment *segment = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segment = segments;
     if (offscreen_grace.current > 0 || (ex_flags & BULLET_EX_OFFSCREEN))
     {
         offscreen_grace.decrement(1);

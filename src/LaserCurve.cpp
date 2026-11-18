@@ -65,7 +65,7 @@ i32 LaserCurveInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 re
     i32 count = 0;
     u8 *hit = (u8 *)malloc(inner.segment_count);
     memset(hit, 0, inner.segment_count);
-    LaserCurveSegment *segment = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segment = segments;
     i32 i;
     for (i = 0; i < inner.segment_count; i++, segment++)
     {
@@ -202,7 +202,7 @@ i32 LaserCurveInf::cancel_as_bomb_circle(Float3 *pos, f32 radius, i32 mode, i32 
     u8 hit[0x100];
     memset(hit, 0, sizeof(hit));
     radius = radius * radius;
-    LaserCurveSegment *segment = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segment = segments;
     i32 i;
     for (i = 0; i < inner.segment_count; i++, segment++)
     {
@@ -238,7 +238,7 @@ i32 LaserCurveInf::cancel_as_bomb_circle(Float3 *pos, f32 radius, i32 mode, i32 
         {
             for (i32 k = 0; k < inner.segment_count - j; k++)
             {
-                ((LaserCurveSegment *)segments)[k] = ((LaserCurveSegment *)segments)[k + j];
+                segments[k] = segments[k + j];
             }
             segment_timer += (f32)-j;
             inner.segment_count -= j;
@@ -269,7 +269,7 @@ i32 LaserCurveInf::cancel_as_bomb_circle(Float3 *pos, f32 radius, i32 mode, i32 
             {
                 for (i32 k = 0; k < inner.segment_count - j; k++)
                 {
-                    ((LaserCurveSegment *)segments)[k] = ((LaserCurveSegment *)segments)[k + j];
+                    segments[k] = segments[k + j];
                 }
                 inner.segment_count -= j;
             }
@@ -320,7 +320,7 @@ i32 LaserCurveInf::cancel(i32 mode, i32 skip_invuln)
     {
         return 0;
     }
-    LaserCurveSegment *segment = (LaserCurveSegment *)segments;
+    LaserCurveSegment *segment = segments;
     for (i32 i = 0; i < inner.segment_count; i++, segment++)
     {
         D3DXVECTOR3 pos = segment->pos;

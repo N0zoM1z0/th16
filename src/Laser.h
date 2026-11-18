@@ -376,6 +376,7 @@ struct LaserCurveSegment
     f32 angle;
     f32 length;
 };
+static_assert(sizeof(LaserCurveSegment) == 0x20, "curve segment binary layout");
 
 // A curvy laser: segment_count points that follow the head's path (ECL
 // laserCuOn). The name is ZUN's, from RTTI.
@@ -386,8 +387,8 @@ class LaserCurveInf : public LaserDataInf
     LaserCurveInner inner;
     AnmVm vm_92c;
     AnmVm vm_f28;
-    // segment_count LaserCurveSegments.
-    void *segments;
+    // Array of segment_count typed curve segments, owned by this laser.
+    LaserCurveSegment *segments;
     // Two RenderVertex144 per segment, rebuilt for drawing.
     void *vertices;
     // Head of a list of heap nodes; never a real node itself.
