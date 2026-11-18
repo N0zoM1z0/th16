@@ -2406,7 +2406,8 @@ i32 LaserCurveInf::initialize(void *params)
     vm->flags_lo = vm->flags_lo & ~ANM_VM_BLEND_MODE_MASK | (1 << ANM_VM_BLEND_MODE_SHIFT);
     ((AnmVmFlagsLoFields *)&vm_f28.flags_lo)->render_mode = 1;
     vm_f28.flags_hi = vm_f28.flags_hi & ~0x80000 | 0x40000;
-    vertices = malloc(inner.segment_count * 0x38);
+    static_assert(2 * sizeof(RenderVertex144) == 0x38, "curve vertex-pair allocation size");
+    vertices = (RenderVertex144 *)malloc(inner.segment_count * 2 * sizeof(RenderVertex144));
     segments = (LaserCurveSegment *)malloc(inner.segment_count * sizeof(LaserCurveSegment));
     position = inner.start_pos;
     if (inner.distance != 0.0f)
@@ -2537,7 +2538,7 @@ static __forceinline f32 laser_mid_angle(f32 cur, f32 prev)
 i32 LaserCurveInf::on_draw()
 {
     f32 u = 0.0f;
-    RenderVertex144 *vertex = (RenderVertex144 *)vertices;
+    RenderVertex144 *vertex = vertices;
     LaserCurveSegment *segment = segments;
     for (i32 i = 0; i < inner.segment_count; i++, segment++, vertex++)
     {
@@ -2592,7 +2593,7 @@ i32 LaserCurveInf::on_draw()
         vertex->pos.z = 0.0f;
         u += 1.0f / (f32)(inner.segment_count - 1);
     }
-    g_AnmManager->draw_vertex_strip(&vm_92c, (RenderVertex144 *)vertices, inner.segment_count * 2);
+    g_AnmManager->draw_vertex_strip(&vm_92c, vertices, inner.segment_count * 2);
     if (inner.segment_count >= segment_timer.current)
     {
         vm_f28.pos = segments[inner.segment_count - 1].pos;

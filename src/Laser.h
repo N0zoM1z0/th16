@@ -11,6 +11,7 @@
 #include "types.h"
 
 struct AnmLoaded;
+struct RenderVertex144;
 
 // LaserDataInf::state.
 enum LaserState
@@ -389,8 +390,8 @@ class LaserCurveInf : public LaserDataInf
     AnmVm vm_f28;
     // Array of segment_count typed curve segments, owned by this laser.
     LaserCurveSegment *segments;
-    // Two RenderVertex144 per segment, rebuilt for drawing.
-    void *vertices;
+    // Two RenderVertex144 records per segment, rebuilt for drawing.
+    RenderVertex144 *vertices;
     // Head of a list of heap nodes; never a real node itself.
     LaserCurveNode nodes;
 
