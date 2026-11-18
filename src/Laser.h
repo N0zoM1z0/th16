@@ -372,7 +372,9 @@ struct LaserCurveInner
 struct LaserCurveSegment
 {
     Float3 pos;
-    u8 unk_c[0x18 - 0xc];
+    // Segment-local offset: zeroed on creation, with the first segment
+    // initially carrying the curve's tip offset.
+    Float3 offset;
     // Direction and length of the piece to the next point.
     f32 angle;
     f32 length;

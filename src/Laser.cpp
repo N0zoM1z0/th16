@@ -2432,7 +2432,7 @@ i32 LaserCurveInf::initialize(void *params)
     for (i32 i = 0; i < inner.segment_count; i++)
     {
         segments[i].pos = position;
-        *(Float3 *)segments[i].unk_c = g_zero_vec;
+        segments[i].offset = g_zero_vec;
         segments[i].angle = inner.ang_aim;
         segments[i].length = inner.speed;
     }
@@ -2469,7 +2469,7 @@ i32 LaserCurveInf::initialize(void *params)
         nodes.end_time = 999999.0f;
         ex_index = *(i32 *)inner.unk_34c;
     }
-    *(Float3 *)segments->unk_c = tip_offset;
+    segments->offset = tip_offset;
     for (i32 i = 0; i < inner.segment_count; i++)
     {
         // prev_pos indexed from segments again (not segment[-1]): segments is
@@ -3210,7 +3210,7 @@ i32 LaserCurveInf::on_tick()
             else
             {
                 segs[i].pos = inner.start_pos;
-                *(Float3 *)segs[i].unk_c = g_zero_vec;
+                segs[i].offset = g_zero_vec;
                 segs[i].angle = inner.ang_aim;
                 segs[i].length = inner.speed;
             }
