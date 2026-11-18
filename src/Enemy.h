@@ -14,6 +14,11 @@
 #include "types.h"
 
 class EnemyInf;
+struct EnemyData;
+
+// ECL 634 supplies an optional callback in place of ordinary hit checks.
+// Only the null callback is present in TH16's built-in table.
+typedef int(__fastcall *EnemyHitCheckFunc)(EnemyData *enemy);
 
 // ExpHP: zEnemyList.
 typedef ZunList<EnemyInf> EnemyList;
@@ -370,7 +375,7 @@ struct EnemyData
     void *func_from_ecl_func_set;
     u32 is_func_set_2;
     void *func_from_ecl_flag_ext_dmg;
-    void *func_from_ecl_unknown_634;
+    EnemyHitCheckFunc hit_check_callback;
     i32 own_chapter;
     // How many enemies this one counts as in the chapter statistics
     // (setHurtbox's first call makes it 1, ECL 569 sets it); added to
@@ -637,7 +642,7 @@ enum EnemyEclOpcode
     ECL_OP_LIFE_HIDE = 631,
     ECL_OP_FUNC_SET = 632,
     ECL_OP_FLAG_EXT_DMG = 633,
-    ECL_OP_UNKNOWN_634 = 634,
+    ECL_OP_SET_HIT_CHECK_CALLBACK = 634,
     ECL_OP_ET_CANCEL2 = 635,
     ECL_OP_ET_CLEAR2 = 636,
     ECL_OP_FUNC_CALL = 637,

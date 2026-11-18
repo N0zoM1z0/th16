@@ -119,9 +119,9 @@ int __fastcall ecl_ext_damage_anm_hurtbox(EnemyData *enemy, int damage);
 // GLOBAL: TH16 0x490eb4
 extern EnemyExtDamageFunc const g_ecl_ext_damage_funcs[3] = {NULL, ecl_ext_damage_stored, ecl_ext_damage_anm_hurtbox};
 
-// The hooks ECL 634 installs; only entry 0 (NULL).
+// Only the null hit-check callback is defined in this version.
 // GLOBAL: TH16 0x4a6dc4
-void *g_ecl_unknown_634_funcs[1];
+EnemyHitCheckFunc g_ecl_unknown_634_funcs[1];
 
 // This file's copy of sincosmul (ZunAsm.h; TH16 keeps one per object
 // file).
@@ -1403,9 +1403,9 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_FLAG_EXT_DMG:
         func_from_ecl_flag_ext_dmg = (void *)g_ecl_ext_damage_funcs[get_int_arg(0)];
         break;
-    // unknown634(index)
-    case ECL_OP_UNKNOWN_634:
-        func_from_ecl_unknown_634 = g_ecl_unknown_634_funcs[get_int_arg(0)];
+    // setHitCheckCallback(index): overrides ordinary player collision testing.
+    case ECL_OP_SET_HIT_CHECK_CALLBACK:
+        hit_check_callback = g_ecl_unknown_634_funcs[get_int_arg(0)];
         break;
     // funcCall(index): runs a hook of g_ecl_func_sets once.
     case ECL_OP_FUNC_CALL:

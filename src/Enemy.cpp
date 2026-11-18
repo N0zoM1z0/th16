@@ -736,9 +736,9 @@ int EnemyData::step_logic()
     }
     if (!(flags_low & (ENEMY_FLAG_NO_HITBOX | ENEMY_FLAG_INTANGIBLE)) && no_hitbox_dur.current <= 0 && !(flags_low & ENEMY_FLAG_4000000))
     {
-        if (func_from_ecl_unknown_634 != NULL)
+        if (hit_check_callback != NULL)
         {
-            ((EnemyFuncSetFunc)func_from_ecl_unknown_634)(this);
+            hit_check_callback(this);
         }
         else
         {
