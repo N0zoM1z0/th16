@@ -1084,8 +1084,11 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 goto next_instr;
             }
             case ECL_OP_STACK_SIN:
-                stack.push_float((f32)sin(stack.pop_float()));
+            {
+                volatile f32 result = (f32)sin(stack.pop_float());
+                stack.push_float(result);
                 goto next_instr;
+            }
             case ECL_OP_STACK_SQRT:
                 stack.push_float(sqrtf(stack.pop_float()));
                 goto next_instr;
@@ -1138,14 +1141,18 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             {
                 f32 a = get_float_arg(EclFloatArgIndex{1});
                 f32 b = get_float_arg(EclFloatArgIndex{2});
-                f32 diff = b - a;
-                if (diff > ZUN_PI)
+                f32 diff;
+                if (b - a > ZUN_PI)
                 {
                     diff = b - (a + ZUN_2PI);
                 }
                 else if (a - b > ZUN_PI)
                 {
                     diff = b - (a - ZUN_2PI);
+                }
+                else
+                {
+                    diff = b - a;
                 }
                 *get_float_arg_ptr(0) = diff;
                 break;
