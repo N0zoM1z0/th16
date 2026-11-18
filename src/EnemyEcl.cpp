@@ -340,7 +340,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ANM_BLEND_MODE:
         ecl_anm_vm_instr();
         break;
-    // unknown566: dies now.
+    // dieNow: immediately run the enemy death path.
     case ECL_OP_DIE_NOW:
         if (full_owner->die())
         {
@@ -2265,7 +2265,7 @@ int EnemyData::ecl_run_over_300()
         g_LaserManager->allocate_new_laser(LASER_INFINITE, &laser_params_storage.infinite);
         break;
     }
-    // A beam laser (ExpHP: unknown713).
+    // laserBeamOn(et, id): create a beam laser from the shooter settings.
     case ECL_OP_LASER_BEAM_ON:
     {
         ::new (&laser_params_storage.beam) LaserBeamInner();

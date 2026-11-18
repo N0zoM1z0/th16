@@ -555,7 +555,7 @@ enum EnemyEclOpcode
     ECL_OP_SET_SCREEN_SHAKE = 517,
     ECL_OP_DIALOG_READ = 518,
     ECL_OP_DIALOG_WAIT = 519,
-    // ExpHP: unknown520.
+    // Wait until all active bosses are gone.
     ECL_OP_WAIT_BOSSES = 520,
     ECL_OP_SET_TIMEOUT = 521,
     ECL_OP_SPELL = 522,
@@ -579,53 +579,53 @@ enum EnemyEclOpcode
     ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_1 = 538,
     ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_2 = 539,
     ECL_OP_STARS = 540,
-    // ExpHP: unknown541.
+    // Suppress the enemy hitbox for a duration.
     ECL_OP_NO_HITBOX_TIME = 541,
     ECL_OP_SPELL_TIMEOUT = 542,
-    // ExpHP: unknown543.
+    // Hide the boss death / spell effect.
     ECL_OP_HIDE_BOSS_EFFECT = 543,
-    // ExpHP: unknown544.
+    // Toggle the 0x08000000 enemy flag.
     ECL_OP_FLAG_8000000 = 544,
     ECL_OP_RESET = 545,
     ECL_OP_BOMB_SHIELD = 546,
     ECL_OP_GAME_SPEED = 547,
     ECL_OP_DIFF_WAIT = 548,
-    // ExpHP: unknown549.
+    // Flash the enemy magenta.
     ECL_OP_MAGENTA_FLASH = 549,
-    // ExpHP: unknown550.
+    // Select the enemy kill group.
     ECL_OP_SET_KILL_GROUP = 550,
-    // ExpHP: unknown551.
+    // Kill enemies in the selected group.
     ECL_OP_KILL_GROUP = 551,
     ECL_OP_Z_INDEX = 552,
     ECL_OP_HIT_SOUND = 553,
     ECL_OP_STAGE_LOGO = 554,
     ECL_OP_ENM_ALIVE = 555,
     ECL_OP_SET_DEATH = 556,
-    // ExpHP: unknown557.
+    // Set the stage fog.
     ECL_OP_STAGE_FOG = 557,
     ECL_OP_FLAG_MIRROR = 558,
-    // ExpHP: unknown559.
+    // Set the enemy limit.
     ECL_OP_ENEMY_LIMIT = 559,
     // (width, height): override the shared bullet-bounce rectangle dimensions.
     ECL_OP_BULLET_BOUNCE_RECT_SIZE = 560,
     ECL_OP_DIE = 561,
-    // ExpHP: unknown562.
+    // Drop items regardless of game mode.
     ECL_OP_DROP_ITEMS_ANY_MODE = 562,
-    // ExpHP: unknown563.
+    // Set a rectangular hitbox.
     ECL_OP_RECT_HITBOX = 563,
-    // ExpHP: unknown564.
+    // Set the enemy rotation.
     ECL_OP_SET_ROTATION = 564,
     ECL_OP_BOMB_INVULN = 565,
-    // ExpHP: unknown566.
+    // Immediately run the enemy death path.
     ECL_OP_DIE_NOW = 566,
-    // ExpHP: unknown567.
+    // Place spell text at the bottom of the screen.
     ECL_OP_SPELL_TEXT_AT_BOTTOM = 567,
     ECL_OP_SPELL_MODE = 568,
-    // ExpHP: unknown569.
+    // Set the chapter count.
     ECL_OP_CHAPTER_COUNT = 569,
-    // ExpHP: unknown570.
+    // Count destroyed enemies.
     ECL_OP_COUNT_DESTROYED = 570,
-    // ExpHP: unknown571.
+    // Kill all enemies without death effects.
     ECL_OP_KILL_ALL_NO_DEATH = 571,
     ECL_OP_LIFE_NOW = 572,
     ECL_OP_ET_NEW = 600,
@@ -684,13 +684,13 @@ enum EnemyEclOpcode
     ECL_OP_LASER_ST_END = 710,
     ECL_OP_LASER_CU_ON = 711,
     ECL_OP_HITBOX_RECT = 712,
-    // ExpHP: unknown713.
+    // Create a beam laser.
     ECL_OP_LASER_BEAM_ON = 713,
     // Sets the beam laser's ECL control bit; other laser kinds ignore it.
     ECL_OP_LASER_BEAM_FLAG = 714,
     ECL_OP_ENM_CALL = 800,
     ECL_OP_ENM_POS = 801,
-    // ExpHP: unknown802.
+    // Interrupt all active bosses.
     ECL_OP_BOSSES_INTERRUPT = 802,
     // Season item drops.
     ECL_OP_SPEC0 = 1000,
