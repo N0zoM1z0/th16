@@ -2136,9 +2136,9 @@ int EnemyData::ecl_run_over_300()
     // The script supplies encrypted name bytes directly after its arguments.
     case ECL_OP_SPELL:
     case ECL_OP_SPELL_528:
-    case ECL_OP_SPELL_537:
-    case ECL_OP_SPELL_538:
-    case ECL_OP_SPELL_539:
+    case ECL_OP_SPELL_ID_PLUS_DIFFICULTY:
+    case ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_1:
+    case ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_2:
     {
         char name[0x80];
         i32 name_length = instr->args[3].i;
@@ -2158,13 +2158,13 @@ int EnemyData::ecl_run_over_300()
         i32 spell_id = current_context->get_int_arg(0);
         switch ((i16)instr->opcode)
         {
-        case ECL_OP_SPELL_537:
+        case ECL_OP_SPELL_ID_PLUS_DIFFICULTY:
             spell_id += g_Globals.difficulty;
             break;
-        case ECL_OP_SPELL_538:
+        case ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_1:
             spell_id += g_Globals.difficulty - 1;
             break;
-        case ECL_OP_SPELL_539:
+        case ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_2:
             spell_id += g_Globals.difficulty - 2;
             break;
         }

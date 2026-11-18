@@ -556,10 +556,11 @@ enum EnemyEclOpcode
     ECL_OP_RANK_I2 = 534,
     ECL_OP_DIFF_I = 535,
     ECL_OP_DIFF_F = 536,
-    // spell with the difficulty minus 0, 1 or 2 added to the id.
-    ECL_OP_SPELL_537 = 537,
-    ECL_OP_SPELL_538 = 538,
-    ECL_OP_SPELL_539 = 539,
+    // Spell ID variants: add the difficulty, difficulty - 1, or
+    // difficulty - 2 to the script-supplied base ID.
+    ECL_OP_SPELL_ID_PLUS_DIFFICULTY = 537,
+    ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_1 = 538,
+    ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_2 = 539,
     ECL_OP_STARS = 540,
     // ExpHP: unknown541.
     ECL_OP_NO_HITBOX_TIME = 541,
