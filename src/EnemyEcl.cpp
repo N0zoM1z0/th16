@@ -2237,7 +2237,7 @@ int EnemyData::ecl_run_over_300()
         laser_params_storage.line.shot_transform_sfx = shooter.shot_transform_sfx;
         laser_params_storage.line.laser_new_arg_4 = shooter.laser_new_arg_4;
         laser_params_storage.line.distance = shooter.distance;
-        LaserManager::allocate_new_laser(LASER_LINE, &laser_params_storage.line);
+        g_LaserManager->allocate_new_laser(LASER_LINE, &laser_params_storage.line);
         break;
     }
     // laserStOn(et, a): an infinite laser.
@@ -2267,7 +2267,7 @@ int EnemyData::ecl_run_over_300()
         laser_params_storage.infinite.distance = shooter.distance;
         laser_params_storage.infinite.shot_transform_sfx = shooter.shot_transform_sfx;
         laser_params_storage.infinite.laser_st_on_arg_1 = get_int_arg(1);
-        LaserManager::allocate_new_laser(LASER_INFINITE, &laser_params_storage.infinite);
+        g_LaserManager->allocate_new_laser(LASER_INFINITE, &laser_params_storage.infinite);
         break;
     }
     // laserBeamOn(et, id): create a beam laser from the shooter settings.
@@ -2287,7 +2287,7 @@ int EnemyData::ecl_run_over_300()
         laser_params_storage.beam.length = shooter.pos.z;
         laser_params_storage.beam.distance = shooter.distance;
         laser_params_storage.beam.id = get_int_arg(1);
-        LaserManager::allocate_new_laser(LASER_BEAM, &laser_params_storage.beam);
+        g_LaserManager->allocate_new_laser(LASER_BEAM, &laser_params_storage.beam);
         break;
     }
     // laserCuOn(et): a curvy laser.
@@ -2311,7 +2311,7 @@ int EnemyData::ecl_run_over_300()
         laser_params_storage.curve.shot_transform_sfx = shooter.shot_transform_sfx;
         laser_params_storage.curve.laser_new_arg_4 = shooter.laser_new_arg_4;
         laser_params_storage.curve.distance = shooter.distance;
-        LaserManager::allocate_new_laser(LASER_CURVE, &laser_params_storage.curve);
+        g_LaserManager->allocate_new_laser(LASER_CURVE, &laser_params_storage.curve);
         break;
     }
     // laserStEnd(id): cancels every laser with the id.
