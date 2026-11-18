@@ -639,10 +639,10 @@ int EnemyData::ecl_run_over_300()
         f32 x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{0});
         f32 y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{1});
         f32 z = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        D3DXVECTOR2 *position_xy = (D3DXVECTOR2 *)&pos_vel->pos;
-        position_xy->x += x;
-        position_xy->y += y;
-        pos_vel->pos.z = z + pos_vel->pos.z;
+        Float3 *position = &pos_vel->pos;
+        position->x += x;
+        position->y += y;
+        position->z += z;
         update_final_pos();
         break;
     }
