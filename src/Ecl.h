@@ -15,6 +15,8 @@ struct EclLocation
     i32 subroutine_index;
     i32 offset_from_first_instruction;
 };
+static_assert(offsetof(EclLocation, offset_from_first_instruction) == sizeof(i32),
+              "ECL location offset cursor follows its subroutine index");
 
 // One value on the ECL stack or in an argument.
 union EclStackItem
@@ -278,8 +280,9 @@ struct EclRunContext
     EclRawInstr *current_instr();
     // 0x4747d0. current_instr, out of line (ExpHP: get_subroutine_ptr).
     HARNESS_CALLED EclRawInstr *get_subroutine_ptr();
-    // get_float_arg_ptr for the instruction at loc.
-    f32 *float_arg_ptr_at(EclLocation *loc, int index);
+    // get_float_arg_ptr for the instruction at loc. The cursor addresses
+    // offset_from_first_instruction; the subroutine index is the preceding word.
+    f32 *float_arg_ptr_at(i32 *offset_from_first_instruction, int index);
 };
 
 // Intrusive list of run contexts (ExpHP: zEclRunContextList).

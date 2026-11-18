@@ -667,11 +667,11 @@ i32 SptInf::create_async(i32 id, i32 start)
 
 // The pointer argument getter for an instruction other than the current
 // one (the interpolation's own instruction).
-__forceinline f32 *EclRunContext::float_arg_ptr_at(EclLocation *loc, int index)
+__forceinline f32 *EclRunContext::float_arg_ptr_at(i32 *offset_from_first_instruction, int index)
 {
     SptInf *vm = this->vm;
-    EclRawInstr *ins = vm->file_manager->subroutines[loc->subroutine_index].instruction_at(
-        loc->offset_from_first_instruction);
+    EclRawInstr *ins = vm->file_manager->subroutines[offset_from_first_instruction[-1]].instruction_at(
+        offset_from_first_instruction[0]);
     if (ins->variable_mask & (1 << index))
     {
         f32 value = ins->args[index].f;
@@ -1251,14 +1251,19 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     time += speed;
 step_float_i:
     InterpFloat *interp = float_i;
-    EclLocation *location = float_i_locs;
-    for (i32 i = 0; i < 8; i++, interp++, location++)
+    // The original cursor points at the offset word, with the subroutine index
+    // immediately before it.
+    i32 *location = &float_i_locs[0].offset_from_first_instruction;
+    i32 count = 8;
+    do
     {
         if (interp->end_time != 0)
         {
             f32 *dst = float_arg_ptr_at(location, 1);
             *dst = interp->step();
         }
-    }
+        interp++;
+        location += 2;
+    } while (--count != 0);
     return 0;
 }
