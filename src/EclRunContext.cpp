@@ -541,32 +541,38 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
         *(i32 *)((u8 *)dest->stack.data + old_top) = old_top;
         dest->stack.stack_offset += 4;
     }
-    EclCallArg *arg = (EclCallArg *)((u8 *)&ins->args[start + 1] + name_len);
-    i32 *local = (i32 *)((u8 *)dest->stack.data + locals);
-    for (i32 i = start + 1; i < ins->param_count; i++, arg++, local++)
+    // Call arguments follow the variable-length subroutine name. Their type
+    // tags are byte-addressed, while the value word is read at a four-byte
+    // aligned offset from the instruction's argument area.
+    u32 arg_offset = name_len + (start + 2) * sizeof(i32);
+    u8 *arg_base = (u8 *)ins + 0x10;
+    EclStackItem *local = (EclStackItem *)((u8 *)dest->stack.data + locals);
+    for (i32 i = start + 1; i < ins->param_count; i++, arg_offset += 8, local++)
     {
-        if (arg->type_from == 'f' || arg->type_from == 'g')
+        if (arg_base[arg_offset + 0xc] == 'f' || arg_base[arg_offset + 0xc] == 'g')
         {
-            f32 value = pop_float_arg_given_value(i, arg->value.f);
-            if (arg->type_to == 'f')
+            f32 value = pop_float_arg_given_value(
+                i, *(f32 *)(arg_base + 0x10 + (arg_offset & ~3u)));
+            if (arg_base[arg_offset + 0xd] == 'f')
             {
-                *(f32 *)local = value;
+                local->f = value;
             }
             else
             {
-                *local = (i32)value;
+                local->i = (i32)value;
             }
         }
         else
         {
-            i32 value = pop_int_arg_given_value(i, arg->value.i);
-            if (arg->type_to == 'f')
+            i32 value = pop_int_arg_given_value(
+                i, *(i32 *)(arg_base + 0x10 + (arg_offset & ~3u)));
+            if (arg_base[arg_offset + 0xd] == 'f')
             {
-                *(f32 *)local = (f32)value;
+                local->f = (f32)value;
             }
             else
             {
-                *local = value;
+                local->i = value;
             }
         }
     }
