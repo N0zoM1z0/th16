@@ -19,7 +19,7 @@ that evidence is missing. Never remove an archive because its old path is absent
 | `.venv/` | Locked comparison dependencies |
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
-| `.analysis/reference-audit.json` | Last saved fingerprinted 2026-11-15 results; stale against the 2026-11-17 candidate; strict audit refresh still needs EH-parent preflight resolution |
+| `.analysis/reference-audit.json` | Last saved fingerprinted 2026-11-15 local report; stale against the current 2026-11-18 worktree. Factory inspection reports zero imported Oracle results; see the handoff before treating any local count as exactness. |
 | `.analysis/claude-tools/` | Diagnostic scripts and probe sources; historical audit/source/log/binary outputs are compressed, rebuildable probe outputs removed, active exp.json/cur-audit.json/build.log retained |
 | `.analysis/projectile-ex-source-work/` | PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
 | `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
@@ -70,7 +70,36 @@ Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
 
-## Current handoff cleanup: 2026-11-17
+## Current handoff cleanup: 2026-11-18
+
+Archived **13 unreferenced, byte-identical historical `*-reference-audit.json`
+snapshots** from old `.analysis/*-work/` directories. At least one expanded
+copy of every SHA-256 group remains in place; files with a detected script or
+document consumer were retained. The archived originals totalled **54,546,432
+allocated bytes** and the verified gzip payloads use **3,887,104 allocated
+bytes**, reclaiming **50,659,328 bytes (about 48.3 MiB)**.
+
+Every gzip was read back and checked against the original SHA-256 and byte
+count before its source copy was removed. The index
+`.analysis/cleanup-handoff-20261118.json` records original/archive hashes,
+byte counts, modes and timestamps. The normal evidence helper was smoke-tested
+with both `list` and `show`; restore an archived path on demand:
+
+```sh
+scripts/repo-python scripts/evidence-archive.py list boss-local-sample-work
+scripts/repo-python scripts/evidence-archive.py show boss-local-sample-work/baseline-reference-audit.json
+scripts/repo-python scripts/evidence-archive.py restore boss-local-sample-work/baseline-reference-audit.json
+```
+
+The canonical `.analysis/reference-audit.json`, private target, current
+PE/MAP/PDB/build receipt, current object/dependency graph, Ghidra project,
+shared tools and pinned reference checkout were preserved. The two existing
+uncommitted timer source edits were preserved; their comments were clarified
+separately without changing executable logic. The archival operation changed
+no source logic, build graph, Oracle policy or replay input. No cold build or
+full replay was run for the prose/archive work.
+
+## Previous handoff cleanup: 2026-11-17
 
 Archived **62 retired, top-level native Boss, damage and laser fixture, output
 and expected-result files** from the five historical `.analysis/` directories:
