@@ -128,7 +128,8 @@ void *g_ecl_unknown_634_funcs[1];
 // FUNCTION: TH16 0x426260
 static void __fastcall enemy_ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
 {
-    ZUN_ASM_SINCOSMUL(dst, angle, radius);
+    dst->x = radius * cosf(angle);
+    dst->y = radius * sinf(angle);
 }
 
 // The line, infinite and curve laser constructors test the origin before
