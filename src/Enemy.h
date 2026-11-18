@@ -273,30 +273,41 @@ enum EnemyFlagsHigh
 // sets or clears); the assignments compile to xor/and/xor. See EnemyFlags.
 struct EnemyFlagsLow
 {
-    u32 unk_0 : 2;
+    u32 no_hurtbox : 1;
+    u32 no_hitbox : 1;
     u32 no_offscreen_delete_x : 1;
     u32 no_offscreen_delete_y : 1;
-    u32 unk_4 : 1;
+    u32 invincible : 1;
     u32 intangible : 1;
-    u32 unk_6 : 6;
+    u32 reserved_6 : 1;
+    u32 no_death : 1;
+    u32 always_killable : 1;
+    u32 grazeable : 1;
+    u32 survives_kill_all_400 : 1;
+    u32 die_on_hit : 1;
     u32 rect_hitbox : 1;
-    u32 unk_13 : 3;
+    u32 no_hit_effect : 1;
+    u32 reserved_14_15 : 2;
     // Has been on screen; leaving it then deletes the enemy.
     u32 was_on_screen : 1;
-    u32 unk_17 : 2;
+    u32 move_limit : 1;
+    u32 ticked : 1;
     u32 mirrored : 1;
     u32 directional_anm : 1;
-    u32 unk_21 : 3;
+    u32 damaged : 1;
+    u32 survives_kill_all_400000 : 1;
+    u32 boss : 1;
     u32 timeout : 1;
-    u32 unk_25 : 1;
+    u32 delete_next_update : 1;
     u32 flag_4000000 : 1;
     u32 flag_8000000 : 1;
     u32 bombshield : 1;
-    u32 unk_29 : 1;
+    u32 bombshield_up : 1;
     u32 big_life : 1;
     // Makes the main VM flash magenta (ECL 549).
     u32 magenta_flash : 1;
 };
+static_assert(sizeof(EnemyFlagsLow) == sizeof(u32), "enemy flags_low bit layout");
 
 // An enemy's state, embedded in EnemyInf (ExpHP: zEnemyData).
 struct EnemyData
