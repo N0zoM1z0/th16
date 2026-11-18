@@ -544,15 +544,16 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
     // Call arguments follow the variable-length subroutine name. Their type
     // tags are byte-addressed, while the value word is read at a four-byte
     // aligned offset from the instruction's argument area.
-    u32 arg_offset = name_len + (start + 2) * sizeof(i32);
-    u8 *arg_base = (u8 *)ins + 0x10;
+    register u32 arg_offset = name_len + (start + 2) * sizeof(i32);
+    register u8 *arg_base = (u8 *)ins + 0x10;
+    EclStackItem *arg_values = (EclStackItem *)arg_base;
     EclStackItem *local = (EclStackItem *)((u8 *)dest->stack.data + locals);
     for (i32 i = start + 1; i < ins->param_count; i++, arg_offset += 8, local++)
     {
         if (arg_base[arg_offset + 0xc] == 'f' || arg_base[arg_offset + 0xc] == 'g')
         {
             f32 value = pop_float_arg_given_value(
-                i, *(f32 *)(arg_base + 0x10 + (arg_offset & ~3u)));
+                i, arg_values[arg_offset / sizeof(EclStackItem)].f);
             if (arg_base[arg_offset + 0xd] == 'f')
             {
                 local->f = value;
@@ -565,7 +566,7 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
         else
         {
             i32 value = pop_int_arg_given_value(
-                i, *(i32 *)(arg_base + 0x10 + (arg_offset & ~3u)));
+                i, arg_values[arg_offset / sizeof(EclStackItem)].i);
             if (arg_base[arg_offset + 0xd] == 'f')
             {
                 local->f = (f32)value;
