@@ -237,7 +237,7 @@ union EclLaserParamsStorage
 {
     LaserLineInner line;
     // The ECL temporary uses the inline constructor to initialize its default speed.
-    LaserInfiniteInnerInline infinite;
+    LaserInfiniteInner infinite;
     LaserBeamInner beam;
     LaserCurveInner curve;
     EclMovementScratch movement;
@@ -2239,7 +2239,7 @@ int EnemyData::ecl_run_over_300()
     // laserStOn(et, a): an infinite laser.
     case ECL_OP_LASER_ST_ON:
     {
-        ::new (&laser_params_storage.infinite) LaserInfiniteInnerInline();
+        ::new (&laser_params_storage.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
