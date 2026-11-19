@@ -706,15 +706,14 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        i32 position_offset;
+        PosVel *curve_position;
         InterpStrange1 *position_interp;
         f32 goal_x;
         f32 goal_y;
         {
-            position_offset = (instr->opcode == ECL_OP_MOVE_CURVE ||
-                               instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
-                                  ? offsetof(EnemyData, abs_pos)
-                                  : offsetof(EnemyData, rel_pos);
+            curve_position = (instr->opcode == ECL_OP_MOVE_CURVE ||
+                              instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
+                                 ? &abs_pos : &rel_pos;
             position_interp = (instr->opcode == ECL_OP_MOVE_CURVE ||
                                instr->opcode == ECL_OP_MOVE_CURVE_OFFSET) ? &abs_pos_i : &rel_pos_i;
             goal_x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
@@ -729,7 +728,7 @@ int EnemyData::ecl_run_over_300()
             if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ||
                 instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
             {
-                f32 current_x = ((PosVel *)((u8 *)this + position_offset))->pos.x;
+                f32 current_x = curve_position->pos.x;
                 if (!(flags_low & ENEMY_FLAG_MIRRORED))
                 {
                     goal_x = current_x + goal_x;
@@ -738,7 +737,7 @@ int EnemyData::ecl_run_over_300()
                 {
                     goal_x = current_x - goal_x;
                 }
-                goal_y = ((PosVel *)((u8 *)this + position_offset))->pos.y + goal_y;
+                goal_y = curve_position->pos.y + goal_y;
             }
 
             position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
@@ -751,12 +750,12 @@ int EnemyData::ecl_run_over_300()
         }
         goto ecl_move_curve_finish;
         ecl_move_curve_finish:
-        position_interp->initial = ((PosVel *)((u8 *)this + position_offset))->pos;
-        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : ((PosVel *)((u8 *)this + position_offset))->pos.x,
-                                       goal_y > -999999.0 ? goal_y : ((PosVel *)((u8 *)this + position_offset))->pos.y,
+        position_interp->initial = curve_position->pos;
+        position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : curve_position->pos.x,
+                                       goal_y > -999999.0 ? goal_y : curve_position->pos.y,
                                        0.0f);
         position_interp->reset_timer();
-        ((PosVel *)((u8 *)this + position_offset))->flags &= ~0xf;
+        curve_position->flags &= ~0xf;
         break;
     }
     case ECL_OP_MOVE_BEZIER:
