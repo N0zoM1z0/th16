@@ -581,18 +581,7 @@ extern i32 g_title_return_point;
 // other GameWindow fields from 0x4d9d1c on. The mode is set once the
 // loading screen is done.
 // FramePacingTable and g_frame_pacing are in GameWindow.h.
-// FramePacingTable::mode: which set of sleep statistics the frame loop
-// uses, by what is running.
-enum FramePacingMode
-{
-    // Loading screens, scene changes and the pause menu (up to 15 ms of
-    // sleep per frame).
-    FRAME_PACING_IDLE = 0,
-    // The title menus and the end-of-game menus (12 ms).
-    FRAME_PACING_MENU = 1,
-    // A stage in progress (12 ms). Mode 3 (8 ms) is never used.
-    FRAME_PACING_GAME = 2,
-};
+
 // GameWindow::device_reset_frames: set to 10 when the device is reset,
 // counted down once per frame by Supervisor::on_tick, never read.
 // The game speed multiplier. ECL changes it (slowing down final boss

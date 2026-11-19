@@ -5,6 +5,18 @@
 #include "decomp.h"
 #include "types.h"
 
+// Which of the four pacing statistics entries the main window uses.
+enum FramePacingMode : i32
+{
+    // Loading screens, scene changes and the pause menu (up to 15 ms).
+    FRAME_PACING_IDLE = 0,
+    // Title and end-of-game menus (12 ms).
+    FRAME_PACING_MENU = 1,
+    // Stage gameplay (12 ms). Mode 3 (8 ms) is unused.
+    FRAME_PACING_GAME = 2,
+};
+static_assert(sizeof(FramePacingMode) == sizeof(i32), "frame pacing mode occupies 32 bits");
+
 // Frame pacing statistics, one set per pacing mode (GameWindow::pacing_mode).
 struct FramePacing
 {
@@ -122,7 +134,7 @@ struct GameWindow
     u8 unk_20a8[4];
     // Milliseconds to sleep this frame.
     i32 sleep_ms;
-    i32 pacing_mode;
+    FramePacingMode pacing_mode;
     FramePacing pacing[4];
 
     // The frame loop variants; 0 to keep running, 1 or 2 to quit. With
@@ -173,7 +185,7 @@ extern DECOMP_ALIGN16 GameWindow g_GameWindow;
 // multiple of 16), so the compiler may use aligned SSE stores.
 struct DECOMP_ALIGN16 FramePacingTable
 {
-    i32 mode;
+    FramePacingMode mode;
     struct
     {
         i32 max_sleep_ms;
@@ -181,6 +193,10 @@ struct DECOMP_ALIGN16 FramePacingTable
         i32 late_frames;
     } pacing[4];
 };
+static_assert(offsetof(FramePacingTable, pacing) == sizeof(FramePacingMode),
+              "pacing statistics follow the mode word");
+static_assert(offsetof(GameWindow, pacing_mode) == offsetof(GameWindow, sleep_ms) + sizeof(i32),
+              "frame pacing mode follows the current frame sleep time");
 #define g_frame_pacing (*(FramePacingTable *)&g_GameWindow.pacing_mode)
 
 // Seconds since startup, from the performance counter if there is one.
