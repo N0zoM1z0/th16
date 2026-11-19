@@ -766,7 +766,8 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 EclRunContextList *node = vm->lookup_async(get_int_arg(0));
                 if (node != NULL)
                 {
-                    node->entry->flags_11e4 |= 1;
+                    node->entry->async_flags =
+                        static_cast<EclAsyncFlags>(node->entry->async_flags | ECL_ASYNC_MARKED);
                 }
                 break;
             }
@@ -775,7 +776,8 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 EclRunContextList *node = vm->lookup_async(get_int_arg(0));
                 if (node != NULL)
                 {
-                    node->entry->flags_11e4 &= ~1;
+                    node->entry->async_flags =
+                        static_cast<EclAsyncFlags>(node->entry->async_flags & ~ECL_ASYNC_MARKED);
                 }
                 break;
             }

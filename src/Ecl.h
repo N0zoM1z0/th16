@@ -261,6 +261,16 @@ struct EclFloatArgIndex
     i32 value;
 };
 
+// The ECL asyncMark/asyncClear opcodes set and clear this per-context bit.
+// The word remains in the original context layout, even though TH16 does
+// not otherwise read it.
+enum EclAsyncFlags : u32
+{
+    ECL_ASYNC_UNMARKED = 0,
+    ECL_ASYNC_MARKED = 1 << 0,
+};
+static_assert(sizeof(EclAsyncFlags) == sizeof(u32), "async flags occupy one word");
+
 // One thread of ECL execution (ExpHP: zEclRunContext).
 struct EclRunContext
 {
@@ -275,8 +285,8 @@ struct EclRunContext
     u8 unk_1021[3];
     InterpFloat float_i[8];
     EclLocation float_i_locs[8];
-    // Bit 0 set and cleared on another async by ECL 18 and 19; never read.
-    u32 flags_11e4;
+    // A per-async execution mark (ECL 18 and 19).
+    EclAsyncFlags async_flags;
 
     EclRunContext();
     i32 get_int_arg(int index);
@@ -309,6 +319,8 @@ struct EclRunContext
     // offset_from_first_instruction; the subroutine index is the preceding word.
     f32 *float_arg_ptr_at(i32 *offset_from_first_instruction, int index);
 };
+static_assert(offsetof(EclRunContext, async_flags) == 0x11e4,
+              "ECL async flags stay at the final context word");
 
 // Intrusive list of run contexts (ExpHP: zEclRunContextList).
 struct EclRunContextList

@@ -75,7 +75,8 @@ SptInf::SptInf()
 // FUNCTION: TH16 0x41a5a0
 void SptInf::reset_run_context()
 {
-    context.primary_context.flags_11e4 &= ~1;
+    context.primary_context.async_flags =
+        static_cast<EclAsyncFlags>(context.primary_context.async_flags & ~ECL_ASYNC_MARKED);
     context.primary_context.time = 0.0f;
     context.primary_context.cur_location.offset_from_first_instruction = -1;
     context.primary_context.cur_location.subroutine_index = -1;
