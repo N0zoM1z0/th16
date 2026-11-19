@@ -25,14 +25,23 @@ union EclStackItem
     f32 f;
 };
 
-// What ECL code pushes: a type tag ('i' or 'f') and the value. Locals
-// below the frame base are plain values without a tag.
+// A stack expression carries its value kind as a single-byte tag. ECL
+// call arguments have a separate encoding (which also accepts 'g').
+enum EclStackValueKind : char
+{
+    ECL_STACK_INTEGER = 'i',
+    ECL_STACK_FLOAT = 'f',
+};
+
+// Locals below the frame base are plain values without a tag.
 struct EclStackEntry
 {
-    char type;
+    EclStackValueKind type;
     u8 unk_1[3];
     EclStackItem value;
 };
+static_assert(sizeof(EclStackEntry) == 8, "ECL expression stack entry size");
+static_assert(offsetof(EclStackEntry, value) == 4, "ECL expression stack value offset");
 
 // One instruction (ExpHP: zEclRawInstructionHeader), arguments following.
 struct EclRawInstr
@@ -180,12 +189,12 @@ struct EclStack
         stack_offset -= 4;
         EclStackItem item = *(EclStackItem *)((u8 *)data + stack_offset);
         stack_offset -= 4;
-        char type = *((char *)data + stack_offset);
-        if (type == 'f')
+        EclStackValueKind type = *(EclStackValueKind *)((u8 *)data + stack_offset);
+        if (type == ECL_STACK_FLOAT)
         {
             return (i32)item.f;
         }
-        else if (type == 'i')
+        else if (type == ECL_STACK_INTEGER)
         {
             return item.i;
         }
@@ -198,8 +207,8 @@ struct EclStack
         stack_offset -= 4;
         i32 item = *(i32 *)((u8 *)data + stack_offset);
         stack_offset -= 4;
-        char type = *((char *)data + stack_offset);
-        if (type != 'f' && type == 'i')
+        EclStackValueKind type = *(EclStackValueKind *)((u8 *)data + stack_offset);
+        if (type != ECL_STACK_FLOAT && type == ECL_STACK_INTEGER)
         {
             return (f32)item;
         }
@@ -207,7 +216,7 @@ struct EclStack
     }
     __forceinline void push_int(i32 value)
     {
-        *((char *)data + stack_offset) = 'i';
+        *(EclStackValueKind *)((u8 *)data + stack_offset) = ECL_STACK_INTEGER;
         stack_offset += 4;
         *(i32 *)((char *)data + stack_offset) = value;
         stack_offset += 4;
@@ -216,7 +225,7 @@ struct EclStack
     {
         EclStackItem item;
         item.f = value;
-        *((char *)data + stack_offset) = 'f';
+        *(EclStackValueKind *)((u8 *)data + stack_offset) = ECL_STACK_FLOAT;
         stack_offset += 4;
         *(i32 *)((u8 *)data + stack_offset) = item.i;
         stack_offset += 4;
