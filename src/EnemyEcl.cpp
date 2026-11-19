@@ -727,7 +727,14 @@ int EnemyData::ecl_run_over_300()
         }
         if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
         {
-            x = flags_low & ENEMY_FLAG_MIRRORED ? pos_vel->pos.x - x : pos_vel->pos.x + x;
+            if (!(flags_low & ENEMY_FLAG_MIRRORED))
+            {
+                x = pos_vel->pos.x + x;
+            }
+            else
+            {
+                x = pos_vel->pos.x - x;
+            }
             y = pos_vel->pos.y + y;
         }
         interp->end_time = full->context.current_context->get_int_arg(0);
