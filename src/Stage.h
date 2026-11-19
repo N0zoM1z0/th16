@@ -34,11 +34,20 @@ struct InterpCameraSky
     CameraSky step();
 };
 
+// The STD file encodes a quad kind in a signed 16-bit field.
+// Negative kinds terminate the variable-length quad list.
+enum StdQuadKind : i16
+{
+    STD_QUAD_END = -1,
+    STD_QUAD_SPRITE = 0,
+};
+static_assert(sizeof(StdQuadKind) == sizeof(i16), "STD quad kind is a signed word");
+
 // One ANM quad of an STD object. vm_index is filled in at load time.
 struct StdQuad
 {
-    // Negative ends the list; only type 0 is drawn.
-    i16 type;
+    // Only the sprite kind is drawn; a negative kind ends this object's list.
+    StdQuadKind type;
     i16 size;
     i16 script;
     i16 vm_index;
@@ -48,6 +57,8 @@ struct StdQuad
     f32 width;
     f32 height;
 };
+static_assert(offsetof(StdQuad, type) == 0, "STD quad kind starts the record");
+static_assert(offsetof(StdQuad, pos) == 8, "STD quad position follows its header");
 
 // An object of the STD file: a list of quads with a bounding box.
 struct StdObject

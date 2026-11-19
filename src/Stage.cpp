@@ -571,7 +571,7 @@ i32 Stage::draw_layer(i32 layer)
         for (StdQuad *quad = object->quads; quad->type >= 0; quad = (StdQuad *)((u8 *)quad + quad->size))
         {
             AnmVm *vm = &vms[quad->vm_index];
-            if (quad->type != 0)
+            if (quad->type != STD_QUAD_SPRITE)
             {
                 continue;
             }
