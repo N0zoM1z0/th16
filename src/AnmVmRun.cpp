@@ -1108,7 +1108,7 @@ i32 AnmVm::run()
             pos_i.end_time = ANM_INT(0);
             pos_i.bezier_1 = g_zero_vec;
             pos_i.bezier_2 = g_zero_vec;
-            pos_i.method = ins->args[1].i;
+            pos_i.method = static_cast<InterpMode>(ins->args[1].i);
             if (!(flags_lo & ANM_VM_POS_I_TO_POS_2))
             {
                 pos_i.initial = pos;
@@ -1125,7 +1125,7 @@ i32 AnmVm::run()
             pos_i.end_time = ANM_INT(0);
             pos_i.bezier_1 = g_zero_vec;
             pos_i.bezier_2 = g_zero_vec;
-            pos_i.method = ins->args[1].i;
+            pos_i.method = static_cast<InterpMode>(ins->args[1].i);
             if (!(flags_lo & ANM_VM_POS_I_TO_POS_2))
             {
                 pos_i.initial = pos;
@@ -1197,7 +1197,7 @@ i32 AnmVm::run()
             rotate_i.end_time = ANM_INT(0);
             rotate_i.bezier_1 = g_zero_vec;
             rotate_i.bezier_2 = g_zero_vec;
-            rotate_i.method = ins->args[1].i;
+            rotate_i.method = static_cast<InterpMode>(ins->args[1].i);
             rotate_i.initial = rotation;
             rotate_i.goal = goal;
             rotate_i.reset_timer();
@@ -1472,7 +1472,7 @@ Float3 *AnmVm::get_total_rotation()
 void AnmVm::set_uv_scale_time(i32 end_time, i32 method, Float2 *initial, Float2 *goal)
 {
     uv_scale_i.end_time = end_time;
-    uv_scale_i.method = method;
+    uv_scale_i.method = static_cast<InterpMode>(method);
     uv_scale_i.initial = *initial;
     uv_scale_i.goal = *goal;
     uv_scale_i.time = 0;
@@ -1482,7 +1482,7 @@ void AnmVm::set_uv_scale_time(i32 end_time, i32 method, Float2 *initial, Float2 
 void AnmVm::set_scale_2_time(i32 end_time, i32 method, Float2 *initial, Float2 *goal)
 {
     scale_2_i.end_time = end_time;
-    scale_2_i.method = method;
+    scale_2_i.method = static_cast<InterpMode>(method);
     scale_2_i.initial = *initial;
     scale_2_i.goal = *goal;
     scale_2_i.time = 0;

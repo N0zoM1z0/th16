@@ -171,7 +171,7 @@ void AnmLoaded::copy_vm(AnmVm *dst, i32 script)
 void AnmVm::set_scale_interp(i32 end_time, i32 method, D3DXVECTOR2 *initial, D3DXVECTOR2 *goal)
 {
     scale_i.end_time = end_time;
-    scale_i.method = method;
+    scale_i.method = static_cast<InterpMode>(method);
     scale_i.initial = *initial;
     scale_i.goal = *goal;
     scale_i.time.reset();
@@ -201,7 +201,7 @@ HARNESS_CALLED void AnmVm::set_pos_time(i32 end_time, i32 method, Float3 *initia
     pos_i.end_time = end_time;
     pos_i.bezier_1 = g_zero_vec;
     pos_i.bezier_2 = g_zero_vec;
-    pos_i.method = method;
+    pos_i.method = static_cast<InterpMode>(method);
     pos_i.initial = *initial;
     pos_i.goal = *goal;
     pos_i.time.reset();

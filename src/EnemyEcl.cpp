@@ -1106,7 +1106,7 @@ int EnemyData::ecl_run_over_300()
         radial_i->end_time = time;
         radial_i->bezier_1 = g_zero_vec2;
         radial_i->bezier_2 = g_zero_vec2;
-        radial_i->method = mode;
+        radial_i->method = static_cast<InterpMode>(mode);
         u32 radial_bits;
         memcpy(&radial_bits, &initial_radius, sizeof(radial_bits));
         *(volatile u32 *)&radial_i->initial.x = radial_bits;
@@ -1233,7 +1233,7 @@ int EnemyData::ecl_run_over_300()
         radial_i->end_time = time;
         radial_i->bezier_1 = g_zero_vec2;
         radial_i->bezier_2 = g_zero_vec2;
-        radial_i->method = mode;
+        radial_i->method = static_cast<InterpMode>(mode);
         u32 radial_bits;
         memcpy(&radial_bits, &initial_radius, sizeof(radial_bits));
         *(volatile u32 *)&radial_i->initial.x = radial_bits;
@@ -1248,7 +1248,7 @@ int EnemyData::ecl_run_over_300()
         ellipse_i->end_time = time;
         ellipse_i->bezier_1 = g_zero_vec2;
         ellipse_i->bezier_2 = g_zero_vec2;
-        ellipse_i->method = mode;
+        ellipse_i->method = static_cast<InterpMode>(mode);
         u32 ellipse_bits;
         memcpy(&ellipse_bits, &initial_ellipse_angle, sizeof(ellipse_bits));
         *(volatile u32 *)&ellipse_i->initial.x = ellipse_bits;

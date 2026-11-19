@@ -1049,7 +1049,7 @@ void Bullet::run_ex()
             ex_move_i.bezier_1 = g_zero_vec;
             ex_move_i.bezier_2 = g_zero_vec;
             ex_move_i.end_time = ex->a;
-            ex_move_i.method = (u8)ex->b;
+            ex_move_i.method = static_cast<InterpMode>((u8)ex->b);
             ex_move_i.reset_timer();
             break;
         }

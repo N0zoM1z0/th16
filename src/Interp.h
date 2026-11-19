@@ -106,7 +106,7 @@ struct InterpFloat2
     D3DXVECTOR2 current;
     ZunTimer time;
     i32 end_time;
-    i32 method;
+    InterpMode method;
 
     // Restarts the timer at frame 0.
     void reset_timer();
@@ -128,7 +128,7 @@ struct InterpFloat3
     D3DXVECTOR3 current;
     ZunTimer time;
     i32 end_time;
-    i32 method;
+    InterpMode method;
 
     // 0x406200
     void reset_timer();

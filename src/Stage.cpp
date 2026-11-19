@@ -1089,7 +1089,7 @@ i32 StageInner::run_std()
         {
             Float3 goal(*(f32 *)&ins->args[2], *(f32 *)&ins->args[3], *(f32 *)&ins->args[4]);
             camera_pos_i.end_time = ins->args[0];
-            camera_pos_i.method = ins->args[1];
+            camera_pos_i.method = static_cast<InterpMode>(ins->args[1]);
             camera_pos_i.initial = camera.position;
             camera_pos_i.goal = goal;
             camera_pos_i.reset_timer();
@@ -1104,7 +1104,7 @@ i32 StageInner::run_std()
         {
             Float3 goal(*(f32 *)&ins->args[2], *(f32 *)&ins->args[3], *(f32 *)&ins->args[4]);
             camera_facing_i.end_time = ins->args[0];
-            camera_facing_i.method = ins->args[1];
+            camera_facing_i.method = static_cast<InterpMode>(ins->args[1]);
             camera_facing_i.initial = camera.facing;
             camera_facing_i.goal = goal;
             camera_facing_i.reset_timer();
@@ -1119,7 +1119,7 @@ i32 StageInner::run_std()
         {
             Float3 goal(*(f32 *)&ins->args[2], *(f32 *)&ins->args[3], *(f32 *)&ins->args[4]);
             camera_up_i.end_time = ins->args[0];
-            camera_up_i.method = ins->args[1];
+            camera_up_i.method = static_cast<InterpMode>(ins->args[1]);
             camera_up_i.initial = camera.up;
             camera_up_i.goal = goal;
             camera_up_i.reset_timer();
@@ -1165,7 +1165,7 @@ i32 StageInner::run_std()
             camera_pos_i.bezier_1 = bezier_1;
             camera_pos_i.goal = goal;
             camera_pos_i.bezier_2 = bezier_2;
-            camera_pos_i.method = 8;
+            camera_pos_i.method = INTERP_BEZIER;
             camera_pos_i.reset_timer();
             break;
         }
@@ -1179,7 +1179,7 @@ i32 StageInner::run_std()
             camera_facing_i.bezier_1 = bezier_1;
             camera_facing_i.goal = goal;
             camera_facing_i.bezier_2 = bezier_2;
-            camera_facing_i.method = 8;
+            camera_facing_i.method = INTERP_BEZIER;
             camera_facing_i.reset_timer();
             break;
         }

@@ -49,7 +49,7 @@ void AnmVm::fade_rgb1(i32 end_time, i32 method, ZunColor *goal)
 HARNESS_CALLED void AnmVm::scale_to(i32 end_time, i32 method, f32 x, f32 y)
 {
     scale_i.end_time = end_time;
-    scale_i.method = method;
+    scale_i.method = static_cast<InterpMode>(method);
     scale_i.initial = scale;
     scale_i.goal = D3DXVECTOR2(x, y);
     scale_i.time = 0;
