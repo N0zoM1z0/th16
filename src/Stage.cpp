@@ -32,7 +32,7 @@ StageData *g_stage_data;
 void StageInner::set_sky_interp(i32 end_time, i32 method, CameraSky *goal)
 {
     camera_sky_i.end_time = end_time;
-    camera_sky_i.method = method;
+    camera_sky_i.method = static_cast<InterpMode>(method);
     camera_sky_i.initial = camera.sky;
     camera_sky_i.goal = *goal;
     camera_sky_i.time.reset();

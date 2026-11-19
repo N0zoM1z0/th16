@@ -147,7 +147,7 @@ struct InterpAngle
     ZunAngle current;
     ZunTimer time;
     i32 end_time;
-    i32 method;
+    InterpMode method;
 
     // The same code as InterpFloat::reset, but a separate function.
     void reset_time();
@@ -164,7 +164,7 @@ struct InterpInt
     i32 current;
     ZunTimer time;
     i32 end_time;
-    i32 method;
+    InterpMode method;
 
     i32 step();
 };
@@ -179,7 +179,7 @@ struct InterpInt3
     Int3 current;
     ZunTimer time;
     i32 end_time;
-    i32 method;
+    InterpMode method;
 
     HARNESS_CALLED Int3 step();
 };

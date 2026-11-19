@@ -28,7 +28,7 @@ struct InterpCameraSky
     CameraSky current;
     ZunTimer time;
     i32 end_time;
-    i32 method;
+    InterpMode method;
 
     // 0x40cd10. Advances the interpolation and returns the current value.
     CameraSky step();

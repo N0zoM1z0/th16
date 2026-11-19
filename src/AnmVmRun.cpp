@@ -1212,7 +1212,7 @@ i32 AnmVm::run()
             rotate_2d_i.end_time = ANM_INT(0);
             rotate_2d_i.bezier_1 = zero;
             rotate_2d_i.bezier_2 = zero;
-            rotate_2d_i.method = ins->args[1].i;
+            rotate_2d_i.method = static_cast<InterpMode>(ins->args[1].i);
             rotate_2d_i.initial = initial;
             rotate_2d_i.goal = goal;
             rotate_2d_i.reset_time();
@@ -1492,7 +1492,7 @@ void AnmVm::set_scale_2_time(i32 end_time, i32 method, Float2 *initial, Float2 *
 void AnmVm::set_alpha2_time(i32 end_time, i32 method, u8 initial, u8 goal)
 {
     alpha2_i.end_time = end_time;
-    alpha2_i.method = method;
+    alpha2_i.method = static_cast<InterpMode>(method);
     alpha2_i.initial = initial;
     alpha2_i.goal = goal;
     alpha2_i.time = 0;
@@ -1506,7 +1506,7 @@ void AnmVm::set_rgb2_time(i32 end_time, i32 method, ZunColor *initial, ZunColor 
 {
     rgb2_i.end_time = end_time;
     rgb2_i.bezier_2 = rgb2_i.bezier_1 = Int3(0, 0, 0);
-    rgb2_i.method = method;
+    rgb2_i.method = static_cast<InterpMode>(method);
     // Filled in y, z, x order: the original loads green, red, then blue.
     Int3 a;
     a.y = initial->g;
@@ -1528,7 +1528,7 @@ void AnmVm::set_rgb1_time(i32 end_time, i32 method, ZunColor *initial, ZunColor 
 {
     rgb1_i.end_time = end_time;
     rgb1_i.bezier_2 = rgb1_i.bezier_1 = Int3(0, 0, 0);
-    rgb1_i.method = method;
+    rgb1_i.method = static_cast<InterpMode>(method);
     // Filled in y, z, x order: the original loads green, red, then blue.
     Int3 a;
     a.y = initial->g;

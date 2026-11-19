@@ -132,7 +132,7 @@ void AnmVm::set_layer(i32 layer)
 void AnmVm::set_alpha1_time(i32 end_time, i32 method, u8 initial, u8 goal)
 {
     alpha1_i.end_time = end_time;
-    alpha1_i.method = method;
+    alpha1_i.method = static_cast<InterpMode>(method);
     alpha1_i.initial = initial;
     alpha1_i.bezier_1 = 0;
     alpha1_i.bezier_2 = 0;

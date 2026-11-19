@@ -8,7 +8,7 @@
 void AnmVm::fade_alpha2(i32 end_time, i32 method, u8 goal)
 {
     alpha2_i.end_time = end_time;
-    alpha2_i.method = method;
+    alpha2_i.method = static_cast<InterpMode>(method);
     alpha2_i.initial = color_2.a;
     alpha2_i.goal = goal;
     alpha2_i.time = 0;
@@ -19,7 +19,7 @@ void AnmVm::fade_alpha2(i32 end_time, i32 method, u8 goal)
 void AnmVm::fade_alpha1(i32 end_time, i32 method, u8 goal)
 {
     alpha1_i.end_time = end_time;
-    alpha1_i.method = method;
+    alpha1_i.method = static_cast<InterpMode>(method);
     alpha1_i.initial = color_1.a;
     alpha1_i.bezier_1 = 0;
     alpha1_i.bezier_2 = 0;
@@ -33,7 +33,7 @@ void AnmVm::fade_rgb1(i32 end_time, i32 method, ZunColor *goal)
     rgb1_i.end_time = end_time;
     rgb1_i.bezier_1 = Int3(0, 0, 0);
     rgb1_i.bezier_2 = rgb1_i.bezier_1;
-    rgb1_i.method = method;
+    rgb1_i.method = static_cast<InterpMode>(method);
     Int3 from(color_1.b, color_1.g, color_1.r);
     // Filled back to front: the original reads goal's bytes in this order.
     Int3 to;
