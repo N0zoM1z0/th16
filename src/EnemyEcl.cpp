@@ -2683,9 +2683,10 @@ int EnemyData::ecl_run_over_300()
                 if (boss->enemy.interrupts[index].life >= 0 &&
                     boss->enemy.interrupts[index].sub_for_set_next != NULL)
                 {
-                    boss->free_all_async();
-                    boss->reset_run_context();
-                    boss->load_sub_by_name(boss->enemy.interrupts[index].sub_for_set_next);
+                    SptInf *boss_vm = boss;
+                    boss_vm->free_all_async();
+                    boss_vm->reset_run_context();
+                    boss_vm->load_sub_by_name(boss->enemy.interrupts[index].sub_for_set_next);
                 }
             }
         }
