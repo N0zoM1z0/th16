@@ -1425,13 +1425,13 @@ done:
     }
     if (flags_lo & ANM_VM_FOLLOW_CAMERA)
     {
-        // The camera offset is added component-wise to preserve the target's
-        // load and addition order in the first two coordinates.
+        // X and Y add the camera offset to the entity position. Z is loaded
+        // from the camera first in the original, so keep that read volatile.
         Float3 *p = &entity_pos;
         const Float3 *camera_delta = &g_Supervisor.cameras[3].position_delta;
         p->x = p->x + camera_delta->x;
         p->y = p->y + camera_delta->y;
-        p->z = p->z + camera_delta->z;
+        p->z = *(volatile const f32 *)&camera_delta->z + p->z;
     }
     if (flags_hi & ANM_VM_UV_QUAD_FROM_CORNERS)
     {
