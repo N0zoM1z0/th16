@@ -1303,10 +1303,12 @@ void Gui::show_boss_marker()
     }
     if (script >= 0)
     {
-        i32 marker_script = script + FRONT_ANM_BOSS_MARKER;
-        if (marker_script >= 0)
+        // The binary performs this addition as 32-bit unsigned arithmetic,
+        // then checks the wrapped result as signed before creating the VM.
+        u32 marker_script = (u32)script + FRONT_ANM_BOSS_MARKER;
+        if ((i32)marker_script >= 0)
         {
-            boss_marker_id = create_effect_via_pointer(front_anm, marker_script, -1, NULL);
+            boss_marker_id = create_effect_via_pointer(front_anm, (i32)marker_script, -1, NULL);
         }
     }
 }
