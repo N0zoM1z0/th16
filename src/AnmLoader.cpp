@@ -81,7 +81,7 @@ i32 AnmLoaded::load(const char *path)
 }
 
 // FUNCTION: TH16 0x46cf80
-AnmLoaded *AnmManager::do_preload_anm(i32 slot, const char *path)
+DECOMP_NOINLINE AnmLoaded *AnmManager::do_preload_anm(i32 slot, const char *path)
 {
     anm_log("::preloadAnim : %s\n", path);
     if (slot >= 0x1f)
