@@ -1497,40 +1497,39 @@ HARNESS_CALLED EnemyInf *EnemyManager::allocate_new_enemy(const char *sub_name, 
 // FUNCTION: TH16 0x423050
 int EnemyData::ecl_enm_create()
 {
-    if (g_EnemyManager->enemy_count_real >= g_EnemyManager->inner.enemy_limit)
+    if (g_EnemyManager->enemy_count_real < g_EnemyManager->inner.enemy_limit)
     {
-        return 0;
+        // The instruction is read through `full` before the `vm` copy exists:
+        // with the copy first, the inlined current_instr swaps ecx and edx.
+        EclRawInstr *instr = full->context.current_context->current_instr();
+        EnemyInf *vm = full;
+        i32 n = (instr->args[0].i + 4) / 4;
+        EnemyCreateParams params;
+        memset(&params, 0, sizeof(params));
+        params.pos.x = vm->context.current_context->get_float_arg_given_value(1, instr->args[n].f);
+        params.pos.y = this->full->context.current_context->get_float_arg_given_value(2, instr->args[n + 1].f);
+        if (instr->opcode == ECL_OP_ENM_CREATE || instr->opcode == ECL_OP_ENM_CREATE_F || instr->opcode == ECL_OP_ENM_CREATE_321 || instr->opcode == ECL_OP_ENM_CREATE_MF ||
+            instr->opcode == ECL_OP_ENM_CREATE_M)
+        {
+            params.pos.x += final_pos.pos.x;
+            params.pos.y += final_pos.pos.y;
+        }
+        if (instr->opcode == ECL_OP_ENM_CREATE_MF || instr->opcode == ECL_OP_ENM_CREATE_M || instr->opcode == ECL_OP_ENM_CREATE_AMF || instr->opcode == ECL_OP_ENM_CREATE_AM)
+        {
+            params.mirrored = 1;
+        }
+        if (flags_low & ENEMY_FLAG_MIRRORED)
+        {
+            params.pos.x *= -1.0f;
+            params.mirrored ^= 1;
+        }
+        params.life = this->full->context.current_context->get_int_arg_given_value(3, instr->args[n + 2].i);
+        params.score_reward = this->full->context.current_context->get_int_arg_given_value(4, instr->args[n + 3].i);
+        params.item_drop = this->full->context.current_context->get_int_arg_given_value(5, instr->args[n + 4].i);
+        memcpy(params.ecl_int_vars, ecl_int_vars, sizeof(ecl_int_vars) + sizeof(ecl_float_vars));
+        params.parent_enemy_id = this->full->enemy_id;
+        g_EnemyManager->allocate_new_enemy((const char *)&instr->args[1], &params, 0);
     }
-    // The instruction is read through `full` before the `vm` copy exists:
-    // with the copy first, the inlined current_instr swaps ecx and edx.
-    EclRawInstr *instr = full->context.current_context->current_instr();
-    EnemyInf *vm = full;
-    i32 n = (instr->args[0].i + 4) / 4;
-    EnemyCreateParams params;
-    memset(&params, 0, sizeof(params));
-    params.pos.x = vm->context.current_context->get_float_arg_given_value(1, instr->args[n].f);
-    params.pos.y = this->full->context.current_context->get_float_arg_given_value(2, instr->args[n + 1].f);
-    if (instr->opcode == ECL_OP_ENM_CREATE || instr->opcode == ECL_OP_ENM_CREATE_F || instr->opcode == ECL_OP_ENM_CREATE_321 || instr->opcode == ECL_OP_ENM_CREATE_MF ||
-        instr->opcode == ECL_OP_ENM_CREATE_M)
-    {
-        params.pos.x += final_pos.pos.x;
-        params.pos.y += final_pos.pos.y;
-    }
-    if (instr->opcode == ECL_OP_ENM_CREATE_MF || instr->opcode == ECL_OP_ENM_CREATE_M || instr->opcode == ECL_OP_ENM_CREATE_AMF || instr->opcode == ECL_OP_ENM_CREATE_AM)
-    {
-        params.mirrored = 1;
-    }
-    if (flags_low & ENEMY_FLAG_MIRRORED)
-    {
-        params.pos.x *= -1.0f;
-        params.mirrored ^= 1;
-    }
-    params.life = this->full->context.current_context->get_int_arg_given_value(3, instr->args[n + 2].i);
-    params.score_reward = this->full->context.current_context->get_int_arg_given_value(4, instr->args[n + 3].i);
-    params.item_drop = this->full->context.current_context->get_int_arg_given_value(5, instr->args[n + 4].i);
-    memcpy(params.ecl_int_vars, ecl_int_vars, sizeof(ecl_int_vars) + sizeof(ecl_float_vars));
-    params.parent_enemy_id = this->full->enemy_id;
-    g_EnemyManager->allocate_new_enemy((const char *)&instr->args[1], &params, 0);
     return 0;
 }
 
