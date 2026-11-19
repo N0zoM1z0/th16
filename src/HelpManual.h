@@ -7,7 +7,7 @@
 #include "types.h"
 
 // HelpManual::state.
-enum HelpManualState
+enum HelpManualState : i32
 {
     HELP_STATE_START = 0,
     HELP_STATE_RUN = 1,
@@ -16,7 +16,7 @@ enum HelpManualState
 };
 
 // HelpManual::substate while running.
-enum HelpManualSubstate
+enum HelpManualSubstate : i32
 {
     // Shows the list of the nine pages.
     HELP_SUBSTATE_SETUP = 0,
@@ -31,6 +31,8 @@ enum HelpManualSubstate
     // Turning to the next or previous page.
     HELP_SUBSTATE_TURNING = 5,
 };
+static_assert(sizeof(HelpManualState) == sizeof(i32), "manual lifecycle state storage");
+static_assert(sizeof(HelpManualSubstate) == sizeof(i32), "manual page state storage");
 
 // The manual (from the title screen or the pause menu): nine pages whose
 // pictures (help_01.png to help_09.png) are loaded into help.anm's second
@@ -41,8 +43,7 @@ struct HelpManual
     u32 flags;
     UpdateFunc *on_tick;
     UpdateFunc *on_draw;
-    // HelpManualState.
-    i32 state;
+    HelpManualState state;
     ZunTimer timer;
     MenuHelper menu;
     // The list's nine entries, then the page itself.
@@ -56,8 +57,7 @@ struct HelpManual
     AnmLoaded *help_anm;
     // The page picture as read, until it becomes the texture.
     u8 *file_data;
-    // HelpManualSubstate.
-    i32 substate;
+    HelpManualSubstate substate;
     char file_name[0x80];
     i32 file_size;
 
