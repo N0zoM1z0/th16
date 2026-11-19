@@ -76,19 +76,22 @@ struct StdInstance
     D3DXVECTOR3 pos;
 };
 
+// STD instructions encode an opcode in a signed 16-bit field.
+enum StdOpcode : i16;
+
 // A script instruction; the arguments follow.
 struct StdInstr
 {
     // Negative ends the script.
     i32 time;
-    i16 opcode;
+    StdOpcode opcode;
     i16 size;
     i32 args[1];
 };
 
 // STD instruction opcodes. Names from truth's TH14-TH17 stdmap where it has
 // one.
-enum StdOpcode
+enum StdOpcode : i16
 {
     // The script stops here for good.
     STD_STOP = 0,
@@ -120,6 +123,9 @@ enum StdOpcode
     // Unnamed in truth: how far objects are drawn.
     STD_DRAW_DISTANCE = 20,
 };
+static_assert(sizeof(StdOpcode) == sizeof(i16), "stage opcode is signed 16-bit");
+static_assert(offsetof(StdInstr, opcode) == 4, "stage opcode record offset");
+static_assert(offsetof(StdInstr, args) == 8, "stage instruction argument offset");
 
 // The STD file's header; the objects' offsets follow.
 struct StdHeader
