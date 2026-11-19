@@ -327,8 +327,8 @@ static_assert(offsetof(Player, inner) + offsetof(PlayerInner, bullets) + offseto
 i32 __fastcall damage_source_on_hit_piercing(PlayerDamageSource *source, i32 enemy_pos, i32 enemy_size,
                                              f32 rotation, f32 radius)
 {
-    i32 bullet_index = source->bullet_index;
     Player *player = g_Player;
+    i32 bullet_index = source->bullet_index;
     i32 previous_damage = player->inner.bullets[bullet_index].damage;
     player->inner.bullets[bullet_index].damage = 1;
     return previous_damage;
