@@ -586,7 +586,7 @@ HARNESS_CALLED i32 GuiMsgVm::run()
             }
             AnmManager::interrupt_tree_and_run(player_face, MSG_ANM_ACTIVE);
             AnmManager::interrupt_tree(id_54, MSG_ANM_ACTIVE);
-            active_side = 0;
+            active_side = MSG_SIDE_PLAYER;
             get_vm_or_clear(text_line_1)->pos_2.y = 0.0f;
             get_vm_or_clear(text_line_2)->pos_2.y = 0.0f;
             get_vm_or_clear(furigana_1)->pos_2.y = 0.0f;
@@ -609,7 +609,7 @@ HARNESS_CALLED i32 GuiMsgVm::run()
                 }
             }
             AnmManager::interrupt_tree(id_54, MSG_ANM_INACTIVE);
-            active_side = 1;
+            active_side = MSG_SIDE_BOSS;
             get_vm_or_clear(text_line_1)->pos_2.y = 0.0f;
             get_vm_or_clear(text_line_2)->pos_2.y = 0.0f;
             get_vm_or_clear(furigana_1)->pos_2.y = 0.0f;
@@ -620,7 +620,7 @@ HARNESS_CALLED i32 GuiMsgVm::run()
             break;
         case MSG_SPEAKER_SIDE:
             AnmManager::interrupt_tree(id_54, MSG_ANM_INACTIVE);
-            active_side = instr()->args.i[0];
+            active_side = static_cast<MsgSpeakerSide>(instr()->args.i[0]);
             get_vm_or_clear(text_line_1)->pos_2.y = 0.0f;
             get_vm_or_clear(text_line_2)->pos_2.y = 0.0f;
             get_vm_or_clear(furigana_1)->pos_2.y = 0.0f;
@@ -637,7 +637,7 @@ HARNESS_CALLED i32 GuiMsgVm::run()
                 AnmManager::interrupt_tree_and_run(enemy_faces[i], MSG_ANM_INACTIVE);
             }
             AnmManager::interrupt_tree(id_54, MSG_ANM_INACTIVE);
-            active_side = 0;
+            active_side = MSG_SIDE_PLAYER;
             AnmVm *vm = g_AnmManager->get_vm_with_id(text_line_1);
             if (vm != NULL)
             {
@@ -1569,7 +1569,7 @@ GuiMsgVm::GuiMsgVm(void *script)
     side_text_color_1 = 0;
     side_text_color_2 = 0;
     side_text_color_3 = 0;
-    active_side = 0;
+    active_side = MSG_SIDE_PLAYER;
     set_float3(&side_text_pos[0], 16.0f, 0.0f, 0.0f);
     set_float3(&side_text_pos[1], 16.0f, 0.0f, 0.0f);
     set_float3(&side_text_pos[2], 16.0f, 0.0f, 0.0f);

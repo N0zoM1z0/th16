@@ -124,6 +124,15 @@ struct GuiMsgVmFlags
     u32 unused : 25;
 };
 
+// The active dialogue speaker. MSG_SPEAKER_SIDE also permits script-defined
+// numeric sides, preserved at the same signed 32-bit width.
+enum MsgSpeakerSide : i32
+{
+    MSG_SIDE_PLAYER = 0,
+    MSG_SIDE_BOSS = 1,
+};
+static_assert(sizeof(MsgSpeakerSide) == sizeof(i32), "dialogue speaker side is 32-bit");
+
 // A running dialogue script. Layout from ExpHP's th-re-data (zGuiMsgVm).
 struct GuiMsgVm
 {
@@ -167,8 +176,8 @@ struct GuiMsgVm
     // Whether MSG_TEXT_ADD has cleared the old text for the current pair of
     // lines.
     i32 text_cleared;
-    // 0: player, 1: enemy.
-    i32 active_side;
+    // 0: player; 1: enemy. The dialogue bytecode can set other sides.
+    MsgSpeakerSide active_side;
     // Text color per side (indexed by active_side as an array; all zero).
     i32 side_text_color_0;
     i32 side_text_color_1;
@@ -544,6 +553,7 @@ static_assert(offsetof(Gui, chapter_result_duration) == 0x1c4, "Gui layout");
 static_assert(offsetof(Gui, boss_bars) == 0x1dc, "Gui layout");
 static_assert(offsetof(Gui, front_anm) == 0x2d8, "Gui layout");
 static_assert(sizeof(Gui) == 0x2e4, "Gui size");
+static_assert(offsetof(GuiMsgVm, active_side) == 0x19c, "dialogue speaker side offset");
 static_assert(offsetof(GuiMsgVm, side_text_pos) == 0x15c, "GuiMsgVm layout");
 static_assert(offsetof(GuiMsgVm, ecl_resume_timer) == 0x18c, "GuiMsgVm layout");
 static_assert(offsetof(GuiMsgVm, bubble_x) == 0x1b0, "GuiMsgVm layout");
