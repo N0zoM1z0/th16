@@ -9,28 +9,36 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built source checkpoint: d96eead
-  (gpt-web: recover typed enemy life spell and pending-kill flags). Ten later
-  source commits on 2026-11-19 recovered typed BGM queue and worker state,
-  the SHT shooter byte, frame pacing, screen effects, enemy drops and life
-  flags, replay modes, signed STD quad kinds, and ANM FSET_RAND's result
-  lifetime. The source keeps native storage widths and existing public ABI.
-  The current layout-sensitive ECL linear-disassembly result should not be
-  mistaken for a semantic or strict Oracle regression. Consult Git history
-  and scoped opcode comparisons, not the stale audit totals below.
+- Latest locally built source checkpoint: a8ec90d
+  (gpt-web: restore float frame decrement for bullet offscreen timer). Six
+  later commits on 2026-11-19 recovered typed ECL expression-stack addressing,
+  carried ReplayManagerMode into GameThread, typed bullet cancellation
+  script selectors, and reconstructed Bullet::step_ex_08 / Bullet::step_ex_17
+  source ordering and scratch storage. All source changes retain native field
+  widths and public function ABI. Consult Git history and focused owner
+  comparisons; do not treat normalized ratios as strict Oracle results.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
   **not currently a dirty change**; its old evidence is historical.
-- The incremental MSVC/LTCG build succeeded on 2026-11-19 with **1,166 annotated
-  functions**. This is a build/annotation count, not an accepted exact count.
-  Focused normalized complete-function diagnostics: `EclRunContext::ecl_run`
-  1,807 target / 1,641 candidate instructions, ratio **0.9171**;
-  `EclRunContext::call_sub` 177 / 173, ratio **0.9086**;
-  `LaserLineInf::run_ex` 344 / 343, ratio **0.9141**. The currently built
-  `LaserCurveInf::run_ex` is 360 / 363 instructions, ratio **0.9737**.
-  These figures can include
-  non-code bytes in the disassembler's linear window and are **not** strict
-  complete-owner receipts.
+- The latest incremental MSVC/LTCG build succeeded on 2026-11-19 with
+  **1,166 annotated functions**. This is a build/annotation count, not an
+  accepted exact count. Focused normalized diagnostics from that build:
+  EclRunContext::ecl_run 1,807 target / 1,776 candidate instructions,
+  ratio **0.9205**; Bullet::step_ex_08 327 / 336, ratio **0.8929**;
+  Bullet::step_ex_17 130 / 130, ratio **0.9769**. The bullet offscreen
+  function is intentionally kept as a natural C++ scratch union: separate
+  vector locals were tested but gave a lower **0.682** ratio due to stack-slot
+  placement. AnmVm::run last measured 3,837 / 3,827, ratio **0.9504**;
+  GuiMsgVm::run last measured 1,211 / 1,153, ratio **0.9590**. These are
+  local normalized comparisons, not strict complete-owner receipts.
+- Recent focused trials that were not kept: writing STACK_SIN directly to
+  the ECL stack reduced the complete ecl_run ratio to **0.9005**, so the
+  shared push_float path was restored. The direct typed-entry stack-sin
+  variant was also rejected. The GameThread::replay_mode type restoration
+  remains in c064a92; its PauseMenu::tick_open local ratio measured
+  **0.9705** versus **0.9735** before the change, while GameThread creation,
+  tick and transition leaves remained 1.0. Revisit only with a concrete
+  source-level explanation, not register-allocation forcing.
 - The saved strict-audit/progress image dates to **2026-11-15** and is stale.
   Its **1,033 exact / 51 mismatch / 131 incomplete** and **1,215 annotated
   units** are historical only; do not present them as today's result.
