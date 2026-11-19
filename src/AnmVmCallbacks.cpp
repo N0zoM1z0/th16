@@ -453,7 +453,7 @@ int __fastcall anm_masked_effect_init(AnmVm *vm, D3DXVECTOR3 *pos)
         g_EffectManager->effect_anm->copy_vm_and_run(&data->vms[i], i + EFFECT_SCRIPT_MASK_FIRST);
         data->vms[i].entity_pos = center;
     }
-    data->mode = 0;
+    data->mode = ANM_MASK_FULL_SCREEN;
     vm->set_layer(40);
     data->vms[3].entity_pos = data->vms[2].entity_pos = data->vms[1].entity_pos = data->vms[0].entity_pos =
         D3DXVECTOR3(320.0f, 240.0f, 0.0f);
@@ -499,19 +499,19 @@ int __fastcall anm_masked_effect_on_switch(AnmVm *vm, i32 n)
         }
         return 0;
     case 7:
-        data->mode = 0;
+        data->mode = ANM_MASK_FULL_SCREEN;
         vm->set_layer(30);
         break;
     case 8:
-        data->mode = 1;
+        data->mode = ANM_MASK_WITHOUT_OVERLAY_1;
         vm->set_layer(23);
         break;
     case 9:
-        data->mode = 0;
+        data->mode = ANM_MASK_FULL_SCREEN;
         vm->set_layer(36);
         break;
     case 10:
-        data->mode = 3;
+        data->mode = ANM_MASK_WITHOUT_OVERLAY_3;
         vm->set_layer(30);
         break;
     default:

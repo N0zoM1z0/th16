@@ -398,7 +398,7 @@ static __forceinline void anm_mask_draw(AnmMaskVertex *vertices)
 i32 __fastcall anm_on_draw_masked(AnmVm *vm)
 {
     AnmMaskedEffectData *data = (AnmMaskedEffectData *)vm->extra_data;
-    if (data->mode == 2)
+    if (data->mode == ANM_MASK_ARCADE)
     {
         anm_mask_begin();
         AnmMaskVertex arcade[4];
@@ -409,7 +409,7 @@ i32 __fastcall anm_on_draw_masked(AnmVm *vm)
         anm_mask_finish_vertices(arcade);
         anm_mask_draw(arcade);
     }
-    else if (data->mode == 0 && g_Supervisor.present_params.BackBufferFormat == D3DFMT_A8R8G8B8)
+    else if (data->mode == ANM_MASK_FULL_SCREEN && g_Supervisor.present_params.BackBufferFormat == D3DFMT_A8R8G8B8)
     {
         anm_mask_begin();
         AnmMaskVertex screen[4];
@@ -424,7 +424,7 @@ i32 __fastcall anm_on_draw_masked(AnmVm *vm)
     {
         g_AnmManager->draw_vm(&data->vms[i]);
     }
-    if (data->mode == 2 || (data->mode == 0 && g_Supervisor.present_params.BackBufferFormat == D3DFMT_A8R8G8B8))
+    if (data->mode == ANM_MASK_ARCADE || (data->mode == ANM_MASK_FULL_SCREEN && g_Supervisor.present_params.BackBufferFormat == D3DFMT_A8R8G8B8))
     {
         supervisor_d3d_device()->SetRenderState(D3DRS_SEPARATEALPHABLENDENABLE, FALSE);
         g_AnmManager->draw_vm(&data->overlay);
