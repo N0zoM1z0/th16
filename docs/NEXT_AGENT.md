@@ -9,19 +9,22 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built source checkpoint: eed3a66
-  (gpt-web: pin bullet corner scratch overlap and integer timer frames). Recent
-  commits recovered typed ECL expression-stack addressing, carried
-  ReplayManagerMode into GameThread, typed bullet cancellation script
-  selectors, and reconstructed Bullet::step_ex_08 / Bullet::step_ex_17
-  source ordering and scratch storage. The current offscreen scratch union
-  explicitly places corner.x over the unused direction.z word and asserts
-  both offsets and total size. All source changes retain native field widths
-  and public function ABI. Consult Git history and focused owner comparisons;
-  do not treat normalized ratios as strict Oracle results.
-- The worktree was clean after the 2026-11-19 incremental build and focused
-  comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
-  **not currently a dirty change**; its old evidence is historical.
+- Latest locally built source checkpoint: 27a464d
+  (gpt-web: use the SptInf base for boss VM restarts). Recent commits recovered
+  typed replay USER headers, the shared Globals flag word, ECL argument
+  addressing, movement interpolation sharing, natural Bezier argument
+  evaluation, direct ECL owner access, and the SptInf base view for boss VM
+  restarts. Earlier work also reconstructed Bullet::step_ex_08 /
+  Bullet::step_ex_17 source ordering and scratch storage. The current
+  offscreen scratch union explicitly places corner.x over the unused
+  direction.z word and asserts both offsets and total size. All source
+  changes retain native field widths and public function ABI. Consult Git
+  history and focused owner comparisons; do not treat normalized ratios as
+  strict Oracle results.
+- The worktree is clean after the latest 2026-11-19 incremental build and
+  focused comparisons. The 2026-11-18 ScreenEffect.cpp / ZunTimer.h
+  experiment is not currently a dirty change; its old evidence is historical.
+  Branch main is 17 commits ahead of origin/main; do not push unless asked.
 - The latest incremental MSVC/LTCG build succeeded on 2026-11-19 with
   **1,166 annotated functions**. This is a build/annotation count, not an
   accepted exact count. Focused normalized diagnostics from that build:
@@ -56,13 +59,14 @@ must not override `git status`.
   cache. Keep both, together with `.tools/`, `.venv/`, `ghidra-project/` and
   the pinned `_reference/` checkout.
 
-## 2026-11-19 follow-up session
+## 2026-11-19 first follow-up session
 
-Current HEAD: `c0c474a` (`gpt-web: restore natural ECL Bezier argument evaluation`),
-branch `main` is 14 commits ahead of `origin/main`, and the worktree is clean.
-The session made five source commits after the handoff checkpoint; each change
-was built incrementally with the pinned MSVC/LTCG toolchain (1,166 annotated
-functions). No full cold replay was run and nothing was pushed.
+At the end of this session HEAD was c0c474a (gpt-web: restore natural ECL
+Bezier argument evaluation), branch main was 14 commits ahead of origin/main,
+and the worktree was clean. Five source commits were made after the previous
+handoff; each change was built incrementally with the pinned MSVC/LTCG
+toolchain (1,166 annotated functions). No full cold replay was run and
+nothing was pushed.
 
 - `dd5879d`: added a typed 12-byte replay USER section header, named section
   kinds and used `RpyInfo + 1` for the following stage snapshots. Build passed;
@@ -104,6 +108,48 @@ comment says it reaches beyond the score-data object; no independent
 backing-region layout has yet been established. Do not invent a
 `ScorefileCharacter` member or silently bound this access without evidence.
 
+## 2026-11-19 second follow-up session
+
+Current HEAD: 27a464d (gpt-web: use the SptInf base for boss VM restarts),
+branch main is 17 commits ahead of origin/main, and the worktree is clean.
+Two additional source commits were made after the first follow-up; the final
+incremental build passed with 1,166 annotated functions. No full cold replay
+was run and nothing was pushed.
+
+- f14fd8b: removed the cached register EnemyInf* full_owner from
+  EnemyData::ecl_run_over_300 and used natural full member accesses
+  throughout. The complete owner improved from 0.9025 to 0.9079
+  (target/candidate 21,408 / 21,408 bytes); Bezier cases 125/126 changed
+  from 82 candidate instructions to 86, matching the target count.
+  ecl_run and call_sub stayed at 0.9205 and 0.9086.
+- 27a464d: used an explicit SptInf* boss_vm view for the three VM operations
+  in BOSSES_INTERRUPT (free_all_async, reset_run_context, load_sub_by_name).
+  This improved the complete upper-ECL owner again to 0.9134
+  (target/candidate 21,408 / 21,392 bytes; 4,562 / 4,775 linear
+  instructions). The BOSSES_INTERRUPT span remains 36 / 37 instructions
+  at 0.99; SptInf::free_all_async and reset_run_context each remain locally
+  1.0 (20 / 20 and 24 / 24 instructions). ecl_run and call_sub remain
+  0.9205 and 0.9086.
+
+Rejected and restored experiments are retained under .analysis/th16-session16-*:
+moving the laser-origin Y load to immediately after transform copy lowered
+cases 402/403/411 to 75/72/75 and the upper owner to 0.8997; branch-local
+direct D3DXVECTOR3 assignments lowered the upper owner to 0.9061 and laser
+cases to 79/85/73/66. Reordering the movement cases or moving the shared
+tail after both handlers did not improve the complete owner. Snapshotting
+the boss interrupt subroutine name before the two VM resets produced the
+same case and owner results as the retained SptInf* view, so it was restored.
+The source tree is clean; do not resurrect these trials without new evidence.
+
+Final focused diagnostics from the final build: EnemyData::ecl_run_over_300
+0.9134, EclRunContext::ecl_run 0.9205, call_sub 0.9086,
+LaserLineInf::run_ex 0.9186 (344 / 344 instructions; 1,588 / 1,600 bytes),
+LaserCurveInf::run_ex 0.9616 (360 / 370; 1,548 / 1,568 bytes),
+ReplayManager::read_replay_file 1.0, ReplayManager::save 0.9461,
+GameThread::thread_start 1.0, and GameThread::~GameThread 1.0. These remain
+normalized local diagnostics, not strict Oracle receipts.
+
+
 ## Immediate working commands
 
 ```sh
@@ -141,10 +187,10 @@ Factory acceptance.
 
 | Owner / source | Current local measurement and next issue |
 | --- | --- |
-| EnemyData::ecl_run_over_300 (0x41dcb0), src/EnemyEcl.cpp | **2026-11-19 follow-up:** complete registered owner 21,408 bytes; candidate 21,376 bytes, 4,562 target / 4,661 candidate linear instructions, **0.9025** (up from 0.8261 at the start of this follow-up). Shared movePosTime/moveCurve interpolation finish and natural Bezier argument evaluation account for the improvement. Bezier cases 125/126 are 86/82 instructions, 0.81. The shared tail is physically placed after the curve case by LTCG, so case spans 101/103 and 134/135/138/139 read 99/74 and 80/109 respectively; their combined size is 183 vs 179. Laser cases 402/403/411/413 remain 0.78/0.75/0.79/0.75; bosses-interrupt case 502 remains 0.99. These are diagnostics, not strict receipts. |
+| EnemyData::ecl_run_over_300 (0x41dcb0), src/EnemyEcl.cpp | **Latest 2026-11-19 build:** 21,408 target / 21,392 candidate bytes; 4,562 / 4,775 linear instructions; **0.9134**. Shared movePosTime/moveCurve interpolation finish, natural Bezier argument evaluation, direct full owner access and the SptInf base view in bossesInterrupt account for the improvement from 0.8261 at the start of the two follow-ups. Bezier cases 125/126 are 86/86 instructions, 0.98. Case spans 101/103 and 134/135/138/139 read 99/74 and 80/104 respectively; they are not additive owner boundaries. Laser cases 402/403/411/413 remain 0.78/0.75/0.79/0.75; bosses-interrupt case 502 remains 0.99. These are diagnostics, not strict receipts. |
 | AnmVm::run (0x45f980), src/AnmVmRun.cpp | After 82b1cfa: 14,177 / 14,160 bytes; 3,837 / 3,817 linear instructions, 0.9485 (previously 0.9474). In FSET_RAND, the candidate case-124 span shrank from 24 to 13 instructions, normalized ratio 0.70, while the full owner improved slightly; check whether the destination write was merged into a shared path. Follow-camera case 4 and circle-random case 132 still need register-order work. |
-| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 343 instructions; **0.9141**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
-| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 363 instructions; **0.9737**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
+| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 344 instructions; **0.9186**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
+| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 370 instructions; **0.9616**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
 | `EnemyData::step_logic`, target `0x41c330`, `src/Enemy.cpp` | 2,207 / 2,208 bytes; 534 / 530 instructions; **0.9868**. Keep the branchless dialogue-damage selection; staged life/overkill rewrites previously regressed this owner. |
 | `Bullet::step_ex_08`, target `0x4162d0`, `src/BulletManager.cpp` | 1,390 / 1,424 bytes; 327 / 336 instructions; **0.8929**. The committed `DirectionCornerScratch` union models the direction/corner stack overlap naturally; continue investigating corner math and register scheduling. |
 | `EnemyData::step_interpolators`, target `0x41bb50`, `src/Enemy.cpp` | 1,692 / 1,696 bytes; 421 / 421 instructions; **0.9976**. The camera Y operand order checkpoint is committed. |
