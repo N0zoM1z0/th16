@@ -14,7 +14,7 @@ void screen_debug_log(const char *fmt, ...);
 
 // The modes: which tick and draw callbacks the effect gets. Unless said
 // otherwise arg_18 is the duration and arg_1c the color.
-enum ScreenEffectMode
+enum ScreenEffectMode : i32
 {
     // Uncovers the window from a color (on_tick_fade_in), first resetting the
     // viewport to the whole window.
@@ -39,6 +39,7 @@ enum ScreenEffectMode
     // Covers the window with a color for arg_18 frames.
     SCREEN_EFFECT_HOLD = 9,
 };
+static_assert(sizeof(ScreenEffectMode) == sizeof(i32), "screen effect mode occupies one 32-bit field");
 
 // Full-screen fades, flashes and screen shake. Layout from ExpHP's
 // th-re-data (zScreenEffect). The meaning of the creation arguments depends
@@ -48,7 +49,7 @@ struct ScreenEffect
     u32 flags;
     UpdateFunc *on_tick;
     UpdateFunc *on_draw;
-    i32 mode;
+    ScreenEffectMode mode;
     i32 unk_10;
     // Alpha of the drawn rectangle, 0-255.
     i32 alpha;
@@ -232,7 +233,7 @@ __forceinline void ScreenEffect::initialize_inline(i32 mode, i32 arg_18, i32 arg
     }
     on_tick->on_cleanup = (UpdateFuncCallback)on_cleanup;
     timer.reset();
-    this->mode = mode;
+    this->mode = static_cast<ScreenEffectMode>(mode);
     this->arg_18 = arg_18;
     this->arg_1c = arg_1c;
     this->arg_20 = arg_20;
