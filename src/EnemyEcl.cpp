@@ -690,7 +690,7 @@ int EnemyData::ecl_run_over_300()
         position_interp->end_time = context_source->full->context.current_context->get_int_arg(0);
         position_interp->bezier_1 = g_zero_vec;
         position_interp->bezier_2 = g_zero_vec;
-        position_interp->method_for_3d = context_source->full->context.current_context->get_int_arg(1);
+        position_interp->method_for_3d = static_cast<InterpMode>(context_source->full->context.current_context->get_int_arg(1));
         position_interp->flag_1d &= ~1;
         position_interp->initial = pos_vel->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : pos_vel->pos.x,
@@ -743,7 +743,7 @@ int EnemyData::ecl_run_over_300()
             position_interp->end_time = full_owner->context.current_context->get_int_arg(0);
             position_interp->bezier_1 = g_zero_vec;
             position_interp->bezier_2 = g_zero_vec;
-            position_interp->method_for_1d = full_owner->context.current_context->get_int_arg(1);
+            position_interp->method_for_1d = static_cast<InterpMode>(full_owner->context.current_context->get_int_arg(1));
             position_interp->flag_1d |= 1;
             position_interp->move_curve_mode = full_owner->context.current_context->get_int_arg(2);
             position_interp->flag_1d |= 1;

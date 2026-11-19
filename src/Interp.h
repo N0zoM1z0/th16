@@ -9,7 +9,7 @@
 #include "types.h"
 
 // Easing curves of ANM/ECL interpolation (the "mode" of an interpolator).
-enum InterpMode
+enum InterpMode : i32
 {
     INTERP_LINEAR = 0,
     INTERP_EASE_IN_2 = 1,
@@ -202,19 +202,22 @@ struct InterpStrange1
     {
         struct
         {
-            i32 method_for_1d;
+            InterpMode method_for_1d;
             u32 move_curve_mode;
             u32 unk_5c;
         };
-        i32 methods_1d[3];
+        InterpMode methods_1d[3];
     };
-    i32 method_for_3d;
+    InterpMode method_for_3d;
     i32 flag_1d;
 
     void reset_timer();
     // 0x4258b0
     D3DXVECTOR3 step();
 };
+static_assert(sizeof(InterpMode) == sizeof(i32), "interpolation modes occupy one signed word");
+static_assert(offsetof(InterpStrange1, methods_1d) == offsetof(InterpStrange1, method_for_1d),
+              "the per-axis methods alias the first mode field");
 
 // The shared interpolation curves (InterpMode): progress (usually 0 to 1)
 // of an interpolation `time` frames into one of `end_time` frames.
