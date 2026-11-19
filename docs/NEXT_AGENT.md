@@ -9,16 +9,16 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built game-source checkpoint: `84000e8`
-  (`gpt-web: type integer angle and sky interpolation methods`). Five
-  successive source commits on 2026-11-19 recovered the per-axis ECL curve
-  modes, the laser state/kind fields, and the scalar, vector, integer, angle,
-  color and camera-fog interpolation methods as signed `InterpMode` values.
-  Script-sourced integers still enter through explicit casts, and existing
-  function signatures (including `LaserManager::allocate_new_laser`) retain
-  their PDB identities. The earlier typed-position, laser EX and ECL stack
-  checkpoints remain in Git. Use `git log` and `git status -sb` for the
-  live HEAD and upstream relation.
+- Latest locally built game-source checkpoint: `8339e1e`
+  (`gpt-web: restore native 3D shooter offsets in enemy ECL`). The current
+  ECL shooter has a true `D3DXVECTOR3` relative offset distinct from a
+  `BulletOrigin` whose third float is an enabled marker, not a Z coordinate.
+  These natural types improved the local ECL owner and laser-on case 402
+  comparison. Separate checkpoints recover 16-bit bullet lifecycle, 32-bit
+  item/player lifecycle types and the stage camera's byte-sized rocking
+  pattern without changing the enclosing binary layouts. The earlier
+  typed ECL/ANM/interpolation and laser EX work remains in Git. Use `git log`
+  and `git status -sb` for the live HEAD and upstream relation.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
   **not currently a dirty change**; its old evidence is historical.
@@ -84,7 +84,7 @@ Factory acceptance.
 
 | Owner / source | Current local measurement and next issue |
 | --- | --- |
-| `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | **2026-11-19 later build:** 21,408 target / 21,504 candidate bytes; 4,562 / 4,614 normalized linear-disassembly instructions; **0.9019**. This whole-owner diagnostic includes potential noncode regions and is not a strict result. Focused Bezier 125/126 remains 86/84 at 0.76, and curve 121/123 remains 169/173 at 0.97 after typed-position recovery. Four laser constructors 402/403/411/413 still require reconstruction, preserving distinct origin/copy orders. |
+| `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | **2026-11-19 latest incremental build:** 21,408 target / 21,520 candidate bytes; 4,562 / 4,616 normalized linear-disassembly instructions; **0.9022** (previously 0.9019). Typed 3D relative offsets also improve laser case 402 to 74/77 at 0.78 and bosses-interrupt case 502 to 36/37 at 0.99. The complete-function diagnostic includes possible noncode data and is not a strict result. Laser constructors 403/411/413 remain at 0.75/0.79/0.75, with different origin/copy ordering to preserve. |
 | `AnmVm::run`, target `0x45f980`, `src/AnmVmRun.cpp` | 14,177 / 14,208 bytes; 3,837 / 3,843 instructions; **0.9474**. Cases 4 (`FOLLOW_CAMERA`) ~0.98, 124 (`FSET_RAND`) ~0.96, and 132 (random circle) ~0.97. Remaining differences include x87 result lifetime, radial multiplication and load order. |
 | `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 343 instructions; **0.9141**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
 | `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 363 instructions; **0.9737**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
@@ -92,10 +92,12 @@ Factory acceptance.
 | `Bullet::step_ex_08`, target `0x4162d0`, `src/BulletManager.cpp` | 1,390 / 1,424 bytes; 327 / 336 instructions; **0.8929**. The committed `DirectionCornerScratch` union models the direction/corner stack overlap naturally; continue investigating corner math and register scheduling. |
 | `EnemyData::step_interpolators`, target `0x41bb50`, `src/Enemy.cpp` | 1,692 / 1,696 bytes; 421 / 421 instructions; **0.9976**. The camera Y operand order checkpoint is committed. |
 | `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | **Latest incremental build:** 476 / 480 bytes; 121 / 121 instructions; **0.9917**, with one `push esi` occurring before rather than after the timer's current-frame store. Changing `tick_goto` to return the current frame did not fix it, so that trial was restored. |
+| `StageInner::run_std`, target `0x40b3b0`, `src/Stage.cpp` | **2026-11-19:** 3,204 / 3,184 bytes; 677 / 688 instructions; **0.9275** after typing the signed 16-bit STD opcode (previously 0.9240). The later typed rocking-mode union kept the same local comparison. |
+| `Player::on_tick_body`, target `0x442560`, `src/Player.cpp` | **2026-11-19:** 4,540 / 4,528 bytes; 929 / 925 instructions; **0.9137** with typed player/player-shot states. |
 
-Focused ECL opcode diagnostics from the 2026-11-19 incremental build:
+Focused ECL opcode diagnostics from the latest 2026-11-19 incremental build:
 cases 402/403/411/413 (line/infinite/curve/beam laser) are respectively
-74/75 at 0.77, 80/83 at 0.75, 68/71 at 0.79 and 65/66 at 0.75. These are inline case spans, not complete
+74/77 at 0.78, 80/83 at 0.75, 68/71 at 0.79 and 65/66 at 0.75. These are inline case spans, not complete
 owners. The ECL dispatch map and its complete PDB owner are different scopes;
 never infer exactness from dispatch coverage or case ratios.
 
@@ -104,6 +106,22 @@ never infer exactness from dispatch coverage or case ratios.
 For exact diffs consult `git show COMMIT`, not an old note's guessed source
 form. The most relevant recent commits are:
 
+- `8339e1e`: model `bullet_mgr_offsets` as a native 3D vector; the ECL
+  complete-owner local ratio improved from 0.9019 to 0.9022, laser case 402
+  from 0.77 to 0.78, and bosses-interrupt case 502 from 0.97 to 0.99.
+- `f910f2f`: restore byte-sized camera rocking mode with names for the
+  supported patterns in a four-byte `StageInner` word. The STD interpreter
+  remains at local ratio 0.9275.
+- `e55469a`, `9b54c61`, `09a6cf2`: type player and player-shot lifecycle
+  states (32-bit), item state/type (32-bit), and bullet lifecycle state
+  (16-bit); their touched large owners and focused leaves still build.
+- `8ad19f6`: separate `BulletOrigin.enabled` (float 0/1 marker for
+  `etOffsetAbs`) from a shooter's real relative Z offset. Keep the origin's
+  explicit marker when changing laser origin arithmetic.
+- `d40b241`: replace generic `InterpStrange1::flag_1d` with typed per-axis
+  flag usage across enemy ECL and the interpolator step.
+- `b6cefb6`: restore the signed 16-bit stage STD opcode and layout; its
+  large interpreter's local normalized ratio rose from 0.9240 to 0.9275.
 - `84000e8`: type the 32-bit `InterpMode` fields of `InterpInt`, `InterpInt3`,
   `InterpAngle` and `InterpCameraSky` with explicit casts at ANM and stage
   script boundaries. The full ANM and stage owner diagnostics are unchanged;
@@ -170,6 +188,16 @@ Re-measure before relying on any old ratio; none of these figures is a Factory
 exactness credit.
 
 ## Retained 2026-11-19 trial findings
+
+The most recent local A/B trials also restored several rejected natural
+expressions: `LaserCurveInf::step_ex_angle_accel` using a direct or volatile
+speed value (0.9796 unchanged or worse); a derived EX `SHOOT` cursor in the
+line/curve large interpreters (0.9141 to 0.8883, 0.9737 to 0.9399);
+`EnemyInterrupt &` captured early in bossesInterrupt (case 502 dropped from
+0.99 to 0.83); and a `draw_circle` cached vertex count (0.9939 unchanged).
+Changing the relative-origin XY addition order was neutral. These trials were
+restored and their ignored evidence remains under `.analysis/th16-s8-*`.
+
 
 The latest local trials also tested, compiled and rejected: a split-base laser
 EX transform pointer (line EX ratio 0.9141 to 0.9094); updating the draw-circle
