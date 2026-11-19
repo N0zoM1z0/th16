@@ -70,21 +70,21 @@ no normalized differences; this is useful but does not prove byte exactness.
 
 ## Large owners: current frontier
 
-All ratios below come from local complete-function normalized instruction
-comparisons against the current incremental candidate. They are diagnostic
-only: they do not prove byte identity, relocation identity or Factory
-acceptance.
+The table mixes the last saved 2026-11-18 complete-function normalized
+measurements with refreshed 2026-11-19 owner comparisons where noted. They
+are diagnostic only: they do not prove byte identity, relocation identity or
+Factory acceptance.
 
 | Owner / source | Current local measurement and next issue |
 | --- | --- |
 | `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | 21,408 target / 21,456 candidate bytes; 4,562 / 5,435 normalized instructions; **0.8633**. Hard groups: laser cases 402/403/411/413 score about 0.73–0.77; Bezier 125/126 about 0.89; curve 134/135/138/139 about 0.98. `MOVE_POS_3D` 116/117 is about 0.90 and random movement 112/113 about 1.00. Continue with the four laser creation paths and preserve their distinct origin/copy order. |
 | `AnmVm::run`, target `0x45f980`, `src/AnmVmRun.cpp` | 14,177 / 14,208 bytes; 3,837 / 3,843 instructions; **0.9474**. Cases 4 (`FOLLOW_CAMERA`) ~0.98, 124 (`FSET_RAND`) ~0.96, and 132 (random circle) ~0.97. Remaining differences include x87 result lifetime, radial multiplication and load order. |
-| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | 1,588 / 1,600 bytes; 344 / 342 instructions; **0.9067**. Revisit `BulletEx` cursor and indexed-address scheduling without repeating known volatile cursor regressions. |
-| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | 1,548 / 1,552 bytes; 360 / 363 instructions; **0.9654**. The cursor/payload schedule still differs. |
+| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **2026-11-19:** 1,588 / 1,600 bytes; 344 / 344 instructions; **0.9157**. Direct/register `BulletEx` cursor and live-index sound-check trials were worse; preserve the current pointer lifetime when revisiting indexed-address scheduling. |
+| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **2026-11-19:** 1,548 / 1,552 bytes; 360 / 361 instructions; **0.9709**. Removing the volatile transform pointer regressed the complete-owner diagnostic; the cursor/payload schedule still differs. |
 | `EnemyData::step_logic`, target `0x41c330`, `src/Enemy.cpp` | 2,207 / 2,208 bytes; 534 / 530 instructions; **0.9868**. Keep the branchless dialogue-damage selection; staged life/overkill rewrites previously regressed this owner. |
 | `Bullet::step_ex_08`, target `0x4162d0`, `src/BulletManager.cpp` | 1,390 / 1,424 bytes; 327 / 336 instructions; **0.8929**. The committed `DirectionCornerScratch` union models the direction/corner stack overlap naturally; continue investigating corner math and register scheduling. |
 | `EnemyData::step_interpolators`, target `0x41bb50`, `src/Enemy.cpp` | 1,692 / 1,696 bytes; 421 / 421 instructions; **0.9976**. The camera Y operand order checkpoint is committed. |
-| `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | 476 / 480 bytes; 121 / 121 instructions; **0.9917** on the dirty experiment, with one unmatched `push esi`. Compare against clean HEAD before deciding whether the new timer helper is worth keeping. |
+| `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | **Historical 2026-11-18 experiment only:** 476 / 480 bytes; 121 / 121 instructions; **0.9917**, with one unmatched `push esi`. That experiment is not a current dirty change; re-measure the current candidate before acting. |
 
 Focused ECL opcode diagnostics from the 2026-11-19 incremental build:
 cases 402/403/411/413 (line/infinite/curve/beam laser) are respectively
