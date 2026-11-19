@@ -506,7 +506,7 @@ D3DXVECTOR3 InterpStrange1::step()
         }
         return goal;
     }
-    if (!(flag_1d & 1))
+    if (!(axis_flags & INTERP_STRANGE_PER_AXIS))
     {
         if (method_for_3d == INTERP_CONSTANT_VELOCITY)
         {

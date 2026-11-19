@@ -184,6 +184,13 @@ struct InterpInt3
     HARNESS_CALLED Int3 step();
 };
 
+// Flag 0 selects an independent interpolation method for each coordinate.
+// ECL moveCurve sets it; ordinary move and Bezier interpolation clear it.
+enum InterpStrangeAxisFlags : i32
+{
+    INTERP_STRANGE_PER_AXIS = 1,
+};
+
 // A 3D interpolator with current first and a choice between one curve
 // for the whole vector and one per axis (ExpHP: zInterpStrange1). The
 // enemies' position interpolators (ECL's move instructions) use it.
@@ -196,8 +203,8 @@ struct InterpStrange1
     D3DXVECTOR3 bezier_2;
     ZunTimer time;
     i32 end_time;
-    // With flag_1d bit 0, each axis interpolates on its own with these
-    // three methods (x, y, z); otherwise method_for_3d applies to all.
+    // With INTERP_STRANGE_PER_AXIS, use the three independent coordinate
+    // methods; otherwise method_for_3d applies to the entire vector.
     union
     {
         struct
@@ -210,12 +217,13 @@ struct InterpStrange1
         InterpMode methods_1d[3];
     };
     InterpMode method_for_3d;
-    i32 flag_1d;
+    i32 axis_flags;
 
     void reset_timer();
     // 0x4258b0
     D3DXVECTOR3 step();
 };
+static_assert(offsetof(InterpStrange1, axis_flags) == 0x64, "3D interpolation axis-mode flags offset");
 static_assert(sizeof(InterpMode) == sizeof(i32), "interpolation modes occupy one signed word");
 static_assert(offsetof(InterpStrange1, methods_1d) == offsetof(InterpStrange1, method_for_1d),
               "the per-axis methods alias the first mode field");
