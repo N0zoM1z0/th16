@@ -120,13 +120,8 @@ static_assert(offsetof(EnemyBulletShooter, aim_type) == 0x368,
               "shooter aim mode offset");
 static_assert(sizeof(EnemyBulletShooter) == 0x380, "shooter binary layout");
 
-// ECL etOffset: the relative displacement applied to an enemy's position.
-struct BulletOffset
-{
-    D3DXVECTOR2 xy;
-    f32 z;
-};
-
+// ECL etOffset uses a normal 3D position offset; etOffsetAbs instead
+// encodes an absolute 2D shot origin and a float enabled marker.
 // ECL etOffsetAbs: the third float is an enabled marker, *not* a
 // coordinate. When it exceeds 0.9, the next shot uses xy as its fixed
 // origin (with a zero Z); otherwise the shot follows the enemy's position.
@@ -135,7 +130,7 @@ struct BulletOrigin
     D3DXVECTOR2 xy;
     f32 enabled;
 };
-static_assert(sizeof(BulletOrigin) == sizeof(BulletOffset),
+static_assert(sizeof(BulletOrigin) == sizeof(D3DXVECTOR3),
               "absolute bullet origins have the same stored stride as offsets");
 static_assert(offsetof(BulletOrigin, enabled) == 8,
               "absolute bullet origin enabled marker offset");
@@ -388,7 +383,7 @@ struct EnemyData
     InterpFloat2 rel_ellipse_i;
     EnemyBulletShooter bullet_props[16];
     i32 et_ex_index[16];
-    BulletOffset bullet_mgr_offsets[16];
+    D3DXVECTOR3 bullet_mgr_offsets[16];
     BulletOrigin bullet_mgr_origins[16];
     D3DXVECTOR2 final_sprite_size;
     D3DXVECTOR2 move_limit_center;

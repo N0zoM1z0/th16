@@ -151,17 +151,17 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
         memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-        y = enemy->bullet_mgr_offsets[i].xy.y;
-        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].xy.x;
+        y = enemy->bullet_mgr_offsets[i].y;
+        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
         y += enemy->bullet_mgr_origins[i].xy.y;
         z = 0.0f;
     }
     else
     {
         memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-        y = enemy->bullet_mgr_offsets[i].xy.y;
+        y = enemy->bullet_mgr_offsets[i].y;
         z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
+        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
     *out = D3DXVECTOR3(x, y, z);
@@ -175,14 +175,14 @@ static __forceinline void copy_ex_and_get_shot_origin(
     f32 z;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        x = enemy->bullet_mgr_offsets[i].xy.x + enemy->bullet_mgr_origins[i].xy.x;
-        y = enemy->bullet_mgr_offsets[i].xy.y + enemy->bullet_mgr_origins[i].xy.y;
+        x = enemy->bullet_mgr_offsets[i].x + enemy->bullet_mgr_origins[i].xy.x;
+        y = enemy->bullet_mgr_offsets[i].y + enemy->bullet_mgr_origins[i].xy.y;
         z = 0.0f;
     }
     else
     {
-        x = enemy->bullet_mgr_offsets[i].xy.x + enemy->final_pos.pos.x;
-        y = enemy->bullet_mgr_offsets[i].xy.y + enemy->final_pos.pos.y;
+        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
+        y = enemy->bullet_mgr_offsets[i].y + enemy->final_pos.pos.y;
         z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
     }
     *out = D3DXVECTOR3(x, y, z);
@@ -1691,8 +1691,8 @@ int EnemyData::ecl_run_over_300()
         bullet_props[slot].shot_sfx = 21;
         bullet_props[slot].shot_transform_sfx = 38;
         bullet_props[slot].sfx_flags = 0x23;
-        bullet_mgr_offsets[slot].xy.x = 0.0f;
-        bullet_mgr_offsets[slot].xy.y = 0.0f;
+        bullet_mgr_offsets[slot].x = 0.0f;
+        bullet_mgr_offsets[slot].y = 0.0f;
         bullet_mgr_origins[slot].xy.x = 0.0f;
         bullet_mgr_origins[slot].xy.y = 0.0f;
         bullet_mgr_origins[slot].enabled = 0.0f;
@@ -1717,14 +1717,14 @@ int EnemyData::ecl_run_over_300()
         if (bullet_mgr_origins[slot].enabled > 0.9f)
         {
             bullet_props[slot].pos = D3DXVECTOR3(
-                bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].xy.x,
-                bullet_mgr_origins[slot].xy.y + bullet_mgr_offsets[slot].xy.y, 0.0f);
+                bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x,
+                bullet_mgr_origins[slot].xy.y + bullet_mgr_offsets[slot].y, 0.0f);
         }
         else
         {
             bullet_props[slot].pos = D3DXVECTOR3(
-                final_pos.pos.x + bullet_mgr_offsets[slot].xy.x,
-                final_pos.pos.y + bullet_mgr_offsets[slot].xy.y,
+                final_pos.pos.x + bullet_mgr_offsets[slot].x,
+                final_pos.pos.y + bullet_mgr_offsets[slot].y,
                 final_pos.pos.z + bullet_mgr_offsets[slot].z);
         }
         g_BulletManager->et_protect_range = et_protect_range;
@@ -1744,8 +1744,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_OFFSET:
     {
         i32 slot = get_int_arg(0);
-        bullet_mgr_offsets[slot].xy.x = get_float_arg(EclFloatArgIndex{1});
-        bullet_mgr_offsets[slot].xy.y = get_float_arg(EclFloatArgIndex{2});
+        bullet_mgr_offsets[slot].x = get_float_arg(EclFloatArgIndex{1});
+        bullet_mgr_offsets[slot].y = get_float_arg(EclFloatArgIndex{2});
         break;
     }
     // etOffsetRad(slot, angle, dist)
@@ -1755,8 +1755,8 @@ int EnemyData::ecl_run_over_300()
         f32 angle = get_float_arg(EclFloatArgIndex{1});
         Float3 offset;
         enemy_ecl_sincosmul_func()(&offset, angle, get_float_arg(EclFloatArgIndex{2}));
-        bullet_mgr_offsets[slot].xy.x = offset.x;
-        bullet_mgr_offsets[slot].xy.y = offset.y;
+        bullet_mgr_offsets[slot].x = offset.x;
+        bullet_mgr_offsets[slot].y = offset.y;
         break;
     }
     // etDist(slot, dist)
