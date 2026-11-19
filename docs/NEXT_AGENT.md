@@ -56,6 +56,54 @@ must not override `git status`.
   cache. Keep both, together with `.tools/`, `.venv/`, `ghidra-project/` and
   the pinned `_reference/` checkout.
 
+## 2026-11-19 follow-up session
+
+Current HEAD: `c0c474a` (`gpt-web: restore natural ECL Bezier argument evaluation`),
+branch `main` is 14 commits ahead of `origin/main`, and the worktree is clean.
+The session made five source commits after the handoff checkpoint; each change
+was built incrementally with the pinned MSVC/LTCG toolchain (1,166 annotated
+functions). No full cold replay was run and nothing was pushed.
+
+- `dd5879d`: added a typed 12-byte replay USER section header, named section
+  kinds and used `RpyInfo + 1` for the following stage snapshots. Build passed;
+  `read_replay_file` and `set_end_stage` remain 1.0, `save` remains 0.9461.
+- `0360b61`: represented the shared `Globals + 0x45c` word as a named union
+  view over `GlobalsFlags45c`; removed all raw `GLOBALS_FLAGS_45C` access.
+  The named-view build passed and A/B matched the pre-change build for
+  `GameThread::thread_start` and `GameThread::~GameThread` (both 1.0),
+  `on_tick_body` (1.0), `stage_clear` (0.9817), `EnemyData::ecl_run_over_300`
+  and `PauseMenu::tick_open` (0.9705).
+- `feb9f2a`: changed ECL call argument base selection from `(u8 *)ins + 0x10`
+  to the declared `ins->args` field. It is a semantic typed-entry cleanup
+  with unchanged `call_sub` (0.9086) and `ecl_run` (0.9205) comparisons.
+- `1315649`: merged the common final position/goal/timer/PosVel-flag writes
+  of `MOVE_POS_TIME` and `MOVE_CURVE` through one C++ label. The complete
+  upper-ECL owner rose from 0.8261 to 0.8905 and shrank by 128 bytes; the
+  combined two case spans fell from 201 to 185 instructions.
+- `c0c474a`: removed volatile Bezier goal temporaries and used the natural
+  `full_owner` argument-getter sequence. The complete upper-ECL owner rose
+  again to 0.9025 (4,562 / 4,661 instructions); cases 125/126 now have 82
+  candidate instructions against 86 target. Using `full` instead of
+  `full_owner` in that case compiled but regressed the complete owner to
+  0.8364; that trial was restored.
+
+Rejected, uncommitted ECL experiments are retained under `.analysis/`:
+laser-origin helper reordering increased the upper owner to 0.8231 and was
+restored; reference-shaped curve setup increased its case to 104 instructions
+and was restored; placing the shared movement scratch in the laser union or
+in a standalone `EclMovementScratch` local regressed the complete owner.
+Typed `EclCallArg*` loops were also tested with the correct base
+`(u8 *)&ins->args[start + 1] + name_len`; both do/while and reference-style
+for variants lowered `call_sub` to 0.8343 / 0.8035, so the committed byte-view
+loop remains. Do not reuse the earlier incorrect `arg_base + arg_offset - 4`
+calculation.
+
+The remaining lexical raw-member finding in `MainMenu.cpp` is the
+`Scorefile::unlock_all` counter pointer at `spell + 0x5210`. The existing
+comment says it reaches beyond the score-data object; no independent
+backing-region layout has yet been established. Do not invent a
+`ScorefileCharacter` member or silently bound this access without evidence.
+
 ## Immediate working commands
 
 ```sh
@@ -93,7 +141,7 @@ Factory acceptance.
 
 | Owner / source | Current local measurement and next issue |
 | --- | --- |
-| EnemyData::ecl_run_over_300 (0x41dcb0), src/EnemyEcl.cpp | Before d96eead: 4,562 / 4,616 linear instructions, 0.9022. After the EnemyLife field-type change, a linear window reported 4,562 / 5,449, 0.8277; its jump-table/data extent is not a reliable code boundary. Focused laser opcodes 402/403/411/413 remain 0.78/0.75/0.79/0.75, and bosses-interrupt case 502 remains 0.99. Investigate the case bodies and complete owner extent, not the raw linear ratio. |
+| EnemyData::ecl_run_over_300 (0x41dcb0), src/EnemyEcl.cpp | **2026-11-19 follow-up:** complete registered owner 21,408 bytes; candidate 21,376 bytes, 4,562 target / 4,661 candidate linear instructions, **0.9025** (up from 0.8261 at the start of this follow-up). Shared movePosTime/moveCurve interpolation finish and natural Bezier argument evaluation account for the improvement. Bezier cases 125/126 are 86/82 instructions, 0.81. The shared tail is physically placed after the curve case by LTCG, so case spans 101/103 and 134/135/138/139 read 99/74 and 80/109 respectively; their combined size is 183 vs 179. Laser cases 402/403/411/413 remain 0.78/0.75/0.79/0.75; bosses-interrupt case 502 remains 0.99. These are diagnostics, not strict receipts. |
 | AnmVm::run (0x45f980), src/AnmVmRun.cpp | After 82b1cfa: 14,177 / 14,160 bytes; 3,837 / 3,817 linear instructions, 0.9485 (previously 0.9474). In FSET_RAND, the candidate case-124 span shrank from 24 to 13 instructions, normalized ratio 0.70, while the full owner improved slightly; check whether the destination write was merged into a shared path. Follow-camera case 4 and circle-random case 132 still need register-order work. |
 | `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 343 instructions; **0.9141**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
 | `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 363 instructions; **0.9737**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
