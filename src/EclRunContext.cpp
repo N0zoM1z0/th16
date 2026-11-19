@@ -32,13 +32,13 @@ i32 EclRunContext::get_int_arg(int index)
         {
             EclStackEntry *entry = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset) + value;
             EclStackItem item = entry->value;
-            char type = entry->type;
+            EclStackValueKind type = entry->type;
             i32 result;
-            if (type == 'f')
+            if (type == ECL_STACK_FLOAT)
             {
                 result = (i32)item.f;
             }
-            else if (type == 'i')
+            else if (type == ECL_STACK_INTEGER)
             {
                 result = item.i;
             }
@@ -70,7 +70,7 @@ HARNESS_CALLED f32 LTCG_VECTORCALL EclRunContext::get_float_arg(EclFloatArgIndex
             EclStackEntry *entry =
                 (EclStackEntry *)((u8 *)stack.data + stack.stack_offset - (i32)(-value * sizeof(EclStackEntry)));
             EclStackItem item = entry->value;
-            if (entry->type != 'f' && entry->type == 'i')
+            if (entry->type != ECL_STACK_FLOAT && entry->type == ECL_STACK_INTEGER)
             {
                 return (f32)item.i;
             }
@@ -97,13 +97,13 @@ i32 EclRunContext::get_int_arg_given_value(int index, i32 value)
             EclStackEntry *entries = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset);
             EclStackItem *value_ptr = &entries[value].value;
             EclStackItem item = *value_ptr;
-            char type = entries[value].type;
+            EclStackValueKind type = entries[value].type;
             i32 result;
-            if (type == 'f')
+            if (type == ECL_STACK_FLOAT)
             {
                 result = (i32)item.f;
             }
-            else if (type == 'i')
+            else if (type == ECL_STACK_INTEGER)
             {
                 result = item.i;
             }
@@ -133,7 +133,7 @@ HARNESS_CALLED f32 EclRunContext::get_float_arg_given_value(int index, f32 value
             EclStackEntry *entry =
                 (EclStackEntry *)((u8 *)stack.data + stack.stack_offset - (i32)(-value * sizeof(EclStackEntry)));
             EclStackItem item = entry->value;
-            if (entry->type != 'f' && entry->type == 'i')
+            if (entry->type != ECL_STACK_FLOAT && entry->type == ECL_STACK_INTEGER)
             {
                 return (f32)item.i;
             }
@@ -162,14 +162,14 @@ HARNESS_CALLED i32 EclRunContext::pop_int_arg(int index)
             stack.stack_offset -= 4;
             EclStackItem item = *(EclStackItem *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
-            char type = *((char *)stack.data + stack.stack_offset);
+            EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
             // As in get_int_arg (matching).
             i32 result;
-            if (type == 'f')
+            if (type == ECL_STACK_FLOAT)
             {
                 result = (i32)item.f;
             }
-            else if (type == 'i')
+            else if (type == ECL_STACK_INTEGER)
             {
                 result = item.i;
             }
@@ -202,8 +202,8 @@ HARNESS_CALLED f32 EclRunContext::pop_float_arg(int index)
             stack.stack_offset -= 4;
             i32 item = *(i32 *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
-            char type = *((char *)stack.data + stack.stack_offset);
-            if (type != 'f' && type == 'i')
+            EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
+            if (type != ECL_STACK_FLOAT && type == ECL_STACK_INTEGER)
             {
                 return (f32)item;
             }
@@ -229,14 +229,14 @@ i32 EclRunContext::pop_int_arg_given_value(int index, i32 value)
             stack.stack_offset -= 4;
             EclStackItem item = *(EclStackItem *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
-            char type = *((char *)stack.data + stack.stack_offset);
+            EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
             // As in get_int_arg (matching).
             i32 result;
-            if (type == 'f')
+            if (type == ECL_STACK_FLOAT)
             {
                 result = (i32)item.f;
             }
-            else if (type == 'i')
+            else if (type == ECL_STACK_INTEGER)
             {
                 result = item.i;
             }
@@ -268,8 +268,8 @@ HARNESS_CALLED f32 EclRunContext::pop_float_arg_given_value(int index, f32 value
             stack.stack_offset -= 4;
             i32 item = *(i32 *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
-            char type = *((char *)stack.data + stack.stack_offset);
-            if (type != 'f' && type == 'i')
+            EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
+            if (type != ECL_STACK_FLOAT && type == ECL_STACK_INTEGER)
             {
                 return (f32)item;
             }
@@ -843,7 +843,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 i32 *dst = get_int_arg_ptr(0);
                 *dst = stack.pop_raw();
                 stack.stack_offset -= 4;
-                if (*((char *)stack.data + stack.stack_offset) == 'f')
+                if (*(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset) == ECL_STACK_FLOAT)
                 {
                     *dst = (i32) * (f32 *)dst;
                 }
@@ -854,8 +854,8 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 f32 *dst = get_float_arg_ptr(0);
                 *(i32 *)dst = stack.pop_raw();
                 stack.stack_offset -= 4;
-                char type = *((char *)stack.data + stack.stack_offset);
-                if (type != 'f' && type == 'i')
+                EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
+                if (type != ECL_STACK_FLOAT && type == ECL_STACK_INTEGER)
                 {
                     *dst = (f32) * (i32 *)dst;
                 }
