@@ -2005,7 +2005,7 @@ int EnemyData::ecl_run_over_300()
         // Keep the member access typed while using the target's shared base.
 #define ECL_EX_FIELD(field) (reinterpret_cast<BulletEx *>(reinterpret_cast<u8 *>(&bullet_props[0].ex[0]) + ex_offset)->field)
         ECL_EX_FIELD(slot) = get_int_arg(arg++);
-        ECL_EX_FIELD(type) = get_int_arg(arg++);
+        ECL_EX_FIELD(type) = static_cast<BulletExType>(get_int_arg(arg++));
         ECL_EX_FIELD(a) = get_int_arg(arg++);
         ECL_EX_FIELD(b) = get_int_arg(arg++);
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)

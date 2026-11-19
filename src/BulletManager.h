@@ -18,7 +18,7 @@
 // transform sets its bit in Bullet::active_ex_flags until it is done, and
 // the ones that run over several frames are stepped by Bullet::step_ex_NN,
 // NN being the bit. Names are the usual thecl ones.
-enum BulletExType
+enum BulletExType : i32
 {
     // A speed boost that fades over 16 frames (step_ex_00).
     BULLET_EX_SPEEDUP = 1 << 0,
@@ -89,13 +89,18 @@ struct BulletEx
     i32 b;
     i32 c;
     i32 d;
-    // A BulletExType, 0 for an empty slot.
-    i32 type;
+    // A bitmask opcode; zero means the transform slot is empty.
+    BulletExType type;
     // 0: waits until no other transform runs.
     i32 slot;
     // BULLET_EX_ENEMY's subroutine name.
     char *string;
 };
+
+static_assert(sizeof(BulletExType) == sizeof(i32), "BulletEx opcode storage is 32-bit");
+static_assert(offsetof(BulletEx, type) == 0x20, "BulletEx opcode offset");
+static_assert(offsetof(BulletEx, slot) == 0x24, "BulletEx scheduling flag offset");
+static_assert(sizeof(BulletEx) == 0x2c, "BulletEx bytecode record size");
 
 // Running state of an active transform (bullets and lasers). ExpHP:
 // zBulletExState.
