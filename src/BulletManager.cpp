@@ -1075,7 +1075,7 @@ void Bullet::run_ex()
             scale_i.bezier_1 = 0.0f;
             scale_i.bezier_2 = 0.0f;
             scale_i.end_time = ex->a;
-            scale_i.method = ex->b;
+            scale_i.method = static_cast<InterpMode>(ex->b);
             scale_i.reset();
             flags |= BULLET_FLAG_SCALED;
             ex_index++;

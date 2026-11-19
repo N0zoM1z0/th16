@@ -1180,7 +1180,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 float_i_locs[i] = cur_location;
                 float_i[i].step();
                 float_i[i].end_time = get_int_arg(2);
-                float_i[i].method = get_int_arg(3);
+                float_i[i].method = static_cast<InterpMode>(get_int_arg(3));
                 f32 initial = get_float_arg(EclFloatArgIndex{4});
                 f32 goal = get_float_arg(EclFloatArgIndex{5});
                 float_i[i].initial = initial;
@@ -1198,7 +1198,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 float_i_locs[i] = cur_location;
                 float_i[i].step();
                 float_i[i].end_time = get_int_arg(2);
-                float_i[i].method = get_int_arg(3);
+                float_i[i].method = static_cast<InterpMode>(get_int_arg(3));
                 f32 initial = get_float_arg(EclFloatArgIndex{4});
                 f32 goal = get_float_arg(EclFloatArgIndex{5});
                 float_i[i].initial = initial;

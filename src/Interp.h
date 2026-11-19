@@ -71,7 +71,7 @@ struct InterpFloat
     f32 current;
     ZunTimer time;
     i32 end_time;
-    i32 method;
+    InterpMode method;
 
     // Restarts the timer at frame 0.
     DECOMP_NOINLINE void reset();

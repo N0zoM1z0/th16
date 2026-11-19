@@ -1247,7 +1247,7 @@ i32 AnmVm::run()
             u_vel_i.end_time = ANM_INT(0);
             u_vel_i.bezier_1 = 0.0f;
             u_vel_i.bezier_2 = 0.0f;
-            u_vel_i.method = ins->args[1].i;
+            u_vel_i.method = static_cast<InterpMode>(ins->args[1].i);
             u_vel_i.initial = uv_scroll_vel.x;
             u_vel_i.goal = goal;
             u_vel_i.reset();
@@ -1259,7 +1259,7 @@ i32 AnmVm::run()
             v_vel_i.end_time = ANM_INT(0);
             v_vel_i.bezier_1 = 0.0f;
             v_vel_i.bezier_2 = 0.0f;
-            v_vel_i.method = ins->args[1].i;
+            v_vel_i.method = static_cast<InterpMode>(ins->args[1].i);
             v_vel_i.initial = uv_scroll_vel.y;
             v_vel_i.goal = goal;
             v_vel_i.reset();

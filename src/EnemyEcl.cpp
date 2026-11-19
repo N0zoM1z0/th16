@@ -905,7 +905,7 @@ int EnemyData::ecl_run_over_300()
         i32 angle_duration = full_owner->context.current_context->get_int_arg(0);
         angle_i->initial = initial_angle;
         angle_i->end_time = angle_duration;
-        angle_i->method = mode;
+        angle_i->method = static_cast<InterpMode>(mode);
         angle_i->bezier_1 = 0.0f;
         angle_i->bezier_2 = 0.0f;
         angle_i->goal = angle;
@@ -914,7 +914,7 @@ int EnemyData::ecl_run_over_300()
         i32 speed_duration = full_owner->context.current_context->get_int_arg(0);
         speed_i->initial = initial_speed;
         speed_i->end_time = speed_duration;
-        speed_i->method = mode;
+        speed_i->method = static_cast<InterpMode>(mode);
         speed_i->bezier_1 = 0.0f;
         speed_i->bezier_2 = 0.0f;
         speed_i->goal = speed;
@@ -994,7 +994,7 @@ int EnemyData::ecl_run_over_300()
             delta = angle - initial;
         }
         angle_i->end_time = get_int_arg(0);
-        angle_i->method = mode;
+        angle_i->method = static_cast<InterpMode>(mode);
         angle_i->bezier_1 = 0.0f;
         angle_i->bezier_2 = 0.0f;
         angle_i->initial = initial;
@@ -1383,7 +1383,7 @@ int EnemyData::ecl_run_over_300()
         f32 speed = get_float_arg(EclFloatArgIndex{2});
 
         angle_i->end_time = get_int_arg(0);
-        angle_i->method = mode;
+        angle_i->method = static_cast<InterpMode>(mode);
         angle_i->bezier_1 = 0.0f;
         angle_i->bezier_2 = 0.0f;
         angle_i->initial = angle;
@@ -1391,7 +1391,7 @@ int EnemyData::ecl_run_over_300()
         angle_i->reset();
 
         speed_i->end_time = get_int_arg(0);
-        speed_i->method = mode;
+        speed_i->method = static_cast<InterpMode>(mode);
         speed_i->bezier_1 = 0.0f;
         speed_i->bezier_2 = 0.0f;
         speed_i->initial = speed;
