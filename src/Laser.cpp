@@ -3383,7 +3383,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
         }
         case BULLET_EX_TAG:
             id = ex->a;
-            ex_index++;
+            ex_index = index + 1;
             continue;
         case BULLET_EX_LOOP:
             ex_index = ex->a;
