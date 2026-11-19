@@ -19,18 +19,21 @@ enum EndingScriptFlags
     ENDING_SCRIPT_WAITING = 1 << 2,
 };
 
+// The ending and staff-roll scripts store their opcode in one byte.
+enum EndingOpcode : u8;
+
 // One instruction of an ending script (eNN.msg, staffN.msg): a time, an
 // opcode and size bytes of arguments.
 struct EndingInstr
 {
     u16 time;
-    u8 opcode;
+    EndingOpcode opcode;
     u8 size;
     i32 args[1];
 };
 
 // Ending script opcodes (no community names; named after what they do).
-enum EndingOpcode
+enum EndingOpcode : u8
 {
     ENDING_END = 0,
     // Writes the next of the five text lines (an obfuscated string),
@@ -62,6 +65,9 @@ enum EndingOpcode
     ENDING_PICTURE_HARD = 16,
     ENDING_PICTURE_LUNATIC = 17,
 };
+static_assert(sizeof(EndingOpcode) == sizeof(u8), "ending opcode must be one byte");
+static_assert(offsetof(EndingInstr, opcode) == 2, "ending opcode offset");
+static_assert(offsetof(EndingInstr, args) == 4, "ending instruction argument offset");
 
 // Runs an ending or staff roll script. ExpHP: zEndingChildF0.
 struct EndingScriptVm
