@@ -270,11 +270,8 @@ static_assert(sizeof(EclMovementScratch) <= sizeof(EclLaserParamsStorage),
 int EnemyData::ecl_run_over_300()
 {
     EclLaserParamsStorage laser_params_storage;
-    PosVel *movement_pos_vel;
-    InterpStrange1 *movement_interp;
-    f32 movement_goal_x;
-    f32 movement_goal_y;
-    register EclRawInstr *instr = full->context.current_context->current_instr();
+    EnemyInf *full_owner = full;
+    register EclRawInstr *instr = full_owner->context.current_context->current_instr();
     switch ((i16)instr->opcode)
     {
     // enmCreateF and its variants: only without a boss.
@@ -695,19 +692,19 @@ int EnemyData::ecl_run_over_300()
         position_interp->bezier_2 = g_zero_vec;
         position_interp->method_for_3d = static_cast<InterpMode>(context_source->full->context.current_context->get_int_arg(1));
         position_interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        movement_pos_vel = pos_vel;
-        movement_interp = position_interp;
-        movement_goal_x = goal_x;
-        movement_goal_y = goal_y;
+        laser_params_storage.movement.position = pos_vel;
+        laser_params_storage.movement.position_interp = position_interp;
+        laser_params_storage.movement.goal_x = goal_x;
+        laser_params_storage.movement.goal_y = goal_y;
     }
-    // movePosTime and moveCurve share the interpolation's final position,
-    // goal, timer and PosVel-flag updates.
+    // movePosTime, moveCurve and moveBezier share the interpolation's final
+    // position, goal, timer and PosVel-flag updates.
     ecl_movement_interp_finish:
-        movement_interp->initial = movement_pos_vel->pos;
-        movement_interp->goal = Float3(movement_goal_x > -999999.0 ? movement_goal_x : movement_pos_vel->pos.x,
-                                        movement_goal_y > -999999.0 ? movement_goal_y : movement_pos_vel->pos.y, 0.0f);
-        movement_interp->reset_timer();
-        movement_pos_vel->flags &= ~0xf;
+        laser_params_storage.movement.position_interp->initial = laser_params_storage.movement.position->pos;
+        laser_params_storage.movement.position_interp->goal = Float3(laser_params_storage.movement.goal_x > -999999.0 ? laser_params_storage.movement.goal_x : laser_params_storage.movement.position->pos.x,
+                                        laser_params_storage.movement.goal_y > -999999.0 ? laser_params_storage.movement.goal_y : laser_params_storage.movement.position->pos.y, 0.0f);
+        laser_params_storage.movement.position_interp->reset_timer();
+        laser_params_storage.movement.position->flags &= ~0xf;
         break;
     // moveCurve(time, mode_x, mode_y, x, y) and its variants: separate
     // modes for x and y.
@@ -744,10 +741,10 @@ int EnemyData::ecl_run_over_300()
         interp->axis_flags |= 1;
         interp->method_for_1d_y = static_cast<InterpMode>(full->context.current_context->get_int_arg(2));
         interp->axis_flags |= 1;
-        movement_pos_vel = pos_vel;
-        movement_interp = interp;
-        movement_goal_x = x;
-        movement_goal_y = y;
+        laser_params_storage.movement.position = pos_vel;
+        laser_params_storage.movement.position_interp = interp;
+        laser_params_storage.movement.goal_x = x;
+        laser_params_storage.movement.goal_y = y;
         goto ecl_movement_interp_finish;
     }
     // moveBezier(time, b1x, b1y, x, y, b2x, b2y), moveBezierRel
@@ -771,10 +768,10 @@ int EnemyData::ecl_run_over_300()
         interp->bezier_2 = bezier_2;
         interp->method_for_3d = INTERP_BEZIER;
         interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        movement_pos_vel = pos_vel;
-        movement_interp = interp;
-        movement_goal_x = x;
-        movement_goal_y = y;
+        laser_params_storage.movement.position = pos_vel;
+        laser_params_storage.movement.position_interp = interp;
+        laser_params_storage.movement.goal_x = x;
+        laser_params_storage.movement.goal_y = y;
         goto ecl_movement_interp_finish;
     }
     // moveVel(angle, speed) and the relative and
