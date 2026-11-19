@@ -19,7 +19,7 @@
 // fields are in 1/128 pixels.
 
 // PlayerInner::state.
-enum PlayerState
+enum PlayerState : i32
 {
     // Rising from the bottom of the screen after a death, clearing
     // bullets and lasers.
@@ -33,6 +33,8 @@ enum PlayerState
     // Just hit: the deathbomb window before the life is lost.
     PLAYER_STATE_HIT = 4,
 };
+
+static_assert(sizeof(PlayerState) == sizeof(i32), "player lifecycle state encoding");
 
 // PlayerInner::flags.
 enum PlayerFlags
@@ -140,7 +142,7 @@ struct PlayerOption
 };
 
 // PlayerBullet::state (ExpHP: zPlayerBulletState).
-enum PlayerBulletState
+enum PlayerBulletState : i32
 {
     // The slot is free.
     PLAYER_BULLET_FREE = 0,
@@ -148,6 +150,8 @@ enum PlayerBulletState
     // It hit something and plays its hit animation; it no longer hurts.
     PLAYER_BULLET_HIT = 2,
 };
+
+static_assert(sizeof(PlayerBulletState) == sizeof(i32), "player bullet lifecycle state encoding");
 
 // PlayerBullet::flags.
 enum PlayerBulletFlag
@@ -188,8 +192,8 @@ struct PlayerBullet
     // Nothing in TH16 uses it.
     ZunTimer timer_34;
     PosVel pos;
-    // PlayerBulletState.
-    i32 state;
+    // The bullet lifecycle state; not an untyped animation flag.
+    PlayerBulletState state;
     // Homing shots: the id of the enemy they chase (an EnemyRef).
     i32 target_enemy_id;
     // Marisa's laser: set while it touches an enemy this frame, and set
@@ -316,8 +320,8 @@ struct PlayerInner
     // Where the search for a free damage source starts.
     i32 last_created_damage_source_index;
     PlayerDamageSource damage_sources[PLAYER_DAMAGE_SOURCE_COUNT + 1];
-    // PlayerState.
-    i32 state;
+    // The player lifecycle state (normal, hit, dead, or respawning).
+    PlayerState state;
     // The hitbox shown while focused.
     AnmId anm_id_focused_hitbox;
     // An effect (effect.anm script 0x1b) that follows the player while
