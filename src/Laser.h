@@ -14,7 +14,7 @@ struct AnmLoaded;
 struct RenderVertex144;
 
 // LaserDataInf::state.
-enum LaserState
+enum LaserState : i32
 {
     // Cancelled: skipped by on_draw and removed on the next tick.
     LASER_STATE_CANCELLED = 1,
@@ -25,6 +25,10 @@ enum LaserState
     LASER_STATE_EXPANDING = 4,
     LASER_STATE_SHRINKING = 5,
 };
+
+// Kind is also a 32-bit field in every laser object. The concrete enum is
+// defined after the subclasses and is used by the allocation dispatcher.
+enum LaserKind : i32;
 
 // Base of every laser kind. The name is ZUN's, from RTTI. The base methods
 // are almost all empty; the slot names follow ExpHP's zVTableLaser.
@@ -45,9 +49,8 @@ class LaserDataInf
     // BULLET_EX_FREEZE_SEGMENTS: keep curved-laser nodes stationary.
     u32 segments_frozen : 1;
     u32 flags_rest : 27;
-    // A LaserState.
-    i32 state;
-    i32 kind;
+    LaserState state;
+    LaserKind kind;
     ZunTimer timer;
     // Grazes count every third frame of it.
     ZunTimer graze_timer;
@@ -504,13 +507,15 @@ class LaserBeamInf : public LaserDataInf
     virtual i32 touches_circle(Float3 *pos, f32 radius);
 };
 
-enum LaserKind
+enum LaserKind : i32
 {
     LASER_LINE = 0,
     LASER_INFINITE = 1,
     LASER_CURVE = 2,
     LASER_BEAM = 3,
 };
+static_assert(sizeof(LaserKind) == sizeof(i32), "laser kind is a signed 32-bit field");
+static_assert(sizeof(LaserState) == sizeof(i32), "laser state is a signed 32-bit field");
 
 // Owns every live laser, kept in a list behind a dummy head.
 struct LaserManager
