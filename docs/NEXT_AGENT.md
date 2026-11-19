@@ -9,13 +9,15 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built game-source checkpoint: `e6293cb`
-  (`gpt-web: restore typed interpolation modes for ECL curve motion`). The
-  latest source changes select the Bezier/curve position through `PosVel*`
-  instead of reconstructing it from a byte offset, and store the curve
-  interpolation methods as `InterpMode`. The earlier signed sound IDs,
-  typed ECL stack/call arguments, laser timing, EX tag cursors and binary
-  opcode types remain in Git. Use `git log` and `git status -sb` for the
+- Latest locally built game-source checkpoint: `84000e8`
+  (`gpt-web: type integer angle and sky interpolation methods`). Five
+  successive source commits on 2026-11-19 recovered the per-axis ECL curve
+  modes, the laser state/kind fields, and the scalar, vector, integer, angle,
+  color and camera-fog interpolation methods as signed `InterpMode` values.
+  Script-sourced integers still enter through explicit casts, and existing
+  function signatures (including `LaserManager::allocate_new_laser`) retain
+  their PDB identities. The earlier typed-position, laser EX and ECL stack
+  checkpoints remain in Git. Use `git log` and `git status -sb` for the
   live HEAD and upstream relation.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
@@ -102,6 +104,23 @@ never infer exactness from dispatch coverage or case ratios.
 For exact diffs consult `git show COMMIT`, not an old note's guessed source
 form. The most relevant recent commits are:
 
+- `84000e8`: type the 32-bit `InterpMode` fields of `InterpInt`, `InterpInt3`,
+  `InterpAngle` and `InterpCameraSky` with explicit casts at ANM and stage
+  script boundaries. The full ANM and stage owner diagnostics are unchanged;
+  the `InterpInt3::step` and `InterpAngle::step` normalized diagnostics remain
+  270/270 and 260/260 respectively.
+- `6a7697d`: type the `InterpFloat2` and `InterpFloat3` method fields through
+  stage, ANM, enemy ECL and bullet EX. `InterpFloat3::step` remains 230/230
+  in its local normalized comparison; the ECL and ANM dispatch owners retain
+  their previous ratios.
+- `da3c7c6`: type `InterpFloat::method` in the shared ECL, ANM and bullet
+  transformations without changing `InterpFloat::start`'s integer ABI.
+- `a076964`: type `LaserDataInf::state` and `kind` as fixed-width enums while
+  preserving `allocate_new_laser(i32, void*)` and its original PDB symbol.
+  Line/curve EX owners and laser construction cases retain their diagnostics.
+- `ecd04c1`: recover the y and z per-axis ECL interpolator modes in the
+  anonymous method union; `MOVE_CURVE` cases 121/123 remain 169/173, 0.97.
+
 - `e6293cb`: restore signed 32-bit `InterpMode` in the ECL curve interpolator;
   local `InterpStrange1::step` remains 313 / 313 instructions at 0.9936.
 - `c179d02` and `0ca80c8`: use the chosen typed `PosVel*` for ECL curve and
@@ -151,6 +170,16 @@ Re-measure before relying on any old ratio; none of these figures is a Factory
 exactness credit.
 
 ## Retained 2026-11-19 trial findings
+
+The latest local trials also tested, compiled and rejected: a split-base laser
+EX transform pointer (line EX ratio 0.9141 to 0.9094); updating the draw-circle
+angle parameter directly (0.9939 to 0.9848); separating the recursive ANM
+world-position component stores (0.9714 to 0.8936); and a shared `union`
+for performance-counter and fallback double temporaries in `get_runtime`
+(0.9744 to 0.8846). Direct ANM ID assignment in `EnemyData::step_interpolators`
+was locally neutral (421/421, 0.9976) and was also restored. All corresponding
+trial sources and diagnostic files are ignored under `.analysis/th16-s5-*`.
+No ASM, byte padding or full cold replay was used in these tests.
 
 The latest session also restored a separate, unchanged-result curve-laser
 pointer-base trial and two regressive attempts: ANM fan parallel radius/speed
