@@ -343,7 +343,7 @@ int ReplayManager::read_replay_file(const char *filename)
     lzss_decompress(data, ((RpyFileHeader *)rpy_file)->compressed_size, (u8 *)replay_data,
                     ((RpyFileHeader *)rpy_file)->size);
     info = (RpyInfo *)replay_data;
-    RpyGamestate *gamestate = (RpyGamestate *)((u8 *)replay_data + 0xa0);
+    RpyGamestate *gamestate = reinterpret_cast<RpyGamestate *>(info + 1);
     for (i32 i = 0; i < (info->num_stages >= 8 ? 6 : info->num_stages); i++)
     {
         stages[gamestate->stage].gamestate_at_stage_begin = gamestate;
@@ -687,14 +687,15 @@ static __forceinline void write_to_file(const void *data, DWORD size)
 }
 
 // Pads a USER section to a multiple of 4 bytes and stores its size.
-static __forceinline i32 finish_user_section(u8 *section, char *end)
+static __forceinline i32 finish_user_section(RpyUserSectionHeader *section, char *end)
 {
-    if ((end - (char *)section) % 4 != 0)
+    char *section_bytes = (char *)section;
+    if ((end - section_bytes) % 4 != 0)
     {
-        end += 4 - (end - (char *)section) % 4;
+        end += 4 - (end - section_bytes) % 4;
     }
-    i32 size = end - (char *)section;
-    *(i32 *)(section + 4) = size;
+    i32 size = end - section_bytes;
+    section->size = size;
     return size;
 }
 
@@ -804,12 +805,12 @@ HARNESS_CALLED i32 ReplayManager::save(const char *path, const char *name, i32 u
     {
         free(compressed);
     }
-    u8 *user = (u8 *)malloc(0xffff);
+    RpyUserSectionHeader *user = (RpyUserSectionHeader *)malloc(0xffff);
     memset(user, 0, 0xffff);
-    *(u32 *)user = RPY_USER_MAGIC;
+    user->magic = RPY_USER_MAGIC;
     // USER section 0: the replay's info as text.
-    user[8] = 0;
-    char *text = (char *)user + 0xc;
+    user->kind = RPY_USER_DESCRIPTION;
+    char *text = (char *)(user + 1);
     text += sprintf(text, "%s \x83\x8a\x83v\x83\x8c\x83" "C\x83t\x83@\x83" "C\x83\x8b\x8f\xee\x95\xf1\r\n",
                     "\x93\x8c\x95\xfb\x93V\x8b\xf3\xe0\xf6");
     text += sprintf(text, "Version %s\r\n", "1.00a");
@@ -850,10 +851,10 @@ HARNESS_CALLED i32 ReplayManager::save(const char *path, const char *name, i32 u
     i32 user_size = finish_user_section(user, text);
     write_to_file(user, user_size);
     memset(user, 0, 0xffff);
-    *(u32 *)user = RPY_USER_MAGIC;
+    user->magic = RPY_USER_MAGIC;
     // USER section 1: the comment ("write a comment").
-    user[8] = 1;
-    text = (char *)user + 0xc;
+    user->kind = RPY_USER_COMMENT;
+    text = (char *)(user + 1);
     text += sprintf(text, "\x83R\x83\x81\x83\x93\x83g\x82\xf0\x8f\x91\x82\xaf\x82\xdc\x82\xb7") + 1;
     user_size = finish_user_section(user, text);
     write_to_file(user, user_size);

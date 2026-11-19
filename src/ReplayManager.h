@@ -127,6 +127,24 @@ struct RpyHeader
     }
 };
 
+// One USER block follows the compressed replay payload. Its text begins
+// after the 12-byte header; section 0 is the replay description and 1 is the
+// user comment.
+enum RpyUserSectionKind : u8
+{
+    RPY_USER_DESCRIPTION = 0,
+    RPY_USER_COMMENT = 1,
+};
+struct RpyUserSectionHeader
+{
+    u32 magic;
+    u32 size;
+    RpyUserSectionKind kind;
+    u8 unk_9[3];
+};
+static_assert(sizeof(RpyUserSectionHeader) == 0xc, "replay USER section header size");
+static_assert(offsetof(RpyUserSectionHeader, kind) == 8, "replay USER section kind offset");
+
 // RpyHeader's fields.
 struct RpyFileHeader
 {
