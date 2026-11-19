@@ -395,12 +395,13 @@ extern ShtBulletFunc g_sht_func_3_table[1];
 extern DamageSourceHitFunc const g_damage_source_hit_funcs[3];
 
 // ShtShooter::kind.
-enum ShtShooterKind
+enum ShtShooterKind : u8
 {
     // One bullet per option that stays attached to it while the shot key
     // is held (Marisa's laser).
     SHT_SHOOTER_LASER = 2,
 };
+static_assert(sizeof(ShtShooterKind) == sizeof(u8), "SHT shooter kind occupies one byte");
 
 // One way of firing bullets in a .sht file (ExpHP: zShtShooter). The array
 // for each power level ends with a fire_rate of -1.
@@ -422,8 +423,8 @@ struct ShtShooter
     // 0: fired from the player; n: from option n - 1 (season options
     // from SEASON_OPTION_INDEX_BASE + 1).
     u8 option;
-    // ShtShooterKind.
-    u8 kind;
+    // The .sht file encodes the shooting implementation in one byte.
+    ShtShooterKind kind;
     union
     {
         struct
