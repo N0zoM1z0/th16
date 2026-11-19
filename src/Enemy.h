@@ -87,8 +87,9 @@ struct EnemyBulletShooter
     u16 aim_type_high;
     // 0x20: play shot_sfx.
     u32 sfx_flags;
-    u32 shot_sfx;
-    u32 shot_transform_sfx;
+    // Signed sound IDs: -1 disables the sound, including transform effects.
+    i32 shot_sfx;
+    i32 shot_transform_sfx;
     u32 start_transform;
     u32 unk_37c;
 
