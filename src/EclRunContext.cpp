@@ -553,11 +553,12 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
         register u32 arg_offset = name_len + (start + 2) * sizeof(i32);
         do
         {
-            if (arg_base[arg_offset + 0xc] == 'f' || arg_base[arg_offset + 0xc] == 'g')
+            if (arg_base[arg_offset + 0xc] == ECL_CALL_FLOAT ||
+                arg_base[arg_offset + 0xc] == ECL_CALL_GLOBAL_FLOAT)
             {
                 f32 value = pop_float_arg_given_value(
                     i, arg_values[arg_offset / sizeof(EclStackItem)].f);
-                if (arg_base[arg_offset + 0xd] == 'f')
+                if (arg_base[arg_offset + 0xd] == ECL_CALL_FLOAT)
                 {
                     local->f = value;
                 }
@@ -570,7 +571,7 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
             {
                 i32 value = pop_int_arg_given_value(
                     i, arg_values[arg_offset / sizeof(EclStackItem)].i);
-                if (arg_base[arg_offset + 0xd] == 'f')
+                if (arg_base[arg_offset + 0xd] == ECL_CALL_FLOAT)
                 {
                     local->f = (f32)value;
                 }

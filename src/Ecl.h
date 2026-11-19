@@ -145,16 +145,25 @@ enum EclOpcode
     ECL_OP_RAND_RING_POS = 93,
 };
 
-// One extra argument of the call instructions: the type of the value as
-// written ('f'/'g' float, else int), the type the callee wants ('f' float,
-// else int), and the value.
+// Call arguments use a different encoding from expression-stack entries:
+// both 'f' and 'g' denote a source float, while only 'f' denotes a float
+// expected by the callee.
+enum EclCallValueKind : char
+{
+    ECL_CALL_INTEGER = 'i',
+    ECL_CALL_FLOAT = 'f',
+    ECL_CALL_GLOBAL_FLOAT = 'g',
+};
+
 struct EclCallArg
 {
-    char type_from;
-    char type_to;
+    EclCallValueKind type_from;
+    EclCallValueKind type_to;
     u8 unk_2[2];
     EclStackItem value;
 };
+static_assert(sizeof(EclCallArg) == 8, "ECL call argument record size");
+static_assert(offsetof(EclCallArg, value) == 4, "ECL call argument value offset");
 
 // ExpHP: zEclStack.
 struct EclStack
