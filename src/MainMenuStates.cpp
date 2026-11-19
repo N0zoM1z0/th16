@@ -469,7 +469,7 @@ i32 TitleInf::do_difficulty_select()
         {
             AnmManager::interrupt_tree(anm_ids[0x68], 1);
             anm_ids[0x68].id = 0;
-            if (g_Globals.game_mode != GAME_MODE_NORMAL)
+            if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_NORMAL)
             {
                 g_last_difficulty = menu.next_selection;
                 g_Globals.difficulty = g_last_difficulty;
@@ -738,7 +738,7 @@ i32 TitleInf::do_subseason_select()
             g_SoundManager.play_sound_centered(SE_OK00, 0);
             set_substate(3);
             g_SoundManager.play_sound_centered(SE_BOON00, 0);
-            if (g_Globals.game_mode == GAME_MODE_NORMAL)
+            if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
             {
                 g_Supervisor.fade_out_bgm(0.05f);
                 return 1;
@@ -750,7 +750,7 @@ i32 TitleInf::do_subseason_select()
         {
             // The goto start at the end of this branch puts the now loading
             // block before confirm, like the original.
-            if (g_Globals.game_mode == GAME_MODE_NORMAL)
+            if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
             {
                 g_AsciiManager->show_now_loading(480.0f, 392.0f);
                 AnmId id;

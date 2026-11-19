@@ -87,11 +87,11 @@ int __fastcall ReplayManager::on_draw_fps(void *arg)
 // FUNCTION: TH16 0x449190
 void Globals::set_game_mode(u32 mode)
 {
-    if (game_mode != GAME_MODE_SPELL_PRACTICE)
+    if (flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
     {
         spell_id = -1;
     }
-    game_mode = mode;
+    flags_45c_fields.game_mode = mode;
 }
 
 // FUNCTION: TH16 0x4491c0
@@ -306,7 +306,7 @@ int ReplayManager::read_replay_file(const char *filename)
     i32 size;
 
     strcpy(this->filename, filename);
-    if (!(g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
+    if (!(g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
     {
         _chdir(g_GameWindow.save_dir);
         sprintf(path, "replay/%s", filename);
@@ -352,7 +352,7 @@ int ReplayManager::read_replay_file(const char *filename)
             (u8 *)(stages[gamestate->stage].input_begin + gamestate->num_frames);
         gamestate = (RpyGamestate *)((u8 *)(gamestate + 1) + gamestate->data_size);
     }
-    if (!(g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY) && data != NULL)
+    if (!(g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY) && data != NULL)
     {
         free(data);
     }
@@ -572,8 +572,8 @@ int ReplayManager::initialize(i32 mode, const char *filename)
         info->subshot = g_Globals.subshot;
         info->subseason = g_Globals.subseason;
         info->difficulty = g_Globals.difficulty;
-        info->flag_practice = g_Globals.game_mode;
-        info->flag_spell_practice = g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE ? 1 : 0;
+        info->flag_practice = g_Globals.flags_45c_fields.game_mode;
+        info->flag_spell_practice = g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE ? 1 : 0;
         info->spell_id = g_Globals.spell_id;
         if (g_GameThread != NULL)
         {

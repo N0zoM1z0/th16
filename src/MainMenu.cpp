@@ -981,7 +981,7 @@ i32 TitleInf::on_tick()
         else if (g_title_idle_frames >= 1800)
         {
             // Idle on the title screen for 30 seconds: play a demo replay.
-            g_Globals.flags_hi_45c = (g_Globals.flags_hi_45c & ~GLOBALS_HI_2) | GLOBALS_HI_DEMO_PLAY;
+            g_Globals.flags_45c_fields.flags_hi_45c = (g_Globals.flags_45c_fields.flags_hi_45c & ~GLOBALS_HI_2) | GLOBALS_HI_DEMO_PLAY;
             strcpy(g_current_replay_filename, g_demo_replay_names[g_demo_replay_index]);
             ReplayManager *replay = ReplayManager::create_from_file(g_current_replay_filename);
             g_demo_replay_index++;
@@ -1057,7 +1057,7 @@ i32 TitleInf::on_tick()
             do_score_name_entry();
             break;
         }
-        if (!(g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
+        if (!(g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
         {
             menu_flags |= TITLE_START_BGM;
             bgm_start_delay = 0;
@@ -1067,7 +1067,7 @@ i32 TitleInf::on_tick()
             menu_flags &= ~TITLE_START_BGM;
             g_Globals.difficulty = g_Globals.difficulty_before_demo;
         }
-        g_Globals.flags_hi_45c &= ~GLOBALS_HI_DEMO_PLAY;
+        g_Globals.flags_45c_fields.flags_hi_45c &= ~GLOBALS_HI_DEMO_PLAY;
         if (g_title_return_point == TITLE_RETURN_FIRST)
         {
             menu_flags |= TITLE_FIRST_SHOW;
@@ -1261,12 +1261,12 @@ i32 TitleInf::do_title_screen()
         {
             menu.disable(TITLE_ITEM_EXTRA_START);
         }
-        if (g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE)
+        if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE)
         {
             menu.set_cursor(TITLE_ITEM_SPELL_PRACTICE);
             g_Globals.set_game_mode(GAME_MODE_NORMAL);
         }
-        else if (g_Globals.game_mode != GAME_MODE_NORMAL)
+        else if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_NORMAL)
         {
             menu.set_cursor(TITLE_ITEM_PRACTICE_START);
             g_Globals.set_game_mode(GAME_MODE_NORMAL);

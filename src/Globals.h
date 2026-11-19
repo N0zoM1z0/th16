@@ -70,6 +70,15 @@ enum GlobalsFlagsHi
     GLOBALS_HI_2 = 1 << 1,
 };
 
+// The three logical fields share one 32-bit word at Globals + 0x45c.
+struct GlobalsFlags45c
+{
+    u32 flags_lo_45c : 4;
+    u32 game_mode : 2;
+    u32 flags_hi_45c : 26;
+};
+static_assert(sizeof(GlobalsFlags45c) == sizeof(u32), "Globals flag word size");
+
 // GlobalsFlagsHi bits as GameThread sees them in the whole flag word.
 #define GLOBALS_WORD_DEMO_PLAY (GLOBALS_HI_DEMO_PLAY << 6)
 
@@ -170,12 +179,12 @@ struct Globals
     // The difficulty to go back to after the title screen's demo replay.
     i32 difficulty_before_demo;
     u8 unk_234[0x45c - 0x234];
-    // GlobalsFlagsLo.
-    u32 flags_lo_45c : 4;
-    // GameMode.
-    u32 game_mode : 2;
-    // GlobalsFlagsHi.
-    u32 flags_hi_45c : 26;
+    union
+    {
+        GlobalsFlags45c flags_45c_fields;
+        // The same flags as a whole word for GameThread's combined masks.
+        u32 flags_45c;
+    };
 
     // Members that do not use this; LTCG dropped it. The item code passes
     // an argument these never read (callers push whatever is in ecx).
@@ -210,6 +219,8 @@ struct Globals
         return level;
     }
 };
+
+static_assert(offsetof(Globals, flags_45c) == 0x45c, "Globals flag word offset");
 
 extern Globals g_Globals;
 

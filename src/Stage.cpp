@@ -207,7 +207,7 @@ Stage::~Stage()
         delete lolk_snapshot_inner.fog;
         lolk_snapshot_inner.fog = NULL;
     }
-    if (!(g_Globals.flags_lo_45c & GLOBALS_SAME_STAGE_AGAIN))
+    if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_SAME_STAGE_AGAIN))
     {
         g_AnmManager->unload_anm(ANM_SLOT_STAGE + (stage_num & 1));
     }

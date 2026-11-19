@@ -145,7 +145,7 @@ int PauseMenu::on_tick()
     switch (state)
     {
     case PAUSE_CLOSED:
-        if (!(g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY) && !g_GameThread->flags.music_restart &&
+        if (!(g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY) && !g_GameThread->flags.music_restart &&
             ((g_hardware_input_pressed & INPUT_MENU) || (g_Supervisor.flags & SUPERVISOR_DEVICE_WAS_RESET)) &&
             g_GameThread->on_tick != NULL &&
             (g_GameThread->on_tick->flags & UPDATE_FUNC_ACTIVE) && g_GameThread->time_in_stage.current >= 30)
@@ -458,7 +458,7 @@ void PauseMenu::open()
     AnmManager::interrupt_tree(menu_anm_id, 3);
     SoundManager::pause_sounds();
     g_SoundManager.play_sound_centered(SE_PAUSE, 0);
-    if (g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+    if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
     {
         g_SoundManager.modify_bgm(BGM_PAUSE, 0, "Pause");
     }
@@ -497,11 +497,11 @@ void open_stage_end_menu()
     g_GameThread->flags.in_menu = 1;
     menu->set_state(PAUSE_STAGE_END);
     menu->set_substate_inline(PAUSE_SUB_OPEN_STAGE_END);
-    if (g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE)
+    if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE)
     {
         menu->set_substate(PAUSE_SUB_OPEN_SPELL_PRACTICE_END);
     }
-    if (g_Globals.game_mode == GAME_MODE_NORMAL)
+    if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
     {
         menu->snapshot_id = g_Supervisor.text_anm->create_ui_vm_at_origin(TEXT_SCRIPT_PAUSE_SNAPSHOT, 0);
         g_AnmManager->copy_screen_to_sprite(menu->snapshot_id, (i32)(g_screen_coord_scale * 32.0f),
@@ -526,9 +526,9 @@ void open_stage_end_menu()
 // FUNCTION: TH16 0x43f7e0
 void PauseMenu::begin_score_entry()
 {
-    if (g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+    if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
     {
-        if (g_Globals.game_mode != GAME_MODE_NORMAL)
+        if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_NORMAL)
         {
             ScorefilePractice *practices = g_Scorefile->characters[g_Globals.subshot + g_Globals.character].practices[0];
             i32 stage = g_Globals.difficulty * 8 + g_Globals.stage_num - 1;
@@ -617,7 +617,7 @@ void open_game_over_menu()
     g_GameThread->flags.in_menu = 1;
     SoundManager::pause_sounds();
     g_SoundManager.play_sound_centered(SE_PAUSE, 0);
-    if (g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+    if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
     {
         g_SoundManager.modify_bgm(BGM_PAUSE, 0, "Pause");
     }
@@ -626,7 +626,7 @@ void open_game_over_menu()
     }
     menu->take_snapshot();
     menu->front_anm = g_Gui->front_anm;
-    if (g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+    if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
     {
         strcpy(menu->saved_bgm_name, g_SoundManager.get_bgm_name());
         menu->saved_bgm_time = g_SoundManager.bgm_play_time();
@@ -1153,7 +1153,7 @@ void PauseMenu::tick_open()
                 set_substate(PAUSE_SUB_CHOOSE);
                 item_menu.num_choices = PAUSE_ITEM_COUNT;
                 item_menu.wraps = 1;
-                if (!(menu_flags & PAUSE_FROM_STAGE_END) && g_Globals.game_mode == GAME_MODE_NORMAL)
+                if (!(menu_flags & PAUSE_FROM_STAGE_END) && g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
                 {
                     menu_anm_id = front_anm->create_ui_vm_at_origin(PAUSE_SCRIPT_GAME_OVER_MENU, 0);
                     if (g_Globals.continues_used > 0)
@@ -1234,7 +1234,7 @@ void PauseMenu::tick_open()
             name_entry_menu.set_cursor(0);
             name_entry_menu.num_choices = NAME_ENTRY_CHOICES;
             name_entry_menu.wraps = 1;
-            if (stage_finished != 0 && g_Globals.game_mode == GAME_MODE_NORMAL)
+            if (stage_finished != 0 && g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
             {
                 g_ReplayManager->set_end_stage(1);
             }
@@ -1281,7 +1281,7 @@ void PauseMenu::tick_open()
             }
             set_substate(PAUSE_SUB_CHOOSE);
             menu_anm_id.show_tree();
-            if (g_Globals.game_mode != GAME_MODE_NORMAL)
+            if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_NORMAL)
             {
                 item_menu.disable(PAUSE_ITEM_RESUME);
                 item_menu.disable(PAUSE_ITEM_MANUAL);

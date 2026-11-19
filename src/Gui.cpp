@@ -166,7 +166,7 @@ i32 Gui::load_stage_files()
 // FUNCTION: TH16 0x427730
 void Gui::release_stage_files()
 {
-    if (!(g_Globals.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
+    if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
     {
         g_AnmManager->unload_anm(ANM_SLOT_STAGE_LOGO);
     }
@@ -180,7 +180,7 @@ void Gui::release_stage_files()
         delete msg;
         msg = NULL;
     }
-    if (!(g_Globals.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
+    if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
     {
         if (msg_file != NULL)
         {
@@ -228,7 +228,7 @@ HARNESS_CALLED void Gui::release_msg()
         delete msg;
         msg = NULL;
     }
-    if (!(g_Globals.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
+    if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
     {
         g_AnmManager->unload_anm(ANM_SLOT_STAGE_LOGO);
         stage_logo_anm = NULL;
@@ -1043,8 +1043,8 @@ void Gui::update_score()
         g_Globals.hiscore_continues = g_Globals.continues_used;
         // The flag is set before it is tested, so the hiscore notice never
         // shows.
-        g_Globals.flags_lo_45c |= GLOBALS_HISCORE_BEATEN;
-        if (!(g_Globals.flags_lo_45c & GLOBALS_HISCORE_BEATEN))
+        g_Globals.flags_45c_fields.flags_lo_45c |= GLOBALS_HISCORE_BEATEN;
+        if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_HISCORE_BEATEN))
         {
             gui->show_notice(0, GUI_NOTICE_HISCORE);
         }
@@ -1226,7 +1226,7 @@ HARNESS_CALLED void Gui::hide_stage_clear_bonus()
 // FUNCTION: TH16 0x42c240
 void show_stage_logo()
 {
-    if (g_Supervisor.gamemode_to_switch_to != GAMEMODE_UNUSED_8 && !(g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
+    if (g_Supervisor.gamemode_to_switch_to != GAMEMODE_UNUSED_8 && !(g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
     {
         create_effect_via_pointer(g_Gui->stage_logo_anm, LOGO_ANM_STAGE_TITLE, -1, NULL);
     }
@@ -1607,7 +1607,7 @@ void Gui::start_dialogue(i32 script)
     {
         i32 boss = script == -1;
         StageData *stage = g_stage_data;
-        if (g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE && g_GameThread->replay_mode == 0)
+        if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE && g_GameThread->replay_mode == 0)
         {
             char path[0x100];
             strcpy(path, stage->music_names[boss]);
@@ -1758,12 +1758,12 @@ void Gui::setup_stage_hud()
     gui->update_lives(g_Globals.lives, g_Globals.life_fragments);
     gui->update_bombs(g_Globals.bombs, g_Globals.bomb_fragments);
     // The stage theme's title.
-    if (g_Supervisor.gamemode_to_switch_to != GAMEMODE_UNUSED_8 && !(g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY) &&
-        g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+    if (g_Supervisor.gamemode_to_switch_to != GAMEMODE_UNUSED_8 && !(g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY) &&
+        g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
     {
         create_effect_inline(gui->stage_logo_anm, LOGO_ANM_STAGE_THEME, -1, NULL);
     }
-    if (g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY)
+    if (g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY)
     {
         create_effect_inline(gui->front_anm, FRONT_ANM_DEMO_PLAY, -1, NULL);
     }

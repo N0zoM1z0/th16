@@ -47,10 +47,6 @@ extern i32 g_continues_remaining;
 // otherwise one more than the lives.
 extern i32 g_practice_lives_key;
 
-// g_Globals' flag word at 0x45c as a whole (flags_lo_45c, game_mode,
-// flags_hi_45c): GlobalsFlagsLo masks and GLOBALS_WORD_DEMO_PLAY.
-#define GLOBALS_FLAGS_45C (*(u32 *)((u8 *)&g_Globals + 0x45c))
-
 // GameThread::flags as one word, for the GameThreadFlagMask masks.
 #define GAME_THREAD_FLAG_WORD(thread) (*(u32 *)&(thread)->flags)
 
@@ -186,14 +182,14 @@ i32 GameThread::thread_start()
                 g_Globals.difficulty = DIFFICULTY_EXTRA;
             }
         }
-        if (g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE)
+        if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE)
         {
             g_Globals.hiscore = g_Scorefile->characters[g_Globals.subshot + g_Globals.character]
                                     .spells[g_Globals.spell_id]
                                     .practice_score;
             g_Globals.hiscore_continues = 0;
         }
-        else if (g_Globals.game_mode != GAME_MODE_NORMAL)
+        else if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_NORMAL)
         {
             g_Globals.hiscore = g_Scorefile->characters[g_Globals.subshot + g_Globals.character]
                                     .practices[g_Globals.difficulty][g_Globals.stage_num - 1]
@@ -207,7 +203,7 @@ i32 GameThread::thread_start()
             g_Globals.hiscore = best->score;
             g_Globals.hiscore_continues = best->continues;
         }
-        if (!(g_Globals.flags_lo_45c & GLOBALS_CONTINUED))
+        if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_CONTINUED))
         {
             g_Globals.continues_used = 0;
         }
@@ -218,7 +214,7 @@ i32 GameThread::thread_start()
         g_Globals.max_piv = g_max_piv_per_difficulty[g_Globals.difficulty] * 100;
         g_Globals.piv = (f32)g_Globals.initial_piv / 100.0f * 100.0f;
         g_continues_remaining = g_continues_per_difficulty[g_Globals.difficulty];
-        if (g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE)
+        if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE)
         {
             g_Globals.lives = 0;
             g_Globals.bombs = 0;
@@ -227,7 +223,7 @@ i32 GameThread::thread_start()
                 g_Gui->update_bombs(0, g_Globals.bomb_fragments);
             }
         }
-        else if (g_Globals.game_mode == GAME_MODE_NORMAL)
+        else if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
         {
             g_Globals.lives = 2;
         }
@@ -245,7 +241,7 @@ i32 GameThread::thread_start()
         }
         // Spell practice, the extra stage and practice from stage 2 on
         // start with 4.00 power; stage 1 with 1.00.
-        if (g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE)
+        if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE)
         {
             i32 power = g_Globals.power_per_level * 4;
             if (power > g_Globals.max_power)
@@ -307,7 +303,7 @@ i32 GameThread::thread_start()
             }
         }
         g_Player->inner.repopulate_options();
-        GLOBALS_FLAGS_45C &= ~GLOBALS_HISCORE_BEATEN;
+        g_Globals.flags_45c &= ~GLOBALS_HISCORE_BEATEN;
         if (thread->replay_mode == REPLAY_RECORDING)
         {
             i32 *play_count = &g_Scorefile->characters[g_Globals.subshot + g_Globals.character].play_count;
@@ -338,7 +334,7 @@ i32 GameThread::thread_start()
     thread->start_stage_num = g_stage_data->stage_num;
     // The game objects; going on to the next stage keeps them and only
     // loads the new stage's files.
-    if (!(g_Globals.flags_lo_45c & GLOBALS_NEXT_STAGE))
+    if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_NEXT_STAGE))
     {
         if (ReplayManager::create(thread->replay_mode) == NULL)
         {
@@ -382,7 +378,7 @@ i32 GameThread::thread_start()
             goto fail;
         }
     }
-    if (!(g_Globals.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
+    if (!(g_Globals.flags_45c_fields.flags_lo_45c & GLOBALS_STAGE_RESTART_MASK))
     {
         if (EnemyManager::create(g_stage_data->ecl_filename) == NULL)
         {
@@ -403,11 +399,11 @@ i32 GameThread::thread_start()
     }
     // Outside the demo, load the stage and boss themes (stopping the old
     // music unless in spell practice).
-    if (!(GLOBALS_FLAGS_45C & GLOBALS_WORD_DEMO_PLAY))
+    if (!(g_Globals.flags_45c & GLOBALS_WORD_DEMO_PLAY))
     {
         // The original tests the flag byte in memory and loads the word
         // again for game_mode; a plain read shares one load.
-        if (((volatile Globals *)&g_Globals)->game_mode != GAME_MODE_SPELL_PRACTICE)
+        if (((volatile Globals *)&g_Globals)->flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
         {
             g_Supervisor.stop_bgm();
         }
@@ -428,7 +424,7 @@ i32 GameThread::thread_start()
     thread->music_restart_delay = 60;
     g_Supervisor.end_stage_load_anms();
     GAME_THREAD_FLAG_WORD(thread) &= ~GAME_THREAD_LOADING;
-    GLOBALS_FLAGS_45C &= ~(GLOBALS_SAME_STAGE_AGAIN | GLOBALS_NEXT_STAGE | GLOBALS_CONTINUED);
+    g_Globals.flags_45c &= ~(GLOBALS_SAME_STAGE_AGAIN | GLOBALS_NEXT_STAGE | GLOBALS_CONTINUED);
     g_Supervisor.thread.should_run = FALSE;
     g_Supervisor.thread.stop_requested = TRUE;
     g_cancel_screen_effects = 0;
@@ -473,7 +469,7 @@ fail:
 DECOMP_NOINLINE GameThread::~GameThread()
 {
     scorefile_save();
-    GLOBALS_FLAGS_45C &= ~(GLOBALS_SAME_STAGE_AGAIN | GLOBALS_NEXT_STAGE);
+    g_Globals.flags_45c &= ~(GLOBALS_SAME_STAGE_AGAIN | GLOBALS_NEXT_STAGE);
     g_game_speed = 1.0f;
     g_draw_hook_0f = NULL;
     g_draw_hook_1a = NULL;
@@ -483,13 +479,13 @@ DECOMP_NOINLINE GameThread::~GameThread()
         g_AsciiManager->show_now_loading_inline(480.0f, 392.0f);
         if (g_Globals.weird_stage_num == g_Globals.stage_num)
         {
-            GLOBALS_FLAGS_45C |= GLOBALS_SAME_STAGE_AGAIN;
+            g_Globals.flags_45c |= GLOBALS_SAME_STAGE_AGAIN;
         }
     }
     else if (g_Supervisor.gamemode_to_switch_to == GAMEMODE_NEXT_STAGE)
     {
         g_AsciiManager->show_now_loading(480.0f, 392.0f);
-        GLOBALS_FLAGS_45C |= GLOBALS_NEXT_STAGE;
+        g_Globals.flags_45c |= GLOBALS_NEXT_STAGE;
     }
     else if (g_Supervisor.gamemode_to_switch_to == GAMEMODE_TITLE)
     {
@@ -509,11 +505,11 @@ DECOMP_NOINLINE GameThread::~GameThread()
             {
                 g_Globals.continues_used = 9;
             }
-            GLOBALS_FLAGS_45C |= GLOBALS_CONTINUED;
+            g_Globals.flags_45c |= GLOBALS_CONTINUED;
         }
-        GLOBALS_FLAGS_45C |= GLOBALS_SAME_STAGE_AGAIN;
+        g_Globals.flags_45c |= GLOBALS_SAME_STAGE_AGAIN;
     }
-    if (!(GLOBALS_FLAGS_45C & GLOBALS_NEXT_STAGE))
+    if (!(g_Globals.flags_45c & GLOBALS_NEXT_STAGE))
     {
         if (g_Supervisor.gamemode_to_switch_to != GAMEMODE_ENDING &&
             g_Supervisor.gamemode_to_switch_to != GAMEMODE_TITLE_SCORE_ENTRY)
@@ -564,7 +560,7 @@ DECOMP_NOINLINE GameThread::~GameThread()
         }
         g_ItemManager->destroy_all();
     }
-    if (!(GLOBALS_FLAGS_45C & GLOBALS_STAGE_RESTART_MASK))
+    if (!(g_Globals.flags_45c & GLOBALS_STAGE_RESTART_MASK))
     {
         delete g_EnemyManager;
     }
@@ -581,8 +577,8 @@ DECOMP_NOINLINE GameThread::~GameThread()
     g_GameThread = NULL;
     // The music stops unless it goes on: a retry in spell practice, the
     // next stage, or the demo.
-    if (!(g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE && (GLOBALS_FLAGS_45C & GLOBALS_SAME_STAGE_AGAIN)) &&
-        !(GLOBALS_FLAGS_45C & (GLOBALS_WORD_DEMO_PLAY | GLOBALS_NEXT_STAGE)))
+    if (!(g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE && (g_Globals.flags_45c & GLOBALS_SAME_STAGE_AGAIN)) &&
+        !(g_Globals.flags_45c & (GLOBALS_WORD_DEMO_PLAY | GLOBALS_NEXT_STAGE)))
     {
         if (g_Supervisor.config.flags & CONFIG_BGM_IN_MEMORY)
         {
@@ -596,7 +592,7 @@ DECOMP_NOINLINE GameThread::~GameThread()
     }
     SoundManager::pause_sounds();
     g_cancel_screen_effects = 1;
-    g_Supervisor.background_color = (GLOBALS_FLAGS_45C & GLOBALS_SAME_STAGE_AGAIN) ? 0 : 0xff000000;
+    g_Supervisor.background_color = (g_Globals.flags_45c & GLOBALS_SAME_STAGE_AGAIN) ? 0 : 0xff000000;
 }
 
 // One frame of a game: the ending fade, the stage start and transition,
@@ -672,7 +668,7 @@ HARNESS_CALLED i32 GameThread::on_tick_body()
     }
     // The demo ends on a key press or a menu, or after 0xf3c frames (with a
     // fade from 0xf00), back to the title.
-    if (g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY)
+    if (g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY)
     {
         if ((g_hardware_input & (INPUT_ENTER | INPUT_MENU | INPUT_BOMB | INPUT_SHOT)) ||
             (GAME_THREAD_FLAG_WORD(this) & (GAME_THREAD_IN_MENU | GAME_THREAD_FLAG_5 | GAME_THREAD_FLAG_6)))
@@ -931,7 +927,7 @@ HARNESS_CALLED i32 GameThread::begin_stage()
     }
     flags.stage_transition = 0;
     restart_stage_objects();
-    if (g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE && !(g_Globals.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
+    if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE && !(g_Globals.flags_45c_fields.flags_hi_45c & GLOBALS_HI_DEMO_PLAY))
     {
         g_Supervisor.play_bgm(0, g_stage_data->music_ids[0]);
     }
@@ -982,7 +978,7 @@ i32 GameThread::finish_stage_transition()
 i32 stage_clear()
 {
     GameThread *thread = g_GameThread;
-    if (g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+    if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
     {
         Gui::show_stage_clear_bonus();
     }
@@ -991,14 +987,14 @@ i32 stage_clear()
     {
         g_MainBomb->end_at_stage_clear();
     }
-    if (g_Globals.game_mode != GAME_MODE_NORMAL)
+    if (g_Globals.flags_45c_fields.game_mode != GAME_MODE_NORMAL)
     {
         if (g_GameThread->replay_mode != REPLAY_RECORDING)
         {
             open_replay_end_menu();
             return 0;
         }
-        if (g_Globals.game_mode == GAME_MODE_SPELL_PRACTICE)
+        if (g_Globals.flags_45c_fields.game_mode == GAME_MODE_SPELL_PRACTICE)
         {
             ScorefileSpell *spell =
                 &g_Scorefile->characters[g_Globals.subshot + g_Globals.character].spells[g_Globals.spell_id];
@@ -1007,7 +1003,7 @@ i32 stage_clear()
                 spell->practice_score = g_Globals.score / 10 * 10;
             }
         }
-        if (g_GameThread->replay_mode == REPLAY_RECORDING && g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+        if (g_GameThread->replay_mode == REPLAY_RECORDING && g_Globals.flags_45c_fields.game_mode != GAME_MODE_SPELL_PRACTICE)
         {
             g_Scorefile->characters[g_Globals.subshot + g_Globals.character]
                 .practices[g_Globals.difficulty][g_Globals.stage_num - 1]
