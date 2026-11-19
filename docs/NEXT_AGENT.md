@@ -9,14 +9,16 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built source checkpoint: a8ec90d
-  (gpt-web: restore float frame decrement for bullet offscreen timer). Six
-  later commits on 2026-11-19 recovered typed ECL expression-stack addressing,
-  carried ReplayManagerMode into GameThread, typed bullet cancellation
-  script selectors, and reconstructed Bullet::step_ex_08 / Bullet::step_ex_17
-  source ordering and scratch storage. All source changes retain native field
-  widths and public function ABI. Consult Git history and focused owner
-  comparisons; do not treat normalized ratios as strict Oracle results.
+- Latest locally built source checkpoint: eed3a66
+  (gpt-web: pin bullet corner scratch overlap and integer timer frames). Recent
+  commits recovered typed ECL expression-stack addressing, carried
+  ReplayManagerMode into GameThread, typed bullet cancellation script
+  selectors, and reconstructed Bullet::step_ex_08 / Bullet::step_ex_17
+  source ordering and scratch storage. The current offscreen scratch union
+  explicitly places corner.x over the unused direction.z word and asserts
+  both offsets and total size. All source changes retain native field widths
+  and public function ABI. Consult Git history and focused owner comparisons;
+  do not treat normalized ratios as strict Oracle results.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
   **not currently a dirty change**; its old evidence is historical.
