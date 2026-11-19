@@ -15,6 +15,7 @@
 
 class EnemyInf;
 struct EnemyData;
+enum ItemType : i32;
 
 // ECL-installed callbacks. Hook signatures are part of the EnemyData layout:
 // these are typed function pointers, not opaque user data.
@@ -166,7 +167,8 @@ struct EnemyLife
 // ExpHP: zEnemyDrop.
 struct EnemyDrop
 {
-    i32 main_type;
+    // ECL dropMain selects one ItemType; zero disables the main drop.
+    ItemType main_type;
     i32 extra_counts[0x11];
     D3DXVECTOR2 area;
 
@@ -175,7 +177,7 @@ struct EnemyDrop
         memset(this, 0, sizeof(*this));
         area.y = 32.0f;
         area.x = 32.0f;
-        main_type = 0;
+        main_type = static_cast<ItemType>(0);
     }
 
     void eject_all_drops(D3DXVECTOR3 *pos);

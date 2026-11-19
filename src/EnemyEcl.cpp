@@ -1558,7 +1558,7 @@ int EnemyData::ecl_run_over_300()
         break;
     // dropMain(item_type)
     case ECL_OP_DROP_MAIN:
-        drops.main_type = get_int_arg(0);
+        drops.main_type = static_cast<ItemType>(get_int_arg(0));
         break;
     // lifeSet(life)
     case ECL_OP_LIFE_SET:

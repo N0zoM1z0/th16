@@ -895,7 +895,7 @@ void EnemyDrop::eject_all_drops(D3DXVECTOR3 *pos)
         g_ItemManager->spawn_item(main_type, pos, 0, -ZUN_PI / 2, 2.2f, 0, 0);
     }
     eject_extra_drops(pos);
-    main_type = 0;
+    main_type = static_cast<ItemType>(0);
 }
 
 // The random distance is read again for the horizontal spread product, and
@@ -1416,7 +1416,7 @@ HARNESS_CALLED EnemyInf *EnemyManager::allocate_new_enemy(const char *sub_name, 
     enemy->enemy.score_reward = params->score_reward;
     enemy->enemy.life.current = params->life;
     enemy->enemy.life.maximum = params->life;
-    enemy->enemy.drops.main_type = params->item_drop;
+    enemy->enemy.drops.main_type = static_cast<ItemType>(params->item_drop);
     enemy->enemy.drops.extra_counts[15] = 10;
     enemy->enemy.drop_season.bonus_timer = 60;
     enemy->enemy.drop_season.max_time = 60;
