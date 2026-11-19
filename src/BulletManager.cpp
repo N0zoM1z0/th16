@@ -1970,7 +1970,7 @@ HARNESS_CALLED i32 Bullet::on_tick()
 // FUNCTION: TH16 0x4162d0
 HARNESS_CALLED i32 Bullet::step_ex_08()
 {
-    ex_state[11].timer.decrement(1);
+    ex_state[11].timer.decrement(1.0f);
     if (ex_state[11].ints[0] != 0 &&
         (outside_range(&pos.x, vm_sprite(&vm0)->sprite_width, -192.0f, 192.0f) ||
          outside_range(&pos.y, vm_sprite(&vm0)->sprite_height, 0.0f, 448.0f)))
