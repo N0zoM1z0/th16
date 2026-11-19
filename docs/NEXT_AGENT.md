@@ -9,13 +9,14 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built game-source checkpoint: `35b2062`
-  (`gpt-web: type ANM script opcodes as signed 16-bit records`). Five subsequent
-  source commits on 2026-11-19 corrected EX tag cursor dataflow in both laser
-  interpreters and recovered typed binary opcodes in the ECL, bullet-transform
-  and ANM records. The earlier signed sound-ID, typed ECL stack/call argument
-  and laser-timing phase checkpoints remain in history. Use `git log` and
-  `git status -sb` for the live HEAD and upstream relation.
+- Latest locally built game-source checkpoint: `e6293cb`
+  (`gpt-web: restore typed interpolation modes for ECL curve motion`). The
+  latest source changes select the Bezier/curve position through `PosVel*`
+  instead of reconstructing it from a byte offset, and store the curve
+  interpolation methods as `InterpMode`. The earlier signed sound IDs,
+  typed ECL stack/call arguments, laser timing, EX tag cursors and binary
+  opcode types remain in Git. Use `git log` and `git status -sb` for the
+  live HEAD and upstream relation.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
   **not currently a dirty change**; its old evidence is historical.
@@ -81,7 +82,7 @@ Factory acceptance.
 
 | Owner / source | Current local measurement and next issue |
 | --- | --- |
-| `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | 21,408 target / 21,456 candidate bytes; 4,562 / 5,435 normalized instructions; **0.8633**. Hard groups: laser cases 402/403/411/413 score about 0.73–0.77; Bezier 125/126 about 0.89; curve 134/135/138/139 about 0.98. `MOVE_POS_3D` 116/117 is about 0.90 and random movement 112/113 about 1.00. Continue with the four laser creation paths and preserve their distinct origin/copy order. |
+| `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | **2026-11-19 later build:** 21,408 target / 21,504 candidate bytes; 4,562 / 4,614 normalized linear-disassembly instructions; **0.9019**. This whole-owner diagnostic includes potential noncode regions and is not a strict result. Focused Bezier 125/126 remains 86/84 at 0.76, and curve 121/123 remains 169/173 at 0.97 after typed-position recovery. Four laser constructors 402/403/411/413 still require reconstruction, preserving distinct origin/copy orders. |
 | `AnmVm::run`, target `0x45f980`, `src/AnmVmRun.cpp` | 14,177 / 14,208 bytes; 3,837 / 3,843 instructions; **0.9474**. Cases 4 (`FOLLOW_CAMERA`) ~0.98, 124 (`FSET_RAND`) ~0.96, and 132 (random circle) ~0.97. Remaining differences include x87 result lifetime, radial multiplication and load order. |
 | `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 343 instructions; **0.9141**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
 | `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 363 instructions; **0.9737**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
@@ -101,6 +102,15 @@ never infer exactness from dispatch coverage or case ratios.
 For exact diffs consult `git show COMMIT`, not an old note's guessed source
 form. The most relevant recent commits are:
 
+- `e6293cb`: restore signed 32-bit `InterpMode` in the ECL curve interpolator;
+  local `InterpStrange1::step` remains 313 / 313 instructions at 0.9936.
+- `c179d02` and `0ca80c8`: use the chosen typed `PosVel*` for ECL curve and
+  Bezier position evaluation; the affected opcode blocks and large owner have
+  unchanged normalized diagnostic results. Avoid reintroducing `this + offset`
+  casts just to select absolute versus relative position.
+- `a91560e` and `da1b8f0`: unify masked ANM effect tick/render allocation and
+  type its overlay modes. Creation and draw callbacks retain their local
+  normalized match (86 / 86 and 355 / 355, respectively).
 - `35b2062`: recover signed 16-bit `AnmRawInstr::opcode` and verify its
   layout; the full `AnmVm::run` diagnostic remains 3,837 / 3,843 at 0.9474.
 - `c09349d`: restore `BulletEx::type` as a signed 32-bit bitmask opcode with
@@ -141,6 +151,13 @@ Re-measure before relying on any old ratio; none of these figures is a Factory
 exactness credit.
 
 ## Retained 2026-11-19 trial findings
+
+The latest session also restored a separate, unchanged-result curve-laser
+pointer-base trial and two regressive attempts: ANM fan parallel radius/speed
+cursors (normalized 1.0000 to 0.9481) and scalarized masked-effect XY-before-Z
+stores (0.8148 to 0.6258). Evidence remains ignored in `.analysis/th16-session4-*`.
+The natural-source typed-position and typed-mode changes above were retained
+only after the affected local build and opcode/owner comparisons.
 
 The previously noted `ZunTimer::tick_goto_volatile` screen-shake experiment is
 historical: it is not in the current worktree. Its old 121/121, 0.9917
