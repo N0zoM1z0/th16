@@ -1303,10 +1303,10 @@ void Gui::show_boss_marker()
     }
     if (script >= 0)
     {
-        script += FRONT_ANM_BOSS_MARKER;
-        if (script >= 0)
+        i32 marker_script = script + FRONT_ANM_BOSS_MARKER;
+        if (marker_script >= 0)
         {
-            boss_marker_id = create_effect_via_pointer(front_anm, script, -1, NULL);
+            boss_marker_id = create_effect_via_pointer(front_anm, marker_script, -1, NULL);
         }
     }
 }
