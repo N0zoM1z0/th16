@@ -9,16 +9,15 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built game-source checkpoint: `8339e1e`
-  (`gpt-web: restore native 3D shooter offsets in enemy ECL`). The current
-  ECL shooter has a true `D3DXVECTOR3` relative offset distinct from a
-  `BulletOrigin` whose third float is an enabled marker, not a Z coordinate.
-  These natural types improved the local ECL owner and laser-on case 402
-  comparison. Separate checkpoints recover 16-bit bullet lifecycle, 32-bit
-  item/player lifecycle types and the stage camera's byte-sized rocking
-  pattern without changing the enclosing binary layouts. The earlier
-  typed ECL/ANM/interpolation and laser EX work remains in Git. Use `git log`
-  and `git status -sb` for the live HEAD and upstream relation.
+- Latest locally built source checkpoint: `b7ff292`
+  (`gpt-web: recover typed pause lifecycle and menu substates`). Six source
+  commits on 2026-11-19 restored 16-bit `EtAimMode`, unsigned byte MSG and
+  ending-script opcodes, and the 32-bit manual, title and pause menu states.
+  The dialogue and ending interpreters' focused normalized ratios increased
+  to 0.9504 and 0.9768. Preserve external integer setter signatures and
+  native bytecode layouts. The prior 3D ECL shooter offsets and origins,
+  interpolator modes and laser EX checkpoints remain in Git. Use `git log`
+  and `git status -sb` for live HEAD and upstream state.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
   **not currently a dirty change**; its old evidence is historical.
@@ -94,6 +93,11 @@ Factory acceptance.
 | `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | **Latest incremental build:** 476 / 480 bytes; 121 / 121 instructions; **0.9917**, with one `push esi` occurring before rather than after the timer's current-frame store. Changing `tick_goto` to return the current frame did not fix it, so that trial was restored. |
 | `StageInner::run_std`, target `0x40b3b0`, `src/Stage.cpp` | **2026-11-19:** 3,204 / 3,184 bytes; 677 / 688 instructions; **0.9275** after typing the signed 16-bit STD opcode (previously 0.9240). The later typed rocking-mode union kept the same local comparison. |
 | `Player::on_tick_body`, target `0x442560`, `src/Player.cpp` | **2026-11-19:** 4,540 / 4,528 bytes; 929 / 925 instructions; **0.9137** with typed player/player-shot states. |
+| `GuiMsgVm::run`, target `0x42a1d0`, `src/Gui.cpp` | **2026-11-19:** 1,211 target / 1,188 candidate linear instructions; **0.9504**, up from 0.9468 after recovering the byte-sized `MsgOpcode`. Its switch ownership still has an independent incomplete-audit warning. |
+| `EndingScriptVm::run`, target `0x4199f0`, `src/Ending.cpp` | **2026-11-19:** 640 / 611 linear instructions; **0.9768**, up from 0.9742 after restoring `EndingOpcode : u8`. |
+| `PauseMenu::tick_open`, target `0x43f980`, `src/PauseMenu.cpp` | **2026-11-19:** 1,322 / 1,318 linear instructions; **0.9674** after typing its lifecycle and substate enums; `PauseMenu::on_tick` remains 83 / 83, 1.0. |
+| `TitleInf::on_tick`, target `0x44af80`, `src/MainMenu.cpp` | **2026-11-19:** 386 / 379 linear instructions; **0.9098** after typing the title lifecycle states. `TitleInf::set_state` remains 21 / 21, 1.0. |
+| `HelpManual::on_tick_body`, target `0x42eab0`, `src/HelpManual.cpp` | **2026-11-19:** 336 / 338 linear instructions; **0.9763** after typing manual lifecycle and page states. |
 
 Focused ECL opcode diagnostics from the latest 2026-11-19 incremental build:
 cases 402/403/411/413 (line/infinite/curve/beam laser) are respectively
@@ -106,6 +110,15 @@ never infer exactness from dispatch coverage or case ratios.
 For exact diffs consult `git show COMMIT`, not an old note's guessed source
 form. The most relevant recent commits are:
 
+- `b7ff292`, `9f4944e`, `976688b`: recover the pause, title and manual
+  state/substate types without changing the original integer setter ABI.
+  The affected large state machines build and retain their local ratios.
+- `4362993`, `99cf66b`: restore native 8-bit ending and MSG opcodes and the
+  argument offsets in their records; the two complete interpreter ratios
+  improve to 0.9768 and 0.9504. No strict exactness inference.
+- `e4f27ff`: type `EnemyBulletShooter::aim_type` as `EtAimMode : u16` and
+  convert the ECL, bullet EX and laser EX assignments at their integer
+  script boundaries. The original low-word encoding is preserved.
 - `8339e1e`: model `bullet_mgr_offsets` as a native 3D vector; the ECL
   complete-owner local ratio improved from 0.9019 to 0.9022, laser case 402
   from 0.77 to 0.78, and bosses-interrupt case 502 from 0.97 to 0.99.
@@ -188,6 +201,17 @@ Re-measure before relying on any old ratio; none of these figures is a Factory
 exactness credit.
 
 ## Retained 2026-11-19 trial findings
+
+Later scoped comparisons found several natural-source variants that were
+restored rather than committed: using a reference to `EnemyInterrupt` in
+`BOSSES_INTERRUPT` lowered case 502 from 0.99 to 0.83; direct
+`pos_vel->pos` component writes in `MOVE_POS_3D` lowered its case group
+from 0.77 to 0.73; sharing the laser origin Y load before the copy lowered
+cases 402/403/411 from 0.78/0.75/0.79 to 0.65/0.63/0.65; moving the half
+width computation ahead of `fabsf` in `collision_test_circle_rect` lowered
+its complete leaf ratio from 0.9612 to 0.8932. Retain the baseline and
+consult the ignored `.analysis/th16-s9-*` diagnostics if revisiting them.
+
 
 The most recent local A/B trials also restored several rejected natural
 expressions: `LaserCurveInf::step_ex_angle_accel` using a direct or volatile
