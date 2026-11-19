@@ -29,8 +29,8 @@ extern const char g_name_entry_chars[];
 HARNESS_CALLED void PauseMenu::set_state(i32 state)
 {
     prev_state = this->state;
-    this->state = state;
-    substate = 0;
+    this->state = static_cast<PauseState>(state);
+    substate = PAUSE_SUB_OPEN_PAUSE;
     time_in_current_menu.reset();
     time_since_pause_or_unpause.reset();
     item_menu.num_disabled = 0;
@@ -40,7 +40,7 @@ HARNESS_CALLED void PauseMenu::set_state(i32 state)
 // FUNCTION: TH16 0x43e200
 void PauseMenu::set_substate(i32 value)
 {
-    substate = value;
+    substate = static_cast<PauseSubstate>(value);
     time_in_current_menu.reset();
 }
 

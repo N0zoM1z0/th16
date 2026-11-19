@@ -10,7 +10,7 @@
 struct ReplayManager;
 
 // PauseMenu::state: which menu is open.
-enum PauseState
+enum PauseState : i32
 {
     PAUSE_CLOSED = 0,
     // The pause menu (Esc), or the menu shown when a replay ends.
@@ -22,7 +22,7 @@ enum PauseState
 };
 
 // PauseMenu::substate: the step of the open menu (tick_open).
-enum PauseSubstate
+enum PauseSubstate : i32
 {
     // The menus appearing, by how they were opened.
     PAUSE_SUB_OPEN_PAUSE = 0,
@@ -49,6 +49,8 @@ enum PauseSubstate
     // Closing the menu and acting on the choice.
     PAUSE_SUB_CLOSE = 16,
 };
+static_assert(sizeof(PauseState) == sizeof(i32), "pause state occupies one word");
+static_assert(sizeof(PauseSubstate) == sizeof(i32), "pause substate occupies one word");
 
 // The menu's items, top to bottom (the game over menu's first item is
 // "continue").
@@ -108,10 +110,10 @@ struct PauseMenu
     // text.anm script 0x34 behind the menu, showing a snapshot of the game
     // area (take_snapshot).
     AnmId snapshot_id;
-    // PauseState and PauseSubstate values.
-    i32 state;
-    i32 prev_state;
-    i32 substate;
+    // Menu lifecycle, its previous lifecycle and the active menu step.
+    PauseState state;
+    PauseState prev_state;
+    PauseSubstate substate;
     // Where the next character of the replay or score name goes.
     i32 name_cursor;
     // Set when the menu opened because a stage was finished
@@ -151,7 +153,7 @@ struct PauseMenu
     // set_substate where LTCG inlined it.
     __forceinline void set_substate_inline(i32 value)
     {
-        substate = value;
+        substate = static_cast<PauseSubstate>(value);
         time_in_current_menu.reset();
     }
 
