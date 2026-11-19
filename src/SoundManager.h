@@ -482,12 +482,13 @@ static_assert(offsetof(BgmCommandEntry, command) == 0, "BGM command precedes its
 static_assert(offsetof(BgmCommandEntry, step) == 8, "BGM command progress offset");
 
 // What the sound threads should do (SoundManager::thread_state).
-enum SoundThreadState
+enum SoundThreadState : i32
 {
     SOUND_THREAD_RUNNING = 0,
     SOUND_THREAD_DONE = 1,
     SOUND_THREAD_QUIT = 2,
 };
+static_assert(sizeof(SoundThreadState) == sizeof(i32), "sound thread state occupies 32 bits");
 
 extern SoundEffectData g_sound_effect_table[SOUND_EFFECT_COUNT];
 
@@ -539,7 +540,7 @@ struct SoundManager
     HANDLE init_thread;
     HANDLE load_thread;
     DWORD init_thread_id;
-    i32 thread_state;
+    SoundThreadState thread_state;
     HWND window;
     i32 init_done;
     i32 bgm_volume;
