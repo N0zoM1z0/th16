@@ -2067,10 +2067,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_LASER_TIMING:
     {
         i32 idx = get_int_arg(0);
-        bullet_props[idx].laser_timing[0] = get_int_arg(1);
-        bullet_props[idx].laser_timing[1] = get_int_arg(2);
-        bullet_props[idx].laser_timing[2] = get_int_arg(3);
-        bullet_props[idx].laser_timing[3] = get_int_arg(4);
+        bullet_props[idx].laser_timing.start_time = get_int_arg(1);
+        bullet_props[idx].laser_timing.expand_time = get_int_arg(2);
+        bullet_props[idx].laser_timing.duration = get_int_arg(3);
+        bullet_props[idx].laser_timing.shrink_time = get_int_arg(4);
         bullet_props[idx].flags = get_int_arg(5);
         break;
     }
@@ -2275,12 +2275,12 @@ int EnemyData::ecl_run_over_300()
         i32 color = shooter.color;
         laser_params_storage.infinite.color = color;
         laser_params_storage.infinite.ang_aim = normalize_angle(ang_aim);
-        laser_params_storage.infinite.start_time = shooter.laser_timing[0];
-        laser_params_storage.infinite.expand_time = shooter.laser_timing[1];
+        laser_params_storage.infinite.start_time = shooter.laser_timing.start_time;
+        laser_params_storage.infinite.expand_time = shooter.laser_timing.expand_time;
         laser_params_storage.infinite.speed = shooter.spd1;
-        laser_params_storage.infinite.duration = shooter.laser_timing[2];
+        laser_params_storage.infinite.duration = shooter.laser_timing.duration;
         laser_params_storage.infinite.laser_new_arg_1 = shooter.pos.x;
-        laser_params_storage.infinite.shrink_time = shooter.laser_timing[3];
+        laser_params_storage.infinite.shrink_time = shooter.laser_timing.shrink_time;
         laser_params_storage.infinite.flags = shooter.flags | 2;
         laser_params_storage.infinite.laser_new_arg_2 = shooter.pos.y;
         laser_params_storage.infinite.laser_new_arg_4 = shooter.laser_new_arg_4;
@@ -2303,7 +2303,7 @@ int EnemyData::ecl_run_over_300()
         f32 ang_aim = shooter.ang_aim;
         laser_params_storage.beam.color = color;
         laser_params_storage.beam.ang_aim = normalize_angle(ang_aim);
-        laser_params_storage.beam.timing = shooter.laser_timing[0];
+        laser_params_storage.beam.timing = shooter.laser_timing.start_time;
         laser_params_storage.beam.laser_new_arg_4 = shooter.laser_new_arg_4;
         laser_params_storage.beam.length = shooter.pos.z;
         laser_params_storage.beam.distance = shooter.distance;
@@ -2325,7 +2325,7 @@ int EnemyData::ecl_run_over_300()
         i32 color = shooter.color;
         laser_params_storage.curve.color = color;
         laser_params_storage.curve.ang_aim = normalize_angle(ang_aim);
-        laser_params_storage.curve.segment_count = shooter.laser_timing[0];
+        laser_params_storage.curve.segment_count = shooter.laser_timing.start_time;
         laser_params_storage.curve.creation_flags |= LASER_CURVE_CREATED_BY_ECL;
         laser_params_storage.curve.shot_sfx = shooter.shot_sfx;
         laser_params_storage.curve.speed = shooter.spd1;

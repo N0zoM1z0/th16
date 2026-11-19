@@ -464,7 +464,7 @@ struct LaserBeamInner
     i32 id;
     i32 color;
     f32 distance;
-    // The shooter's laser_timing[0].
+    // The shooter's laser_timing.start_time (also the beam timing).
     i32 timing;
     // Low bit written by ECL 714; its downstream meaning is still unknown.
     u32 ecl_beam_flag : 1;

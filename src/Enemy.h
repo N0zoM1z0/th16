@@ -54,6 +54,18 @@ enum EtAimMode
     ET_AIM_PEANUT2 = 12,
 };
 
+// ECL's laserTiming arguments. The first field is also used as the beam
+// timing and curved-laser segment count; the other three are meaningful for
+// infinite lasers.
+struct EnemyLaserTiming
+{
+    i32 start_time;
+    i32 expand_time;
+    i32 duration;
+    i32 shrink_time;
+};
+static_assert(sizeof(EnemyLaserTiming) == 0x10, "ECL laser timing layout");
+
 // ExpHP: zEnemyBulletShooter.
 struct EnemyBulletShooter
 {
@@ -74,8 +86,8 @@ struct EnemyBulletShooter
     // laserNew's fourth argument; the first three go into pos.
     f32 laser_new_arg_4;
     u8 unk_344[0x350 - 0x344];
-    // laserTiming's first four arguments.
-    i32 laser_timing[4];
+    // laserTiming's four phase parameters.
+    EnemyLaserTiming laser_timing;
     // laserTiming's fifth argument; the laser instructions add a bit.
     u32 flags;
     // Bullets per layer and layers per shot.
@@ -100,6 +112,10 @@ struct EnemyBulletShooter
     }
 };
 
+static_assert(offsetof(EnemyBulletShooter, laser_timing) == 0x350,
+              "shooter laser timing offset");
+static_assert(offsetof(EnemyBulletShooter, flags) == 0x360,
+              "shooter laser flags offset");
 static_assert(offsetof(EnemyBulletShooter, aim_type) == 0x368,
               "shooter aim mode offset");
 static_assert(sizeof(EnemyBulletShooter) == 0x380, "shooter binary layout");
