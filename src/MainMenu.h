@@ -15,7 +15,7 @@ struct ReplayManager;
 // switches screens and resets substate, the step within the screen. Most
 // screens use substate 0 to set up, 1 while their sprites appear, 2 for
 // input and 4 (or 3) while they leave.
-enum TitleState
+enum TitleState : i32
 {
     // Picks the first screen from g_title_return_point.
     TITLE_STATE_INIT = 0,
@@ -47,6 +47,7 @@ enum TitleState
     TITLE_STATE_SPELL_PRACTICE_DIFFICULTY_SELECT = 19,
     TITLE_STATE_SPELL_PRACTICE_SUBSEASON_SELECT = 20,
 };
+static_assert(sizeof(TitleState) == sizeof(i32), "title state is a 32-bit value");
 
 // The interrupts the title menus send to the sprites of their rows (the
 // row under the cursor gets a script-specific one instead).
@@ -127,9 +128,9 @@ class TitleInf : public TaskInf
     UpdateFunc *on_draw_func;
     AnmLoaded *title_anm;
     AnmLoaded *title_v_anm;
-    // TitleState values, and the step within the state.
-    i32 state;
-    i32 prev_state;
+    // Screen selection is a state; substate is a screen-local step counter.
+    TitleState state;
+    TitleState prev_state;
     i32 substate;
     // The cursor of the screen that runs.
     MenuHelper menu;

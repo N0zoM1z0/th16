@@ -52,7 +52,7 @@ u32 TitleInf::get_size()
 void TitleInf::set_state(i32 state)
 {
     prev_state = this->state;
-    this->state = state;
+    this->state = static_cast<TitleState>(state);
     substate = 0;
     time_in_state.reset();
 }
