@@ -269,7 +269,7 @@ enum AnmRenderMode
 
 // ANM opcodes (names after ExpHP's truth, map/v8.anmm; the ones truth leaves
 // unnamed are named after what AnmVm::run does with them).
-enum AnmOpcode
+enum AnmOpcode : i16
 {
     // The end of a script: deletes the VM like delete.
     ANM_OP_END = -1,
@@ -555,12 +555,16 @@ union AnmInstrArg
 
 struct AnmRawInstr
 {
-    i16 opcode;
+    AnmOpcode opcode;
     u16 offset_to_next;
     i16 time;
     u16 var_mask;
     AnmInstrArg args[10];
 };
+static_assert(sizeof(AnmOpcode) == sizeof(i16), "ANM opcode is a signed 16-bit value");
+static_assert(offsetof(AnmRawInstr, time) == 4, "ANM instruction time offset");
+static_assert(offsetof(AnmRawInstr, args) == 8, "ANM instruction argument offset");
+static_assert(sizeof(AnmRawInstr) == 0x30, "ANM instruction record allocation");
 
 // Variable numbers in ANM script arguments (names after ExpHP's truth).
 enum AnmVar
