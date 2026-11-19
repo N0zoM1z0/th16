@@ -748,13 +748,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
     {
-        PosVel *bezier_position = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
-        InterpStrange1 *bezier_interp =
-            instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
-        volatile f32 bezier_goal_x =
-            full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        volatile f32 bezier_goal_y =
-            full_owner->context.current_context->get_float_arg(EclFloatArgIndex{4});
+        PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
+        InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
+        f32 x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        f32 y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{4});
         Float3 bezier_1;
         bezier_1.x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{1});
         bezier_1.y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{2});
@@ -763,23 +760,15 @@ int EnemyData::ecl_run_over_300()
         bezier_2.x = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{5});
         bezier_2.y = full_owner->context.current_context->get_float_arg(EclFloatArgIndex{6});
         bezier_2.z = 0.0f;
-        i32 duration = full_owner->context.current_context->get_int_arg(0);
-
-        bezier_interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        bezier_interp->end_time = duration;
-        bezier_interp->bezier_1 = bezier_1;
-        bezier_interp->bezier_2 = bezier_2;
-        bezier_interp->method_for_3d = INTERP_BEZIER;
-        bezier_interp->initial = bezier_position->pos;
-        bezier_interp->goal = Float3(bezier_goal_x > -999999.0
-                                         ? bezier_goal_x
-                                         : bezier_position->pos.x,
-                                     bezier_goal_y > -999999.0
-                                         ? bezier_goal_y
-                                         : bezier_position->pos.y,
-                                     0.0f);
-        bezier_interp->reset_timer();
-        bezier_position->flags &= ~0xf;
+        interp->end_time = full_owner->context.current_context->get_int_arg(0);
+        interp->bezier_1 = bezier_1;
+        interp->bezier_2 = bezier_2;
+        interp->method_for_3d = INTERP_BEZIER;
+        interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
+        interp->initial = pos_vel->pos;
+        interp->goal = Float3(x > -999999.0 ? x : pos_vel->pos.x, y > -999999.0 ? y : pos_vel->pos.y, 0.0f);
+        interp->reset_timer();
+        pos_vel->flags &= ~0xf;
         break;
     }
     // moveVel(angle, speed) and the relative and
