@@ -820,7 +820,9 @@ i32 AnmVm::run()
             f32 angle = g_replay_unsafe_rng.randf_neg_1_to_1() * ZUN_PI;
             f32 random_radius = g_replay_unsafe_rng.randf_neg_1_to_1();
             f32 range = max - min;
-            f32 radius = range * random_radius + min;
+            f32 radius = random_radius;
+            radius *= range;
+            radius += min;
             Float3 point;
             anm_sincosmul(&point, angle, radius);
             *ANM_FLOAT_PTR(0) = point.x;
