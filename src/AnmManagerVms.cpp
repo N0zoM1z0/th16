@@ -695,7 +695,7 @@ AnmId AnmLoaded::create_managed_child(i32 script, AnmVm *parent, i32 mode)
     vm->parent_vm = parent;
     vm->root_vm = parent->root_vm != NULL ? parent->root_vm : parent;
     vm->run();
-    vm->mode_of_create_child = mode;
+    vm->mode_of_create_child = static_cast<AnmCreateMode>(mode);
     AnmId id;
     if ((mode & ANM_CREATE_UI_FRONT) == ANM_CREATE_UI_FRONT)
     {
@@ -1049,7 +1049,7 @@ AnmId AnmManager::restore_snapshot_vm(AnmVm *snapshot, AnmVm *parent)
     AnmVm *vm = g_AnmManager->allocate_vm();
     vm->copy_from(*snapshot, 1);
     vm->flags_hi &= ~ANM_VM_IS_SNAPSHOT;
-    i32 mode = vm->mode_of_create_child;
+    AnmCreateMode mode = vm->mode_of_create_child;
     AnmId id;
     if ((mode & ANM_CREATE_UI_FRONT) == ANM_CREATE_UI_FRONT)
     {

@@ -844,7 +844,7 @@ __forceinline AnmId AnmLoaded::create_vm_inline(i32 script, Float3 *pos, f32 rot
     }
     vm->rotation.z = rotation;
     vm->run();
-    vm->mode_of_create_child = child_mode;
+    vm->mode_of_create_child = static_cast<AnmCreateMode>(child_mode);
     AnmId id;
     id = g_AnmManager->insert_in_world_list_back(vm);
     LEAVE_CS(CS_ANM_MANAGER);

@@ -1192,7 +1192,7 @@ static __forceinline AnmId create_vm_inline(AnmLoaded *anm, i32 script, D3DXVECT
     }
     vm->rotation.z = rotation;
     vm->run();
-    vm->mode_of_create_child = 0;
+    vm->mode_of_create_child = ANM_CREATE_WORLD_BACK;
     AnmId id;
     id = g_AnmManager->insert_in_world_list_back(vm);
     LEAVE_CS(CS_ANM_MANAGER);
@@ -1495,7 +1495,7 @@ HARNESS_CALLED AnmId AnmLoaded::create_ui_effect(i32 script, i32 unused, AnmVm *
     vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     vm->rotation.z = 0.0f;
     vm->run();
-    vm->mode_of_create_child = 4;
+    vm->mode_of_create_child = ANM_CREATE_UI;
     AnmId id;
     id = g_AnmManager->insert_in_ui_list_back(vm);
     vm->flags_hi &= ~(ANM_VM_FREEZES_WITH_WORLD | ANM_VM_FREEZES_AFTER_FIRST_RUN);
@@ -1676,7 +1676,7 @@ static __forceinline AnmId create_effect_inline(AnmLoaded *anm, i32 script, i32 
     vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     vm->rotation.z = 0.0f;
     vm->run();
-    vm->mode_of_create_child = 0;
+    vm->mode_of_create_child = ANM_CREATE_WORLD_BACK;
     AnmId id;
     id = g_AnmManager->insert_in_world_list_back(vm);
     LEAVE_CS(CS_ANM_MANAGER);

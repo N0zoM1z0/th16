@@ -69,7 +69,7 @@ static __forceinline AnmId create_vm_front_at(AnmLoaded *file, i32 script, Float
     }
     vm->rotation.z = rotation;
     vm->run();
-    vm->mode_of_create_child = 2;
+    vm->mode_of_create_child = ANM_CREATE_FRONT;
     AnmId id;
     id = g_AnmManager->insert_in_world_list_front(vm);
     LEAVE_CS(CS_ANM_MANAGER);

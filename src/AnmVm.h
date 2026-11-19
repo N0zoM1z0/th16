@@ -460,7 +460,7 @@ enum AnmLayer
 // AnmVm::mode_of_create_child: where AnmLoaded::create_managed_child and
 // AnmManager::restore_snapshot_vm insert a VM. Neither bit: the back of
 // the world list.
-enum AnmCreateMode
+enum AnmCreateMode : i32
 {
     ANM_CREATE_WORLD_BACK = 0,
     // At the front of the list (drawn first).
@@ -469,6 +469,7 @@ enum AnmCreateMode
     ANM_CREATE_UI = 4,
     ANM_CREATE_UI_FRONT = ANM_CREATE_UI | ANM_CREATE_FRONT,
 };
+static_assert(sizeof(AnmCreateMode) == sizeof(i32), "ANM creation mode occupies a 32-bit field");
 
 // The bitfields of AnmVm::flags_lo that code assigns (ECL's anmBlendMode);
 // the assignment compiles to xor/and/xor.
@@ -752,7 +753,7 @@ struct AnmVm
     Float3 last_rendered_quad_in_surface_space[4];
     // Which list the VM went into (AnmCreateMode bits), so that a restored
     // snapshot goes back to the same one.
-    i32 mode_of_create_child;
+    AnmCreateMode mode_of_create_child;
     ZunColor color_1;
     ZunColor color_2;
     // The drawn color, tinted by the parent's with ANM_VM_COLORIZE_CHILDREN;
@@ -1003,6 +1004,8 @@ struct AnmVm
     // it; adds the bytes read to *size.
     HARNESS_CALLED void load_from(const AnmVm *src, i32 *size);
 };
+static_assert(offsetof(AnmVm, mode_of_create_child) == 0x51c,
+              "child creation mode stays at the original VM field offset");
 
 // Where HUD elements drawn at full resolution inside the arcade region are
 // placed: half the window width and the arcade's top edge, scaled (ExpHP:
