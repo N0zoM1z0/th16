@@ -745,7 +745,7 @@ int EnemyData::ecl_run_over_300()
             position_interp->bezier_2 = g_zero_vec;
             position_interp->method_for_1d = static_cast<InterpMode>(full_owner->context.current_context->get_int_arg(1));
             position_interp->flag_1d |= 1;
-            position_interp->move_curve_mode = full_owner->context.current_context->get_int_arg(2);
+            position_interp->method_for_1d_y = static_cast<InterpMode>(full_owner->context.current_context->get_int_arg(2));
             position_interp->flag_1d |= 1;
         }
         goto ecl_move_curve_finish;

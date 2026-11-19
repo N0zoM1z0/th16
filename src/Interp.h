@@ -203,8 +203,9 @@ struct InterpStrange1
         struct
         {
             InterpMode method_for_1d;
-            u32 move_curve_mode;
-            u32 unk_5c;
+            // ECL moveCurve supplies the x and y axis modes separately.
+            InterpMode method_for_1d_y;
+            InterpMode method_for_1d_z;
         };
         InterpMode methods_1d[3];
     };
@@ -218,6 +219,12 @@ struct InterpStrange1
 static_assert(sizeof(InterpMode) == sizeof(i32), "interpolation modes occupy one signed word");
 static_assert(offsetof(InterpStrange1, methods_1d) == offsetof(InterpStrange1, method_for_1d),
               "the per-axis methods alias the first mode field");
+static_assert(offsetof(InterpStrange1, method_for_1d_y) ==
+                  offsetof(InterpStrange1, method_for_1d) + sizeof(InterpMode),
+              "the y-axis mode follows the x-axis mode");
+static_assert(offsetof(InterpStrange1, method_for_1d_z) ==
+                  offsetof(InterpStrange1, method_for_1d_y) + sizeof(InterpMode),
+              "the z-axis mode follows the y-axis mode");
 
 // The shared interpolation curves (InterpMode): progress (usually 0 to 1)
 // of an interpolation `time` frames into one of `end_time` frames.
