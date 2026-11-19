@@ -1008,11 +1008,9 @@ HARNESS_CALLED AnmId AnmManager::store_snapshot_of_vm(AnmVm *vm, AnmVm *parent, 
 
 // Brings the snapshot with this id back to life as a new VM tree; returns
 // the new root VM's id.
-// ENTER_CS and LEAVE_CS are spelled out with the enabled flag in a local:
-// the original keeps it in bl across the lookup (reloaded after
-// EnterCriticalSection), which the macros' two separate reads do not give.
-// TODO: effective match only: the original reloads id into eax before the
-// flag after EnterCriticalSection, ours after.
+// ENTER_CS and LEAVE_CS are spelled out with the enabled flag in a local.
+// The volatile depth update and id reload preserve the original order after
+// EnterCriticalSection: increment depth, reload id, then sample enabled.
 // FUNCTION: TH16 0x46f8f0
 HARNESS_CALLED AnmId AnmManager::restore_snapshot(AnmId id)
 {
@@ -1021,13 +1019,21 @@ HARNESS_CALLED AnmId AnmManager::restore_snapshot(AnmId id)
         return AnmId();
     }
     bool locking = g_CriticalSections.enabled;
+    register i32 snapshot_id;
     if (locking)
     {
         EnterCriticalSection(&g_CriticalSections.cs[CS_ANM_MANAGER]);
-        g_CriticalSections.depth[CS_ANM_MANAGER]++;
+        (*(volatile u8 *)&g_CriticalSections.depth[CS_ANM_MANAGER])++;
+        snapshot_id = *(volatile i32 *)&id.id;
         locking = g_CriticalSections.enabled;
     }
-    AnmVm *snapshot = get_snapshot_vm_with_id(id);
+    else
+    {
+        snapshot_id = id.id;
+    }
+    AnmId snapshot_id_arg;
+    snapshot_id_arg.id = snapshot_id;
+    AnmVm *snapshot = get_snapshot_vm_with_id(snapshot_id_arg);
     if (locking)
     {
         LeaveCriticalSection(&g_CriticalSections.cs[CS_ANM_MANAGER]);
