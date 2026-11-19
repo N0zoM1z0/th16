@@ -8,6 +8,7 @@
 
 #include "AnmManager.h"
 #include "AnmVm.h"
+#include "AnmMaskedEffectData.h"
 #include "BulletManager.h"
 #include "EffectManager.h"
 #include "Fog.h"
@@ -439,18 +440,6 @@ int __fastcall anm_jagged_line_on_switch(AnmVm *vm, i32 n)
     return 0;
 }
 
-// Extra data of the masked effect (EffectManager effect 0): four VMs drawn as
-// an alpha mask and a fifth drawn through it (anm_on_draw_masked, which reads
-// it as AnmMaskData), until the four have ended.
-struct AnmMaskedEffectData
-{
-    AnmVm vms[5];
-    // AnmMaskData::mode: 2 masks the arcade region, 0 the whole screen.
-    // Interrupts 7-10 change it along with the layer.
-    i32 mask_mode;
-    i32 frame_count;
-};
-
 // FUNCTION: TH16 0x4071a0
 int __fastcall anm_masked_effect_init(AnmVm *vm, D3DXVECTOR3 *pos)
 {
@@ -464,11 +453,11 @@ int __fastcall anm_masked_effect_init(AnmVm *vm, D3DXVECTOR3 *pos)
         g_EffectManager->effect_anm->copy_vm_and_run(&data->vms[i], i + EFFECT_SCRIPT_MASK_FIRST);
         data->vms[i].entity_pos = center;
     }
-    data->mask_mode = 0;
+    data->mode = 0;
     vm->set_layer(40);
     data->vms[3].entity_pos = data->vms[2].entity_pos = data->vms[1].entity_pos = data->vms[0].entity_pos =
         D3DXVECTOR3(320.0f, 240.0f, 0.0f);
-    g_EffectManager->effect_anm->copy_vm_and_run(&data->vms[4], EFFECT_SCRIPT_MASK_OVERLAY);
+    g_EffectManager->effect_anm->copy_vm_and_run(&data->overlay, EFFECT_SCRIPT_MASK_OVERLAY);
     return 0;
 }
 
@@ -490,7 +479,7 @@ int __fastcall anm_masked_effect_on_tick(AnmVm *vm)
     {
         return 1;
     }
-    data->vms[4].run();
+    data->overlay.run();
     data->frame_count++;
     return 0;
 }
@@ -510,19 +499,19 @@ int __fastcall anm_masked_effect_on_switch(AnmVm *vm, i32 n)
         }
         return 0;
     case 7:
-        data->mask_mode = 0;
+        data->mode = 0;
         vm->set_layer(30);
         break;
     case 8:
-        data->mask_mode = 1;
+        data->mode = 1;
         vm->set_layer(23);
         break;
     case 9:
-        data->mask_mode = 0;
+        data->mode = 0;
         vm->set_layer(36);
         break;
     case 10:
-        data->mask_mode = 3;
+        data->mode = 3;
         vm->set_layer(30);
         break;
     default:

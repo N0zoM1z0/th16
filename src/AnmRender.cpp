@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "AnmManager.h"
+#include "AnmMaskedEffectData.h"
 #include "Rng.h"
 #include "Supervisor.h"
 #include "UpdateFunc.h"
@@ -334,17 +335,6 @@ HARNESS_CALLED i32 AnmManager::draw_triangle_fan(i32 count, Float3 *center, Floa
     return 0;
 }
 
-// The extra data of VMs drawn by anm_on_draw_masked (ExpHP:
-// AnmVm::on_draw__1): four VMs drawn onto a cleared alpha channel, and a
-// fifth drawn through it. Mode 2 masks the arcade region, mode 0 the whole
-// screen (only with an alpha channel in the back buffer).
-struct AnmMaskData
-{
-    AnmVm vms[4];
-    AnmVm overlay;
-    i32 mode;
-};
-
 // D3DFVF_XYZRHW | D3DFVF_DIFFUSE
 struct AnmMaskVertex
 {
@@ -407,7 +397,7 @@ static __forceinline void anm_mask_draw(AnmMaskVertex *vertices)
 // FUNCTION: TH16 0x4073a0
 i32 __fastcall anm_on_draw_masked(AnmVm *vm)
 {
-    AnmMaskData *data = (AnmMaskData *)vm->extra_data;
+    AnmMaskedEffectData *data = (AnmMaskedEffectData *)vm->extra_data;
     if (data->mode == 2)
     {
         anm_mask_begin();
