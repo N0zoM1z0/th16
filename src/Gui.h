@@ -22,11 +22,14 @@ struct MsgFile
     } scripts[1];
 };
 
+// The dialogue file stores its opcode as a single unsigned byte.
+enum MsgOpcode : u8;
+
 // One dialogue instruction (ExpHP: zMsgRawInstr).
 struct MsgRawInstr
 {
     u16 time;
-    u8 opcode;
+    MsgOpcode opcode;
     // Size of the arguments.
     u8 args_size;
     union
@@ -39,7 +42,7 @@ struct MsgRawInstr
 
 // Dialogue (MSG) instruction opcodes. Names from truth's TH11+ msgmap where
 // it has one.
-enum MsgOpcode
+enum MsgOpcode : u8
 {
     MSG_END = 0,
     // Shows the player's face (argument 0) or the alternative one.
@@ -89,6 +92,9 @@ enum MsgOpcode
     MSG_PORTRAIT_HIGHLIGHT = 34,
     MSG_LIGHTS_OUT = 35,
 };
+static_assert(sizeof(MsgOpcode) == sizeof(u8), "MSG opcode must occupy one byte");
+static_assert(offsetof(MsgRawInstr, opcode) == 2, "MSG opcode offset");
+static_assert(offsetof(MsgRawInstr, args) == 4, "MSG arguments follow the four-byte header");
 
 // Masks of GuiMsgVm::flags.
 enum GuiMsgVmFlagMask
