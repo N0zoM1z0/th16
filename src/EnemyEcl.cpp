@@ -771,11 +771,11 @@ int EnemyData::ecl_run_over_300()
         interp->bezier_2 = bezier_2;
         interp->method_for_3d = INTERP_BEZIER;
         interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        interp->initial = pos_vel->pos;
-        interp->goal = Float3(x > -999999.0 ? x : pos_vel->pos.x, y > -999999.0 ? y : pos_vel->pos.y, 0.0f);
-        interp->reset_timer();
-        pos_vel->flags &= ~0xf;
-        break;
+        movement_pos_vel = pos_vel;
+        movement_interp = interp;
+        movement_goal_x = x;
+        movement_goal_y = y;
+        goto ecl_movement_interp_finish;
     }
     // moveVel(angle, speed) and the relative and
     // no-mirror (428, 430) forms. -999999 keeps the current value.
