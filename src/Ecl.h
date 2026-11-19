@@ -43,11 +43,14 @@ struct EclStackEntry
 static_assert(sizeof(EclStackEntry) == 8, "ECL expression stack entry size");
 static_assert(offsetof(EclStackEntry, value) == 4, "ECL expression stack value offset");
 
+// Opcodes are stored in the ECL file as unsigned 16-bit integers.
+enum EclOpcode : u16;
+
 // One instruction (ExpHP: zEclRawInstructionHeader), arguments following.
 struct EclRawInstr
 {
     i32 time;
-    u16 opcode;
+    EclOpcode opcode;
     u16 total_size;
     // Bit n set: argument n names a variable rather than a constant.
     u16 variable_mask;
@@ -61,7 +64,7 @@ struct EclRawInstr
 // The instructions every ECL VM runs (EclRunContext::ecl_run). Names follow
 // ExpHP's th-re-data labels (in parentheses where ours differ); 300 and up
 // belong to the VM subclass (EnemyData::ecl_run_over_300).
-enum EclOpcode
+enum EclOpcode : u16
 {
     ECL_OP_NOP = 0,
     // Ends the context.
@@ -144,6 +147,10 @@ enum EclOpcode
     // Random point in a ring (ExpHP: math93).
     ECL_OP_RAND_RING_POS = 93,
 };
+
+static_assert(offsetof(EclRawInstr, opcode) == 4, "ECL opcode offset");
+static_assert(offsetof(EclRawInstr, args) == 0x10, "ECL argument area offset");
+static_assert(sizeof(EclRawInstr) == 0x14, "ECL instruction header and first argument");
 
 // Call arguments use a different encoding from expression-stack entries:
 // both 'f' and 'g' denote a source float, while only 'f' denotes a float
