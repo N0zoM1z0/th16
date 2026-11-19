@@ -139,7 +139,7 @@ static_assert(offsetof(BulletOrigin, enabled) == 8,
               "absolute bullet origin enabled marker offset");
 
 // EnemyLife::is_spell.
-enum EnemyLifeFlags
+enum EnemyLifeFlags : u32
 {
     // A spell card is running: damage counts in sevenths
     // (current_scaled_by_seven).
@@ -147,6 +147,7 @@ enum EnemyLifeFlags
     // Dies at its next step_logic; nothing in TH16 sets it.
     ENEMY_LIFE_KILL = 1 << 1,
 };
+static_assert(sizeof(EnemyLifeFlags) == sizeof(u32), "enemy life flags occupy one word");
 
 // ExpHP: zEnemyLife.
 struct EnemyLife
@@ -158,11 +159,12 @@ struct EnemyLife
     i32 current_scaled_by_seven;
     i32 starting_value_for_next_attack;
     i32 total_damage_including_ignored;
-    // EnemyLifeFlags.
-    u32 is_spell;
+    // Spell damage accounting and the pending-kill flag share this word.
+    EnemyLifeFlags is_spell;
 
     i32 receive_damage(i32 damage);
 };
+static_assert(offsetof(EnemyLife, is_spell) == 0x18, "enemy life flags are stored after six counters");
 
 // ExpHP: zEnemyDrop.
 struct EnemyDrop

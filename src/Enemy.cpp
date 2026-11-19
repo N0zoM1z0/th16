@@ -103,7 +103,7 @@ EnemyInf::EnemyInf(const char *sub_name)
     context.current_context->cur_location.subroutine_index = file_manager->find_sub_by_name(sub_name);
     context.current_context->cur_location.offset_from_first_instruction = 0;
     context.current_context->time = 0.0f;
-    enemy.life.is_spell &= ~ENEMY_LIFE_KILL;
+    enemy.life.is_spell = static_cast<EnemyLifeFlags>(enemy.life.is_spell & ~ENEMY_LIFE_KILL);
     enemy.life.current = 0;
     enemy.life.maximum = 0;
     enemy.life.remaining_for_cur_attack = 0;
