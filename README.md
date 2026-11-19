@@ -53,17 +53,20 @@ annotated units (51.33% of the then-annotated bytes). These numbers and the
 progress image are **historical**, not current results. The current
 incremental candidate (built on 2026-11-19) builds **1,166 annotated
 functions**; that is a separate build count, not a new strict-exactness total.
-The 2026-11-19 source checkpoints recover typed ECL stack/call arguments and
-named laser timing phases; see the [current handoff](docs/NEXT_AGENT.md).
+The latest code-bearing checkpoint also improves the large upper-ECL owner
+through shared movement interpolation, natural Bezier argument evaluation and
+typed SptInf boss-VM restarts. Its latest local normalized diagnostic is 0.9134,
+not a strict exactness result; see the [current handoff](docs/NEXT_AGENT.md).
 
-Factory inspection currently reports **0 imported Oracle results** and an
-`inventory-import-only` diagnostic, so accepted exactness and production
-closure are unknown. The last known local focused strict Oracle attempt was
-blocked by EH-parent PDB owner preflight (`EH parent lacks one complete
-candidate PDB owner`). Do not turn local normalized-instruction similarities
-into exactness claims. The [current handoff](docs/NEXT_AGENT.md) records the
-latest checked worktree state, historical timer experiment, large-owner
-measurements and focused commands. An audit must be refreshed and accepted before quoting new
+The last recorded Factory inspection reported **0 imported Oracle results**
+and an inventory-import-only diagnostic. This handoff cleanup did not refresh
+the Factory inventory, so accepted exactness and production closure remain
+unknown. The last known local focused strict Oracle attempt was blocked by
+EH-parent PDB owner preflight (EH parent lacks one complete candidate PDB
+owner). Do not turn local normalized-instruction similarities into exactness
+claims. The [current handoff](docs/NEXT_AGENT.md) records the latest checked
+worktree state, historical timer experiment, large-owner measurements and
+focused commands. An audit must be refreshed and accepted before quoting new
 project-wide strict totals.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the

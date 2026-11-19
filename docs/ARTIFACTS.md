@@ -19,7 +19,7 @@ that evidence is missing. Never remove an archive because its old path is absent
 | `.venv/` | Locked comparison dependencies |
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
-| `.analysis/reference-audit.json` | Last saved fingerprinted 2026-11-15 local report; stale against the current 2026-11-18 worktree. Factory inspection reports zero imported Oracle results; see the handoff before treating any local count as exactness. |
+| `.analysis/reference-audit.json` | Last saved fingerprinted 2026-11-15 local report; stale against the 2026-11-19 source checkpoint. The last recorded Factory inspection reported zero imported Oracle results; see the handoff before treating any local count as exactness. |
 | `.analysis/claude-tools/` | Diagnostic scripts and probe sources; historical audit/source/log/binary outputs are compressed, rebuildable probe outputs removed, active exp.json/cur-audit.json/build.log retained |
 | `.analysis/projectile-ex-source-work/` | PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
 | `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
@@ -61,6 +61,12 @@ that evidence is missing. Never remove an archive because its old path is absent
 | `.analysis/ecl-dispatch-work/` | Large ECL shared-position and spell-name source trials, complete diagnostic code/table/map packets, native movement and spell-prefix fixtures, final tested image, scope refusals and regression evidence |
 | `.analysis/ecl-context-work/` | ECL coordinate evaluation and animation operand trials, typed lookup fixtures, native animation snapshots and historical-image control, invalid-opcode notes and final source regression evidence |
 | `.analysis/ecl-angle-work/` | ECL angle/orbit initialization trials, complete code/table/map packets, native full-state angle/orbit fixtures, pre-rebuild receipt refusal, final tested image and source regression evidence |
+| .analysis/orb-and-laser-hit-work/, .analysis/laser-rectangle-copy-work/, .analysis/curve-square-result-work/, .analysis/curve-sqrt-interface-work/, .analysis/bullet-offscreen-work/, .analysis/float2-time-result-work/, .analysis/reimu-orb-array-work/, .analysis/reimu-bomb-tick-work/, .analysis/shot-hit-pointer-work/ | Later projectile, laser, geometry and interpolation trials; retain source variants, owner images, fixtures and restoration evidence. Identical audit copies are archived only when no consumer exists. |
+| .analysis/anm-interpreter-results-work/, .analysis/anm-clock-array-work/, .analysis/anm-entry-timer-work/, .analysis/anm-integer-result-work/ | ANM interpreter, clock, timer and integer-result experiments with baseline/final images and focused audit evidence. |
+| .analysis/camera-sky-exact-work/, .analysis/stage-disc-fog-work/, .analysis/dialogue-initialization-work/, .analysis/music-comment-join-work/, .analysis/winmain-static-work/, .analysis/enemy-camera-order-work/, .analysis/updatefunc-node-context-work/, .analysis/atan2-runtime-work/, .analysis/math-runtime-work/, .analysis/boss-query-result-work/, .analysis/boss-statistics-call-work/, .analysis/boss-statistics-layout-work/, .analysis/boss-selection-followup-work/, .analysis/boss-local-sample-work/, .analysis/surface-exit-work/, .analysis/menu-search-result-work/, .analysis/spellcard-timer-result-work/ | Later runtime, Boss, Stage, camera, audio and entry-owner trials; preserve the source snapshots, native fixtures, build images and regression context. |
+| .analysis/th16-s15-globalflags-ab-src/ | Source snapshots used for the Globals flag-layout A/B comparison. |
+| .analysis/factory-native-ghidra/, .analysis/factory-runtime/ | Local Factory Ghidra call results and runtime diagnostics; keep until the shared provider confirms they are disposable. |
+| .analysis/baselines/, .analysis/reference-first-audit/, .analysis/reference-failed-build/ | Historical compressed audit snapshots, the initial audit report/build receipt and an old failed-build log; none is the current strict result. |
 | `.analysis/archives/`, `.analysis/cleanup-handoff-*.json` | Verified historical evidence and dated recovery indexes |
 | `.analysis/factory-registration.toml`, `.analysis/factory-validation*` | Staged private registration and isolated validation evidence |
 | `.analysis/ghidra/`, diagnostic notes and regression records | Analysis evidence and failed-experiment context |
@@ -69,6 +75,44 @@ that evidence is missing. Never remove an archive because its old path is absent
 Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
+
+## Current handoff cleanup: 2026-11-19
+
+Archived **7 unreferenced, byte-identical historical reference-audit copies**
+and **17 unreferenced, byte-identical historical PDB image copies** from later
+work directories. Every copy with a detected script/document consumer was
+retained, and at least one expanded copy of every SHA-256 group remains. The
+PDBs were archived only when no script consumer was found; their sibling
+build receipts remain, and the PDB must be restored before using that image.
+The original files used **140,058,624 allocated bytes**; the verified gzip
+archives use **26,021,888 allocated bytes**, reclaiming **114,036,736 bytes
+(about 108.8 MiB)**. The 24-record index
+.analysis/cleanup-handoff-20261119.json records each original and archive
+hash, byte count, mode and nanosecond timestamp.
+
+Every gzip was decompressed and checked byte-for-byte and by SHA-256 before
+the index was written and before any original was removed. Each PDB was also
+checked against its sibling build receipt when present. The standard evidence
+helper passed list, show and temporary restore tests; restored copies were
+checked for hash, mode and timestamp, then removed. Restore an archived path
+with the standard helper:
+
+    scripts/repo-python scripts/evidence-archive.py list ecl-owner-work
+    scripts/repo-python scripts/evidence-archive.py show ecl-owner-work/baseline-image/th16.pdb
+    scripts/repo-python scripts/evidence-archive.py restore ecl-owner-work/baseline-image/th16.pdb
+
+Also removed unreferenced generated Python bytecode caches, the stale
+.build-vectorcall-member.obj probe object and vc140.pdb. These files had
+no source/script consumers and used **2,379,776 allocated bytes**. Including
+those generated outputs, this cleanup reclaimed about **116,416,512 allocated
+bytes (111.0 MiB)** before the small index and directory metadata.
+
+The canonical .analysis/reference-audit.json, claude-tools/exp.json, private
+target, current PE/MAP/PDB and object/dependency graph, Ghidra project,
+toolchains, pinned reference checkout, and all consumer-backed or unique
+historical evidence were preserved. No source logic, build graph, Oracle
+configuration or replay input changed. No build, cold replay, audit or Factory
+acceptance operation was run for this documentation/archive cleanup.
 
 ## Current handoff cleanup: 2026-11-18
 

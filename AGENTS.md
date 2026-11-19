@@ -26,10 +26,10 @@ game data, Ghidra projects, build outputs, tools and `.analysis/` stay ignored.
 
 The user has authorized importing the pinned reference candidates and evaluating
 them using this repository's Factory/TH10-style strict Oracle. Upstream matching
-tools, percentages and exact labels have no acceptance authority. The current
-Factory inventory reports zero imported Oracle results; use accepted snapshots
-and accepted facts for exactness claims, not local similarity or historical
-audit totals. Do not use REA in this workspace.
+tools, percentages and exact labels have no acceptance authority. The last
+recorded Factory inventory reported zero imported Oracle results; use accepted
+snapshots and accepted facts for exactness claims, not local similarity or
+historical audit totals. Do not use REA in this workspace.
 
 ## Target and tools
 

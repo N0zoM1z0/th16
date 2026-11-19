@@ -101,7 +101,7 @@ comparison. `mismatch` means that complete comparison found a difference.
 `incomplete` means ownership, boundary, decode or linkage evidence is missing.
 These local results do not establish original source authorship, physical
 storage ownership, whole-product closure or Factory Truth Kernel acceptance.
-The current Factory inspection reports zero imported Oracle results and an
+The last recorded Factory inspection reported zero imported Oracle results and an
 `inventory-import-only` diagnostic; no local normalized score or saved report
 should be described as an accepted Factory exactness fact.
 

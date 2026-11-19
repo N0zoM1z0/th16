@@ -2,14 +2,17 @@
 
 Start with [the current handoff](../NEXT_AGENT.md). Every file here is
 evidence that a config file, Oracle review profile or source comment names;
-counts inside them are those of the checkpoint they were written at. Historical
-session logs and source-trial reports were removed on 2026-11-15 and remain in
-Git history. scripts/progress.py reports authoritative totals only after
-audit-reference.py has refreshed the input-matched report; it refuses stale
-inputs. The saved report is dated 2026-11-15 and predates the 2026-11-16/17 source
-checkpoints and the current 2026-11-18 dirty timer experiment; none of its
-totals describe the current candidate. Factory inspection currently reports
-zero imported Oracle results, so the report is local historical evidence only.
+counts inside them describe the checkpoint at which they were written.
+Historical source trials and session evidence are retained under .analysis and
+its verified archives; older tracked documentation revisions remain in Git
+history. scripts/progress.py reports project totals only after
+audit-reference.py refreshes the input-matched report and refuses stale inputs.
+
+The saved local reference-audit report is dated 2026-11-15 and predates the
+2026-11-16/17 source checkpoints and the 2026-11-19 ECL work. Its totals do not
+describe the current candidate. The last recorded Factory inspection reported
+zero imported Oracle results, so that report remains local historical evidence
+rather than an accepted Factory exactness result.
 
 | Topic | Files |
 | --- | --- |

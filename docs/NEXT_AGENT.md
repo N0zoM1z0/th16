@@ -9,7 +9,7 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built source checkpoint: 27a464d
+- Latest code-bearing source checkpoint: 27a464d
   (gpt-web: use the SptInf base for boss VM restarts). Recent commits recovered
   typed replay USER headers, the shared Globals flag word, ECL argument
   addressing, movement interpolation sharing, natural Bezier argument
@@ -21,21 +21,26 @@ must not override `git status`.
   changes retain native field widths and public function ABI. Consult Git
   history and focused owner comparisons; do not treat normalized ratios as
   strict Oracle results.
-- The worktree is clean after the latest 2026-11-19 incremental build and
-  focused comparisons. The 2026-11-18 ScreenEffect.cpp / ZunTimer.h
-  experiment is not currently a dirty change; its old evidence is historical.
-  Branch main is 17 commits ahead of origin/main; do not push unless asked.
+- The source worktree is clean after the latest 2026-11-19 incremental build.
+  This handoff pass changes documentation and ignored historical artifacts only;
+  it does not change game source or the incremental build graph. The only local
+  commits ahead of origin are documentation/artifact-cleanup checkpoints from
+  this handoff. Do not push unless asked. The 2026-11-18 ScreenEffect.cpp /
+  ZunTimer.h experiment is not a dirty change; its old evidence is historical.
 - The latest incremental MSVC/LTCG build succeeded on 2026-11-19 with
   **1,166 annotated functions**. This is a build/annotation count, not an
   accepted exact count. Focused normalized diagnostics from that build:
-  EclRunContext::ecl_run 1,807 target / 1,776 candidate instructions,
-  ratio **0.9205**; Bullet::step_ex_08 327 / 336, ratio **0.8929**;
-  Bullet::step_ex_17 130 / 130, ratio **0.9769**. The bullet offscreen
-  function is intentionally kept as a natural C++ scratch union: separate
-  vector locals were tested but gave a lower **0.682** ratio due to stack-slot
-  placement. AnmVm::run last measured 3,837 / 3,827, ratio **0.9504**;
-  GuiMsgVm::run last measured 1,211 / 1,153, ratio **0.9590**. These are
-  local normalized comparisons, not strict complete-owner receipts.
+  EnemyData::ecl_run_over_300 4,562 target / 4,775 candidate instructions,
+  **0.9134**; EclRunContext::ecl_run 1,807 / 1,776, **0.9205**;
+  call_sub 177 / 173, **0.9086**; LaserLineInf::run_ex 344 / 344,
+  **0.9186**; LaserCurveInf::run_ex 360 / 370, **0.9616**.
+  Bullet::step_ex_08 remains 327 / 336, **0.8929**; step_ex_17
+  130 / 130, **0.9769**. The bullet offscreen function is intentionally
+  kept as a natural C++ scratch union: separate vector locals were tested but
+  gave a lower **0.682** ratio due to stack-slot placement. AnmVm::run last
+  measured 3,837 / 3,827, **0.9504**; GuiMsgVm::run 1,211 / 1,188,
+  **0.9504**. These are local normalized comparisons, not strict
+  complete-owner receipts.
 - Recent focused trials that were not kept: writing STACK_SIN directly to
   the ECL stack reduced the complete ecl_run ratio to **0.9005**, so the
   shared push_float path was restored. The direct typed-entry stack-sin
@@ -110,8 +115,8 @@ backing-region layout has yet been established. Do not invent a
 
 ## 2026-11-19 second follow-up session
 
-Current HEAD: 27a464d (gpt-web: use the SptInf base for boss VM restarts),
-branch main is 17 commits ahead of origin/main, and the worktree is clean.
+At the end of this session HEAD was 27a464d (gpt-web: use the SptInf
+base for boss VM restarts), and main was 17 commits ahead of origin/main.
 Two additional source commits were made after the first follow-up; the final
 incremental build passed with 1,166 annotated functions. No full cold replay
 was run and nothing was pushed.
@@ -148,6 +153,35 @@ LaserCurveInf::run_ex 0.9616 (360 / 370; 1,548 / 1,568 bytes),
 ReplayManager::read_replay_file 1.0, ReplayManager::save 0.9461,
 GameThread::thread_start 1.0, and GameThread::~GameThread 1.0. These remain
 normalized local diagnostics, not strict Oracle receipts.
+
+
+## 2026-11-19 handoff preparation
+
+This pass corrected stale status/metric wording in README.md, AGENTS.md,
+ARTIFACTS.md, REFERENCE_IMPORT.md, the knowledge index and this handoff. It added the
+later experiment directories to ARTIFACTS.md so the next agent can tell
+which ignored work trees contain retained evidence.
+
+Seven unreferenced, byte-identical reference-audit copies and 17 duplicate
+historical PDB image copies were compressed under
+.analysis/archives/20261119/reference-audit-duplicates/ and
+.analysis/archives/20261119/duplicate-pdb-images/.
+Script/document consumers and at least one expanded copy per SHA-256 group
+were retained. PDB sibling build receipts remain; restore an archived PDB
+before using its historical image. The cleanup index is
+.analysis/cleanup-handoff-20261119.json, and list/show/restore were tested.
+Unreferenced Python bytecode caches and two old root probe outputs were also
+removed. The artifact guide records the verified storage savings.
+
+No source, current build cache, target, Ghidra project, toolchain or pinned
+reference was changed. No build, audit, replay or Factory acceptance operation
+was run for the documentation/archive cleanup.
+
+Next source focus: continue the upper-ECL laser initialization cases 402/403/
+411/413 and the MOVE_CURVE case spans 134/135/138/139, then revisit
+LaserLineInf::run_ex, LaserCurveInf::run_ex and call_sub. Use focused case and
+complete-owner comparisons with incremental builds; do not run a full cold
+replay for ordinary source iterations.
 
 
 ## Immediate working commands
@@ -188,7 +222,7 @@ Factory acceptance.
 | Owner / source | Current local measurement and next issue |
 | --- | --- |
 | EnemyData::ecl_run_over_300 (0x41dcb0), src/EnemyEcl.cpp | **Latest 2026-11-19 build:** 21,408 target / 21,392 candidate bytes; 4,562 / 4,775 linear instructions; **0.9134**. Shared movePosTime/moveCurve interpolation finish, natural Bezier argument evaluation, direct full owner access and the SptInf base view in bossesInterrupt account for the improvement from 0.8261 at the start of the two follow-ups. Bezier cases 125/126 are 86/86 instructions, 0.98. Case spans 101/103 and 134/135/138/139 read 99/74 and 80/104 respectively; they are not additive owner boundaries. Laser cases 402/403/411/413 remain 0.78/0.75/0.79/0.75; bosses-interrupt case 502 remains 0.99. These are diagnostics, not strict receipts. |
-| AnmVm::run (0x45f980), src/AnmVmRun.cpp | After 82b1cfa: 14,177 / 14,160 bytes; 3,837 / 3,817 linear instructions, 0.9485 (previously 0.9474). In FSET_RAND, the candidate case-124 span shrank from 24 to 13 instructions, normalized ratio 0.70, while the full owner improved slightly; check whether the destination write was merged into a shared path. Follow-camera case 4 and circle-random case 132 still need register-order work. |
+| AnmVm::run (0x45f980), src/AnmVmRun.cpp | **Latest 2026-11-19 measurement:** 14,177 / 14,160 bytes; 3,837 / 3,827 linear instructions; **0.9504**. The 82b1cfa checkpoint measured 0.9485. In FSET_RAND, the candidate case-124 span is 13 instructions against 24 target instructions (local case ratio 0.70); follow-camera case 4 and circle-random case 132 still need register-order work. |
 | `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 344 instructions; **0.9186**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
 | `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 370 instructions; **0.9616**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
 | `EnemyData::step_logic`, target `0x41c330`, `src/Enemy.cpp` | 2,207 / 2,208 bytes; 534 / 530 instructions; **0.9868**. Keep the branchless dialogue-damage selection; staged life/overkill rewrites previously regressed this owner. |
