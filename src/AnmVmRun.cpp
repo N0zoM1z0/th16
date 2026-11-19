@@ -518,8 +518,8 @@ i32 AnmVm::run()
         if ((flags_hi & (ANM_VM_FREEZES_WITH_WORLD | ANM_VM_FREEZES_AFTER_FIRST_RUN)) == ANM_VM_FREEZES_WITH_WORLD &&
             g_GameThread != NULL && g_GameThread->flags.flag_1)
         {
-            g_game_speed = saved_game_speed;
-            return 0;
+            result = 0;
+            goto finish;
         }
     }
     else
@@ -1410,8 +1410,8 @@ i32 AnmVm::run()
             goto finish;
         case ANM_OP_STATIC:
             instr_offset = -1;
-            g_game_speed = saved_game_speed;
-            return 0;
+            result = 0;
+            goto finish;
         }
         instr_offset += ins->offset_to_next;
     }
