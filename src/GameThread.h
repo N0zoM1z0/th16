@@ -7,6 +7,10 @@
 #include "ZunTimer.h"
 #include "types.h"
 
+// The game thread carries the same playback/recording encoding as the replay
+// manager, but keeps its integer-argument creation ABI.
+enum ReplayManagerMode : i32;
+
 // th16.cfg: the 0x64 bytes of settings that Config holds from its version
 // field on, as a struct of its own. A game in progress (and a replay, at
 // +0x18) carries a copy. Field meanings are Config's. The constructor sets
@@ -142,8 +146,8 @@ struct GameThread
     u8 unk_98[0xa8 - 0x98];
     // Set by ECL along with Globals::chapter.
     i32 chapter;
-    // 0: playing, otherwise watching a replay.
-    i32 replay_mode;
+    // Recording new play or watching a saved replay.
+    ReplayManagerMode replay_mode;
     // Frames since the last stage was cleared (game_cleared).
     i32 fade_timer;
 
@@ -174,5 +178,7 @@ struct GameThread
     // starts the stage music.
     i32 finish_stage_transition();
 };
+static_assert(offsetof(GameThread, replay_mode) == 0xac,
+              "game-thread replay mode stays in its original word");
 
 extern GameThread *g_GameThread;

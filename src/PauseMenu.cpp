@@ -447,7 +447,7 @@ void PauseMenu::open()
     thread->flags.in_menu = 1;
     front_anm = g_Gui->front_anm;
     delete_vm_and_clear(menu_anm_id);
-    if (thread->replay_mode != 0)
+    if (thread->replay_mode != REPLAY_RECORDING)
     {
         menu_anm_id = front_anm->create_ui_vm_at_origin(PAUSE_SCRIPT_REPLAY_PAUSE_MENU, 0);
     }
@@ -488,7 +488,7 @@ void open_stage_end_menu()
 {
     PauseMenu *menu = g_PauseMenu;
     GameThread::update_play_time();
-    if (g_GameThread->replay_mode == 1)
+    if (g_GameThread->replay_mode == REPLAY_PLAYBACK)
     {
         g_Supervisor.gamemode_to_switch_to =
             (g_Supervisor.flags & SUPERVISOR_IDLE_ON_EXIT) ? GAMEMODE_IDLE : GAMEMODE_TITLE;
@@ -606,7 +606,7 @@ void open_game_over_menu()
 {
     PauseMenu *menu = g_PauseMenu;
     GameThread::update_play_time();
-    if (g_GameThread->replay_mode == 1)
+    if (g_GameThread->replay_mode == REPLAY_PLAYBACK)
     {
         g_Supervisor.gamemode_to_switch_to =
             (g_Supervisor.flags & SUPERVISOR_IDLE_ON_EXIT) ? GAMEMODE_IDLE : GAMEMODE_TITLE;
@@ -660,7 +660,7 @@ double LTCG_VECTORCALL get_runtime();
 // FUNCTION: TH16 0x43f6a0
 void PauseMenu::leave_paused()
 {
-    if (g_GameThread->replay_mode == 0)
+    if (g_GameThread->replay_mode == REPLAY_RECORDING)
     {
         g_play_time_runtime = get_runtime();
     }
@@ -682,7 +682,7 @@ void PauseMenu::leave_paused()
 // FUNCTION: TH16 0x43f740
 void PauseMenu::leave_game_over()
 {
-    if (g_GameThread->replay_mode == 0)
+    if (g_GameThread->replay_mode == REPLAY_RECORDING)
     {
         g_play_time_runtime = get_runtime();
     }
@@ -694,7 +694,7 @@ void PauseMenu::leave_game_over()
 // FUNCTION: TH16 0x43f790
 void PauseMenu::leave_stage_end()
 {
-    if (g_GameThread->replay_mode == 0)
+    if (g_GameThread->replay_mode == REPLAY_RECORDING)
     {
         g_play_time_runtime = get_runtime();
     }
@@ -745,7 +745,7 @@ void PauseMenu::tick_open()
         }
         set_substate(PAUSE_SUB_CHOOSE);
         item_menu.num_choices = PAUSE_ITEM_COUNT;
-        if (g_GameThread->replay_mode != 0)
+        if (g_GameThread->replay_mode != REPLAY_RECORDING)
         {
             item_menu.disable(PAUSE_ITEM_SAVE_REPLAY);
             item_menu.disable(PAUSE_ITEM_MANUAL);
@@ -837,7 +837,7 @@ void PauseMenu::tick_open()
                 AnmManager::interrupt_tree(menu_anm_id.search_children(0x92, 0), 6);
                 AnmManager::interrupt_tree(menu_anm_id.search_children(0x94, 0), 6);
                 AnmManager::interrupt_tree(menu_anm_id.search_children(0x96, 0), 6);
-                if (g_GameThread->replay_mode == 0 && state == PAUSE_PAUSED)
+                if (g_GameThread->replay_mode == REPLAY_RECORDING && state == PAUSE_PAUSED)
                 {
                     set_substate(PAUSE_SUB_CONFIRM);
                 }
@@ -870,7 +870,7 @@ void PauseMenu::tick_open()
                 AnmManager::interrupt_tree(menu_anm_id.search_children(0x93, 0), 6);
                 AnmManager::interrupt_tree(menu_anm_id.search_children(0x95, 0), 6);
                 AnmManager::interrupt_tree(menu_anm_id.search_children(0x98, 0), 6);
-                if (g_GameThread->replay_mode == 0 && state == PAUSE_PAUSED)
+                if (g_GameThread->replay_mode == REPLAY_RECORDING && state == PAUSE_PAUSED)
                 {
                     set_substate(PAUSE_SUB_CONFIRM);
                 }
@@ -1401,7 +1401,7 @@ void PauseMenu::tick_open()
             delete_vm_and_clear(snapshot_id);
             delete_vm_and_clear(menu_anm_id);
             g_Supervisor.gamemode_to_switch_to =
-                g_GameThread->replay_mode != 0 ? GAMEMODE_RESTART_REPLAY : GAMEMODE_RESTART;
+                g_GameThread->replay_mode != REPLAY_RECORDING ? GAMEMODE_RESTART_REPLAY : GAMEMODE_RESTART;
             break;
         }
         set_state(PAUSE_CLOSED);

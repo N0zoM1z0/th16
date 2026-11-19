@@ -73,7 +73,7 @@ HARNESS_CALLED GameThread *GameThread::create(i32 replay_mode)
     g_frame_pacing.mode = FRAME_PACING_IDLE;
     g_Supervisor.d3d_device->EvictManagedResources();
     g_GameThread = thread;
-    thread->replay_mode = replay_mode;
+    thread->replay_mode = static_cast<ReplayManagerMode>(replay_mode);
     thread->flags.loading = 1;
     g_Supervisor.start_thread((ThreadStart)thread_start_callback, NULL);
     return thread;
@@ -169,7 +169,7 @@ i32 GameThread::thread_start()
     GAME_THREAD_FLAG_WORD(g_GameThread) &= ~GAME_THREAD_GAME_CLEARED;
     g_Globals.time_in_stage = 0;
     g_Globals.time_in_chapter = 0;
-    if (g_GameThread->replay_mode == 0)
+    if (g_GameThread->replay_mode == REPLAY_RECORDING)
     {
         g_Scorefile->characters[g_Globals.subshot + g_Globals.character]
             .practices[g_Globals.difficulty][g_Globals.stage_num - 1]
@@ -308,7 +308,7 @@ i32 GameThread::thread_start()
         }
         g_Player->inner.repopulate_options();
         GLOBALS_FLAGS_45C &= ~GLOBALS_HISCORE_BEATEN;
-        if (thread->replay_mode == 0)
+        if (thread->replay_mode == REPLAY_RECORDING)
         {
             i32 *play_count = &g_Scorefile->characters[g_Globals.subshot + g_Globals.character].play_count;
             if (*play_count < 9999999)
@@ -438,7 +438,7 @@ i32 GameThread::thread_start()
     anm_vm_interrupt_2(g_Supervisor.arcade_blit_vm_1a);
     anm_vm_interrupt_2(g_Supervisor.arcade_blit_vm_2c);
     anm_vm_interrupt_2(g_Supervisor.arcade_blit_vm_39);
-    if (g_GameThread->replay_mode == 0)
+    if (g_GameThread->replay_mode == REPLAY_RECORDING)
     {
         g_play_time_runtime = get_runtime();
     }
@@ -621,7 +621,7 @@ HARNESS_CALLED i32 GameThread::on_tick_body()
         }
         if (fade_timer >= 380)
         {
-            if (replay_mode != 0)
+            if (replay_mode != REPLAY_RECORDING)
             {
                 open_replay_end_menu();
             }
@@ -775,7 +775,7 @@ void GameThread::enable_update_funcs()
 // FUNCTION: TH16 0x42dbc0
 void GameThread::update_play_time()
 {
-    if (g_GameThread->replay_mode != 0)
+    if (g_GameThread->replay_mode != REPLAY_RECORDING)
     {
         return;
     }
@@ -993,7 +993,7 @@ i32 stage_clear()
     }
     if (g_Globals.game_mode != GAME_MODE_NORMAL)
     {
-        if (g_GameThread->replay_mode != 0)
+        if (g_GameThread->replay_mode != REPLAY_RECORDING)
         {
             open_replay_end_menu();
             return 0;
@@ -1007,7 +1007,7 @@ i32 stage_clear()
                 spell->practice_score = g_Globals.score / 10 * 10;
             }
         }
-        if (g_GameThread->replay_mode == 0 && g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
+        if (g_GameThread->replay_mode == REPLAY_RECORDING && g_Globals.game_mode != GAME_MODE_SPELL_PRACTICE)
         {
             g_Scorefile->characters[g_Globals.subshot + g_Globals.character]
                 .practices[g_Globals.difficulty][g_Globals.stage_num - 1]
@@ -1040,7 +1040,7 @@ i32 stage_clear()
         }
         g_Globals.add_to_score(bonus);
         g_Gui->stage_clear_bonus += bonus;
-        if (g_GameThread->replay_mode != 0)
+        if (g_GameThread->replay_mode != REPLAY_RECORDING)
         {
             open_replay_end_menu();
             return 0;
@@ -1062,7 +1062,7 @@ i32 stage_clear()
         i32 bonus = (g_Globals.lives * 5 + g_Globals.bombs) * 1000000;
         g_Globals.add_to_score(bonus);
         g_Gui->stage_clear_bonus += bonus;
-        if (g_GameThread->replay_mode != 0)
+        if (g_GameThread->replay_mode != REPLAY_RECORDING)
         {
             open_replay_end_menu();
         }
@@ -1085,7 +1085,7 @@ i32 stage_clear()
         thread->fade_timer = 0;
         return 0;
     }
-    if (g_GameThread->replay_mode == 0)
+    if (g_GameThread->replay_mode == REPLAY_RECORDING)
     {
         g_Scorefile->characters[g_Globals.subshot + g_Globals.character]
             .practices[g_Globals.difficulty][g_Globals.stage_num - 1]
