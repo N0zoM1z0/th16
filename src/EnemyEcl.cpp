@@ -1957,7 +1957,7 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         // Only the low 16 bits, as everywhere else (the original stores a word).
-        bullet_props[slot].aim_type = (u16)get_int_arg(1);
+        bullet_props[slot].aim_type = static_cast<EtAimMode>((u16)get_int_arg(1));
         break;
     }
     // etSound(slot, shot_sfx, transform_sfx)

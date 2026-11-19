@@ -28,7 +28,7 @@ typedef ZunList<EnemyInf> EnemyList;
 
 // EnemyBulletShooter::aim_type (ECL etAim), thecl's names. count bullets per
 // layer, layers from spd1 to spd2; AT forms add the angle to the player.
-enum EtAimMode
+enum EtAimMode : u16
 {
     // A fan of count bullets, ang_bullet_dist apart, around ang_aim.
     ET_AIM_AT = 0,
@@ -53,6 +53,8 @@ enum EtAimMode
     // The same turned by half a step.
     ET_AIM_PEANUT2 = 12,
 };
+
+static_assert(sizeof(EtAimMode) == sizeof(u16), "ECL aim mode occupies a 16-bit word");
 
 // ECL's laserTiming arguments. The first field is also used as the beam
 // timing and curved-laser segment count; the other three are meaningful for
@@ -95,7 +97,7 @@ struct EnemyBulletShooter
     i16 layers;
     // EtAimMode is encoded in the low 16 bits; keep the unused high half
     // as an actual stored field to preserve the shooter's original layout.
-    u16 aim_type;
+    EtAimMode aim_type;
     u16 aim_type_high;
     // 0x20: play shot_sfx.
     u32 sfx_flags;

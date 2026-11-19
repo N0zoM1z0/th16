@@ -951,7 +951,7 @@ void Bullet::run_ex()
         {
             EnemyBulletShooter props;
             props.pos = pos;
-            props.aim_type = (u16)ex->a;
+            props.aim_type = static_cast<EtAimMode>((u16)ex->a);
             props.start_transform = ex->b;
             props.count = ex->c;
             props.layers = ex->d;
