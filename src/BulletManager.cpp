@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stddef.h>
 #include <string.h>
 
 #include "AnmManager.h"
@@ -1970,7 +1971,7 @@ HARNESS_CALLED i32 Bullet::on_tick()
 // FUNCTION: TH16 0x4162d0
 HARNESS_CALLED i32 Bullet::step_ex_08()
 {
-    ex_state[11].timer.decrement(1.0f);
+    ex_state[11].timer.decrement(1);
     if (ex_state[11].ints[0] != 0 &&
         (outside_range(&pos.x, vm_sprite(&vm0)->sprite_width, -192.0f, 192.0f) ||
          outside_range(&pos.y, vm_sprite(&vm0)->sprite_height, 0.0f, 448.0f)))
@@ -1987,6 +1988,12 @@ HARNESS_CALLED i32 Bullet::step_ex_08()
             DirectionCornerFields fields;
             DirectionCornerScratch() {}
         } scratch;
+        // The corner starts in the direction vector's unused Z slot; the
+        // extra fourth word stores the corner Y without aliasing direction XY.
+        static_assert(offsetof(DirectionCornerFields, corner) == sizeof(f32) * 2,
+                      "bullet corner begins after the two direction components");
+        static_assert(sizeof(DirectionCornerScratch) == sizeof(f32) * 4,
+                      "bullet direction/corner scratch occupies four floats");
         bullet_sincosmul_2(&scratch.direction, angle, 1.0f);
         scratch.fields.corner.x = (-384.0f - vm_sprite(&vm0)->sprite_width) * 0.5f - pos.x;
         scratch.fields.corner.y = 224.0f - (vm_sprite(&vm0)->sprite_height + 448.0f) * 0.5f - pos.y;
