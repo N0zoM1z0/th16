@@ -9,11 +9,13 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest verified game-source checkpoint: `ee73604`
-  (`gpt-web: recover named laser timing phases in ECL shooters`). Five source
-  commits on 2026-11-19 restored signed shooter sound IDs, typed ECL stack and
-  call argument tags, and the shooter's four named laser timing phases. Use
-  `git log` and `git status -sb` for the live HEAD and upstream relation.
+- Latest locally built game-source checkpoint: `35b2062`
+  (`gpt-web: type ANM script opcodes as signed 16-bit records`). Five subsequent
+  source commits on 2026-11-19 corrected EX tag cursor dataflow in both laser
+  interpreters and recovered typed binary opcodes in the ECL, bullet-transform
+  and ANM records. The earlier signed sound-ID, typed ECL stack/call argument
+  and laser-timing phase checkpoints remain in history. Use `git log` and
+  `git status -sb` for the live HEAD and upstream relation.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
   **not currently a dirty change**; its old evidence is historical.
@@ -22,7 +24,9 @@ must not override `git status`.
   Focused normalized complete-function diagnostics: `EclRunContext::ecl_run`
   1,807 target / 1,641 candidate instructions, ratio **0.9171**;
   `EclRunContext::call_sub` 177 / 173, ratio **0.9086**;
-  `LaserLineInf::run_ex` 344 / 344, ratio **0.9157**. These figures can include
+  `LaserLineInf::run_ex` 344 / 343, ratio **0.9141**. The currently built
+  `LaserCurveInf::run_ex` is 360 / 363 instructions, ratio **0.9737**.
+  These figures can include
   non-code bytes in the disassembler's linear window and are **not** strict
   complete-owner receipts.
 - The saved strict-audit/progress image dates to **2026-11-15** and is stale.
@@ -79,12 +83,12 @@ Factory acceptance.
 | --- | --- |
 | `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | 21,408 target / 21,456 candidate bytes; 4,562 / 5,435 normalized instructions; **0.8633**. Hard groups: laser cases 402/403/411/413 score about 0.73–0.77; Bezier 125/126 about 0.89; curve 134/135/138/139 about 0.98. `MOVE_POS_3D` 116/117 is about 0.90 and random movement 112/113 about 1.00. Continue with the four laser creation paths and preserve their distinct origin/copy order. |
 | `AnmVm::run`, target `0x45f980`, `src/AnmVmRun.cpp` | 14,177 / 14,208 bytes; 3,837 / 3,843 instructions; **0.9474**. Cases 4 (`FOLLOW_CAMERA`) ~0.98, 124 (`FSET_RAND`) ~0.96, and 132 (random circle) ~0.97. Remaining differences include x87 result lifetime, radial multiplication and load order. |
-| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **2026-11-19:** 1,588 / 1,600 bytes; 344 / 344 instructions; **0.9157**. Direct/register `BulletEx` cursor and live-index sound-check trials were worse; preserve the current pointer lifetime when revisiting indexed-address scheduling. |
-| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **2026-11-19:** 1,548 / 1,552 bytes; 360 / 361 instructions; **0.9709**. Removing the volatile transform pointer regressed the complete-owner diagnostic; the cursor/payload schedule still differs. |
+| `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 343 instructions; **0.9141**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
+| `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 363 instructions; **0.9737**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
 | `EnemyData::step_logic`, target `0x41c330`, `src/Enemy.cpp` | 2,207 / 2,208 bytes; 534 / 530 instructions; **0.9868**. Keep the branchless dialogue-damage selection; staged life/overkill rewrites previously regressed this owner. |
 | `Bullet::step_ex_08`, target `0x4162d0`, `src/BulletManager.cpp` | 1,390 / 1,424 bytes; 327 / 336 instructions; **0.8929**. The committed `DirectionCornerScratch` union models the direction/corner stack overlap naturally; continue investigating corner math and register scheduling. |
 | `EnemyData::step_interpolators`, target `0x41bb50`, `src/Enemy.cpp` | 1,692 / 1,696 bytes; 421 / 421 instructions; **0.9976**. The camera Y operand order checkpoint is committed. |
-| `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | **Historical 2026-11-18 experiment only:** 476 / 480 bytes; 121 / 121 instructions; **0.9917**, with one unmatched `push esi`. That experiment is not a current dirty change; re-measure the current candidate before acting. |
+| `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | **Latest incremental build:** 476 / 480 bytes; 121 / 121 instructions; **0.9917**, with one `push esi` occurring before rather than after the timer's current-frame store. Changing `tick_goto` to return the current frame did not fix it, so that trial was restored. |
 
 Focused ECL opcode diagnostics from the 2026-11-19 incremental build:
 cases 402/403/411/413 (line/infinite/curve/beam laser) are respectively
@@ -97,6 +101,15 @@ never infer exactness from dispatch coverage or case ratios.
 For exact diffs consult `git show COMMIT`, not an old note's guessed source
 form. The most relevant recent commits are:
 
+- `35b2062`: recover signed 16-bit `AnmRawInstr::opcode` and verify its
+  layout; the full `AnmVm::run` diagnostic remains 3,837 / 3,843 at 0.9474.
+- `c09349d`: restore `BulletEx::type` as a signed 32-bit bitmask opcode with
+  explicit record offsets; the bullet and laser EX owners still compile.
+- `8332037`: type the 16-bit ECL opcode and assert its argument offset; the
+  large ECL dispatch and argument getter diagnostics remain unchanged.
+- `01bc889` and `ae81387`: use the loop-entry index to advance TAG operations
+  in line and curve laser EX interpreters respectively. Focused complete-owner
+  normalized comparison improved in both cases before saving.
 - `ee73604`: replace numbered ECL laser timing slots with the named original
   phases while retaining the shooter's binary layout; the first field also
   serves beam timing and curve segment count.
@@ -142,8 +155,19 @@ laser/ET_EX cases; altered ANM random-float or camera-offset evaluation;
 explicit `EnemyLife` pointers and damage temporaries in
 `EnemyData::step_logic`. Evidence from the trials is retained under ignored
 `.analysis/th16-*-20261119*` and `.analysis/th16-*-build.log` files. The
-recorded positive changes are the five source commits above; do not mistake a
-trial's normalized ratio for strict exactness or reconstructive progress.
+recorded positive changes include the five subsequent source commits listed
+above; do not mistake a trial's normalized ratio for strict exactness or
+reconstructive progress.
+Additional 2026-11-19 focused trials after `ee73604`: nonvolatile ECL shooter
+references, splitting laser origin vector stores, and factoring ANM random
+multiplication through `Rng::randf_0_to` or a precomputed result regressed the
+selected opcode spans. Separating the bullet direction/corner scratch, early
+collision half-height computation, explicit `AnmVm::world_pos` vector addition,
+and alternative curve/line EX index or BLEND update forms also did not improve
+comparisons. A `tick_goto` return-value variant was codegen-neutral in the
+screen-shake leaf. Each failed trial was restored rather than committed. Local
+trial records are retained under `.analysis/th16-session2-*` (ignored).
+
 
 ## Suggested next experiments
 
