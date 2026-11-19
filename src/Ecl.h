@@ -191,6 +191,14 @@ struct EclStack
     // 0x474860. Closes the frame enter opened.
     HARNESS_CALLED i32 ecl_return();
 
+    // Expression entries are 8-byte tagged records, but call frames and
+    // locals use the same storage as an untyped byte stream. This view
+    // addresses a tagged entry using a byte offset into that stream.
+    __forceinline EclStackEntry *entry_at(i32 byte_offset)
+    {
+        return (EclStackEntry *)((u8 *)data + byte_offset);
+    }
+
     // The local at the given byte offset from the frame base. Callers that
     // go through it compute the frame address before adding the offset.
     i32 *local_ptr(i32 offset)

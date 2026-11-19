@@ -30,7 +30,7 @@ i32 EclRunContext::get_int_arg(int index)
         // path, keeps the type in a register as in the original.
         if (ins->args[index].i <= -1 && value >= -100)
         {
-            EclStackEntry *entry = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset) + value;
+            EclStackEntry *entry = stack.entry_at(stack.stack_offset) + value;
             EclStackItem item = entry->value;
             EclStackValueKind type = entry->type;
             i32 result;
@@ -68,7 +68,7 @@ HARNESS_CALLED f32 LTCG_VECTORCALL EclRunContext::get_float_arg(EclFloatArgIndex
         if (value <= -1.0f && value >= -100.0f)
         {
             EclStackEntry *entry =
-                (EclStackEntry *)((u8 *)stack.data + stack.stack_offset - (i32)(-value * sizeof(EclStackEntry)));
+                stack.entry_at(stack.stack_offset - (i32)(-value * sizeof(EclStackEntry)));
             EclStackItem item = entry->value;
             if (entry->type != ECL_STACK_FLOAT && entry->type == ECL_STACK_INTEGER)
             {
@@ -94,7 +94,7 @@ i32 EclRunContext::get_int_arg_given_value(int index, i32 value)
         }
         if (value <= -1 && value >= -100)
         {
-            EclStackEntry *entries = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset);
+            EclStackEntry *entries = stack.entry_at(stack.stack_offset);
             EclStackItem *value_ptr = &entries[value].value;
             EclStackItem item = *value_ptr;
             EclStackValueKind type = entries[value].type;
@@ -131,7 +131,7 @@ HARNESS_CALLED f32 EclRunContext::get_float_arg_given_value(int index, f32 value
         if (value <= -1.0f && value >= -100.0f)
         {
             EclStackEntry *entry =
-                (EclStackEntry *)((u8 *)stack.data + stack.stack_offset - (i32)(-value * sizeof(EclStackEntry)));
+                stack.entry_at(stack.stack_offset - (i32)(-value * sizeof(EclStackEntry)));
             EclStackItem item = entry->value;
             if (entry->type != ECL_STACK_FLOAT && entry->type == ECL_STACK_INTEGER)
             {
@@ -846,7 +846,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 i32 *dst = get_int_arg_ptr(0);
                 *dst = stack.pop_raw();
                 stack.stack_offset -= 4;
-                EclStackEntry *entry = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset);
+                EclStackEntry *entry = stack.entry_at(stack.stack_offset);
                 if (entry->type == ECL_STACK_FLOAT)
                 {
                     *dst = (i32) * (f32 *)dst;
@@ -858,7 +858,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 f32 *dst = get_float_arg_ptr(0);
                 *(i32 *)dst = stack.pop_raw();
                 stack.stack_offset -= 4;
-                EclStackEntry *entry = (EclStackEntry *)((u8 *)stack.data + stack.stack_offset);
+                EclStackEntry *entry = stack.entry_at(stack.stack_offset);
                 if (entry->type != ECL_STACK_FLOAT && entry->type == ECL_STACK_INTEGER)
                 {
                     *dst = (f32) * (i32 *)dst;
