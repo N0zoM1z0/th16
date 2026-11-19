@@ -380,6 +380,25 @@ struct BulletManager
 
 extern BulletManager *g_BulletManager;
 
+// How a bullet's cancellation selects an animation script. This is distinct
+// from BulletCancelMode, which controls item generation when cancelled.
+enum BulletCancelScriptKind : i32
+{
+    BULLET_CANCEL_SCRIPT_COLOR_PAIR = 0,
+    BULLET_CANCEL_SCRIPT_COLOR_TABLE = 1,
+    BULLET_CANCEL_SCRIPT_DISABLED = 2,
+    BULLET_CANCEL_SCRIPT_FIXED_16 = 3,
+    BULLET_CANCEL_SCRIPT_FIXED_6 = 4,
+    BULLET_CANCEL_SCRIPT_FIXED_12 = 5,
+    BULLET_CANCEL_SCRIPT_SPRITE_REMAP = 6,
+    BULLET_CANCEL_SCRIPT_FIXED_260 = 7,
+    BULLET_CANCEL_SCRIPT_FIXED_263 = 8,
+    BULLET_CANCEL_SCRIPT_FIXED_266 = 9,
+    BULLET_CANCEL_SCRIPT_FIXED_275 = 10,
+};
+static_assert(sizeof(BulletCancelScriptKind) == sizeof(i32),
+              "cancel animation selection occupies one 32-bit field");
+
 // Per bullet type (lasers use it too): its ANM script and the sprite of each
 // color. ExpHP has zBulletType at 0x118 bytes; the table at 0x49f2e0 has a
 // stride of 0x114.
@@ -396,11 +415,13 @@ struct BulletTypeInfo
     // Picks the cancel animation script: 0 by color, 1 from
     // g_bullet_cancel_scripts, 2 none, 6 the color's fourth sprite, others
     // a fixed script.
-    i32 cancel_kind;
+    BulletCancelScriptKind cancel_kind;
     // Script of the second VM (vm1) drawn over the bullet; 0 for none.
     i32 overlay_script;
 };
 static_assert(offsetof(BulletTypeInfo, hitbox_radius) == 0x104, "BulletTypeInfo layout");
+static_assert(offsetof(BulletTypeInfo, cancel_kind) == 0x10c,
+              "cancel animation selection offset within the table");
 static_assert(sizeof(BulletTypeInfo) == 0x114, "BulletTypeInfo layout");
 
 #define BULLET_TYPE_COUNT 44

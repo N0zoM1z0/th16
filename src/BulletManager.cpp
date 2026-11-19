@@ -651,39 +651,39 @@ i32 BulletManager::shoot_one(EnemyBulletShooter *props, i32 i, i32 layer, f32 an
     }
     switch (g_bullet_types[props->type].cancel_kind)
     {
-    case 0:
+    case BULLET_CANCEL_SCRIPT_COLOR_PAIR:
         bullet->cancel_script = props->color * 2 + 4;
         break;
-    case 1:
+    case BULLET_CANCEL_SCRIPT_COLOR_TABLE:
         bullet->cancel_script = g_bullet_cancel_scripts[props->color];
         break;
-    case 2:
+    case BULLET_CANCEL_SCRIPT_DISABLED:
         bullet->cancel_script = -1;
         bullet->flags |= BULLET_FLAG_ROUND_HITBOX;
         break;
-    case 3:
+    case BULLET_CANCEL_SCRIPT_FIXED_16:
         bullet->cancel_script = 0x10;
         break;
-    case 4:
+    case BULLET_CANCEL_SCRIPT_FIXED_6:
         bullet->cancel_script = 6;
         break;
-    case 6:
+    case BULLET_CANCEL_SCRIPT_SPRITE_REMAP:
         bullet->cancel_script = g_bullet_types[bullet->sprite].sprites[props->color][3];
         bullet->flags |= BULLET_FLAG_ROUND_HITBOX;
         break;
-    case 7:
+    case BULLET_CANCEL_SCRIPT_FIXED_260:
         bullet->cancel_script = 0x104;
         bullet->flags |= BULLET_FLAG_ROUND_HITBOX;
         break;
-    case 8:
+    case BULLET_CANCEL_SCRIPT_FIXED_263:
         bullet->cancel_script = 0x107;
         bullet->flags |= BULLET_FLAG_ROUND_HITBOX;
         break;
-    case 9:
+    case BULLET_CANCEL_SCRIPT_FIXED_266:
         bullet->cancel_script = 0x10a;
         bullet->flags |= BULLET_FLAG_ROUND_HITBOX;
         break;
-    case 10:
+    case BULLET_CANCEL_SCRIPT_FIXED_275:
         bullet->cancel_script = 0x113;
         bullet->flags |= BULLET_FLAG_ROUND_HITBOX;
         break;
@@ -892,42 +892,42 @@ void Bullet::run_ex()
             }
             switch (g_bullet_types[sprite].cancel_kind)
             {
-            case 0:
+            case BULLET_CANCEL_SCRIPT_COLOR_PAIR:
                 cancel_script = color * 2 + 4;
                 break;
-            case 1:
+            case BULLET_CANCEL_SCRIPT_COLOR_TABLE:
                 cancel_script = g_bullet_cancel_scripts[color];
                 break;
-            case 2:
+            case BULLET_CANCEL_SCRIPT_DISABLED:
                 cancel_script = -1;
                 flags |= BULLET_FLAG_ROUND_HITBOX;
                 break;
-            case 3:
+            case BULLET_CANCEL_SCRIPT_FIXED_16:
                 cancel_script = 0x10;
                 break;
-            case 4:
+            case BULLET_CANCEL_SCRIPT_FIXED_6:
                 cancel_script = 6;
                 break;
-            case 5:
+            case BULLET_CANCEL_SCRIPT_FIXED_12:
                 cancel_script = 0xc;
                 break;
-            case 6:
+            case BULLET_CANCEL_SCRIPT_SPRITE_REMAP:
                 cancel_script = g_bullet_types[sprite].sprites[color][3];
                 flags |= BULLET_FLAG_ROUND_HITBOX;
                 break;
-            case 7:
+            case BULLET_CANCEL_SCRIPT_FIXED_260:
                 cancel_script = 0x104;
                 flags |= BULLET_FLAG_ROUND_HITBOX;
                 break;
-            case 8:
+            case BULLET_CANCEL_SCRIPT_FIXED_263:
                 cancel_script = 0x107;
                 flags |= BULLET_FLAG_ROUND_HITBOX;
                 break;
-            case 9:
+            case BULLET_CANCEL_SCRIPT_FIXED_266:
                 cancel_script = 0x10a;
                 flags |= BULLET_FLAG_ROUND_HITBOX;
                 break;
-            case 10:
+            case BULLET_CANCEL_SCRIPT_FIXED_275:
                 cancel_script = 0x113;
                 flags |= BULLET_FLAG_ROUND_HITBOX;
                 break;
