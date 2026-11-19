@@ -112,7 +112,7 @@ struct BulletExState
 };
 
 // Bullet::state.
-enum BulletState
+enum BulletState : u16
 {
     BULLET_STATE_FREE = 0,
     // Flying; runs its transforms.
@@ -129,6 +129,8 @@ enum BulletState
     // The sentinel past the end of the bullet array.
     BULLET_STATE_SENTINEL = 6,
 };
+
+static_assert(sizeof(BulletState) == sizeof(u16), "bullet state occupies one 16-bit word");
 
 // Bullet::flags.
 enum BulletFlags
@@ -189,8 +191,8 @@ struct Bullet
     // The shooter's sfx_flags; not read.
     u32 sfx_flags;
     u8 unk_c70[0xc72 - 0xc70];
-    // A BulletState.
-    u16 state;
+    // The compact lifecycle state, kept as 16 bits in the bullet record.
+    BulletState state;
     u8 unk_c74[0xc78 - 0xc74];
     // Next bullet drawn in the same layer.
     Bullet *next_in_layer;
@@ -269,6 +271,7 @@ struct Bullet
         return *(ZunAngle *)&angle;
     }
 };
+static_assert(offsetof(Bullet, state) == 0xc72, "bullet lifecycle state binary offset");
 
 // 0x417140. The sprite mapping callback of bullet VMs: picks the sprite for
 // the bullet's type and color.
