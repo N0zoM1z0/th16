@@ -804,7 +804,7 @@ void SoundManager::modify_bgm(i32 command, i32 arg, const char *name)
     {
         if (bgm_commands[i].command == BGM_NONE)
         {
-            bgm_commands[i].command = command;
+            bgm_commands[i].command = static_cast<BgmCommand>(command);
             bgm_commands[i].arg = arg;
             strcpy(bgm_commands[i].name, name);
             bgm_commands[i].step = 0;

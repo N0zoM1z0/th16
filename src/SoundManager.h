@@ -413,7 +413,7 @@ enum SoundEffect
 
 // SoundManager::modify_bgm's commands. The sound thread works through them
 // in order, a step per call for the longer ones (BgmCommandEntry::step).
-enum BgmCommand
+enum BgmCommand : i32
 {
     // The end of the queue.
     BGM_NONE = 0,
@@ -466,8 +466,8 @@ void sound_debug_log(const char *fmt, ...);
 // A request to the sound thread (SoundManager::modify_bgm).
 struct BgmCommandEntry
 {
-    // A BgmCommand.
-    i32 command;
+    // A BGM command opcode; zero marks the empty queue slot.
+    BgmCommand command;
     i32 arg;
     // How many steps of the command have run.
     i32 step;
@@ -476,6 +476,10 @@ struct BgmCommandEntry
 };
 
 #define SOUND_FILE_COUNT 0x43
+
+static_assert(sizeof(BgmCommand) == sizeof(i32), "BGM commands occupy one 32-bit word");
+static_assert(offsetof(BgmCommandEntry, command) == 0, "BGM command precedes its argument");
+static_assert(offsetof(BgmCommandEntry, step) == 8, "BGM command progress offset");
 
 // What the sound threads should do (SoundManager::thread_state).
 enum SoundThreadState
