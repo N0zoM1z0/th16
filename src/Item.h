@@ -19,7 +19,7 @@ struct ItemList
 };
 
 // Item::item_type (ExpHP's zItemType).
-enum ItemType
+enum ItemType : i32
 {
     ITEM_POWER = 1,
     ITEM_POINT = 2,
@@ -45,7 +45,7 @@ enum ItemType
 };
 
 // Item::state.
-enum ItemState
+enum ItemState : i32
 {
     ITEM_STATE_FREE = 0,
     ITEM_STATE_FALLING = 1,
@@ -62,6 +62,9 @@ enum ItemState
     ITEM_STATE_DELAYED = 6,
 };
 
+static_assert(sizeof(ItemType) == sizeof(i32), "item type is encoded in 32 bits");
+static_assert(sizeof(ItemState) == sizeof(i32), "item lifecycle state is encoded in 32 bits");
+
 // One item (power, point, season...). Layout from ExpHP's th-re-data.
 struct Item
 {
@@ -74,10 +77,9 @@ struct Item
     f32 angle;
     ZunTimer time;
     ZunTimer timer_c3c;
-    // An ItemState.
-    i32 state;
-    // An ItemType.
-    i32 item_type;
+    // Distinct lifecycle and pickup identity, stored as 32-bit values.
+    ItemState state;
+    ItemType item_type;
     // The type for cancel and season items, 0 for others; on_draw_body
     // then sets 1 while the offscreen arrow (vm_2) is drawn, else 0.
     i32 unk_c58;
@@ -121,6 +123,9 @@ struct Item
     void collect_big_power();
     void collect_point();
 };
+
+static_assert(offsetof(Item, state) == 0xc50, "item lifecycle state layout");
+static_assert(offsetof(Item, item_type) == 0xc54, "item pickup type layout");
 
 // The point of collection: items collected above this line, or while
 // everything is being auto-collected (ITEM_STATE_AUTOCOLLECT), are worth

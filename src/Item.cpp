@@ -662,7 +662,7 @@ HARNESS_CALLED Item *ItemManager::spawn_item(i32 type, Float3 *pos, i32 unk_3, f
                 item->intangibility_frames = mgr->total_items_created % 4;
             }
             item->state = ITEM_STATE_DELAYED;
-            item->item_type = type;
+            item->item_type = static_cast<ItemType>(type);
             item->unk_c58 = type;
             item->position = *pos;
             item_sincosmul(&item->velocity, angle, speed);
@@ -709,7 +709,7 @@ HARNESS_CALLED Item *ItemManager::spawn_item(i32 type, Float3 *pos, i32 unk_3, f
             item->speed = 0.0f;
             item->speed_towards_player = 0.0f;
             item->intangibility_frames = 0;
-            item->item_type = anm_type;
+            item->item_type = static_cast<ItemType>(anm_type);
             item->spawn_effect();
             item->unk_c58 = 0;
             g_BulletManager->bullet_anm->copy_vm_and_run(&item->vm, g_item_anm_scripts[anm_type][0]);
