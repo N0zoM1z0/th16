@@ -9,15 +9,15 @@ must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest locally built source checkpoint: `b7ff292`
-  (`gpt-web: recover typed pause lifecycle and menu substates`). Six source
-  commits on 2026-11-19 restored 16-bit `EtAimMode`, unsigned byte MSG and
-  ending-script opcodes, and the 32-bit manual, title and pause menu states.
-  The dialogue and ending interpreters' focused normalized ratios increased
-  to 0.9504 and 0.9768. Preserve external integer setter signatures and
-  native bytecode layouts. The prior 3D ECL shooter offsets and origins,
-  interpolator modes and laser EX checkpoints remain in Git. Use `git log`
-  and `git status -sb` for live HEAD and upstream state.
+- Latest locally built source checkpoint: d96eead
+  (gpt-web: recover typed enemy life spell and pending-kill flags). Ten later
+  source commits on 2026-11-19 recovered typed BGM queue and worker state,
+  the SHT shooter byte, frame pacing, screen effects, enemy drops and life
+  flags, replay modes, signed STD quad kinds, and ANM FSET_RAND's result
+  lifetime. The source keeps native storage widths and existing public ABI.
+  The current layout-sensitive ECL linear-disassembly result should not be
+  mistaken for a semantic or strict Oracle regression. Consult Git history
+  and scoped opcode comparisons, not the stale audit totals below.
 - The worktree was clean after the 2026-11-19 incremental build and focused
   comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
   **not currently a dirty change**; its old evidence is historical.
@@ -83,8 +83,8 @@ Factory acceptance.
 
 | Owner / source | Current local measurement and next issue |
 | --- | --- |
-| `EnemyData::ecl_run_over_300`, target `0x41dcb0`, `src/EnemyEcl.cpp` | **2026-11-19 latest incremental build:** 21,408 target / 21,520 candidate bytes; 4,562 / 4,616 normalized linear-disassembly instructions; **0.9022** (previously 0.9019). Typed 3D relative offsets also improve laser case 402 to 74/77 at 0.78 and bosses-interrupt case 502 to 36/37 at 0.99. The complete-function diagnostic includes possible noncode data and is not a strict result. Laser constructors 403/411/413 remain at 0.75/0.79/0.75, with different origin/copy ordering to preserve. |
-| `AnmVm::run`, target `0x45f980`, `src/AnmVmRun.cpp` | 14,177 / 14,208 bytes; 3,837 / 3,843 instructions; **0.9474**. Cases 4 (`FOLLOW_CAMERA`) ~0.98, 124 (`FSET_RAND`) ~0.96, and 132 (random circle) ~0.97. Remaining differences include x87 result lifetime, radial multiplication and load order. |
+| EnemyData::ecl_run_over_300 (0x41dcb0), src/EnemyEcl.cpp | Before d96eead: 4,562 / 4,616 linear instructions, 0.9022. After the EnemyLife field-type change, a linear window reported 4,562 / 5,449, 0.8277; its jump-table/data extent is not a reliable code boundary. Focused laser opcodes 402/403/411/413 remain 0.78/0.75/0.79/0.75, and bosses-interrupt case 502 remains 0.99. Investigate the case bodies and complete owner extent, not the raw linear ratio. |
+| AnmVm::run (0x45f980), src/AnmVmRun.cpp | After 82b1cfa: 14,177 / 14,160 bytes; 3,837 / 3,817 linear instructions, 0.9485 (previously 0.9474). In FSET_RAND, the candidate case-124 span shrank from 24 to 13 instructions, normalized ratio 0.70, while the full owner improved slightly; check whether the destination write was merged into a shared path. Follow-camera case 4 and circle-random case 132 still need register-order work. |
 | `LaserLineInf::run_ex`, target `0x431fe0`, `src/Laser.cpp` | **Latest incremental build:** 1,588 / 1,600 bytes; 344 / 343 instructions; **0.9141**. Commit `01bc889` restored the target's TAG cursor-from-index assignment; other live-index sound checks and direct/register `BulletEx` cursor trials regressed. |
 | `LaserCurveInf::run_ex`, target `0x438cb0`, `src/Laser.cpp` | **Latest incremental build:** 1,548 / 1,568 bytes; 360 / 363 instructions; **0.9737**. Commit `ae81387` restored the target's TAG index update while keeping the loop's transform pointer; other cursor variants regressed. |
 | `EnemyData::step_logic`, target `0x41c330`, `src/Enemy.cpp` | 2,207 / 2,208 bytes; 534 / 530 instructions; **0.9868**. Keep the branchless dialogue-damage selection; staged life/overkill rewrites previously regressed this owner. |
@@ -99,6 +99,15 @@ Factory acceptance.
 | `TitleInf::on_tick`, target `0x44af80`, `src/MainMenu.cpp` | **2026-11-19:** 386 / 379 linear instructions; **0.9098** after typing the title lifecycle states. `TitleInf::set_state` remains 21 / 21, 1.0. |
 | `HelpManual::on_tick_body`, target `0x42eab0`, `src/HelpManual.cpp` | **2026-11-19:** 336 / 338 linear instructions; **0.9763** after typing manual lifecycle and page states. |
 
+Additional 2026-11-19 focused owner diagnostics (local normalized, not
+accepted strict Oracle evidence): SoundManager::update_sound_thread 379/385
+instructions at 0.9529; ReplayManager::on_tick_record 87/65 at 0.7632;
+Stage::draw_layer 206/206 at 1.0, with StageInner::run_std remaining 0.9275.
+The sound queue still spills the count and omits a second positivity check
+before division. PlayerBullet::create and Player::shoot_one_bullet remain
+376/376 and 88/88 at 1.0; GameWindow::update_window and
+do_frame_sleeping remain 60/60 and 78/78 at 1.0.
+
 Focused ECL opcode diagnostics from the latest 2026-11-19 incremental build:
 cases 402/403/411/413 (line/infinite/curve/beam laser) are respectively
 74/77 at 0.78, 80/83 at 0.75, 68/71 at 0.79 and 65/66 at 0.75. These are inline case spans, not complete
@@ -110,6 +119,24 @@ never infer exactness from dispatch coverage or case ratios.
 For exact diffs consult `git show COMMIT`, not an old note's guessed source
 form. The most relevant recent commits are:
 
+- d96eead: type EnemyLife's pending-kill/spell word and cast the mask
+  updates in enemy initialization and ECL spellEnd; step_logic and
+  receive_damage retain 0.9868 and normalized 34/34, respectively.
+- 82b1cfa: materialize the ANM FSET_RAND scaled result before resolving the
+  destination. The case's local scope changes substantially; the full
+  AnmVm::run ratio is 0.9485, not strict exactness.
+- 4ab0d84: recover signed 16-bit STD quad kind, including the negative
+  end-of-list sentinel, and preserve variable-length quad record offsets.
+- d655874: type recording, playback and loaded replay modes without changing
+  initialize(i32,...) ABI; playback and initialization retain local 1.0.
+- 2d0018d: type the enemy's main drop as ItemType through enemy creation,
+  dropMain ECL, and drop reset; ECL owner retains 0.9022.
+- 4b249d6: type stored ScreenEffectMode, retaining its integer creation ABI.
+- 090ff30: consolidate FramePacingMode in the window, frame pacing table and
+  saved pause-menu state without changing storage layout.
+- 75ed788 and 048b58f: recover sound worker lifecycle and BGM queue opcodes;
+  update_sound_thread remains 0.9529, modify_bgm remains 41/41 at 1.0.
+- d6eff7e: type the single-byte SHT shooter kind used by player-shot creation.
 - `b7ff292`, `9f4944e`, `976688b`: recover the pause, title and manual
   state/substate types without changing the original integer setter ABI.
   The affected large state machines build and retain their local ratios.
@@ -201,6 +228,19 @@ Re-measure before relying on any old ratio; none of these figures is a Factory
 exactness credit.
 
 ## Retained 2026-11-19 trial findings
+
+Latest ignored .analysis/th16-s10-* trials: ECL movePos3D as a vector
+temporary lowered its opcode group to 0.69, while a cached ECL context
+pointer lowered it to 0.72 (baseline 0.77). For the sound queue, reloading
+count for averaging gave 0.9323 and a plain while-sum gave 0.9167, below
+the baseline 0.9529. A volatile sound-ID local raised it to 0.9556 but was
+rejected as an unnatural forced spill; a normal request snapshot had no
+effect. ANM FSET_RAND with direct/inlined multiplication changed the
+extracted opcode block from 24 to 13 candidate instructions and lowered
+its case ratio to 0.70 (baseline 0.96). Its current expression is committed
+in 82b1cfa because the full AnmVm::run diagnostic improved to 0.9485; confirm
+the shared writeback before changing it again. The other trial variants
+were restored. Do not assume linear disassembly past owner extents is code.
 
 Later scoped comparisons found several natural-source variants that were
 restored rather than committed: using a reference to `EnemyInterrupt` in
