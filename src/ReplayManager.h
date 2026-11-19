@@ -176,13 +176,14 @@ struct ReplayStageData
     ~ReplayStageData();
 };
 
-enum ReplayManagerMode
+enum ReplayManagerMode : i32
 {
     REPLAY_RECORDING = 0,
     REPLAY_PLAYBACK = 1,
     // Only read, for the replay menus.
     REPLAY_LOADED = 2,
 };
+static_assert(sizeof(ReplayManagerMode) == sizeof(i32), "replay manager mode occupies a 32-bit field");
 
 // Records the game's input into a replay and saves it, plays one back, or
 // just reads one for the menus. Layout from ExpHP's th-re-data
@@ -192,8 +193,8 @@ struct ReplayManager
     u32 flags;
     UpdateFunc *on_tick_func;
     UpdateFunc *on_draw_func;
-    // A ReplayManagerMode.
-    i32 mode;
+    // Recording, playback or read-only replay list data.
+    ReplayManagerMode mode;
     // Set to 1 when playback reaches stage 3; never read.
     i32 unk_10;
     // The file header (an RpyHeader).

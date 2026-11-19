@@ -554,7 +554,7 @@ static __forceinline UpdateFunc *new_replay_func(UpdateFuncCallback function, Re
 // FUNCTION: TH16 0x447760
 int ReplayManager::initialize(i32 mode, const char *filename)
 {
-    this->mode = mode;
+    this->mode = static_cast<ReplayManagerMode>(mode);
     if (mode == REPLAY_RECORDING)
     {
         g_ReplayManager = this;
