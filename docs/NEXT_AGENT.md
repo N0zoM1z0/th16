@@ -1,48 +1,44 @@
 # TH16 reconstruction: current agent handoff
 
-**Updated 2026-11-18.** Read [AGENTS.md](../AGENTS.md) before editing. Work in
+**Updated 2026-11-19.** Read [AGENTS.md](../AGENTS.md) before editing. Work in
 natural C/C++; do not use inline assembly, fake padding, or inert code to force
 machine-code similarity. Commit coherent improvements as `gpt-web: ...` and do
-not push unless the user requests it. This handoff is prepared for the incoming
-agent: preserve and inspect the two existing dirty timer files before editing;
-do not reset, overwrite or silently discard them.
+not push unless the user requests it. Always inspect the live worktree and
+preserve any dirty changes before editing; an older handoff's dirty-file list
+must not override `git status`.
 
 ## Repository checkpoint and validation boundaries
 
-- Latest **game-source** checkpoint before this handoff cleanup:
-  `d3aecb675fca4ee69b82bde7d9041b587fbf6216`
-  (`gpt-web: avoid caching ECL context owner`, 2026-11-17 21:16 UTC).
-  `main` and `origin/main` were synchronized before the documentation work.
-  This handoff adds two documentation-only local commits; use `git log` and
-  `git status -sb` for the actual post-cleanup HEAD/ahead count. Neither commit
-  changes game source.
-- The worktree has exactly **two unstaged, uncommitted source changes**:
-  `src/ScreenEffect.cpp` and `src/ZunTimer.h`. There are no staged changes,
-  untracked files or conflicts. They implement an experimental
-  `ZunTimer::tick_goto_volatile(i32 *out_current)` used only by
-  `ScreenEffect::on_tick_shake`; see the dedicated section below. Treat this as
-  an unproven experiment, not a committed reconstruction improvement.
-- An incremental build of that exact dirty worktree succeeded on 2026-11-18:
-  **1,166 annotated functions**. This is a build/annotation count, not an
-  exactness count. The focused `on_tick_shake` diagnostic is 121 target / 121
-  candidate instructions, ratio **0.9917**, with one unmatched `push esi`.
-  This normalized diagnostic is not a strict receipt and has not yet been
-  compared against a clean-HEAD baseline for this experiment.
+- Latest verified game-source checkpoint: `ee73604`
+  (`gpt-web: recover named laser timing phases in ECL shooters`). Five source
+  commits on 2026-11-19 restored signed shooter sound IDs, typed ECL stack and
+  call argument tags, and the shooter's four named laser timing phases. Use
+  `git log` and `git status -sb` for the live HEAD and upstream relation.
+- The worktree was clean after the 2026-11-19 incremental build and focused
+  comparisons. The 2026-11-18 `ScreenEffect.cpp` / `ZunTimer.h` experiment is
+  **not currently a dirty change**; its old evidence is historical.
+- The incremental MSVC/LTCG build succeeded on 2026-11-19 with **1,166 annotated
+  functions**. This is a build/annotation count, not an accepted exact count.
+  Focused normalized complete-function diagnostics: `EclRunContext::ecl_run`
+  1,807 target / 1,641 candidate instructions, ratio **0.9171**;
+  `EclRunContext::call_sub` 177 / 173, ratio **0.9086**;
+  `LaserLineInf::run_ex` 344 / 344, ratio **0.9157**. These figures can include
+  non-code bytes in the disassembler's linear window and are **not** strict
+  complete-owner receipts.
 - The saved strict-audit/progress image dates to **2026-11-15** and is stale.
   Its **1,033 exact / 51 mismatch / 131 incomplete** and **1,215 annotated
   units** are historical only; do not present them as today's result.
-- Factory inspection currently identifies the original Japanese v1.00a target,
-  but reports **0 imported Oracle results** and an `inventory-import-only`
-  diagnostic. Exactness, provenance acceptance and production closure are
-  therefore unknown in the current Factory registry. The last known local
-  strict Oracle attempt was blocked in EH-owner preflight by
-  **"EH parent lacks one complete candidate PDB owner"**; that historical
-  blocker has not been re-certified. A successful build or normalized ratio of
-  `1.0` is not an accepted complete-owner/relocation receipt.
+- The last Factory inspection reported **0 imported Oracle results** and an
+  `inventory-import-only` diagnostic. Exactness, provenance acceptance and
+  production closure are unknown in the current Factory registry. The last
+  known local strict Oracle attempt was blocked in EH-owner preflight by
+  **"EH parent lacks one complete candidate PDB owner"**; this blocker has not
+  been re-certified. A successful build or normalized ratio of `1.0` is not
+  an accepted complete-owner/relocation receipt.
 - `resources/th16.exe` is the private original Japanese v1.00a target;
-  `build/reference-candidate/` is the current incremental PE/MAP/PDB and
-  object/symbol cache. Keep both, together with `.tools/`, `.venv/`,
-  `ghidra-project/` and the pinned `_reference/` checkout.
+  `build/reference-candidate/` is the incremental PE/MAP/PDB and object/symbol
+  cache. Keep both, together with `.tools/`, `.venv/`, `ghidra-project/` and
+  the pinned `_reference/` checkout.
 
 ## Immediate working commands
 
@@ -90,9 +86,9 @@ acceptance.
 | `EnemyData::step_interpolators`, target `0x41bb50`, `src/Enemy.cpp` | 1,692 / 1,696 bytes; 421 / 421 instructions; **0.9976**. The camera Y operand order checkpoint is committed. |
 | `ScreenEffect::on_tick_shake`, target `0x45cd30`, `src/ScreenEffect.cpp` | 476 / 480 bytes; 121 / 121 instructions; **0.9917** on the dirty experiment, with one unmatched `push esi`. Compare against clean HEAD before deciding whether the new timer helper is worth keeping. |
 
-Focused ECL opcode diagnostics from the current build: cases 402/403/411/413
-(line/infinite/curve/beam laser) are 74/76 at 0.75, 80/84 at 0.73, 68/72 at
-0.77 and 65/67 at 0.74 respectively. These are inline case spans, not complete
+Focused ECL opcode diagnostics from the 2026-11-19 incremental build:
+cases 402/403/411/413 (line/infinite/curve/beam laser) are respectively
+74/75 at 0.77, 80/83 at 0.75, 68/71 at 0.79 and 65/66 at 0.75. These are inline case spans, not complete
 owners. The ECL dispatch map and its complete PDB owner are different scopes;
 never infer exactness from dispatch coverage or case ratios.
 
@@ -100,6 +96,16 @@ never infer exactness from dispatch coverage or case ratios.
 
 For exact diffs consult `git show COMMIT`, not an old note's guessed source
 form. The most relevant recent commits are:
+
+- `ee73604`: replace numbered ECL laser timing slots with the named original
+  phases while retaining the shooter's binary layout; the first field also
+  serves beam timing and curve segment count.
+- `c06eef1`: distinguish `'f'`/`'g'` call argument tags from expression-stack
+  value tags, with explicit call argument size and value-offset checks.
+- `20c7ac0` and `6f9470a`: carry typed integer/float expression tags through
+  ECL argument getters, setters, pushes and pops, with stack record layout
+  checks and the same large `ecl_run` diagnostic as before.
+- `33070ba`: restore signed shot and transform-sound IDs; `-1` disables sound.
 
 - `d3aecb6`: avoid caching the ECL context owner in the large dispatcher.
 - `7e443aa`: preserve camera-delta Y operand order in
@@ -121,17 +127,23 @@ the four laser `initialize` variants, `Player::check_hit_rect`,
 Re-measure before relying on any old ratio; none of these figures is a Factory
 exactness credit.
 
-## Current dirty timer experiment
+## Retained 2026-11-19 trial findings
 
-`src/ZunTimer.h` adds `tick_goto_volatile(i32 *out_current)`, duplicating the
-existing `tick_goto()` control flow but storing `current` through a volatile
-pointer before writing the output parameter. `src/ScreenEffect.cpp` calls it
-from `on_tick_shake` to try to place the current-frame store before a register
-spill. The current incremental build succeeds, but the focused comparison
-still has one unmatched `push esi`; no clean-HEAD A/B result or accepted receipt
-exists. Before retaining it, compare both versions using a reversible source
-swap/build/restore sequence, check timer semantics and other call sites, then
-keep or revert deliberately. Do not silently discard the two dirty files.
+The previously noted `ZunTimer::tick_goto_volatile` screen-shake experiment is
+historical: it is not in the current worktree. Its old 121/121, 0.9917
+normalized diagnostic is not a strict receipt.
+
+The following natural-source trials were compiled and compared, then restored
+because their affected complete-owner or ECL-case diagnostics regressed:
+separate direction and corner locals in `Bullet::step_ex_08`; direct or
+`register` transform pointers and live-index sound checks in
+`LaserLineInf::run_ex`; shared-origin or direct transform pointers in the ECL
+laser/ET_EX cases; altered ANM random-float or camera-offset evaluation;
+explicit `EnemyLife` pointers and damage temporaries in
+`EnemyData::step_logic`. Evidence from the trials is retained under ignored
+`.analysis/th16-*-20261119*` and `.analysis/th16-*-build.log` files. The
+recorded positive changes are the five source commits above; do not mistake a
+trial's normalized ratio for strict exactness or reconstructive progress.
 
 ## Suggested next experiments
 
