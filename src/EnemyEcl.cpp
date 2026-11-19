@@ -148,7 +148,7 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     f32 x;
     f32 y;
     f32 z;
-    if (enemy->bullet_mgr_origins[i].z > 0.9f)
+    if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
         memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
         y = enemy->bullet_mgr_offsets[i].xy.y;
@@ -173,7 +173,7 @@ static __forceinline void copy_ex_and_get_shot_origin(
     f32 x;
     f32 y;
     f32 z;
-    if (enemy->bullet_mgr_origins[i].z > 0.9f)
+    if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
         x = enemy->bullet_mgr_offsets[i].xy.x + enemy->bullet_mgr_origins[i].xy.x;
         y = enemy->bullet_mgr_offsets[i].xy.y + enemy->bullet_mgr_origins[i].xy.y;
@@ -1695,7 +1695,7 @@ int EnemyData::ecl_run_over_300()
         bullet_mgr_offsets[slot].xy.y = 0.0f;
         bullet_mgr_origins[slot].xy.x = 0.0f;
         bullet_mgr_origins[slot].xy.y = 0.0f;
-        bullet_mgr_origins[slot].z = 0.0f;
+        bullet_mgr_origins[slot].enabled = 0.0f;
         et_ex_index[slot] = 0;
         break;
     }
@@ -1714,7 +1714,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ET_ON:
     {
         i32 slot = get_int_arg(0);
-        if (bullet_mgr_origins[slot].z > 0.9f)
+        if (bullet_mgr_origins[slot].enabled > 0.9f)
         {
             bullet_props[slot].pos = D3DXVECTOR3(
                 bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].xy.x,
@@ -1775,11 +1775,11 @@ int EnemyData::ecl_run_over_300()
         bullet_mgr_origins[slot].xy.y = get_float_arg(EclFloatArgIndex{2});
         if (-990.0f > bullet_mgr_origins[slot].xy.x)
         {
-            bullet_mgr_origins[slot].z = 0.0f;
+            bullet_mgr_origins[slot].enabled = 0.0f;
         }
         else
         {
-            bullet_mgr_origins[slot].z = 1.0f;
+            bullet_mgr_origins[slot].enabled = 1.0f;
         }
         break;
     }
