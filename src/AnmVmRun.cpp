@@ -506,6 +506,7 @@ i32 AnmVm::run()
         return 1;
     }
     AnmRawInstr *ins;
+    Float3 corners[4];
     i32 result = 0;
     if (instr_offset < 0 || (flags_lo & ANM_VM_SCRIPT_DISABLED))
     {
@@ -1303,7 +1304,6 @@ i32 AnmVm::run()
             break;
         case ANM_OP_UV_FROM_CORNERS:
         {
-            Float3 corners[4];
             write_sprite_corners(corners);
             divide_vec2_by_640_480(&uv_quad_of_sprite[0], (Float2 *)&corners[0]);
             divide_vec2_by_640_480(&uv_quad_of_sprite[1], (Float2 *)&corners[1]);
@@ -1435,7 +1435,6 @@ done:
     }
     if (flags_hi & ANM_VM_UV_QUAD_FROM_CORNERS)
     {
-        Float3 corners[4];
         write_sprite_corners(corners);
         divide_vec2_by_640_480(&uv_quad_of_sprite[0], (Float2 *)&corners[0]);
         divide_vec2_by_640_480(&uv_quad_of_sprite[1], (Float2 *)&corners[1]);
