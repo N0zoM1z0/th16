@@ -2613,6 +2613,7 @@ void LaserCurveInf::run_ex()
 {
     while (ex_index < 0x12)
     {
+        i32 index = ex_index;
         BulletEx *volatile ex_ptr = &inner.ex[ex_index];
         BulletEx *ex = ex_ptr;
         if (ex->type == 0)
@@ -2775,7 +2776,7 @@ void LaserCurveInf::run_ex()
         }
         case BULLET_EX_TAG:
             id = ex->a;
-            ex_index++;
+            ex_index = index + 1;
             continue;
         case BULLET_EX_LOOP:
             ex_index = ex->a;
