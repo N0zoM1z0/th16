@@ -127,6 +127,21 @@ static_assert(sizeof(StdOpcode) == sizeof(i16), "stage opcode is signed 16-bit")
 static_assert(offsetof(StdInstr, opcode) == 4, "stage opcode record offset");
 static_assert(offsetof(StdInstr, args) == 8, "stage instruction argument offset");
 
+// STD_ROCKING_MODE selects one of the camera rocking patterns. It is
+// stored in the low byte of StageInner's four-byte mode word.
+enum StageRockingMode : u8
+{
+    STAGE_ROCK_NONE = 0,
+    STAGE_ROCK_XZ_SWAY = 1,
+    STAGE_ROCK_TILT_Z_POSITIVE = 2,
+    STAGE_ROCK_XY_SWAY = 3,
+    STAGE_ROCK_TILT_Z_NEGATIVE = 4,
+    STAGE_ROCK_SWEEP = 7,
+    STAGE_ROCK_X_SWAY = 8,
+    STAGE_ROCK_SMALL_X_SWAY = 9,
+};
+static_assert(sizeof(StageRockingMode) == sizeof(u8), "rocking mode uses one byte");
+
 // The STD file's header; the objects' offsets follow.
 struct StdHeader
 {
@@ -148,8 +163,17 @@ struct StageInner
     ZunTimer time_in_stage;
     // Offset of the next script instruction from the script start.
     i32 cur_instr_offset;
-    // Its low byte is the camera rocking pattern (rocking_mode()).
-    i32 rocking_mode_word;
+    // The original stores a four-byte word, but the rocking pattern is
+    // encoded only in its low byte. Keep the rest of that word intact.
+    union
+    {
+        i32 rocking_mode_word;
+        struct
+        {
+            StageRockingMode rocking_mode_value;
+            u8 rocking_mode_other_bytes[3];
+        };
+    };
     // Time in the rocking pattern's cycle.
     ZunTimer rocking_timer;
     InterpFloat3 camera_facing_i;
@@ -199,9 +223,9 @@ struct StageInner
     // safebuffers: see run_std (Stage.cpp).
     __declspec(safebuffers) i32 run_std();
     // The camera rocking pattern (STD_ROCKING_MODE): 0 for none.
-    u8 &rocking_mode()
+    StageRockingMode &rocking_mode()
     {
-        return *(u8 *)&rocking_mode_word;
+        return rocking_mode_value;
     }
     // 0x40c4a0
     void step_fog();
@@ -294,3 +318,7 @@ struct Stage
 extern Stage *g_Stage;
 // The previous stage while the next one starts (ExpHP: "ANOTHER_STAGE_PTR").
 extern Stage *g_Stage2;
+static_assert(offsetof(StageInner, rocking_mode_value) == offsetof(StageInner, rocking_mode_word),
+              "rocking mode remains in the low byte of its original word");
+static_assert(offsetof(StageInner, rocking_timer) == offsetof(StageInner, rocking_mode_word) + sizeof(i32),
+              "rocking timer follows the original four-byte mode word");

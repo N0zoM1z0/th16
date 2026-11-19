@@ -1184,15 +1184,15 @@ i32 StageInner::run_std()
             break;
         }
         case STD_ROCKING_MODE:
-            rocking_mode() = *(u8 *)&ins->args[0];
-            if (rocking_mode() == 0)
+            rocking_mode() = static_cast<StageRockingMode>(*(u8 *)&ins->args[0]);
+            if (rocking_mode() == STAGE_ROCK_NONE)
             {
                 camera.rocking_vector_1.x = 0.0f;
                 camera.rocking_vector_1.y = 0.0f;
                 camera.rocking_vector_1.z = 0.0f;
             }
             rocking_timer.reset_inline();
-            if (rocking_mode() == 2)
+            if (rocking_mode() == STAGE_ROCK_TILT_Z_POSITIVE)
             {
                 rocking_timer.set_value(0x200);
             }
@@ -1285,11 +1285,11 @@ stopped:
     }
     // The rocking patterns sway the camera (rocking vectors) and tilt it
     // (up) over a cycle of rocking_timer.
-    if (rocking_mode() != 0)
+    if (rocking_mode() != STAGE_ROCK_NONE)
     {
         switch (rocking_mode())
         {
-        case 1:
+        case STAGE_ROCK_XZ_SWAY:
         {
             f32 angle = normalize_angle(rocking_timer.current_f * ZUN_PI * 2.0f / 512.0f);
             f32 s = sinf(angle);
@@ -1307,7 +1307,7 @@ stopped:
             }
             break;
         }
-        case 2:
+        case STAGE_ROCK_TILT_Z_POSITIVE:
         {
             f32 angle = normalize_angle(rocking_timer.current_f * ZUN_PI * 2.0f / 3072.0f);
             camera.up.x = -sinf(angle);
@@ -1319,7 +1319,7 @@ stopped:
             }
             break;
         }
-        case 3:
+        case STAGE_ROCK_XY_SWAY:
         {
             f32 angle = normalize_angle(rocking_timer.current_f * ZUN_PI * 2.0f / 2048.0f);
             f32 s = sinf(angle);
@@ -1337,7 +1337,7 @@ stopped:
             }
             break;
         }
-        case 4:
+        case STAGE_ROCK_TILT_Z_NEGATIVE:
         {
             f32 angle = normalize_angle(rocking_timer.current_f * ZUN_PI * 2.0f / 3072.0f);
             camera.up.x = -sinf(angle);
@@ -1349,7 +1349,7 @@ stopped:
             }
             break;
         }
-        case 7:
+        case STAGE_ROCK_SWEEP:
         {
             f32 angle = rocking_timer.current_f * ZUN_PI * 2.0f / 2048.0f - ZUN_PI;
             f32 s = sinf(angle);
@@ -1363,7 +1363,7 @@ stopped:
             }
             break;
         }
-        case 8:
+        case STAGE_ROCK_X_SWAY:
         {
             f32 s = sinf(rocking_timer.current_f * ZUN_PI * 2.0f / 1024.0f - ZUN_PI);
             camera.rocking_vector_1.x = s * -50.0f;
@@ -1375,7 +1375,7 @@ stopped:
             }
             break;
         }
-        case 9:
+        case STAGE_ROCK_SMALL_X_SWAY:
         {
             f32 s = sinf(rocking_timer.current_f * ZUN_PI * 2.0f / 512.0f - ZUN_PI);
             camera.up.x = s * -0.01f;
