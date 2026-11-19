@@ -234,27 +234,35 @@ static AnmId snapshot_of_vm_id(AnmId id)
 
 // Copies the child VMs along with the VM: into snapshots (mode 0) or back
 // out of them (mode 1).
-// TODO: the mode 0 loop spills its counter (the original keeps it in ebx)
-// since get_vm_with_id has a visible body (it matched while
-// get_vm_with_id was an opaque placeholder).
+// Both modes walk the destination array and use the source/destination
+// address difference to reach the corresponding source entry.
+// TODO: mode 0 still spills its counter; the original keeps it in ebx.
 // FUNCTION: TH16 0x405fa0
 int __fastcall anm_gather_effect_on_copy(AnmVm *vm, const AnmVm *other, i32 mode)
 {
     AnmGatherEffectData *dst = (AnmGatherEffectData *)vm->extra_data;
     AnmGatherEffectData *src = (AnmGatherEffectData *)other->extra_data;
+    AnmId *dst_id = dst->vm_ids;
+    const AnmId *src_id = src->vm_ids;
     if (mode == 0)
     {
-        for (i32 i = 0; i < 200; i++)
+        i32 src_offset = (i32)((u32)src_id - (u32)dst_id);
+        i32 remaining = 200;
+        do
         {
-            dst->vm_ids[i] = snapshot_of_vm_id(src->vm_ids[i]);
-        }
+            AnmId id = *(AnmId *)((u8 *)dst_id + src_offset);
+            *dst_id++ = snapshot_of_vm_id(id);
+        } while (--remaining);
     }
     else if (mode == 1)
     {
-        for (i32 i = 0; i < 200; i++)
+        i32 src_offset = (i32)((u32)src_id - (u32)dst_id);
+        i32 remaining = 200;
+        do
         {
-            dst->vm_ids[i] = g_AnmManager->restore_snapshot(src->vm_ids[i]);
-        }
+            AnmId id = *(AnmId *)((u8 *)dst_id + src_offset);
+            *dst_id++ = g_AnmManager->restore_snapshot(id);
+        } while (--remaining);
     }
     return 0;
 }
