@@ -762,8 +762,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
     {
-        i32 bezier_position_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos)
-                                                                          : offsetof(EnemyData, rel_pos);
+        PosVel *bezier_position = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
         InterpStrange1 *bezier_interp =
             instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
         volatile f32 bezier_goal_x =
@@ -785,16 +784,16 @@ int EnemyData::ecl_run_over_300()
         bezier_interp->bezier_1 = bezier_1;
         bezier_interp->bezier_2 = bezier_2;
         bezier_interp->method_for_3d = INTERP_BEZIER;
-        bezier_interp->initial = ((PosVel *)((u8 *)this + bezier_position_offset))->pos;
+        bezier_interp->initial = bezier_position->pos;
         bezier_interp->goal = Float3(bezier_goal_x > -999999.0
                                          ? bezier_goal_x
-                                         : ((PosVel *)((u8 *)this + bezier_position_offset))->pos.x,
+                                         : bezier_position->pos.x,
                                      bezier_goal_y > -999999.0
                                          ? bezier_goal_y
-                                         : ((PosVel *)((u8 *)this + bezier_position_offset))->pos.y,
+                                         : bezier_position->pos.y,
                                      0.0f);
         bezier_interp->reset_timer();
-        ((PosVel *)((u8 *)this + bezier_position_offset))->flags &= ~0xf;
+        bezier_position->flags &= ~0xf;
         break;
     }
     // moveVel(angle, speed) and the relative and
