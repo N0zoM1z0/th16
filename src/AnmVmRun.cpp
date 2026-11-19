@@ -758,7 +758,10 @@ i32 AnmVm::run()
             f32 range = ANM_FLOAT(1);
             f32 value = g_replay_unsafe_rng.randf_0_to_1() * range;
             *ANM_FLOAT_PTR(0) = value;
-            break;
+            // Keep this opcode's destination write and instruction advance
+            // in its own dispatch block, as in the original interpreter.
+            instr_offset += ins->offset_to_next;
+            continue;
         }
         case ANM_OP_FSIN:
         {
