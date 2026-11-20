@@ -656,39 +656,37 @@ int EnemyData::step_logic()
         {
             damage /= 5;
         }
-        // Dialogue suppresses damage. Keep the selected amount in its own
-        // local so the damage accumulator and effective amount have distinct
-        // register lifetimes through the statistics and life updates.
-        i32 dealt = g_Gui->msg == NULL ? damage : 0;
+        // Dialogue suppresses damage before the statistics and life updates.
+        damage = g_Gui->msg == NULL ? damage : 0;
         // Hit damage and non-hit damage feed separate counters. Lethal
         // hit overflow contributes one quarter beyond the remaining life.
-        if (dealt > 0)
+        if (damage > 0)
         {
             if (hit)
             {
-                if (dealt >= life.current)
+                if (damage >= life.current)
                 {
-                    i32 hit_overflow = (dealt - life.current) / 4 + life.current;
+                    i32 hit_overflow = (damage - life.current) / 4 + life.current;
                     g_EnemyManager->inner.damage_this_frame[0] += hit_overflow;
                 }
                 else
                 {
-                    g_EnemyManager->inner.damage_this_frame[0] += dealt;
+                    g_EnemyManager->inner.damage_this_frame[0] += damage;
                 }
             }
             else
             {
-                g_EnemyManager->inner.damage_this_frame[1] += dealt;
+                g_EnemyManager->inner.damage_this_frame[1] += damage;
             }
         }
-        i32 life_damage = dealt;
+        i32 life_damage = damage;
         if (g_MainBomb->in_use == 1 && bomb_damage_multiplier < 1.0f)
         {
-            if (dealt != 0 && 0.0f >= bomb_damage_multiplier)
+            if (damage != 0 && 0.0f >= bomb_damage_multiplier)
             {
                 g_SoundManager.play_sound_at_position(SE_NODAMAGE, final_pos.pos.x);
             }
-            life_damage = dealt * bomb_damage_multiplier;
+            life_damage = damage * bomb_damage_multiplier;
         }
         if (life_damage != 0)
         {
