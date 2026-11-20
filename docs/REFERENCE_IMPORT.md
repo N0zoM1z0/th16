@@ -105,9 +105,9 @@ comparison. `mismatch` means that complete comparison found a difference.
 `incomplete` means ownership, boundary, decode or linkage evidence is missing.
 These local results do not establish original source authorship, physical
 storage ownership, whole-product closure or Factory Truth Kernel acceptance.
-The live Factory accepted snapshot reports the `inventory-import-only`
-diagnostic and zero accepted results. Formal admission requires a controlled
-TH16 replay driver and a policy that authorizes its receipts.
+The isolated Factory v141 pilot accepted a complete cold replay of
+`AnmManager::restore_snapshot`. The shared Web service uses the TH16
+inventory adapter. See the handoff for the pilot's evidence location.
 
 The historical per-function findings and artifact identities are retained in
 `.analysis/reference-audit.json`. See the handoff for the current report.

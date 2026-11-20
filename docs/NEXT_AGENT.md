@@ -43,11 +43,18 @@ historical. This file is the short operational entry point.
   against the reviewed 32-byte target extent. Repair these scopes before
   treating their historical results as current. The upper ECL owner
   (`0x41dcb0`) has three unresolved linked fields in the current report.
-- Factory's live accepted snapshot and target-filtered facts return zero
-  accepted results for TH16. The inventory adapter supplies provisional
-  boundaries. For formal acceptance, add a controlled TH16 linked-PE replay
-  driver and policy entries, then cold-replay one complete owner through the
-  worker and check its accepted fact.
+- Commit `6eb8bd5` records three ANM matches from existing source. A cold
+  build confirmed `insert_in_world_list_back` (`0x46e7d0`, 177 bytes),
+  `insert_in_ui_list_back` (`0x46e940`, 177 bytes), and
+  `restore_snapshot` (`0x46f8f0`, 128 bytes).
+- The isolated Factory v141 pilot accepted `restore_snapshot` as
+  `codegen_exact` after a clean build and comparison of all 128 bytes and
+  11 linked fields. Its job is `job:2f8b4061e97642dda9c3411794203fe5`.
+  The dedicated worktree keeps the pilot config, reports, and live fact
+  query under `.analysis/factory-replay-th16/.analysis/`. The
+  `th16-linked-pe-replay` branch in Factory contains the driver and policy.
+  The shared Web service still reports inventory-only TH16. Its existing
+  receipts bind a different runner fingerprint.
 
 ## Latest focused normalized owner comparisons
 
@@ -101,8 +108,6 @@ of a complete byte/relocation-exact owner.
    slot. Both were tried again: alternate `tick_nested`, split vector
    component writes, preinitialized `read`, and a separate serialized-data
    pointer all regressed. Their committed versions were restored.
-   `restore_snapshot` has 46/46 normalized matching instructions but no
-   accepted exactness receipt.
 
 ## Practical commands and preserved evidence
 

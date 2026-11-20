@@ -63,9 +63,9 @@ receipts or a project-wide progress metric. See the
 
 The local strict audit runs against the current incremental candidate.
 Failed EH and private-function proofs leave their affected comparisons
-incomplete. The Factory accepted snapshot is available and returns zero
-accepted results. TH16 currently has an inventory adapter and needs a
-controlled replay driver and policy support to admit its first receipt.
+incomplete. An isolated Factory pilot accepted a complete cold replay of
+`AnmManager::restore_snapshot`. The shared Web service currently exposes
+TH16's inventory. The handoff records the pilot scope and evidence.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the
 [short handoff](docs/NEXT_AGENT.md) (current leads, measurements and commands)
