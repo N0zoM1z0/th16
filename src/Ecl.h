@@ -325,7 +325,7 @@ struct EclRunContext
     HARNESS_CALLED EclRawInstr *get_subroutine_ptr();
     // get_float_arg_ptr for the instruction at loc. The cursor addresses
     // offset_from_first_instruction; the subroutine index is the preceding word.
-    f32 *float_arg_ptr_at(i32 *offset_from_first_instruction, int index);
+    f32 *float_arg_ptr_at(SptInf *vm, i32 *offset_from_first_instruction, int index);
 };
 static_assert(offsetof(EclRunContext, async_flags) == 0x11e4,
               "ECL async flags stay at the final context word");
