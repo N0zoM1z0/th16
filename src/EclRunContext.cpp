@@ -221,20 +221,11 @@ i32 EclRunContext::pop_int_arg_given_value(int index, i32 value)
             stack.stack_offset -= 4;
             EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
             // As in get_int_arg (matching).
-            i32 result;
             if (type == ECL_STACK_FLOAT)
             {
-                result = (i32)item.f;
+                return (i32)item.f;
             }
-            else if (type == ECL_STACK_INTEGER)
-            {
-                result = item.i;
-            }
-            else
-            {
-                result = item.i;
-            }
-            return result;
+            return item.i;
         }
         return vm->get_int_global(value);
     }
