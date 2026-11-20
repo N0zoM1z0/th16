@@ -193,7 +193,7 @@ HARNESS_CALLED f32 EclRunContext::pop_float_arg(int index)
             i32 item = *(i32 *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
             EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
-            if (type != ECL_STACK_FLOAT && type == ECL_STACK_INTEGER)
+            if (type == ECL_STACK_INTEGER)
             {
                 return (f32)item;
             }
@@ -259,7 +259,7 @@ HARNESS_CALLED f32 EclRunContext::pop_float_arg_given_value(int index, f32 value
             i32 item = *(i32 *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
             EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
-            if (type != ECL_STACK_FLOAT && type == ECL_STACK_INTEGER)
+            if (type == ECL_STACK_INTEGER)
             {
                 return (f32)item;
             }
@@ -848,7 +848,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 *(i32 *)dst = stack.pop_raw();
                 stack.stack_offset -= 4;
                 EclStackEntry *entry = stack.entry_at(stack.stack_offset);
-                if (entry->type != ECL_STACK_FLOAT && entry->type == ECL_STACK_INTEGER)
+                if (entry->type == ECL_STACK_INTEGER)
                 {
                     *dst = (f32) * (i32 *)dst;
                 }
