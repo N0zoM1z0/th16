@@ -90,9 +90,15 @@ historical. This file is the short operational entry point.
   frontier regressions.
 - The follow-up Factory profile also accepted
   `ecl_ext_damage_anm_hurtbox` (`0x425410`, 285 bytes, ten linked fields)
-  and `LaserLineInf::step_ex_angle` (`0x432c20`, 412 bytes, seven linked
-  fields). Each used its own cold build. The profile's accepted-facts query
-  now includes all four receipts for source checkpoint `133ed62`.
+  and both `step_ex_angle` owners (`0x432c20` and `0x4392c0`, 412 bytes and
+  seven linked fields each). It accepted `sht_on_hit_burst_rising`
+  (`0x446e20`, 349 bytes, eight linked fields) as well. Each used its own
+  cold build. The accepted-facts query returns six receipts for source
+  checkpoint `133ed62`.
+- Use `scripts/check-frontier.py --report .analysis/oracle-follow-up/full-final.json`
+  to check the separately saved audit. Full checks require every current
+  annotation. A focused report can check the explicitly selected frontier
+  addresses it covers.
 
 ## Latest focused normalized owner comparisons
 
