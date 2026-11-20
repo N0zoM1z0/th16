@@ -208,7 +208,7 @@ static __forceinline Fog *new_enemy_fog()
 // anmPlay's extra steps go through this helper, like the original: a
 // direct AnmVm::run call in a loop would make ecl_run_over_300 realign its
 // frame for run's aligned-stack need.
-static inline void ecl_run_vm(AnmVm *vm)
+static DECOMP_NOINLINE void ecl_run_vm(AnmVm *vm)
 {
     vm->run();
 }
