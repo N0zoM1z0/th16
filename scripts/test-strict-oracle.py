@@ -4,6 +4,7 @@ import copy
 import struct
 import unittest
 
+from reference_bindings import validate_unit_bindings
 from strict_oracle import Context, Incomplete, ROOT, replay_owner
 
 
@@ -45,6 +46,14 @@ class CompleteOwnerReplay(unittest.TestCase):
         self.assertEqual(result["result"], "exact")
         self.assertEqual(result["matched_bytes"], 11)
         self.assertFalse(result["raw_equal"])
+
+    def test_stored_target_cannot_make_a_different_global_match(self):
+        self.assertEqual(self.compare()["result"], "exact")
+        fixed = {"_Global": 0x403000, "_Callee": 0x402200}
+        validate_unit_bindings(self.unit, fixed)
+        fixed["_Global"] = 0x403004
+        with self.assertRaisesRegex(Incomplete, "independent target binding: _Global"):
+            validate_unit_bindings(self.unit, fixed)
 
     def test_wrong_candidate_global_is_not_masked(self):
         self.image.data = self.image.data[:1] + struct.pack("<I", 0x503004) + self.image.data[5:]

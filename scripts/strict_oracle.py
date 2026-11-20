@@ -638,7 +638,8 @@ class Context:
                  ROOT / "config/runtime-interiors.toml",
                  ROOT / "scripts/runtime_isa.py", ROOT / "config/runtime-globals.toml",
                  ROOT / "scripts/sound_data_identity.py",
-                 ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py"]
+                 ROOT / "scripts/audit-reference.py", ROOT / "scripts/compare-linked-function.py",
+                 ROOT / "scripts/reference_bindings.py"]
         result = {str(p.relative_to(ROOT)): digest(p) for p in files}
         with (ROOT / "config/functions.csv").open(newline="") as stream:
             boundaries = [{key: row[key] for key in ("address", "size", "span_end", "current_name", "source_file")}
