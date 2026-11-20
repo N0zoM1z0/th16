@@ -1427,7 +1427,22 @@ static __forceinline i32 test_circle_rect_inline(f32 rect_x, f32 rect_y, f32 w, 
 // find_enemy_by_id).
 static __forceinline EnemyInf *laser_boss()
 {
-    return g_EnemyManager->find_enemy_by_id(g_EnemyManager->inner.boss_ids[0]);
+    EnemyManager *manager = g_EnemyManager;
+    i32 id = manager->inner.boss_ids[0];
+    EnemyInf *enemy = NULL;
+    if (id == 0)
+    {
+        return NULL;
+    }
+    for (EnemyList *node = manager->active_enemy_list_head; node != NULL; node = node->next)
+    {
+        enemy = node->entry;
+        if (enemy->enemy_id == id)
+        {
+            return enemy;
+        }
+    }
+    return enemy;
 }
 
 // The size of the sprite of the boss's first VM.
