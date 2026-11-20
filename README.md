@@ -71,8 +71,12 @@ build or a normalized instruction ratio. Do not publish updated project-wide
 strict totals without a freshly accepted complete-owner receipt.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the
-[handoff](docs/NEXT_AGENT.md) (current levers, open leads and dead ends) and the
-[knowledge index](docs/knowledge/README.md).
+[short handoff](docs/NEXT_AGENT.md) (current leads, measurements and commands)
+and the [knowledge index](docs/knowledge/README.md). The long
+[2026-11-19 chronology](docs/HANDOFF_20261119.md) is preserved as history.
+The 2026-11-20 handoff archived 63 recoverable duplicate historical
+PDB/audit files, reclaiming about 273 MiB without touching the active build;
+see [storage recovery](docs/ARTIFACTS.md).
 
 Use `scripts/repo-python`; it selects an interpreter with the hash-pinned
 Capstone decoder from `config/tools.lock.toml`.

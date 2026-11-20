@@ -102,8 +102,11 @@ comparison. `mismatch` means that complete comparison found a difference.
 These local results do not establish original source authorship, physical
 storage ownership, whole-product closure or Factory Truth Kernel acceptance.
 The last recorded Factory inspection reported zero imported Oracle results and an
-`inventory-import-only` diagnostic; no local normalized score or saved report
-should be described as an accepted Factory exactness fact.
+`inventory-import-only` diagnostic. A fresh accepted-snapshot lookup on
+2026-11-20 failed with an unsupported Windows toolchain-family classification;
+the current accepted result set therefore could not be checked by that
+operation. No local normalized score or saved report should be described as
+an accepted Factory exactness fact.
 
 Full per-function findings, missing fields and artifact identities are retained
 in `.analysis/reference-audit.json`. Canonical source mappings and local match

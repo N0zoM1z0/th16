@@ -116,6 +116,12 @@ Keep `resources/th16.exe`, `.tools/`, `.venv/`, `ghidra-project/`,
 `.analysis/claude-tools/` and the pinned `_reference/` checkout.
 Historical evidence may be restored by `scripts/evidence-archive.py`
 using a checksummed `.analysis/cleanup-handoff-*.json` index.
+The 2026-11-20 cleanup archived 35 redundant historical PDBs and 28
+redundant audit reports, preserving a content-identical expanded peer per
+group. The 63-record `cleanup-handoff-20261120.json` restored about
+**273.39 MiB of allocated storage**; historical PDBs may need restoration
+before using their sibling build receipts. The active candidate remains
+unchanged.
 
 The old [handoff archive](HANDOFF_20261119.md) retains detailed chronology,
 rejected trial source paths and deeper ownership notes. Also consult

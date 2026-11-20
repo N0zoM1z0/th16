@@ -19,7 +19,7 @@ that evidence is missing. Never remove an archive because its old path is absent
 | `.venv/` | Locked comparison dependencies |
 | `ghidra-project/` | Imported and analyzed target database |
 | `build/reference-candidate/` | Current PE/MAP/PDB, function map, receipt, object/dependency cache and non-LTCG symbol-discovery cache |
-| `.analysis/reference-audit.json` | Last saved fingerprinted 2026-11-15 local report; stale against the 2026-11-19 source checkpoint. The last recorded Factory inspection reported zero imported Oracle results; see the handoff before treating any local count as exactness. |
+| `.analysis/reference-audit.json` | Last saved fingerprinted 2026-11-15 local report; stale against the 2026-11-20 source checkpoint. The last recorded Factory inspection reported zero imported Oracle results; see the handoff before treating any local count as exactness. |
 | `.analysis/claude-tools/` | Diagnostic scripts and probe sources; historical audit/source/log/binary outputs are compressed, rebuildable probe outputs removed, active exp.json/cur-audit.json/build.log retained |
 | `.analysis/projectile-ex-source-work/` | PDB 619 baseline/PDB 624 restoration, reviewed curve/sound/animation trials, explicitly unreviewed duplicated-sound image, all restored sources and complete static handoff regression |
 | `.analysis/upper-ecl-case-work/` | PDB 614 baseline/PDB 619 restored image, four complete 21 KB source trials, registered original 4,519-instruction CFG/three tables/map, frame-store proof, initial/final 79-control logs, baseline count check and complete raw-image regression |
@@ -76,7 +76,53 @@ Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
 
-## Current handoff cleanup: 2026-11-19
+## Current handoff cleanup: 2026-11-20
+
+Archived **35 duplicate historical PDBs** and **28 duplicate historical
+`*-reference-audit.json` reports**. These **63 files** were byte-identical
+to other retained evidence; the scan excluded direct script/document
+consumers and left at least one expanded SHA-256-identical copy per content
+group. Every PDB was checked against the corresponding sibling
+`build-receipt.json` hash when supplied. Unique evidence and active
+working files were not touched.
+
+The 63 originals occupied **345,296,896 allocated bytes (329.30 MiB)**.
+Their verified gzip archives occupy **58,621,952 allocated bytes
+(55.91 MiB)**, recovering **286,674,944 allocated bytes (273.39 MiB)**.
+The repository's coarse total went from roughly 4.1 GiB to 3.8 GiB.
+
+The checksummed index is
+`.analysis/cleanup-handoff-20261120.json`. The archives are under
+`.analysis/archives/20261120/pdb-duplicates/` and
+`.analysis/archives/20261120/audit-duplicates/`. Each record contains the
+original path, SHA-256, original length, permission mode and nanosecond
+mtime, archive path and digest, and an expanded peer. Gzip contents were
+compared byte-for-byte against the originals **before** deletion.
+The ignored reproducible cleanup procedure remains in
+`.analysis/gpt-web-cleanup-20261120.py`.
+
+The standard recovery helper passed `list` and `show` tests for both
+content families. One PDB was restored, checked for content hash, size,
+permissions and timestamp, then the temporary expanded copy was removed.
+To recover historical evidence for a diagnostic that needs its original
+path, first list the index and then restore the needed file:
+
+```sh
+scripts/repo-python scripts/evidence-archive.py list anm-clock-array-work/baseline-image/th16.pdb
+scripts/repo-python scripts/evidence-archive.py show anm-interpreter-results-work/baseline-reference-audit.json
+scripts/repo-python scripts/evidence-archive.py restore anm-clock-array-work/baseline-image/th16.pdb
+```
+
+Do not interpret archived historical `th16.pdb` as a missing current
+PDB; the current `build/reference-candidate/` remains fully expanded.
+Historical build receipts remain alongside their images, but restore
+their archived PDB before replaying an older image's full PDB-bound
+comparison. The private target, toolchain, Ghidra project, current
+PE/MAP/PDB/object graph, pinned reference and canonical
+`.analysis/reference-audit.json` were preserved. No source, compiler
+configuration, complete cold replay or strict Oracle acceptance was changed.
+
+## Previous handoff cleanup: 2026-11-19
 
 Archived **7 unreferenced, byte-identical historical reference-audit copies**
 and **17 unreferenced, byte-identical historical PDB image copies** from later
@@ -114,7 +160,7 @@ historical evidence were preserved. No source logic, build graph, Oracle
 configuration or replay input changed. No build, cold replay, audit or Factory
 acceptance operation was run for this documentation/archive cleanup.
 
-## Current handoff cleanup: 2026-11-18
+## Previous handoff cleanup: 2026-11-18
 
 Archived **13 unreferenced, byte-identical historical `*-reference-audit.json`
 snapshots** from old `.analysis/*-work/` directories. At least one expanded
