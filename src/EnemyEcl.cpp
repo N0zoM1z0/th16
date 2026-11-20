@@ -262,7 +262,7 @@ static_assert(sizeof(LaserCurveInner) <= sizeof(EclScratchStorage), "curve param
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {
-    PosVel *movement_pos_vel;
+    u32 movement_pos_vel_offset;
     InterpStrange1 *movement_interp;
     f32 movement_goal_x;
     f32 movement_goal_y;
@@ -695,12 +695,15 @@ int EnemyData::ecl_run_over_300()
     // moveCurve and moveBezier share the interpolation's final position,
     // goal, timer and PosVel-flag updates.
     ecl_movement_interp_finish:
+    {
+        PosVel *movement_pos_vel = reinterpret_cast<PosVel *>(reinterpret_cast<u8 *>(this) + movement_pos_vel_offset);
         movement_interp->initial = movement_pos_vel->pos;
         movement_interp->goal = Float3(movement_goal_x > -999999.0 ? movement_goal_x : movement_pos_vel->pos.x,
                                         movement_goal_y > -999999.0 ? movement_goal_y : movement_pos_vel->pos.y, 0.0f);
         movement_interp->reset_timer();
         movement_pos_vel->flags &= ~0xf;
         break;
+    }
     // moveCurve(time, mode_x, mode_y, x, y) and its variants: separate
     // modes for x and y.
     case ECL_OP_MOVE_CURVE:
@@ -708,9 +711,25 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        const bool absolute = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET;
-        PosVel *pos_vel = absolute ? &abs_pos : &rel_pos;
-        InterpStrange1 *interp = absolute ? &abs_pos_i : &rel_pos_i;
+        u32 pos_vel_offset;
+        if (instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
+        {
+            pos_vel_offset = offsetof(EnemyData, abs_pos);
+        }
+        else
+        {
+            pos_vel_offset = offsetof(EnemyData, rel_pos);
+        }
+        InterpStrange1 *interp;
+        if (instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
+        {
+            interp = &abs_pos_i;
+        }
+        else
+        {
+            interp = &rel_pos_i;
+        }
+        PosVel *pos_vel = reinterpret_cast<PosVel *>(reinterpret_cast<u8 *>(this) + pos_vel_offset);
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         if (full->context.current_context->get_int_arg(0) <= 0)
@@ -737,7 +756,7 @@ int EnemyData::ecl_run_over_300()
         interp->axis_flags |= 1;
         interp->method_for_1d_y = static_cast<InterpMode>(full->context.current_context->get_int_arg(2));
         interp->axis_flags |= 1;
-        movement_pos_vel = pos_vel;
+        movement_pos_vel_offset = pos_vel_offset;
         movement_interp = interp;
         movement_goal_x = x;
         movement_goal_y = y;
@@ -747,7 +766,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
     {
-        PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
+        u32 pos_vel_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
@@ -764,7 +783,7 @@ int EnemyData::ecl_run_over_300()
         interp->bezier_2 = bezier_2;
         interp->method_for_3d = INTERP_BEZIER;
         interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        movement_pos_vel = pos_vel;
+        movement_pos_vel_offset = pos_vel_offset;
         movement_interp = interp;
         movement_goal_x = x;
         movement_goal_y = y;
