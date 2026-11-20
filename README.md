@@ -15,10 +15,10 @@ Agent workflow: follow the highest-priority requirements in [AGENTS.md](AGENTS.m
 
 This project reconstructs C++ source for the original Japanese TH16 version
 1.00a executable. The source is built with the historical MSVC 2017 (v141_xp)
-toolchain under whole-program optimization (/GL, /LTCG), and every annotated
-function is compared over its complete extent, including relocations, against
-the original by a local strict Oracle. Similarity scores and upstream labels
-grant no exact credit.
+toolchain under whole-program optimization (/GL, /LTCG). The intended
+strict comparison covers complete owned extents and relocations, but the
+current candidate has not received fresh Factory-accepted Oracle results.
+Similarity scores and upstream labels grant no exact credit.
 
 ## Exact target
 
@@ -47,27 +47,28 @@ above is composited from the game's own textures for identification only.
 
 ## Current status
 
-The latest **saved strict-audit snapshot** is dated **2026-11-15 06:37 UTC**:
-**1,033 exact / 51 mismatch / 131 incomplete** among 1,215 historical
-annotated units (51.33% of the then-annotated bytes). These numbers and the
-progress image are **historical**, not current results. The current
-incremental candidate (built on 2026-11-19) builds **1,166 annotated
-functions**; that is a separate build count, not a new strict-exactness total.
-The latest code-bearing checkpoint also improves the large upper-ECL owner
-through shared movement interpolation, natural Bezier argument evaluation and
-typed SptInf boss-VM restarts. Its latest local normalized diagnostic is 0.9134,
-not a strict exactness result; see the [current handoff](docs/NEXT_AGENT.md).
+The **latest saved local strict-audit snapshot** is from **2026-11-15
+06:37 UTC**: **1,033 exact / 51 mismatch / 131 incomplete** among 1,215
+historical annotated units. The progress image above is historical, not
+current accepted exactness. The latest checked **incremental** candidate
+build (handoff verification on 2026-11-20) compiles **1,166 annotated
+functions**, which is a build count, not an exactness total.
 
-The last recorded Factory inspection reported **0 imported Oracle results**
-and an inventory-import-only diagnostic. This handoff cleanup did not refresh
-the Factory inventory, so accepted exactness and production closure remain
-unknown. The last known local focused strict Oracle attempt was blocked by
-EH-parent PDB owner preflight (EH parent lacks one complete candidate PDB
-owner). Do not turn local normalized-instruction similarities into exactness
-claims. The [current handoff](docs/NEXT_AGENT.md) records the latest checked
-worktree state, historical timer experiment, large-owner measurements and
-focused commands. An audit must be refreshed and accepted before quoting new
-project-wide strict totals.
+At the latest *source* checkpoint `b814004`, focused normalized
+disassembly comparison reports `EnemyData::ecl_run_over_300` **0.8655**
+(4,562 / 5,465 target/candidate instructions) and `AnmVm::run`
+**0.9531** (3,837 / 3,818). These numbers are not strict Oracle
+receipts or a project-wide progress metric. See the
+[current handoff](docs/NEXT_AGENT.md) for other large owners and current leads.
+
+The last recorded Factory inventory had zero imported Oracle results;
+a fresh accepted-snapshot query on 2026-11-20 was blocked by an
+unsupported Windows toolchain-family classification. Current accepted
+byte/relocation exactness and production closure therefore remain
+**unverified**. The earlier focused Oracle attempt was also blocked at
+EH-parent PDB owner preflight. Neither problem is resolved by a successful
+build or a normalized instruction ratio. Do not publish updated project-wide
+strict totals without a freshly accepted complete-owner receipt.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the
 [handoff](docs/NEXT_AGENT.md) (current levers, open leads and dead ends) and the

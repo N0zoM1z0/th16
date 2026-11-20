@@ -9,7 +9,7 @@ history. scripts/progress.py reports project totals only after
 audit-reference.py refreshes the input-matched report and refuses stale inputs.
 
 The saved local reference-audit report is dated 2026-11-15 and predates the
-2026-11-16/17 source checkpoints and the 2026-11-19 ECL work. Its totals do not
+2026-11-16/17 source checkpoints and the 2026-11-19/20 ECL work. Its totals do not
 describe the current candidate. The last recorded Factory inspection reported
 zero imported Oracle results, so that report remains local historical evidence
 rather than an accepted Factory exactness result.

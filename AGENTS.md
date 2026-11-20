@@ -1,7 +1,9 @@
 # TH16 reconstruction workspace
 
 Prioritize useful reconstruction and reusable knowledge with minimal workflow.
-Inspect the current worktree and `docs/NEXT_AGENT.md` before editing. Preserve
+Inspect the current worktree and `docs/NEXT_AGENT.md` before editing.
+The earlier chronology is preserved separately in
+`docs/HANDOFF_20261119.md`; its "latest" measurements are historical. Preserve
 dirty work and required ignored evidence. See `docs/ARTIFACTS.md` before cleaning
 local outputs; retain the current build graph for incremental work. Write code,
 documentation and commit messages in English. The Japanese game title is the
