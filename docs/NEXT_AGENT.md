@@ -72,6 +72,17 @@ historical. This file is the short operational entry point.
   `.analysis/factory-replay-th16-follow-up/.analysis/accepted-facts.json`.
   The fact query uses the worker's environment. A different shell launch
   initially returned a stale environment verdict.
+- Commit `743da3f` makes the frontier compare replayed bytes, including
+  residual differences inside relocation fields. The historical audit
+  supplied the encodings for 14 corrected baselines. The current check
+  still reports 18 regressions and now includes the four affected field
+  bytes in `BulletManager::clear_all`.
+- The second pilot profile now also accepts `InterpFloat3::step`
+  (`0x406e10`, 906 bytes, six linked fields). Job
+  `job:151c70756a3547b9938c18ca86afb258` completed a cold build and exact
+  replay. The live fact query returns this receipt and the earlier laser
+  receipt together. All exact results in the current full audit have local
+  match entries.
 
 ## Latest focused normalized owner comparisons
 
