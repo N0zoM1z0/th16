@@ -2655,8 +2655,9 @@ void LaserCurveInf::run_ex()
             LaserCurveNode *node = append_node((f32)ex->b);
             node->mode = LASER_CURVE_MOTION_ACCEL;
             node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
+            f32 angle = *(volatile f32 *)&node->angle;
             node->start_pos.z = 0.0f;
-            laser_sincosmul(&node->velocity, node->angle, 1.0f);
+            laser_sincosmul(&node->velocity, angle, 1.0f);
             node->velocity.z = 0.0f;
             node->speed_delta = ex->r;
             node->angle_delta = ex->s;
@@ -2682,8 +2683,9 @@ void LaserCurveInf::run_ex()
             LaserCurveNode *node = append_node((f32)ex->b);
             node->mode = LASER_CURVE_MOTION_ANGLE_ACCEL;
             node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
+            f32 angle = *(volatile f32 *)&node->angle;
             node->start_pos.z = 0.0f;
-            laser_sincosmul(&node->velocity, node->angle, 1.0f);
+            laser_sincosmul(&node->velocity, angle, 1.0f);
             node->velocity.z = 0.0f;
             node->speed_delta = ex->r;
             node->angle_delta = ex->s;
