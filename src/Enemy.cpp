@@ -690,21 +690,22 @@ int EnemyData::step_logic()
         }
         if (life_damage != 0)
         {
+            EnemyLife &enemy_life = life;
             if ((g_Spellcard->flags & (SPELLCARD_ACTIVE | SPELLCARD_EARLY_BOMB)) == (SPELLCARD_ACTIVE | SPELLCARD_EARLY_BOMB))
             {
                 life_damage /= 30;
             }
             if (!(flags_low & ENEMY_FLAG_INVINCIBLE) && set_invuln.current <= 0)
             {
-                life.receive_damage(life_damage);
+                enemy_life.receive_damage(life_damage);
             }
             else
             {
-                life.total_damage_including_ignored += life_damage;
+                enemy_life.total_damage_including_ignored += life_damage;
             }
             if (drop_season.damage_per_season_drop > 0)
             {
-                while (drop_season.damage_accounted_for_season_drops < life.total_damage_including_ignored)
+                while (drop_season.damage_accounted_for_season_drops < enemy_life.total_damage_including_ignored)
                 {
                     drop_season.damage_accounted_for_season_drops += drop_season.damage_per_season_drop;
                     g_ItemManager->spawn_item(ITEM_SEASON, &final_pos.pos, 0, g_replay_safe_rng.randf_neg_pi_to_pi(),
@@ -725,7 +726,7 @@ int EnemyData::step_logic()
                 }
             }
             // Bit 7 is ENEMY_FLAG_NO_DEATH.
-            if ((life.current <= 0) & ~(flags_low >> 7))
+            if ((enemy_life.current <= 0) & ~(flags_low >> 7))
             {
                 if (full->die() != 0)
                 {
