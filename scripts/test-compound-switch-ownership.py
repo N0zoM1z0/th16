@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Exercise complete compound dispatch graphs without changing artifacts."""
+from collections import defaultdict
 import copy
 import hashlib
 import struct
@@ -11,6 +12,7 @@ import capstone
 
 from strict_oracle import Context, Incomplete, ROOT, replay_owner
 from linked_image import linked_code_fields
+from reference_bindings import function_map
 from switch_ownership import (compound_data_parts, inspect_dispatch, inspect_switch,
                               switch_owner_size, validate_compound_record, validate_switch_owner)
 
@@ -41,12 +43,20 @@ class CompoundSwitchControls(unittest.TestCase):
     def setUpClass(cls):
         cls.context=Context()
         cls.units=tomllib.loads((ROOT/'config/match-units.toml').read_text())['units']
+        cls.current_entries = defaultdict(list)
+        for original, candidate, symbol in function_map(cls.context):
+            cls.current_entries[original].append((candidate, symbol))
         cls.records={a:r for a,r in cls.context.switch_owners.items() if 'dispatches' in r}
         cls.decoder=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_32)
         cls.decoder.detail=True
 
     def unit(self,address):
-        return self.units[f'reference-{address:08x}']
+        unit = self.units[f'reference-{address:08x}']
+        entries = self.current_entries[address]
+        self.assertEqual(len(entries), 1)
+        candidate, symbol = entries[0]
+        self.assertEqual(symbol, unit["symbol"])
+        return dict(unit, candidate_address=candidate)
 
     def mutation(self,address,side,offset,raw):
         context=copy.copy(self.context)
