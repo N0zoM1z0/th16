@@ -2156,10 +2156,10 @@ int EnemyData::ecl_run_over_300()
         register u8 key_step = 7;
         // The encrypted input advances while the destination uses a frame
         // index; this also keeps the original loop's key-update order.
-        ::new (scratch.spell_name) char[0x80];
+        char *dest = ::new (scratch.spell_name) char[0x80];
         for (i32 i = 0; i < name_length; i++)
         {
-            scratch.spell_name[i] = (char)(*encrypted_name++ ^ key);
+            dest[i] = (char)(*encrypted_name++ ^ key);
             key = (u8)(key + key_step);
             key_step = (u8)(key_step + 0x10);
         }
@@ -2180,7 +2180,7 @@ int EnemyData::ecl_run_over_300()
 
         i32 time_limit = full->context.current_context->get_int_arg(2);
         i32 boss_index = full->context.current_context->get_int_arg(1);
-        g_Spellcard->start(spell_id, scratch.spell_name, time_limit, boss_index);
+        g_Spellcard->start(spell_id, dest, time_limit, boss_index);
         *(volatile u32 *)&life.is_spell |= ENEMY_LIFE_SPELL;
         life.current_scaled_by_seven = life.current * 7;
     }
