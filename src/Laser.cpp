@@ -2948,9 +2948,9 @@ void LaserCurveNode::get_state(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
                         break;
                     }
                 }
-                // Accumulate the incoming frame before advancing its speed.
-                pos += d;
+                // d uses the incoming speed; advance speed for the next frame.
                 s += speed_delta;
+                pos += d;
             } while (--n);
         }
         laser_sincosmul(&d, a, s);
