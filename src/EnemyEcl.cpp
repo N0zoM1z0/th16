@@ -2218,20 +2218,21 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_LASER_ON:
     {
         ::new (&scratch.line) LaserLineInner();
+        EnemyData *owner = this;
         i32 slot = get_int_arg(0);
-        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
+        const volatile EnemyBulletShooter &shooter = owner->bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
-            this, slot, &scratch.line.start_pos, scratch.line.ex);
+            owner, slot, &scratch.line.start_pos, scratch.line.ex);
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.line.bullet_type = bullet_type;
         i32 bullet_color = shooter.color;
         scratch.line.bullet_color = bullet_color;
         scratch.line.ang_aim = normalize_angle(ang_aim);
-        scratch.line.flags = shooter.flags | 1;
         scratch.line.speed = shooter.spd1;
         scratch.line.laser_new_arg_1 = shooter.pos.x;
         scratch.line.laser_new_arg_2 = shooter.pos.y;
+        scratch.line.flags = shooter.flags | 1;
         scratch.line.shot_sfx = shooter.shot_sfx;
         scratch.line.laser_new_arg_3 = shooter.pos.z;
         scratch.line.shot_transform_sfx = shooter.shot_transform_sfx;
@@ -2260,8 +2261,8 @@ int EnemyData::ecl_run_over_300()
         scratch.infinite.duration = shooter.laser_timing.duration;
         scratch.infinite.laser_new_arg_1 = shooter.pos.x;
         scratch.infinite.shrink_time = shooter.laser_timing.shrink_time;
-        scratch.infinite.flags = shooter.flags | 2;
         scratch.infinite.laser_new_arg_2 = shooter.pos.y;
+        scratch.infinite.flags = shooter.flags | 2;
         scratch.infinite.laser_new_arg_4 = shooter.laser_new_arg_4;
         scratch.infinite.shot_sfx = shooter.shot_sfx;
         scratch.infinite.distance = shooter.distance;
