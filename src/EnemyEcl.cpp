@@ -552,7 +552,9 @@ int EnemyData::ecl_run_over_300()
     // otherwise select its n-th alternate, starting at script + 5.
     case ECL_OP_ANM_PLAY_ALTERNATE:
     {
-        i32 slot = full->context.current_context->get_int_arg(0);
+        EclRunContext *current_context =
+            *reinterpret_cast<EclRunContext *volatile *>(&full->context.current_context);
+        i32 slot = current_context->get_int_arg(0);
         i32 alternate = full->context.current_context->get_int_arg(1);
         AnmId *selected = &anm_ids[slot];
         AnmId &anm_id = *selected;
