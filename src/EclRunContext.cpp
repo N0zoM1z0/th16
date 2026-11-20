@@ -543,7 +543,7 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
     // Call arguments follow the variable-length subroutine name. Their type
     // tags are byte-addressed, while the value word is read at a four-byte
     // aligned offset from the instruction's argument area.
-    register u8 *arg_base = (u8 *)ins->args;
+    register u8 *arg_base = (u8 *)ins;
     EclStackItem *arg_values = ins->args;
     i32 i = start + 1;
     if (i < ins->param_count)
