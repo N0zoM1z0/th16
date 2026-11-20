@@ -145,21 +145,19 @@ static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
 static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
+    bool has_origin = enemy->bullet_mgr_origins[i].enabled > 0.9f;
+    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
+    f32 y = enemy->bullet_mgr_offsets[i].y;
     f32 x;
-    f32 y;
     f32 z;
-    if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
+    if (has_origin)
     {
-        memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-        y = enemy->bullet_mgr_offsets[i].y;
         x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
         y += enemy->bullet_mgr_origins[i].xy.y;
         z = 0.0f;
     }
     else
     {
-        memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-        y = enemy->bullet_mgr_offsets[i].y;
         z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
