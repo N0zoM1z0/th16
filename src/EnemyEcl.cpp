@@ -256,7 +256,7 @@ int EnemyData::ecl_run_over_300()
     InterpStrange1 *movement_interp;
     f32 movement_goal_x;
     f32 movement_goal_y;
-    register volatile SptInf *context_owner = full;
+    volatile SptInf *context_owner = full;
     register EclRawInstr *instr = context_owner->context.current_context->current_instr();
     EclScratchStorage scratch;
     switch ((i16)instr->opcode)
