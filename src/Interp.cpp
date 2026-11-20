@@ -427,7 +427,7 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
     InterpFloat2 *self = this;
     if (self->end_time > 0)
     {
-        self->time.tick_goto();
+        self->time.tick_nested();
         if (self->time.current >= self->end_time)
         {
             self->time.set(self->end_time);
@@ -450,13 +450,14 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
     if (self->method == INTERP_CONSTANT_VELOCITY)
     {
         D3DXVECTOR2 tmp = self->initial;
-        self->initial = self->goal + tmp;
+        self->initial.x = tmp.x + self->goal.x;
+        self->initial.y = tmp.y + self->goal.y;
         self->current = self->initial;
     }
     else if (self->method == INTERP_CONSTANT_ACCEL)
     {
         D3DXVECTOR2 tmp = self->initial;
-        self->initial = tmp + self->bezier_2;
+        self->initial = self->bezier_2 + tmp;
         self->bezier_2 = self->bezier_2 + self->goal;
         self->current = self->initial;
     }
