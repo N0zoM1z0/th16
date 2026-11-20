@@ -3296,7 +3296,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
             ex_state[1].timer.set_value(0);
             ex_state[1].ints[0] = ex->a;
             laser_sincosmul((Float3 *)&ex_state[1].floats[5], ex_state[1].floats[1], ex_state[1].floats[0]);
-            if (index != 0 && inner.shot_transform_sfx >= 0)
+            if (ex_index != 0 && inner.shot_transform_sfx >= 0)
             {
                 g_SoundManager.play_sound_centered(inner.shot_transform_sfx, 0);
             }
@@ -3307,7 +3307,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
             ex_state[2].floats[1] = ex->s;
             ex_state[2].timer.set_value(0);
             ex_state[2].ints[0] = ex->a;
-            if (index != 0 && inner.shot_transform_sfx >= 0)
+            if (ex_index != 0 && inner.shot_transform_sfx >= 0)
             {
                 g_SoundManager.play_sound_centered(inner.shot_transform_sfx, 0);
             }
@@ -3399,7 +3399,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
         }
         case BULLET_EX_TAG:
             id = ex->a;
-            ex_index = index + 1;
+            ex_index++;
             continue;
         case BULLET_EX_LOOP:
             ex_index = ex->a;
