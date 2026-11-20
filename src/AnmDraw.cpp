@@ -300,11 +300,8 @@ void __stdcall AnmVm::write_sprite_corners__with_z_rot(AnmVm *vm_param, Float3 *
     AnmAnchorCorners *yt = &g_anchor_corners_y[(vm->flags_lo >> ANM_VM_ANCHOR_Y_SHIFT) & 3];
     f32 xs[4];
     f32 ys[4];
-    for (i32 j = 0; j < 4; j++)
-    {
-        xs[j] = xt->corner[j];
-        ys[j] = yt->corner[j];
-    }
+    memcpy(xs, xt->corner, sizeof(xs));
+    memcpy(ys, yt->corner, sizeof(ys));
     i32 i;
     for (i = 0; i < 4; i++)
     {
