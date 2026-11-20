@@ -151,8 +151,9 @@ static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
 static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
-    bool has_origin = enemy->bullet_mgr_origins[i].enabled > 0.9f;
+    f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
+    bool has_origin = origin_enabled > 0.9f;
     f32 y = enemy->bullet_mgr_offsets[i].y;
     f32 x;
     if (has_origin)
