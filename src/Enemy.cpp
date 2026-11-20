@@ -656,57 +656,61 @@ int EnemyData::step_logic()
         {
             damage /= 5;
         }
-        // Dialogue suppresses damage; the conditional also preserves the
-        // target's branchless selection of the effective damage amount.
-        i32 effective_damage = g_Gui->msg == NULL ? damage : 0;
+        // Dialogue suppresses damage. Keep the selected amount in its own
+        // local so the damage accumulator and effective amount have distinct
+        // register lifetimes through the statistics and life updates.
+        i32 dealt = 0;
+        if (g_Gui->msg == NULL)
+        {
+            dealt = damage;
+        }
         // Hit damage and non-hit damage feed separate counters. Lethal
         // hit overflow contributes one quarter beyond the remaining life.
-        if (effective_damage > 0)
+        if (dealt > 0)
         {
             if (hit)
             {
-                if (effective_damage >= life.current)
+                if (dealt >= life.current)
                 {
-                    i32 hit_overflow = (effective_damage - life.current) / 4 + life.current;
+                    i32 hit_overflow = (dealt - life.current) / 4 + life.current;
                     g_EnemyManager->inner.damage_this_frame[0] += hit_overflow;
                 }
                 else
                 {
-                    g_EnemyManager->inner.damage_this_frame[0] += effective_damage;
+                    g_EnemyManager->inner.damage_this_frame[0] += dealt;
                 }
             }
             else
             {
-                g_EnemyManager->inner.damage_this_frame[1] += effective_damage;
+                g_EnemyManager->inner.damage_this_frame[1] += dealt;
             }
         }
-        i32 life_damage = effective_damage;
+        i32 life_damage = dealt;
         if (g_MainBomb->in_use == 1 && bomb_damage_multiplier < 1.0f)
         {
-            if (effective_damage != 0 && 0.0f >= bomb_damage_multiplier)
+            if (dealt != 0 && 0.0f >= bomb_damage_multiplier)
             {
                 g_SoundManager.play_sound_at_position(SE_NODAMAGE, final_pos.pos.x);
             }
-            life_damage = effective_damage * bomb_damage_multiplier;
+            life_damage = dealt * bomb_damage_multiplier;
         }
         if (life_damage != 0)
         {
-            EnemyLife &enemy_life = life;
             if ((g_Spellcard->flags & (SPELLCARD_ACTIVE | SPELLCARD_EARLY_BOMB)) == (SPELLCARD_ACTIVE | SPELLCARD_EARLY_BOMB))
             {
                 life_damage /= 30;
             }
             if (!(flags_low & ENEMY_FLAG_INVINCIBLE) && set_invuln.current <= 0)
             {
-                enemy_life.receive_damage(life_damage);
+                life.receive_damage(life_damage);
             }
             else
             {
-                enemy_life.total_damage_including_ignored += life_damage;
+                life.total_damage_including_ignored += life_damage;
             }
             if (drop_season.damage_per_season_drop > 0)
             {
-                while (drop_season.damage_accounted_for_season_drops < enemy_life.total_damage_including_ignored)
+                while (drop_season.damage_accounted_for_season_drops < life.total_damage_including_ignored)
                 {
                     drop_season.damage_accounted_for_season_drops += drop_season.damage_per_season_drop;
                     g_ItemManager->spawn_item(ITEM_SEASON, &final_pos.pos, 0, g_replay_safe_rng.randf_neg_pi_to_pi(),
@@ -727,7 +731,7 @@ int EnemyData::step_logic()
                 }
             }
             // Bit 7 is ENEMY_FLAG_NO_DEATH.
-            if ((enemy_life.current <= 0) & ~(flags_low >> 7))
+            if ((life.current <= 0) & ~(flags_low >> 7))
             {
                 if (full->die() != 0)
                 {
