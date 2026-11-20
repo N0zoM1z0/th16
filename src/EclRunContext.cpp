@@ -193,11 +193,20 @@ HARNESS_CALLED f32 EclRunContext::pop_float_arg(int index)
             i32 item = *(i32 *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
             EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
-            if (type == ECL_STACK_INTEGER)
+            f32 result;
+            if (type == ECL_STACK_FLOAT)
             {
-                return (f32)item;
+                result = *(f32 *)&item;
             }
-            return *(f32 *)&item;
+            else if (type == ECL_STACK_INTEGER)
+            {
+                result = (f32)item;
+            }
+            else
+            {
+                result = *(f32 *)&item;
+            }
+            return result;
         }
         return vm->get_float_global((i32)value);
     }
@@ -250,11 +259,20 @@ HARNESS_CALLED f32 EclRunContext::pop_float_arg_given_value(int index, f32 value
             i32 item = *(i32 *)((u8 *)stack.data + stack.stack_offset);
             stack.stack_offset -= 4;
             EclStackValueKind type = *(EclStackValueKind *)((u8 *)stack.data + stack.stack_offset);
-            if (type == ECL_STACK_INTEGER)
+            f32 result;
+            if (type == ECL_STACK_FLOAT)
             {
-                return (f32)item;
+                result = *(f32 *)&item;
             }
-            return *(f32 *)&item;
+            else if (type == ECL_STACK_INTEGER)
+            {
+                result = (f32)item;
+            }
+            else
+            {
+                result = *(f32 *)&item;
+            }
+            return result;
         }
         return vm->get_float_global((i32)value);
     }
