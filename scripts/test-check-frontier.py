@@ -60,6 +60,15 @@ class FrontierControls(unittest.TestCase):
         current = {0x401000: dict(entry(changed(4)), result="incomplete")}
         self.assertTrue(frontier.evaluate(recorded, current, set())[1])
 
+    def test_disappearing_frontier_reports_regression(self):
+        recorded = {0x401000: entry(changed(4))}
+        for selected in (None, [0x401000]):
+            with self.subTest(selected=selected):
+                lines, regressed, updates = frontier.evaluate(recorded, {}, set(), selected)
+                self.assertTrue(regressed)
+                self.assertTrue(lines[0].startswith("MISSING"))
+                self.assertFalse(updates)
+
     def test_improvement_is_recorded(self):
         recorded = {0x401000: entry(changed(4, 5))}
         better = entry(changed(5))

@@ -6,32 +6,32 @@
 [frontier."0x004018e0"]
 symbol = "?read_joypad@Supervisor@@QAEII@Z"
 source = "src/Supervisor.cpp"
-size = 819
-target_sha256 = "0f4889a79ef93cfcabfd5dad718f917cf62a1b93482ceeb68a3a1482372dfff3"
+size = 839
+target_sha256 = "0561c407290b5e7d95f97f578e260ee58f9f8300c61e45b7a32dacb5d2cb6920"
 result = "incomplete"
 candidate_size = 819
 
 [frontier."0x00402220"]
 symbol = "?zun_decrypt@@YIPAEPAEHEEHH@Z"
 source = "src/Crypt.cpp"
-size = 261
-target_sha256 = "3e9cf411d1572f760df0c56788604a81b28cc7170686a5fbcd25b85f8a890d41"
+size = 264
+target_sha256 = "6af5c8b4e4587c03104115271699e0fa59ca16d46b5b8bb1ccbf7d359d727606"
 result = "incomplete"
 candidate_size = 261
 
 [frontier."0x00402330"]
 symbol = "?zun_encrypt@@YIPAEPAEHEEHH@Z"
 source = "src/Crypt.cpp"
-size = 261
-target_sha256 = "770433a17e4c2c1e1cdec40dd2d85bcbd1aecc2539318ce483225991755f30f3"
+size = 262
+target_sha256 = "aa2134edc312195a6b905e85dfcce81ccd09c5583013c2fdb266a8d0f1396fac"
 result = "incomplete"
 candidate_size = 261
 
 [frontier."0x00402440"]
 symbol = "?file_read_all@@YIPAEPBDPAHH@Z"
 source = "src/FileSystem.cpp"
-size = 443
-target_sha256 = "206a852927ce1dba54e2726e4843be516f2092b25677da1e003d8ea1409b6171"
+size = 444
+target_sha256 = "9adcc6967db77525d2d60861d480acc539b3b3bacd74bd210d1d44b591c32f76"
 result = "incomplete"
 candidate_size = 443
 
@@ -65,24 +65,24 @@ residual = ["6C", "A5", "AF", "B3", "CF", "DA", "FB", "106", "112-11D", "11F-120
 [frontier."0x00403ec0"]
 symbol = "?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z"
 source = "src/Collision.cpp"
-size = 870
-target_sha256 = "81bc03a82f2d6064a814b9f70f6f43cf810b6818a52b742c77de0e447aecb3e9"
+size = 860
+target_sha256 = "8c189871321c47c750a7155d4e87a32645edad4b21dc9af178cf37e4c4a77cac"
 result = "incomplete"
 candidate_size = 870
 
 [frontier."0x00404600"]
 symbol = "?collision_line_rect@@YGHPAUD3DXVECTOR2@@0PAUD3DXVECTOR3@@MMMMMM@Z"
 source = "src/Collision.cpp"
-size = 940
-target_sha256 = "0c6ec4630550cb1eec0d52a145cfb89cf9c1f40e8e945a3f5987c95aaafded7d"
+size = 947
+target_sha256 = "d3d786a61886c02badc32eb5eadb11ec8e8bd5c9440b463babec4b1f7371f57b"
 result = "incomplete"
 candidate_size = 940
 
 [frontier."0x004049c0"]
 symbol = "?collision_test_rect_rect@@YGHMMMMMMMMMM@Z"
 source = "src/Collision.cpp"
-size = 2155
-target_sha256 = "2cdc30c4d972cb39fc5a77e1d09f76b7ae128e4a1b7169975f24dceb28fe5ae0"
+size = 2168
+target_sha256 = "d3dbeeb0bb9809be2e3edee0bfbca8533dced30440fae5dd60d2cd8fbd6361a7"
 result = "incomplete"
 candidate_size = 2155
 
@@ -98,24 +98,24 @@ residual = ["D", "20", "24", "27", "2D", "31", "36", "3D", "43", "47", "51", "62
 [frontier."0x00405700"]
 symbol = "?anm_gather_effect_on_tick@@YIHPAUAnmVm@@@Z"
 source = "src/AnmVmCallbacks.cpp"
-size = 1993
-target_sha256 = "f1748694fe7f36c9ca047a7edf48911f141080b4e25dad577b5edcae975e2584"
+size = 1973
+target_sha256 = "77e438a7a54422e73466dfe8dd68323ea3ad82782589cc4c4b7c9bc74da04361"
 result = "incomplete"
 candidate_size = 1993
 
 [frontier."0x00405fa0"]
 symbol = "?anm_gather_effect_on_copy@@YIHPAUAnmVm@@PBU1@H@Z"
 source = "src/AnmVmCallbacks.cpp"
-size = 164
-target_sha256 = "9f5476050993e6351a0f06fc834466c2fda6745cc90576c918f7fb4b27787d82"
+size = 146
+target_sha256 = "160161413767dd548f20e9843f4197e44e4822ccc59efac62a393084799414c4"
 result = "incomplete"
 candidate_size = 164
 
 [frontier."0x00406a70"]
 symbol = "?transform_coords@AnmVm@@QAEPAUD3DXVECTOR3@@PAU2@@Z"
 source = "src/AnmVm.cpp"
-size = 456
-target_sha256 = "28b5deb0e535f218acc0d9440ed8b6f7c7f58518419562b3fe990457c364f443"
+size = 461
+target_sha256 = "6e323111f82d26600b1b8a2212f80749b1dd284a92df73555efa8d2d5080c972"
 result = "incomplete"
 candidate_size = 456
 
@@ -140,56 +140,56 @@ residual = ["C9", "D1", "DF-E4", "E6-108"]
 [frontier."0x00408650"]
 symbol = "?draw_string@AsciiInf@@QAEXPAUAsciiStr@@@Z"
 source = "src/AsciiManager.cpp"
-size = 2220
-target_sha256 = "57c876d593803ed3341e7347ab4348ce118aebc9c0d154e62ce944e1b4eef698"
+size = 2128
+target_sha256 = "83dd508bbe22a820a021665ee7fa666cb8a511c728160292a6ae274ce28caa17"
 result = "incomplete"
 candidate_size = 2220
 
 [frontier."0x00408fb0"]
 symbol = "?tick@AsciiInf@@QAEXXZ"
 source = "src/AsciiManager.cpp"
-size = 119
-target_sha256 = "7a2e060d330d5e2d1e052930d29b7d054c16a0c3613585770d339b9270772155"
+size = 120
+target_sha256 = "8debc61d2cfaeb9eb333ca978a344d729dd8c49516a0901c07109c797587fb68"
 result = "incomplete"
 candidate_size = 119
 
 [frontier."0x00409f90"]
 symbol = "?on_draw_03@Stage@@QAEHXZ"
 source = "src/Stage.cpp"
-size = 1147
-target_sha256 = "dc1a902a867c12b59b35a9b55c0558d9809048da0af5fd2784639882cb36f9f3"
+size = 1144
+target_sha256 = "70f3e13b1af5f586de3bf0f58e93fa42d3fc7703e74649b23ce13cb611d7dc68"
 result = "incomplete"
 candidate_size = 1147
 
 [frontier."0x0040a7d0"]
 symbol = "?is_culled@StdObject@@QAEHPAUD3DXVECTOR3@@MPAUCamera@@@Z"
 source = "src/Stage.cpp"
-size = 1109
-target_sha256 = "2dbb7ee67644454961f1c6fe58499e150fc664c3ec1cde849080b1dea6832c2d"
+size = 1111
+target_sha256 = "9a038969e564126fd994c8298f7f327eafbf49c7412da0b91e98cb1d5b998f62"
 result = "incomplete"
 candidate_size = 1109
 
 [frontier."0x0040b3b0"]
 symbol = "?run_std@StageInner@@QAEHXZ"
 source = "src/Stage.cpp"
-size = 3184
-target_sha256 = "7060b8fcaa1ea643cedfe132ee02c011274a23937db23ae067ac0a2f7b358ee9"
+size = 3204
+target_sha256 = "ab59c4564d9cc5a946808766d4439d43a171a5e97b281a0de1c9607837f94d05"
 result = "incomplete"
 candidate_size = 3184
 
 [frontier."0x0040c4a0"]
 symbol = "?step_fog@StageInner@@QAEXXZ"
 source = "src/Stage.cpp"
-size = 2172
-target_sha256 = "edcb06de8c3a627c2c4eb903f9f2bf44ce9a2691769c182be23a8b8cb8164c22"
+size = 2156
+target_sha256 = "ba417e64d663cc56c5b2ec06abdf32a7941c955d8355bb355ca86b0e4b0d2f39"
 result = "incomplete"
 candidate_size = 2172
 
 [frontier."0x0040cd10"]
 symbol = "?step@InterpCameraSky@@QAE?AUCameraSky@@XZ"
 source = "src/Stage.cpp"
-size = 1630
-target_sha256 = "def9221004013b0e178c5363c041e04edfa86ccc0f61d4b4971f4a3af8a58fc8"
+size = 1623
+target_sha256 = "52f687ca1f3101baea26c5e628a496da22b5d382d24bfa888ac822dcba319bba"
 result = "incomplete"
 candidate_size = 1630
 
@@ -223,8 +223,8 @@ residual = ["8-A", "F-10", "12", "15-51", "79", "9D", "A9"]
 [frontier."0x0040fe80"]
 symbol = "?cancel_bullets@BombMarisaAInf@@UAEHXZ"
 source = "src/BombMain.cpp"
-size = 595
-target_sha256 = "0dede0cfdd896bf5ee304e37505ee7339fd90953a4254cb32c69d12dee8049e5"
+size = 621
+target_sha256 = "3500e6753f954fddb5edb09e4d591a9fbd32cfd2234562a46982a6ed56717f53"
 result = "incomplete"
 candidate_size = 595
 
@@ -249,48 +249,48 @@ residual = ["B2-B5", "114", "116-118", "11B-11E", "121-123", "128-12D", "132-134
 [frontier."0x00411b70"]
 symbol = "?destroy_all@BulletManager@@SAXXZ"
 source = "src/BulletManager.cpp"
-size = 297
-target_sha256 = "7a0b241beb70a44ddd08403909005aacf1d4517647de0b7f2a52f5517ba89522"
+size = 300
+target_sha256 = "40d2232d24befc5b3b3c51b6bd91706baf184840a1c3adb9ca90855e17e1ffb6"
 result = "incomplete"
 candidate_size = 297
 
 [frontier."0x00411e70"]
 symbol = "?on_tick@Bullet@@QAEHXZ"
 source = "src/BulletManager.cpp"
-size = 1572
-target_sha256 = "36f38d4538acee17de47174b6f0a044ff3521e934c7fb39fe196ee4b0f7fce7e"
+size = 1592
+target_sha256 = "051ed27398e6c59940b649b3a14a5ad58176686e3a918d113d841b8619401f72"
 result = "incomplete"
 candidate_size = 1572
 
 [frontier."0x004124b0"]
 symbol = "?check_player_collision@Bullet@@QAEHH@Z"
 source = "src/BulletManager.cpp"
-size = 449
-target_sha256 = "95ece29ed0f89001de57e91219648772bffdb4022b348ec47298ac875d7f4daa"
+size = 448
+target_sha256 = "82a30e53c0af877d01f8c102b4f8dcc3ff0704083c1e5e042cfc56bce77d8926"
 result = "incomplete"
 candidate_size = 449
 
 [frontier."0x00412860"]
 symbol = "?on_tick_body@BulletManager@@QAEHXZ"
 source = "src/BulletManager.cpp"
-size = 471
-target_sha256 = "8f4faac77a23fc235133857e2381578c7be136b67a792fce4e8c624b236d5739"
+size = 502
+target_sha256 = "0448dcdbe12726e438c37c5c014361f216e9af9d8b4a9e94656600bff70d53d0"
 result = "incomplete"
 candidate_size = 471
 
 [frontier."0x00412cb0"]
 symbol = "?shoot_one@BulletManager@@QAEHPAUEnemyBulletShooter@@HHM@Z"
 source = "src/BulletManager.cpp"
-size = 3024
-target_sha256 = "19bfe0bf78112e2d4d28276790af0d023b746da27d476e189eb7eb663c4977b2"
+size = 2984
+target_sha256 = "230b8024374cbc75664f51e3d623b3ae94622657cf0e517ce39f6180ac51d29a"
 result = "incomplete"
 candidate_size = 3024
 
 [frontier."0x00413860"]
 symbol = "?run_ex@Bullet@@QAEXXZ"
 source = "src/BulletManager.cpp"
-size = 5500
-target_sha256 = "58a65296faf1e358f3bb7b87d93ad235c8782140c05f7495d628580f09854487"
+size = 5436
+target_sha256 = "55318fce0141fec9837db4af86c39fe418a798548ff106b999261f5a877662d4"
 result = "incomplete"
 candidate_size = 5500
 
@@ -342,8 +342,8 @@ residual = ["76", "79", "7F", "82", "88", "8B", "91", "94", "9A", "9D"]
 [frontier."0x00418ba0"]
 symbol = "?create_ui_effect@EffectManager@@QAE?AUAnmId@@HPAUD3DXVECTOR3@@PAUAnmVm@@@Z"
 source = "src/EffectManager.cpp"
-size = 175
-target_sha256 = "4bc4d4d79dfd7a04e6cfc79cce21fb0cf4d1787a97a89fd81bf67923374f4f27"
+size = 180
+target_sha256 = "98c856bdbc2de5a0a1f2fa6c4023d2543f0f0957cb78c440c0c7c6320a218833"
 result = "incomplete"
 candidate_size = 175
 
@@ -367,8 +367,8 @@ residual = ["36F-374"]
 [frontier."0x0041c330"]
 symbol = "?step_logic@EnemyData@@QAEHXZ"
 source = "src/Enemy.cpp"
-size = 2197
-target_sha256 = "65336485bc2b70e0f2bb34233e9c7e6b2052d38d106c0774a73b6c22881700fd"
+size = 2207
+target_sha256 = "af9d7f867cc330e018536d58aca99d136551b278213bcb8c3fa1e5133077e90c"
 result = "incomplete"
 candidate_size = 2197
 
@@ -384,16 +384,16 @@ residual = ["7B-A6", "AC"]
 [frontier."0x0041da30"]
 symbol = "?kill_all_in_group@EnemyManager@@SGXH@Z"
 source = "src/Enemy.cpp"
-size = 314
-target_sha256 = "431dff98bd3be465163b028460ad463417edfad49f1c22ad1a1bff184eecf7a7"
+size = 305
+target_sha256 = "ffd7ed29352b1eeece4dd2a1e611f54647235bd3ce38513e4d198559f75c2475"
 result = "incomplete"
 candidate_size = 314
 
 [frontier."0x0041db70"]
 symbol = "?kill_all_no_set_death@EnemyManager@@SAXXZ"
 source = "src/Enemy.cpp"
-size = 305
-target_sha256 = "65de658c3d519734fcb4cc2b37d8aaf4b13c83076566b033bfb3a78d3c2c3b82"
+size = 301
+target_sha256 = "b7bb06f2418447b239cb5df0ce4bbcc396f993415834cc20f1a289513fb014ea"
 result = "incomplete"
 candidate_size = 305
 
@@ -417,16 +417,16 @@ residual = ["82-8A", "8D-93", "98-A3"]
 [frontier."0x00425570"]
 symbol = "?step_radial_dist@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ"
 source = "src/Interp.cpp"
-size = 758
-target_sha256 = "929028328cd5f91060b48a0bcbd54ddcd7b239108d48841f004b0841f55f03e8"
+size = 757
+target_sha256 = "75b7e017b977cae2e50915c4e8bc967a69b41e11352cf44bce498804c8424e39"
 result = "incomplete"
 candidate_size = 758
 
 [frontier."0x004258b0"]
 symbol = "?step@InterpStrange1@@QAE?AUD3DXVECTOR3@@XZ"
 source = "src/Interp.cpp"
-size = 1231
-target_sha256 = "b1f364dedd338c93ebb4b1256f216d873b29987268504292b6369e3086c61248"
+size = 1232
+target_sha256 = "31dc970b06d3fc3f9d9664a82a055775aae8871420a669fab2fc1b7a6ae143b0"
 result = "incomplete"
 candidate_size = 1231
 
@@ -442,16 +442,16 @@ residual = ["5"]
 [frontier."0x00427cf0"]
 symbol = "?on_tick_body@Gui@@QAEHXZ"
 source = "src/Gui.cpp"
-size = 4449
-target_sha256 = "a28a8af6c6f6cbf07570782bdffee61edb705fd6307dd17e0d616ffa4e352c2b"
+size = 4469
+target_sha256 = "f74f80132c3e2044345a0a1a9d5ea07f97ed140f7790eb1af37232282637696e"
 result = "incomplete"
 candidate_size = 4449
 
 [frontier."0x00428e70"]
 symbol = "?on_draw_2_body@Gui@@QAEHXZ"
 source = "src/Gui.cpp"
-size = 3250
-target_sha256 = "f402071e43f88f74e71609e3370c7507287570dccd77614c31cf74a3825be63e"
+size = 3187
+target_sha256 = "bae5464a40ab6badd4654e53cb7fb116e9f5249fab48844b43f9389b5cedc3bb"
 result = "incomplete"
 candidate_size = 3250
 
@@ -466,40 +466,40 @@ candidate_size = 4780
 [frontier."0x0042bc10"]
 symbol = "?update_score@Gui@@SAXXZ"
 source = "src/Gui.cpp"
-size = 195
-target_sha256 = "6e97acbbf07847183b10f8af4b42900d7044b295d2ea27999e1109d020532d11"
+size = 224
+target_sha256 = "4a5c6c05140d8e3e2e5b87ae96dfca7510967a5360ebf497cae1fcc5f907bb95"
 result = "incomplete"
 candidate_size = 195
 
 [frontier."0x0042bcf0"]
 symbol = "?show_notice@Gui@@QAEXHH@Z"
 source = "src/Gui.cpp"
-size = 888
-target_sha256 = "8392649965908e50c8bc6f1b8065efe1ce2e3fda98a9093d8f9e95fff3cddacb"
+size = 24
+target_sha256 = "24f4e92f937c62ce8c8d94919e46033131935f31c6ff399e894d7f7419aea8ab"
 result = "incomplete"
 candidate_size = 888
 
 [frontier."0x0042c480"]
 symbol = "?show_boss_marker@Gui@@QAEXXZ"
 source = "src/Gui.cpp"
-size = 103
-target_sha256 = "0d53b8b8861ca9ce78aee431b8eff5bac4c809e6a172f9d91859b87bca60fcff"
+size = 105
+target_sha256 = "b56efce7b5cf4c3073554dd5771b51e238da15195b517ca57530c14af358097d"
 result = "incomplete"
 candidate_size = 103
 
 [frontier."0x0042c600"]
 symbol = "?update_season_gauge@Gui@@SAXXZ"
 source = "src/Gui.cpp"
-size = 596
-target_sha256 = "6e56f8ef9d2541a982af00d26224e5c57ed9a827159c570de63c2ad71e7b7f48"
+size = 551
+target_sha256 = "51961cbee8875fc6af6d465d9730be5ff256627580af1e517c1599ec44d3e375"
 result = "incomplete"
 candidate_size = 596
 
 [frontier."0x0042dc50"]
 symbol = "?begin_stage@GameThread@@QAEHXZ"
 source = "src/GameThread.cpp"
-size = 648
-target_sha256 = "d2eaf0723b175213cf9f9bf5ed7bc2beb9e0884318dde1508a1ce65731085204"
+size = 649
+target_sha256 = "61e8caac8b9cfafd5ffd10bf539b8a4276c3a2e543e66967918fa2c2c8de48af"
 result = "incomplete"
 candidate_size = 648
 
@@ -515,16 +515,16 @@ residual = ["208"]
 [frontier."0x0042f4e0"]
 symbol = "?on_tick_body@ItemManager@@QAEHXZ"
 source = "src/Item.cpp"
-size = 3192
-target_sha256 = "4f4d867df3d29f29a9b274c7bc69b24aa294808ad1d5411a1c74ece624e389e8"
+size = 3100
+target_sha256 = "e567448f3f2f6c47d8f710d9979f09e799144ea6ee96a549342bccc8fbfcf3ce"
 result = "incomplete"
 candidate_size = 3192
 
 [frontier."0x00430100"]
 symbol = "?collect_power@Item@@QAEXXZ"
 source = "src/Item.cpp"
-size = 652
-target_sha256 = "57d2c6ea3d76223aef334c4982f07430edd0e21815d10a8c0165c4773f5828e9"
+size = 665
+target_sha256 = "caf68d95269f9b078bfe882a7bd187811e0ac4662a12ba302240d1bb51f647b1"
 result = "incomplete"
 candidate_size = 652
 
@@ -540,16 +540,16 @@ residual = ["EB"]
 [frontier."0x00430960"]
 symbol = "?spawn_item@ItemManager@@QAEPAUItem@@HPAUD3DXVECTOR3@@HMMHH@Z"
 source = "src/Item.cpp"
-size = 805
-target_sha256 = "485f500276ca04acc8cad00acd42abe96b98084236cb29a734eb690f5e6e5bbf"
+size = 812
+target_sha256 = "264fe7df0f7529bb696d04ab6fd48c64dcae147d587a76fc73e8a211db777a32"
 result = "incomplete"
 candidate_size = 805
 
 [frontier."0x00431760"]
 symbol = "?allocate_new_laser@LaserManager@@QAEHHPAX@Z"
 source = "src/Laser.cpp"
-size = 248
-target_sha256 = "bee7cebcc20251745a6a74cedd50956daccce8189b301549563e07b9d2cc0267"
+size = 252
+target_sha256 = "bb07da02b552b3b4b572baf497dfc34d80139a13f065a6db28b7d91706466bad"
 result = "incomplete"
 candidate_size = 248
 
@@ -565,16 +565,16 @@ residual = ["3-5", "A-46", "48-4F"]
 [frontier."0x00431a70"]
 symbol = "?cancel_in_radius@LaserManager@@QAEHPAUD3DXVECTOR3@@MHH@Z"
 source = "src/Laser.cpp"
-size = 109
-target_sha256 = "40f756c81c3550977fcb96bd67d96a0e86afc4eaa81eaf7882b0d8cc7305ca6e"
+size = 119
+target_sha256 = "5d727a03280c6398335ae3d9f91b0ff8a4e76d4dde4cbc7a7f020525def998eb"
 result = "incomplete"
 candidate_size = 109
 
 [frontier."0x00431fe0"]
 symbol = "?run_ex@LaserLineInf@@UAEXXZ"
 source = "src/Laser.cpp"
-size = 1748
-target_sha256 = "cdec710244484d0c5feb8c88adba6508a6db3b204140d5ded560924b603a3d70"
+size = 1588
+target_sha256 = "67fce36bcdf4d296737bd87473ae40b27f6aa78795138c63737aead97995aa43"
 result = "incomplete"
 candidate_size = 1748
 
@@ -590,72 +590,72 @@ residual = ["33-3D"]
 [frontier."0x00432f40"]
 symbol = "?on_tick@LaserLineInf@@UAEHXZ"
 source = "src/Laser.cpp"
-size = 1479
-target_sha256 = "75b9a3d7af7be84d8d82052eb0a850cbfa5265c06de8220722d3bb7cc28a87ef"
+size = 1473
+target_sha256 = "07b3960d983174b55ac420496295e28e3ae0846ef07c9b90215bd2a3c1c9aecb"
 result = "incomplete"
 candidate_size = 1479
 
 [frontier."0x00433860"]
 symbol = "?cancel_as_bomb_rectangle@LaserLineInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z"
 source = "src/Laser.cpp"
-size = 2031
-target_sha256 = "fa1d108e292c37ba5b6051b0acfbf913137c516c4a9bce3ff1bda0fcd0675fed"
+size = 1968
+target_sha256 = "ebe7d80be786823031f6f3afe71d041ffee5bfd49e50b5ef3b078f4e3245c369"
 result = "incomplete"
 candidate_size = 2031
 
 [frontier."0x00434010"]
 symbol = "?sum_rect_damage@LaserLineInf@@UAEHHHHHHH@Z"
 source = "src/Laser.cpp"
-size = 1803
-target_sha256 = "5f76c1dc835237fd2327e11bdf37981212f41c24e2e5161c591f549bc0dc2031"
+size = 1815
+target_sha256 = "53db9168d6e2a2994cca17ce5e3fa34f6e116bacd362e4174285c5888c71814d"
 result = "incomplete"
 candidate_size = 1803
 
 [frontier."0x00434730"]
 symbol = "?cancel_as_bomb_circle@LaserLineInf@@UAEHPAUD3DXVECTOR3@@MHH@Z"
 source = "src/Laser.cpp"
-size = 1396
-target_sha256 = "5dde125150ad169da78f8b91f4567c49f258c035d287e9205e18274793665f38"
+size = 1425
+target_sha256 = "b582ebfb1c5bc034de13cb2648d865aa47c203853413d580f1379641c5317dc0"
 result = "incomplete"
 candidate_size = 1396
 
 [frontier."0x00434cd0"]
 symbol = "?cancel@LaserLineInf@@UAEHHH@Z"
 source = "src/Laser.cpp"
-size = 678
-target_sha256 = "6af671d59feae6fb95a42b29b3e96082dbd9dfd0c6459e27c8a4e59fa3ba1ae4"
+size = 657
+target_sha256 = "961751ec3ce07d58599af52f2f67bb9bbc8d122afa7a3584122149b477e02769"
 result = "incomplete"
 candidate_size = 678
 
 [frontier."0x004352f0"]
 symbol = "?on_tick@LaserInfiniteInf@@UAEHXZ"
 source = "src/LaserInfinite.cpp"
-size = 792
-target_sha256 = "897800062e0101c9f18eb6da90d49012b9e0744c0e8cfb89a27fbe05abfbdb46"
+size = 800
+target_sha256 = "b373ff307ba31ca58bebeaa787e02ae769779e23164f8837649d86629912a6e2"
 result = "incomplete"
 candidate_size = 792
 
 [frontier."0x00435880"]
 symbol = "?cancel_as_bomb_rectangle@LaserInfiniteInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z"
 source = "src/Laser.cpp"
-size = 1906
-target_sha256 = "70b55abf2a5ede90ff1e9bc422ec0d6b15f56dc193d12822188c416dff78b332"
+size = 1922
+target_sha256 = "1360e29857bec2ad96addd223a022fc9c5e9b18aaa5ee6265bc4416ac3ee1725"
 result = "incomplete"
 candidate_size = 1906
 
 [frontier."0x00436010"]
 symbol = "?sum_rect_damage@LaserInfiniteInf@@UAEHHHHHHH@Z"
 source = "src/Laser.cpp"
-size = 1607
-target_sha256 = "a2cb54f54a9648beccb397770536ee745f21eb7ea971ce3271e16cc4e8a6e9ab"
+size = 1623
+target_sha256 = "e073575813abfc609d1d1e990b520b407dbc704898d6df47f87067d25fe81261"
 result = "incomplete"
 candidate_size = 1607
 
 [frontier."0x00436670"]
 symbol = "?cancel_as_bomb_circle@LaserInfiniteInf@@UAEHPAUD3DXVECTOR3@@MHH@Z"
 source = "src/Laser.cpp"
-size = 1527
-target_sha256 = "76b55e62643efc1456f57e75e9e6f51096940e65758fad5ee35a38bb9a17a6ff"
+size = 1531
+target_sha256 = "4187bc920c454f4a34f7a05bdbd334ca26526fd74b7549994b149cf45538c6ae"
 result = "incomplete"
 candidate_size = 1527
 
@@ -671,32 +671,32 @@ residual = ["5C-5D", "61-62", "65-6B", "6E-74", "79-85", "87-89", "8B-8C", "91-9
 [frontier."0x00436fd0"]
 symbol = "?run_ex@LaserInfiniteInf@@UAEXXZ"
 source = "src/LaserInfinite.cpp"
-size = 188
-target_sha256 = "da40b857e23d7c888527004572d33b0ba140433b261c7460d3f32355f644b4e2"
+size = 195
+target_sha256 = "0e4b5557bc9bd2403b4edcf948fc3963c52435fb501b6a3f756ab21fcff4e142"
 result = "incomplete"
 candidate_size = 188
 
 [frontier."0x004377d0"]
 symbol = "?on_tick@LaserCurveInf@@UAEHXZ"
 source = "src/Laser.cpp"
-size = 1301
-target_sha256 = "9315b3f819fc76de36af67aafe95d1c2cffc20ea65c463620d93cb32812beb2a"
+size = 1305
+target_sha256 = "21c188ea7494b3ad7dd3bc882767e12879cbcc13a34e961f1370181f46c02a15"
 result = "incomplete"
 candidate_size = 1301
 
 [frontier."0x00437cf0"]
 symbol = "?check_graze_or_kill@LaserCurveInf@@UAEHH@Z"
 source = "src/Laser.cpp"
-size = 507
-target_sha256 = "1230d5db859be14dfd367803189c9b122b701bdf5649fb2372be841c7c1f0f91"
+size = 494
+target_sha256 = "552fc76fa8251b315c31c63d6b6e134eb9239c5ef0ab98ca9324b8af05073367"
 result = "incomplete"
 candidate_size = 507
 
 [frontier."0x00437ee0"]
 symbol = "?get_state@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM1M@Z"
 source = "src/Laser.cpp"
-size = 1168
-target_sha256 = "804fd20280a29b980ef78b29b6f66fdb1b41599e3920bce53ced27e8480759a1"
+size = 1164
+target_sha256 = "f3ef25a2e9e4c842966d7c3cf911f031c16169739a85fe8f6fe6345a461476e1"
 result = "incomplete"
 candidate_size = 1168
 
@@ -712,8 +712,8 @@ residual = ["302", "30B", "313", "317"]
 [frontier."0x00438cb0"]
 symbol = "?run_ex@LaserCurveInf@@UAEXXZ"
 source = "src/Laser.cpp"
-size = 1720
-target_sha256 = "43639de681e8b48d9ecdd55b027d1aeb5b05fb2f8c7fe8c4419701459bdca7db"
+size = 1548
+target_sha256 = "98368b51e1cef5a5af4ee87590620fc0e8c86313a7bcfe1ae466f75eb86ac3ba"
 result = "incomplete"
 candidate_size = 1720
 
@@ -738,24 +738,24 @@ residual = ["83-90"]
 [frontier."0x004397d0"]
 symbol = "?cancel_as_bomb_rectangle@LaserCurveInf@@UAEHPAUD3DXVECTOR3@@0MHH@Z"
 source = "src/LaserCurve.cpp"
-size = 1379
-target_sha256 = "90c3d30f4c5ce849159b10a20ac24256653c2f5e6114d8bc9216e05d33dcc9d1"
+size = 1411
+target_sha256 = "55f4cf6aa6d2f5e4419b611780b8207c22946149bb6f4c6a80f82e2bfd633039"
 result = "incomplete"
 candidate_size = 1379
 
 [frontier."0x00439d60"]
 symbol = "?sum_rect_damage@LaserCurveInf@@UAEHHHHHHH@Z"
 source = "src/Laser.cpp"
-size = 1383
-target_sha256 = "7af0377d3ca4ecc09416b2e05c56e2a6d66115052a9a050d5a5685495b6ff57a"
+size = 1410
+target_sha256 = "a0b459c03233052e3ff45bf1b890a062458c1cc10e22f6fd2da746bcf893d000"
 result = "incomplete"
 candidate_size = 1383
 
 [frontier."0x0043c780"]
 symbol = "?camera_update_2d@@YGXPAUCamera@@@Z"
 source = "src/Supervisor.cpp"
-size = 444
-target_sha256 = "9b1396908cb039f502434ae76212b2919628fb120bfce4630096917d7b24cd96"
+size = 437
+target_sha256 = "3b1b19257d0bdef2fd4693c0e19dd006c6fe0f9d18975e6da0b8abadaf481d9c"
 result = "incomplete"
 candidate_size = 444
 
@@ -771,16 +771,16 @@ residual = ["292-299", "29B-29D"]
 [frontier."0x0043ef20"]
 symbol = "?take_snapshot@PauseMenu@@QAEXXZ"
 source = "src/PauseMenu.cpp"
-size = 462
-target_sha256 = "0799424881724b3395782499904475f62c491f480de0bc7bbd40cb40a34b2a5f"
+size = 464
+target_sha256 = "40e49dfe9b2de0e70371b96764f9a62e4a9b95fb5d7c87e5d7b051478f89b5be"
 result = "incomplete"
 candidate_size = 462
 
 [frontier."0x0043f350"]
 symbol = "?open_game_over_menu@@YAXXZ"
 source = "src/PauseMenu.cpp"
-size = 425
-target_sha256 = "2ac3a26fc8a278ae14333592c2f1e065b84cbb251aaf4aa0b43cdfb1a6e62feb"
+size = 428
+target_sha256 = "0cf8b7d8331700e66606a152d88552e01184ef260939ef2c46424739937c0be0"
 result = "incomplete"
 candidate_size = 425
 
@@ -795,40 +795,40 @@ candidate_size = 4676
 [frontier."0x00440cd0"]
 symbol = "?copy_screen_to_sprite@AnmManager@@QAEHUAnmId@@HHHH@Z"
 source = "src/AnmScreenCopy.cpp"
-size = 121
-target_sha256 = "28e78028de4f28c40eddc93f987e5fbcf18359c8c1330c14c3827442b38b42a8"
+size = 119
+target_sha256 = "39a37ca2daff81bd995e3ecf5be9ae157e037112089eb6431a400e3d07370dda"
 result = "incomplete"
 candidate_size = 121
 
 [frontier."0x00441cf0"]
 symbol = "?move@Player@@QAEHXZ"
 source = "src/Player.cpp"
-size = 1648
-target_sha256 = "6f6784a5dfe1d0c66836e8e8fd375eb066b3cb5a9f35ace696fb84cd36732026"
+size = 1676
+target_sha256 = "2c1237a8776270233b7927558c18194878dc09f520e5fa594a993082d819d140"
 result = "incomplete"
 candidate_size = 1648
 
 [frontier."0x00442380"]
 symbol = "?update_options@Player@@QAEHPAUPlayerOption@@H@Z"
 source = "src/Player.cpp"
-size = 485
-target_sha256 = "bba5e0092032654d31a48a2c4883912f32fe0df5d9d33bf82d9b47ebe4baf160"
+size = 480
+target_sha256 = "ab14c9195ea4c25b335d7b91c60c4c44e6b73f53adbc0752585e94cf0aab439d"
 result = "incomplete"
 candidate_size = 485
 
 [frontier."0x00442560"]
 symbol = "?on_tick_body@Player@@QAEHXZ"
 source = "src/Player.cpp"
-size = 4520
-target_sha256 = "2690bd5e98691193cc439e6a017e40eba18fbef45682d3c4ca16b594ef5f4251"
+size = 4540
+target_sha256 = "ae6d4cc94e5109ab59d87ca7d1f082519d1e7b77c00bc727db6443c19789e067"
 result = "incomplete"
 candidate_size = 4520
 
 [frontier."0x004438c0"]
 symbol = "?check_hit_rect@Player@@QAEHPAUD3DXVECTOR3@@0H@Z"
 source = "src/Player.cpp"
-size = 281
-target_sha256 = "8d57c6451a7ecc0c75eecc560c9d0adba8f307093d6bafe492255e159bf9f8a3"
+size = 283
+target_sha256 = "08f863cd825015072a911d08d47dba71a6f3ba9a25285050d7a0892bdabadeb4"
 result = "incomplete"
 candidate_size = 281
 
@@ -844,40 +844,40 @@ residual = ["1C-1D", "23-2C"]
 [frontier."0x004440e0"]
 symbol = "?repopulate_options@PlayerInner@@QAEXXZ"
 source = "src/Player.cpp"
-size = 2178
-target_sha256 = "0b32a214105017d962c15cecd9907a6e93878bd42cf7a7529217ec7b7575259d"
+size = 2244
+target_sha256 = "03ac0a3f97aff715d16a0feefb829249483a9436e1a04a1a1e164fdba170ca43"
 result = "incomplete"
 candidate_size = 2178
 
 [frontier."0x004456d0"]
 symbol = "?tick_bullets@Player@@QAEHXZ"
 source = "src/Player.cpp"
-size = 863
-target_sha256 = "8b4db54127c45acbf960d9deb07a752f1cc89069ca2ee01491ebc35f750a972b"
+size = 861
+target_sha256 = "0f21e2e90093c0e8c9c3fe5b073b9d7a3c59072e9a223b912248788201a910c1"
 result = "incomplete"
 candidate_size = 863
 
 [frontier."0x00445a30"]
 symbol = "?compute_damage_to_enemy@Player@@QAEHPAUD3DXVECTOR3@@0MMPAH0HH@Z"
 source = "src/Player.cpp"
-size = 744
-target_sha256 = "4c4ef99e383756c63013779f1c8f9365ee01cac9ecc76ede6269ad42e6703866"
+size = 774
+target_sha256 = "b80d62c2e70e50143d38a7118b8c07b4bc611acd4061c9edb2260a2fdf2197d8"
 result = "incomplete"
 candidate_size = 744
 
 [frontier."0x00446260"]
 symbol = "?sht_on_tick_laser@@YIHPAUPlayerBullet@@@Z"
 source = "src/PlayerShot.cpp"
-size = 1522
-target_sha256 = "56646313813f268c1ad19ae24a71715f4e740900a57e491881fb442594c79f23"
+size = 1543
+target_sha256 = "c8b73f88d9b651300b1480b7b231e66963d22ac1cddd9edce9215c854e773466"
 result = "incomplete"
 candidate_size = 1522
 
 [frontier."0x00446870"]
 symbol = "?sht_on_hit_laser@@YIHPAUPlayerBullet@@HHMM@Z"
 source = "src/PlayerShot.cpp"
-size = 1404
-target_sha256 = "d2328485776b50da254f35f923e9a9c26e37da585a1f50e43e890a1bc0fb0169"
+size = 1409
+target_sha256 = "499c8569bdeb7d3496ea077d13e02a8de6a0b785638d660d45f8f00009c5cbed"
 result = "incomplete"
 candidate_size = 1404
 
@@ -901,64 +901,64 @@ candidate_size = 39
 [frontier."0x00447c80"]
 symbol = "??1ReplayManager@@QAE@XZ"
 source = "src/ReplayManager.cpp"
-size = 415
-target_sha256 = "7c54b10cfb00c759b549d3b6663a0bdcf79a936bf9efb717246c7408ba4974d9"
+size = 416
+target_sha256 = "e94d8040d3f3a0761e8d6e0eff6faa9dbf57b99904dd0dfaa7ef3eb11e331501"
 result = "incomplete"
 candidate_size = 415
 
 [frontier."0x00447fd0"]
 symbol = "?on_tick_record@ReplayManager@@QAEHXZ"
 source = "src/ReplayManager.cpp"
-size = 281
-target_sha256 = "0e0f4d195361a8aca91173769f9f477562391c18c991a8fb7598a60ae0c22250"
+size = 337
+target_sha256 = "d086815c80d38e074379be29ffb168071901d234f09250be7c6b3205ad62d827"
 result = "incomplete"
 candidate_size = 281
 
 [frontier."0x00448400"]
 symbol = "?save@ReplayManager@@QAEHPBD0HH@Z"
 source = "src/ReplayManager.cpp"
-size = 2020
-target_sha256 = "842fb6e084d1df26d958df0a93a27519e00dfb60b83cbe6d3a8496f81cbf941c"
+size = 2061
+target_sha256 = "4d821328bdfbfbfc14273d0d299ac7eef5754009cca0aab3f1358909d5fb2dcc"
 result = "incomplete"
 candidate_size = 2020
 
 [frontier."0x00449720"]
 symbol = "?init@ScorefileStatus@@QAEXXZ"
 source = "src/Scorefile.cpp"
-size = 181
-target_sha256 = "53d1abdadfb05545ae17a63df2dcdf201bd98aa6a82f5ba15b183762c16b7f67"
+size = 183
+target_sha256 = "3f60c83bbff328201a5083f3db7a093d67fb882ecb31000a655eee2b651bca28"
 result = "incomplete"
 candidate_size = 181
 
 [frontier."0x00449ea0"]
 symbol = "?on_tick@PopupManager@@QAEHXZ"
 source = "src/PopupManager.cpp"
-size = 341
-target_sha256 = "59e54042914cf573880dab9cbc5821c38bf087bed736f4dcbfe5ef83922ce0b4"
+size = 342
+target_sha256 = "6f92fc6af1729b676f6c033f07ae8eede5f241e94288283e2c5370a9f506a728"
 result = "incomplete"
 candidate_size = 341
 
 [frontier."0x0044a000"]
 symbol = "?on_draw@PopupManager@@QAEHXZ"
 source = "src/PopupManager.cpp"
-size = 1087
-target_sha256 = "262a68c5fcef93dfdadeccdd615e6521df9a62fd33c110d55d54865a8a4ac5ed"
+size = 1086
+target_sha256 = "de1570a17e04ced54bc0554ef403d8956f585a993a8a0b236e09010f0cadacb7"
 result = "incomplete"
 candidate_size = 1087
 
 [frontier."0x0044a700"]
 symbol = "?interrupt_child_and_run@TitleInf@@QAEXHHH@Z"
 source = "src/MainMenu.cpp"
-size = 127
-target_sha256 = "aaa76351d95220abefcbd7242be6cf1c80c3bc07d62cec841b0310b0d97befbd"
+size = 129
+target_sha256 = "d9c4b2fff9be45ec0aac9da26084e81038b0b702827b242e66dcc81e1e0e9100"
 result = "incomplete"
 candidate_size = 127
 
 [frontier."0x0044af80"]
 symbol = "?on_tick@TitleInf@@QAEHXZ"
 source = "src/MainMenu.cpp"
-size = 1460
-target_sha256 = "6f8aac6dddc1b629c68acf4fee90c3982f75543ea7dabeef634be7c313662bcc"
+size = 1452
+target_sha256 = "ac1d6af93a7069cfadc95a8597d6220247872aa73d9d25511004ef94e9e5f70d"
 result = "incomplete"
 candidate_size = 1460
 
@@ -974,16 +974,16 @@ residual = ["8A", "16B", "1F4", "24E", "26C", "270", "2CD", "2EB", "2EF", "305",
 [frontier."0x0044c570"]
 symbol = "?do_options@TitleInf@@QAEHXZ"
 source = "src/MainMenu.cpp"
-size = 872
-target_sha256 = "9d4e8f3b98f0d42a168d86d82c1d9ab9006000e384b9f85232b31faff10f1012"
+size = 836
+target_sha256 = "e2f1e020a728f276bbf270d4e66ded1fb444b3f0277a2bd0ccfb14b1f0ee0bfb"
 result = "incomplete"
 candidate_size = 872
 
 [frontier."0x0044e930"]
 symbol = "?do_key_config@TitleInf@@QAEHXZ"
 source = "src/MainMenu.cpp"
-size = 836
-target_sha256 = "cf745c3dde2edde26690723f677aa6eca63f829b4e20de6eed05ccff95242a8c"
+size = 812
+target_sha256 = "e9cdce6ea444f4188c8bb6119f07621de2e7b31dfdd1b48c833f1526acf6171b"
 result = "incomplete"
 candidate_size = 836
 
@@ -998,48 +998,48 @@ candidate_size = 1180
 [frontier."0x004502c0"]
 symbol = "?do_character_select@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 2124
-target_sha256 = "bc889e04e02a659674cb63428e195c3c8e2de571e00bdf5550df8d16821f63b8"
+size = 2096
+target_sha256 = "e84871d526e9615061a200b4c4bbe35dedca2f0812c8384dd04966b8b4169bd8"
 result = "incomplete"
 candidate_size = 2124
 
 [frontier."0x00450ef0"]
 symbol = "?do_practice_stage_select@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 1292
-target_sha256 = "3b111faade67b70b24cf07b882b6a5fe2d4df779cc5d00d69037947467fbc18c"
+size = 1232
+target_sha256 = "0c5acb2b3ced0ea10804d1daf04f3cc7c643aa282c17e05dbc84d9b160afdd63"
 result = "incomplete"
 candidate_size = 1292
 
 [frontier."0x00451d50"]
 symbol = "?on_draw__replay@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 1501
-target_sha256 = "a293ec157cd921d659c3065a178b9dd9d33564af25aaa4985e3ae5f36972e2c2"
+size = 1500
+target_sha256 = "6f2fa966bb66dc7b6c2f0e4b9538e3fc242bfca9a2945a59ffb638e82f756756"
 result = "incomplete"
 candidate_size = 1501
 
 [frontier."0x00452330"]
 symbol = "?do_player_data@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 2288
-target_sha256 = "21823f7f0d56a6624e67ada06f07b4a71fdd69f759d0d2511e984d2266b7ccfd"
+size = 2304
+target_sha256 = "867aac4ca88b4767b1e4d758f37eeecedde95642e7e832b9ec0982ecd418cbf5"
 result = "incomplete"
 candidate_size = 2288
 
 [frontier."0x00452c30"]
 symbol = "?draw_spell_card_page@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 1016
-target_sha256 = "da30ae53f67a542071b54531fb72f2d1d41c116794fbb4a1865de9e7d2cd6fd0"
+size = 1011
+target_sha256 = "16669cf6c2b976a60b9c19c81c4756c5fa2772b5a9126320fcdc89374acb2b45"
 result = "incomplete"
 candidate_size = 1016
 
 [frontier."0x004532f0"]
 symbol = "?do_score_name_entry@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 1444
-target_sha256 = "5af9b62bb524eeed8b9cb0c4cde135a0951a645be822bd0c57de2b672652e5d5"
+size = 1460
+target_sha256 = "e5a769d4b02c7b5aa75ee350c26e00c3ff4d442ae3532cc6239be7d1c14d188d"
 result = "incomplete"
 candidate_size = 1444
 
@@ -1063,48 +1063,48 @@ residual = ["174", "17C", "184"]
 [frontier."0x00455d50"]
 symbol = "?do_spell_practice_subseason@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 804
-target_sha256 = "2ceb65ae5c2507b0024daf415a510d6beb37af5d9424b186dc1ec8860fc5dc56"
+size = 776
+target_sha256 = "531d382c0e04bf476406313b3b60aeddc2a14175f44f6b3cf029e3cbd95816ee"
 result = "incomplete"
 candidate_size = 804
 
 [frontier."0x004560b0"]
 symbol = "?load_spell_list@TitleInf@@QAEHHHPAHH@Z"
 source = "src/MainMenuStates.cpp"
-size = 2287
-target_sha256 = "be61a9c6125b00f17b91d10c51683667278b57bbb8f6b4d5a30272a980834272"
+size = 2286
+target_sha256 = "fc88b95b7536ceb18776d19dff41074b34b48f3b83ace9c165ba1c673ceb78fa"
 result = "incomplete"
 candidate_size = 2287
 
 [frontier."0x00456a20"]
 symbol = "?do_spell_practice_difficulty@TitleInf@@QAEHXZ"
 source = "src/MainMenuStates.cpp"
-size = 840
-target_sha256 = "97ee9293b19b24729b0e7402324ad8514340782aa2515a8b72ea50fdc7b83b46"
+size = 812
+target_sha256 = "df012aa8511dddcc5e8683b2f8365f264dcc8367eb1e735a23c00ae634a2b9ca"
 result = "incomplete"
 candidate_size = 840
 
 [frontier."0x00457f00"]
 symbol = "?lzss_decompress@@YIPAEPAEH0H@Z"
 source = "src/Lzss.cpp"
-size = 517
-target_sha256 = "c949b64d0929d03a793bec0408b2abd5fe53eacd0e222c9fd796641dcd007f81"
+size = 469
+target_sha256 = "d005a1aaf9e1a129e92073c3b1ccd405a4330748713a70bf6b7389acc03b3037"
 result = "incomplete"
 candidate_size = 517
 
 [frontier."0x00458730"]
 symbol = "?bleed_color@TextHelper@@QAE_NH@Z"
 source = "src/TextHelper.cpp"
-size = 816
-target_sha256 = "da064b6b8bd161ad126c7b403f201e301b4ac48efc9c0ac7bf62fad0fe1b151c"
+size = 954
+target_sha256 = "db39935761d9f667125b6ad6516d3f608527ef0603cb43aadd2ecb4264b06684"
 result = "incomplete"
 candidate_size = 816
 
 [frontier."0x00458af0"]
 symbol = "?blur_alpha@TextHelper@@QAE_NH@Z"
 source = "src/TextHelper.cpp"
-size = 366
-target_sha256 = "e285ccab1c824a8c37499cb6dfa2710a682c1df2a9eac93ea518bd2dd8e74f7c"
+size = 388
+target_sha256 = "6941fe93a9df42104aae95d914136123c92a9d7f9945dbecff7a8c7f02ccabab"
 result = "incomplete"
 candidate_size = 366
 
@@ -1129,8 +1129,8 @@ residual = ["129", "141"]
 [frontier."0x0045b7d0"]
 symbol = "?init_d3d@@YAHXZ"
 source = "src/WinMain.cpp"
-size = 651
-target_sha256 = "f99c46d3f7ae6b971987d8ed89041c9d88a30400c93ac109dd9aaa86fb518660"
+size = 673
+target_sha256 = "d32e2228a132127ed0f630d79f4e02d5f961a9e9fefc79705b90937a601d43ff"
 result = "incomplete"
 candidate_size = 651
 
@@ -1146,64 +1146,64 @@ residual = ["76-79"]
 [frontier."0x0045dc50"]
 symbol = "?preload_bgm@SoundManager@@QAEHHPBD@Z"
 source = "src/SoundManager.cpp"
-size = 473
-target_sha256 = "847684f3c4557dbd2a2cef320a71430d2301bc8f0de1900113973a4cb3aec033"
+size = 472
+target_sha256 = "c735fee6625f5f6d716150a048dc2c859446938fe3134d0f871ea29b0021ed59"
 result = "incomplete"
 candidate_size = 473
 
 [frontier."0x0045e330"]
 symbol = "?update_sound_thread@SoundManager@@SAHXZ"
 source = "src/SoundManager.cpp"
-size = 1420
-target_sha256 = "01ca2c23e95b0496e3a8b8890c349eb9fd42a4d14a000a4da331ae534dcdf691"
+size = 1428
+target_sha256 = "70680c7d7a86c294bd9fcbc3842f086a82dd2390d2d509da8b33e4b791443450"
 result = "incomplete"
 candidate_size = 1420
 
 [frontier."0x0045e8d0"]
 symbol = "?play@SoundBufferEntry@@QAEXH@Z"
 source = "src/SoundManager.cpp"
-size = 179
-target_sha256 = "34302fbbe932460e4da3581a5c06c426f1584a789d51f942fbd867e82f7723bf"
+size = 182
+target_sha256 = "239e9bff57f8db320f8a9018d9ba63a13b0c669b3fdc7ba79658dadfc5e5eca2"
 result = "incomplete"
 candidate_size = 179
 
 [frontier."0x0045e990"]
 symbol = "?load@SoundBufferEntry@@QAEHPBD@Z"
 source = "src/SoundManager.cpp"
-size = 713
-target_sha256 = "e58d070999570a656c9b819b069bd57caa88c7fb79d0ac97714407813a4879ef"
+size = 702
+target_sha256 = "26ed88a3454f9540cb5ddb40e8d994b43a18aa17dd45e85d568e4804837b85b3"
 result = "incomplete"
 candidate_size = 713
 
 [frontier."0x0045f160"]
 symbol = "?set_vm_script@AnmLoaded@@QAEXPAUAnmVm@@H@Z"
 source = "src/AnmLoaded.cpp"
-size = 362
-target_sha256 = "4227994b3b6e11f2d770fe9a340c488949f96bcd732136f4512a28f9c505f429"
+size = 365
+target_sha256 = "83aca2183250c46a6eb60371a0f47b1bfc56d698db00c54d67252bfac42c4707"
 result = "incomplete"
 candidate_size = 362
 
 [frontier."0x0045f980"]
 symbol = "?run@AnmVm@@QAEHXZ"
 source = "src/AnmVmRun.cpp"
-size = 14141
-target_sha256 = "686cdd24c6ad913b7cdec663d95dd273f5c2cff77cc8157f3245fac09c374b77"
+size = 14177
+target_sha256 = "e61c159d14ce1de65dc7d2a21c23dfd39e0c9118a180d57466c949b3226d1c58"
 result = "incomplete"
 candidate_size = 14141
 
 [frontier."0x004632f0"]
 symbol = "?update_special_vertices@AnmVm@@QAEXXZ"
 source = "src/AnmVmRun.cpp"
-size = 2097
-target_sha256 = "4e0c2cdc71cc9d2c8f5b9a1f64edf719359737a564af3234bff58028315dc4bf"
+size = 2101
+target_sha256 = "bc7e0bef80ac250eea3c5c9d2524948e33e9b5e0854cd3f07e9fa4f8cf9e27f0"
 result = "incomplete"
 candidate_size = 2097
 
 [frontier."0x00463d40"]
 symbol = "?step@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ"
 source = "src/Interp.cpp"
-size = 758
-target_sha256 = "45a0231002d0d271adfb2a63868e3001a7e56403d83cf0d9a6a23a3d7ee29ccb"
+size = 757
+target_sha256 = "ca0905060d35253dca50936a63986fdeee6eb3ed57823e8d5781e72fc74d3864"
 result = "incomplete"
 candidate_size = 758
 
@@ -1219,56 +1219,56 @@ residual = ["368"]
 [frontier."0x00465280"]
 symbol = "?render_sprite_2d@AnmManager@@QAEHPAUAnmVm@@H@Z"
 source = "src/AnmDraw.cpp"
-size = 1936
-target_sha256 = "7de1d4abca7c4643369df213321f7448d5954c4918eee4e2ee710ad80e3d96e2"
+size = 1937
+target_sha256 = "64ef0d1d123b21a194c70faf4475155412168b0da3932c6ba5e540f195fe0c1a"
 result = "incomplete"
 candidate_size = 1936
 
 [frontier."0x00465c40"]
 symbol = "?write_sprite_corners__without_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z"
 source = "src/AnmDraw.cpp"
-size = 1126
-target_sha256 = "562ab48a89e64fd69e5072a7a835f74217a0aa16313ff550ebb1053cfd14bd39"
+size = 1122
+target_sha256 = "0dc896608214dedb22edc056dd146fc49f7534a436272730a14fa2ce69b22591"
 result = "incomplete"
 candidate_size = 1126
 
 [frontier."0x004660b0"]
 symbol = "?write_sprite_corners__with_z_rot@AnmVm@@SGXPAU1@PAUD3DXVECTOR3@@111@Z"
 source = "src/AnmDraw.cpp"
-size = 809
-target_sha256 = "27e268a1973a3e37ce10f13a926c6bc336f8e4af1fa3cf309268115fc2b5f336"
+size = 727
+target_sha256 = "4d2ac78f0e0ef9223b805fc27c8fed38d0f67f894a6bbb0c39db0a8ad8235037"
 result = "incomplete"
 candidate_size = 809
 
 [frontier."0x00466390"]
 symbol = "?write_billboard_corners@AnmManager@@SGHPAUAnmVm@@@Z"
 source = "src/AnmDraw.cpp"
-size = 1149
-target_sha256 = "7666be19760c4755e41f2f383db9fdd534a0edfe54f4ffda98313e55edc8479c"
+size = 1160
+target_sha256 = "e303766787ed8dbc3bf3aeabdd8c95f8e1cdc1122086a762a37f0535b4611d56"
 result = "incomplete"
 candidate_size = 1149
 
 [frontier."0x00466820"]
 symbol = "?draw_billboard_fog@AnmManager@@QAEHPAUAnmVm@@@Z"
 source = "src/AnmDraw.cpp"
-size = 1736
-target_sha256 = "1d11765f122f2c215cb1c07b31622be6ff1c07d3beaee3bb4f387c6086c2ac8c"
+size = 1735
+target_sha256 = "37172a2ffb503cdab3302ecba39a164426756875236a3d10f2d890f5adbe1435"
 result = "incomplete"
 candidate_size = 1736
 
 [frontier."0x00467410"]
 symbol = "?draw_3d@AnmManager@@QAEHPAUAnmVm@@@Z"
 source = "src/AnmDraw.cpp"
-size = 2308
-target_sha256 = "8899755c7150fcb5f1bb0f7bd653e71e33be1932123aec1b1a64f0222cdcfdb0"
+size = 2280
+target_sha256 = "586358417683b8813bd6770b747b0ce60eca270a6750dfd4988034c7886e98fc"
 result = "incomplete"
 candidate_size = 2308
 
 [frontier."0x00467d00"]
 symbol = "?draw_3d_vertex_strip@AnmManager@@QAEHPAUAnmVm@@PAURenderVertexXyzDiffuseTex@@H@Z"
 source = "src/AnmDraw.cpp"
-size = 1296
-target_sha256 = "04e9fee4a776795572877b42d3113dda75b40c49f6883d2e9ed6202966513388"
+size = 1255
+target_sha256 = "9ecc84acf5079aba2eca94d7b206d1dffa0fa26d037ac4b5ccbdc97907602d63"
 result = "incomplete"
 candidate_size = 1296
 
@@ -1293,16 +1293,16 @@ residual = ["81", "91", "A0", "A2"]
 [frontier."0x00468c70"]
 symbol = "?draw_rect@AnmManager@@QAEHMMMMMKKHH@Z"
 source = "src/AnmPrimitives.cpp"
-size = 835
-target_sha256 = "82523fe57ef753d1250daeea7bc5ec037c2d26f6e73008ab47527944121dc06e"
+size = 843
+target_sha256 = "799a3826f3d7c3b5fbef1553b1aef4007bfcf92d5a191aa683092f897ab144b6"
 result = "incomplete"
 candidate_size = 835
 
 [frontier."0x00468fc0"]
 symbol = "?draw_rect_outline@AnmManager@@QAEHMMMMMKKHH@Z"
 source = "src/AnmPrimitives.cpp"
-size = 863
-target_sha256 = "64204f56baad6acfe51393fb480fb0b4963c1c9bb450fbd5f5aa9cb054869042"
+size = 869
+target_sha256 = "db98c166c2fbf7b827fb9c8cd708f8ed8e7e65c8d479dacff37a25ee2b3239bb"
 result = "incomplete"
 candidate_size = 863
 
@@ -1336,40 +1336,40 @@ residual = ["56-69", "183-18C", "216-22F"]
 [frontier."0x0046c0d0"]
 symbol = "?convert_texture@AnmManager@@SGXPAUIDirect3DTexture9@@@Z"
 source = "src/AnmTexels.cpp"
-size = 1822
-target_sha256 = "8825b59f14a90b25264827304a488d311cb7981470cb4da046f2e5e58c1099c6"
+size = 2014
+target_sha256 = "f240fe70cf15b57b54defb4e4aeb211036edac004d0ab257d87367954061bf54"
 result = "incomplete"
 candidate_size = 1822
 
 [frontier."0x0046c8b0"]
 symbol = "?reload_texture@AnmManager@@QAEHPAUAnmLoadedD3D@@PAXIHHH@Z"
 source = "src/AnmLoader.cpp"
-size = 100
-target_sha256 = "472ac3ba2c35fdfa59fe20302a5d32cd7d54334b0cee288892046b15e65f722f"
+size = 101
+target_sha256 = "35850e252da8c557d3ce8f8b05f7f4d88ab86fd80bcdacba2e14eb9d14e234d1"
 result = "incomplete"
 candidate_size = 100
 
 [frontier."0x0046cb60"]
 symbol = "?load_texture_from_data@AnmManager@@SGHPAUAnmLoadedD3D@@PAUAnmRawTexture@@HHH@Z"
 source = "src/AnmLoader.cpp"
-size = 454
-target_sha256 = "d7ba007741ed9e46a3fca088fc7c79562e4a6b654f71352ea3f990b569c499e4"
+size = 459
+target_sha256 = "4d515a70939b6ff53d8256f75bc992354a76ce785b097e32ff33c9318249131d"
 result = "incomplete"
 candidate_size = 454
 
 [frontier."0x0046cdd0"]
 symbol = "?load@AnmLoaded@@QAEHPBD@Z"
 source = "src/AnmLoader.cpp"
-size = 461
-target_sha256 = "7d1b64a9e17eea7789ad434dfbf1601d6ab94ddb5e3fd05749018b70467b64af"
+size = 430
+target_sha256 = "0a29f927fd65ba35daa692319fc97c1d02f241e00f9cae42dae8b06fc5222fb8"
 result = "incomplete"
 candidate_size = 461
 
 [frontier."0x0046d020"]
 symbol = "?preload_anm@AnmManager@@SGPAUAnmLoaded@@HPBD@Z"
 source = "src/AnmLoader.cpp"
-size = 145
-target_sha256 = "4d54808d5e29a1af411cd1917d785d395332ad83b776995c69f90082af76d6a2"
+size = 147
+target_sha256 = "cc939a7ab0a59cf9c3131d4dfd50d56753509459804589ace5d2c97df5e06b83"
 result = "incomplete"
 candidate_size = 145
 
@@ -1385,8 +1385,8 @@ residual = ["E6", "F5", "100", "10B", "116", "121", "128", "133", "13E", "14F", 
 [frontier."0x0046d3b0"]
 symbol = "?setup_entry@AnmManager@@QAEHPAUAnmLoaded@@HHHPAUAnmRawEntry@@@Z"
 source = "src/AnmLoader.cpp"
-size = 731
-target_sha256 = "8d0081ae0bb4ae2529f375ff36d417ad5ce58d3cb3ab7d5cb99fafe5d689b978"
+size = 734
+target_sha256 = "eb0d9fb36eee27ae761b7827138bbf212b37129c13797acfe0c1150a7047d6cd"
 result = "incomplete"
 candidate_size = 731
 
@@ -1465,47 +1465,47 @@ residual = ["25A", "262", "26D"]
 [frontier."0x004711f0"]
 symbol = "?SetVolume@CSound@@QAEJH@Z"
 source = "src/DSUtil.cpp"
-size = 116
-target_sha256 = "865c46b661977578b1eae8995175c281af812b8a721e60d08114aa5de4cad85c"
+size = 114
+target_sha256 = "95767ccd4ddbb892e4618cb360bcfd6e5c48065deb3ce411971a1444d101ae8f"
 result = "incomplete"
 candidate_size = 116
 
 [frontier."0x00471380"]
 symbol = "?Unpause@CSound@@QAEJXZ"
 source = "src/DSUtil.cpp"
-size = 107
-target_sha256 = "a638167e1e615c90f16301508e38307f87067ec42bc749ebda04bfd2ea797772"
+size = 103
+target_sha256 = "08d4857e6f9941ecdba2f667d1fbb14efdcdfcabfda171abd4d9b95ad9eb3224"
 result = "incomplete"
 candidate_size = 107
 
 [frontier."0x00471db0"]
 symbol = "?call_sub@EclRunContext@@QAEHPAU1@HH@Z"
 source = "src/EclRunContext.cpp"
-size = 581
-target_sha256 = "1ab1fed3a38b1e60f3f0d835f3b3061a8d541aadf59859bff3af309e5ed648b7"
+size = 632
+target_sha256 = "7db02c4499ced3340447264e093d7e10363d9179404446ff493767bf5e2d1e64"
 result = "incomplete"
 candidate_size = 581
 
 [frontier."0x00472030"]
 symbol = "?ecl_run@EclRunContext@@QAEHM@Z"
 source = "src/EclRunContext.cpp"
-size = 7038
-target_sha256 = "cf7217e1d21b6769c0c79ada17cab377450753de110319b469e8f0fd9a48014c"
+size = 7046
+target_sha256 = "bd5771b962232fb3ccda37e8609a507ad321801a646b9112d9f1bd98ea4227b2"
 result = "incomplete"
 candidate_size = 7038
 
 [frontier."0x00473e40"]
 symbol = "?get_int_arg_given_value@EclRunContext@@QAEHHH@Z"
 source = "src/EclRunContext.cpp"
-size = 166
-target_sha256 = "3b2a0aa77ccc855bdaf1c4f8d38759bfe061da7d1dab4978b724d4924bb1718b"
+size = 175
+target_sha256 = "1ccfa81e951c522e15c929918d3e7b3fdd7303ba44dc7f1c57e1045a39df6a7c"
 result = "incomplete"
 candidate_size = 166
 
 [frontier."0x00474530"]
 symbol = "?load_ecl_data@SptResourceInf@@UAEHPAX@Z"
 source = "src/EclRunContext.cpp"
-size = 522
-target_sha256 = "acef11709505843d058e94a99692937063b9c094be0f86fe27fa40f8b0dab228"
+size = 523
+target_sha256 = "468f3c431413a19f7972f84352dc6e4c5b425d59d4d09a71dfe91adbb3a9afcc"
 result = "incomplete"
 candidate_size = 522

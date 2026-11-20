@@ -86,9 +86,6 @@ def evaluate(recorded: dict[int, dict], current: dict[int, dict], exact: set[int
     """Compare recorded and current entries; returns (lines, regressed, updates)."""
     lines, regressed, updates = [], False, {}
     if selected is None:
-        for address in sorted(recorded.keys() - current.keys() - exact):
-            lines.append(f"MISSING   0x{address:08x}: no longer annotated")
-            regressed = True
         for address in sorted(current.keys() - recorded.keys()):
             lines.append(f"REGRESSED 0x{address:08x} {current[address]['symbol']}: was exact, "
                          f"now {current[address]['result']}")
@@ -100,7 +97,11 @@ def evaluate(recorded: dict[int, dict], current: dict[int, dict], exact: set[int
             lines.append(f"EXACT     {label}")
             updates[address] = None
             continue
-        new = current[address]
+        new = current.get(address)
+        if new is None:
+            lines.append(f"MISSING   {label}: no longer annotated")
+            regressed = True
+            continue
         if new["target_sha256"] != old["target_sha256"] or new["size"] != old["size"]:
             lines.append(f"REGRESSED {label}: original extent changed")
             regressed = True
@@ -172,7 +173,11 @@ def current_state():
         if row["result"] == "exact":
             exact.add(row["target_address"])
             continue
-        row = dict(row, candidate_size=sizes.get(row["symbol"]))
+        boundary = context.boundaries.get(row["target_address"])
+        if boundary is None:
+            raise SystemExit(f"No target extent for frontier 0x{row['target_address']:08x}.")
+        row = dict(row, size=int(boundary["size"]), candidate_size=sizes.get(row.get("symbol")),
+                   symbol=row.get("symbol") or boundary["current_name"])
         current[row["target_address"]] = measure(row, target.read_address, candidate.read_address)
     context.finish()
     return exact, current

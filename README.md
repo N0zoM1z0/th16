@@ -47,7 +47,7 @@ above is composited from the game's own textures for identification only.
 
 ## Current status
 
-The **latest saved local strict-audit snapshot** is from **2026-11-15
+The **historical audit behind the progress image** is from **2026-11-15
 06:37 UTC**: **1,033 exact / 51 mismatch / 131 incomplete** among 1,215
 historical annotated units. The progress image above is historical, not
 current accepted exactness. The latest checked **incremental** candidate
@@ -61,14 +61,11 @@ disassembly comparison reports `EnemyData::ecl_run_over_300` **0.8655**
 receipts or a project-wide progress metric. See the
 [current handoff](docs/NEXT_AGENT.md) for other large owners and current leads.
 
-The last recorded Factory inventory had zero imported Oracle results;
-a fresh accepted-snapshot query on 2026-11-20 was blocked by an
-unsupported Windows toolchain-family classification. Current accepted
-byte/relocation exactness and production closure therefore remain
-**unverified**. The earlier focused Oracle attempt was also blocked at
-EH-parent PDB owner preflight. Neither problem is resolved by a successful
-build or a normalized instruction ratio. Do not publish updated project-wide
-strict totals without a freshly accepted complete-owner receipt.
+The local strict audit runs against the current incremental candidate.
+Failed EH and private-function proofs leave their affected comparisons
+incomplete. The Factory accepted snapshot is available and returns zero
+accepted results. TH16 currently has an inventory adapter and needs a
+controlled replay driver and policy support to admit its first receipt.
 
 For a new agent, read [AGENTS.md](AGENTS.md), then the
 [short handoff](docs/NEXT_AGENT.md) (current leads, measurements and commands)

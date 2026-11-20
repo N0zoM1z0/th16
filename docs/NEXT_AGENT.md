@@ -27,17 +27,27 @@ historical. This file is the short operational entry point.
   under [ARTIFACTS.md](ARTIFACTS.md).
 - The latest checked **incremental** `scripts/build.py` produced
   `build/reference-candidate/th16.exe` with **1,166 annotated functions**.
-  Neither a full cold replay nor a fresh full strict audit was run for this
-  handoff. Do not discard `build/reference-candidate/` to save space.
+  Keep `build/reference-candidate/` for incremental work.
 - `.analysis/reference-audit.json` and `resources/progress.svg` describe an
   old **2026-11-15** local audit: **1,033 exact / 51 mismatch / 131 incomplete**
-  out of **1,215 historical units**. They are **not** today's accepted progress.
-  The last recorded Factory inventory had zero imported Oracle results.
-  On 2026-11-20, a fresh `factory_get_accepted_snapshot(th16)` attempt failed
-  before returning a snapshot because the adapter did not recognize the
-  Windows toolchain family (`unsupported Windows toolchain family`).
-  Therefore current accepted exactness and closure are **not established**.
-  Normalized disassembly scores below are investigation aids only.
+  out of **1,215 historical units**. The current incremental candidate
+  passed **1,032 exact / 44 mismatch / 139 incomplete** in a separate local
+  audit at `.analysis/oracle-acceptance-current.json`. Eleven annotations
+  gained local exactness and twelve lost it. The frontier also detects six
+  regressions in previously mismatching owners. Its incomplete entries now
+  hash the original extents from the historical boundary inventory. The
+  historical report and match ledgers are retained for comparison.
+- Two previously reviewed proofs fail on the current candidate.
+  `Gui::start_dialogue` (`0x429ff0`) differs in its GS/EH cleanup aggregate.
+  `enemy_ecl_sincosmul` (`0x426260`) has a 73-byte candidate PDB contribution
+  against the reviewed 32-byte target extent. Repair these scopes before
+  treating their historical results as current. The upper ECL owner
+  (`0x41dcb0`) has three unresolved linked fields in the current report.
+- Factory's live accepted snapshot and target-filtered facts return zero
+  accepted results for TH16. The inventory adapter supplies provisional
+  boundaries. For formal acceptance, add a controlled TH16 linked-PE replay
+  driver and policy entries, then cold-replay one complete owner through the
+  worker and check its accepted fact.
 
 ## Latest focused normalized owner comparisons
 
@@ -100,6 +110,7 @@ of a complete byte/relocation-exact owner.
 git status --short --branch
 git log -10 --oneline
 scripts/repo-python scripts/build.py  # incremental, only after source edits
+scripts/repo-python scripts/audit-reference.py --address 0x46f8f0 --json .analysis/oracle-focused.json
 scripts/repo-python .analysis/measure-leaf.py 0x41dcb0 ecl_run_over_300@EnemyData
 scripts/repo-python .analysis/measure-leaf.py 0x45f980 run@AnmVm
 scripts/repo-python .analysis/measure-leaf.py 0x472030 ecl_run@EclRunContext

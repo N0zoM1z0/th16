@@ -89,6 +89,10 @@ Unknown or ambiguous destinations are incomplete. The
 Oracle never selects a target destination merely because it would make the
 current operand match.
 
+If a reviewed EH graph fails, its parent remains incomplete. A failed
+candidate private-function proof withholds that function's binding from
+callers. Independent owners can still undergo complete comparison.
+
 Reviewed bounded switches include their entire inline absolute-address table
 and alignment bytes. The original unsigned guard, indexed dispatch and all
 case slots establish the full scope; the candidate requires every table and
@@ -101,15 +105,13 @@ comparison. `mismatch` means that complete comparison found a difference.
 `incomplete` means ownership, boundary, decode or linkage evidence is missing.
 These local results do not establish original source authorship, physical
 storage ownership, whole-product closure or Factory Truth Kernel acceptance.
-The last recorded Factory inspection reported zero imported Oracle results and an
-`inventory-import-only` diagnostic. A fresh accepted-snapshot lookup on
-2026-11-20 failed with an unsupported Windows toolchain-family classification;
-the current accepted result set therefore could not be checked by that
-operation. No local normalized score or saved report should be described as
-an accepted Factory exactness fact.
+The live Factory accepted snapshot reports the `inventory-import-only`
+diagnostic and zero accepted results. Formal admission requires a controlled
+TH16 replay driver and a policy that authorizes its receipts.
 
-Full per-function findings, missing fields and artifact identities are retained
-in `.analysis/reference-audit.json`. Canonical source mappings and local match
+The historical per-function findings and artifact identities are retained in
+`.analysis/reference-audit.json`. See the handoff for the current report.
+Canonical source mappings and local match
 rows are organized separately from the origin-review ledger. Source origins
 remain under review even when a local code comparison passes.
 The current handoff is [NEXT_AGENT.md](NEXT_AGENT.md); historical reports and
