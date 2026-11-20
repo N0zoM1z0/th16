@@ -169,22 +169,22 @@ static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    f32 x = enemy->bullet_mgr_offsets[i].x;
-    f32 y = enemy->bullet_mgr_offsets[i].y;
+    f32 x;
+    f32 y;
+    f32 z;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        x += enemy->bullet_mgr_origins[i].xy.x;
-        y += enemy->bullet_mgr_origins[i].xy.y;
-        out->z = 0.0f;
+        x = enemy->bullet_mgr_offsets[i].x + enemy->bullet_mgr_origins[i].xy.x;
+        y = enemy->bullet_mgr_offsets[i].y + enemy->bullet_mgr_origins[i].xy.y;
+        z = 0.0f;
     }
     else
     {
-        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x += enemy->final_pos.pos.x;
-        y += enemy->final_pos.pos.y;
+        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
+        y = enemy->bullet_mgr_offsets[i].y + enemy->final_pos.pos.y;
+        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
     }
-    out->x = x;
-    out->y = y;
+    *out = D3DXVECTOR3(x, y, z);
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
