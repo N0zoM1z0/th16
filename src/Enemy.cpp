@@ -659,11 +659,7 @@ int EnemyData::step_logic()
         // Dialogue suppresses damage. Keep the selected amount in its own
         // local so the damage accumulator and effective amount have distinct
         // register lifetimes through the statistics and life updates.
-        i32 dealt = 0;
-        if (g_Gui->msg == NULL)
-        {
-            dealt = damage;
-        }
+        i32 dealt = g_Gui->msg == NULL ? damage : 0;
         // Hit damage and non-hit damage feed separate counters. Lethal
         // hit overflow contributes one quarter beyond the remaining life.
         if (dealt > 0)
