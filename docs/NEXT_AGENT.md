@@ -93,8 +93,14 @@ historical. This file is the short operational entry point.
   and both `step_ex_angle` owners (`0x432c20` and `0x4392c0`, 412 bytes and
   seven linked fields each). It accepted `sht_on_hit_burst_rising`
   (`0x446e20`, 349 bytes, eight linked fields) as well. Each used its own
-  cold build. The accepted-facts query returns six receipts for source
-  checkpoint `133ed62`.
+  cold build.
+- The same profile now returns eight accepted receipts for `133ed62`.
+  The two added cold replays cover `AnmManager::AnmManager` (`0x46a3a0`,
+  5,071 bytes, 164 linked fields, a 136-byte EH code owner and 76 bytes of
+  EH metadata) and `Supervisor::switch_gamemodes` (`0x43ce10`, 815 bytes,
+  75 linked fields and two dispatch tables). Commit `8f60750` makes the
+  compound-switch mutation tests resolve the current PDB addresses from
+  the function map. All 39 controls pass after rebinding.
 - Use `scripts/check-frontier.py --report .analysis/oracle-follow-up/full-final.json`
   to check the separately saved audit. Full checks require every current
   annotation. A focused report can check the explicitly selected frontier
