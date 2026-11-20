@@ -230,8 +230,8 @@ HARNESS_CALLED Float3 *AnmVm::transform_coords(Float3 *pos)
         goto scaled;
     }
     pos->x *= scale;
-    pos->y *= scale;
-    pos->z *= scale;
+    *(volatile f32 *)&pos->y *= scale;
+    *(volatile f32 *)&pos->z *= scale;
 scaled:
     if (root_vm != NULL && !(flags_hi & ANM_VM_NO_PARENT_POS))
     {
@@ -247,8 +247,8 @@ scaled:
         Float3 offset;
         root_vm->get_own_transformed_pos(&offset);
         pos->x += offset.x;
-        pos->y += offset.y;
-        pos->z += offset.z;
+        *(volatile f32 *)&pos->y += offset.y;
+        *(volatile f32 *)&pos->z += offset.z;
         return pos;
     }
     u32 kind = flags_hi & ANM_VM_ORIGIN_MODE_MASK;
