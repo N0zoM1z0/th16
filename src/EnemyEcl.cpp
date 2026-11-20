@@ -261,8 +261,7 @@ int EnemyData::ecl_run_over_300()
     InterpStrange1 *movement_interp;
     f32 movement_goal_x;
     f32 movement_goal_y;
-    EnemyInf *full_owner = full;
-    register EclRawInstr *instr = full_owner->context.current_context->current_instr();
+    register EclRawInstr *instr = full->context.current_context->current_instr();
     switch ((i16)instr->opcode)
     {
     // enmCreateF and its variants: only without a boss.
