@@ -3093,7 +3093,7 @@ i32 LaserLineInf::on_tick()
         vm_f28.run();
     }
     vm_1524.run();
-    timer.tick();
+    segment_timer.tick();
     return 0;
 }
 
