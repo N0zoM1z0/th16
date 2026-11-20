@@ -667,7 +667,8 @@ int EnemyData::step_logic()
             {
                 if (effective_damage >= life.current)
                 {
-                    g_EnemyManager->inner.damage_this_frame[0] += (effective_damage - life.current) / 4 + life.current;
+                    i32 hit_overflow = (effective_damage - life.current) / 4 + life.current;
+                    g_EnemyManager->inner.damage_this_frame[0] += hit_overflow;
                 }
                 else
                 {
