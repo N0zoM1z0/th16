@@ -1118,9 +1118,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046E710,AnmManager::on_tick_21_world,src/AnmManagerVms.cpp,?on_tick_21_world@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0046E740,AnmManager::on_tick_09_ui,src/AnmManagerVms.cpp,?on_tick_09_ui@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0046E750,AnmManager::render_layer,src/AnmLayers.cpp,?render_layer@AnmManager@@QAEHH@Z,exact,,.analysis/reference-audit.json
-0x0046E7D0,AnmManager::insert_in_world_list_back,src/AnmManagerVms.cpp,?insert_in_world_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
+0x0046E7D0,AnmManager::insert_in_world_list_back,src/AnmManagerVms.cpp,?insert_in_world_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,exact,,.analysis/factory-pilot-current.json
 0x0046E890,AnmManager::insert_in_world_list_front,src/AnmManagerVms.cpp,?insert_in_world_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
-0x0046E940,AnmManager::insert_in_ui_list_back,src/AnmManagerVms.cpp,?insert_in_ui_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
+0x0046E940,AnmManager::insert_in_ui_list_back,src/AnmManagerVms.cpp,?insert_in_ui_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,exact,,.analysis/factory-pilot-current.json
 0x0046EA00,AnmManager::insert_in_ui_list_front,src/AnmManagerVms.cpp,?insert_in_ui_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
 0x0046EAB0,AnmManager::destroy_possibly_managed_vm,src/AnmManagerVms.cpp,?destroy_possibly_managed_vm@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0046EC90,AnmManager::destroy_possibly_managed_snapshot_vm,src/AnmManagerVms.cpp,?destroy_possibly_managed_snapshot_vm@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
@@ -1147,7 +1147,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046F600,AnmManager::allocate_vm,src/AnmManagerVms.cpp,?allocate_vm@AnmManager@@QAEPAUAnmVm@@XZ,exact,,.analysis/reference-audit.json
 0x0046F720,AnmManager::allocate_snapshot_vm,src/AnmManagerVms.cpp,?allocate_snapshot_vm@AnmManager@@QAEPAUAnmVm@@PAH@Z,mismatch,,.analysis/reference-audit.json
 0x0046F810,AnmManager::store_snapshot_of_vm,src/AnmManagerVms.cpp,?store_snapshot_of_vm@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@0H@Z,exact,,.analysis/reference-audit.json
-0x0046F8F0,AnmManager::restore_snapshot,src/AnmManagerVms.cpp,?restore_snapshot@AnmManager@@QAE?AUAnmId@@U2@@Z,mismatch,,.analysis/reference-audit.json
+0x0046F8F0,AnmManager::restore_snapshot,src/AnmManagerVms.cpp,?restore_snapshot@AnmManager@@QAE?AUAnmId@@U2@@Z,exact,,.analysis/factory-pilot-current.json
 0x0046F970,AnmManager::restore_snapshot_vm,src/AnmManagerVms.cpp,?restore_snapshot_vm@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@0@Z,exact,,.analysis/reference-audit.json
 0x0046FAC0,AnmManager::save_vm_tree,src/AnmManagerVms.cpp,?save_vm_tree@AnmManager@@QAEXPAUAnmVm@@0PAH@Z,exact,,.analysis/reference-audit.json
 0x0046FC30,AnmManager::load_vm_tree,src/AnmManagerVms.cpp,?load_vm_tree@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@0PAH@Z,exact,,.analysis/reference-audit.json

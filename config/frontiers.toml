@@ -1399,15 +1399,6 @@ result = "mismatch"
 candidate_size = 281
 residual = ["1E-20", "22-2C", "31-38"]
 
-[frontier."0x0046e7d0"]
-symbol = "?insert_in_world_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z"
-source = "src/AnmManagerVms.cpp"
-size = 177
-target_sha256 = "f8e2ee42b4b2b4927d145421d02bfc843e6c636a7bd619572b5f02537d683a7c"
-result = "mismatch"
-candidate_size = 177
-residual = ["5", "F", "15", "17", "1E", "25", "2C", "35", "3E", "4B", "51", "5A", "5D", "60", "64", "6A", "70", "7A", "83", "89-8D", "8F-9C"]
-
 [frontier."0x0046e890"]
 symbol = "?insert_in_world_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z"
 source = "src/AnmManagerVms.cpp"
@@ -1416,15 +1407,6 @@ target_sha256 = "3e4e33f25b2549dfd38fb05128ca387d8cc947aba3e1010f567fa13311b4542
 result = "mismatch"
 candidate_size = 172
 residual = ["5", "10", "16", "18", "1F", "26", "2D", "37", "3F", "49", "4F", "55", "58", "5B", "5E", "64", "6A", "74", "7D", "83-87", "89-96"]
-
-[frontier."0x0046e940"]
-symbol = "?insert_in_ui_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z"
-source = "src/AnmManagerVms.cpp"
-size = 177
-target_sha256 = "eb9961497196be54f332a08cbeb7941dcb4657b1eb1c406ece568c65747f0c8e"
-result = "mismatch"
-candidate_size = 177
-residual = ["5", "F", "15", "17", "1E", "25", "2C", "35", "3E", "4B", "51", "5A", "5D", "60", "64", "6A", "70", "7A", "83", "89-8D", "8F-9C"]
 
 [frontier."0x0046ea00"]
 symbol = "?insert_in_ui_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z"
@@ -1443,15 +1425,6 @@ target_sha256 = "a6ec54e401af48f750913ac15ba094b81a91673ea042ff01fe7bcd79e5d2228
 result = "mismatch"
 candidate_size = 235
 residual = ["2D-34"]
-
-[frontier."0x0046f8f0"]
-symbol = "?restore_snapshot@AnmManager@@QAE?AUAnmId@@U2@@Z"
-source = "src/AnmManagerVms.cpp"
-size = 128
-target_sha256 = "062646d6ae09ed4c26a89cfb963aa01fda3f76b7d778fe57982350090752b736"
-result = "mismatch"
-candidate_size = 128
-residual = ["3F-40", "45-47"]
 
 [frontier."0x0046ffb0"]
 symbol = "?load_from@AnmVm@@QAEXPBU1@PAH@Z"

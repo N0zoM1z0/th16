@@ -993,9 +993,9 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046E710,AnmManager::on_tick_21_world,reference-0046e710,local-strict-pass,43,43,43,.analysis/reference-audit.json
 0x0046E740,AnmManager::on_tick_09_ui,reference-0046e740,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0046E750,AnmManager::render_layer,reference-0046e750,local-strict-pass,115,115,115,.analysis/reference-audit.json
-0x0046E7D0,AnmManager::insert_in_world_list_back,reference-0046e7d0,mismatch,177,177,139,.analysis/reference-audit.json
+0x0046E7D0,AnmManager::insert_in_world_list_back,reference-0046e7d0,local-strict-pass,177,177,177,.analysis/factory-pilot-current.json
 0x0046E890,AnmManager::insert_in_world_list_front,reference-0046e890,mismatch,172,172,134,.analysis/reference-audit.json
-0x0046E940,AnmManager::insert_in_ui_list_back,reference-0046e940,mismatch,177,177,139,.analysis/reference-audit.json
+0x0046E940,AnmManager::insert_in_ui_list_back,reference-0046e940,local-strict-pass,177,177,177,.analysis/factory-pilot-current.json
 0x0046EA00,AnmManager::insert_in_ui_list_front,reference-0046ea00,mismatch,172,172,134,.analysis/reference-audit.json
 0x0046EAB0,AnmManager::destroy_possibly_managed_vm,reference-0046eab0,local-strict-pass,480,480,480,.analysis/reference-audit.json
 0x0046EC90,AnmManager::destroy_possibly_managed_snapshot_vm,reference-0046ec90,local-strict-pass,207,207,207,.analysis/reference-audit.json
@@ -1022,7 +1022,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046F600,AnmManager::allocate_vm,reference-0046f600,local-strict-pass,288,288,288,.analysis/reference-audit.json
 0x0046F720,AnmManager::allocate_snapshot_vm,reference-0046f720,mismatch,235,235,227,.analysis/reference-audit.json
 0x0046F810,AnmManager::store_snapshot_of_vm,reference-0046f810,local-strict-pass,216,216,216,.analysis/reference-audit.json
-0x0046F8F0,AnmManager::restore_snapshot,reference-0046f8f0,mismatch,128,128,119,.analysis/reference-audit.json
+0x0046F8F0,AnmManager::restore_snapshot,reference-0046f8f0,local-strict-pass,128,128,128,.analysis/factory-pilot-current.json
 0x0046F970,AnmManager::restore_snapshot_vm,reference-0046f970,local-strict-pass,331,331,331,.analysis/reference-audit.json
 0x0046FAC0,AnmManager::save_vm_tree,reference-0046fac0,local-strict-pass,361,361,361,.analysis/reference-audit.json
 0x0046FC30,AnmManager::load_vm_tree,reference-0046fc30,local-strict-pass,286,286,286,.analysis/reference-audit.json
