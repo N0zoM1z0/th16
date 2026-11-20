@@ -171,13 +171,13 @@ i32 LaserCurveInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 re
                 allocate_curve_laser_inline(&params);
             }
         }
-        if (head >= 4)
+        if (head < 4)
         {
-            inner.segment_count = head;
+            pending_delete = 1;
         }
         else
         {
-            pending_delete = 1;
+            inner.segment_count = head;
         }
     }
 done:
