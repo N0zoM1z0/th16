@@ -712,8 +712,9 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos : &rel_pos;
-        InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET ? &abs_pos_i : &rel_pos_i;
+        const bool absolute = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET;
+        PosVel *pos_vel = absolute ? &abs_pos : &rel_pos;
+        InterpStrange1 *interp = absolute ? &abs_pos_i : &rel_pos_i;
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         if (full->context.current_context->get_int_arg(0) <= 0)
@@ -750,8 +751,9 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
     {
-        PosVel *pos_vel = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos : &rel_pos;
-        InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
+        const bool absolute = instr->opcode == ECL_OP_MOVE_BEZIER;
+        PosVel *pos_vel = absolute ? &abs_pos : &rel_pos;
+        InterpStrange1 *interp = absolute ? &abs_pos_i : &rel_pos_i;
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         Float3 bezier_1;
