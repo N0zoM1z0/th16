@@ -55,6 +55,23 @@ historical. This file is the short operational entry point.
   `th16-linked-pe-replay` branch in Factory contains the driver and policy.
   The shared Web service still reports inventory-only TH16. Its existing
   receipts bind a different runner fingerprint.
+- Commit `2e6d711` makes single-unit replay check stored relocation targets
+  against the audit's independent bindings. A forged target in
+  `BulletManager::cancel_radius` previously hid four differing bytes. The
+  current replay rejects that binding, missing relocation fields, truncated
+  owners, and a foreign function symbol.
+- Commit `133ed62` records eight more existing candidates after focused
+  audit and single-unit replay. See `.analysis/oracle-follow-up-focused.json`
+  for the 3,202 compared bytes and `.analysis/oracle-follow-up/full-final.json`
+  for the full audit. All 1,215 per-function results agree with the previous
+  full audit.
+- A second isolated Factory job accepted
+  `LaserCurveInf::check_graze_or_kill` (`0x437cf0`) with the new binding
+  check. Job `job:527a89f3b52540d69e816535c8de3482` compared all 494 bytes
+  and 13 linked fields. Its live result is saved in
+  `.analysis/factory-replay-th16-follow-up/.analysis/accepted-facts.json`.
+  The fact query uses the worker's environment. A different shell launch
+  initially returned a stale environment verdict.
 
 ## Latest focused normalized owner comparisons
 

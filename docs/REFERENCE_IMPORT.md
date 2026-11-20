@@ -71,9 +71,12 @@ This diagnostic setting is recorded in the build profile.
 
 Function/global annotations provide explicit candidate address bindings, fixed
 independently of each compared operand. Imports are bound by DLL and import
-name. Literal storage requires either a unique complete payload or an explicit
-reviewed fixed instruction witness with its full storage proof. Runtime
-identities require complete extents, pinned library ownership and reviewed
+name. Single-unit replay checks the stored target and symbol against the
+current function map and verifies each stored linkage against the independent
+bindings used by the audit. Literal storage requires either a unique complete
+payload or an explicit reviewed fixed instruction witness with its full
+storage proof. Runtime identities require complete extents, pinned library
+ownership and reviewed
 target evidence. See [shared linkage evidence](knowledge/reviewed-linkages.md).
 Explicit runtime interior CALL identities additionally require a complete
 reviewed code contribution, its complete data contribution from the same
