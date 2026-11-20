@@ -164,7 +164,9 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
         x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    *out = D3DXVECTOR3(x, y, z);
+    out->x = x;
+    out->y = y;
+    out->z = z;
 }
 static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
@@ -185,7 +187,9 @@ static __forceinline void copy_ex_and_get_shot_origin(
         x += enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    *out = D3DXVECTOR3(x, y, z);
+    out->x = x;
+    out->y = y;
+    out->z = z;
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
