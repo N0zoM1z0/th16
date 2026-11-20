@@ -557,7 +557,7 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = full->context.current_context->get_int_arg(0);
         i32 alternate = full->context.current_context->get_int_arg(1);
-        AnmId *volatile selected = &anm_ids[slot];
+        AnmId *selected = &anm_ids[slot];
         AnmId &anm_id = *selected;
         g_AnmManager->delete_vm(anm_id);
         anm_id.id = 0;
