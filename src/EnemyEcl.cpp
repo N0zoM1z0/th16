@@ -47,6 +47,14 @@ static const f32 ecl_move_rand_neg_half_pi_low = -ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_neg_half_pi_high = -ZUN_PI / 2 + 0.05f;
 static const f32 ecl_move_rand_pos_half_pi_low = ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_pos_half_pi_high = ZUN_PI / 2 + 0.05f;
+// Hide AnmVm::run from the caller's LTCG stack-alignment graph while
+// retaining the direct call in the generated VM-step wrapper.
+typedef i32 (AnmVm::*EnemyEclAnmVmRunFunc)();
+static inline EnemyEclAnmVmRunFunc enemy_ecl_anm_vm_run_func()
+{
+    return &AnmVm::run;
+}
+static DECOMP_NOINLINE AnmVm *ecl_run_vm(AnmVm *vm);
 // create_vm, inserted at the front of the world list like create_vm_front
 // (0x426160, which is a copy with pos and rotation folded). LTCG inlined
 // this into the anmPlay instructions.
@@ -66,7 +74,7 @@ static __forceinline AnmId create_vm_front_at(AnmLoaded *file, i32 script, Float
         vm->entity_pos = *pos;
     }
     vm->rotation.z = rotation;
-    vm->run();
+    vm = ecl_run_vm(vm);
     vm->mode_of_create_child = ANM_CREATE_FRONT;
     AnmId id;
     id = g_AnmManager->insert_in_world_list_front(vm);
@@ -208,9 +216,10 @@ static __forceinline Fog *new_enemy_fog()
 // anmPlay's extra steps go through this helper, like the original: a
 // direct AnmVm::run call in a loop would make ecl_run_over_300 realign its
 // frame for run's aligned-stack need.
-static DECOMP_NOINLINE void ecl_run_vm(AnmVm *vm)
+static DECOMP_NOINLINE AnmVm *ecl_run_vm(AnmVm *vm)
 {
-    vm->run();
+    (vm->*enemy_ecl_anm_vm_run_func())();
+    return vm;
 }
 
 // The laser instructions and angleToPlayer, as forceinline helpers: the
@@ -440,7 +449,7 @@ int EnemyData::ecl_run_over_300()
         AnmVm *vm = id.find_or_clear();
         for (i32 i = 0; i < context_owner->context.current_context->get_int_arg(2); i++)
         {
-            ecl_run_vm(vm);
+            vm = ecl_run_vm(vm);
         }
         break;
     }
