@@ -170,22 +170,20 @@ static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    f32 offset_x = enemy->bullet_mgr_offsets[i].x;
-    f32 offset_y = enemy->bullet_mgr_offsets[i].y;
-    f32 x;
-    f32 y;
+    f32 x = enemy->bullet_mgr_offsets[i].x;
+    f32 y = enemy->bullet_mgr_offsets[i].y;
     f32 z;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        x = offset_x + enemy->bullet_mgr_origins[i].xy.x;
-        y = offset_y + enemy->bullet_mgr_origins[i].xy.y;
+        x += enemy->bullet_mgr_origins[i].xy.x;
+        y += enemy->bullet_mgr_origins[i].xy.y;
         z = 0.0f;
     }
     else
     {
         z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x = offset_x + enemy->final_pos.pos.x;
-        y = offset_y + enemy->final_pos.pos.y;
+        x += enemy->final_pos.pos.x;
+        y += enemy->final_pos.pos.y;
     }
     out->x = x;
     out->y = y;
@@ -641,10 +639,9 @@ int EnemyData::ecl_run_over_300()
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{0});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         f32 z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        Float3 *position = &pos_vel->pos;
-        position->x += x;
-        position->y += y;
-        position->z += z;
+        pos_vel->pos.x += x;
+        pos_vel->pos.y += y;
+        pos_vel->pos.z += z;
         update_final_pos();
         break;
     }
