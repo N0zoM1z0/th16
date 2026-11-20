@@ -70,30 +70,31 @@ i32 LaserCurveInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 re
     for (i = 0; i < inner.segment_count; i++, segment++)
     {
         Float3 seg_pos = segment->pos;
-        f32 half_w = size->x;
-        f32 half_h = size->y;
-        f32 dx = seg_pos.x - center->x;
-        f32 dy = seg_pos.y - center->y;
+        Float2 half_size;
+        half_size.x = size->x;
+        half_size.y = size->y;
+        Float2 offset;
+        offset.x = seg_pos.x - center->x;
+        offset.y = seg_pos.y - center->y;
         if (rect_angle != 0.0f)
         {
             f32 neg_angle = -rect_angle;
             f32 s = zun_sinf(neg_angle);
             f32 c = zun_cosf(neg_angle);
-            f32 rx = dx * c - dy * s;
-            dy = dy * c + dx * s;
-            dx = rx;
+            f32 rx = offset.x * c - offset.y * s;
+            offset.y = offset.y * c + offset.x * s;
+            offset.x = rx;
         }
-        if (half_w * 0.5f < (f32)fabs(dx) || half_h * 0.5f < (f32)fabs(dy))
+        if (half_size.x * 0.5f >= (f32)fabs(offset.x) && half_size.y * 0.5f >= (f32)fabs(offset.y))
         {
-            continue;
-        }
-        count++;
-        hit[i] = 1;
-        if (i % 10 == 0)
-        {
-            gen_items_from_cancel(&seg_pos, mode);
-            g_EffectManager->track_inline(
-                g_BulletManager->bullet_anm->create_vm(inner.color * 2 + 0xd1, &seg_pos, 0.0f, -1, 0));
+            count++;
+            hit[i] = 1;
+            if (i % 10 == 0)
+            {
+                gen_items_from_cancel(&seg_pos, mode);
+                g_EffectManager->track_inline(
+                    g_BulletManager->bullet_anm->create_vm(inner.color * 2 + 0xd1, &seg_pos, 0.0f, -1, 0));
+            }
         }
     }
     if (count != 0)
