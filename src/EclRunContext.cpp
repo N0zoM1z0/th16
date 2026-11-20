@@ -97,21 +97,11 @@ i32 EclRunContext::get_int_arg_given_value(int index, i32 value)
             EclStackEntry *entries = stack.entry_at(stack.stack_offset);
             EclStackItem *value_ptr = &entries[value].value;
             EclStackItem item = *value_ptr;
-            EclStackValueKind type = entries[value].type;
-            i32 result;
-            if (type == ECL_STACK_FLOAT)
+            if (entries[value].type == ECL_STACK_FLOAT)
             {
-                result = (i32)item.f;
+                return (i32)item.f;
             }
-            else if (type == ECL_STACK_INTEGER)
-            {
-                result = item.i;
-            }
-            else
-            {
-                result = item.i;
-            }
-            return result;
+            return item.i;
         }
         return vm->get_int_global(value);
     }
