@@ -3229,7 +3229,9 @@ i32 LaserCurveInf::on_tick()
         {
             Float3 head;
             laser_sincosmul(&head, angle, hit_length);
-            head += position;
+            head.x = position.x + head.x;
+            head.y = position.y + head.y;
+            head.z = position.z + head.z;
             if (!(segment->pos.x + width <= -192.0f || segment->pos.x - width >= 192.0f ||
                   segment->pos.y + width <= 0.0f || segment->pos.y - width >= 448.0f))
             {
