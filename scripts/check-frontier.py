@@ -78,13 +78,15 @@ def measure(row: dict, read_target, read_candidate) -> dict:
     original = read_target(address, size)
     entry = {"symbol": row["symbol"], "source": row["source"], "size": size,
              "target_sha256": hashlib.sha256(original).hexdigest(), "result": row["result"]}
-    if "compared_size" in row:
-        if row["compared_size"] != size:
+    if row["result"] in {"exact", "mismatch"}:
+        if row.get("compared_size") != size:
             raise ValueError(f"Strict comparison size differs from the target extent at {address:#010x}.")
         candidate = read_candidate(row["candidate_address"], size)
         differences = residual(original, candidate, row["linkages"])
         if len(differences) != size - row["matched_bytes"]:
             raise ValueError(f"Strict mismatch count differs from replayed bytes at {address:#010x}.")
+        if (row["result"] == "exact") != (not differences):
+            raise ValueError(f"Strict verdict differs from replayed bytes at {address:#010x}.")
         entry["candidate_size"] = size
         entry["residual"] = format_offsets(differences)
     else:
@@ -92,21 +94,19 @@ def measure(row: dict, read_target, read_candidate) -> dict:
     return entry
 
 
-def evaluate(recorded: dict[int, dict], current: dict[int, dict], exact: set[int], selected=None):
+def evaluate(recorded: dict[int, dict], current: dict[int, dict], selected=None):
     """Compare recorded and current entries; returns (lines, regressed, updates)."""
     lines, regressed, updates = [], False, {}
     if selected is None:
         for address in sorted(current.keys() - recorded.keys()):
-            lines.append(f"REGRESSED 0x{address:08x} {current[address]['symbol']}: was exact, "
-                         f"now {current[address]['result']}")
+            entry = current[address]
+            if entry["result"] == "exact":
+                continue
+            lines.append(f"REGRESSED 0x{address:08x} {entry['symbol']}: was exact, now {entry['result']}")
             regressed = True
     for address in sorted(recorded if selected is None else selected):
         old = recorded[address]
         label = f"0x{address:08x} {old['symbol']}"
-        if address in exact:
-            lines.append(f"EXACT     {label}")
-            updates[address] = None
-            continue
         new = current.get(address)
         if new is None:
             lines.append(f"MISSING   {label}: no longer annotated")
@@ -115,6 +115,10 @@ def evaluate(recorded: dict[int, dict], current: dict[int, dict], exact: set[int
         if new["target_sha256"] != old["target_sha256"] or new["size"] != old["size"]:
             lines.append(f"REGRESSED {label}: original extent changed")
             regressed = True
+            continue
+        if new["result"] == "exact":
+            lines.append(f"EXACT     {label}")
+            updates[address] = None
             continue
         if old["result"] == "mismatch":
             if new["result"] != "mismatch":
@@ -168,29 +172,23 @@ def load_recorded() -> dict[int, dict]:
 
 def current_state():
     sys.path.insert(0, str(ROOT / "scripts"))
-    from linked_image import PEImage
     from strict_oracle import Context
 
     context = Context()
     report = json.loads(REPORT.read_text())
     if report["input_identity"] != context.before:
         raise SystemExit("The strict report is stale; rerun scripts/audit-reference.py.")
-    target = PEImage(ROOT / "resources/th16.exe")
-    candidate = PEImage(ROOT / "build/reference-candidate/th16.exe")
     sizes = {f["symbol"]: f["size"] for f in context.linked["functions"]}
-    exact, current = set(), {}
+    current = {}
     for row in report["functions"]:
-        if row["result"] == "exact":
-            exact.add(row["target_address"])
-            continue
         boundary = context.boundaries.get(row["target_address"])
         if boundary is None:
             raise SystemExit(f"No target extent for frontier 0x{row['target_address']:08x}.")
         row = dict(row, size=int(boundary["size"]), candidate_size=sizes.get(row.get("symbol")),
                    symbol=row.get("symbol") or boundary["current_name"])
-        current[row["target_address"]] = measure(row, target.read_address, candidate.read_address)
+        current[row["target_address"]] = measure(row, context.target.read_address, context.image.read_address)
     context.finish()
-    return exact, current
+    return current
 
 
 def main() -> int:
@@ -206,15 +204,16 @@ def main() -> int:
         if unknown:
             print(f"unknown frontier(s): {', '.join(unknown)}", file=sys.stderr)
             return 2
-    exact, current = current_state()
+    current = current_state()
     if not recorded:
         if not args.update:
             print(f"{CONFIG.relative_to(ROOT)} is missing; create it with --update", file=sys.stderr)
             return 2
-        CONFIG.write_text(render(current))
-        print(f"recorded {len(current)} frontier(s) in {CONFIG.relative_to(ROOT)}")
+        nonexact = {address: entry for address, entry in current.items() if entry["result"] != "exact"}
+        CONFIG.write_text(render(nonexact))
+        print(f"recorded {len(nonexact)} frontier(s) in {CONFIG.relative_to(ROOT)}")
         return 0
-    lines, regressed, updates = evaluate(recorded, current, exact, selected)
+    lines, regressed, updates = evaluate(recorded, current, selected)
     print("\n".join(lines))
     if args.update:
         if regressed:

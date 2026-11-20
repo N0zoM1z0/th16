@@ -49,7 +49,7 @@ class FrontierControls(unittest.TestCase):
         baseline = {0x401000: entry(changed(9))}
         field = dict(offset=0, width=4, type="DIR32", encoded=0x03020200)
         current = {0x401000: entry(changed(9), linkages=[field])}
-        lines, regressed, _ = frontier.evaluate(baseline, current, set())
+        lines, regressed, _ = frontier.evaluate(baseline, current)
         self.assertTrue(regressed)
         self.assertIn("newly differing offsets 1", lines[0])
 
@@ -65,32 +65,32 @@ class FrontierControls(unittest.TestCase):
 
     def test_unchanged_residual_passes(self):
         recorded = {0x401000: entry(changed(4, 5))}
-        lines, regressed, updates = frontier.evaluate(recorded, {0x401000: entry(changed(4, 5))}, set())
+        lines, regressed, updates = frontier.evaluate(recorded, {0x401000: entry(changed(4, 5))})
         self.assertFalse(regressed)
         self.assertEqual(updates, {})
         self.assertTrue(lines[0].startswith("OK"))
 
     def test_new_differing_byte_regresses(self):
         recorded = {0x401000: entry(changed(4))}
-        lines, regressed, _ = frontier.evaluate(recorded, {0x401000: entry(changed(4, 7))}, set())
+        lines, regressed, _ = frontier.evaluate(recorded, {0x401000: entry(changed(4, 7))})
         self.assertTrue(regressed)
         self.assertIn("newly differing offsets 7", lines[0])
 
     def test_exact_function_leaving_exact_regresses(self):
-        lines, regressed, _ = frontier.evaluate({}, {0x401000: entry(changed(1))}, set())
+        lines, regressed, _ = frontier.evaluate({}, {0x401000: entry(changed(1))})
         self.assertTrue(regressed)
         self.assertTrue(lines[0].startswith("REGRESSED"))
 
     def test_mismatch_becoming_incomplete_regresses(self):
         recorded = {0x401000: entry(changed(4))}
         current = {0x401000: dict(entry(changed(4)), result="incomplete")}
-        self.assertTrue(frontier.evaluate(recorded, current, set())[1])
+        self.assertTrue(frontier.evaluate(recorded, current)[1])
 
     def test_disappearing_frontier_reports_regression(self):
         recorded = {0x401000: entry(changed(4))}
         for selected in (None, [0x401000]):
             with self.subTest(selected=selected):
-                lines, regressed, updates = frontier.evaluate(recorded, {}, set(), selected)
+                lines, regressed, updates = frontier.evaluate(recorded, {}, selected)
                 self.assertTrue(regressed)
                 self.assertTrue(lines[0].startswith("MISSING"))
                 self.assertFalse(updates)
@@ -98,7 +98,7 @@ class FrontierControls(unittest.TestCase):
     def test_improvement_is_recorded(self):
         recorded = {0x401000: entry(changed(4, 5))}
         better = entry(changed(5))
-        lines, regressed, updates = frontier.evaluate(recorded, {0x401000: better}, set())
+        lines, regressed, updates = frontier.evaluate(recorded, {0x401000: better})
         self.assertFalse(regressed)
         self.assertTrue(lines[0].startswith("IMPROVED"))
         self.assertEqual(updates, {0x401000: better})
@@ -109,9 +109,24 @@ class FrontierControls(unittest.TestCase):
 
     def test_new_exact_result_leaves_the_file(self):
         recorded = {0x401000: entry(changed(4))}
-        lines, regressed, updates = frontier.evaluate(recorded, {}, {0x401000})
+        current = {0x401000: entry(ORIGINAL, result="exact")}
+        lines, regressed, updates = frontier.evaluate(recorded, current)
         self.assertFalse(regressed)
         self.assertEqual(updates, {0x401000: None})
+
+    def test_exact_result_cannot_replace_a_different_original_extent(self):
+        original = ORIGINAL[:-1]
+        report = dict(row(ORIGINAL, result="exact"), size=15, compared_size=15, matched_bytes=15)
+        exact = frontier.measure(report, lambda a, n: original, lambda a, n: original)
+        lines, regressed, updates = frontier.evaluate({0x401000: entry(changed(4))}, {0x401000: exact})
+        self.assertTrue(regressed)
+        self.assertIn("original extent changed", lines[0])
+        self.assertFalse(updates)
+
+    def test_exact_verdict_must_agree_with_replayed_bytes(self):
+        candidate = changed(9)
+        with self.assertRaisesRegex(ValueError, "verdict differs"):
+            entry(candidate, result="exact")
 
     def test_unknown_name_is_refused(self):
         with mock.patch.object(frontier, "load_recorded", return_value={0x401000: entry(changed(4))}), \
