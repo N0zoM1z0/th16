@@ -2242,8 +2242,25 @@ int EnemyData::ecl_run_over_300()
         EnemyData *owner = this;
         i32 slot = get_int_arg(0);
         const volatile EnemyBulletShooter &shooter = owner->bullet_props[slot];
-        get_shot_origin_and_copy_ex_branch_first(
-            owner, slot, &scratch.line.start_pos, scratch.line.ex);
+        f32 origin_enabled = *(volatile f32 *)&owner->bullet_mgr_origins[slot].enabled;
+        memcpy(scratch.line.ex, owner->bullet_props[slot].ex, sizeof(owner->bullet_props[slot].ex));
+        bool has_origin = origin_enabled > 0.9f;
+        f32 y = *(volatile f32 *)&owner->bullet_mgr_offsets[slot].y;
+        f32 x;
+        if (has_origin)
+        {
+            x = owner->bullet_mgr_origins[slot].xy.x + owner->bullet_mgr_offsets[slot].x;
+            y += owner->bullet_mgr_origins[slot].xy.y;
+            scratch.line.start_pos.z = 0.0f;
+        }
+        else
+        {
+            scratch.line.start_pos.z = owner->bullet_mgr_offsets[slot].z + owner->final_pos.pos.z;
+            x = owner->bullet_mgr_offsets[slot].x + owner->final_pos.pos.x;
+            y += owner->final_pos.pos.y;
+        }
+        scratch.line.start_pos.x = x;
+        scratch.line.start_pos.y = y;
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.line.bullet_type = bullet_type;
