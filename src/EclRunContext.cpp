@@ -548,7 +548,7 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
     i32 i = start + 1;
     if (i < ins->param_count)
     {
-        EclStackItem *local = (EclStackItem *)((u8 *)dest->stack.data + locals);
+        register EclStackItem *local = (EclStackItem *)((u8 *)dest->stack.data + locals);
         register u32 arg_offset = name_len + (start + 2) * sizeof(i32);
         do
         {
