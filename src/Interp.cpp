@@ -538,7 +538,7 @@ D3DXVECTOR3 InterpStrange1::step()
     }
     else
     {
-        i32 i = 0;
+        register i32 i = 0;
         do
         {
             if (methods_1d[i] == INTERP_CONSTANT_VELOCITY)
