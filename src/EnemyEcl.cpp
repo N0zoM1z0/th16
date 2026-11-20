@@ -748,14 +748,12 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_BEZIER:
     case ECL_OP_MOVE_BEZIER_REL:
     {
-        const bool absolute = instr->opcode == ECL_OP_MOVE_BEZIER;
-        PosVel *pos_vel = &rel_pos;
-        InterpStrange1 *interp = &rel_pos_i;
-        if (absolute)
-        {
-            pos_vel = &abs_pos;
-            interp = &abs_pos_i;
-        }
+        i32 position_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos)
+                                                                    : offsetof(EnemyData, rel_pos);
+        i32 interpolation_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos_i)
+                                                                        : offsetof(EnemyData, rel_pos_i);
+        PosVel *pos_vel = (PosVel *)((u8 *)this + position_offset);
+        InterpStrange1 *interp = (InterpStrange1 *)((u8 *)this + interpolation_offset);
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         Float3 bezier_1;
