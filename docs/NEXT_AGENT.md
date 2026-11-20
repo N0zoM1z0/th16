@@ -83,6 +83,16 @@ historical. This file is the short operational entry point.
   replay. The live fact query returns this receipt and the earlier laser
   receipt together. All exact results in the current full audit have local
   match entries.
+- Commit `5a2a8bf` requires the original size and hash to agree before an
+  exact result clears a frontier entry. The check also verifies that each
+  exact or mismatch verdict agrees with the replayed bytes. The full
+  current report passes this consistency check and retains the 18 known
+  frontier regressions.
+- The follow-up Factory profile also accepted
+  `ecl_ext_damage_anm_hurtbox` (`0x425410`, 285 bytes, ten linked fields)
+  and `LaserLineInf::step_ex_angle` (`0x432c20`, 412 bytes, seven linked
+  fields). Each used its own cold build. The profile's accepted-facts query
+  now includes all four receipts for source checkpoint `133ed62`.
 
 ## Latest focused normalized owner comparisons
 
