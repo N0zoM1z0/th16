@@ -1013,7 +1013,13 @@ int EnemyData::ecl_run_over_300()
         {
             speed = speed > -999999.0 ? speed : 0.0f;
         }
-        speed_i->start(get_int_arg(0), mode, initial, speed);
+        speed_i->initial = initial;
+        speed_i->end_time = get_int_arg(0);
+        speed_i->method = static_cast<InterpMode>(mode);
+        speed_i->bezier_1 = 0.0f;
+        speed_i->bezier_2 = 0.0f;
+        speed_i->goal = speed;
+        speed_i->reset();
         pv->flags &= ~0xf;
         break;
     }
