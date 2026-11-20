@@ -1260,8 +1260,6 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     }
     time += speed;
 step_float_i:
-    // Keep the owning VM stable across InterpFloat::step calls in this pass.
-    SptInf *vm = this->vm;
     InterpFloat *interp = float_i;
     // The original cursor points at the offset word, with the subroutine index
     // immediately before it.
@@ -1271,6 +1269,7 @@ step_float_i:
     {
         if (interp->end_time != 0)
         {
+            SptInf *vm = this->vm;
             f32 *dst = float_arg_ptr_at(vm, location, 1);
             *dst = interp->step();
         }
