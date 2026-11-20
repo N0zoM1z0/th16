@@ -3,8 +3,8 @@
 
 config/frontiers.toml lists every non-exact annotation of the current strict
 audit: its symbol, original size and SHA-256, the strict result, the candidate
-size and, for same-size mismatches, the byte offsets that still differ once the
-reviewed linkage fields are masked. The check reads the fresh strict report
+size and, for same-size mismatches, the byte offsets that still differ after
+replaying the reviewed linkage fields. The check reads the fresh strict report
 (.analysis/reference-audit.json, written by audit-reference.py) and fails when
 
 - an annotation outside the file is no longer exact (an exact regression),
@@ -34,8 +34,8 @@ CONFIG = ROOT / "config/frontiers.toml"
 REPORT = ROOT / ".analysis/reference-audit.json"
 HEADER = """\
 # Annotated functions that are not exact yet, checked by scripts/check-frontier.py.
-# residual: hex byte offsets (ranges) that differ from the original after the
-# reviewed linkage fields are masked (same-size mismatches only). Never edit by
+# residual: hex byte offsets (ranges) that differ from the original after
+# replaying reviewed linkage fields (same-size mismatches only). Never edit by
 # hand; record improvements with scripts/check-frontier.py --update."""
 
 
@@ -62,9 +62,14 @@ def format_offsets(offsets: set[int]) -> list[str]:
 
 
 def residual(original: bytes, candidate: bytes, linkages: list[dict]) -> set[int]:
-    """Offsets that differ outside the masked linkage fields."""
-    masked = {row["offset"] + i for row in linkages for i in range(row["width"])}
-    return {i for i in range(len(original)) if i not in masked and original[i] != candidate[i]}
+    """Offsets that differ after applying the Oracle's encoded fields."""
+    replayed = bytearray(candidate)
+    for field in linkages:
+        offset, width = field["offset"], field["width"]
+        replayed[offset:offset + width] = field["encoded"].to_bytes(
+            width, "little", signed=field["type"].startswith("REL")
+        )
+    return {index for index, (left, right) in enumerate(zip(original, replayed, strict=True)) if left != right}
 
 
 def measure(row: dict, read_target, read_candidate) -> dict:
@@ -74,9 +79,14 @@ def measure(row: dict, read_target, read_candidate) -> dict:
     entry = {"symbol": row["symbol"], "source": row["source"], "size": size,
              "target_sha256": hashlib.sha256(original).hexdigest(), "result": row["result"]}
     if "compared_size" in row:
+        if row["compared_size"] != size:
+            raise ValueError(f"Strict comparison size differs from the target extent at {address:#010x}.")
         candidate = read_candidate(row["candidate_address"], size)
+        differences = residual(original, candidate, row["linkages"])
+        if len(differences) != size - row["matched_bytes"]:
+            raise ValueError(f"Strict mismatch count differs from replayed bytes at {address:#010x}.")
         entry["candidate_size"] = size
-        entry["residual"] = format_offsets(residual(original, candidate, row["linkages"]))
+        entry["residual"] = format_offsets(differences)
     else:
         entry["candidate_size"] = row.get("candidate_size")
     return entry

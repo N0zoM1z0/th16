@@ -17,9 +17,16 @@ ORIGINAL = bytes(range(16))
 
 
 def row(candidate: bytes, result="mismatch", linkages=()):
+    replayed = bytearray(candidate)
+    for field in linkages:
+        offset, width = field["offset"], field["width"]
+        replayed[offset:offset + width] = field["encoded"].to_bytes(
+            width, "little", signed=field["type"] == "REL32"
+        )
     return {"target_address": 0x401000, "candidate_address": 0x402000, "symbol": "?f@@YAXXZ",
             "source": "src/F.cpp", "size": 16, "result": result, "compared_size": 16,
-            "linkages": [dict(offset=o, width=4) for o in linkages]}
+            "linkages": list(linkages),
+            "matched_bytes": sum(left == right for left, right in zip(ORIGINAL, replayed))}
 
 
 def entry(candidate: bytes, **kw):
@@ -34,8 +41,27 @@ def changed(*offsets):
 
 
 class FrontierControls(unittest.TestCase):
-    def test_linkage_fields_are_masked(self):
-        self.assertEqual(entry(changed(2, 3, 9), linkages=[0])["residual"], ["9"])
+    def test_replayed_linkage_replaces_raw_candidate_bytes(self):
+        field = dict(offset=0, width=4, type="DIR32", encoded=0x03020100)
+        self.assertEqual(entry(changed(2, 3, 9), linkages=[field])["residual"], ["9"])
+
+    def test_new_replayed_linkage_difference_regresses(self):
+        baseline = {0x401000: entry(changed(9))}
+        field = dict(offset=0, width=4, type="DIR32", encoded=0x03020200)
+        current = {0x401000: entry(changed(9), linkages=[field])}
+        lines, regressed, _ = frontier.evaluate(baseline, current, set())
+        self.assertTrue(regressed)
+        self.assertIn("newly differing offsets 1", lines[0])
+
+    def test_negative_relative_encoding_is_signed(self):
+        field = dict(offset=0, width=4, type="REL32", encoded=-1)
+        self.assertEqual(entry(ORIGINAL, linkages=[field])["residual"], ["0-3"])
+
+    def test_report_mismatch_count_must_agree_with_replayed_bytes(self):
+        candidate = changed(9)
+        report = dict(row(candidate), matched_bytes=14)
+        with self.assertRaisesRegex(ValueError, "mismatch count"):
+            frontier.measure(report, lambda a, n: ORIGINAL, lambda a, n: candidate)
 
     def test_unchanged_residual_passes(self):
         recorded = {0x401000: entry(changed(4, 5))}

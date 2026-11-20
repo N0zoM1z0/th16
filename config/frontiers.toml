@@ -1,6 +1,6 @@
 # Annotated functions that are not exact yet, checked by scripts/check-frontier.py.
-# residual: hex byte offsets (ranges) that differ from the original after the
-# reviewed linkage fields are masked (same-size mismatches only). Never edit by
+# residual: hex byte offsets (ranges) that differ from the original after
+# replaying reviewed linkage fields (same-size mismatches only). Never edit by
 # hand; record improvements with scripts/check-frontier.py --update.
 
 [frontier."0x004018e0"]
@@ -60,7 +60,7 @@ size = 400
 target_sha256 = "b759a777316680bdc21067b946ec6187732e99451c79fcfa54b15b670c9ac118"
 result = "mismatch"
 candidate_size = 400
-residual = ["6C", "A5", "AF", "B3", "CF", "DA", "FB", "106", "112-11D", "11F-120"]
+residual = ["6C", "70-71", "A5", "A9-AA", "AF", "B3", "CF", "DA", "FB", "106", "112-11D", "11F-120"]
 
 [frontier."0x00403ec0"]
 symbol = "?collision_segment_intersection@@YGHPAM0MMMMMMMM@Z"
@@ -126,7 +126,7 @@ size = 336
 target_sha256 = "0fae8a98776373e88e3f60d24762df9060ab736ff416ea12b77ad0c474899230"
 result = "mismatch"
 candidate_size = 336
-residual = ["C9", "D1", "DF-E4", "E6-108"]
+residual = ["C9-CA", "D1-D2", "DF-E4", "E6-108"]
 
 [frontier."0x00408650"]
 symbol = "?draw_string@AsciiInf@@QAEXPAUAsciiStr@@@Z"
@@ -209,7 +209,7 @@ size = 578
 target_sha256 = "c4620eb55be048745c741e36abe5873922e04dd5b1cc455fca25a4cd0acb5927"
 result = "mismatch"
 candidate_size = 578
-residual = ["8-A", "F-10", "12", "15-51", "79", "9D", "A9"]
+residual = ["8-10", "12", "15-55", "79", "9D", "A9"]
 
 [frontier."0x0040fe80"]
 symbol = "?cancel_bullets@BombMarisaAInf@@UAEHXZ"
@@ -226,7 +226,7 @@ size = 1148
 target_sha256 = "f438655ae0e3029e1827ab572c2106c29c32e7c6efd75aa92e9f7a2b8ad7aa7d"
 result = "mismatch"
 candidate_size = 1148
-residual = ["A-C", "E", "14", "1F-26", "28", "2D-32", "37-3A", "3F-54", "59-6F", "74-7D", "BA", "C2", "F5", "F7-FF", "104-10C", "144", "14D-158", "165", "18B", "199", "1A1", "1D5", "1E5", "1EB", "1F2", "203", "223", "239", "254", "257", "2A5", "30E", "31C", "323", "33E", "359", "366", "36B", "36E", "371", "383", "38B", "39E", "3A9", "3B4", "3B9", "3BE", "3E2", "3E8", "3EE", "3F7", "401", "40E", "414", "43A", "446", "44C", "45A", "468-46B", "46E-473", "476"]
+residual = ["A-C", "E", "14", "1F-26", "28-7D", "BA", "C2", "F5", "F7-10C", "144", "14D-158", "165", "18B", "199", "1A1", "1D5", "1E5", "1EB", "1F2", "203", "223", "239", "254", "257", "2A5", "30E", "31C", "323", "33E", "359", "366", "36B", "36E", "371", "383", "38B", "39E", "3A9", "3B4", "3B9", "3BE", "3E2", "3E8", "3EE", "3F7", "401", "40E", "414", "43A", "446", "44C", "45A", "468-46B", "46E-473", "476"]
 
 [frontier."0x00410de0"]
 symbol = "?on_tick@BombReimuAInf@@UAEHXZ"
@@ -235,7 +235,7 @@ size = 1145
 target_sha256 = "af1d2a8553b8e99cd045db9f306a85f10ad242de6a7c35dcd96d9410bcf7908a"
 result = "mismatch"
 candidate_size = 1145
-residual = ["B2-B5", "114", "116-118", "11B-11E", "121-123", "128-12D", "132-134", "139-147", "14C-152", "157", "15C-168", "16D-172", "177-184", "188-192", "196-199", "19D-1A3", "1A7-1AC", "1B0-1B3", "1B7-1BB", "1BE-1C2", "1C5-1C9", "1CC-1D0", "1D3-1D6", "1DA-1E8", "1EA-1F0", "1F2-1FA", "30E-316", "38F", "3EB", "45F"]
+residual = ["B2-B5", "114", "116-118", "11B-11E", "121-126", "128-15A", "15C-16B", "16D-184", "188-192", "196-199", "19D-1A3", "1A7-1AC", "1B0-1B3", "1B7-1BB", "1BE-1C2", "1C5-1C9", "1CC-1D0", "1D3-1D6", "1DA-1E8", "1EA-1F0", "1F2-1FA", "30E-316", "38F", "3EB", "45F"]
 
 [frontier."0x00411b70"]
 symbol = "?destroy_all@BulletManager@@SAXXZ"
@@ -292,7 +292,7 @@ size = 519
 target_sha256 = "72ba757fbe20758a3a91a60ecc7cc76156a28b0f72d16a0b0b51b86aa3dbbe08"
 result = "mismatch"
 candidate_size = 519
-residual = ["19", "21"]
+residual = ["19-1A", "21-22"]
 
 [frontier."0x00415f90"]
 symbol = "?step_ex_17@Bullet@@QAEHXZ"
@@ -353,7 +353,7 @@ size = 1692
 target_sha256 = "9ca261d7e40d56d4e50cb7634ac8ef5c1285affb61b0904a1dbc2cf87d4952f3"
 result = "mismatch"
 candidate_size = 1692
-residual = ["36F-374"]
+residual = ["36F-378"]
 
 [frontier."0x0041c330"]
 symbol = "?step_logic@EnemyData@@QAEHXZ"
@@ -542,7 +542,7 @@ size = 142
 target_sha256 = "254c1bec8b506467dfeb4882b9be4882ce74a9ba253b37bf16e71d5b05c5ca02"
 result = "mismatch"
 candidate_size = 142
-residual = ["3-5", "A-46", "48-4F"]
+residual = ["3-46", "48-4F"]
 
 [frontier."0x00431a70"]
 symbol = "?cancel_in_radius@LaserManager@@QAEHPAUD3DXVECTOR3@@MHH@Z"
@@ -639,7 +639,7 @@ size = 633
 target_sha256 = "7d8d12947ddf016405f781311d882ff6359a92100959dd19e9a990d2df767f55"
 result = "mismatch"
 candidate_size = 633
-residual = ["5C-5D", "61-62", "65-6B", "6E-74", "79-85", "87-89", "8B-8C", "91-9A", "9C-B6", "B8-DA"]
+residual = ["5C-5D", "61-62", "65-6B", "6E-74", "79-85", "87-89", "8B-9A", "9C-B6", "B8-DA"]
 
 [frontier."0x00436fd0"]
 symbol = "?run_ex@LaserInfiniteInf@@UAEXXZ"
@@ -916,7 +916,7 @@ size = 3964
 target_sha256 = "81d8e10a18ee9fc409635c8ec4f75aacc3b74861e413c7251c4169a2e34d03e5"
 result = "mismatch"
 candidate_size = 3964
-residual = ["8A", "16B", "1F4", "24E", "26C", "270", "2CD", "2EB", "2EF", "305", "3C5", "41E", "43C", "440", "4A0", "4BE", "4C2", "4D8", "4F2", "541", "55F", "563", "5C0", "5DE", "5E2", "5F8", "6B6", "6CC", "6F5", "716", "71A", "74E", "7AD", "7D8-7D9", "811-812", "8D6-8DE", "913", "96E", "98C", "990", "9F0", "A0E", "A12", "A28", "A42", "A91", "AAF", "AB3", "B10", "B2E", "B32", "B48", "BA9", "BCD", "C1C", "C34", "C86-C89", "C8C-C93", "DCE", "DD3-DD4"]
+residual = ["8A", "16B", "1F4", "24E", "26C", "270", "2CD", "2EB", "2EF", "305", "3C5", "41E", "43C", "440", "4A0", "4BE", "4C2", "4D8", "4F2", "541", "55F", "563", "5C0", "5DE", "5E2", "5F8", "6B6", "6CC", "6F5", "716", "71A", "74E", "7AD", "7D8-7D9", "811-812", "8D6-8DE", "913", "96E", "98C", "990", "9F0", "A0E", "A12", "A28", "A42", "A91", "AAF", "AB3", "B10", "B2E", "B32", "B48", "BA9", "BCD", "C1C", "C34", "C86-C89", "C8C-C93", "DCE-DD8"]
 
 [frontier."0x0044c570"]
 symbol = "?do_options@TitleInf@@QAEHXZ"
@@ -1062,7 +1062,7 @@ size = 2919
 target_sha256 = "2401bd15572213d5fbf8c5620ebd8fcf64f82e742b9306027e950c3eaca3166a"
 result = "mismatch"
 candidate_size = 2919
-residual = ["A0-A8", "AB", "B0", "B5", "BA-BE", "C3-C7", "CC", "D1-D2", "D7-DD", "E2-E5", "E7-E8", "ED-F1", "F6-F7", "FC-10B", "110-115", "11A-125", "12A-12F", "134-13F", "144-149", "14E-150", "152-159", "15E-163", "168-16A", "16C-173", "178-17C", "181-185", "187-189", "18E-192", "198-199", "19F", "1A5", "1AB", "1B0-1B1", "1B6-1BD", "1CF-1D0", "209-212", "215", "218-21E", "241", "263", "26D", "27B", "280", "288-289", "28E", "293-294", "299", "29E-2A3", "2A5-2A6", "2AB", "2B0-2B1", "2B6-2B7", "2B9-2C2", "2C7-2CF", "2D1-2D4", "2D9-2DC", "2DF-2E2", "2E7-2EA", "2EF-2F0", "2F5-2F6", "2FB-2FE", "308", "30D-30E", "313", "318", "31D", "322-32C", "32E-330", "335-33F", "344-345", "34A-354", "359-35F", "364", "369-372", "374-379", "37C-37E", "381-382", "387-388", "38D-398", "39B-39D", "3A0-3A1", "3A6-3A7", "3AC-3B5", "3B8-3BA", "3BD-3BF", "3C2-3C4", "3C7-3C8", "3CD-3CE", "3D3-3DE", "3E1-3E3", "3E6-3E7", "3EC-3ED", "3F2-3FB", "3FE-400", "403-407", "40A-40B", "410-411", "416-421", "424-426", "429-42A", "42F-430", "435-43E", "441-443", "446-447", "44C-44D", "452-456", "45B-45F", "462-464", "467-468", "46D-46E", "473-47E", "481-483", "486-487", "48C-48D", "492-49B", "49E-4A0", "4A3-4A5", "4A8-4AA", "4AD-4AE", "4B3-4B4", "4B9-4C4", "4C7-4C9", "4CC-4CD", "4D2-4D3", "4D8-4E1", "4E4-4E6", "4E9-4ED", "4F0-4F1", "4F6-4F7", "4FC-507", "50A-50C", "50F-510", "515-516", "51B-524", "527-529", "52C-52D", "532-533", "538-53C", "542-547", "54C-54F", "551", "556-557", "55C-55D", "562-564", "567", "56C-56D", "576-577", "57C-58A", "58F-59A", "59F", "5A4-5AD", "5B2-5BA", "5BF", "5C4", "5C9-5CF", "5D5", "5DA", "5DF-5E2", "5E7", "5EC", "5F3", "5F8", "5FA-5FD", "602", "607", "60C-616", "61B-620", "625-62A", "62F", "634-639", "63E-63F", "645", "64A-651", "656-65E", "660-661", "666-66C", "671", "676-67D", "682-684", "689", "68E-68F", "694-69A", "69F-6A0", "6A5", "6AA-6CB", "6D0-6D2", "6D7-6E1", "6E6-6EE", "6F0-6F4", "6F6-6FE", "703-70D", "712-718", "71D-722", "727-72E", "733-741", "746", "74B-754", "759-75D", "762-765", "76A", "76F-777", "77C", "781-790", "795-7A3", "7A6-7A7", "7AC-7B5", "7BA-7C0", "7C5-7C6", "7CB-7CC", "7D1-7D4", "7D9-7DE", "7E3-7E4", "7E9-7EA", "7ED-7F3", "7F5-7F9", "7FE-7FF", "805", "808-809", "80E-812", "817", "81C", "821-826", "82B-833", "838", "83D-83E", "843-845", "84A-84C", "851-859", "85B", "860", "865", "86A-876", "87B-880", "885-887", "889-892", "895-89E", "8A3-8A7", "8AD", "8B2-8BA", "8BF-8C0", "8C5-8C8", "8CD-8CE", "8D3-8D6", "8DB-8DC", "8E1-8E6", "8EB-8EC", "8F1-8FC", "8FF-903", "908-909", "90E-911", "916-917", "91C-923", "928-929", "92E-92F", "938-943", "948-949", "94E-952", "957", "95C-95D", "962-964", "969-970", "975-97A", "97F-983", "988-989", "98E-98F", "994", "999", "99E", "9A3", "9A8", "9AD", "9B2-9B3", "9B8-9BD", "9C2-9C3", "9C8", "9CA-9DD"]
+residual = ["A0-A8", "AB-AE", "B0-C9", "CC-CF", "D1-D5", "D7-E5", "E7-F9", "FC-118", "11A-132", "134-14C", "14E-150", "152-166", "168-16A", "16C-17F", "181-185", "187-192", "198-19C", "19F-1A2", "1A5-1A8", "1AB-1AE", "1B0-1B4", "1B6-1BD", "1CF-1D0", "209-212", "215", "218-222", "241", "263", "26D", "27B", "280", "288-290", "292-2A3", "2A5-2B4", "2B6-2B7", "2B9-2CF", "2D1-2DC", "2DF-2FE", "308-32C", "32E-372", "374-379", "37C-37E", "381-398", "39B-39D", "3A0-3B5", "3B8-3BA", "3BD-3BF", "3C2-3C4", "3C7-3DE", "3E1-3E3", "3E6-3FB", "3FE-400", "403-407", "40A-421", "424-426", "429-43E", "441-443", "446-45F", "462-464", "467-47E", "481-483", "486-49B", "49E-4A0", "4A3-4A5", "4A8-4AA", "4AD-4C4", "4C7-4C9", "4CC-4E1", "4E4-4E6", "4E9-4ED", "4F0-507", "50A-50C", "50F-524", "527-529", "52C-540", "542-54F", "551-554", "556-564", "567-571", "576-5CF", "5D1-5D3", "5D5-5EC", "5EF-5F0", "5F3-5F8", "5FA-643", "645-65E", "660-6A8", "6AA-6EE", "6F0-6F4", "6F6-790", "792-7A3", "7A6-7E1", "7E3-7EA", "7ED-7F3", "7F5-7FC", "7FE-803", "805", "808-80A", "80E-828", "82A-835", "837-848", "84A-84F", "851-859", "85B-868", "86A-887", "889-892", "895-8A0", "8A3-8AB", "8AD-8FC", "8FF-92F", "934-935", "938-94C", "94E-9C8", "9CA-9DD"]
 
 [frontier."0x0045b130"]
 symbol = "?get_runtime@@YQNXZ"
@@ -1226,7 +1226,7 @@ size = 339
 target_sha256 = "69ade737c9c2ed7faa3c7b0cfe66a29284499a60611474fa9503bf35525b15c0"
 result = "mismatch"
 candidate_size = 339
-residual = ["6A-6B", "70-73", "75-7F", "8E", "90"]
+residual = ["6A-73", "75-7F", "8E", "90"]
 
 [frontier."0x00468350"]
 symbol = "?draw_vertex_fan@AnmManager@@QAEHPAUAnmVm@@PAURenderVertex144@@H@Z"
@@ -1260,7 +1260,7 @@ size = 588
 target_sha256 = "61d9d4d75e6547668382f5a2282a6a0ba151c98579143adea24531ebdf1784e9"
 result = "mismatch"
 candidate_size = 588
-residual = ["5D-5E", "60-8F", "91-9E", "A3-A6"]
+residual = ["5D-5E", "60-8F", "91-AA"]
 
 [frontier."0x00469890"]
 symbol = "?draw_triangle_fan@AnmManager@@QAEHHPAUD3DXVECTOR3@@PAUD3DXVECTOR2@@PATZunColor@@@Z"
@@ -1344,7 +1344,7 @@ size = 281
 target_sha256 = "bacffc52a57e674922ed72ceadafcf1e9ab2c74288d899ee4f59b2fa5a09c044"
 result = "mismatch"
 candidate_size = 281
-residual = ["1E-20", "22-2C", "31-38"]
+residual = ["1E-20", "22-38"]
 
 [frontier."0x0046f720"]
 symbol = "?allocate_snapshot_vm@AnmManager@@QAEPAUAnmVm@@PAH@Z"
