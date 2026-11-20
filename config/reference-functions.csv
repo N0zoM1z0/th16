@@ -106,7 +106,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00406CC0,jagged_line_sincosmul,src/AnmVmCallbacks.cpp,?jagged_line_sincosmul@@YIXPAUD3DXVECTOR3@@MM@Z,exact,,.analysis/reference-audit.json
 0x00406CE0,AnmVm::set_alpha1_time,src/AnmVm.cpp,?set_alpha1_time@AnmVm@@QAEXHHEE@Z,exact,,.analysis/reference-audit.json
 0x00406D80,AnmVm::set_layer,src/AnmVm.cpp,?set_layer@AnmVm@@QAEXH@Z,exact,,.analysis/reference-audit.json
-0x00406E10,InterpFloat3::step,src/Interp.cpp,?step@InterpFloat3@@QAE?AUD3DXVECTOR3@@XZ,mismatch,,.analysis/reference-audit.json
+0x00406E10,InterpFloat3::step,src/Interp.cpp,?step@InterpFloat3@@QAE?AUD3DXVECTOR3@@XZ,exact,,.analysis/oracle-follow-up-focused.json
 0x004071A0,anm_masked_effect_init,src/AnmVmCallbacks.cpp,?anm_masked_effect_init@@YIHPAUAnmVm@@PAUD3DXVECTOR3@@@Z,exact,,.analysis/reference-audit.json
 0x00407330,anm_masked_effect_on_tick,src/AnmVmCallbacks.cpp,?anm_masked_effect_on_tick@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x004073A0,anm_on_draw_masked,src/AnmRender.cpp,?anm_on_draw_masked@@YIHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
@@ -415,7 +415,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004252D0,ecl_funcset_cancel_near_player,src/Enemy.cpp,?ecl_funcset_cancel_near_player@@YIHPAUEnemyData@@@Z,exact,,.analysis/reference-audit.json
 0x004253B0,ecl_funcset_zero_power,src/Enemy.cpp,?ecl_funcset_zero_power@@YIHPAUEnemyData@@@Z,exact,,.analysis/reference-audit.json
 0x004253F0,ecl_ext_damage_stored,src/Enemy.cpp,?ecl_ext_damage_stored@@YIHPAUEnemyData@@H@Z,exact,,.analysis/reference-audit.json
-0x00425410,ecl_ext_damage_anm_hurtbox,src/Enemy.cpp,?ecl_ext_damage_anm_hurtbox@@YIHPAUEnemyData@@H@Z,mismatch,,.analysis/reference-audit.json
+0x00425410,ecl_ext_damage_anm_hurtbox,src/Enemy.cpp,?ecl_ext_damage_anm_hurtbox@@YIHPAUEnemyData@@H@Z,exact,,.analysis/oracle-follow-up-focused.json
 0x00425530,InterpFloat2::reset_timer,src/Interp.cpp,?reset_timer@InterpFloat2@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x00425570,InterpFloat2::step_radial_dist,src/Interp.cpp,?step_radial_dist@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00425870,InterpStrange1::reset_timer,src/Interp.cpp,?reset_timer@InterpStrange1@@QAEXXZ,exact,,.analysis/reference-audit.json
@@ -585,7 +585,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00431FA0,LaserLineInf::on_sprite_set,src/LaserLine.cpp,?on_sprite_set@LaserLineInf@@SIHPAUAnmVm@@H@Z,exact,,.analysis/reference-audit.json
 0x00431FE0,LaserLineInf::run_ex,src/Laser.cpp,?run_ex@LaserLineInf@@UAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00432620,LaserLineInf::step_ex_bounce,src/Laser.cpp,?step_ex_bounce@LaserLineInf@@UAEHXZ,exact,,.analysis/reference-audit.json
-0x00432C20,LaserLineInf::step_ex_angle,src/Laser.cpp,?step_ex_angle@LaserLineInf@@UAEHXZ,mismatch,,.analysis/reference-audit.json
+0x00432C20,LaserLineInf::step_ex_angle,src/Laser.cpp,?step_ex_angle@LaserLineInf@@UAEHXZ,exact,,.analysis/oracle-follow-up-focused.json
 0x00432DC0,LaserLineInf::step_ex_accel,src/LaserLine.cpp,?step_ex_accel@LaserLineInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x00432F40,LaserLineInf::on_tick,src/Laser.cpp,?on_tick@LaserLineInf@@UAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00433510,LaserLineInf::check_graze_or_kill,src/Laser.cpp,?check_graze_or_kill@LaserLineInf@@UAEHH@Z,exact,,.analysis/reference-audit.json
@@ -610,12 +610,12 @@ address,name,source_file,symbol,result,reason,evidence
 0x004370A0,LaserCurveInf::initialize,src/Laser.cpp,?initialize@LaserCurveInf@@UAEHPAX@Z,exact,,.analysis/reference-audit.json
 0x00437760,LaserCurveInf::on_destroy,src/LaserCurve.cpp,?on_destroy@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x004377D0,LaserCurveInf::on_tick,src/Laser.cpp,?on_tick@LaserCurveInf@@UAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x00437CF0,LaserCurveInf::check_graze_or_kill,src/Laser.cpp,?check_graze_or_kill@LaserCurveInf@@UAEHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00437CF0,LaserCurveInf::check_graze_or_kill,src/Laser.cpp,?check_graze_or_kill@LaserCurveInf@@UAEHH@Z,exact,,.analysis/oracle-follow-up-focused.json
 0x00437EE0,LaserCurveNode::get_state,src/Laser.cpp,?get_state@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM1M@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00438370,LaserCurveNode::step_back,src/Laser.cpp,?step_back@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM10MMM@Z,mismatch,,.analysis/reference-audit.json
 0x00438750,LaserCurveInf::on_draw,src/Laser.cpp,?on_draw@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x00438CB0,LaserCurveInf::run_ex,src/Laser.cpp,?run_ex@LaserCurveInf@@UAEXXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
-0x004392C0,LaserCurveInf::step_ex_angle,src/Laser.cpp,?step_ex_angle@LaserCurveInf@@UAEHXZ,mismatch,,.analysis/reference-audit.json
+0x004392C0,LaserCurveInf::step_ex_angle,src/Laser.cpp,?step_ex_angle@LaserCurveInf@@UAEHXZ,exact,,.analysis/oracle-follow-up-focused.json
 0x00439460,LaserCurveInf::step_ex_angle_accel,src/Laser.cpp,?step_ex_angle_accel@LaserCurveInf@@UAEHXZ,mismatch,,.analysis/reference-audit.json
 0x004395B0,LaserCurveInf::step_ex_accel,src/Laser.cpp,?step_ex_accel@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
 0x00439730,LaserCurveInf::step_ex_offscreen,src/LaserCurve.cpp,?step_ex_offscreen@LaserCurveInf@@UAEHXZ,exact,,.analysis/reference-audit.json
@@ -768,7 +768,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00446260,sht_on_tick_laser,src/PlayerShot.cpp,?sht_on_tick_laser@@YIHPAUPlayerBullet@@@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00446870,sht_on_hit_laser,src/PlayerShot.cpp,?sht_on_hit_laser@@YIHPAUPlayerBullet@@HHMM@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x00446E00,sht_on_tick_accelerate,src/PlayerShot.cpp,?sht_on_tick_accelerate@@YIHPAUPlayerBullet@@@Z,exact,,.analysis/reference-audit.json
-0x00446E20,sht_on_hit_burst_rising,src/PlayerShot.cpp,?sht_on_hit_burst_rising@@YIHPAUPlayerBullet@@HHMM@Z,mismatch,,.analysis/reference-audit.json
+0x00446E20,sht_on_hit_burst_rising,src/PlayerShot.cpp,?sht_on_hit_burst_rising@@YIHPAUPlayerBullet@@HHMM@Z,exact,,.analysis/oracle-follow-up-focused.json
 0x00446F80,sht_on_hit_burst,src/PlayerShot.cpp,?sht_on_hit_burst@@YIHPAUPlayerBullet@@HHMM@Z,exact,,.analysis/reference-audit.json
 0x004470E0,sht_on_init_sideways,src/PlayerShot.cpp,?sht_on_init_sideways@@YIHPAUPlayerBullet@@@Z,exact,,.analysis/reference-audit.json
 0x004470F0,sht_on_tick_sideways,src/PlayerShot.cpp,?sht_on_tick_sideways@@YIHPAUPlayerBullet@@@Z,exact,,.analysis/reference-audit.json
@@ -1119,9 +1119,9 @@ address,name,source_file,symbol,result,reason,evidence
 0x0046E740,AnmManager::on_tick_09_ui,src/AnmManagerVms.cpp,?on_tick_09_ui@AnmManager@@SIHPAU1@@Z,exact,,.analysis/reference-audit.json
 0x0046E750,AnmManager::render_layer,src/AnmLayers.cpp,?render_layer@AnmManager@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x0046E7D0,AnmManager::insert_in_world_list_back,src/AnmManagerVms.cpp,?insert_in_world_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,exact,,.analysis/factory-pilot-current.json
-0x0046E890,AnmManager::insert_in_world_list_front,src/AnmManagerVms.cpp,?insert_in_world_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
+0x0046E890,AnmManager::insert_in_world_list_front,src/AnmManagerVms.cpp,?insert_in_world_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,exact,,.analysis/oracle-follow-up-focused.json
 0x0046E940,AnmManager::insert_in_ui_list_back,src/AnmManagerVms.cpp,?insert_in_ui_list_back@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,exact,,.analysis/factory-pilot-current.json
-0x0046EA00,AnmManager::insert_in_ui_list_front,src/AnmManagerVms.cpp,?insert_in_ui_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,mismatch,,.analysis/reference-audit.json
+0x0046EA00,AnmManager::insert_in_ui_list_front,src/AnmManagerVms.cpp,?insert_in_ui_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z,exact,,.analysis/oracle-follow-up-focused.json
 0x0046EAB0,AnmManager::destroy_possibly_managed_vm,src/AnmManagerVms.cpp,?destroy_possibly_managed_vm@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0046EC90,AnmManager::destroy_possibly_managed_snapshot_vm,src/AnmManagerVms.cpp,?destroy_possibly_managed_snapshot_vm@AnmManager@@QAEHPAUAnmVm@@@Z,exact,,.analysis/reference-audit.json
 0x0046ED60,AnmLoaded::create_managed_child,src/AnmManagerVms.cpp,?create_managed_child@AnmLoaded@@QAE?AUAnmId@@HPAUAnmVm@@H@Z,exact,,.analysis/reference-audit.json

@@ -119,15 +119,6 @@ target_sha256 = "6e323111f82d26600b1b8a2212f80749b1dd284a92df73555efa8d2d5080c97
 result = "incomplete"
 candidate_size = 456
 
-[frontier."0x00406e10"]
-symbol = "?step@InterpFloat3@@QAE?AUD3DXVECTOR3@@XZ"
-source = "src/Interp.cpp"
-size = 906
-target_sha256 = "d10ea08dd74b8294cedfd90085831845d1b23d43878ae659dcb19bbf0e13e5ee"
-result = "mismatch"
-candidate_size = 906
-residual = ["73-78", "7A"]
-
 [frontier."0x00407900"]
 symbol = "?anm_masked_effect_on_switch@@YIHPAUAnmVm@@H@Z"
 source = "src/AnmVmCallbacks.cpp"
@@ -405,15 +396,6 @@ target_sha256 = "6c6f400ca422d9c14e06cb96d7656c71521a61c0f5e6e7dcc4693dab1c1afa4
 result = "incomplete"
 candidate_size = 21388
 
-[frontier."0x00425410"]
-symbol = "?ecl_ext_damage_anm_hurtbox@@YIHPAUEnemyData@@H@Z"
-source = "src/Enemy.cpp"
-size = 285
-target_sha256 = "372020f772806cfe6bb1dfa560e759efbfbf3f013d394b55b9ae4482230c4e18"
-result = "mismatch"
-candidate_size = 285
-residual = ["82-8A", "8D-93", "98-A3"]
-
 [frontier."0x00425570"]
 symbol = "?step_radial_dist@InterpFloat2@@QAE?AUD3DXVECTOR2@@XZ"
 source = "src/Interp.cpp"
@@ -578,15 +560,6 @@ target_sha256 = "67fce36bcdf4d296737bd87473ae40b27f6aa78795138c63737aead97995aa4
 result = "incomplete"
 candidate_size = 1748
 
-[frontier."0x00432c20"]
-symbol = "?step_ex_angle@LaserLineInf@@UAEHXZ"
-source = "src/Laser.cpp"
-size = 412
-target_sha256 = "1eb6785b93cee6df11b6f0562e6bf1e0822c187866d5669a0a09bdffcbf3ad0c"
-result = "mismatch"
-candidate_size = 412
-residual = ["33-3D"]
-
 [frontier."0x00432f40"]
 symbol = "?on_tick@LaserLineInf@@UAEHXZ"
 source = "src/Laser.cpp"
@@ -684,14 +657,6 @@ target_sha256 = "21c188ea7494b3ad7dd3bc882767e12879cbcc13a34e961f1370181f46c02a1
 result = "incomplete"
 candidate_size = 1301
 
-[frontier."0x00437cf0"]
-symbol = "?check_graze_or_kill@LaserCurveInf@@UAEHH@Z"
-source = "src/Laser.cpp"
-size = 494
-target_sha256 = "552fc76fa8251b315c31c63d6b6e134eb9239c5ef0ab98ca9324b8af05073367"
-result = "incomplete"
-candidate_size = 507
-
 [frontier."0x00437ee0"]
 symbol = "?get_state@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM1M@Z"
 source = "src/Laser.cpp"
@@ -716,15 +681,6 @@ size = 1548
 target_sha256 = "98368b51e1cef5a5af4ee87590620fc0e8c86313a7bcfe1ae466f75eb86ac3ba"
 result = "incomplete"
 candidate_size = 1720
-
-[frontier."0x004392c0"]
-symbol = "?step_ex_angle@LaserCurveInf@@UAEHXZ"
-source = "src/Laser.cpp"
-size = 412
-target_sha256 = "6e24d5ad0d2877bebfc1a2e2c1f824ca9ef07df8a32e3043e1bd2a6e2410b8f8"
-result = "mismatch"
-candidate_size = 412
-residual = ["33-3D"]
 
 [frontier."0x00439460"]
 symbol = "?step_ex_angle_accel@LaserCurveInf@@UAEHXZ"
@@ -880,15 +836,6 @@ size = 1409
 target_sha256 = "499c8569bdeb7d3496ea077d13e02a8de6a0b785638d660d45f8f00009c5cbed"
 result = "incomplete"
 candidate_size = 1404
-
-[frontier."0x00446e20"]
-symbol = "?sht_on_hit_burst_rising@@YIHPAUPlayerBullet@@HHMM@Z"
-source = "src/PlayerShot.cpp"
-size = 349
-target_sha256 = "a6cb3da0a2c352732047298869c23077de5fc3c3a5a7412405b51d27c42dc6ca"
-result = "mismatch"
-candidate_size = 349
-residual = ["87-8B", "8D", "8F", "91-99"]
 
 [frontier."0x004474a0"]
 symbol = "?damage_source_on_hit_piercing@@YIHPAUPlayerDamageSource@@HHMM@Z"
@@ -1398,24 +1345,6 @@ target_sha256 = "bacffc52a57e674922ed72ceadafcf1e9ab2c74288d899ee4f59b2fa5a09c04
 result = "mismatch"
 candidate_size = 281
 residual = ["1E-20", "22-2C", "31-38"]
-
-[frontier."0x0046e890"]
-symbol = "?insert_in_world_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z"
-source = "src/AnmManagerVms.cpp"
-size = 172
-target_sha256 = "3e4e33f25b2549dfd38fb05128ca387d8cc947aba3e1010f567fa13311b45423"
-result = "mismatch"
-candidate_size = 172
-residual = ["5", "10", "16", "18", "1F", "26", "2D", "37", "3F", "49", "4F", "55", "58", "5B", "5E", "64", "6A", "74", "7D", "83-87", "89-96"]
-
-[frontier."0x0046ea00"]
-symbol = "?insert_in_ui_list_front@AnmManager@@QAE?AUAnmId@@PAUAnmVm@@@Z"
-source = "src/AnmManagerVms.cpp"
-size = 172
-target_sha256 = "1328682417e4799460672825c513a329e5680f084aeaff56fb96de7f211a0591"
-result = "mismatch"
-candidate_size = 172
-residual = ["5", "10", "16", "18", "1F", "26", "2D", "37", "3F", "49", "4F", "55", "58", "5B", "5E", "64", "6A", "74", "7D", "83-87", "89-96"]
 
 [frontier."0x0046f720"]
 symbol = "?allocate_snapshot_vm@AnmManager@@QAEPAUAnmVm@@PAH@Z"

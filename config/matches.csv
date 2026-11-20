@@ -96,7 +96,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00406CC0,jagged_line_sincosmul,reference-00406cc0,local-strict-pass,32,32,32,.analysis/reference-audit.json
 0x00406CE0,AnmVm::set_alpha1_time,reference-00406ce0,local-strict-pass,154,154,154,.analysis/reference-audit.json
 0x00406D80,AnmVm::set_layer,reference-00406d80,local-strict-pass,133,133,133,.analysis/reference-audit.json
-0x00406E10,InterpFloat3::step,reference-00406e10,mismatch,906,906,899,.analysis/reference-audit.json
+0x00406E10,InterpFloat3::step,reference-00406e10,local-strict-pass,906,906,906,.analysis/oracle-follow-up-focused.json
 0x004071A0,anm_masked_effect_init,reference-004071a0,local-strict-pass,396,396,396,.analysis/reference-audit.json
 0x00407330,anm_masked_effect_on_tick,reference-00407330,local-strict-pass,100,100,100,.analysis/reference-audit.json
 0x004073A0,anm_on_draw_masked,reference-004073a0,local-strict-pass,1348,1348,1348,.analysis/reference-audit.json
@@ -385,7 +385,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004252D0,ecl_funcset_cancel_near_player,reference-004252d0,local-strict-pass,222,222,222,.analysis/reference-audit.json
 0x004253B0,ecl_funcset_zero_power,reference-004253b0,local-strict-pass,61,61,61,.analysis/reference-audit.json
 0x004253F0,ecl_ext_damage_stored,reference-004253f0,local-strict-pass,26,26,26,.analysis/reference-audit.json
-0x00425410,ecl_ext_damage_anm_hurtbox,reference-00425410,mismatch,285,285,253,.analysis/reference-audit.json
+0x00425410,ecl_ext_damage_anm_hurtbox,reference-00425410,local-strict-pass,285,285,285,.analysis/oracle-follow-up-focused.json
 0x00425530,InterpFloat2::reset_timer,reference-00425530,local-strict-pass,63,63,63,.analysis/reference-audit.json
 0x00425870,InterpStrange1::reset_timer,reference-00425870,local-strict-pass,63,63,63,.analysis/reference-audit.json
 0x00425D80,ZunList<void>::append,reference-00425d80,local-strict-pass,65,65,65,.analysis/reference-audit.json
@@ -539,7 +539,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00431B30,LaserLineInf::initialize,reference-00431b30,local-strict-pass,1132,1132,1132,.analysis/reference-audit.json
 0x00431FA0,LaserLineInf::on_sprite_set,reference-00431fa0,local-strict-pass,55,55,55,.analysis/reference-audit.json
 0x00432620,LaserLineInf::step_ex_bounce,reference-00432620,local-strict-pass,1534,1534,1534,.analysis/reference-audit.json
-0x00432C20,LaserLineInf::step_ex_angle,reference-00432c20,mismatch,412,412,401,.analysis/reference-audit.json
+0x00432C20,LaserLineInf::step_ex_angle,reference-00432c20,local-strict-pass,412,412,412,.analysis/oracle-follow-up-focused.json
 0x00432DC0,LaserLineInf::step_ex_accel,reference-00432dc0,local-strict-pass,380,380,380,.analysis/reference-audit.json
 0x00433510,LaserLineInf::check_graze_or_kill,reference-00433510,local-strict-pass,514,514,514,.analysis/reference-audit.json
 0x00433720,LaserLineInf::on_draw,reference-00433720,local-strict-pass,292,292,292,.analysis/reference-audit.json
@@ -553,9 +553,10 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00436EF0,LaserInfiniteInf::touches_circle,reference-00436ef0,local-strict-pass,219,219,219,.analysis/reference-audit.json
 0x004370A0,LaserCurveInf::initialize,reference-004370a0,local-strict-pass,1726,1726,1726,.analysis/reference-audit.json
 0x00437760,LaserCurveInf::on_destroy,reference-00437760,local-strict-pass,98,98,98,.analysis/reference-audit.json
+0x00437CF0,LaserCurveInf::check_graze_or_kill,reference-00437cf0,local-strict-pass,494,494,494,.analysis/oracle-follow-up-focused.json
 0x00438370,LaserCurveNode::step_back,reference-00438370,mismatch,986,986,982,.analysis/reference-audit.json
 0x00438750,LaserCurveInf::on_draw,reference-00438750,local-strict-pass,1371,1371,1371,.analysis/reference-audit.json
-0x004392C0,LaserCurveInf::step_ex_angle,reference-004392c0,mismatch,412,412,401,.analysis/reference-audit.json
+0x004392C0,LaserCurveInf::step_ex_angle,reference-004392c0,local-strict-pass,412,412,412,.analysis/oracle-follow-up-focused.json
 0x00439460,LaserCurveInf::step_ex_angle_accel,reference-00439460,mismatch,323,323,309,.analysis/reference-audit.json
 0x004395B0,LaserCurveInf::step_ex_accel,reference-004395b0,local-strict-pass,380,380,380,.analysis/reference-audit.json
 0x00439730,LaserCurveInf::step_ex_offscreen,reference-00439730,local-strict-pass,153,153,153,.analysis/reference-audit.json
@@ -692,7 +693,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004460C0,sht_on_hit_spark_back,reference-004460c0,local-strict-pass,314,314,314,.analysis/reference-audit.json
 0x00446200,sht_on_init_laser,reference-00446200,local-strict-pass,83,83,83,.analysis/reference-audit.json
 0x00446E00,sht_on_tick_accelerate,reference-00446e00,local-strict-pass,30,30,30,.analysis/reference-audit.json
-0x00446E20,sht_on_hit_burst_rising,reference-00446e20,mismatch,349,349,333,.analysis/reference-audit.json
+0x00446E20,sht_on_hit_burst_rising,reference-00446e20,local-strict-pass,349,349,349,.analysis/oracle-follow-up-focused.json
 0x00446F80,sht_on_hit_burst,reference-00446f80,local-strict-pass,339,339,339,.analysis/reference-audit.json
 0x004470E0,sht_on_init_sideways,reference-004470e0,local-strict-pass,16,16,16,.analysis/reference-audit.json
 0x004470F0,sht_on_tick_sideways,reference-004470f0,local-strict-pass,375,375,375,.analysis/reference-audit.json
@@ -994,9 +995,9 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0046E740,AnmManager::on_tick_09_ui,reference-0046e740,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0046E750,AnmManager::render_layer,reference-0046e750,local-strict-pass,115,115,115,.analysis/reference-audit.json
 0x0046E7D0,AnmManager::insert_in_world_list_back,reference-0046e7d0,local-strict-pass,177,177,177,.analysis/factory-pilot-current.json
-0x0046E890,AnmManager::insert_in_world_list_front,reference-0046e890,mismatch,172,172,134,.analysis/reference-audit.json
+0x0046E890,AnmManager::insert_in_world_list_front,reference-0046e890,local-strict-pass,172,172,172,.analysis/oracle-follow-up-focused.json
 0x0046E940,AnmManager::insert_in_ui_list_back,reference-0046e940,local-strict-pass,177,177,177,.analysis/factory-pilot-current.json
-0x0046EA00,AnmManager::insert_in_ui_list_front,reference-0046ea00,mismatch,172,172,134,.analysis/reference-audit.json
+0x0046EA00,AnmManager::insert_in_ui_list_front,reference-0046ea00,local-strict-pass,172,172,172,.analysis/oracle-follow-up-focused.json
 0x0046EAB0,AnmManager::destroy_possibly_managed_vm,reference-0046eab0,local-strict-pass,480,480,480,.analysis/reference-audit.json
 0x0046EC90,AnmManager::destroy_possibly_managed_snapshot_vm,reference-0046ec90,local-strict-pass,207,207,207,.analysis/reference-audit.json
 0x0046ED60,AnmLoaded::create_managed_child,reference-0046ed60,local-strict-pass,317,317,317,.analysis/reference-audit.json
