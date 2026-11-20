@@ -704,6 +704,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     {
         if (ins->rank_mask & difficulty_mask)
         {
+            register i32 true_value = 1;
             i32 stack_result;
             switch ((i16)ins->opcode)
             {
@@ -857,7 +858,7 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
                 *(i32 *)dst = stack.pop_raw();
                 stack.stack_offset -= 4;
                 EclStackEntry *entry = stack.entry_at(stack.stack_offset);
-                if (entry->type == ECL_STACK_INTEGER)
+                if (entry->type != ECL_STACK_FLOAT && entry->type == ECL_STACK_INTEGER)
                 {
                     *dst = (f32) * (i32 *)dst;
                 }
@@ -993,14 +994,14 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack_result = a == b;
+                stack_result = a == b ? true_value : 0;
                 goto push_expression_result;
             }
             case ECL_OP_NEQF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack_result = a != b;
+                stack_result = a != b ? true_value : 0;
                 goto push_expression_result;
             }
             case ECL_OP_LESSF:
