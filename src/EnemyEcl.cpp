@@ -225,17 +225,18 @@ static_assert(offsetof(EnemyData, bullet_props) + offsetof(EnemyBulletShooter, e
               "ECL transform c field offset");
 static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array offset");
 
-// The original dispatcher reuses one stack slot for its mutually exclusive
-// laser parameter records.
-union EclLaserParamsStorage
+// The spell-name bytes and the four laser parameter records are mutually
+// exclusive ECL temporaries, so they share the original dispatcher's stack slot.
+union EclScratchStorage
 {
+    char spell_name[0x80];
     LaserLineInner line;
     // The ECL temporary uses the inline constructor to initialize its default speed.
     LaserInfiniteInner infinite;
     LaserBeamInner beam;
     LaserCurveInner curve;
 
-    EclLaserParamsStorage()
+    EclScratchStorage()
     {
     }
 };
@@ -244,24 +245,21 @@ static_assert(alignof(LaserLineInner) == 4, "line params alignment");
 static_assert(alignof(LaserInfiniteInner) == 4, "infinite params alignment");
 static_assert(alignof(LaserBeamInner) == 4, "beam params alignment");
 static_assert(alignof(LaserCurveInner) == 4, "curve params alignment");
-static_assert(sizeof(EclLaserParamsStorage) == sizeof(LaserInfiniteInner),
-              "shared ECL laser parameter storage");
-static_assert(sizeof(LaserLineInner) <= sizeof(EclLaserParamsStorage),
-              "line laser fits shared parameter storage");
-static_assert(sizeof(LaserBeamInner) <= sizeof(EclLaserParamsStorage),
-              "beam laser fits shared parameter storage");
-static_assert(sizeof(LaserCurveInner) <= sizeof(EclLaserParamsStorage),
-              "curve laser fits shared parameter storage");
+static_assert(alignof(EclScratchStorage) == 4, "ECL scratch alignment");
+static_assert(sizeof(EclScratchStorage) == sizeof(LaserInfiniteInner), "shared ECL scratch storage");
+static_assert(sizeof(LaserLineInner) <= sizeof(EclScratchStorage), "line params fit ECL scratch");
+static_assert(sizeof(LaserBeamInner) <= sizeof(EclScratchStorage), "beam params fit ECL scratch");
+static_assert(sizeof(LaserCurveInner) <= sizeof(EclScratchStorage), "curve params fit ECL scratch");
 
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {
-    EclLaserParamsStorage laser_params_storage;
     PosVel *movement_pos_vel;
     InterpStrange1 *movement_interp;
     f32 movement_goal_x;
     f32 movement_goal_y;
     register EclRawInstr *instr = full->context.current_context->current_instr();
+    EclScratchStorage scratch;
     switch ((i16)instr->opcode)
     {
     // enmCreateF and its variants: only without a boss.
@@ -2152,17 +2150,16 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_1:
     case ECL_OP_SPELL_ID_PLUS_DIFFICULTY_MINUS_2:
     {
-        char name[0x80];
         i32 name_length = instr->args[3].i;
         const u8 *encrypted_name = reinterpret_cast<const u8 *>(&instr->args[4]);
         u8 key = 0x77;
-        u8 key_step = 7;
+        register u8 key_step = 7;
         // The encrypted input advances while the destination uses a frame
         // index; this also keeps the original loop's key-update order.
-        char *dest = name;
+        ::new (scratch.spell_name) char[0x80];
         for (i32 i = 0; i < name_length; i++)
         {
-            dest[i] = (char)(*encrypted_name++ ^ key);
+            scratch.spell_name[i] = (char)(*encrypted_name++ ^ key);
             key = (u8)(key + key_step);
             key_step = (u8)(key_step + 0x10);
         }
@@ -2183,7 +2180,7 @@ int EnemyData::ecl_run_over_300()
 
         i32 time_limit = full->context.current_context->get_int_arg(2);
         i32 boss_index = full->context.current_context->get_int_arg(1);
-        g_Spellcard->start(spell_id, name, time_limit, boss_index);
+        g_Spellcard->start(spell_id, scratch.spell_name, time_limit, boss_index);
         *(volatile u32 *)&life.is_spell |= ENEMY_LIFE_SPELL;
         life.current_scaled_by_seven = life.current * 7;
     }
@@ -2224,101 +2221,101 @@ int EnemyData::ecl_run_over_300()
     // laserOn(et): a line laser from the shooter's settings.
     case ECL_OP_LASER_ON:
     {
-        ::new (&laser_params_storage.line) LaserLineInner();
+        ::new (&scratch.line) LaserLineInner();
         i32 slot = get_int_arg(0);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
-            this, slot, &laser_params_storage.line.start_pos, laser_params_storage.line.ex);
+            this, slot, &scratch.line.start_pos, scratch.line.ex);
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
-        laser_params_storage.line.bullet_type = bullet_type;
+        scratch.line.bullet_type = bullet_type;
         i32 bullet_color = shooter.color;
-        laser_params_storage.line.bullet_color = bullet_color;
-        laser_params_storage.line.ang_aim = normalize_angle(ang_aim);
-        laser_params_storage.line.flags = shooter.flags | 1;
-        laser_params_storage.line.speed = shooter.spd1;
-        laser_params_storage.line.laser_new_arg_1 = shooter.pos.x;
-        laser_params_storage.line.laser_new_arg_2 = shooter.pos.y;
-        laser_params_storage.line.shot_sfx = shooter.shot_sfx;
-        laser_params_storage.line.laser_new_arg_3 = shooter.pos.z;
-        laser_params_storage.line.shot_transform_sfx = shooter.shot_transform_sfx;
-        laser_params_storage.line.laser_new_arg_4 = shooter.laser_new_arg_4;
-        laser_params_storage.line.distance = shooter.distance;
-        g_LaserManager->allocate_new_laser(LASER_LINE, &laser_params_storage.line);
+        scratch.line.bullet_color = bullet_color;
+        scratch.line.ang_aim = normalize_angle(ang_aim);
+        scratch.line.flags = shooter.flags | 1;
+        scratch.line.speed = shooter.spd1;
+        scratch.line.laser_new_arg_1 = shooter.pos.x;
+        scratch.line.laser_new_arg_2 = shooter.pos.y;
+        scratch.line.shot_sfx = shooter.shot_sfx;
+        scratch.line.laser_new_arg_3 = shooter.pos.z;
+        scratch.line.shot_transform_sfx = shooter.shot_transform_sfx;
+        scratch.line.laser_new_arg_4 = shooter.laser_new_arg_4;
+        scratch.line.distance = shooter.distance;
+        g_LaserManager->allocate_new_laser(LASER_LINE, &scratch.line);
         break;
     }
     // laserStOn(et, a): an infinite laser.
     case ECL_OP_LASER_ST_ON:
     {
-        ::new (&laser_params_storage.infinite) LaserInfiniteInner();
+        ::new (&scratch.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
-            this, slot, &laser_params_storage.infinite.start_pos, laser_params_storage.infinite.ex);
+            this, slot, &scratch.infinite.start_pos, scratch.infinite.ex);
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
-        laser_params_storage.infinite.type = type;
+        scratch.infinite.type = type;
         i32 color = shooter.color;
-        laser_params_storage.infinite.color = color;
-        laser_params_storage.infinite.ang_aim = normalize_angle(ang_aim);
-        laser_params_storage.infinite.start_time = shooter.laser_timing.start_time;
-        laser_params_storage.infinite.expand_time = shooter.laser_timing.expand_time;
-        laser_params_storage.infinite.speed = shooter.spd1;
-        laser_params_storage.infinite.duration = shooter.laser_timing.duration;
-        laser_params_storage.infinite.laser_new_arg_1 = shooter.pos.x;
-        laser_params_storage.infinite.shrink_time = shooter.laser_timing.shrink_time;
-        laser_params_storage.infinite.flags = shooter.flags | 2;
-        laser_params_storage.infinite.laser_new_arg_2 = shooter.pos.y;
-        laser_params_storage.infinite.laser_new_arg_4 = shooter.laser_new_arg_4;
-        laser_params_storage.infinite.shot_sfx = shooter.shot_sfx;
-        laser_params_storage.infinite.distance = shooter.distance;
-        laser_params_storage.infinite.shot_transform_sfx = shooter.shot_transform_sfx;
-        laser_params_storage.infinite.laser_st_on_arg_1 = get_int_arg(1);
-        g_LaserManager->allocate_new_laser(LASER_INFINITE, &laser_params_storage.infinite);
+        scratch.infinite.color = color;
+        scratch.infinite.ang_aim = normalize_angle(ang_aim);
+        scratch.infinite.start_time = shooter.laser_timing.start_time;
+        scratch.infinite.expand_time = shooter.laser_timing.expand_time;
+        scratch.infinite.speed = shooter.spd1;
+        scratch.infinite.duration = shooter.laser_timing.duration;
+        scratch.infinite.laser_new_arg_1 = shooter.pos.x;
+        scratch.infinite.shrink_time = shooter.laser_timing.shrink_time;
+        scratch.infinite.flags = shooter.flags | 2;
+        scratch.infinite.laser_new_arg_2 = shooter.pos.y;
+        scratch.infinite.laser_new_arg_4 = shooter.laser_new_arg_4;
+        scratch.infinite.shot_sfx = shooter.shot_sfx;
+        scratch.infinite.distance = shooter.distance;
+        scratch.infinite.shot_transform_sfx = shooter.shot_transform_sfx;
+        scratch.infinite.laser_st_on_arg_1 = get_int_arg(1);
+        g_LaserManager->allocate_new_laser(LASER_INFINITE, &scratch.infinite);
         break;
     }
     // laserBeamOn(et, id): create a beam laser from the shooter settings.
     case ECL_OP_LASER_BEAM_ON:
     {
-        ::new (&laser_params_storage.beam) LaserBeamInner();
+        ::new (&scratch.beam) LaserBeamInner();
         i32 slot = get_int_arg(0);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         copy_ex_and_get_shot_origin(
-            this, slot, &laser_params_storage.beam.start_pos, laser_params_storage.beam.ex);
+            this, slot, &scratch.beam.start_pos, scratch.beam.ex);
         i32 color = shooter.color;
         f32 ang_aim = shooter.ang_aim;
-        laser_params_storage.beam.color = color;
-        laser_params_storage.beam.ang_aim = normalize_angle(ang_aim);
-        laser_params_storage.beam.timing = shooter.laser_timing.start_time;
-        laser_params_storage.beam.laser_new_arg_4 = shooter.laser_new_arg_4;
-        laser_params_storage.beam.length = shooter.pos.z;
-        laser_params_storage.beam.distance = shooter.distance;
-        laser_params_storage.beam.id = get_int_arg(1);
-        g_LaserManager->allocate_new_laser(LASER_BEAM, &laser_params_storage.beam);
+        scratch.beam.color = color;
+        scratch.beam.ang_aim = normalize_angle(ang_aim);
+        scratch.beam.timing = shooter.laser_timing.start_time;
+        scratch.beam.laser_new_arg_4 = shooter.laser_new_arg_4;
+        scratch.beam.length = shooter.pos.z;
+        scratch.beam.distance = shooter.distance;
+        scratch.beam.id = get_int_arg(1);
+        g_LaserManager->allocate_new_laser(LASER_BEAM, &scratch.beam);
         break;
     }
     // laserCuOn(et): a curvy laser.
     case ECL_OP_LASER_CU_ON:
     {
-        ::new (&laser_params_storage.curve) LaserCurveInner();
+        ::new (&scratch.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
-            this, slot, &laser_params_storage.curve.start_pos, laser_params_storage.curve.ex);
+            this, slot, &scratch.curve.start_pos, scratch.curve.ex);
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
-        laser_params_storage.curve.type = type;
+        scratch.curve.type = type;
         i32 color = shooter.color;
-        laser_params_storage.curve.color = color;
-        laser_params_storage.curve.ang_aim = normalize_angle(ang_aim);
-        laser_params_storage.curve.segment_count = shooter.laser_timing.start_time;
-        laser_params_storage.curve.creation_flags |= LASER_CURVE_CREATED_BY_ECL;
-        laser_params_storage.curve.shot_sfx = shooter.shot_sfx;
-        laser_params_storage.curve.speed = shooter.spd1;
-        laser_params_storage.curve.shot_transform_sfx = shooter.shot_transform_sfx;
-        laser_params_storage.curve.laser_new_arg_4 = shooter.laser_new_arg_4;
-        laser_params_storage.curve.distance = shooter.distance;
-        g_LaserManager->allocate_new_laser(LASER_CURVE, &laser_params_storage.curve);
+        scratch.curve.color = color;
+        scratch.curve.ang_aim = normalize_angle(ang_aim);
+        scratch.curve.segment_count = shooter.laser_timing.start_time;
+        scratch.curve.creation_flags |= LASER_CURVE_CREATED_BY_ECL;
+        scratch.curve.shot_sfx = shooter.shot_sfx;
+        scratch.curve.speed = shooter.spd1;
+        scratch.curve.shot_transform_sfx = shooter.shot_transform_sfx;
+        scratch.curve.laser_new_arg_4 = shooter.laser_new_arg_4;
+        scratch.curve.distance = shooter.distance;
+        g_LaserManager->allocate_new_laser(LASER_CURVE, &scratch.curve);
         break;
     }
     // laserStEnd(id): cancels every laser with the id.
