@@ -4,8 +4,8 @@
 config/frontiers.toml lists every non-exact annotation of the current strict
 audit: its symbol, original size and SHA-256, the strict result, the candidate
 size and, for same-size mismatches, the byte offsets that still differ after
-replaying the reviewed linkage fields. The check reads the fresh strict report
-(.analysis/reference-audit.json, written by audit-reference.py) and fails when
+replaying the reviewed linkage fields. The check reads a fresh strict report
+from audit-reference.py and fails when
 
 - an annotation outside the file is no longer exact (an exact regression),
 - a recorded mismatch becomes incomplete or gains a differing byte, or
@@ -17,6 +17,7 @@ comes from audit-reference.py and the canonical units.
 
 Usage:
   scripts/check-frontier.py                 check every annotation
+  scripts/check-frontier.py --report PATH   check a separately saved audit
   scripts/check-frontier.py 0x41dcb0 ...    check selected frontier entries
   scripts/check-frontier.py --update        record improvements (refused on regression)
 """
@@ -170,23 +171,47 @@ def load_recorded() -> dict[int, dict]:
     return {int(k, 16): v for k, v in tomllib.loads(CONFIG.read_text()).get("frontier", {}).items()}
 
 
-def current_state():
+def check_report_coverage(rows, required, *, complete):
+    reported = {row["target_address"] for row in rows}
+    if len(reported) != len(rows):
+        raise SystemExit("The strict report repeats a function address.")
+    missing = required - reported
+    extra = reported - required if complete else set()
+    if missing or extra:
+        scope = "all current annotations" if complete else "the selected frontier entries"
+        raise SystemExit(f"The strict report does not cover {scope} "
+                         f"({len(missing)} missing, {len(extra)} unexpected).")
+
+
+def current_state(report_path, selected):
     sys.path.insert(0, str(ROOT / "scripts"))
+    from reference_bindings import markers
     from strict_oracle import Context
 
     context = Context()
-    report = json.loads(REPORT.read_text())
+    report = json.loads(report_path.read_text())
     if report["input_identity"] != context.before:
         raise SystemExit("The strict report is stale; rerun scripts/audit-reference.py.")
+    if selected is None:
+        annotations = markers()
+        required = {row["address"] for kind in ("FUNCTION", "SYNTHETIC", "LIBRARY")
+                    for row in annotations[kind]}
+    else:
+        required = set(selected)
+    rows = report["functions"]
+    check_report_coverage(rows, required, complete=selected is None)
     sizes = {f["symbol"]: f["size"] for f in context.linked["functions"]}
     current = {}
-    for row in report["functions"]:
-        boundary = context.boundaries.get(row["target_address"])
+    for row in rows:
+        address = row["target_address"]
+        if address not in required:
+            continue
+        boundary = context.boundaries.get(address)
         if boundary is None:
-            raise SystemExit(f"No target extent for frontier 0x{row['target_address']:08x}.")
+            raise SystemExit(f"No target extent for frontier 0x{address:08x}.")
         row = dict(row, size=int(boundary["size"]), candidate_size=sizes.get(row.get("symbol")),
                    symbol=row.get("symbol") or boundary["current_name"])
-        current[row["target_address"]] = measure(row, context.target.read_address, context.image.read_address)
+        current[address] = measure(row, context.target.read_address, context.image.read_address)
     context.finish()
     return current
 
@@ -194,17 +219,19 @@ def current_state():
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("addresses", nargs="*", help="frontier entries to check (default: all)")
+    parser.add_argument("--report", type=Path, default=REPORT,
+                        help="strict audit JSON (default: .analysis/reference-audit.json)")
     parser.add_argument("--update", action="store_true", help="record improvements")
     args = parser.parse_args()
     recorded = load_recorded()
     selected = None
     if args.addresses:
-        selected = [int(a, 16) for a in args.addresses]
-        unknown = [hex(a) for a in selected if a not in recorded]
+        selected = {int(a, 16) for a in args.addresses}
+        unknown = [hex(a) for a in sorted(selected - recorded.keys())]
         if unknown:
             print(f"unknown frontier(s): {', '.join(unknown)}", file=sys.stderr)
             return 2
-    current = current_state()
+    current = current_state(args.report, selected)
     if not recorded:
         if not args.update:
             print(f"{CONFIG.relative_to(ROOT)} is missing; create it with --update", file=sys.stderr)

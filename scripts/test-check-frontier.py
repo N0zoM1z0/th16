@@ -128,6 +128,19 @@ class FrontierControls(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "verdict differs"):
             entry(candidate, result="exact")
 
+    def test_focused_report_requires_explicit_selection(self):
+        rows = [{"target_address": 0x401000}]
+        with self.assertRaisesRegex(SystemExit, "1 missing"):
+            frontier.check_report_coverage(rows, {0x401000, 0x402000}, complete=True)
+        frontier.check_report_coverage(rows, {0x401000}, complete=False)
+        with self.assertRaisesRegex(SystemExit, "selected frontier entries"):
+            frontier.check_report_coverage(rows, {0x402000}, complete=False)
+
+    def test_duplicate_report_addresses_are_rejected(self):
+        rows = [{"target_address": 0x401000}] * 2
+        with self.assertRaisesRegex(SystemExit, "repeats a function address"):
+            frontier.check_report_coverage(rows, {0x401000}, complete=True)
+
     def test_unknown_name_is_refused(self):
         with mock.patch.object(frontier, "load_recorded", return_value={0x401000: entry(changed(4))}), \
              mock.patch.object(sys, "argv", ["check-frontier.py", "0x41dcb0"]), \

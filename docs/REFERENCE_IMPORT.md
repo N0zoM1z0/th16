@@ -47,6 +47,11 @@ each selected candidate still requires a complete owner. Focused output cannot
 replace the canonical report, units or ledgers. Refresh those with a full audit
 after a coherent milestone.
 
+Use `scripts/check-frontier.py --report .analysis/<audit>.json` to check a
+separately saved full audit. For a focused report, also pass the frontier
+addresses to check. The checker verifies coverage and input freshness before
+applying the ratchet.
+
 ## Independent Oracle
 
 The Oracle reuses PE/MAP/PDB readers, complete decode coverage and linkage-field
