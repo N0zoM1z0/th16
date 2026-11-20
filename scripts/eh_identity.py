@@ -547,14 +547,21 @@ def review_handlers(context, path):
     require(config["schema_version"] == 1, "unsupported EH review schema")
     statics = map_statics(context.directory / "th16.map")
     pdb = pdb_section_contributions(context.directory / "th16.pdb")
-    result = {}
-    targets = set()
+    result, unavailable = {}, {}
+    keys, parents, targets = set(), set(), set()
     for record in config["handlers"]:
         key = (record["source"], record["parent_symbol"])
-        require(key not in result and record["target"] not in targets, "duplicate EH review")
-        result[key] = review_handler(context, record, statics, pdb)
+        parent = record["parent_target"]
+        require(key not in keys and parent not in parents and record["target"] not in targets,
+                "duplicate EH review")
+        keys.add(key)
+        parents.add(parent)
         targets.add(record["target"])
-    return result
+        try:
+            result[key] = review_handler(context, record, statics, pdb)
+        except EHEvidenceError as error:
+            unavailable[parent] = str(error)
+    return result, unavailable
 
 
 def handler_field(proof):

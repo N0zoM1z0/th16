@@ -604,13 +604,15 @@ class Context:
         except RuntimeEvidenceError as error:
             raise Incomplete(str(error)) from error
         try:
-            self.eh_handlers = review_handlers(self, ROOT / "config/eh-handlers.toml")
+            self.eh_handlers, self.unavailable_eh = review_handlers(self, ROOT / "config/eh-handlers.toml")
         except EHEvidenceError as error:
             raise Incomplete(str(error)) from error
 
         from static_identity import review_functions, StaticEvidenceError
+        self.unavailable_statics = {}
         try:
-            self.static_functions = review_functions(self, ROOT / "config/static-functions.toml")
+            self.static_functions = review_functions(self, ROOT / "config/static-functions.toml",
+                                                     unavailable=self.unavailable_statics)
         except StaticEvidenceError as error:
             raise Incomplete(str(error)) from error
 
@@ -649,7 +651,14 @@ class Context:
         if self.identity() != self.before or source_identity() != self.receipt["input_sha256"]:
             raise ValueError("Oracle inputs changed during evaluation")
 
+    def check_owner_evidence(self, target_address):
+        if target_address in self.unavailable_eh:
+            raise Incomplete(f"reviewed EH parent: {self.unavailable_eh[target_address]}")
+        if target_address in self.unavailable_statics:
+            raise Incomplete(f"reviewed private function: {self.unavailable_statics[target_address]}")
+
     def compare(self, unit):
+        self.check_owner_evidence(unit["target_address"])
         source = (ROOT / unit["source"]).resolve()
         if not source.is_file() or not source.is_relative_to((ROOT / "src").resolve()):
             raise Incomplete("primary source must be maintained game code under src/")
@@ -690,6 +699,8 @@ class Context:
             raise Incomplete("target boundary has a different span end")
         self.check_boundary(unit)
         for field in unit["linkages"]:
+            if field["target"] in self.unavailable_statics:
+                raise Incomplete(f"reviewed private callee: {self.unavailable_statics[field['target']]}")
             if field.get("pointer_limit"):
                 proof = pointer_limit(self, function, field, unit["linkages"])
                 if proof is None or any(field.get(key) != value for key, value in proof.items()):

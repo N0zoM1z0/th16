@@ -125,7 +125,18 @@ class CompleteOwnerReplay(unittest.TestCase):
                         pdb_object="Z:" + str(context.directory / "obj/src/Rng.obj"))
         context.linked = dict(functions=[function])
         context.boundaries = {}
+        context.unavailable_eh = {}
+        context.unavailable_statics = {}
         return context, unit
+
+    def test_unavailable_eh_evidence_blocks_only_its_parent(self):
+        context, unit = self.boundary_context()
+        context.unavailable_eh[self.target_start] = "auxiliary owner changed"
+        with self.assertRaisesRegex(Incomplete, "reviewed EH parent: auxiliary owner changed"):
+            context.compare(unit)
+        context.unavailable_eh = {self.target_start + 16: "auxiliary owner changed"}
+        with self.assertRaisesRegex(Incomplete, "lacks an independently reviewed function boundary"):
+            context.compare(unit)
 
     def test_missing_original_boundary_is_distinct_from_an_extent_difference(self):
         context, unit = self.boundary_context()

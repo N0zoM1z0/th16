@@ -154,6 +154,20 @@ class StaticIdentityControls(unittest.TestCase):
         with self.assertRaises(static.StaticEvidenceError):
             self.review(context=context)
 
+    def test_private_owner_failure_blocks_that_owner_and_its_caller(self):
+        context = copy.copy(self.context)
+        selected = next(r for r in self.statics if r['symbol'] == self.records['functions']['laser']['symbol'])
+        context.unavailable_statics = {}
+        with patch.object(static, 'map_statics', return_value=self.statics + [selected.copy()]):
+            context.static_functions = static.review_functions(
+                context, self.path, unavailable=context.unavailable_statics
+            )
+        self.assertEqual(context.compare(self.unit('bullet'))['result'], 'exact')
+        with self.assertRaisesRegex(Incomplete, 'reviewed private function'):
+            context.compare(self.unit('laser'))
+        with self.assertRaisesRegex(Incomplete, 'reviewed private callee'):
+            context.compare(self.caller())
+
     def test_interior_private_name_is_rejected(self):
         selected = next(r for r in self.statics if r['symbol']==self.records['functions']['laser']['symbol'])
         interior = dict(selected,symbol='unreviewed-interior',section_offset=selected['section_offset']+1,address=selected['address']+1)

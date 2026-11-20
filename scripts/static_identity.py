@@ -93,7 +93,7 @@ def witness_dispatch(context, spec, by):
                 mapped_targets=sorted({targets[v] for v in mapper}))
 
 
-def review_functions(context, path):
+def review_functions(context, path, *, unavailable=None):
     records = tomllib.loads(path.read_text())
     require(set(records) == {'functions'}, 'unsupported private-function configuration')
     statics = map_statics(context.directory / 'th16.map')
@@ -102,7 +102,7 @@ def review_functions(context, path):
     decoder.detail = True
     annotations = [line.split() for line in (context.directory / 'functions.txt').read_text().splitlines()]
     result = {}
-    identities = set()
+    identities, targets = set(), set()
     for name, row in records['functions'].items():
         require(set(row)-{'witness_dispatch'} == {'profile','source','symbol','target','size','sha256',
                              'witness_parent','witness','parent_sha256'}, 'unsupported private-function fields')
@@ -127,18 +127,6 @@ def review_functions(context, path):
         next_entry = min(a for a in context.boundaries if a > target)
         require(all(v == 0xcc for v in context.target.read_address(target+size,next_entry-target-size)),
                 'private original owner has unexplained trailing bytes')
-        try:
-            owner = private_owner(context,statics,pdb,row['symbol'],row['source'],size,True)
-        except EHEvidenceError as error:
-            raise StaticEvidenceError(str(error)) from error
-        require([r for r in annotations if int(r[0],0) == target] ==
-                [[hex(target),hex(owner['address']),row['symbol']]], 'private annotation identity differs')
-        require(context.image.read_address(owner['address'],size) == payload,
-                'complete private candidate profile bytes differ')
-        require(not any(a < owner['address']+size and owner['address'] < a+4
-                        for a in context.image.base_relocations()), 'private profile has unreviewed PE relocations')
-        fields = linked_code_fields(context.image,context.publics,owner['address'],size)
-        require(fields['decoded_bytes'] == size and not fields['fields'], 'private profile has unreviewed linked fields')
         parent, witness = row['witness_parent'], row['witness']
         require(parent in context.boundaries, 'private witness lacks original parent')
         raw = context.target.read_address(parent,int(context.boundaries[parent]['size']))
@@ -200,9 +188,24 @@ def review_functions(context, path):
         if dispatch and dispatch['at'] in path_to_call:
             require(dispatch['guard'] in path_to_call, 'private witness path bypasses its dispatch guard')
         identity = (row['source'],row['symbol'])
-        require(identity not in identities and target not in {r['target'] for r in result.values()},
-                'duplicate private-function identity')
+        require(identity not in identities and target not in targets, 'duplicate private-function identity')
         identities.add(identity)
+        targets.add(target)
+        try:
+            owner = private_owner(context,statics,pdb,row['symbol'],row['source'],size,True)
+            require([r for r in annotations if int(r[0],0) == target] ==
+                    [[hex(target),hex(owner['address']),row['symbol']]], 'private annotation identity differs')
+            require(context.image.read_address(owner['address'],size) == payload,
+                    'complete private candidate profile bytes differ')
+            require(not any(a < owner['address']+size and owner['address'] < a+4
+                            for a in context.image.base_relocations()), 'private profile has unreviewed PE relocations')
+            fields = linked_code_fields(context.image,context.publics,owner['address'],size)
+            require(fields['decoded_bytes'] == size and not fields['fields'], 'private profile has unreviewed linked fields')
+        except (EHEvidenceError, StaticEvidenceError) as error:
+            if unavailable is None:
+                raise StaticEvidenceError(str(error)) from error
+            unavailable[target] = str(error)
+            continue
         function = dict(symbol=row['symbol'],address=hex(owner['address']),size=size,
                         extent_source='pdb-section-contribution',pdb_object=owner['object'],
                         pdb_module_index=owner['module_index'])

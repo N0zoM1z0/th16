@@ -269,6 +269,7 @@ def main():
                 raise Incomplete(f"annotation has {len(choices)} candidate symbols")
             _, address, symbol = choices[0]
             report.update(symbol=symbol, candidate_address=address)
+            context.check_owner_evidence(original)
             owners = owned[(address, symbol)]
             static = [(name,p) for name,p in context.static_functions.items()
                       if (p["target"],p["candidate"],p["symbol"],p["source"]) ==
