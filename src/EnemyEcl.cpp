@@ -2153,7 +2153,7 @@ int EnemyData::ecl_run_over_300()
         i32 name_length = instr->args[3].i;
         const u8 *encrypted_name = reinterpret_cast<const u8 *>(&instr->args[4]);
         u8 key = 0x77;
-        register u8 key_step = 7;
+        u8 key_step = 7;
         // The encrypted input advances while the destination uses a frame
         // index; this also keeps the original loop's key-update order.
         char *dest = ::new (scratch.spell_name) char[0x80];
