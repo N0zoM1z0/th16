@@ -2297,9 +2297,9 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
-        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
             this, slot, &scratch.infinite.start_pos, scratch.infinite.ex);
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.infinite.type = type;
@@ -2327,9 +2327,9 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.beam) LaserBeamInner();
         i32 slot = get_int_arg(0);
-        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         copy_ex_and_get_shot_origin(
             this, slot, &scratch.beam.start_pos, scratch.beam.ex);
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 color = shooter.color;
         f32 ang_aim = shooter.ang_aim;
         scratch.beam.color = color;
@@ -2347,9 +2347,9 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
-        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         get_shot_origin_and_copy_ex_branch_first(
             this, slot, &scratch.curve.start_pos, scratch.curve.ex);
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.curve.type = type;
