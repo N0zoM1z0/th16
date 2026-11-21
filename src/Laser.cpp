@@ -1209,7 +1209,9 @@ i32 LaserInfiniteInf::cancel(i32 mode, i32 skip_invuln)
     Float3 pos;
     laser_sincosmul(&step, angle, 8.0f);
     step.z = 0.0f;
-    pos = step + position;
+    pos.x = step.x + position.x;
+    pos.y = position.y + step.y;
+    pos.z = position.z + 0.0f;
     step.x += step.x;
     step.y += step.y;
     while (hit_length > dist + 8.0f)
