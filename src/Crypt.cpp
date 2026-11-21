@@ -77,10 +77,10 @@ u8 *LTCG_FASTCALL zun_encrypt(u8 *data, i32 size, u8 key, u8 step, i32 block, i3
     {
         return data;
     }
+    u8 *in = tmp;
     i32 remaining = (size & ~1) - tail;
     memcpy(tmp, data, copy_size);
 
-    u8 *in = tmp;
     while (remaining > 0 && limit > 0)
     {
         if (remaining < block)
