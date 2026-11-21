@@ -2329,7 +2329,7 @@ int EnemyData::ecl_run_over_300()
         i32 slot = get_int_arg(0);
         copy_ex_and_get_shot_origin(
             this, slot, &scratch.beam.start_pos, scratch.beam.ex);
-        const EnemyBulletShooter &shooter = bullet_props[slot];
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 color = shooter.color;
         f32 ang_aim = shooter.ang_aim;
         scratch.beam.color = color;
