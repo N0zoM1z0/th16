@@ -434,8 +434,8 @@ int EnemyData::ecl_run_over_300()
     // anmPlayAbs(file, script): creates a VM at the origin on the front list.
     case ECL_OP_ANM_PLAY_ABS:
     {
-        i32 file_index = full->get_int_arg(0);
-        i32 script = full->get_int_arg(1);
+        i32 file_index = full->context.current_context->get_int_arg(0);
+        i32 script = full->context.current_context->get_int_arg(1);
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[file_index];
         AnmId created = file->create_vm_front(script, -1, full->context.current_context);
         g_EffectManager->track(created);
