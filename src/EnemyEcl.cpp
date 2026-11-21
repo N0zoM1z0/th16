@@ -2312,8 +2312,8 @@ int EnemyData::ecl_run_over_300()
         scratch.infinite.duration = shooter.laser_timing.duration;
         scratch.infinite.laser_new_arg_1 = shooter.pos.x;
         scratch.infinite.shrink_time = shooter.laser_timing.shrink_time;
-        scratch.infinite.laser_new_arg_2 = shooter.pos.y;
         scratch.infinite.flags = shooter.flags | 2;
+        scratch.infinite.laser_new_arg_2 = shooter.pos.y;
         scratch.infinite.laser_new_arg_4 = shooter.laser_new_arg_4;
         scratch.infinite.shot_sfx = shooter.shot_sfx;
         scratch.infinite.distance = shooter.distance;
