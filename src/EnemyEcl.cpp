@@ -2326,7 +2326,7 @@ int EnemyData::ecl_run_over_300()
         *reinterpret_cast<D3DXVECTOR2 *>(&scratch.beam.start_pos) =
             copy_ex_and_get_shot_origin(
                 this, slot, &scratch.beam.start_pos.z, scratch.beam.ex);
-        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
+        const EnemyBulletShooter &shooter = bullet_props[slot];
         i32 color = shooter.color;
         f32 ang_aim = shooter.ang_aim;
         scratch.beam.color = color;
