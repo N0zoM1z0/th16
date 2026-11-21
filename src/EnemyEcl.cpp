@@ -147,31 +147,7 @@ static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
 }
 
 // The line, infinite and curve laser constructors test the origin before
-// copying the transform array; the beam constructor copies it first. Keep
-// those target instruction orders in separate typed helpers.
-static __forceinline void get_shot_origin_and_copy_ex_branch_first(
-    EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
-{
-    f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
-    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    bool has_origin = origin_enabled > 0.9f;
-    f32 y = enemy->bullet_mgr_offsets[i].y;
-    D3DXVECTOR2 xy;
-    if (has_origin)
-    {
-        xy.x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
-        y += enemy->bullet_mgr_origins[i].xy.y;
-        out->z = 0.0f;
-    }
-    else
-    {
-        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        xy.x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
-        y += enemy->final_pos.pos.y;
-    }
-    xy.y = y;
-    memcpy(out, &xy, sizeof(xy));
-}
+// copying the transform array; the beam constructor copies it first.
 static __forceinline void get_shot_origin_and_copy_ex_packed(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
@@ -2292,8 +2268,8 @@ int EnemyData::ecl_run_over_300()
             x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
             y += final_pos.pos.y;
         }
-        scratch.line.start_pos.x = x;
-        scratch.line.start_pos.y = y;
+        D3DXVECTOR2 start_xy(x, y);
+        memcpy(&scratch.line.start_pos, &start_xy, sizeof(start_xy));
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
