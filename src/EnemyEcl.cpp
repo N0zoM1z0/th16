@@ -68,12 +68,13 @@ static __forceinline AnmId create_vm_front_at(AnmLoaded *file, i32 script, Float
     if (pos == NULL)
     {
         vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->rotation.z = rotation;
     }
     else
     {
         vm->entity_pos = *pos;
+        vm->rotation.z = rotation;
     }
-    vm->rotation.z = rotation;
     vm->run();
     vm->mode_of_create_child = ANM_CREATE_FRONT;
     AnmId id;
@@ -2283,10 +2284,10 @@ int EnemyData::ecl_run_over_300()
         i32 bullet_color = shooter.color;
         scratch.line.bullet_color = bullet_color;
         scratch.line.ang_aim = normalize_angle(ang_aim);
+        scratch.line.flags = shooter.flags | 1;
         scratch.line.speed = shooter.spd1;
         scratch.line.laser_new_arg_1 = shooter.pos.x;
         scratch.line.laser_new_arg_2 = shooter.pos.y;
-        scratch.line.flags = shooter.flags | 1;
         scratch.line.shot_sfx = shooter.shot_sfx;
         scratch.line.laser_new_arg_3 = shooter.pos.z;
         scratch.line.shot_transform_sfx = shooter.shot_transform_sfx;
