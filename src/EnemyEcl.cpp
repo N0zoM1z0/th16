@@ -266,7 +266,8 @@ int EnemyData::ecl_run_over_300()
     InterpStrange1 *movement_interp;
     f32 movement_goal_x;
     f32 movement_goal_y;
-    register EclRawInstr *instr = full->context.current_context->current_instr();
+    register SptInf *context = full;
+    register EclRawInstr *instr = context->context.current_context->current_instr();
     EclScratchStorage scratch;
     switch ((i16)instr->opcode)
     {
@@ -413,7 +414,7 @@ int EnemyData::ecl_run_over_300()
     // anmPlay(file, script)
     case ECL_OP_ANM_PLAY:
     {
-        i32 script = full->context.current_context->get_int_arg(1);
+        i32 script = (*reinterpret_cast<EclRunContext *volatile *>(&context->context.current_context))->get_int_arg(1);
         i32 file_index = full->context.current_context->get_int_arg(0);
         EnemyManager *enemy_manager = g_EnemyManager;
         AnmLoaded *file = enemy_manager->anim_statement_anms[file_index];
@@ -556,9 +557,7 @@ int EnemyData::ecl_run_over_300()
     // otherwise select its n-th alternate, starting at script + 5.
     case ECL_OP_ANM_PLAY_ALTERNATE:
     {
-        EclRunContext *current_context =
-            *reinterpret_cast<EclRunContext *volatile *>(&full->context.current_context);
-        i32 slot = current_context->get_int_arg(0);
+        i32 slot = (*reinterpret_cast<EclRunContext *volatile *>(&context->context.current_context))->get_int_arg(0);
         i32 alternate = full->context.current_context->get_int_arg(1);
         AnmId *selected = &anm_ids[slot];
         AnmId &anm_id = *selected;
