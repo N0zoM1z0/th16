@@ -1776,15 +1776,15 @@ i32 LaserInfiniteInf::cancel_as_bomb_circle(Float3 *center, f32 radius, i32 mode
             }
             i32 run = 0;
             i32 start = j;
-            while (!hit[j])
+            do
             {
-                j++;
-                run++;
-                if (j >= i)
+                if (hit[j])
                 {
                     break;
                 }
-            }
+                j++;
+                run++;
+            } while (j < i);
             f32 start_f = (f32)start;
             pos = origin + step * start_f;
             if (!(pos.x + 32.0f <= -192.0f || pos.x - 32.0f >= 192.0f || pos.y + 32.0f <= 0.0f ||
