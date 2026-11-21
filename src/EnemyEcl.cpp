@@ -567,18 +567,11 @@ int EnemyData::ecl_run_over_300()
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
-        i32 script;
-        if (alternate >= 0)
-        {
-            script = anm_set_main + alternate + 5;
-        }
-        else
-        {
-            script = anm_set_main;
-        }
-        // create_vm_front receives the loaded file again as its unused third ABI argument.
+        // The script argument is selected inline, as the target pushes the
+        // selected script directly from either side of the branch.
         AnmLoaded *unused_file = file;
-        *anm_id = file->create_vm_front(script, layer, unused_file);
+        *anm_id = file->create_vm_front(
+            alternate >= 0 ? anm_set_main + alternate + 5 : anm_set_main, layer, unused_file);
         AnmVm *vm = anm_id->find_or_clear();
         if (slot_for_compare == 0)
         {
