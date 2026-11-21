@@ -1,20 +1,23 @@
 # TH16 reconstruction: next-agent handoff
 
-**Verified 2026-11-20; source checkpoint `b814004`.** Follow
+**Updated 2026-11-21; latest source checkpoint `77d9345`.** Follow
 [AGENTS.md](../AGENTS.md). Use natural C/C++, incremental compilation and
 affected complete-owner comparisons, not ASM or padding. Treat every dirty
 file as intentional work to inspect before editing; `git status` is more
 authoritative than a dated note. Do not push unless requested.
 
 The preceding long investigation is preserved in the
-[2026-11-19 handoff archive](HANDOFF_20261119.md). Its commit IDs and failed
-experiments remain useful, but its "latest" tables and branch statements are
-historical. This file is the short operational entry point.
+[2026-11-19 handoff archive](HANDOFF_20261119.md). The focused work and A/B
+results from the 2026-11-21 session are in
+[the 2026-11-21 handoff](HANDOFF_20261121.md). This file is the short
+operational entry point.
 
 ## Checkpoint and verification boundary
 
-- Latest *code* commit at handoff preparation: `b814004`
-  (`gpt-web: restore ECL timed-position finish path`). The preceding commits
+- Latest *code* commit: `77d9345`
+  (`gpt-web: preserve radial acceleration operand order`). It follows
+  `8715c88` (`gpt-web: use ordinary laser-on shooter reads`). The preceding
+  commits
   include `874e939` (ANM randomized radius), `7ec3361` (follow-camera Z),
   `b0f537e` (movement scratch), `faa61a3` (snapshot restore order),
   `e013bb2` (ECL scratch reuse), `310ea94` (ANM corner scratch),
@@ -114,14 +117,14 @@ from `.analysis/measure-leaf.py`.
 
 | Owner (target VA) | Target / candidate bytes | Target / candidate instructions | Local ratio |
 | --- | ---: | ---: | ---: |
-| `EnemyData::ecl_run_over_300` (`0x41dcb0`) | 21,408 / 21,472 | 4,562 / 5,465 | **0.8655** |
+| `EnemyData::ecl_run_over_300` (`0x41dcb0`) | 21,408 / 21,456 | 4,562 / 4,679 | **0.9386** (2026-11-21 local build; see measurement discrepancy in [handoff](HANDOFF_20261121.md)) |
 | `AnmVm::run` (`0x45f980`) | 14,177 / 14,192 | 3,837 / 3,818 | **0.9531** |
 | `EclRunContext::ecl_run` (`0x472030`) | 7,046 / 6,944 | 1,807 / 1,777 | **0.9180** |
 | `LaserLineInf::run_ex` (`0x431fe0`) | 1,588 / 1,600 | 344 / 336 | **0.9088** |
 | `LaserCurveInf::run_ex` (`0x438cb0`) | 1,548 / 1,568 | 360 / 365 | **0.9683** |
-| `LaserLineInf::on_tick` (`0x432f40`) | 1,473 / 1,488 | 356 / 355 | **0.9058** |
+| `LaserLineInf::on_tick` (`0x432f40`) | 1,473 / 1,488 | 356 / 355 | **0.9395** (2026-11-21 local build) |
 | `LaserCurveInf::on_tick` (`0x4377d0`) | 1,305 / 1,312 | 332 / 330 | **0.9758** |
-| `InterpFloat2::step_radial_dist` (`0x425570`) | 757 / 768 | 207 / 207 | **0.9565** |
+| `InterpFloat2::step_radial_dist` (`0x425570`) | 757 / 768 | 207 / 207 | **0.9517** (2026-11-21 local build) |
 | `EnemyData::step_interpolators` (`0x41bb50`) | 1,692 / 1,696 | 421 / 421 | **0.9976** |
 | `AnmManager::restore_snapshot` (`0x46f8f0`) | 128 / 128 | 46 / 46 | **1.0000** |
 | `AnmVm::load_from` (`0x46ffb0`) | 650 / 656 | 135 / 135 | **0.9778** |
