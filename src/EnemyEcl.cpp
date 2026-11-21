@@ -157,20 +157,20 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     bool has_origin = origin_enabled > 0.9f;
     f32 y = enemy->bullet_mgr_offsets[i].y;
     f32 x;
+    f32 z;
     if (has_origin)
     {
         x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
         y += enemy->bullet_mgr_origins[i].xy.y;
-        out->z = 0.0f;
+        z = 0.0f;
     }
     else
     {
-        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    out->x = x;
-    out->y = y;
+    *out = D3DXVECTOR3(x, y, z);
 }
 static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
