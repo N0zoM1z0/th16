@@ -156,21 +156,19 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     bool has_origin = origin_enabled > 0.9f;
     f32 y = enemy->bullet_mgr_offsets[i].y;
-    f32 x;
-    f32 z;
     if (has_origin)
     {
-        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
+        f32 x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
         y += enemy->bullet_mgr_origins[i].xy.y;
-        z = 0.0f;
+        *out = D3DXVECTOR3(x, y, 0.0f);
     }
     else
     {
-        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
+        f32 z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        f32 x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
+        *out = D3DXVECTOR3(x, y, z);
     }
-    *out = D3DXVECTOR3(x, y, z);
 }
 static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
@@ -668,15 +666,14 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_TIME_OFFSET:
     case ECL_OP_MOVE_POS_REL_TIME_OFFSET:
     {
-        volatile EnemyData *context_source = this;
         PosVel *pos_vel = (instr->opcode == ECL_OP_MOVE_POS_TIME ||
                            instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET) ? &abs_pos : &rel_pos;
         InterpStrange1 *position_interp = (instr->opcode == ECL_OP_MOVE_POS_TIME ||
                                             instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET) ? &abs_pos_i : &rel_pos_i;
 
-        f32 goal_x = context_source->full->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        f32 goal_y = context_source->full->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        if (context_source->full->context.current_context->get_int_arg(0) <= 0)
+        f32 goal_x = get_float_arg(EclFloatArgIndex{2});
+        f32 goal_y = get_float_arg(EclFloatArgIndex{3});
+        if (get_int_arg(0) <= 0)
         {
             position_interp->end_time = 0;
             break;
@@ -697,10 +694,10 @@ int EnemyData::ecl_run_over_300()
             goal_y = pos_vel->pos.y + goal_y;
         }
 
-        position_interp->end_time = context_source->full->context.current_context->get_int_arg(0);
+        position_interp->end_time = get_int_arg(0);
         position_interp->bezier_1 = g_zero_vec;
         position_interp->bezier_2 = g_zero_vec;
-        position_interp->method_for_3d = static_cast<InterpMode>(context_source->full->context.current_context->get_int_arg(1));
+        position_interp->method_for_3d = static_cast<InterpMode>(get_int_arg(1));
         position_interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
         position_interp->initial = pos_vel->pos;
         position_interp->goal = Float3(goal_x > -999999.0 ? goal_x : pos_vel->pos.x,
