@@ -2274,7 +2274,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_LASER_ON:
     {
         ::new (&scratch.line) LaserLineInner();
-        i32 slot = get_int_arg(0);
+        register i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
         memcpy(scratch.line.ex, bullet_props[slot].ex, sizeof(bullet_props[slot].ex));
         bool has_origin = origin_enabled > 0.9f;
@@ -2294,7 +2294,7 @@ int EnemyData::ecl_run_over_300()
         }
         scratch.line.start_pos.x = x;
         scratch.line.start_pos.y = y;
-        const EnemyBulletShooter &shooter = bullet_props[slot];
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.line.bullet_type = bullet_type;
