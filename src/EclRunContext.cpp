@@ -1260,15 +1260,21 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
     }
     time += speed;
 step_float_i:
-    SptInf *vm = this->vm;
-    for (i32 i = 0; i < 8; i++)
+    InterpFloat *interp = float_i;
+    // The original cursor points at the offset word, with the subroutine index
+    // immediately before it.
+    i32 *location = &float_i_locs[0].offset_from_first_instruction;
+    i32 count = 8;
+    do
     {
-        InterpFloat *interp = &float_i[i];
         if (interp->end_time != 0)
         {
-            f32 *dst = float_arg_ptr_at(vm, &float_i_locs[i].offset_from_first_instruction, 1);
+            SptInf *vm = this->vm;
+            f32 *dst = float_arg_ptr_at(vm, location, 1);
             *dst = interp->step();
         }
-    }
+        interp++;
+        location += 2;
+    } while (--count != 0);
     return 0;
 }
