@@ -193,7 +193,8 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
         y += enemy->final_pos.pos.y;
     }
     D3DXVECTOR2 xy(x, y);
-    *reinterpret_cast<D3DXVECTOR2 *>(out) = xy;
+    // Only the packed XY prefix is written; do not alias the Float3 as a Float2.
+    memcpy(out, &xy, sizeof(xy));
 }
 
 static __forceinline D3DXVECTOR2 LTCG_VECTORCALL copy_ex_and_get_shot_origin(
