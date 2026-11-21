@@ -1993,6 +1993,7 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
     }
     Float3 origin = position;
     i32 count = 0;
+    i32 i = 0;
     f32 dist = 8.0f;
     u8 hit[0x100];
     memset(hit, 0, sizeof(hit));
@@ -2038,8 +2039,7 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
     step.x += step.x;
     step.y += step.y;
     step.z += step.z;
-    i32 i;
-    for (i = 0; hit_length >= dist + 8.0f; i++)
+    for (; hit_length >= dist + 8.0f; i++)
     {
         if (!(-half_w > local_x || local_x > half_w || -half_h > local_y || local_y > half_h))
         {
