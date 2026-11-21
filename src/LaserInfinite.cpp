@@ -137,25 +137,19 @@ i32 LaserInfiniteInf::on_tick()
     angle = a;
     if (inner.flags & 1)
     {
-        EnemyList *node = NULL;
         EnemyInf *enemy = NULL;
         i32 boss_id = g_EnemyManager->inner.boss_ids[0];
         if (boss_id != 0)
         {
-            node = g_EnemyManager->active_enemy_list_head;
-            while (node != NULL)
+            for (EnemyList *node = g_EnemyManager->active_enemy_list_head;
+                 node != NULL && (enemy = node->entry)->enemy_id != boss_id;
+                 node = node->next)
             {
-                enemy = node->entry;
-                if (enemy->enemy_id == boss_id)
-                {
-                    break;
-                }
-                node = node->next;
             }
-        }
-        if (enemy != NULL)
-        {
-            position = g_EnemyManager->get_boss(0)->enemy.final_pos.pos;
+            if (enemy != NULL)
+            {
+                position = g_EnemyManager->get_boss(0)->enemy.final_pos.pos;
+            }
         }
     }
     Float3 v;
