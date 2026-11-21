@@ -1385,7 +1385,7 @@ int EnemyData::ecl_anm_set_sprite()
     }
     script = full->context.current_context->get_int_arg(1);
     AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
-    anm_ids[slot] = file->create_vm_front(script, anm_layers + 7, 0);
+    anm_ids[slot] = file->create_vm_front(script, anm_layers + 7, file);
     if (slot == 0)
     {
         anm_slot_0_script = full->context.current_context->get_int_arg(1);

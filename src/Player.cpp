@@ -1441,7 +1441,8 @@ void PlayerInner::repopulate_options()
             g_AnmManager->delete_vm_inline(option->anm_id_full_power);
             option->anm_id_full_power.id = 0;
             option->anm_id_full_power =
-                g_Player->anm_file->create_vm_front(g_main_option_max_power_scripts[g_Globals.character], -1, 0);
+                g_Player->anm_file->create_vm_front(g_main_option_max_power_scripts[g_Globals.character], -1,
+                                                    g_Player->anm_file);
             get_vm_or_clear(option->anm_id_full_power)->entity_pos.y = -32.0f;
         }
     }

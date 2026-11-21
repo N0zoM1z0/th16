@@ -179,9 +179,9 @@ struct AnmLoaded
     // Every caller passes the same unused second argument.
     HARNESS_CALLED AnmId create_ui_vm_at_origin(i32 script, i32 unused);
     // 0x426160. Like create_vm at the origin, but inserted at the front of
-    // the world list.
-    // Every caller passes 0 for unused, which LTCG folded.
-    HARNESS_CALLED AnmId create_vm_front(i32 script, i32 layer, i32 unused);
+    // the world list. The third ABI argument repeats this file pointer; the
+    // implementation does not use it.
+    HARNESS_CALLED AnmId create_vm_front(i32 script, i32 layer, AnmLoaded *unused);
     // 0x46ed60. A child of parent; mode bits 1 and 2 pick the list (see
     // AnmVm::mode_of_create_child).
     AnmId create_managed_child(i32 script, AnmVm *parent, i32 mode);
@@ -225,6 +225,20 @@ static inline AnmLoadedCreateEffectFunc anm_create_effect_func()
 static __forceinline AnmId create_effect_via_pointer(AnmLoaded *anm, i32 script, i32 layer, AnmVm **out)
 {
     return (anm->*anm_create_effect_func())(script, layer, out);
+}
+
+typedef AnmId (AnmLoaded::*AnmLoadedCreateVmFrontFunc)(i32 script, i32 layer, AnmLoaded *unused);
+static inline AnmLoadedCreateVmFrontFunc anm_create_vm_front_func()
+{
+    return &AnmLoaded::create_vm_front;
+}
+
+// The original passes the loaded file again as create_vm_front's third ABI
+// argument. Keep the member-pointer call edge opaque to LTCG so it preserves
+// that value even though the callee does not inspect it.
+static __forceinline AnmId create_vm_front_via_pointer(AnmLoaded *file, i32 script, i32 layer)
+{
+    return (file->*anm_create_vm_front_func())(script, layer, file);
 }
 
 // A sprite as stored in an .anm entry.

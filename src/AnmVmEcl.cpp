@@ -62,7 +62,7 @@ HARNESS_CALLED void PosVel::set_ellipse_angle(f32 angle)
 }
 
 // FUNCTION: TH16 0x426160
-HARNESS_CALLED AnmId AnmLoaded::create_vm_front(i32 script, i32 layer, i32 unused)
+HARNESS_CALLED AnmId AnmLoaded::create_vm_front(i32 script, i32 layer, AnmLoaded *unused)
 {
     ENTER_CS(CS_ANM_MANAGER);
     vm_count++;

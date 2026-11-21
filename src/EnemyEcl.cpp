@@ -435,7 +435,7 @@ int EnemyData::ecl_run_over_300()
         i32 file_index = full->context.current_context->get_int_arg(0);
         i32 script = full->context.current_context->get_int_arg(1);
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[file_index];
-        AnmId created = file->create_vm_front(script, -1, 0);
+        AnmId created = file->create_vm_front(script, -1, file);
         g_EffectManager->track(created);
         break;
     }
@@ -446,7 +446,7 @@ int EnemyData::ecl_run_over_300()
         i32 file_index = full->context.current_context->get_int_arg(0);
         i32 script = full->context.current_context->get_int_arg(1);
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[file_index];
-        AnmId id = file->create_vm_front(script, -1, 0);
+        AnmId id = file->create_vm_front(script, -1, file);
         g_EffectManager->track(id);
         AnmVm *vm = id.find_or_clear();
         for (i32 i = 0; i < full->context.current_context->get_int_arg(2); i++)
@@ -491,7 +491,7 @@ int EnemyData::ecl_run_over_300()
         selected_vm.id = 0;
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        selected_vm = file->create_vm_front(script, anm_layers + 7, 0);
+        selected_vm = file->create_vm_front(script, anm_layers + 7, file);
         AnmVm *vm = selected_vm.find_or_clear();
 
         if (slot == 0)
@@ -521,7 +521,7 @@ int EnemyData::ecl_run_over_300()
         anm_ids[0].id = 0;
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        anm_ids[0] = file->create_vm_front(anm_set_main, anm_layers + 7, 0);
+        anm_ids[0] = file->create_vm_front(anm_set_main, anm_layers + 7, file);
 
         flags_low &= ~ENEMY_FLAG_DIRECTIONAL_ANM;
         anm_slot_0_script = anm_set_main;
@@ -539,7 +539,7 @@ int EnemyData::ecl_run_over_300()
         selected_vm.id = 0;
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
-        selected_vm = file->create_vm_front(anm_set_main + 5, anm_layers + 7, 0);
+        selected_vm = file->create_vm_front(anm_set_main + 5, anm_layers + 7, file);
         AnmVm *vm = selected_vm.find_or_clear();
         if (slot == 0)
         {
@@ -557,23 +557,34 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_ANM_PLAY_ALTERNATE:
     {
         i32 slot = full->context.current_context->get_int_arg(0);
+        i32 slot_for_compare = slot;
         i32 alternate = full->context.current_context->get_int_arg(1);
-        AnmId &anm_id = anm_ids[slot];
-        g_AnmManager->delete_vm(anm_id);
-        anm_id.id = 0;
+        slot += offsetof(EnemyData, anm_ids) / sizeof(AnmId);
+        AnmId *anm_id = reinterpret_cast<AnmId *>(reinterpret_cast<u8 *>(this) + slot * sizeof(AnmId));
+        g_AnmManager->delete_vm(*anm_id);
+        anm_id->id = 0;
 
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
-        anm_id = g_EnemyManager->anim_statement_anms[selected_anm_index]->create_vm_front(
-            alternate >= 0 ? anm_set_main + alternate + 5 : anm_set_main, layer, 0);
-        AnmVm *vm = anm_id.find_or_clear();
-        if (slot == 0)
+        i32 script;
+        if (alternate >= 0)
+        {
+            script = anm_set_main + alternate + 5;
+        }
+        else
+        {
+            script = anm_set_main;
+        }
+        *anm_id = create_vm_front_via_pointer(file, script, layer);
+        AnmVm *vm = anm_id->find_or_clear();
+        if (slot_for_compare == 0)
         {
             final_sprite_size.x = vm->sprite_size.y * vm->scale.y;
             final_sprite_size.y = vm->sprite_size.x * vm->scale.x;
         }
         if (flags_low & ENEMY_FLAG_INTANGIBLE)
         {
-            anm_id.hide_tree();
+            anm_id->hide_tree();
         }
         break;
     }
