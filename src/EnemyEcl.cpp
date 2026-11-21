@@ -74,7 +74,7 @@ static __forceinline AnmId create_vm_front_at(AnmLoaded *file, i32 script, Float
         vm->entity_pos = *pos;
     }
     vm->rotation.z = rotation;
-    vm = ecl_run_vm(vm);
+    vm->run();
     vm->mode_of_create_child = ANM_CREATE_FRONT;
     AnmId id;
     id = g_AnmManager->insert_in_world_list_front(vm);
