@@ -2122,15 +2122,15 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
                     }
                     i32 start = j;
                     run = 0;
-                    while (!hit[j])
+                    do
                     {
-                        j++;
-                        run++;
-                        if (j >= i)
+                        if (hit[j])
                         {
                             break;
                         }
-                    }
+                        j++;
+                        run++;
+                    } while (j < i);
                     LaserLineInner params = inner;
                     params.laser_new_arg_2 = params.laser_new_arg_1 = (f32)run * 16.0f;
                     if (params.laser_new_arg_1 > 24.0f)
