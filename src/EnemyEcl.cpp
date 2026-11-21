@@ -416,7 +416,8 @@ int EnemyData::ecl_run_over_300()
         i32 file_index = full->context.current_context->get_int_arg(0);
         EnemyManager *enemy_manager = g_EnemyManager;
         AnmLoaded *file = enemy_manager->anim_statement_anms[file_index];
-        g_EffectManager->track(create_vm_front_at(file, script, &final_pos.pos, 0.0f));
+        AnmId id = create_vm_front_at(file, script, &final_pos.pos, 0.0f);
+        g_EffectManager->track(id);
         break;
     }
     // anmPlayHigh(file, script): creates a VM at the enemy's current position.
