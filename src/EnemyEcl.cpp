@@ -196,26 +196,25 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
     *reinterpret_cast<D3DXVECTOR2 *>(out) = xy;
 }
 
-static __forceinline void copy_ex_and_get_shot_origin(
-    EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
+static __forceinline D3DXVECTOR2 LTCG_VECTORCALL copy_ex_and_get_shot_origin(
+    EnemyData *enemy, i32 i, f32 *out_z, BulletEx *ex)
 {
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    f32 x;
-    f32 y;
-    f32 z;
+    f32 x = enemy->bullet_mgr_offsets[i].x;
+    f32 y = enemy->bullet_mgr_offsets[i].y;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        x = enemy->bullet_mgr_offsets[i].x + enemy->bullet_mgr_origins[i].xy.x;
-        y = enemy->bullet_mgr_offsets[i].y + enemy->bullet_mgr_origins[i].xy.y;
-        z = 0.0f;
+        *out_z = 0.0f;
+        x += enemy->bullet_mgr_origins[i].xy.x;
+        y += enemy->bullet_mgr_origins[i].xy.y;
     }
     else
     {
-        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
-        y = enemy->bullet_mgr_offsets[i].y + enemy->final_pos.pos.y;
-        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        *out_z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        x += enemy->final_pos.pos.x;
+        y += enemy->final_pos.pos.y;
     }
-    *out = D3DXVECTOR3(x, y, z);
+    return D3DXVECTOR2(x, y);
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
@@ -2348,8 +2347,9 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.beam) LaserBeamInner();
         i32 slot = get_int_arg(0);
-        copy_ex_and_get_shot_origin(
-            this, slot, &scratch.beam.start_pos, scratch.beam.ex);
+        *reinterpret_cast<D3DXVECTOR2 *>(&scratch.beam.start_pos) =
+            copy_ex_and_get_shot_origin(
+                this, slot, &scratch.beam.start_pos.z, scratch.beam.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 color = shooter.color;
         f32 ang_aim = shooter.ang_aim;
