@@ -2165,8 +2165,8 @@ i32 LaserInfiniteInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32
     f32 neg_angle = -rect_angle;
     f32 s = zun_sinf(neg_angle);
     f32 c = zun_cosf(neg_angle);
-    f32 local_x = dx * c - dy * s;
     f32 local_y = dy * c + dx * s;
+    f32 local_x = dx * c - dy * s;
     i32 n = 0;
     f32 local_angle = angle - rect_angle;
     while (local_angle > ZUN_PI)
@@ -2270,15 +2270,15 @@ i32 LaserInfiniteInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32
             }
             i32 run = 0;
             i32 start = j;
-            while (!hit[j])
+            do
             {
-                j++;
-                run++;
-                if (j >= i)
+                if (hit[j])
                 {
                     break;
                 }
-            }
+                j++;
+                run++;
+            } while (j < i);
             LaserLineInner params;
             params.speed = 8.0f;
             params.distance = 0.0f;
