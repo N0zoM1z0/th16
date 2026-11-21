@@ -56,6 +56,8 @@ operational entry point.
   The dedicated worktree keeps the pilot config, reports, and live fact
   query under `.analysis/factory-replay-th16/.analysis/`. The
   `th16-linked-pe-replay` branch in Factory contains the driver and policy.
+  Restore the archived Wine prefix before a new cold replay in either pilot.
+  See [artifact recovery](ARTIFACTS.md#cleanup-on-2026-11-21).
   The shared Web service still reports inventory-only TH16. Its existing
   receipts bind a different runner fingerprint.
 - Commit `2e6d711` makes single-unit replay check stored relocation targets

@@ -76,7 +76,40 @@ Deleting object or symbol-discovery caches would force substantial recompilation
 and defeat the requested incremental workflow. Even repeated per-unit PDB names
 belong to separate compiler invocations. Keep the complete current graph.
 
-## Current handoff cleanup: 2026-11-20
+## Cleanup on 2026-11-21
+
+`.analysis/` fell from **4.38 GiB to 3.37 GiB** of allocated space. The two
+idle Factory pilot Wine prefixes were archived independently. Both archives
+passed extraction checks for file contents, permissions, timestamps, extended
+attributes, and symlink targets. Each pilot returned identical accepted facts
+before and after its expanded prefix was removed, covering nine receipts.
+The pilot worktrees, build outputs, and evidence stores remain available.
+
+Before another cold replay in a pilot, restore its prefix while the pilot is
+idle. Set `pilot` to `factory-replay-th16` or
+`factory-replay-th16-follow-up`:
+
+```sh
+pilot=factory-replay-th16-follow-up
+archive=.analysis/archives/20261121/pilot-prefixes
+tools=".analysis/$pilot/.tools"
+(cd "$archive" && sha256sum -c SHA256SUMS) &&
+test ! -e "$tools/wine" && test ! -L "$tools/wine" &&
+tar --extract --zstd --acls --xattrs --same-permissions --keep-old-files \
+    --file="$archive/$pilot-wine.tar.zst" -C "$tools"
+```
+
+Six historical curve and geometry fixture directories in
+`boss-stats-work` were archived with verified file hashes. The standard
+helper can list, show and restore their evidence through
+`.analysis/cleanup-handoff-20261121-boss-stats.json`:
+
+```sh
+scripts/repo-python scripts/evidence-archive.py list boss-stats-work
+scripts/repo-python scripts/evidence-archive.py restore boss-stats-work/native-curve-final
+```
+
+## Previous handoff cleanup: 2026-11-20
 
 Archived **35 duplicate historical PDBs** and **28 duplicate historical
 `*-reference-audit.json` reports**. These **63 files** were byte-identical
