@@ -115,7 +115,7 @@ struct InterpFloat2
     // interpolators use (ExpHP: InterpRadialDist::step). HARNESS_CALLED:
     // its only caller, EnemyData::step_interpolators, realigns its frame,
     // so LTCG knows this one need not.
-    HARNESS_CALLED D3DXVECTOR2 step_radial_dist();
+    HARNESS_CALLED void step_radial_dist(D3DXVECTOR2 *out);
 };
 
 // InterpFloat for 3D vectors.

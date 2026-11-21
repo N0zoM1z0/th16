@@ -422,7 +422,7 @@ D3DXVECTOR3 InterpFloat3::step()
 // Keep vector operands on the left of their scalar coefficients, matching
 // InterpFloat2::step's target register schedule in the Bezier branch.
 // FUNCTION: TH16 0x425570
-HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
+HARNESS_CALLED void InterpFloat2::step_radial_dist(D3DXVECTOR2 *out)
 {
     InterpFloat2 *self = this;
     if (self->end_time > 0)
@@ -434,18 +434,22 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
             self->end_time = 0;
             if (self->method == INTERP_CONSTANT_VELOCITY || self->method == INTERP_CONSTANT_ACCEL)
             {
-                return self->initial;
+                *out = self->initial;
+                return;
             }
-            return self->goal;
+            *out = self->goal;
+            return;
         }
     }
     else if (self->end_time == 0)
     {
         if (self->method == INTERP_CONSTANT_VELOCITY || self->method == INTERP_CONSTANT_ACCEL)
         {
-            return self->initial;
+            *out = self->initial;
+            return;
         }
-        return self->goal;
+        *out = self->goal;
+        return;
     }
     if (self->method == INTERP_CONSTANT_VELOCITY)
     {
@@ -475,7 +479,7 @@ HARNESS_CALLED D3DXVECTOR2 InterpFloat2::step_radial_dist()
         f32 x = interp_common_methods(self->method, self->time.current_f, (f32)self->end_time);
         self->current = (self->goal - self->initial) * x + self->initial;
     }
-    return self->current;
+    *out = self->current;
 }
 
 // The per-axis loop is a do-while: as a for loop the constant acceleration
