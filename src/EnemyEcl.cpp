@@ -584,31 +584,30 @@ int EnemyData::ecl_run_over_300()
     // otherwise select its n-th alternate, starting at script + 5.
     case ECL_OP_ANM_PLAY_ALTERNATE:
     {
-        i32 slot = full->get_int_arg(0);
-        i32 slot_for_compare = slot;
-        register i32 alternate = full->get_int_arg(1);
-        AnmId *anm_id = &anm_ids[slot];
-        g_AnmManager->delete_vm(*anm_id);
-        anm_id->id = 0;
-
-        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        i32 slot = full->context.current_context->get_int_arg(0);
+        i32 n = full->context.current_context->get_int_arg(1);
+        AnmId *id = &anm_ids[slot];
+        g_AnmManager->delete_vm(*id);
+        id->id = 0;
+        AnmLoaded *anm = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
-        i32 script = anm_set_main;
-        if (alternate >= 0)
+        if (n >= 0)
         {
-            script = anm_set_main + alternate + 5;
+            *id = anm->create_vm_front(anm_set_main + 5 + n, layer, 0);
         }
-        AnmLoaded *unused_file = file;
-        *anm_id = file->create_vm_front(script, layer, unused_file);
-        AnmVm *vm = anm_id->find_or_clear();
-        if (slot_for_compare == 0)
+        else
         {
-            final_sprite_size.x = vm->sprite_size.y * vm->scale.y;
-            final_sprite_size.y = vm->sprite_size.x * vm->scale.x;
+            *id = anm->create_vm_front(anm_set_main, layer, 0);
+        }
+        AnmVm *vm = id->find_or_clear();
+        if (slot == 0)
+        {
+            final_sprite_size.x = vm->scale.y * vm->sprite_size.y;
+            final_sprite_size.y = vm->scale.x * vm->sprite_size.x;
         }
         if (flags_low & ENEMY_FLAG_INTANGIBLE)
         {
-            anm_id->hide_tree();
+            id->hide_tree();
         }
         break;
     }
