@@ -559,15 +559,13 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = (*reinterpret_cast<EclRunContext *volatile *>(&context->context.current_context))->get_int_arg(0);
         i32 alternate = full->context.current_context->get_int_arg(1);
-        AnmId *selected = &anm_ids[slot];
-        AnmId &anm_id = *selected;
+        AnmId &anm_id = anm_ids[slot];
         g_AnmManager->delete_vm(anm_id);
         anm_id.id = 0;
 
-        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
-        anm_id = file->create_vm_front(alternate >= 0 ? anm_set_main + alternate + 5 : anm_set_main,
-                                       layer, 0);
+        anm_id = g_EnemyManager->anim_statement_anms[selected_anm_index]->create_vm_front(
+            alternate >= 0 ? anm_set_main + alternate + 5 : anm_set_main, layer, 0);
         AnmVm *vm = anm_id.find_or_clear();
         if (slot == 0)
         {
