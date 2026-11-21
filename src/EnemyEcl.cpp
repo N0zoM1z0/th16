@@ -584,18 +584,20 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = full->get_int_arg(0);
         i32 slot_for_compare = slot;
-        i32 alternate = full->get_int_arg(1);
+        register i32 alternate = full->get_int_arg(1);
         AnmId *anm_id = &anm_ids[slot];
         g_AnmManager->delete_vm(*anm_id);
         anm_id->id = 0;
 
         AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
-        // The script argument is selected inline, as the target pushes the
-        // selected script directly from either side of the branch.
+        i32 script = anm_set_main;
+        if (alternate >= 0)
+        {
+            script = anm_set_main + alternate + 5;
+        }
         AnmLoaded *unused_file = file;
-        *anm_id = file->create_vm_front(
-            alternate >= 0 ? anm_set_main + alternate + 5 : anm_set_main, layer, unused_file);
+        *anm_id = file->create_vm_front(script, layer, unused_file);
         AnmVm *vm = anm_id->find_or_clear();
         if (slot_for_compare == 0)
         {
