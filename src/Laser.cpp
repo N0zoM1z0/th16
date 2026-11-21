@@ -1423,9 +1423,31 @@ static __forceinline i32 test_circle_rect_inline(f32 rect_x, f32 rect_y, f32 w, 
     return 0;
 }
 
-// The first boss, as the sum_rect_damage variants look it up (inlined
-// find_enemy_by_id).
+// The first boss, as the line and curve sum_rect_damage paths look it up
+// (the inlined EnemyManager::get_boss(0) traversal).
 static __forceinline EnemyInf *laser_boss()
+{
+    EnemyInf *e = NULL;
+    i32 id = g_EnemyManager->inner.boss_ids[0];
+    if (!id)
+    {
+        return NULL;
+    }
+    EnemyList *node;
+    for (node = g_EnemyManager->active_enemy_list_head; node != NULL; node = node->next)
+    {
+        e = node->entry;
+        if (e->enemy_id == id)
+        {
+            return e;
+        }
+    }
+    return e;
+}
+
+// The infinite-laser damage path retains the manager-local traversal that
+// matches its original register schedule.
+static __forceinline EnemyInf *laser_boss_infinite()
 {
     EnemyManager *manager = g_EnemyManager;
     i32 id = manager->inner.boss_ids[0];
@@ -1443,6 +1465,12 @@ static __forceinline EnemyInf *laser_boss()
         }
     }
     return enemy;
+}
+
+static __forceinline AnmLoadedSprite *laser_boss_sprite_infinite()
+{
+    AnmVm *vm = get_vm_or_clear(laser_boss_infinite()->enemy.anm_ids[0]);
+    return &g_AnmManager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id];
 }
 
 // The size of the sprite of the boss's first VM.
@@ -1582,9 +1610,9 @@ i32 LaserInfiniteInf::sum_rect_damage(i32 a, i32 b, i32 c, i32 d, i32 e, i32 f)
     {
         if (*boss_hit == 0)
         {
-            if (test_circle_rect_inline(laser_boss()->enemy.final_pos.pos.x, laser_boss()->enemy.final_pos.pos.y,
-                                        laser_boss_sprite()->sprite_width * 0.75f,
-                                        laser_boss_sprite()->sprite_height * 0.75f, 0.0f, world_x, world_y, 8.0f))
+            if (test_circle_rect_inline(laser_boss_infinite()->enemy.final_pos.pos.x, laser_boss_infinite()->enemy.final_pos.pos.y,
+                                        laser_boss_sprite_infinite()->sprite_width * 0.75f,
+                                        laser_boss_sprite_infinite()->sprite_height * 0.75f, 0.0f, world_x, world_y, 8.0f))
             {
                 *boss_hit = 1;
             }
