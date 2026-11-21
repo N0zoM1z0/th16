@@ -564,7 +564,6 @@ int EnemyData::ecl_run_over_300()
         g_AnmManager->delete_vm(*anm_id);
         anm_id->id = 0;
 
-        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
         i32 layer = anm_layers + 7;
         i32 script;
         if (alternate >= 0)
@@ -575,7 +574,10 @@ int EnemyData::ecl_run_over_300()
         {
             script = anm_set_main;
         }
-        *anm_id = create_vm_front_via_pointer(file, script, layer);
+        AnmLoaded *file = g_EnemyManager->anim_statement_anms[selected_anm_index];
+        // create_vm_front receives the loaded file again as its unused third ABI argument.
+        AnmLoaded *unused_file = file;
+        *anm_id = file->create_vm_front(script, layer, unused_file);
         AnmVm *vm = anm_id->find_or_clear();
         if (slot_for_compare == 0)
         {
