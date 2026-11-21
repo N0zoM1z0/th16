@@ -2278,7 +2278,6 @@ static __forceinline void add_camera_position_delta(D3DXVECTOR3 *position, const
 // FUNCTION: TH16 0x41bb50
 int EnemyData::step_interpolators()
 {
-    D3DXVECTOR2 radial_dist;
     prev_final_pos = final_pos;
     if (abs_angle_i.end_time != 0 && (abs_pos.flags & POSVEL_MODE_MASK) != POSVEL_MODE_CIRCLE &&
         (abs_pos.flags & POSVEL_MODE_MASK) != POSVEL_MODE_ELLIPSE)
@@ -2300,12 +2299,14 @@ int EnemyData::step_interpolators()
     }
     if (abs_radial_dist_i.end_time != 0)
     {
+        D3DXVECTOR2 radial_dist;
         abs_radial_dist_i.step_radial_dist(&radial_dist);
         abs_pos.radial_dist = radial_dist.x;
         abs_pos.radial_speed = radial_dist.y;
     }
     if (rel_radial_dist_i.end_time != 0)
     {
+        D3DXVECTOR2 radial_dist;
         rel_radial_dist_i.step_radial_dist(&radial_dist);
         rel_pos.radial_dist = radial_dist.x;
         rel_pos.radial_speed = radial_dist.y;
