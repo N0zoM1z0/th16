@@ -2294,7 +2294,7 @@ int EnemyData::ecl_run_over_300()
         }
         scratch.line.start_pos.x = x;
         scratch.line.start_pos.y = y;
-        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
+        const EnemyBulletShooter &shooter = bullet_props[slot];
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.line.bullet_type = bullet_type;
