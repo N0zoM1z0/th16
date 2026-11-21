@@ -2193,8 +2193,8 @@ i32 LaserInfiniteInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32
     f32 neg_angle = -rect_angle;
     f32 s = zun_sinf(neg_angle);
     f32 c = zun_cosf(neg_angle);
-    f32 local_y = dy * c + dx * s;
     f32 local_x = dx * c - dy * s;
+    f32 local_y = dy * c + dx * s;
     i32 n = 0;
     f32 local_angle = angle - rect_angle;
     while (local_angle > ZUN_PI)
