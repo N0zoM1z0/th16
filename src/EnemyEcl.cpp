@@ -2349,7 +2349,7 @@ int EnemyData::ecl_run_over_300()
         i32 slot = get_int_arg(0);
         get_shot_origin_and_copy_ex_branch_first(
             this, slot, &scratch.curve.start_pos, scratch.curve.ex);
-        const EnemyBulletShooter &shooter = bullet_props[slot];
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.curve.type = type;
