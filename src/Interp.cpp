@@ -482,6 +482,17 @@ HARNESS_CALLED void InterpFloat2::step_radial_dist(D3DXVECTOR2 *out)
     *out = self->current;
 }
 
+// The enemy tick writes the interpolated pair directly into PosVel's adjacent
+// radial_dist/radial_speed fields. Keep the original vector entry point above
+// intact for the analysis harness.
+DECOMP_NOINLINE void InterpFloat2::step_radial_dist(f32 *out_x, f32 *out_y)
+{
+    D3DXVECTOR2 radial_dist;
+    step_radial_dist(&radial_dist);
+    *out_x = radial_dist.x;
+    *out_y = radial_dist.y;
+}
+
 // The per-axis loop is a do-while: as a for loop the constant acceleration
 // case loaded bezier_2 before initial.
 // TODO: 97%; that case stores current from xmm0 where the original copies initial back through eax (an int copy or a bezier_2 store before it gives that but swaps esi and edi everywhere), and the returned vector's z is loaded after x/y.
