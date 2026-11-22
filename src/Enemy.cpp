@@ -1729,9 +1729,9 @@ int EnemyInf::get_int_global(int var)
     case ECL_VAR_REL_SPEED:
         return (i32)enemy.rel_pos.speed;
     case ECL_VAR_ABS_RADIUS:
-        return (i32)enemy.abs_pos.radial_dist;
+        return (i32)enemy.abs_pos.radial.x;
     case ECL_VAR_REL_RADIUS:
-        return (i32)enemy.rel_pos.radial_dist;
+        return (i32)enemy.rel_pos.radial.x;
     case ECL_VAR_BOSS_X:
         return (i32)g_EnemyManager->get_boss(0)->enemy.final_pos.pos.x;
     case ECL_VAR_BOSS_Y:
@@ -2028,9 +2028,9 @@ f32 EnemyInf::get_float_global(int var)
     case ECL_VAR_REL_SPEED:
         return enemy.rel_pos.speed;
     case ECL_VAR_ABS_RADIUS:
-        return enemy.abs_pos.radial_dist;
+        return enemy.abs_pos.radial.x;
     case ECL_VAR_REL_RADIUS:
-        return enemy.rel_pos.radial_dist;
+        return enemy.rel_pos.radial.x;
     case ECL_VAR_BOSS_X:
         boss = g_EnemyManager->get_boss(0);
         return boss != NULL ? boss->enemy.final_pos.pos.x : 0.0f;
@@ -2299,11 +2299,11 @@ int EnemyData::step_interpolators()
     }
     if (abs_radial_dist_i.end_time != 0)
     {
-        abs_radial_dist_i.step_radial_dist(&abs_pos.radial_dist, &abs_pos.radial_speed);
+        abs_radial_dist_i.step_radial_dist(&abs_pos.radial);
     }
     if (rel_radial_dist_i.end_time != 0)
     {
-        rel_radial_dist_i.step_radial_dist(&rel_pos.radial_dist, &rel_pos.radial_speed);
+        rel_radial_dist_i.step_radial_dist(&rel_pos.radial);
     }
     if (abs_pos_i.end_time != 0)
     {

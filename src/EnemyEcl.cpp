@@ -1075,11 +1075,11 @@ int EnemyData::ecl_run_over_300()
         }
         if (radius > -999999.0)
         {
-            pv->radial_dist = radius;
+            pv->radial.x = radius;
         }
         if (radial_speed > -999999.0)
         {
-            pv->radial_speed = radial_speed;
+            pv->radial.y = radial_speed;
         }
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_CIRCLE;
         pv->step_from_center();
@@ -1100,10 +1100,10 @@ int EnemyData::ecl_run_over_300()
         f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial_speed;
-        f32 goal_radius = radius > -999999.0 ? radius : pv->radial_dist;
-        f32 initial_radius = pv->radial_dist;
-        f32 initial_radial_speed = pv->radial_speed;
+        f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial.y;
+        f32 goal_radius = radius > -999999.0 ? radius : pv->radial.x;
+        f32 initial_radius = pv->radial.x;
+        f32 initial_radial_speed = pv->radial.y;
         i32 time = get_int_arg(0);
         i32 mode = get_int_arg(1);
         if (time <= 0)
@@ -1173,11 +1173,11 @@ int EnemyData::ecl_run_over_300()
         }
         if (radius > -999999.0)
         {
-            pv->radial_dist = radius;
+            pv->radial.x = radius;
         }
         if (radial_speed > -999999.0)
         {
-            pv->radial_speed = radial_speed;
+            pv->radial.y = radial_speed;
         }
         if (ellipse_angle > -999999.0)
         {
@@ -1209,10 +1209,10 @@ int EnemyData::ecl_run_over_300()
         f32 ellipse_ratio = get_float_arg(EclFloatArgIndex{6});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial_speed;
-        f32 goal_radius = radius > -999999.0 ? radius : pv->radial_dist;
-        f32 initial_radius = pv->radial_dist;
-        f32 initial_radial_speed = pv->radial_speed;
+        f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial.y;
+        f32 goal_radius = radius > -999999.0 ? radius : pv->radial.x;
+        f32 initial_radius = pv->radial.x;
+        f32 initial_radial_speed = pv->radial.y;
         f32 goal_ellipse_ratio = ellipse_ratio > -999999.0 ? ellipse_ratio : pv->ellipse_ratio;
         f32 goal_ellipse_angle = ellipse_angle > -999999.0 ? ellipse_angle : pv->ellipse_angle.value;
         f32 initial_ellipse_angle = pv->ellipse_angle.value;

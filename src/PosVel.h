@@ -31,8 +31,7 @@ struct PosVel
     Float3 center;
     f32 speed;
     ZunAngle angle;
-    f32 radial_dist;
-    f32 radial_speed;
+    Float2 radial;
     ZunAngle ellipse_angle;
     f32 ellipse_ratio;
     ZunAngle wave_angle;
