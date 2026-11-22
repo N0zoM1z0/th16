@@ -2362,9 +2362,7 @@ int EnemyData::step_interpolators()
             }
             i32 layer = anm_layers + 7;
             i32 script = anm_set_main + script_offset;
-            typedef AnmId (AnmLoaded::*CreateWithMode)(i32, Float3 *, f32, i32, i32);
-            AnmId id = (file->*static_cast<CreateWithMode>(&AnmLoaded::create_vm_inline))(
-                script, &pos, 0.0f, layer, 8);
+            AnmId id = file->create_vm_inline(script, &pos, 0.0f, layer, 8);
             anm_ids[0] = id;
             anm_direction = dir;
         }
