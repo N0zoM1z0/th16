@@ -1231,20 +1231,16 @@ int EnemyData::ecl_run_over_300()
         radial_i->bezier_1 = g_zero_vec2;
         radial_i->bezier_2 = g_zero_vec2;
         radial_i->method = static_cast<InterpMode>(mode);
-        radial_i->initial.x = initial_radius;
-        radial_i->initial.y = initial_radial_speed;
-        radial_i->goal.x = goal_radius;
-        radial_i->goal.y = goal_radial_speed;
+        radial_i->initial = D3DXVECTOR2(initial_radius, initial_radial_speed);
+        radial_i->goal = D3DXVECTOR2(goal_radius, goal_radial_speed);
         radial_i->reset_timer();
 
         ellipse_i->end_time = time;
         ellipse_i->bezier_1 = g_zero_vec2;
         ellipse_i->bezier_2 = g_zero_vec2;
         ellipse_i->method = static_cast<InterpMode>(mode);
-        ellipse_i->initial.x = initial_ellipse_angle;
-        ellipse_i->initial.y = initial_ellipse_ratio;
-        ellipse_i->goal.x = goal_ellipse_angle;
-        ellipse_i->goal.y = goal_ellipse_ratio;
+        ellipse_i->initial = D3DXVECTOR2(initial_ellipse_angle, initial_ellipse_ratio);
+        ellipse_i->goal = D3DXVECTOR2(goal_ellipse_angle, goal_ellipse_ratio);
         ellipse_i->reset_timer();
         pv->velocity = pv->pos;
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_ELLIPSE;
