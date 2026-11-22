@@ -2291,7 +2291,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
-        get_shot_origin_and_copy_ex_branch_first(
+        get_shot_origin_and_copy_ex_packed(
             this, slot, &scratch.curve.start_pos, scratch.curve.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
