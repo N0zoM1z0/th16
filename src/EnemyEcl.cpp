@@ -55,34 +55,6 @@ static inline EnemyEclAnmVmRunFunc enemy_ecl_anm_vm_run_func()
     return &AnmVm::run;
 }
 static DECOMP_NOINLINE AnmVm *ecl_run_vm(AnmVm *vm);
-// create_vm, inserted at the front of the world list like create_vm_front
-// (0x426160, which is a copy with pos and rotation folded). LTCG inlined
-// this into the anmPlay instructions.
-static __forceinline AnmId create_vm_front_at(AnmLoaded *file, i32 script, Float3 *pos, f32 rotation)
-{
-    ENTER_CS(CS_ANM_MANAGER);
-    file->vm_count++;
-    AnmVm *vm = g_AnmManager->allocate_vm();
-    file->copy_vm(vm, script);
-    vm->flags_hi |= ANM_VM_CREATED_BY_GAME;
-    if (pos == NULL)
-    {
-        vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        vm->rotation.z = rotation;
-    }
-    else
-    {
-        vm->entity_pos = *pos;
-        vm->rotation.z = rotation;
-    }
-    vm->run();
-    vm->mode_of_create_child = ANM_CREATE_FRONT;
-    AnmId id;
-    id = g_AnmManager->insert_in_world_list_front(vm);
-    LEAVE_CS(CS_ANM_MANAGER);
-    return id;
-}
-
 // pi - angle, wrapped: the direction mirrored about the vertical axis, for
 // mirrored enemies (ENEMY_FLAG_MIRRORED).
 static __forceinline f32 mirror_angle(f32 angle)
@@ -433,8 +405,8 @@ int EnemyData::ecl_run_over_300()
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         Float3 pos = Float3(x, y, 0.0f) + final_pos.pos;
-        g_EffectManager->track(create_vm_front_at(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)], full->context.current_context->get_int_arg(1),
-                                                  &pos, full->context.current_context->get_float_arg(EclFloatArgIndex{4})));
+        g_EffectManager->track(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)]->create_vm_front_inline(
+            full->context.current_context->get_int_arg(1), &pos, full->context.current_context->get_float_arg(EclFloatArgIndex{4})));
         break;
     }
     // anmPlay(file, script)
@@ -444,7 +416,7 @@ int EnemyData::ecl_run_over_300()
         i32 file_index = full->context.current_context->get_int_arg(0);
         EnemyManager *enemy_manager = g_EnemyManager;
         AnmLoaded *file = enemy_manager->anim_statement_anms[file_index];
-        AnmId id = create_vm_front_at(file, script, &final_pos.pos, 0.0f);
+        AnmId id = file->create_vm_front_inline(script, &final_pos.pos, 0.0f);
         g_EffectManager->track(id);
         break;
     }
@@ -488,8 +460,8 @@ int EnemyData::ecl_run_over_300()
     {
         i32 script = full->context.current_context->get_int_arg(1);
         i32 file_index = full->context.current_context->get_int_arg(0);
-        AnmId id = create_vm_front_at(g_EnemyManager->anim_statement_anms[file_index], script,
-                                      &final_pos.pos, 0.0f);
+        AnmId id = g_EnemyManager->anim_statement_anms[file_index]->create_vm_front_inline(
+            script, &final_pos.pos, 0.0f);
         AnmVm *vm = id.find_or_clear();
         if (vm != NULL)
         {

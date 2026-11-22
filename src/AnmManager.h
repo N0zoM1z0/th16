@@ -167,6 +167,7 @@ struct AnmLoaded
     // create_vm's body, for the callers LTCG inlined it into (0x426780).
     __forceinline AnmId create_vm_inline(i32 script, Float3 *pos, f32 rotation, i32 layer);
     __forceinline AnmId create_vm_inline(i32 script, Float3 *pos, f32 rotation, i32 layer, i32 child_mode);
+    __forceinline AnmId create_vm_front_inline(i32 script, Float3 *pos, f32 rotation);
     // 0x406380. Creates a VM running the script at the origin, on the given
     // layer unless negative; also stores the VM in *out if out is not NULL.
     AnmId create_effect(i32 script, i32 layer, AnmVm **out);
@@ -861,6 +862,34 @@ __forceinline AnmId AnmLoaded::create_vm_inline(i32 script, Float3 *pos, f32 rot
     vm->mode_of_create_child = static_cast<AnmCreateMode>(child_mode);
     AnmId id;
     id = g_AnmManager->insert_in_world_list_back(vm);
+    LEAVE_CS(CS_ANM_MANAGER);
+    return id;
+}
+
+
+// The positioned front-list variant used by the enemy ECL anmPlay
+// instructions. It shares create_vm's setup but inserts at the front.
+__forceinline AnmId AnmLoaded::create_vm_front_inline(i32 script, Float3 *pos, f32 rotation)
+{
+    ENTER_CS(CS_ANM_MANAGER);
+    vm_count++;
+    AnmVm *vm = g_AnmManager->allocate_vm();
+    copy_vm(vm, script);
+    vm->flags_hi |= ANM_VM_CREATED_BY_GAME;
+    if (pos == NULL)
+    {
+        vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->rotation.z = rotation;
+    }
+    else
+    {
+        vm->entity_pos = *pos;
+        vm->rotation.z = rotation;
+    }
+    vm->run();
+    vm->mode_of_create_child = ANM_CREATE_FRONT;
+    AnmId id;
+    id = g_AnmManager->insert_in_world_list_front(vm);
     LEAVE_CS(CS_ANM_MANAGER);
     return id;
 }
