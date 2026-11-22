@@ -23,6 +23,15 @@ enum PosVelMode
 // The PosVelMode bits of PosVel::flags.
 const u32 POSVEL_MODE_MASK = 0xf;
 
+// The radial component of PosVel: distance from center and its per-frame
+// change. It is laid out as two adjacent floats for InterpFloat2 output.
+struct RadialMotion
+{
+    f32 distance;
+    f32 speed;
+};
+static_assert(sizeof(RadialMotion) == sizeof(Float2), "radial motion layout");
+
 // Position and motion of an enemy or bullet-like object. Layout from
 // ExpHP's th-re-data (zPosVel).
 struct PosVel
@@ -31,7 +40,7 @@ struct PosVel
     Float3 center;
     f32 speed;
     ZunAngle angle;
-    Float2 radial;
+    RadialMotion radial;
     ZunAngle ellipse_angle;
     f32 ellipse_ratio;
     ZunAngle wave_angle;

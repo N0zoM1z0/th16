@@ -1729,9 +1729,9 @@ int EnemyInf::get_int_global(int var)
     case ECL_VAR_REL_SPEED:
         return (i32)enemy.rel_pos.speed;
     case ECL_VAR_ABS_RADIUS:
-        return (i32)enemy.abs_pos.radial.x;
+        return (i32)enemy.abs_pos.radial.distance;
     case ECL_VAR_REL_RADIUS:
-        return (i32)enemy.rel_pos.radial.x;
+        return (i32)enemy.rel_pos.radial.distance;
     case ECL_VAR_BOSS_X:
         return (i32)g_EnemyManager->get_boss(0)->enemy.final_pos.pos.x;
     case ECL_VAR_BOSS_Y:
@@ -2028,9 +2028,9 @@ f32 EnemyInf::get_float_global(int var)
     case ECL_VAR_REL_SPEED:
         return enemy.rel_pos.speed;
     case ECL_VAR_ABS_RADIUS:
-        return enemy.abs_pos.radial.x;
+        return enemy.abs_pos.radial.distance;
     case ECL_VAR_REL_RADIUS:
-        return enemy.rel_pos.radial.x;
+        return enemy.rel_pos.radial.distance;
     case ECL_VAR_BOSS_X:
         boss = g_EnemyManager->get_boss(0);
         return boss != NULL ? boss->enemy.final_pos.pos.x : 0.0f;

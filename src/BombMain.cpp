@@ -427,7 +427,7 @@ void BombReimuAOrb::update()
         if (time < 90)
         {
             start_pos = g_Player->inner.pos;
-            motion.radial.x += 1.5f;
+            motion.radial.distance += 1.5f;
             motion.angle.value = wrap_angle(motion.angle.value + ZUN_PI / 30);
         }
         else if (time < (index + 9) * 10)
@@ -567,10 +567,10 @@ orb_alive:
             orb->start(i, &g_Player->inner.pos);
             PosVel *motion = orb_motion(orb);
             motion->flags = (motion->flags & ~0xd) | 2;
-            motion->radial.x = 0.0f;
+            motion->radial.distance = 0.0f;
             motion->angle.value = wrap_angle(angle);
             i32 source = orb->damage_source;
-            motion->radial.y = ZUN_PI / 64;
+            motion->radial.speed = ZUN_PI / 64;
             g_Player->get_damage_source(source)->damage_limit = 300;
             angle = wrap_angle(angle + ZUN_PI / 4);
         }
