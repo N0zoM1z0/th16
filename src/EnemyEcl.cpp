@@ -1091,16 +1091,17 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CIRCLE_TIME:
     case ECL_OP_MOVE_CIRCLE_REL_TIME:
     {
-        PosVel *pv = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_pos : &rel_pos;
-        InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_speed_i : &rel_speed_i;
-        InterpFloat2 *radial_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_radial_dist_i : &rel_radial_dist_i;
+        bool absolute = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME;
+        PosVel *pv = absolute ? &abs_pos : &rel_pos;
+        InterpFloat *speed_i = absolute ? &abs_speed_i : &rel_speed_i;
+        InterpFloat2 *radial_i = absolute ? &abs_radial_dist_i : &rel_radial_dist_i;
         f32 speed = get_float_arg(EclFloatArgIndex{2});
         f32 radius = get_float_arg(EclFloatArgIndex{3});
         f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        volatile f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial_speed;
-        volatile f32 goal_radius = radius > -999999.0 ? radius : pv->radial_dist;
+        f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial_speed;
+        f32 goal_radius = radius > -999999.0 ? radius : pv->radial_dist;
         f32 initial_radius = pv->radial_dist;
         f32 initial_radial_speed = pv->radial_speed;
         i32 time = get_int_arg(0);
@@ -1116,15 +1117,10 @@ int EnemyData::ecl_run_over_300()
         radial_i->bezier_1 = g_zero_vec2;
         radial_i->bezier_2 = g_zero_vec2;
         radial_i->method = static_cast<InterpMode>(mode);
-        u32 radial_bits;
-        memcpy(&radial_bits, &initial_radius, sizeof(radial_bits));
-        *(volatile u32 *)&radial_i->initial.x = radial_bits;
-        memcpy(&radial_bits, &initial_radial_speed, sizeof(radial_bits));
-        *(volatile u32 *)&radial_i->initial.y = radial_bits;
-        radial_bits = *(volatile u32 *)&goal_radius;
-        *(volatile u32 *)&radial_i->goal.x = radial_bits;
-        radial_bits = *(volatile u32 *)&goal_radial_speed;
-        *(volatile u32 *)&radial_i->goal.y = radial_bits;
+        radial_i->initial.x = initial_radius;
+        radial_i->initial.y = initial_radial_speed;
+        radial_i->goal.x = goal_radius;
+        radial_i->goal.y = goal_radial_speed;
         radial_i->reset_timer();
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_CIRCLE;
         pv->step_from_center();
@@ -1298,9 +1294,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_RAND:
     case ECL_OP_MOVE_RAND_REL:
     {
-        PosVel *pv = instr->opcode == ECL_OP_MOVE_RAND ? &abs_pos : &rel_pos;
-        InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_angle_i : &rel_angle_i;
-        InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_speed_i : &rel_speed_i;
+        bool absolute = instr->opcode == ECL_OP_MOVE_RAND;
+        PosVel *pv = absolute ? &abs_pos : &rel_pos;
+        InterpFloat *angle_i = absolute ? &abs_angle_i : &rel_angle_i;
+        InterpFloat *speed_i = absolute ? &abs_speed_i : &rel_speed_i;
 
         f32 current_x = final_pos.pos.x;
         f32 center_x = move_limit_center.x;
