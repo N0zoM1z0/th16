@@ -744,7 +744,7 @@ void Bullet::run_ex()
         {
             return;
         }
-        if (type & active_ex_flags)
+        if (active_ex_flags & type)
         {
             return;
         }
@@ -946,7 +946,7 @@ void Bullet::run_ex()
             break;
         case BULLET_EX_TAG:
             ex_tag = ex->a;
-            ex_index = index + 1;
+            ex_index++;
             continue;
         case BULLET_EX_SHOOT:
         {
@@ -1106,17 +1106,17 @@ void Bullet::run_ex()
             ex_index++;
             continue;
         case BULLET_EX_DELAY:
-            if (ex->a <= 0)
+            if (ex->a > 0)
             {
-                ex_index = index + 1;
-                continue;
+                active_ex_flags |= ex->type;
+                ex_state[13].timer.set_value(ex->a);
+                break;
             }
-            active_ex_flags |= ex->type;
-            ex_state[13].timer.set_value(ex->a);
-            break;
+            ex_index++;
+            continue;
         case BULLET_EX_LAYER:
             layer = ex->a;
-            ex_index = index + 1;
+            ex_index++;
             continue;
         case BULLET_EX_ENEMY:
         {
@@ -1231,14 +1231,14 @@ void Bullet::run_ex()
             }
             continue;
         case BULLET_EX_WAIT:
-            if (ex->a <= 0)
+            if (ex->a > 0)
             {
-                ex_index = index + 1;
-                continue;
+                active_ex_flags |= ex->type;
+                ex_state[5].timer.set_value(ex->a);
+                break;
             }
-            active_ex_flags |= ex->type;
-            ex_state[5].timer.set_value(ex->a);
-            break;
+            ex_index++;
+            continue;
         case BULLET_EX_HITBOX:
         {
             f32 size = ex->r;
