@@ -1317,18 +1317,10 @@ int EnemyData::ecl_run_over_300()
                 angle += ecl_move_rand_pi;
                 angle = normalize_angle(angle);
             }
-            else if (g_Player->inner.pos.x > current_x)
-            {
-                angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() * ecl_move_rand_quarter;
-                if (g_replay_safe_rng.rand_u16() % 3 == 0)
-                {
-                    angle += ecl_move_rand_pi;
-                }
-            }
             else
             {
                 angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() * ecl_move_rand_quarter;
-                if (g_replay_safe_rng.rand_u16() % 3 != 0)
+                if ((g_Player->inner.pos.x > current_x) == (g_replay_safe_rng.rand_u16() % 3 == 0))
                 {
                     angle += ecl_move_rand_pi;
                 }
