@@ -2214,25 +2214,8 @@ int EnemyData::ecl_run_over_300()
         ::new (&scratch.line) LaserLineInner();
         register i32 slot = get_int_arg(0);
         EnemyBulletShooter *shooter = &bullet_props[slot];
-        f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        memcpy(scratch.line.ex, shooter->ex, sizeof(shooter->ex));
-        bool has_origin = origin_enabled > 0.9f;
-        f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
-        f32 x;
-        if (has_origin)
-        {
-            x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
-            y += bullet_mgr_origins[slot].xy.y;
-            scratch.line.start_pos.z = 0.0f;
-        }
-        else
-        {
-            scratch.line.start_pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
-            x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
-            y += final_pos.pos.y;
-        }
-        scratch.line.start_pos.x = x;
-        scratch.line.start_pos.y = y;
+        get_shot_origin_and_copy_ex_packed(
+            this, slot, &scratch.line.start_pos, scratch.line.ex);
         const volatile EnemyBulletShooter &shooter_settings = *shooter;
         i32 bullet_type = shooter_settings.type;
         f32 ang_aim = shooter_settings.ang_aim;
