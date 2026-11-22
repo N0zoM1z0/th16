@@ -791,7 +791,7 @@ void Bullet::run_ex()
             break;
         case BULLET_EX_ANGLE:
         {
-            active_ex_flags |= BULLET_EX_ANGLE;
+            active_ex_flags |= ex->type;
             ex_state[3].floats[0] = ex->s > -999990.0f ? ex->s : speed;
             f32 r = ex->r;
             f32 resolved_angle =
@@ -836,7 +836,7 @@ void Bullet::run_ex()
             break;
         }
         case BULLET_EX_BOUNCE:
-            active_ex_flags |= BULLET_EX_BOUNCE;
+            active_ex_flags |= ex->type;
             ex_state[4].floats[0] = ex->r;
             if (ex->b & 0x20)
             {
@@ -856,7 +856,7 @@ void Bullet::run_ex()
             ex_invuln_remaining_frames = ex->a;
             break;
         case BULLET_EX_OFFSCREEN:
-            active_ex_flags |= BULLET_EX_OFFSCREEN;
+            active_ex_flags |= ex->type;
             ex_state[11].timer.set(ex->a);
             ex_state[11].ints[0] = ex->b;
             ex_index++;
@@ -939,7 +939,7 @@ void Bullet::run_ex()
             }
             break;
         case BULLET_EX_WRAP:
-            active_ex_flags |= BULLET_EX_WRAP;
+            active_ex_flags |= ex->type;
             ex_state[6].ints[1] = ex->a;
             ex_state[6].ints[0] = 0;
             ex_state[6].ints[2] = ex->b;
@@ -1003,7 +1003,7 @@ void Bullet::run_ex()
             ex_index = ex->a;
             continue;
         case BULLET_EX_VELADD:
-            active_ex_flags |= BULLET_EX_VELADD;
+            active_ex_flags |= type;
             bullet_sincosmul((Float3 *)&ex_state[9].floats[5], ex->r, ex->s);
             ex_state[9].floats[7] = 0.0f;
             ex_state[9].floats[1] = ex->r;
@@ -1030,7 +1030,7 @@ void Bullet::run_ex()
             continue;
         case BULLET_EX_MOVE:
         {
-            active_ex_flags |= BULLET_EX_MOVE;
+            active_ex_flags |= type;
             D3DXVECTOR3 *target = (D3DXVECTOR3 *)&ex_state[8].floats[5];
             target->x = ex->r;
             target->y = ex->s;
@@ -1070,7 +1070,7 @@ void Bullet::run_ex()
             ex_index++;
             continue;
         case BULLET_EX_SIZE:
-            active_ex_flags |= BULLET_EX_SIZE;
+            active_ex_flags |= type;
             scale_i.initial = ex->r;
             scale_i.goal = ex->s;
             scale_i.bezier_1 = 0.0f;
@@ -1084,7 +1084,7 @@ void Bullet::run_ex()
         case BULLET_EX_VELTIME:
             // The original copies both angle arms into temporaries as here,
             // and LTCG inlined ZunAngle(f32) at this site only.
-            active_ex_flags |= BULLET_EX_VELTIME;
+            active_ex_flags |= type;
             ex_state[10].floats[0] = (ex->r - speed) / (f32)ex->a;
             ex_state[10].floats[1] =
                 (ex->s <= -999990.0f
@@ -1111,7 +1111,7 @@ void Bullet::run_ex()
                 ex_index = index + 1;
                 continue;
             }
-            active_ex_flags |= BULLET_EX_DELAY;
+            active_ex_flags |= ex->type;
             ex_state[13].timer.set_value(ex->a);
             break;
         case BULLET_EX_LAYER:
@@ -1236,7 +1236,7 @@ void Bullet::run_ex()
                 ex_index = index + 1;
                 continue;
             }
-            active_ex_flags |= BULLET_EX_WAIT;
+            active_ex_flags |= ex->type;
             ex_state[5].timer.set_value(ex->a);
             break;
         case BULLET_EX_HITBOX:
