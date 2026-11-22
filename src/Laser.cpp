@@ -2097,7 +2097,7 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
     }
     if (count != 0)
     {
-        if (count >= i)
+        if (count == i)
         {
             pending_delete = 1;
             return count;
@@ -2225,8 +2225,7 @@ i32 LaserInfiniteInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32
     Float3 step;
     laser_sincosmul(&step, angle, 8.0f);
     step.z = 0.0f;
-    Float3 pos;
-    pos = position + step;
+    Float3 pos = position + step;
     pos.z = 0.0f;
     step.x += step.x;
     step.y += step.y;
