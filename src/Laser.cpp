@@ -2025,12 +2025,13 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
     f32 dist = 8.0f;
     u8 hit[0x100];
     memset(hit, 0, sizeof(hit));
-    Float3 diff = position - *center;
+    f32 dx = position.x - center->x;
+    f32 dy = position.y - center->y;
     f32 neg_angle = -rect_angle;
     f32 s = zun_sinf(neg_angle);
     f32 c = zun_cosf(neg_angle);
-    f32 local_y = diff.y * c + diff.x * s;
-    f32 local_x = diff.x * c - diff.y * s;
+    f32 local_y = dy * c + dx * s;
+    f32 local_x = dx * c - dy * s;
     i32 n = 0;
     f32 local_angle = angle - rect_angle;
     while (local_angle > ZUN_PI)
@@ -2054,8 +2055,8 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
     local_y += local_step.y;
     local_step.z = 0.0f;
     local_step.y += local_step.y;
-    f32 half_w = size->x * 0.5f;
-    f32 half_h = size->y * 0.5f;
+    f32 half_w = *(volatile f32 *)&size->x * 0.5f;
+    f32 half_h = *(volatile f32 *)&size->y * 0.5f;
     local_x += local_step.x;
     local_step.x += local_step.x;
     Float3 step;
@@ -2097,7 +2098,7 @@ i32 LaserLineInf::cancel_as_bomb_rectangle(Float3 *center, Float3 *size, f32 rec
     }
     if (count != 0)
     {
-        if (count == i)
+        if (count >= i)
         {
             pending_delete = 1;
             return count;
