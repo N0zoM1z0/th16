@@ -8,8 +8,6 @@
 #include "decomp.h"
 #include "types.h"
 
-struct RadialMotion;
-
 // Easing curves of ANM/ECL interpolation (the "mode" of an interpolator).
 enum InterpMode : i32
 {
@@ -118,7 +116,6 @@ struct InterpFloat2
     // its only caller, EnemyData::step_interpolators, realigns its frame,
     // so LTCG knows this one need not.
     HARNESS_CALLED void step_radial_dist(D3DXVECTOR2 *out);
-    DECOMP_NOINLINE void step_radial_dist(RadialMotion *out);
 };
 
 // InterpFloat for 3D vectors.

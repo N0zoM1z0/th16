@@ -1,7 +1,6 @@
 #include <math.h>
 
 #include "Interp.h"
-#include "PosVel.h"
 
 // A zero vector that is never written (ExpHP:
 // SEEMINGLY_CONST_ZERO_VEC_4d9dc4); interpolators take their unused bezier
@@ -483,15 +482,6 @@ HARNESS_CALLED void InterpFloat2::step_radial_dist(D3DXVECTOR2 *out)
         self->current = (self->goal - self->initial) * x + self->initial;
     }
     *out = self->current;
-}
-
-// Adapt the vector interpolator output to the enemy's radial motion pair.
-DECOMP_NOINLINE void InterpFloat2::step_radial_dist(RadialMotion *out)
-{
-    D3DXVECTOR2 radial;
-    step_radial_dist(&radial);
-    out->distance = radial.x;
-    out->speed = radial.y;
 }
 
 // The per-axis loop is a do-while: as a for loop the constant acceleration

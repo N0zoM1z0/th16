@@ -2299,11 +2299,17 @@ int EnemyData::step_interpolators()
     }
     if (abs_radial_dist_i.end_time != 0)
     {
-        abs_radial_dist_i.step_radial_dist(&abs_pos.radial);
+        D3DXVECTOR2 radial_dist;
+        abs_radial_dist_i.step_radial_dist(&radial_dist);
+        abs_pos.radial.distance = radial_dist.x;
+        abs_pos.radial.speed = radial_dist.y;
     }
     if (rel_radial_dist_i.end_time != 0)
     {
-        rel_radial_dist_i.step_radial_dist(&rel_pos.radial);
+        D3DXVECTOR2 radial_dist;
+        rel_radial_dist_i.step_radial_dist(&radial_dist);
+        rel_pos.radial.distance = radial_dist.x;
+        rel_pos.radial.speed = radial_dist.y;
     }
     if (abs_pos_i.end_time != 0)
     {
