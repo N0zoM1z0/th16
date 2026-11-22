@@ -116,8 +116,6 @@ struct InterpFloat2
     // its only caller, EnemyData::step_interpolators, realigns its frame,
     // so LTCG knows this one need not.
     HARNESS_CALLED void step_radial_dist(D3DXVECTOR2 *out);
-    // Scalar-output adapter for PosVel's radial_dist/radial_speed fields.
-    DECOMP_NOINLINE void step_radial_dist(f32 *out_x, f32 *out_y);
 };
 
 // InterpFloat for 3D vectors.

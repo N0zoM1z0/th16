@@ -29,11 +29,11 @@ void PosVel::update_secondary_fields()
         break;
     case POSVEL_MODE_CIRCLE:
     case POSVEL_MODE_ELLIPSE:
-        radial_dist += radial_speed * g_game_speed;
+        radial.x += radial.y * g_game_speed;
         angle.value = wrap_angle(angle.value + speed * g_game_speed);
         break;
     case POSVEL_MODE_WAVE:
-        wave_angle += radial_speed * g_game_speed;
+        wave_angle += radial.y * g_game_speed;
         from_polar(&velocity, ellipse_angle.value, speed * g_game_speed);
         velocity.z = 0.0f;
         break;
@@ -55,7 +55,7 @@ void PosVel::step()
     case POSVEL_MODE_CIRCLE:
     {
         Float3 offset;
-        from_polar(&offset, angle.value, radial_dist);
+        from_polar(&offset, angle.value, radial.x);
         offset.z = 0.0f;
         pos = Float3(offset[0] + velocity[0], offset[1] + velocity[1], offset[2] + velocity[2]);
         break;
@@ -63,7 +63,7 @@ void PosVel::step()
     case POSVEL_MODE_ELLIPSE:
     {
         Float3 offset;
-        from_polar(&offset, normalize_angle((angle - ellipse_angle).value), radial_dist);
+        from_polar(&offset, normalize_angle((angle - ellipse_angle).value), radial.x);
         f32 x = ellipse_ratio * offset.x;
         f32 s = zun_sinf(ellipse_angle.value);
         f32 c = zun_cosf(ellipse_angle.value);
@@ -84,7 +84,7 @@ void PosVel::step()
         ZunAngle side;
         side.value = wrap_angle(ellipse_angle.value + ZUN_PI / 2);
         Float3 offset;
-        from_polar(&offset, normalize_angle(side.value), zun_sinf(wave_angle.value) * radial_dist * g_game_speed);
+        from_polar(&offset, normalize_angle(side.value), zun_sinf(wave_angle.value) * radial.x * g_game_speed);
         offset.z = 0.0f;
         pos = offset + center;
         angle = zun_atan2f(pos.y - prev.y, pos.x - prev.x);
