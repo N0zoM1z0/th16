@@ -2027,11 +2027,8 @@ int EnemyData::ecl_run_over_300()
         {
             ex_index = get_int_arg(1);
         }
-        // All transform fields share one flattened shooter/transform offset
-        // across the argument reads below.
-        volatile i32 ex_offset = et * sizeof(EnemyBulletShooter) + ex_index * sizeof(BulletEx);
-        // Keep the member access typed while using the target's shared base.
-#define ECL_EX_FIELD(field) (reinterpret_cast<BulletEx *>(reinterpret_cast<u8 *>(&bullet_props[0].ex[0]) + ex_offset)->field)
+        BulletEx *ex = &bullet_props[et].ex[ex_index];
+#define ECL_EX_FIELD(field) (ex->field)
         ECL_EX_FIELD(slot) = get_int_arg(arg++);
         ECL_EX_FIELD(type) = static_cast<BulletExType>(get_int_arg(arg++));
         ECL_EX_FIELD(a) = get_int_arg(arg++);
