@@ -805,8 +805,8 @@ int EnemyData::ecl_run_over_300()
     {
         u32 pos_vel_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
-        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
+        volatile f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        volatile f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         Float3 bezier_1;
         bezier_1.x = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         bezier_1.y = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
