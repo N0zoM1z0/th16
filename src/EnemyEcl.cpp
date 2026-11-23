@@ -2300,9 +2300,9 @@ int EnemyData::ecl_run_over_300()
         scratch.infinite.type = type;
         i32 color = shooter.color;
         scratch.infinite.color = color;
-        scratch.infinite.ang_aim = normalize_angle(ang_aim);
         scratch.infinite.start_time = shooter.laser_timing.start_time;
         scratch.infinite.expand_time = shooter.laser_timing.expand_time;
+        scratch.infinite.ang_aim = normalize_angle(ang_aim);
         scratch.infinite.speed = shooter.spd1;
         scratch.infinite.duration = shooter.laser_timing.duration;
         scratch.infinite.laser_new_arg_1 = shooter.pos.x;
