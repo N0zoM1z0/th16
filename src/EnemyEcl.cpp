@@ -1743,19 +1743,22 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        volatile f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
+        __m128 y = _mm_load_ss(&bullet_mgr_offsets[slot].y);
         if (origin_enabled > 0.9f)
         {
-            y += bullet_mgr_origins[slot].xy.y;
-            bullet_props[slot].pos = D3DXVECTOR3(
-                bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x, (f32)y, 0.0f);
+            y = _mm_add_ss(y, _mm_load_ss(&bullet_mgr_origins[slot].xy.y));
+            D3DXVECTOR2 xy(bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x,
+                           _mm_cvtss_f32(y));
+            memcpy(&bullet_props[slot].pos, &xy, sizeof(xy));
+            *(volatile f32 *)&bullet_props[slot].pos.z = 0.0f;
         }
         else
         {
-            y += final_pos.pos.y;
-            bullet_props[slot].pos = D3DXVECTOR3(
-                bullet_mgr_offsets[slot].x + final_pos.pos.x, (f32)y,
-                bullet_mgr_offsets[slot].z + final_pos.pos.z);
+            y = _mm_add_ss(y, _mm_load_ss(&final_pos.pos.y));
+            D3DXVECTOR2 xy(bullet_mgr_offsets[slot].x + final_pos.pos.x,
+                           _mm_cvtss_f32(y));
+            memcpy(&bullet_props[slot].pos, &xy, sizeof(xy));
+            bullet_props[slot].pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
         }
         g_BulletManager->et_protect_range = et_protect_range;
         g_BulletManager->shoot_bullets(&bullet_props[slot]);
