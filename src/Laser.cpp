@@ -2877,8 +2877,8 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
         }
         else
         {
-            Float3 a;
             Float3 b;
+            Float3 a;
             a.z = 0.0f;
             b.z = 0.0f;
             laser_sincosmul(&a, angle, -speed);
