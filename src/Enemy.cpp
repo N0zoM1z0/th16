@@ -2271,10 +2271,10 @@ static __forceinline void add_camera_position_delta(D3DXVECTOR3 *position, const
 {
     position->x = position->x + delta->x;
     position->y = *(const volatile f32 *)&delta->y + position->y;
-    position->z = position->z + delta->z;
+    position->z = *(const volatile f32 *)&position->z + delta->z;
 }
 
-// TODO: recover the original camera Y addition operand order.
+// Keep the camera delta component loads in the target x/y/z operand order.
 // FUNCTION: TH16 0x41bb50
 int EnemyData::step_interpolators()
 {
