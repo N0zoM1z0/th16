@@ -116,6 +116,18 @@ struct InterpFloat2
     // its only caller, EnemyData::step_interpolators, realigns its frame,
     // so LTCG knows this one need not.
     HARNESS_CALLED void step_radial_dist(D3DXVECTOR2 *out);
+
+    // Starts a radial/ellipse pair interpolation with zero Bezier controls.
+    __forceinline void start(i32 duration, InterpMode mode, D3DXVECTOR2 initial, D3DXVECTOR2 goal)
+    {
+        end_time = duration;
+        bezier_1 = g_zero_vec2;
+        bezier_2 = g_zero_vec2;
+        method = mode;
+        this->initial = initial;
+        this->goal = goal;
+        reset_timer();
+    }
 };
 
 // InterpFloat for 3D vectors.

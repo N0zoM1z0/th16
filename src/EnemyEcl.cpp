@@ -1113,15 +1113,9 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         speed_i->start(time, mode, initial_speed, speed);
-        radial_i->end_time = time;
-        radial_i->bezier_1 = g_zero_vec2;
-        radial_i->bezier_2 = g_zero_vec2;
-        radial_i->method = static_cast<InterpMode>(mode);
-        radial_i->initial.x = initial_radius;
-        radial_i->initial.y = initial_radial_speed;
-        radial_i->goal.x = goal_radius;
-        radial_i->goal.y = goal_radial_speed;
-        radial_i->reset_timer();
+        radial_i->start(time, static_cast<InterpMode>(mode),
+                        D3DXVECTOR2(initial_radius, initial_radial_speed),
+                        D3DXVECTOR2(goal_radius, goal_radial_speed));
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_CIRCLE;
         pv->step_from_center();
         update_final_pos();
@@ -1227,21 +1221,12 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         speed_i->start(time, mode, initial_speed, speed);
-        radial_i->end_time = time;
-        radial_i->bezier_1 = g_zero_vec2;
-        radial_i->bezier_2 = g_zero_vec2;
-        radial_i->method = static_cast<InterpMode>(mode);
-        radial_i->initial = D3DXVECTOR2(initial_radius, initial_radial_speed);
-        radial_i->goal = D3DXVECTOR2(goal_radius, goal_radial_speed);
-        radial_i->reset_timer();
-
-        ellipse_i->end_time = time;
-        ellipse_i->bezier_1 = g_zero_vec2;
-        ellipse_i->bezier_2 = g_zero_vec2;
-        ellipse_i->method = static_cast<InterpMode>(mode);
-        ellipse_i->initial = D3DXVECTOR2(initial_ellipse_angle, initial_ellipse_ratio);
-        ellipse_i->goal = D3DXVECTOR2(goal_ellipse_angle, goal_ellipse_ratio);
-        ellipse_i->reset_timer();
+        radial_i->start(time, static_cast<InterpMode>(mode),
+                        D3DXVECTOR2(initial_radius, initial_radial_speed),
+                        D3DXVECTOR2(goal_radius, goal_radial_speed));
+        ellipse_i->start(time, static_cast<InterpMode>(mode),
+                         D3DXVECTOR2(initial_ellipse_angle, initial_ellipse_ratio),
+                         D3DXVECTOR2(goal_ellipse_angle, goal_ellipse_ratio));
         pv->velocity = pv->pos;
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_ELLIPSE;
         pv->step_from_center();
