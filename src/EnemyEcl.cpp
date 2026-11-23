@@ -710,10 +710,13 @@ int EnemyData::ecl_run_over_300()
         position_interp->bezier_2 = g_zero_vec;
         position_interp->method_for_3d = static_cast<InterpMode>(full->context.current_context->get_int_arg(1));
         position_interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        movement_interp = position_interp;
-        movement_goal_x = goal_x;
-        movement_goal_y = goal_y;
-        goto ecl_movement_interp_finish;
+        position_interp->initial = pos_vel->pos;
+        f32 final_goal_y = goal_y > -999999.0 ? goal_y : pos_vel->pos.y;
+        f32 final_goal_x = goal_x > -999999.0 ? goal_x : pos_vel->pos.x;
+        position_interp->goal = Float3(final_goal_x, final_goal_y, 0.0f);
+        position_interp->reset_timer();
+        pos_vel->flags &= ~0xf;
+        break;
     }
     // moveCurve and moveBezier share the interpolation's final position,
     // goal, timer and PosVel-flag updates.
