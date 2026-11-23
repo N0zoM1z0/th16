@@ -3086,11 +3086,10 @@ i32 LaserLineInf::on_tick()
     else
     {
         start_offset += length * g_game_speed;
-        // position += tip_offset * g_game_speed, through a temporary and
-        // D3DXVec3Add with v first: g_game_speed is loaded once and the adds
-        // take the original's operand order.
+        // Scale the tip offset once, then add it to the current position.
+        // Keep the in-place D3DXVec3Add operand order from the original.
         Float3 v = tip_offset * g_game_speed;
-        D3DXVec3Add(&position, &v, &position);
+        D3DXVec3Add(&position, &position, &v);
         if (inner.laser_new_arg_3 > 0.0f && hit_length + start_offset > inner.laser_new_arg_3)
         {
             hit_length = inner.laser_new_arg_3 - start_offset;
@@ -3126,13 +3125,14 @@ i32 LaserLineInf::on_tick()
         }
     }
     check_graze_or_kill(0);
+    register AnmVm *vm = &vm_92c;
     AnmManager *manager = g_AnmManager;
-    vm_92c.flags_lo |= ANM_VM_SCALE_CHANGED;
-    vm_92c.scale.x = width / manager->loaded_anms[vm_92c.anm_loaded_index]->sprites[vm_92c.sprite_id].sprite_width;
-    vm_92c.flags_lo |= ANM_VM_SCALE_CHANGED;
-    vm_92c.scale.y =
-        hit_length / manager->loaded_anms[vm_92c.anm_loaded_index]->sprites[vm_92c.sprite_id].sprite_height;
-    vm_92c.run();
+    vm->flags_lo |= ANM_VM_SCALE_CHANGED;
+    vm->scale.x = width / manager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id].sprite_width;
+    vm->flags_lo |= ANM_VM_SCALE_CHANGED;
+    vm->scale.y =
+        hit_length / manager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id].sprite_height;
+    vm->run();
     if (start_offset == 0.0f)
     {
         vm_f28.run();
