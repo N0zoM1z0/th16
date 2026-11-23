@@ -610,9 +610,10 @@ i32 AnmVm::run()
         }
         case ANM_OP_FSET_ADD:
         {
-            f32 lhs = ANM_FLOAT(1);
+            volatile f32 lhs = ANM_FLOAT(1);
             f32 rhs = ANM_FLOAT(2);
-            *ANM_FLOAT_PTR(0) = lhs + rhs;
+            rhs += lhs;
+            *ANM_FLOAT_PTR(0) = rhs;
             break;
         }
         case ANM_OP_ISET_SUB:
