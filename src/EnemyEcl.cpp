@@ -986,6 +986,7 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         i32 mode = get_int_arg(1);
+        f32 angle_for_delta;
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
             if (angle > -999999.0)
@@ -993,11 +994,20 @@ int EnemyData::ecl_run_over_300()
                 if ((flags_low & ENEMY_FLAG_MIRRORED) && (instr->opcode == ECL_OP_MOVE_ANGLE_TIME || instr->opcode == ECL_OP_MOVE_ANGLE_REL_TIME))
                 {
                     angle = mirror_angle(angle);
+                    angle_for_delta = angle;
+                    *(volatile f32 *)&angle = angle;
+                }
+                else
+                {
+                    angle_for_delta = angle;
+                    *(volatile f32 *)&angle = angle;
                 }
             }
             else
             {
                 angle = pv->angle.value;
+                angle_for_delta = angle;
+                *(volatile f32 *)&angle = angle;
             }
         }
         else
@@ -1013,21 +1023,22 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = 0.0f;
             }
+            angle_for_delta = angle;
         }
         f32 initial = pv->angle.value;
         // The goal as an offset from the current angle, the short way round.
         f32 delta;
-        if (angle - initial > ZUN_PI)
+        if (angle_for_delta - initial > ZUN_PI)
         {
-            delta = angle - (initial + ZUN_2PI);
+            delta = angle_for_delta - (initial + ZUN_2PI);
         }
-        else if (initial - angle > ZUN_PI)
+        else if (initial - angle_for_delta > ZUN_PI)
         {
-            delta = angle - (initial - ZUN_2PI);
+            delta = angle_for_delta - (initial - ZUN_2PI);
         }
         else
         {
-            delta = angle - initial;
+            delta = angle_for_delta - initial;
         }
         angle_i->end_time = get_int_arg(0);
         angle_i->method = static_cast<InterpMode>(mode);
