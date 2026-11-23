@@ -110,9 +110,8 @@ static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
     return &enemy_ecl_sincosmul;
 }
 
-// The line, infinite and curve laser constructors test the origin before
-// copying the transform array; the beam constructor copies it first. Keep
-// those target instruction orders in separate typed helpers.
+// Laser constructors copy the transform array before reading the origin
+// and offset fields. Keep the packed XY prefix separate from the Z store.
 static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
@@ -164,9 +163,9 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
 static __forceinline D3DXVECTOR3 LTCG_VECTORCALL get_shot_origin_and_copy_ex_packed(
     EnemyData *enemy, i32 i, BulletEx *ex)
 {
+    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
     bool has_origin = origin_enabled > 0.9f;
-    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     f32 y = enemy->bullet_mgr_offsets[i].y;
     f32 x;
     f32 z;
