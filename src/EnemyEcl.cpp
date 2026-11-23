@@ -873,7 +873,7 @@ int EnemyData::ecl_run_over_300()
                                    ? &abs_speed_i
                                    : &rel_speed_i;
         f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        volatile f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
             angle_i->end_time = 0;
