@@ -2274,6 +2274,11 @@ static __forceinline void add_camera_position_delta(D3DXVECTOR3 *position, const
     position->z = *(const volatile f32 *)&position->z + delta->z;
 }
 
+static __forceinline void update_interpolated_velocity(PosVel &position, InterpStrange1 &interpolator)
+{
+    position.velocity = interpolator.step() - position.pos;
+}
+
 // Keep the camera delta component loads in the target x/y/z operand order.
 // FUNCTION: TH16 0x41bb50
 int EnemyData::step_interpolators()
@@ -2313,7 +2318,7 @@ int EnemyData::step_interpolators()
     }
     if (abs_pos_i.end_time != 0)
     {
-        abs_pos.velocity = abs_pos_i.step() - abs_pos.pos;
+        update_interpolated_velocity(abs_pos, abs_pos_i);
     }
     else
     {
@@ -2321,7 +2326,7 @@ int EnemyData::step_interpolators()
     }
     if (rel_pos_i.end_time != 0)
     {
-        rel_pos.velocity = rel_pos_i.step() - rel_pos.pos;
+        update_interpolated_velocity(rel_pos, rel_pos_i);
     }
     else
     {
