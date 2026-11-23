@@ -719,9 +719,24 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CURVE_OFFSET:
     case ECL_OP_MOVE_CURVE_REL_OFFSET:
     {
-        bool absolute = instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET;
-        u32 pos_vel_offset = absolute ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
-        InterpStrange1 *interp = absolute ? &abs_pos_i : &rel_pos_i;
+        u32 pos_vel_offset;
+        if (instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
+        {
+            pos_vel_offset = offsetof(EnemyData, abs_pos);
+        }
+        else
+        {
+            pos_vel_offset = offsetof(EnemyData, rel_pos);
+        }
+        InterpStrange1 *interp;
+        if (instr->opcode == ECL_OP_MOVE_CURVE || instr->opcode == ECL_OP_MOVE_CURVE_OFFSET)
+        {
+            interp = &abs_pos_i;
+        }
+        else
+        {
+            interp = &rel_pos_i;
+        }
         PosVel *pos_vel = reinterpret_cast<PosVel *>(reinterpret_cast<u8 *>(this) + pos_vel_offset);
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
