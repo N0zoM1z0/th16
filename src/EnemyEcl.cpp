@@ -162,7 +162,7 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
 }
 
 static __forceinline D3DXVECTOR2 LTCG_VECTORCALL get_shot_origin_and_copy_ex_packed(
-    EnemyData *enemy, i32 i, f32 *out_z, BulletEx *ex)
+    EnemyData *enemy, i32 i, volatile f32 *out_z, BulletEx *ex)
 {
     f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
     bool has_origin = origin_enabled > 0.9f;
