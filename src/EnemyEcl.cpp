@@ -184,25 +184,26 @@ static __forceinline D3DXVECTOR2 LTCG_VECTORCALL get_shot_origin_and_copy_ex_pac
     return D3DXVECTOR2(x, y);
 }
 
-static __forceinline __m128 LTCG_VECTORCALL copy_ex_and_get_shot_origin(
-    EnemyData *enemy, i32 i, f32 *out_z, BulletEx *ex)
+static __forceinline D3DXVECTOR3 LTCG_VECTORCALL copy_ex_and_get_shot_origin(
+    EnemyData *enemy, i32 i, BulletEx *ex)
 {
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     f32 x = enemy->bullet_mgr_offsets[i].x;
     f32 y = enemy->bullet_mgr_offsets[i].y;
+    f32 z;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        *out_z = 0.0f;
+        z = 0.0f;
         x += enemy->bullet_mgr_origins[i].xy.x;
         y += enemy->bullet_mgr_origins[i].xy.y;
     }
     else
     {
-        *out_z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x += enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    return _mm_unpacklo_ps(_mm_set_ss(x), _mm_set_ss(y));
+    return D3DXVECTOR3(x, y, z);
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
@@ -2326,10 +2327,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.beam) LaserBeamInner();
         i32 slot = get_int_arg(0);
-        __m128 start_xy = copy_ex_and_get_shot_origin(
-            this, slot, &scratch.beam.start_pos.z, scratch.beam.ex);
-        _mm_storel_epi64(reinterpret_cast<__m128i *>(&scratch.beam.start_pos),
-                         _mm_castps_si128(start_xy));
+        scratch.beam.start_pos = copy_ex_and_get_shot_origin(this, slot, scratch.beam.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 color = shooter.color;
         f32 ang_aim = shooter.ang_aim;
