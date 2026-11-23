@@ -3231,10 +3231,7 @@ i32 LaserCurveInf::on_tick()
                 f32 prev_angle = segs[i - 1].angle;
                 f32 *out_length = &segs[i].length;
                 f32 *out_angle = &segs[i].angle;
-                // A do/while from the first node (never NULL) instead of a
-                // for loop: closer to the original's registers.
-                LaserCurveNode *node = &nodes;
-                do
+                for (LaserCurveNode *node = &nodes; node != NULL; node = node->next)
                 {
                     if (t >= node->start_time && node->end_time > t)
                     {
@@ -3249,8 +3246,7 @@ i32 LaserCurveInf::on_tick()
                         }
                         break;
                     }
-                    node = node->next;
-                } while (node != NULL);
+                }
                 placed = 1;
             }
             else
@@ -3274,8 +3270,8 @@ i32 LaserCurveInf::on_tick()
             Float3 head;
             laser_sincosmul(&head, angle, hit_length);
             head += position;
-            if (!(segment->pos.x + width <= -192.0f || segment->pos.x - width >= 192.0f ||
-                  segment->pos.y + width <= 0.0f || segment->pos.y - width >= 448.0f))
+            if (segment->pos.x + width > -192.0f && segment->pos.x - width < 192.0f &&
+                segment->pos.y + width > 0.0f && segment->pos.y - width < 448.0f)
             {
                 goto on_screen;
             }
