@@ -2013,15 +2013,14 @@ int EnemyData::ecl_run_over_300()
         {
             et = 0;
         }
-        register EclRawInstr *et_instr = full->context.current_context->current_instr();
 
         i32 arg = 2;
-        if (et_instr->opcode == ECL_OP_ET_EX_NEXT || et_instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             arg = 1;
         }
         i32 ex_index;
-        if (et_instr->opcode == ECL_OP_ET_EX_NEXT || et_instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ex_index = et_ex_index[et];
         }
@@ -2035,7 +2034,7 @@ int EnemyData::ecl_run_over_300()
         ECL_EX_FIELD(type) = static_cast<BulletExType>(get_int_arg(arg++));
         ECL_EX_FIELD(a) = get_int_arg(arg++);
         ECL_EX_FIELD(b) = get_int_arg(arg++);
-        if (et_instr->opcode == ECL_OP_ET_EX_FULL || et_instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             // The c word is part of the selected transform record.
             bullet_props[et].ex[ex_index].c = get_int_arg(arg++);
@@ -2044,14 +2043,14 @@ int EnemyData::ecl_run_over_300()
 
         ECL_EX_FIELD(r) = get_float_arg(EclFloatArgIndex{arg++});
         ECL_EX_FIELD(s) = get_float_arg(EclFloatArgIndex{arg++});
-        if (et_instr->opcode == ECL_OP_ET_EX_FULL || et_instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ECL_EX_FIELD(m) = get_float_arg(EclFloatArgIndex{arg++});
             ECL_EX_FIELD(n) = get_float_arg(EclFloatArgIndex{arg++});
         }
 #undef ECL_EX_FIELD
 
-        if (et_instr->opcode == ECL_OP_ET_EX_NEXT || et_instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             et_ex_index[et]++;
         }
