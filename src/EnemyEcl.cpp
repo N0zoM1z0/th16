@@ -661,10 +661,26 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_POS_TIME_OFFSET:
     case ECL_OP_MOVE_POS_REL_TIME_OFFSET:
     {
-        bool absolute = instr->opcode == ECL_OP_MOVE_POS_TIME ||
-                        instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET;
-        PosVel *pos_vel = absolute ? &abs_pos : &rel_pos;
-        InterpStrange1 *position_interp = absolute ? &abs_pos_i : &rel_pos_i;
+        if (instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET)
+        {
+            movement_pos_vel_offset = offsetof(EnemyData, abs_pos);
+        }
+        else
+        {
+            movement_pos_vel_offset = offsetof(EnemyData, rel_pos);
+        }
+        u32 position_interp_offset;
+        if (instr->opcode == ECL_OP_MOVE_POS_TIME || instr->opcode == ECL_OP_MOVE_POS_TIME_OFFSET)
+        {
+            position_interp_offset = offsetof(EnemyData, abs_pos_i);
+        }
+        else
+        {
+            position_interp_offset = offsetof(EnemyData, rel_pos_i);
+        }
+        PosVel *pos_vel = reinterpret_cast<PosVel *>(reinterpret_cast<u8 *>(this) + movement_pos_vel_offset);
+        InterpStrange1 *position_interp =
+            reinterpret_cast<InterpStrange1 *>(reinterpret_cast<u8 *>(this) + position_interp_offset);
 
         f32 goal_x = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         f32 goal_y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
@@ -694,7 +710,6 @@ int EnemyData::ecl_run_over_300()
         position_interp->bezier_2 = g_zero_vec;
         position_interp->method_for_3d = static_cast<InterpMode>(full->context.current_context->get_int_arg(1));
         position_interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        movement_pos_vel_offset = absolute ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         movement_interp = position_interp;
         movement_goal_x = goal_x;
         movement_goal_y = goal_y;
