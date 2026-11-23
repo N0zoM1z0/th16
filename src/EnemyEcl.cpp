@@ -47,14 +47,6 @@ static const f32 ecl_move_rand_neg_half_pi_low = -ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_neg_half_pi_high = -ZUN_PI / 2 + 0.05f;
 static const f32 ecl_move_rand_pos_half_pi_low = ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_pos_half_pi_high = ZUN_PI / 2 + 0.05f;
-// Hide AnmVm::run from the caller's LTCG stack-alignment graph while
-// retaining the direct call in the generated VM-step wrapper.
-typedef i32 (AnmVm::*EnemyEclAnmVmRunFunc)();
-static inline EnemyEclAnmVmRunFunc enemy_ecl_anm_vm_run_func()
-{
-    return &AnmVm::run;
-}
-static DECOMP_NOINLINE AnmVm *ecl_run_vm(AnmVm *vm);
 // pi - angle, wrapped: the direction mirrored about the vertical axis, for
 // mirrored enemies (ENEMY_FLAG_MIRRORED).
 static __forceinline f32 mirror_angle(f32 angle)
@@ -210,15 +202,6 @@ static inline void set_next(EnemyInf *enemy, int index, int life, int time, cons
 static __forceinline Fog *new_enemy_fog()
 {
     return new Fog(0, 0x11, 0);
-}
-
-// anmPlay's extra steps go through this helper, like the original: a
-// direct AnmVm::run call in a loop would make ecl_run_over_300 realign its
-// frame for run's aligned-stack need.
-static DECOMP_NOINLINE AnmVm *ecl_run_vm(AnmVm *vm)
-{
-    (vm->*enemy_ecl_anm_vm_run_func())();
-    return vm;
 }
 
 // The laser instructions and angleToPlayer, as forceinline helpers: the
@@ -451,7 +434,7 @@ int EnemyData::ecl_run_over_300()
         AnmVm *vm = id.find_or_clear();
         for (i32 i = 0; i < full->context.current_context->get_int_arg(2); i++)
         {
-            vm = ecl_run_vm(vm);
+            vm->run();
         }
         break;
     }
