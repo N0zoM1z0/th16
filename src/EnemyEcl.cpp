@@ -765,10 +765,8 @@ int EnemyData::ecl_run_over_300()
             interp = &rel_pos_i;
         }
         PosVel *pos_vel = reinterpret_cast<PosVel *>(reinterpret_cast<u8 *>(this) + pos_vel_offset);
-        volatile f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
-        f32 offset_x = x;
-        f32 offset_y = y;
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
             interp->end_time = 0;
@@ -776,17 +774,17 @@ int EnemyData::ecl_run_over_300()
         }
         if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
         {
-            x = pos_vel->pos.x;
+            f32 current_x = pos_vel->pos.x;
             if (!(flags_low & ENEMY_FLAG_MIRRORED))
             {
-                x += offset_x;
+                current_x += x;
             }
             else
             {
-                x -= offset_x;
+                current_x -= x;
             }
-            y = pos_vel->pos.y;
-            y += offset_y;
+            x = current_x;
+            y = pos_vel->pos.y + y;
         }
         interp->end_time = full->context.current_context->get_int_arg(0);
         interp->bezier_1 = g_zero_vec;
