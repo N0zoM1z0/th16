@@ -187,11 +187,10 @@ static __forceinline D3DXVECTOR2 LTCG_VECTORCALL get_shot_origin_and_copy_ex_pac
 static __forceinline D3DXVECTOR2 LTCG_VECTORCALL copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, f32 *out_z, BulletEx *ex)
 {
-    f32 origin_enabled = enemy->bullet_mgr_origins[i].enabled;
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     f32 x = enemy->bullet_mgr_offsets[i].x;
     f32 y = enemy->bullet_mgr_offsets[i].y;
-    if (origin_enabled > 0.9f)
+    if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
         *out_z = 0.0f;
         x += enemy->bullet_mgr_origins[i].xy.x;
