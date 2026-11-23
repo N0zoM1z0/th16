@@ -2298,11 +2298,12 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
+        EnemyBulletShooter *shooter_ptr = &bullet_props[slot];
         f32 start_z;
         D3DXVECTOR2 start_xy = get_shot_origin_and_copy_ex_packed(
             this, slot, &start_z, scratch.infinite.ex);
         scratch.infinite.start_pos = D3DXVECTOR3(start_xy.x, start_xy.y, start_z);
-        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
+        const volatile EnemyBulletShooter &shooter = *shooter_ptr;
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.infinite.type = type;
