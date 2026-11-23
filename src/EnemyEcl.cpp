@@ -190,20 +190,22 @@ static __forceinline D3DXVECTOR3 LTCG_VECTORCALL copy_ex_and_get_shot_origin(
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     f32 x = enemy->bullet_mgr_offsets[i].x;
     f32 y = enemy->bullet_mgr_offsets[i].y;
-    f32 z;
+    D3DXVECTOR3 pos;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        z = 0.0f;
+        pos.z = 0.0f;
         x += enemy->bullet_mgr_origins[i].xy.x;
         y += enemy->bullet_mgr_origins[i].xy.y;
     }
     else
     {
-        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        pos.z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x += enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    return D3DXVECTOR3(x, y, z);
+    pos.x = x;
+    pos.y = y;
+    return pos;
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
