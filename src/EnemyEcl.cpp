@@ -1743,18 +1743,18 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
+        volatile f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
         if (origin_enabled > 0.9f)
         {
             y += bullet_mgr_origins[slot].xy.y;
             bullet_props[slot].pos = D3DXVECTOR3(
-                bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x, y, 0.0f);
+                bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x, (f32)y, 0.0f);
         }
         else
         {
             y += final_pos.pos.y;
             bullet_props[slot].pos = D3DXVECTOR3(
-                bullet_mgr_offsets[slot].x + final_pos.pos.x, y,
+                bullet_mgr_offsets[slot].x + final_pos.pos.x, (f32)y,
                 bullet_mgr_offsets[slot].z + final_pos.pos.z);
         }
         g_BulletManager->et_protect_range = et_protect_range;
