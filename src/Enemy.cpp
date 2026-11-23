@@ -2297,16 +2297,15 @@ int EnemyData::step_interpolators()
     {
         rel_pos.speed = rel_speed_i.step();
     }
+    D3DXVECTOR2 radial_dist;
     if (abs_radial_dist_i.end_time != 0)
     {
-        D3DXVECTOR2 radial_dist;
         abs_radial_dist_i.step_radial_dist(&radial_dist);
         abs_pos.radial.distance = radial_dist.x;
         abs_pos.radial.speed = radial_dist.y;
     }
     if (rel_radial_dist_i.end_time != 0)
     {
-        D3DXVECTOR2 radial_dist;
         rel_radial_dist_i.step_radial_dist(&radial_dist);
         rel_pos.radial.distance = radial_dist.x;
         rel_pos.radial.speed = radial_dist.y;
