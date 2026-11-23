@@ -2235,8 +2235,10 @@ int EnemyData::ecl_run_over_300()
         scratch.line.bullet_type = bullet_type;
         i32 bullet_color = shooter_settings.color;
         scratch.line.bullet_color = bullet_color;
-        scratch.line.ang_aim = normalize_angle(ang_aim);
-        scratch.line.flags = shooter_settings.flags | 1;
+        f32 normalized_angle = normalize_angle(ang_aim);
+        i32 shooter_flags = shooter_settings.flags;
+        scratch.line.ang_aim = normalized_angle;
+        scratch.line.flags = shooter_flags | 1;
         scratch.line.speed = shooter_settings.spd1;
         scratch.line.laser_new_arg_1 = shooter_settings.pos.x;
         scratch.line.laser_new_arg_2 = shooter_settings.pos.y;
