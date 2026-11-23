@@ -3125,14 +3125,13 @@ i32 LaserLineInf::on_tick()
         }
     }
     check_graze_or_kill(0);
-    register AnmVm *vm = &vm_92c;
     AnmManager *manager = g_AnmManager;
-    vm->flags_lo |= ANM_VM_SCALE_CHANGED;
-    vm->scale.x = width / manager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id].sprite_width;
-    vm->flags_lo |= ANM_VM_SCALE_CHANGED;
-    vm->scale.y =
-        hit_length / manager->loaded_anms[vm->anm_loaded_index]->sprites[vm->sprite_id].sprite_height;
-    vm->run();
+    vm_92c.flags_lo |= ANM_VM_SCALE_CHANGED;
+    vm_92c.scale.x = width / manager->loaded_anms[vm_92c.anm_loaded_index]->sprites[vm_92c.sprite_id].sprite_width;
+    vm_92c.flags_lo |= ANM_VM_SCALE_CHANGED;
+    vm_92c.scale.y =
+        hit_length / manager->loaded_anms[vm_92c.anm_loaded_index]->sprites[vm_92c.sprite_id].sprite_height;
+    vm_92c.run();
     if (start_offset == 0.0f)
     {
         vm_f28.run();
