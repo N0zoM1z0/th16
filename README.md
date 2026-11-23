@@ -45,59 +45,48 @@ Original executables, game data, Ghidra projects, decompiler output, build
 outputs and downloaded tools are private and never committed. The title image
 above is composited from the game's own textures for identification only.
 
-## Current status
+## Current status (2026-11-23)
 
-The **historical audit behind the progress image** is from **2026-11-15
-06:37 UTC**: **1,033 exact / 51 mismatch / 131 incomplete** among 1,215
-historical annotated units. The progress image above is historical, not
-current accepted exactness. The latest checked **incremental** candidate
-build (handoff verification on 2026-11-20) compiles **1,166 annotated
-functions**, which is a build count, not an exactness total.
+The current source checkpoint is **de0cb82**
+(gpt-web: return packed laser shot origins). The six source commits since
+origin/main are local and have not been pushed; this handoff/documentation
+update is also local. The worktree is clean. The latest incremental build
+compiles **1,166 annotated functions**.
 
-At the latest *source* checkpoint `b814004`, focused normalized
-disassembly comparison reports `EnemyData::ecl_run_over_300` **0.8655**
-(4,562 / 5,465 target/candidate instructions) and `AnmVm::run`
-**0.9531** (3,837 / 3,818). These numbers are not strict Oracle
-receipts or a project-wide progress metric. See the
-[current handoff](docs/NEXT_AGENT.md) for other large owners and current leads.
+Current focused normalized instruction comparisons:
 
-The local strict audit runs against the current incremental candidate.
-Failed EH and private-function proofs leave their affected comparisons
-incomplete. An isolated Factory pilot accepted a complete cold replay of
-`AnmManager::restore_snapshot`. The shared Web service currently exposes
-TH16's inventory. The handoff records the pilot scope and evidence.
+| Owner (target VA) | Target / candidate bytes | Target / candidate instructions | Local ratio |
+| --- | ---: | ---: | ---: |
+| EnemyData::ecl_run_over_300 (0x41dcb0) | 21,408 / 21,584 | 4,562 / 4,833 | **0.9224** |
+| AnmVm::run (0x45f980) | 14,177 / 14,192 | 3,837 / 3,825 | **0.9514** |
+| EclRunContext::ecl_run (0x472030) | 7,046 / 6,976 | 1,807 / 1,701 | **0.9042** |
+| LaserLineInf::run_ex (0x431fe0) | 1,588 / 1,600 | 344 / 346 | **0.9159** |
+| LaserCurveInf::run_ex (0x438cb0) | 1,548 / 1,568 | 360 / 368 | **0.9698** |
+| LaserLineInf::on_tick (0x432f40) | 1,473 / 1,488 | 356 / 354 | **0.9408** |
+| LaserCurveInf::on_tick (0x4377d0) | 1,305 / 1,312 | 332 / 332 | **1.0000** |
+| LaserCurveNode::step_back (0x438370) | 986 / 992 | 248 / 248 | **1.0000** |
+| EnemyData::step_interpolators (0x41bb50) | 1,692 / 1,696 | 421 / 421 | **0.9976** |
+| InterpFloat2::step_radial_dist (0x425570) | 757 / 752 | 207 / 205 | **0.9175** |
 
-For a new agent, read [AGENTS.md](AGENTS.md), then the
-[short handoff](docs/NEXT_AGENT.md) (current leads, measurements and commands)
-and the [knowledge index](docs/knowledge/README.md). The long
-[2026-11-19 chronology](docs/HANDOFF_20261119.md) is preserved as history.
-The 2026-11-20 handoff archived 63 recoverable duplicate historical
-PDB/audit files, reclaiming about 273 MiB without touching the active build;
-see [storage recovery](docs/ARTIFACTS.md).
+These are local instruction-similarity measurements, not exactness claims.
+The focused strict audits still report ecl_run_over_300 incomplete because
+two linked fields lack independent symbol/addend bindings;
+step_interpolators differs in 24 bytes; LaserCurveInf::on_tick differs in
+6 bytes; and LaserCurveNode::step_back differs in 4 bytes. Even a local
+ratio of 1.0000 is not proof of byte-, relocation- or owner-exactness.
 
-Use `scripts/repo-python`; it selects an interpreter with the hash-pinned
-Capstone decoder from `config/tools.lock.toml`.
+The current Factory accepted snapshot is still inventory-only and returns no
+Oracle results. Earlier isolated pilot receipts are retained as historical,
+separate evidence; they are not current shared accepted facts. Source-origin
+review and full production closure remain open. The progress image above is
+also historical: it records the 2026-11-15 local audit, not current status.
 
-```bash
-scripts/repo-python scripts/build.py                     # incremental LTCG build
-scripts/repo-python scripts/audit-reference.py --write-units  # after the strict preflight is resolved
-scripts/repo-python scripts/check-frontier.py            # no function may lose ground
-scripts/repo-python scripts/progress.py --svg resources/progress.svg
-scripts/repo-python scripts/run-tests.py                 # tooling controls, about 2 min
-```
-
-Incremental builds reuse objects by their source, included-header and compiler
-flag hashes, then perform a full LTCG link. Use `--clean` for a milestone or a
-demonstrated cache/dependency problem. Exact credit comes only from the strict
-comparison of a complete owner (`scripts/strict_oracle.py`, units in
-`config/match-units.toml`); `config/frontiers.toml` records the residual bytes
-of every function that is not exact yet.
-
-The selected historical tools are MSVC **19.10.25017**, linker
-**14.10.25017.0**, Windows **7.1A** SDK, UCRT **10.0.10240.0** and DirectX SDK
-**June 2010**. Ghidra **12.1.3**, Temurin JDK **21.0.12.1+1** and Wine are
-provided by the shared Touhou Reconstruction Factory launcher; see
-[shared tools](docs/SHARED_TOOLS.md) and [setup evidence](docs/BOOTSTRAP.md).
+For the next agent, read AGENTS.md, then the
+[current handoff](docs/NEXT_AGENT.md) and
+[artifact and recovery notes](docs/ARTIFACTS.md). The dated
+[2026-11-21 handoff](docs/HANDOFF_20261121.md) and
+[2026-11-19 chronology](docs/HANDOFF_20261119.md) are historical records;
+their checkpoint hashes and measurements have been superseded.
 
 ## Project map
 

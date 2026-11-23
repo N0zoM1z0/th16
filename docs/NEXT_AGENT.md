@@ -1,200 +1,134 @@
 # TH16 reconstruction: next-agent handoff
 
-**Updated 2026-11-21; latest source checkpoint `77d9345`.** Follow
-[AGENTS.md](../AGENTS.md). Use natural C/C++, incremental compilation and
-affected complete-owner comparisons, not ASM or padding. Treat every dirty
-file as intentional work to inspect before editing; `git status` is more
-authoritative than a dated note. Do not push unless requested.
+**Updated 2026-11-23.** Read AGENTS.md first. This is the active handoff;
+the dated 2026-11-19 and 2026-11-21 notes are historical.
 
-The preceding long investigation is preserved in the
-[2026-11-19 handoff archive](HANDOFF_20261119.md). The focused work and A/B
-results from the 2026-11-21 session are in
-[the 2026-11-21 handoff](HANDOFF_20261121.md). This file is the short
-operational entry point.
+## Checkpoint
 
-## Checkpoint and verification boundary
+- Latest source checkpoint: de0cb82a22e2921813d893c5ea592f04de22bc14
+  (gpt-web: return packed laser shot origins). A documentation-only handoff
+  commit follows this source checkpoint.
+- The six source commits listed below are local and have not been pushed.
+- Worktree: clean after the handoff commit. Do not push unless the user asks.
+- The latest incremental build completed and contains **1,166 annotated
+  functions**. Keep build/reference-candidate/ and its object/dependency
+  graph for incremental builds.
+- The six source commits ahead of origin/main, oldest first:
+  99d173a align enemy interpolated velocity stores;
+  a9d6924 restore ET_ON origin and offset read order;
+  cf7aa4d align curve step-back local layout;
+  4af7f10 restore curve step-back local declaration order;
+  a5a5bbb inline enemy interpolated velocity updates;
+  de0cb82 return packed laser shot origins.
 
-- Latest *code* commit: `77d9345`
-  (`gpt-web: preserve radial acceleration operand order`). It follows
-  `8715c88` (`gpt-web: use ordinary laser-on shooter reads`). The preceding
-  commits
-  include `874e939` (ANM randomized radius), `7ec3361` (follow-camera Z),
-  `b0f537e` (movement scratch), `faa61a3` (snapshot restore order),
-  `e013bb2` (ECL scratch reuse), `310ea94` (ANM corner scratch),
-  `ed1bd98` (ECL Bezier finish) and `aad0d32` (enemy creation scope).
-  Use `git log` for the authoritative complete sequence; documentation and
-  archival commits may have landed after this source checkpoint.
-- The worktree was clean when the 2026-11-20 documentation pass began.
-  Reconfirm the live status after any cleanup. Keep ignored build and
-  evidence files, except individually verified historical duplicates handled
-  under [ARTIFACTS.md](ARTIFACTS.md).
-- The latest checked **incremental** `scripts/build.py` produced
-  `build/reference-candidate/th16.exe` with **1,166 annotated functions**.
-  Keep `build/reference-candidate/` for incremental work.
-- `.analysis/reference-audit.json` and `resources/progress.svg` describe an
-  old **2026-11-15** local audit: **1,033 exact / 51 mismatch / 131 incomplete**
-  out of **1,215 historical units**. The current incremental candidate
-  passed **1,032 exact / 44 mismatch / 139 incomplete** in a separate local
-  audit at `.analysis/oracle-acceptance-current.json`. Eleven annotations
-  gained local exactness and twelve lost it. The frontier also detects six
-  regressions in previously mismatching owners. Its incomplete entries now
-  hash the original extents from the historical boundary inventory. The
-  historical report and match ledgers are retained for comparison.
-- Two previously reviewed proofs fail on the current candidate.
-  `Gui::start_dialogue` (`0x429ff0`) differs in its GS/EH cleanup aggregate.
-  `enemy_ecl_sincosmul` (`0x426260`) has a 73-byte candidate PDB contribution
-  against the reviewed 32-byte target extent. Repair these scopes before
-  treating their historical results as current. The upper ECL owner
-  (`0x41dcb0`) has three unresolved linked fields in the current report.
-- Commit `6eb8bd5` records three ANM matches from existing source. A cold
-  build confirmed `insert_in_world_list_back` (`0x46e7d0`, 177 bytes),
-  `insert_in_ui_list_back` (`0x46e940`, 177 bytes), and
-  `restore_snapshot` (`0x46f8f0`, 128 bytes).
-- The isolated Factory v141 pilot accepted `restore_snapshot` as
-  `codegen_exact` after a clean build and comparison of all 128 bytes and
-  11 linked fields. Its job is `job:2f8b4061e97642dda9c3411794203fe5`.
-  The dedicated worktree keeps the pilot config, reports, and live fact
-  query under `.analysis/factory-replay-th16/.analysis/`. The
-  `th16-linked-pe-replay` branch in Factory contains the driver and policy.
-  Restore the archived Wine prefix before a new cold replay in either pilot.
-  See [artifact recovery](ARTIFACTS.md#cleanup-on-2026-11-21).
-  The shared Web service still reports inventory-only TH16. Its existing
-  receipts bind a different runner fingerprint.
-- Commit `2e6d711` makes single-unit replay check stored relocation targets
-  against the audit's independent bindings. A forged target in
-  `BulletManager::cancel_radius` previously hid four differing bytes. The
-  current replay rejects that binding, missing relocation fields, truncated
-  owners, and a foreign function symbol.
-- Commit `133ed62` records eight more existing candidates after focused
-  audit and single-unit replay. See `.analysis/oracle-follow-up-focused.json`
-  for the 3,202 compared bytes and `.analysis/oracle-follow-up/full-final.json`
-  for the full audit. All 1,215 per-function results agree with the previous
-  full audit.
-- A second isolated Factory job accepted
-  `LaserCurveInf::check_graze_or_kill` (`0x437cf0`) with the new binding
-  check. Job `job:527a89f3b52540d69e816535c8de3482` compared all 494 bytes
-  and 13 linked fields. Its live result is saved in
-  `.analysis/factory-replay-th16-follow-up/.analysis/accepted-facts.json`.
-  The fact query uses the worker's environment. A different shell launch
-  initially returned a stale environment verdict.
-- Commit `743da3f` makes the frontier compare replayed bytes, including
-  residual differences inside relocation fields. The historical audit
-  supplied the encodings for 14 corrected baselines. The current check
-  still reports 18 regressions and now includes the four affected field
-  bytes in `BulletManager::clear_all`.
-- The second pilot profile now also accepts `InterpFloat3::step`
-  (`0x406e10`, 906 bytes, six linked fields). Job
-  `job:151c70756a3547b9938c18ca86afb258` completed a cold build and exact
-  replay. The live fact query returns this receipt and the earlier laser
-  receipt together. All exact results in the current full audit have local
-  match entries.
-- Commit `5a2a8bf` requires the original size and hash to agree before an
-  exact result clears a frontier entry. The check also verifies that each
-  exact or mismatch verdict agrees with the replayed bytes. The full
-  current report passes this consistency check and retains the 18 known
-  frontier regressions.
-- The follow-up Factory profile also accepted
-  `ecl_ext_damage_anm_hurtbox` (`0x425410`, 285 bytes, ten linked fields)
-  and both `step_ex_angle` owners (`0x432c20` and `0x4392c0`, 412 bytes and
-  seven linked fields each). It accepted `sht_on_hit_burst_rising`
-  (`0x446e20`, 349 bytes, eight linked fields) as well. Each used its own
-  cold build.
-- The same profile now returns eight accepted receipts for `133ed62`.
-  The two added cold replays cover `AnmManager::AnmManager` (`0x46a3a0`,
-  5,071 bytes, 164 linked fields, a 136-byte EH code owner and 76 bytes of
-  EH metadata) and `Supervisor::switch_gamemodes` (`0x43ce10`, 815 bytes,
-  75 linked fields and two dispatch tables). Commit `8f60750` makes the
-  compound-switch mutation tests resolve the current PDB addresses from
-  the function map. All 39 controls pass after rebinding.
-- Use `scripts/check-frontier.py --report .analysis/oracle-follow-up/full-final.json`
-  to check the separately saved audit. Full checks require every current
-  annotation. A focused report can check the explicitly selected frontier
-  addresses it covers.
+The uncommitted LaserCurveInf::on_tick positive-bounds rewrite tested during
+the 2026-11-23 handoff pass was reverted. It reduced the local ratio from
+1.0000 to 0.976 and made the strict owner incomplete. The committed source is
+the baseline to continue from.
 
-## Latest focused normalized owner comparisons
+## Verification boundary
 
-These are from the current committed source and reference candidate, not
-Oracle receipts. Target/candidate sizes are in bytes; instruction counts come
-from `.analysis/measure-leaf.py`.
+The current Factory accepted snapshot for th16 is inventory-only:
+oracle_results is empty and the adapter reports inventory-import-only.
+Historical isolated pilot jobs did accept individual owners, but those
+receipts are separate from the current shared snapshot. Do not describe local
+similarity, local strict reports, imported labels or historical pilot receipts
+as current accepted exactness.
 
-| Owner (target VA) | Target / candidate bytes | Target / candidate instructions | Local ratio |
+Current focused strict results on the committed candidate:
+
+| Owner | Local strict result | Remaining difference |
+| --- | --- | --- |
+| EnemyData::ecl_run_over_300 (0x41dcb0) | incomplete | Two linked fields lack independent symbol/addend bindings |
+| EnemyData::step_interpolators (0x41bb50) | mismatch | 24 bytes differ; frame size and several stack slots differ |
+| LaserCurveInf::on_tick (0x4377d0) | mismatch | 6 bytes differ at offsets 68, 73, 791, 799, 915 and 941 |
+| LaserCurveNode::step_back (0x438370) | mismatch | 4 bytes differ at offsets 770, 779, 787 and 791 |
+
+A strict result is only as complete as its audited owner boundary and
+independent linkage bindings. The local audit does not promote Factory facts.
+
+## Current focused measurements
+
+The following are from the current committed source and current incremental
+candidate, measured with .analysis/measure-leaf.py. Ratios are normalized
+instruction similarity only; byte extents and instruction counts are included
+so apparent changes can be checked against the whole owner.
+
+| Owner (target VA) | Target / candidate bytes | Target / candidate instructions | Ratio |
 | --- | ---: | ---: | ---: |
-| `EnemyData::ecl_run_over_300` (`0x41dcb0`) | 21,408 / 21,456 | 4,562 / 4,679 | **0.9386** (2026-11-21 local build; see measurement discrepancy in [handoff](HANDOFF_20261121.md)) |
-| `AnmVm::run` (`0x45f980`) | 14,177 / 14,192 | 3,837 / 3,818 | **0.9531** |
-| `EclRunContext::ecl_run` (`0x472030`) | 7,046 / 6,944 | 1,807 / 1,777 | **0.9180** |
-| `LaserLineInf::run_ex` (`0x431fe0`) | 1,588 / 1,600 | 344 / 336 | **0.9088** |
-| `LaserCurveInf::run_ex` (`0x438cb0`) | 1,548 / 1,568 | 360 / 365 | **0.9683** |
-| `LaserLineInf::on_tick` (`0x432f40`) | 1,473 / 1,488 | 356 / 355 | **0.9395** (2026-11-21 local build) |
-| `LaserCurveInf::on_tick` (`0x4377d0`) | 1,305 / 1,312 | 332 / 330 | **0.9758** |
-| `InterpFloat2::step_radial_dist` (`0x425570`) | 757 / 768 | 207 / 207 | **0.9517** (2026-11-21 local build) |
-| `EnemyData::step_interpolators` (`0x41bb50`) | 1,692 / 1,696 | 421 / 421 | **0.9976** |
-| `AnmManager::restore_snapshot` (`0x46f8f0`) | 128 / 128 | 46 / 46 | **1.0000** |
-| `AnmVm::load_from` (`0x46ffb0`) | 650 / 656 | 135 / 135 | **0.9778** |
+| EnemyData::ecl_run_over_300 (0x41dcb0) | 21,408 / 21,584 | 4,562 / 4,833 | **0.9224** |
+| AnmVm::run (0x45f980) | 14,177 / 14,192 | 3,837 / 3,825 | **0.9514** |
+| EclRunContext::ecl_run (0x472030) | 7,046 / 6,976 | 1,807 / 1,701 | **0.9042** |
+| LaserLineInf::run_ex (0x431fe0) | 1,588 / 1,600 | 344 / 346 | **0.9159** |
+| LaserCurveInf::run_ex (0x438cb0) | 1,548 / 1,568 | 360 / 368 | **0.9698** |
+| LaserLineInf::on_tick (0x432f40) | 1,473 / 1,488 | 356 / 354 | **0.9408** |
+| LaserCurveInf::on_tick (0x4377d0) | 1,305 / 1,312 | 332 / 332 | **1.0000** |
+| LaserCurveNode::step_back (0x438370) | 986 / 992 | 248 / 248 | **1.0000** |
+| EnemyData::step_interpolators (0x41bb50) | 1,692 / 1,696 | 421 / 421 | **0.9976** |
+| InterpFloat2::step_radial_dist (0x425570) | 757 / 752 | 207 / 205 | **0.9175** |
 
-**Do not substitute an earlier session's 0.9134 or 0.9274 ECL figure for
-the currently measured 0.8655.** Historical candidates, local comparison
-settings and inline ownership differ. Re-evaluate the *complete* affected
-function, code size, relocation/data scope and PDB ownership before
-interpreting an apparent improvement. Even a ratio of 1.0000 is not proof
-of a complete byte/relocation-exact owner.
+Do not compare these figures directly with the 2026-11-21 handoff's
+0.9386 ECL measurement or its 0.8655 earlier build. Those figures came
+from different candidate/source states. Rebuild incrementally after a source
+edit and remeasure the complete owner.
 
-## Source priorities for the next agent
+## Recommended work
 
-1. **Large ECL boss:** `src/EnemyEcl.cpp`, `EnemyData::ecl_run_over_300`
-   (`0x41dcb0`). Inspect its `MOVE_POS_TIME`, `MOVE_CURVE`, `MOVE_BEZIER`,
-   and laser construction paths (402/403/411/413). Commit `b814004`
-   restored a separate time-position finalization path; keep that semantic
-   change and test the complete owner as well as the local case spans.
-   The candidate still has a different dispatcher stack alignment/frame.
-   Avoid reviving older register/union experiments without new evidence.
-2. **ANM dispatcher:** `src/AnmVmRun.cpp`, `AnmVm::run`
-   (`0x45f980`). Investigate world-freeze branch layout, IMUL/ISET_ADD
-   register lifetimes, randomized circle radius and follow-camera code.
-   Recent versions of temporary-variable, `volatile` and goto experiments
-   generally did not improve the complete owner. `FSET_RAND` advances
-   `instr_offset` in its own dispatch block.
-3. **Laser and ECL interpreters:** `LaserLineInf::on_tick` has a low local
-   ratio; `LaserCurveInf::on_tick` is closer. `EclRunContext::ecl_run`
-   still differs in arithmetic shared exits and opcode code placement.
-   Preserve natural data flow, rather than forcing machine-code bytes.
-4. **Leaf work:** `InterpFloat2::step_radial_dist` still has reversed
-   float-add operands and a Bezier register schedule difference;
-   `AnmVm::load_from` differs at the serialize callback's `read` stack
-   slot. Both were tried again: alternate `tick_nested`, split vector
-   component writes, preinitialized `read`, and a separate serialized-data
-   pointer all regressed. Their committed versions were restored.
+1. **Large ECL boss — EnemyData::ecl_run_over_300 (0x41dcb0).**
+   Continue with natural C++ in src/EnemyEcl.cpp. The latest whole-owner
+   comparison is 0.9224, but two linked fields remain unbound in the strict
+   audit. Focus the relative/time movement and laser construction paths:
+   opcode cases 402, 403, 411 and 413. The ECL case helper indexes by opcode
+   minus 300; these case spans are diagnostics, not complete owner scopes.
+   Resolve linkage and frame/stack-layout differences rather than optimizing
+   only a local opcode ratio.
 
-## Practical commands and preserved evidence
+2. **Curve laser leaves — LaserCurveInf::on_tick and
+   LaserCurveNode::step_back.** Both currently reach 1.0000 normalized
+   instruction similarity, yet strict audits still show 6 and 4 differing
+   bytes respectively. Start from the exact mismatch offsets in the table.
+   Recent positive-bounds, squared-term local and helper rewrites regressed;
+   those experiments were reverted. Preserve the committed natural source
+   and change one semantic expression at a time.
 
-```sh
-git status --short --branch
-git log -10 --oneline
-scripts/repo-python scripts/build.py  # incremental, only after source edits
-scripts/repo-python scripts/audit-reference.py --address 0x46f8f0 --json .analysis/oracle-focused.json
-scripts/repo-python .analysis/measure-leaf.py 0x41dcb0 ecl_run_over_300@EnemyData
-scripts/repo-python .analysis/measure-leaf.py 0x45f980 run@AnmVm
-scripts/repo-python .analysis/measure-leaf.py 0x472030 ecl_run@EclRunContext
-scripts/repo-python .analysis/claude-tools/cases.py 0x41dcb0 101,103,125,126,134,135,138,139
-scripts/repo-python .analysis/claude-tools/cases.py 0x41dcb0 402,403,411,413
-scripts/repo-python .analysis/claude-tools/cases.py 0x45f980 107,113,132
-scripts/repo-python scripts/evidence-archive.py list
-```
+3. **Enemy interpolation — EnemyData::step_interpolators (0x41bb50).**
+   It is at 0.9976 normalized similarity but still has a 24-byte strict
+   mismatch. The prologue uses sub esp, 0x48 instead of target
+   sub esp, 0x38; multiple temporary stack slots also differ. Avoid
+   broad helper extraction until the stack layout is understood.
 
-The ECL case utility indexes by **opcode minus 300**; the ANM utility
-indexes by **opcode plus 1**. These do not delimit complete owner scopes.
-Keep `resources/th16.exe`, `.tools/`, `.venv/`, `ghidra-project/`,
-`build/reference-candidate/`, `.analysis/reference-audit.json`,
-`.analysis/claude-tools/` and the pinned `_reference/` checkout.
-Historical evidence may be restored by `scripts/evidence-archive.py`
-using a checksummed `.analysis/cleanup-handoff-*.json` index.
-The 2026-11-20 cleanup archived 35 redundant historical PDBs and 28
-redundant audit reports, preserving a content-identical expanded peer per
-group. The 63-record `cleanup-handoff-20261120.json` restored about
-**273.39 MiB of allocated storage**; historical PDBs may need restoration
-before using their sibling build receipts. The active candidate remains
-unchanged.
+4. **Large interpreters and laser owners.** AnmVm::run is 0.9514,
+   EclRunContext::ecl_run 0.9042, LaserLineInf::run_ex 0.9159,
+   LaserLineInf::on_tick 0.9408 and LaserCurveInf::run_ex 0.9698.
+   Work on complete owners and preserve call order, register lifetimes and
+   branch layout through ordinary C++.
 
-The old [handoff archive](HANDOFF_20261119.md) retains detailed chronology,
-rejected trial source paths and deeper ownership notes. Also consult
-[ARTIFACTS.md](ARTIFACTS.md) before touching any ignored files and
-[REFERENCE_IMPORT.md](REFERENCE_IMPORT.md) for strict-Oracle boundaries.
+5. **Radial interpolation.** InterpFloat2::step_radial_dist is 0.9175
+   (207 target instructions versus 205 candidate). The prior declaration,
+   operand-order and local-result trials did not improve the whole owner;
+   remeasure the complete function after each source change.
+
+No ASM, NOP/padding or byte-shaped scaffolding is acceptable progress.
+Do not run a full cold replay for routine iterations. Use the incremental
+build and only the affected complete-owner comparisons; reserve broad replay
+for an explicit milestone or a demonstrated cache/dependency problem.
+
+## Commands
+
+    git status --short --branch
+    git log -10 --oneline
+    scripts/repo-python scripts/build.py
+    scripts/repo-python .analysis/measure-leaf.py 0x41dcb0 ecl_run_over_300@EnemyData
+    scripts/repo-python .analysis/measure-leaf.py 0x45f980 run@AnmVm
+    scripts/repo-python .analysis/measure-leaf.py 0x472030 ecl_run@EclRunContext
+    scripts/repo-python .analysis/measure-leaf.py 0x4377d0 '?on_tick@LaserCurveInf@@UAEHXZ'
+    scripts/repo-python .analysis/measure-leaf.py 0x438370 '?step_back@LaserCurveNode@@QAEXPAUD3DXVECTOR3@@PAM10MMM@Z'
+    scripts/repo-python .analysis/claude-tools/cases.py 0x41dcb0 402,403,411,413
+    scripts/repo-python scripts/audit-reference.py --address 0x41dcb0 --json .analysis/ecl-boss-focused.json
+    scripts/repo-python scripts/evidence-archive.py list
+
+The ANM case helper indexes by opcode plus 1. A local strict audit is not a
+Factory acceptance receipt. For the target identity, shared toolchain and
+evidence rules, see AGENTS.md; for private outputs and restoration, see
+ARTIFACTS.md. The 2026-11-21 handoff and 2026-11-19 chronology are retained
+as historical diagnostics, not current status.
