@@ -1108,10 +1108,9 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_CIRCLE_TIME:
     case ECL_OP_MOVE_CIRCLE_REL_TIME:
     {
-        bool absolute = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME;
-        PosVel *pv = absolute ? &abs_pos : &rel_pos;
-        InterpFloat *speed_i = absolute ? &abs_speed_i : &rel_speed_i;
-        InterpFloat2 *radial_i = absolute ? &abs_radial_dist_i : &rel_radial_dist_i;
+        PosVel *pv = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_pos : &rel_pos;
+        InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_speed_i : &rel_speed_i;
+        InterpFloat2 *radial_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_radial_dist_i : &rel_radial_dist_i;
         f32 speed = get_float_arg(EclFloatArgIndex{2});
         f32 radius = get_float_arg(EclFloatArgIndex{3});
         f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
