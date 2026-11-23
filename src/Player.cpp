@@ -1650,24 +1650,27 @@ i32 Player::on_tick_body()
         if (inner.time_in_state.current == 3)
         {
             // Drop half a power level as items, spread toward the top.
-            i32 power = g_Globals.power - g_Globals.power_per_level / 2;
-            g_Globals.power = power < g_Globals.power_per_level ? g_Globals.power_per_level : power;
-            f32 dx = 0.0f - inner.pos.x;
-            f32 dy = inner.pos.y - 224.0f - inner.pos.y;
+            i32 half_power = g_Globals.power_per_level / 2;
+            g_Globals.power += -half_power;
+            g_Globals.power = g_Globals.power < g_Globals.power_per_level ? g_Globals.power_per_level : g_Globals.power;
+            f32 y = inner.pos.y;
+            D3DXVECTOR3 *pos = &inner.pos;
+            f32 dx = 0.0f - pos->x;
+            f32 dy = y - 224.0f - y;
             f32 angle;
-            if (dy == 0.0f && dx == 0.0f)
+            if (dy != 0.0f || dx != 0.0f)
             {
-                angle = ZUN_PI / 2;
+                angle = zun_atan2f(dy, dx);
             }
             else
             {
-                angle = zun_atan2f(dy, dx);
+                angle = ZUN_PI / 2;
             }
             // Seven power items (item type 1).
             i32 items[7] = {1, 1, 1, 1, 1, 1, 1};
             for (i32 i = 0; i < 7; i++)
             {
-                g_ItemManager->spawn_item(items[i], &inner.pos, 0, i * ZUN_PI / 28.0f + angle - ZUN_PI / 8, 3.0f, 0,
+                g_ItemManager->spawn_item(items[i], pos, 0, i * ZUN_PI / 28.0f + angle - ZUN_PI / 8, 3.0f, 0,
                                           0);
             }
             inner.repopulate_options();
