@@ -832,12 +832,10 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_VEL_TIME_NM:
     case ECL_OP_MOVE_VEL_REL_TIME_NM:
     {
-        PosVel *pv = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
-                      instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_pos : &rel_pos;
-        InterpFloat *angle_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
-                                 instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_angle_i : &rel_angle_i;
-        InterpFloat *speed_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
-                                 instr->opcode == ECL_OP_MOVE_VEL_TIME_NM) ? &abs_speed_i : &rel_speed_i;
+        bool absolute = instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM;
+        PosVel *pv = absolute ? &abs_pos : &rel_pos;
+        InterpFloat *angle_i = absolute ? &abs_angle_i : &rel_angle_i;
+        InterpFloat *speed_i = absolute ? &abs_speed_i : &rel_speed_i;
         f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full->context.current_context->get_int_arg(0) <= 0)
