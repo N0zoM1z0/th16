@@ -721,8 +721,9 @@ int EnemyData::ecl_run_over_300()
     {
         PosVel *movement_pos_vel = reinterpret_cast<PosVel *>(reinterpret_cast<u8 *>(this) + movement_pos_vel_offset);
         movement_interp->initial = movement_pos_vel->pos;
-        movement_interp->goal = Float3(movement_goal_x > -999999.0 ? movement_goal_x : movement_pos_vel->pos.x,
-                                        movement_goal_y > -999999.0 ? movement_goal_y : movement_pos_vel->pos.y, 0.0f);
+        f32 goal_y = movement_goal_y > -999999.0 ? movement_goal_y : movement_pos_vel->pos.y;
+        f32 goal_x = movement_goal_x > -999999.0 ? movement_goal_x : movement_pos_vel->pos.x;
+        movement_interp->goal = Float3(goal_x, goal_y, 0.0f);
         movement_interp->reset_timer();
         movement_pos_vel->flags &= ~0xf;
         break;
