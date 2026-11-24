@@ -160,52 +160,26 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
     memcpy(out, &xy, sizeof(xy));
 }
 
-static __forceinline D3DXVECTOR3 LTCG_VECTORCALL get_shot_origin_and_copy_ex_packed(
-    EnemyData *enemy, i32 i, BulletEx *ex)
-{
-    f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
-    bool has_origin = origin_enabled > 0.9f;
-    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    f32 y = enemy->bullet_mgr_offsets[i].y;
-    f32 x;
-    f32 z;
-    if (has_origin)
-    {
-        z = 0.0f;
-        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
-        y += enemy->bullet_mgr_origins[i].xy.y;
-    }
-    else
-    {
-        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
-        y += enemy->final_pos.pos.y;
-    }
-    return D3DXVECTOR3(x, y, z);
-}
-
-static __forceinline D3DXVECTOR3 LTCG_VECTORCALL copy_ex_and_get_shot_origin(
-    EnemyData *enemy, i32 i, BulletEx *ex)
+static __forceinline void copy_ex_and_get_shot_origin(
+    EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     f32 x = enemy->bullet_mgr_offsets[i].x;
     f32 y = enemy->bullet_mgr_offsets[i].y;
-    D3DXVECTOR3 pos;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        pos.z = 0.0f;
+        out->z = 0.0f;
         x += enemy->bullet_mgr_origins[i].xy.x;
         y += enemy->bullet_mgr_origins[i].xy.y;
     }
     else
     {
-        pos.z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x += enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    pos.x = x;
-    pos.y = y;
-    return pos;
+    out->x = x;
+    out->y = y;
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
@@ -805,8 +779,8 @@ int EnemyData::ecl_run_over_300()
     {
         u32 pos_vel_offset = instr->opcode == ECL_OP_MOVE_BEZIER ? offsetof(EnemyData, abs_pos) : offsetof(EnemyData, rel_pos);
         InterpStrange1 *interp = instr->opcode == ECL_OP_MOVE_BEZIER ? &abs_pos_i : &rel_pos_i;
-        volatile f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
-        volatile f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
+        f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
+        f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{4});
         Float3 bezier_1;
         bezier_1.x = full->context.current_context->get_float_arg(EclFloatArgIndex{1});
         bezier_1.y = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
@@ -820,11 +794,14 @@ int EnemyData::ecl_run_over_300()
         interp->bezier_2 = bezier_2;
         interp->method_for_3d = INTERP_BEZIER;
         interp->axis_flags &= ~INTERP_STRANGE_PER_AXIS;
-        movement_pos_vel_offset = pos_vel_offset;
-        movement_interp = interp;
-        movement_goal_x = x;
-        movement_goal_y = y;
-        goto ecl_movement_interp_finish;
+        PosVel *pos_vel = reinterpret_cast<PosVel *>(reinterpret_cast<u8 *>(this) + pos_vel_offset);
+        interp->initial = pos_vel->pos;
+        f32 goal_y = y > -999999.0 ? y : pos_vel->pos.y;
+        f32 goal_x = x > -999999.0 ? x : pos_vel->pos.x;
+        interp->goal = Float3(goal_x, goal_y, 0.0f);
+        interp->reset_timer();
+        pos_vel->flags &= ~0xf;
+        break;
     }
     // moveVel(angle, speed) and the relative and
     // no-mirror (428, 430) forms. -999999 keeps the current value.
@@ -879,9 +856,10 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         i32 mode = full->context.current_context->get_int_arg(1);
+        const double keep_coordinate_threshold = -999999.0;
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
-            if (angle > -999999.0)
+            if (angle > keep_coordinate_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -894,14 +872,14 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = pv->angle.value;
             }
-            if (!(speed > -999999.0))
+            if (!(speed > keep_coordinate_threshold))
             {
                 speed = pv->speed;
             }
         }
         else
         {
-            if (angle > -999999.0)
+            if (angle > keep_coordinate_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -914,7 +892,7 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = 0.0f;
             }
-            if (!(speed > -999999.0))
+            if (!(speed > keep_coordinate_threshold))
             {
                 speed = 0.0f;
             }
@@ -945,7 +923,7 @@ int EnemyData::ecl_run_over_300()
         angle_i->goal = angle;
         angle_i->reset();
 
-        i32 speed_duration = full->context.current_context->get_int_arg(0);
+        i32 speed_duration = get_int_arg(0);
         speed_i->initial = initial_speed;
         speed_i->end_time = speed_duration;
         speed_i->method = static_cast<InterpMode>(mode);
@@ -2258,7 +2236,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.line) LaserLineInner();
         register i32 slot = get_int_arg(0);
-        scratch.line.start_pos = get_shot_origin_and_copy_ex_packed(this, slot, scratch.line.ex);
+        get_shot_origin_and_copy_ex_packed(this, slot, &scratch.line.start_pos, scratch.line.ex);
         const volatile EnemyBulletShooter &shooter_settings = bullet_props[slot];
         i32 bullet_type = shooter_settings.type;
         f32 ang_aim = shooter_settings.ang_aim;
@@ -2283,7 +2261,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
-        scratch.infinite.start_pos = get_shot_origin_and_copy_ex_packed(this, slot, scratch.infinite.ex);
+        get_shot_origin_and_copy_ex_packed(this, slot, &scratch.infinite.start_pos, scratch.infinite.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
@@ -2312,7 +2290,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.beam) LaserBeamInner();
         i32 slot = get_int_arg(0);
-        scratch.beam.start_pos = copy_ex_and_get_shot_origin(this, slot, scratch.beam.ex);
+        copy_ex_and_get_shot_origin(this, slot, &scratch.beam.start_pos, scratch.beam.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 color = shooter.color;
         f32 ang_aim = shooter.ang_aim;
@@ -2331,7 +2309,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
-        scratch.curve.start_pos = get_shot_origin_and_copy_ex_packed(this, slot, scratch.curve.ex);
+        get_shot_origin_and_copy_ex_packed(this, slot, &scratch.curve.start_pos, scratch.curve.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
