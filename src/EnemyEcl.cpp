@@ -1120,7 +1120,7 @@ int EnemyData::ecl_run_over_300()
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
         f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial.speed;
-        volatile f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
+        f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
         D3DXVECTOR2 initial_radial(initial_radius, initial_radial_speed);
