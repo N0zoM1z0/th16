@@ -954,7 +954,7 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_ANGLE_TIME:
     case ECL_OP_MOVE_ANGLE_REL_TIME:
     {
-        PosVel *pv = instr->opcode == ECL_OP_MOVE_ANGLE_TIME ? &abs_pos : &rel_pos;
+        register PosVel *pv = instr->opcode == ECL_OP_MOVE_ANGLE_TIME ? &abs_pos : &rel_pos;
         InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_ANGLE_TIME ? &abs_angle_i : &rel_angle_i;
         f32 angle = get_float_arg(EclFloatArgIndex{2});
         if (get_int_arg(0) <= 0)
