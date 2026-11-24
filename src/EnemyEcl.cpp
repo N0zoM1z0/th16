@@ -168,20 +168,20 @@ static __forceinline void copy_ex_and_get_shot_origin(
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     f32 x = enemy->bullet_mgr_offsets[i].x;
     f32 y = enemy->bullet_mgr_offsets[i].y;
+    f32 z;
     if (enemy->bullet_mgr_origins[i].enabled > 0.9f)
     {
-        out->z = 0.0f;
+        z = 0.0f;
         x += enemy->bullet_mgr_origins[i].xy.x;
         y += enemy->bullet_mgr_origins[i].xy.y;
     }
     else
     {
-        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x += enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    D3DXVECTOR2 xy(x, y);
-    memcpy(out, &xy, sizeof(xy));
+    *out = D3DXVECTOR3(x, y, z);
 }
 
 // setNext: the life at which interrupt index fires and, unless the life is
