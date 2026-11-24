@@ -1706,14 +1706,14 @@ int EnemyData::ecl_run_over_300()
         f32 lunatic = get_float_arg(EclFloatArgIndex{4});
         switch (g_Globals.difficulty)
         {
+        case DIFFICULTY_HARD:
+            *get_float_arg_ptr(0) = hard;
+            break;
         case DIFFICULTY_EASY:
             *get_float_arg_ptr(0) = easy;
             break;
         case DIFFICULTY_NORMAL:
             *get_float_arg_ptr(0) = normal;
-            break;
-        case DIFFICULTY_HARD:
-            *get_float_arg_ptr(0) = hard;
             break;
         case DIFFICULTY_LUNATIC:
             *get_float_arg_ptr(0) = lunatic;
