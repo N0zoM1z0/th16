@@ -860,7 +860,6 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         i32 mode = full->context.current_context->get_int_arg(1);
-        // Keep the target's shared sentinel load live across both mode paths.
         static const volatile double unset_coordinate_threshold = -999999.0;
         register double keep_coordinate_threshold = unset_coordinate_threshold;
         if (mode != INTERP_CONSTANT_VELOCITY)
@@ -1707,7 +1706,7 @@ int EnemyData::ecl_run_over_300()
             *get_float_arg_ptr(0) = lunatic;
             break;
         default:
-            *full->context.current_context->get_float_arg_ptr(0) = lunatic;
+            *get_float_arg_ptr(0) = lunatic;
             break;
         }
         break;
