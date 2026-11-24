@@ -632,7 +632,8 @@ int EnemyData::ecl_run_over_300()
         f32 z = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         *position_x += x;
         *position_y += y;
-        pos_vel->pos.z += z;
+        volatile f32 *position_z = &pos_vel->pos.z;
+        *position_z = z + pos_vel->pos.z;
         update_final_pos();
         break;
     }
