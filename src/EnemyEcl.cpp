@@ -848,7 +848,7 @@ int EnemyData::ecl_run_over_300()
         InterpFloat *speed_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM)
                                    ? &abs_speed_i
                                    : &rel_speed_i;
-        f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
+        register f32 angle = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
         f32 speed = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
@@ -858,6 +858,7 @@ int EnemyData::ecl_run_over_300()
         }
         i32 mode = full->context.current_context->get_int_arg(1);
         register const double keep_coordinate_threshold = -999999.0;
+        f32 goal_angle = angle;
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
             if (angle > keep_coordinate_threshold)
@@ -866,12 +867,12 @@ int EnemyData::ecl_run_over_300()
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
                      instr->opcode == ECL_OP_MOVE_VEL_REL_TIME))
                 {
-                    angle = mirror_angle(angle);
+                    goal_angle = mirror_angle(angle);
                 }
             }
             else
             {
-                angle = pv->angle.value;
+                goal_angle = pv->angle.value;
             }
             if (!(speed > keep_coordinate_threshold))
             {
@@ -886,12 +887,12 @@ int EnemyData::ecl_run_over_300()
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
                      instr->opcode == ECL_OP_MOVE_VEL_REL_TIME))
                 {
-                    angle = -angle;
+                    goal_angle = -angle;
                 }
             }
             else
             {
-                angle = 0.0f;
+                goal_angle = 0.0f;
             }
             if (!(speed > keep_coordinate_threshold))
             {
@@ -901,11 +902,11 @@ int EnemyData::ecl_run_over_300()
 
         f32 initial_angle = pv->angle.value;
         f32 initial_speed = pv->speed;
-        if (zun_fabsf(initial_angle - angle) >= ZUN_PI)
+        if (zun_fabsf(initial_angle - goal_angle) >= ZUN_PI)
         {
-            if (!(angle > initial_angle))
+            if (!(goal_angle > initial_angle))
             {
-                angle += ZUN_2PI;
+                goal_angle += ZUN_2PI;
             }
             else
             {
@@ -921,7 +922,7 @@ int EnemyData::ecl_run_over_300()
         angle_i->method = static_cast<InterpMode>(mode);
         angle_i->bezier_1 = 0.0f;
         angle_i->bezier_2 = 0.0f;
-        angle_i->goal = angle;
+        angle_i->goal = goal_angle;
         angle_i->reset();
 
         i32 speed_duration = get_int_arg(0);
