@@ -1115,11 +1115,11 @@ int EnemyData::ecl_run_over_300()
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_speed_i : &rel_speed_i;
         InterpFloat2 *radial_i = instr->opcode == ECL_OP_MOVE_CIRCLE_TIME ? &abs_radial_dist_i : &rel_radial_dist_i;
         f32 speed = get_float_arg(EclFloatArgIndex{2});
-        f32 radius = get_float_arg(EclFloatArgIndex{3});
+        volatile f32 radius = get_float_arg(EclFloatArgIndex{3});
         f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial.speed;
+        register f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial.speed;
         f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
@@ -1233,11 +1233,23 @@ int EnemyData::ecl_run_over_300()
         {
             goal_radial_speed = pv->radial.speed;
         }
-        volatile f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
+        register f32 goal_radius = radius;
+        if (!(goal_radius > -999999.0))
+        {
+            goal_radius = pv->radial.distance;
+        }
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
-        volatile f32 goal_ellipse_ratio = ellipse_ratio > -999999.0 ? ellipse_ratio : pv->ellipse_ratio;
-        volatile f32 goal_ellipse_angle = ellipse_angle > -999999.0 ? ellipse_angle : pv->ellipse_angle.value;
+        register f32 goal_ellipse_ratio = ellipse_ratio;
+        if (!(goal_ellipse_ratio > -999999.0))
+        {
+            goal_ellipse_ratio = pv->ellipse_ratio;
+        }
+        register f32 goal_ellipse_angle = ellipse_angle;
+        if (!(goal_ellipse_angle > -999999.0))
+        {
+            goal_ellipse_angle = pv->ellipse_angle.value;
+        }
         f32 initial_ellipse_angle = pv->ellipse_angle.value;
         f32 initial_ellipse_ratio = pv->ellipse_ratio;
         i32 time = get_int_arg(0);
@@ -1700,8 +1712,11 @@ int EnemyData::ecl_run_over_300()
             *get_float_arg_ptr(0) = lunatic;
             break;
         default:
-            *get_float_arg_ptr(0) = lunatic;
+        {
+            volatile f32 *destination = get_float_arg_ptr(0);
+            *destination = lunatic;
             break;
+        }
         }
         break;
     }
