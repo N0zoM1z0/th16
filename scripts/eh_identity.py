@@ -180,6 +180,9 @@ def inspect_saved_register_frame(image, address, size, handler, *,
 
 
 def review_handler(context, record, statics, pdb):
+    if record.get("profile") == "ecl-boss-cleanup-v1":
+        from eh_ecl_boss import review_ecl_boss
+        return review_ecl_boss(context, record, statics, pdb)
     if record.get("profile") == "aligned-audio-allocation-v1":
         from eh_aligned_audio import review_aligned_audio
         return review_aligned_audio(context, record, statics, pdb)

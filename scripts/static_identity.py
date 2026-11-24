@@ -1,6 +1,8 @@
 """Explicit complete private-function identities; no public-symbol promotion."""
 from collections import deque
+from pathlib import Path
 import hashlib
+import re
 import struct
 import tomllib
 
@@ -104,17 +106,25 @@ def review_functions(context, path, *, unavailable=None):
     result = {}
     identities, targets = set(), set()
     for name, row in records['functions'].items():
-        require(set(row)-{'witness_dispatch'} == {'profile','source','symbol','target','size','sha256',
-                             'witness_parent','witness','parent_sha256'}, 'unsupported private-function fields')
+        semantic_sse2 = row.get('profile') == 'x87-sincos-scale-sse2-candidate-v1'
+        required = {'profile','source','symbol','target','size','sha256',
+                    'witness_parent','witness','parent_sha256'}
+        if semantic_sse2:
+            required |= {'candidate_size','candidate_sha256'}
+        require(set(row)-{'witness_dispatch'} == required, 'unsupported private-function fields')
         source = row['source']
         require(isinstance(source,str) and source.startswith('src/') and source.endswith('.cpp')
                 and '\\' not in source and ':' not in source
                 and all(p not in ('','.','..') for p in source.split('/')),
                 'private producer requires a canonical maintained source path')
-        payload = PROFILES.get(row['profile'])
+        payload = (PROFILES['x87-sincos-scale-v1'] if semantic_sse2
+                   else PROFILES.get(row['profile']))
         require(payload is not None and row['size'] == len(payload),
                 'unreviewed private-function profile or complete extent')
         target, size = row['target'], row['size']
+        candidate_size = row['candidate_size'] if semantic_sse2 else size
+        require(type(candidate_size) is int and candidate_size > 0,
+                'private candidate extent must be integral')
         require(type(target) is int and type(size) is int, 'private-function extent must be integral')
         boundary = context.boundaries.get(target)
         require(boundary is not None and int(boundary['size']) == size
@@ -192,21 +202,40 @@ def review_functions(context, path, *, unavailable=None):
         identities.add(identity)
         targets.add(target)
         try:
-            owner = private_owner(context,statics,pdb,row['symbol'],row['source'],size,True)
+            owner = private_owner(context,statics,pdb,row['symbol'],row['source'],candidate_size,True)
             require([r for r in annotations if int(r[0],0) == target] ==
                     [[hex(target),hex(owner['address']),row['symbol']]], 'private annotation identity differs')
-            require(context.image.read_address(owner['address'],size) == payload,
-                    'complete private candidate profile bytes differ')
-            require(not any(a < owner['address']+size and owner['address'] < a+4
+            candidate_payload = context.image.read_address(owner['address'],candidate_size)
+            if semantic_sse2:
+                require(hashlib.sha256(candidate_payload).hexdigest() == row['candidate_sha256'],
+                        'complete private SSE2 sincos candidate differs')
+                source_text = (Path(__file__).resolve().parents[1] / source).read_text()
+                require(re.search(r'static\s+void\s+__fastcall\s+enemy_ecl_sincosmul\s*'
+                                  r'\(Float3\s*\*dst,\s*f32\s+angle,\s*f32\s+radius\)\s*'
+                                  r'\{\s*dst->x\s*=\s*radius\s*\*\s*cosf\(angle\);\s*'
+                                  r'dst->y\s*=\s*radius\s*\*\s*sinf\(angle\);\s*\}',
+                                  source_text) is not None,
+                        'private SSE2 sincos source is not the reviewed natural C++ implementation')
+                fields = linked_code_fields(context.image,context.publics,owner['address'],candidate_size)
+                require(fields['decoded_bytes'] == candidate_size and fields['normalization_complete']
+                        and [(f['offset'],f['width'],f['type'],f.get('candidate_symbols'))
+                             for f in fields['fields']]
+                        == [(19,4,'REL32',['__libm_sse2_cos_precise']),
+                            (48,4,'REL32',['__libm_sse2_sin_precise'])],
+                        'private SSE2 sincos candidate does not compute cosine then sine into XY')
+            else:
+                require(candidate_payload == payload, 'complete private candidate profile bytes differ')
+                fields = linked_code_fields(context.image,context.publics,owner['address'],candidate_size)
+                require(fields['decoded_bytes'] == candidate_size and not fields['fields'],
+                        'private profile has unreviewed linked fields')
+            require(not any(a < owner['address']+candidate_size and owner['address'] < a+4
                             for a in context.image.base_relocations()), 'private profile has unreviewed PE relocations')
-            fields = linked_code_fields(context.image,context.publics,owner['address'],size)
-            require(fields['decoded_bytes'] == size and not fields['fields'], 'private profile has unreviewed linked fields')
         except (EHEvidenceError, StaticEvidenceError) as error:
             if unavailable is None:
                 raise StaticEvidenceError(str(error)) from error
             unavailable[target] = str(error)
             continue
-        function = dict(symbol=row['symbol'],address=hex(owner['address']),size=size,
+        function = dict(symbol=row['symbol'],address=hex(owner['address']),size=candidate_size,
                         extent_source='pdb-section-contribution',pdb_object=owner['object'],
                         pdb_module_index=owner['module_index'])
         result[name] = dict(**row,candidate=owner['address'],function=function,

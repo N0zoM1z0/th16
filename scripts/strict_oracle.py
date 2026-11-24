@@ -631,7 +631,7 @@ class Context:
                  ROOT / "scripts/eh_allocation.py", ROOT / "scripts/eh_gs_allocation.py",
                  ROOT / "scripts/eh_aligned_audio.py",
                  ROOT / "scripts/eh_array_constructor.py",
-                 ROOT / "scripts/eh_terminate.py",
+                 ROOT / "scripts/eh_terminate.py", ROOT / "scripts/eh_ecl_boss.py",
                  ROOT / "scripts/static_identity.py", ROOT / "config/static-functions.toml",
                  ROOT / "scripts/runtime_identity.py", ROOT / "scripts/runtime_fmod.py",
                  ROOT / "scripts/runtime_atan2.py",

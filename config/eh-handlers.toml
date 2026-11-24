@@ -767,3 +767,20 @@ func_info_size = 52
 func_info_sha256 = "d90e56a4d8da15c0a2017fd7d1cff1e3a780068fd4e1e3ae77c02ce8f03e3293"
 eh_flags = 1
 evidence = "docs/knowledge/terminate-destructor-eh.md"
+
+[[handlers]]
+profile = "ecl-boss-cleanup-v1"
+source = "src/EnemyEcl.cpp"
+parent_symbol = "?ecl_run_over_300@EnemyData@@QAEHXZ"
+parent_target = 0x0041DCB0
+parent_size = 21408
+parent_sha256 = "6c6f400ca422d9c14e06cb96d7656c71521a61c0f5e6e7dcc4693dab1c1afa49"
+target = 0x0048A6C2
+code_target = 0x0048A6B0
+size = 58
+target_sha256 = "f9b2de9bcf867661eae7a699f689f9a369b69fc40c4ea8a54f7fdc73ae6412fa"
+func_info_target = 0x0049B274
+func_info_size = 44
+func_info_sha256 = "c14cb4cee5769a95b2fd3daa9f0c3977121fd0b8d4924134e6dc022c3a132163"
+eh_flags = 1
+evidence = "docs/knowledge/ecl-boss-eh.md"
