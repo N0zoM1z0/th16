@@ -1240,7 +1240,11 @@ int EnemyData::ecl_run_over_300()
         {
             goal_radial_speed = pv->radial.speed;
         }
-        register f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
+        register f32 goal_radius = radius;
+        if (!(goal_radius > -999999.0))
+        {
+            goal_radius = pv->radial.distance;
+        }
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
         register f32 goal_ellipse_ratio = ellipse_ratio;
@@ -1759,8 +1763,8 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
-        f32 x;
+        register f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
+        register f32 x;
         D3DXVECTOR2 *out_xy = reinterpret_cast<D3DXVECTOR2 *>(&bullet_props[slot].pos);
         f32 *out_z = &bullet_props[slot].pos.z;
         if (origin_enabled > 0.9f)
@@ -1769,7 +1773,7 @@ int EnemyData::ecl_run_over_300()
             x += bullet_mgr_offsets[slot].x;
             y += bullet_mgr_origins[slot].xy.y;
             *out_z = 0.0f;
-        *out_xy = D3DXVECTOR2(x, y);
+            *out_xy = D3DXVECTOR2(x, y);
         }
         else
         {
