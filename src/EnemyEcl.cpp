@@ -41,7 +41,6 @@ static const f32 ecl_move_rand_third = 3.0f;
 static const f32 ecl_move_rand_pi = ZUN_PI;
 static const f32 ecl_move_rand_half_pi = ZUN_PI / 2;
 static const f32 ecl_move_rand_five_cents = 0.05f;
-static const double ecl_move_rand_five_cents_double = 0.05;
 // The largest f32 below the original double threshold 0.05; since the
 // operand is f32, <= preserves the original double comparison exactly.
 static const double ecl_move_velocity_keep_threshold = -999999.0;
@@ -1400,7 +1399,7 @@ int EnemyData::ecl_run_over_300()
         else
         {
             f32 positive_vertical_distance = zun_fabsf(angle - ecl_move_rand_half_pi);
-            if (positive_vertical_distance < ecl_move_rand_five_cents_double)
+            if (positive_vertical_distance < 0.05)
             {
                 angle = (ecl_move_rand_half_pi > angle) ? ecl_move_rand_pos_half_pi_low
                                                         : ecl_move_rand_pos_half_pi_high;
