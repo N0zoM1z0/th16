@@ -1240,11 +1240,7 @@ int EnemyData::ecl_run_over_300()
         {
             goal_radial_speed = pv->radial.speed;
         }
-        register f32 goal_radius = radius;
-        if (!(goal_radius > -999999.0))
-        {
-            goal_radius = pv->radial.distance;
-        }
+        register f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
         register f32 goal_ellipse_ratio = ellipse_ratio;
