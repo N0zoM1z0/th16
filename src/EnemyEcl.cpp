@@ -156,8 +156,8 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
         x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    D3DXVECTOR2 xy(x, y);
-    memcpy(out, &xy, sizeof(xy));
+    out->x = x;
+    out->y = y;
 }
 
 static __forceinline void copy_ex_and_get_shot_origin(
@@ -1742,19 +1742,24 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
-        // Keep the selected Y source as a branch-local memory read.
+        // Keep the selected Y source next to its branch's position calculation.
         if (origin_enabled > 0.9f)
         {
-            y += *(volatile f32 *)&bullet_mgr_origins[slot].xy.y;
-            bullet_props[slot].pos = Float3(bullet_mgr_offsets[slot].x + bullet_mgr_origins[slot].xy.x,
-                                            y, 0.0f);
+            D3DXVECTOR3 pos;
+            pos.x = bullet_mgr_offsets[slot].x + bullet_mgr_origins[slot].xy.x;
+            pos.y = *(volatile f32 *)&bullet_mgr_offsets[slot].y +
+                    *(volatile f32 *)&bullet_mgr_origins[slot].xy.y;
+            pos.z = 0.0f;
+            bullet_props[slot].pos = pos;
         }
         else
         {
-            y += *(volatile f32 *)&final_pos.pos.y;
-            bullet_props[slot].pos = Float3(bullet_mgr_offsets[slot].x + final_pos.pos.x,
-                                            y, bullet_mgr_offsets[slot].z + final_pos.pos.z);
+            D3DXVECTOR3 pos;
+            pos.x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
+            pos.y = *(volatile f32 *)&bullet_mgr_offsets[slot].y +
+                    *(volatile f32 *)&final_pos.pos.y;
+            pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
+            bullet_props[slot].pos = pos;
         }
         g_BulletManager->et_protect_range = et_protect_range;
         g_BulletManager->shoot_bullets(&bullet_props[slot]);
