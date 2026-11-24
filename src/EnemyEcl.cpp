@@ -1129,6 +1129,7 @@ int EnemyData::ecl_run_over_300()
         }
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
+        D3DXVECTOR2 initial_radial(initial_radius, initial_radial_speed);
 
         i32 time = get_int_arg(0);
         i32 mode = get_int_arg(1);
@@ -1143,8 +1144,7 @@ int EnemyData::ecl_run_over_300()
         radial_i->bezier_1 = g_zero_vec2;
         radial_i->bezier_2 = g_zero_vec2;
         radial_i->method = static_cast<InterpMode>(mode);
-        radial_i->initial.x = initial_radius;
-        radial_i->initial.y = initial_radial_speed;
+        radial_i->initial = initial_radial;
         radial_i->goal.x = radius;
         radial_i->goal.y = radial_speed;
         radial_i->reset_timer();
