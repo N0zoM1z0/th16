@@ -142,8 +142,8 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
     f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     bool has_origin = origin_enabled > 0.9f;
-    f32 y = enemy->bullet_mgr_offsets[i].y;
-    f32 x;
+    register f32 y = enemy->bullet_mgr_offsets[i].y;
+    register f32 x;
     if (has_origin)
     {
         x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
@@ -858,10 +858,9 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         i32 mode = full->context.current_context->get_int_arg(1);
-        const double keep_coordinate_threshold = ecl_move_velocity_keep_threshold;
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
-            if (angle > keep_coordinate_threshold)
+            if (angle > ecl_move_velocity_keep_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -874,14 +873,14 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = pv->angle.value;
             }
-            if (!(speed > keep_coordinate_threshold))
+            if (!(speed > ecl_move_velocity_keep_threshold))
             {
                 speed = pv->speed;
             }
         }
         else
         {
-            if (angle > keep_coordinate_threshold)
+            if (angle > ecl_move_velocity_keep_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -894,7 +893,7 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = 0.0f;
             }
-            if (!(speed > keep_coordinate_threshold))
+            if (!(speed > ecl_move_velocity_keep_threshold))
             {
                 speed = 0.0f;
             }
