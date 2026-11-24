@@ -158,7 +158,9 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
         x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    D3DXVECTOR2 xy(x, y);
+    D3DXVECTOR2 xy;
+    xy.x = x;
+    xy.y = y;
     memcpy(out, &xy, sizeof(xy));
 }
 
