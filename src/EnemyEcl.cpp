@@ -1773,6 +1773,7 @@ int EnemyData::ecl_run_over_300()
             x += bullet_mgr_offsets[slot].x;
             y += bullet_mgr_origins[slot].xy.y;
             *out_z = 0.0f;
+        *out_xy = D3DXVECTOR2(x, y);
         }
         else
         {
@@ -1782,8 +1783,8 @@ int EnemyData::ecl_run_over_300()
             y += final_pos.pos.y;
             z += final_pos.pos.z;
             *out_z = z;
+            *out_xy = D3DXVECTOR2(x, y);
         }
-        *out_xy = D3DXVECTOR2(x, y);
         g_BulletManager->et_protect_range = et_protect_range;
         g_BulletManager->shoot_bullets(&bullet_props[slot]);
         g_BulletManager->et_protect_range = 0.0f;
