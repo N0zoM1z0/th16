@@ -904,13 +904,13 @@ int EnemyData::ecl_run_over_300()
         f32 initial_speed = pv->speed;
         if (zun_fabsf(initial_angle - goal_angle) >= ZUN_PI)
         {
-            if (!(goal_angle > initial_angle))
+            if (goal_angle > initial_angle)
             {
-                goal_angle += ZUN_2PI;
+                initial_angle += ZUN_2PI;
             }
             else
             {
-                initial_angle += ZUN_2PI;
+                goal_angle += ZUN_2PI;
             }
         }
 
@@ -1229,18 +1229,33 @@ int EnemyData::ecl_run_over_300()
         f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
         f32 ellipse_angle = get_float_arg(EclFloatArgIndex{5});
         f32 ellipse_ratio = get_float_arg(EclFloatArgIndex{6});
-        speed = speed > -999999.0 ? speed : pv->speed;
+        if (!(speed > -999999.0))
+        {
+            speed = pv->speed;
+        }
         f32 initial_speed = pv->speed;
-        register f32 goal_radial_speed = radial_speed;
+        f32 goal_radial_speed = radial_speed;
         if (!(goal_radial_speed > -999999.0))
         {
             goal_radial_speed = pv->radial.speed;
         }
-        volatile f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
+        f32 goal_radius = radius;
+        if (!(goal_radius > -999999.0))
+        {
+            goal_radius = pv->radial.distance;
+        }
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
-        volatile f32 goal_ellipse_ratio = ellipse_ratio > -999999.0 ? ellipse_ratio : pv->ellipse_ratio;
-        volatile f32 goal_ellipse_angle = ellipse_angle > -999999.0 ? ellipse_angle : pv->ellipse_angle.value;
+        f32 goal_ellipse_ratio = ellipse_ratio;
+        if (!(goal_ellipse_ratio > -999999.0))
+        {
+            goal_ellipse_ratio = pv->ellipse_ratio;
+        }
+        f32 goal_ellipse_angle = ellipse_angle;
+        if (!(goal_ellipse_angle > -999999.0))
+        {
+            goal_ellipse_angle = pv->ellipse_angle.value;
+        }
         f32 initial_ellipse_angle = pv->ellipse_angle.value;
         f32 initial_ellipse_ratio = pv->ellipse_ratio;
         i32 time = get_int_arg(0);
