@@ -2020,16 +2020,23 @@ int EnemyData::ecl_run_over_300()
             et = 0;
         }
 
-        i16 opcode = instr->opcode;
-        i32 arg = (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT) ? 1 : 2;
-        i32 ex_index = arg == 1 ? et_ex_index[et] : get_int_arg(1);
+        i32 arg = (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT) ? 1 : 2;
+        i32 ex_index;
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
+        {
+            ex_index = et_ex_index[et];
+        }
+        else
+        {
+            ex_index = get_int_arg(1);
+        }
         BulletEx *ex = &bullet_props[et].ex[ex_index];
 #define ECL_EX_FIELD(field) (ex->field)
         ECL_EX_FIELD(slot) = get_int_arg(arg++);
         ECL_EX_FIELD(type) = static_cast<BulletExType>(get_int_arg(arg++));
         ECL_EX_FIELD(a) = get_int_arg(arg++);
         ECL_EX_FIELD(b) = get_int_arg(arg++);
-        if (opcode == ECL_OP_ET_EX_FULL || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             // The c word is part of the selected transform record.
             bullet_props[et].ex[ex_index].c = get_int_arg(arg++);
@@ -2038,14 +2045,14 @@ int EnemyData::ecl_run_over_300()
 
         ECL_EX_FIELD(r) = get_float_arg(EclFloatArgIndex{arg++});
         ECL_EX_FIELD(s) = get_float_arg(EclFloatArgIndex{arg++});
-        if (opcode == ECL_OP_ET_EX_FULL || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             ECL_EX_FIELD(m) = get_float_arg(EclFloatArgIndex{arg++});
             ECL_EX_FIELD(n) = get_float_arg(EclFloatArgIndex{arg++});
         }
 #undef ECL_EX_FIELD
 
-        if (opcode == ECL_OP_ET_EX_NEXT || opcode == ECL_OP_ET_EX_FULL_NEXT)
+        if (instr->opcode == ECL_OP_ET_EX_NEXT || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             et_ex_index[et]++;
         }
