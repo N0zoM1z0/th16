@@ -144,21 +144,20 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
     bool has_origin = origin_enabled > 0.9f;
     register f32 y = enemy->bullet_mgr_offsets[i].y;
     register f32 x;
+    f32 z;
     if (has_origin)
     {
         x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
         y += enemy->bullet_mgr_origins[i].xy.y;
-        out->z = 0.0f;
+        z = 0.0f;
     }
     else
     {
-        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    D3DXVECTOR2 xy(x, y);
-    // Only the packed XY prefix is written; do not alias the Float3 as a Float2.
-    memcpy(out, &xy, sizeof(xy));
+    *out = D3DXVECTOR3(x, y, z);
 }
 
 static __forceinline void copy_ex_and_get_shot_origin(
@@ -858,9 +857,10 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         i32 mode = full->context.current_context->get_int_arg(1);
+        const double keep_coordinate_threshold = ecl_move_velocity_keep_threshold;
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
-            if (angle > ecl_move_velocity_keep_threshold)
+            if (angle > keep_coordinate_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -873,14 +873,14 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = pv->angle.value;
             }
-            if (!(speed > ecl_move_velocity_keep_threshold))
+            if (!(speed > keep_coordinate_threshold))
             {
                 speed = pv->speed;
             }
         }
         else
         {
-            if (angle > ecl_move_velocity_keep_threshold)
+            if (angle > keep_coordinate_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -893,7 +893,7 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = 0.0f;
             }
-            if (!(speed > ecl_move_velocity_keep_threshold))
+            if (!(speed > keep_coordinate_threshold))
             {
                 speed = 0.0f;
             }
