@@ -1337,9 +1337,9 @@ int EnemyData::ecl_run_over_300()
         InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_angle_i : &rel_angle_i;
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_speed_i : &rel_speed_i;
 
+        register f32 half_width = move_limit_size.x * ecl_move_rand_quarter;
+        register f32 current_x = final_pos.pos.x;
         f32 center_x = move_limit_center.x;
-        f32 half_width = move_limit_size.x * ecl_move_rand_quarter;
-        f32 current_x = final_pos.pos.x;
         f32 left = center_x - half_width;
         f32 right = center_x + half_width;
         f32 angle;
@@ -1357,7 +1357,8 @@ int EnemyData::ecl_run_over_300()
             }
             else
             {
-                if (g_Player->inner.pos.x > current_x)
+                register f32 player_x = g_Player->inner.pos.x;
+                if (player_x > current_x)
                 {
                     angle = g_replay_safe_rng.randf_neg_1_to_1_times_pi() * ecl_move_rand_quarter;
                     if (g_replay_safe_rng.rand_u16() % 3 == 0)
@@ -1376,16 +1377,17 @@ int EnemyData::ecl_run_over_300()
             }
         }
 
-        f32 current_y = final_pos.pos.y;
-        f32 half_height = move_limit_size.y * ecl_move_rand_quarter;
-        f32 lower = move_limit_center.y - half_height;
+        register f32 current_y = final_pos.pos.y;
+        register f32 half_height = move_limit_size.y * ecl_move_rand_quarter;
+        register f32 center_y = move_limit_center.y;
+        f32 lower = center_y - half_height;
         if (lower > current_y)
         {
             angle = zun_fabsf(angle);
         }
         else
         {
-            f32 upper = move_limit_center.y + half_height;
+            f32 upper = center_y + half_height;
             if (current_y > upper)
             {
                 angle = -zun_fabsf(angle);
@@ -1420,7 +1422,8 @@ int EnemyData::ecl_run_over_300()
         angle_i->reset();
 
         speed_i->end_time = get_int_arg(0);
-        speed_i->method = static_cast<InterpMode>(mode);
+        // The original writes the mode to angle_i again, not speed_i.
+        angle_i->method = static_cast<InterpMode>(mode);
         speed_i->bezier_1 = 0.0f;
         speed_i->bezier_2 = 0.0f;
         speed_i->initial = speed;
