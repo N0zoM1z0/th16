@@ -745,34 +745,37 @@ int EnemyData::ecl_run_over_300()
         if (full->context.current_context->get_int_arg(0) <= 0)
         {
             interp->end_time = 0;
-            break;
         }
-        if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
+        else
         {
-            f32 current_x = pos_vel->pos.x;
-            if (!(flags_low & ENEMY_FLAG_MIRRORED))
+            if (instr->opcode == ECL_OP_MOVE_CURVE_OFFSET || instr->opcode == ECL_OP_MOVE_CURVE_REL_OFFSET)
             {
-                current_x += x;
+                f32 current_x = pos_vel->pos.x;
+                if (!(flags_low & ENEMY_FLAG_MIRRORED))
+                {
+                    current_x += x;
+                }
+                else
+                {
+                    current_x -= x;
+                }
+                x = current_x;
+                y = pos_vel->pos.y + y;
             }
-            else
-            {
-                current_x -= x;
-            }
-            x = current_x;
-            y = pos_vel->pos.y + y;
+            interp->end_time = full->context.current_context->get_int_arg(0);
+            interp->bezier_1 = g_zero_vec;
+            interp->bezier_2 = g_zero_vec;
+            interp->method_for_1d = static_cast<InterpMode>(full->context.current_context->get_int_arg(1));
+            interp->axis_flags |= 1;
+            interp->method_for_1d_y = static_cast<InterpMode>(full->context.current_context->get_int_arg(2));
+            interp->axis_flags |= 1;
+            movement_pos_vel_offset = pos_vel_offset;
+            movement_interp = interp;
+            movement_goal_x = x;
+            movement_goal_y = y;
+            goto ecl_movement_interp_finish;
         }
-        interp->end_time = full->context.current_context->get_int_arg(0);
-        interp->bezier_1 = g_zero_vec;
-        interp->bezier_2 = g_zero_vec;
-        interp->method_for_1d = static_cast<InterpMode>(full->context.current_context->get_int_arg(1));
-        interp->axis_flags |= 1;
-        interp->method_for_1d_y = static_cast<InterpMode>(full->context.current_context->get_int_arg(2));
-        interp->axis_flags |= 1;
-        movement_pos_vel_offset = pos_vel_offset;
-        movement_interp = interp;
-        movement_goal_x = x;
-        movement_goal_y = y;
-        goto ecl_movement_interp_finish;
+        break;
     }
     // moveBezier(time, b1x, b1y, x, y, b2x, b2y), moveBezierRel
     case ECL_OP_MOVE_BEZIER:
@@ -1229,33 +1232,18 @@ int EnemyData::ecl_run_over_300()
         f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
         f32 ellipse_angle = get_float_arg(EclFloatArgIndex{5});
         f32 ellipse_ratio = get_float_arg(EclFloatArgIndex{6});
-        if (!(speed > -999999.0))
-        {
-            speed = pv->speed;
-        }
+        speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        f32 goal_radial_speed = radial_speed;
+        register f32 goal_radial_speed = radial_speed;
         if (!(goal_radial_speed > -999999.0))
         {
             goal_radial_speed = pv->radial.speed;
         }
-        f32 goal_radius = radius;
-        if (!(goal_radius > -999999.0))
-        {
-            goal_radius = pv->radial.distance;
-        }
+        volatile f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
-        f32 goal_ellipse_ratio = ellipse_ratio;
-        if (!(goal_ellipse_ratio > -999999.0))
-        {
-            goal_ellipse_ratio = pv->ellipse_ratio;
-        }
-        f32 goal_ellipse_angle = ellipse_angle;
-        if (!(goal_ellipse_angle > -999999.0))
-        {
-            goal_ellipse_angle = pv->ellipse_angle.value;
-        }
+        volatile f32 goal_ellipse_ratio = ellipse_ratio > -999999.0 ? ellipse_ratio : pv->ellipse_ratio;
+        volatile f32 goal_ellipse_angle = ellipse_angle > -999999.0 ? ellipse_angle : pv->ellipse_angle.value;
         f32 initial_ellipse_angle = pv->ellipse_angle.value;
         f32 initial_ellipse_ratio = pv->ellipse_ratio;
         i32 time = get_int_arg(0);
@@ -1349,9 +1337,9 @@ int EnemyData::ecl_run_over_300()
         InterpFloat *angle_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_angle_i : &rel_angle_i;
         InterpFloat *speed_i = instr->opcode == ECL_OP_MOVE_RAND ? &abs_speed_i : &rel_speed_i;
 
-        f32 current_x = final_pos.pos.x;
         f32 center_x = move_limit_center.x;
         f32 half_width = move_limit_size.x * ecl_move_rand_quarter;
+        f32 current_x = final_pos.pos.x;
         f32 left = center_x - half_width;
         f32 right = center_x + half_width;
         f32 angle;
