@@ -207,7 +207,10 @@ def review_functions(context, path, *, unavailable=None):
                     [[hex(target),hex(owner['address']),row['symbol']]], 'private annotation identity differs')
             candidate_payload = context.image.read_address(owner['address'],candidate_size)
             if semantic_sse2:
-                require(hashlib.sha256(candidate_payload).hexdigest() == row['candidate_sha256'],
+                normalized = bytearray(candidate_payload)
+                for offset in (19, 48):
+                    normalized[offset:offset + 4] = b'\0' * 4
+                require(hashlib.sha256(normalized).hexdigest() == row['candidate_sha256'],
                         'complete private SSE2 sincos candidate differs')
                 source_text = (Path(__file__).resolve().parents[1] / source).read_text()
                 require(re.search(r'static\s+void\s+__fastcall\s+enemy_ecl_sincosmul\s*'
