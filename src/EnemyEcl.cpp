@@ -2296,25 +2296,42 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_LASER_ON:
     {
         ::new (&scratch.line) LaserLineInner();
-        register i32 slot = get_int_arg(0);
-        *reinterpret_cast<D3DXVECTOR2 *>(&scratch.line.start_pos) =
-            get_shot_origin_and_copy_ex_packed(this, slot, &scratch.line.start_pos.z, scratch.line.ex);
-        const volatile EnemyBulletShooter &shooter_settings = bullet_props[slot];
-        i32 bullet_type = shooter_settings.type;
-        f32 ang_aim = shooter_settings.ang_aim;
+        i32 slot = get_int_arg(0);
+        const volatile EnemyBulletShooter &shooter = bullet_props[slot];
+        f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
+        memcpy(scratch.line.ex, bullet_props[slot].ex, sizeof(bullet_props[slot].ex));
+        bool has_origin = origin_enabled > 0.9f;
+        f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
+        f32 x;
+        if (has_origin)
+        {
+            x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
+            y += bullet_mgr_origins[slot].xy.y;
+            scratch.line.start_pos.z = 0.0f;
+        }
+        else
+        {
+            scratch.line.start_pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
+            x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
+            y += final_pos.pos.y;
+        }
+        scratch.line.start_pos.x = x;
+        scratch.line.start_pos.y = y;
+        i32 bullet_type = shooter.type;
+        f32 ang_aim = shooter.ang_aim;
         scratch.line.bullet_type = bullet_type;
-        i32 bullet_color = shooter_settings.color;
+        i32 bullet_color = shooter.color;
         scratch.line.bullet_color = bullet_color;
         scratch.line.ang_aim = normalize_angle(ang_aim);
-        scratch.line.flags = shooter_settings.flags | 1;
-        scratch.line.speed = shooter_settings.spd1;
-        scratch.line.laser_new_arg_1 = shooter_settings.pos.x;
-        scratch.line.laser_new_arg_2 = shooter_settings.pos.y;
-        scratch.line.shot_sfx = shooter_settings.shot_sfx;
-        scratch.line.laser_new_arg_3 = shooter_settings.pos.z;
-        scratch.line.shot_transform_sfx = shooter_settings.shot_transform_sfx;
-        scratch.line.laser_new_arg_4 = shooter_settings.laser_new_arg_4;
-        scratch.line.distance = shooter_settings.distance;
+        scratch.line.flags = shooter.flags | 1;
+        scratch.line.speed = shooter.spd1;
+        scratch.line.laser_new_arg_1 = shooter.pos.x;
+        scratch.line.laser_new_arg_2 = shooter.pos.y;
+        scratch.line.shot_sfx = shooter.shot_sfx;
+        scratch.line.laser_new_arg_3 = shooter.pos.z;
+        scratch.line.shot_transform_sfx = shooter.shot_transform_sfx;
+        scratch.line.laser_new_arg_4 = shooter.laser_new_arg_4;
+        scratch.line.distance = shooter.distance;
         g_LaserManager->allocate_new_laser(LASER_LINE, &scratch.line);
         break;
     }
