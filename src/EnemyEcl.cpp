@@ -144,20 +144,20 @@ static __forceinline void get_shot_origin_and_copy_ex_packed(
     bool has_origin = origin_enabled > 0.9f;
     register f32 y = enemy->bullet_mgr_offsets[i].y;
     register f32 x;
-    f32 z;
     if (has_origin)
     {
         x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
         y += enemy->bullet_mgr_origins[i].xy.y;
-        z = 0.0f;
+        out->z = 0.0f;
     }
     else
     {
-        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
+        out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
         x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    *out = D3DXVECTOR3(x, y, z);
+    D3DXVECTOR2 xy(x, y);
+    memcpy(out, &xy, sizeof(xy));
 }
 
 static __forceinline void copy_ex_and_get_shot_origin(
@@ -857,10 +857,9 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         i32 mode = full->context.current_context->get_int_arg(1);
-        const double keep_coordinate_threshold = ecl_move_velocity_keep_threshold;
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
-            if (angle > keep_coordinate_threshold)
+            if (static_cast<double>(angle) > ecl_move_velocity_keep_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -873,14 +872,14 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = pv->angle.value;
             }
-            if (!(speed > keep_coordinate_threshold))
+            if (!(static_cast<double>(speed) > ecl_move_velocity_keep_threshold))
             {
                 speed = pv->speed;
             }
         }
         else
         {
-            if (angle > keep_coordinate_threshold)
+            if (static_cast<double>(angle) > ecl_move_velocity_keep_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -893,7 +892,7 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = 0.0f;
             }
-            if (!(speed > keep_coordinate_threshold))
+            if (!(static_cast<double>(speed) > ecl_move_velocity_keep_threshold))
             {
                 speed = 0.0f;
             }
@@ -1744,15 +1743,16 @@ int EnemyData::ecl_run_over_300()
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
         f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
+        // Keep the selected Y source as a branch-local memory read.
         if (origin_enabled > 0.9f)
         {
-            y += bullet_mgr_origins[slot].xy.y;
+            y += *(volatile f32 *)&bullet_mgr_origins[slot].xy.y;
             bullet_props[slot].pos = Float3(bullet_mgr_offsets[slot].x + bullet_mgr_origins[slot].xy.x,
                                             y, 0.0f);
         }
         else
         {
-            y += final_pos.pos.y;
+            y += *(volatile f32 *)&final_pos.pos.y;
             bullet_props[slot].pos = Float3(bullet_mgr_offsets[slot].x + final_pos.pos.x,
                                             y, bullet_mgr_offsets[slot].z + final_pos.pos.z);
         }
