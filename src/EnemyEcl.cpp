@@ -1742,19 +1742,18 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
-        // Keep the selected Y source as a branch-local memory read.
         if (origin_enabled > 0.9f)
         {
-            y += *(volatile f32 *)&bullet_mgr_origins[slot].xy.y;
-            bullet_props[slot].pos = Float3(bullet_mgr_offsets[slot].x + bullet_mgr_origins[slot].xy.x,
-                                            y, 0.0f);
+            f32 x = bullet_mgr_offsets[slot].x + bullet_mgr_origins[slot].xy.x;
+            f32 y = bullet_mgr_offsets[slot].y + bullet_mgr_origins[slot].xy.y;
+            bullet_props[slot].pos = Float3(x, y, 0.0f);
         }
         else
         {
-            y += *(volatile f32 *)&final_pos.pos.y;
-            bullet_props[slot].pos = Float3(bullet_mgr_offsets[slot].x + final_pos.pos.x,
-                                            y, bullet_mgr_offsets[slot].z + final_pos.pos.z);
+            f32 x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
+            f32 y = bullet_mgr_offsets[slot].y + final_pos.pos.y;
+            f32 z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
+            bullet_props[slot].pos = Float3(x, y, z);
         }
         g_BulletManager->et_protect_range = et_protect_range;
         g_BulletManager->shoot_bullets(&bullet_props[slot]);
