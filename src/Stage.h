@@ -228,7 +228,7 @@ struct StageInner
     ~StageInner();
 
     // 0x409490. Starts interpolating the fog from its current value.
-    void set_sky_interp(i32 end_time, i32 method, CameraSky *goal);
+    DECOMP_NOINLINE void set_sky_interp(i32 end_time, i32 method, CameraSky *goal);
     // 0x40b3b0. Runs the instructions whose time has come, advances the
     // time, steps the camera interpolators and rocks the camera.
     // safebuffers: see run_std (Stage.cpp).
