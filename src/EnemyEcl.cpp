@@ -843,8 +843,8 @@ int EnemyData::ecl_run_over_300()
     case ECL_OP_MOVE_VEL_REL_TIME_NM:
     {
         PosVel *pv = (instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM)
-                         ? &abs_pos
-                         : &rel_pos;
+                                  ? &abs_pos
+                                  : &rel_pos;
         InterpFloat *angle_i = (instr->opcode == ECL_OP_MOVE_VEL_TIME || instr->opcode == ECL_OP_MOVE_VEL_TIME_NM)
                                    ? &abs_angle_i
                                    : &rel_angle_i;
@@ -860,8 +860,9 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         i32 mode = full->context.current_context->get_int_arg(1);
-        register const double keep_coordinate_threshold = -999999.0;
-        f32 goal_angle = angle;
+        // Keep the target's shared sentinel load live across both mode paths.
+        static const volatile double unset_coordinate_threshold = -999999.0;
+        register double keep_coordinate_threshold = unset_coordinate_threshold;
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
             if (angle > keep_coordinate_threshold)
@@ -870,12 +871,12 @@ int EnemyData::ecl_run_over_300()
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
                      instr->opcode == ECL_OP_MOVE_VEL_REL_TIME))
                 {
-                    goal_angle = mirror_angle(angle);
+                    angle = mirror_angle(angle);
                 }
             }
             else
             {
-                goal_angle = pv->angle.value;
+                angle = pv->angle.value;
             }
             if (!(speed > keep_coordinate_threshold))
             {
@@ -890,12 +891,12 @@ int EnemyData::ecl_run_over_300()
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
                      instr->opcode == ECL_OP_MOVE_VEL_REL_TIME))
                 {
-                    goal_angle = -angle;
+                    angle = -angle;
                 }
             }
             else
             {
-                goal_angle = 0.0f;
+                angle = 0.0f;
             }
             if (!(speed > keep_coordinate_threshold))
             {
@@ -905,15 +906,15 @@ int EnemyData::ecl_run_over_300()
 
         f32 initial_angle = pv->angle.value;
         f32 initial_speed = pv->speed;
-        if (zun_fabsf(initial_angle - goal_angle) >= ZUN_PI)
+        if (zun_fabsf(initial_angle - angle) >= ZUN_PI)
         {
-            if (goal_angle > initial_angle)
+            if (angle > initial_angle)
             {
                 initial_angle += ZUN_2PI;
             }
             else
             {
-                goal_angle += ZUN_2PI;
+                angle += ZUN_2PI;
             }
         }
 
@@ -925,7 +926,7 @@ int EnemyData::ecl_run_over_300()
         angle_i->method = static_cast<InterpMode>(mode);
         angle_i->bezier_1 = 0.0f;
         angle_i->bezier_2 = 0.0f;
-        angle_i->goal = goal_angle;
+        angle_i->goal = angle;
         angle_i->reset();
 
         i32 speed_duration = get_int_arg(0);
