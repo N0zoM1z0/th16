@@ -141,7 +141,7 @@ def review_ecl_boss(context, record, statics, pdb):
     candidate_info = candidate_data + 8
     candidate_expected = _aggregate(context.image, candidate_code, candidate_info,
                                     runtime[_DELETE][1], runtime[_COOKIE][1], runtime[_FRAME][1],
-                                    -0x3F8, -0x468, -8)
+                                    -0x400, -0x478, -8)
     require(context.target.read_address(code, record["size"]) == target_code,
             "ECL original Fog cleanup or double-cookie handler differs")
     require(context.image.read_address(candidate_code, record["size"]) == candidate_expected,
