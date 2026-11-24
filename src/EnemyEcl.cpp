@@ -2032,23 +2032,33 @@ int EnemyData::ecl_run_over_300()
         }
         BulletEx *ex = &bullet_props[et].ex[ex_index];
 #define ECL_EX_FIELD(field) (ex->field)
-        ECL_EX_FIELD(slot) = get_int_arg(arg++);
-        ECL_EX_FIELD(type) = static_cast<BulletExType>(get_int_arg(arg++));
-        ECL_EX_FIELD(a) = get_int_arg(arg++);
-        ECL_EX_FIELD(b) = get_int_arg(arg++);
+        ECL_EX_FIELD(slot) = get_int_arg(arg);
+        ++arg;
+        ECL_EX_FIELD(type) = static_cast<BulletExType>(get_int_arg(arg));
+        ++arg;
+        ECL_EX_FIELD(a) = get_int_arg(arg);
+        ++arg;
+        ECL_EX_FIELD(b) = get_int_arg(arg);
+        ++arg;
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
             // The c word is part of the selected transform record.
-            bullet_props[et].ex[ex_index].c = get_int_arg(arg++);
-            ECL_EX_FIELD(d) = get_int_arg(arg++);
+            bullet_props[et].ex[ex_index].c = get_int_arg(arg);
+            ++arg;
+            ECL_EX_FIELD(d) = get_int_arg(arg);
+            ++arg;
         }
 
-        ECL_EX_FIELD(r) = get_float_arg(EclFloatArgIndex{arg++});
-        ECL_EX_FIELD(s) = get_float_arg(EclFloatArgIndex{arg++});
+        ECL_EX_FIELD(r) = get_float_arg(EclFloatArgIndex{arg});
+        ++arg;
+        ECL_EX_FIELD(s) = get_float_arg(EclFloatArgIndex{arg});
+        ++arg;
         if (instr->opcode == ECL_OP_ET_EX_FULL || instr->opcode == ECL_OP_ET_EX_FULL_NEXT)
         {
-            ECL_EX_FIELD(m) = get_float_arg(EclFloatArgIndex{arg++});
-            ECL_EX_FIELD(n) = get_float_arg(EclFloatArgIndex{arg++});
+            ECL_EX_FIELD(m) = get_float_arg(EclFloatArgIndex{arg});
+            ++arg;
+            ECL_EX_FIELD(n) = get_float_arg(EclFloatArgIndex{arg});
+            ++arg;
         }
 #undef ECL_EX_FIELD
 
