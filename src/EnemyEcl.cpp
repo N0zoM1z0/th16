@@ -1120,8 +1120,16 @@ int EnemyData::ecl_run_over_300()
         f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        f32 goal_radial_speed = radial_speed > -999999.0 ? radial_speed : pv->radial.speed;
-        volatile f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
+        volatile f32 goal_radial_speed;
+        if (!(radial_speed > -999999.0))
+        {
+            goal_radial_speed = pv->radial.speed;
+        }
+        else
+        {
+            goal_radial_speed = radial_speed;
+        }
+        f32 goal_radius = radius > -999999.0 ? radius : pv->radial.distance;
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
         D3DXVECTOR2 initial_radial(initial_radius, initial_radial_speed);
@@ -1135,7 +1143,13 @@ int EnemyData::ecl_run_over_300()
             break;
         }
         speed_i->start(time, mode, initial_speed, speed);
-        radial_i->start(time, static_cast<InterpMode>(mode), initial_radial, goal_radial);
+        radial_i->end_time = time;
+        radial_i->bezier_1 = g_zero_vec2;
+        radial_i->bezier_2 = g_zero_vec2;
+        radial_i->method = static_cast<InterpMode>(mode);
+        radial_i->initial = initial_radial;
+        radial_i->goal = goal_radial;
+        radial_i->reset_timer();
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_CIRCLE;
         pv->step_from_center();
         update_final_pos();
