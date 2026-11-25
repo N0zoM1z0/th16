@@ -83,7 +83,7 @@ All three assignments persist at `Schedule` entry. Thus the final discrepancy
 is already present at allocator return; scheduling does not introduce the
 square-register reversal. This does not yet explain why those assignments won.
 
-Next, trace the `NColDeterminePhysregAvail` choices and preferences for these
+The subsequent trace examined `NColDeterminePhysregAvail` for these
 live ranges. Its RVA is `0x79391`; disassembly shows a call to
 `NColMdGetRegOrder` before the eligible-register search. Compare earlier
 requests in the other motion branches and the incoming operand identities
@@ -110,3 +110,52 @@ Private evidence and replay helpers are in `.analysis/step-back-compiler/`:
 The ordinary and debugger diagnostic images, response files and logs remain
 there. Focused strict baseline, dot-product and restored reports are
 `.analysis/20261125-step-back-{baseline,dot,restored}.json`.
+
+## Earlier cause: expression canonicalization
+
+The next trace followed the same three tuple identities back through lowering.
+The sum was already Y-square then X-square at `Lower` entry. Lowering changes
+its opcode from `0x723` to `0x476` without reversing its inputs. The later
+post-lowering optimization renames the operands but preserves their order.
+
+At `dop2_InitialOptsAndSetup` entry the original multiply tuples are ordered
+X then Y, and the sum reads their result symbols `0xab`, `0xb6`. By
+`dop2_PreLowerGlobalOpts` entry those same identities appear as `0xb6`, `0xab`.
+This brackets the reversal before the allocation work discussed above.
+The selected NColor run hit 91 `NColProcessCandidate` calls and 91 rewrites,
+with no legacy `RegAssign` calls.
+
+A write observation caught `FactCanonSort` rebuilding the sum's tree-source
+list at RVA `0xdd5c5` (the stop PC is `0xdd5c8`). Its two multiply-child keys,
+stored at tuple `+0x18`, are `0x01030817` for Y and `0x010307b7` for X. The
+sort places the larger Y key first. `OptRebuildTuples` then reconstructs the
+linear sum with Y's result first. The initial square operand fields belong
+to the same aggregate, at offsets zero and four, with symbol ordinals
+`0x14` and `0x15`. The sorting routine reads symbol ordinals at `+0x20` when
+constructing leaf keys. This is evidence for checking component identity and
+inlining context, rather than trying to repair a final register instruction.
+
+The hardware-watch run captured the complete start-to-PreLower transition,
+but GDB subsequently crashed after the watches were removed. Its observation
+is retained as `commute-watch.jsonl`; it is not a completed build control.
+The software breakpoint at the observed store's successor then completed
+normally. Its five hits all record the same Y-before-X keys and tree order;
+the final PreLower entry records the rebuilt `0xb6`, `0xab` sum. The complete
+`.text` and base relocations still equal the ordinary diagnostic link, and
+the entire selected body still equals the normal build's raw 986 bytes.
+See `commute-software.jsonl` and `commute-software-control.json`.
+
+A source control captured Y then X in scalar locals after the position store
+and reused them for magnitude and angle. The complete owner stayed 986 bytes
+but fell to 545 strictly matching bytes: code in the sentinel-motion branch
+also moved, and the square-register discrepancy remained. The source was
+restored and incrementally rebuilt. Keep `Laser.cpp.components-yx`,
+`components-yx-strict.json`, and its build log; do not repeat this alias form.
+
+The lowering and pre-lowering snapshots are `*-lowering.json` and
+`*-prelower.json`, with corresponding event logs and successful diagnostic
+image controls. The relevant probes are `trace-local.py`, `trace-lowering.py`,
+`trace-prelower.py`, and `trace-commute-software.py`. The current next question
+is where X/Y's aggregate-field symbols first acquire their ordinals, including
+the preceding position-vector inline context. Establish that before changing
+source again, then check the complete owner's other branches and stack layout.

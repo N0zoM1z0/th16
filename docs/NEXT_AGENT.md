@@ -16,7 +16,10 @@ of speculative local rewrites. A read-only v141 LTCG/GDB trace now captures
 `NColor` entry/return and `Schedule` entry for this owner. Its full raw body is
 identical to the regular build. Follow
 [the compiler investigation](knowledge/curve-step-back-compiler-trace.md)
-for controls, private evidence and the next operand/preference question.
+for controls and private evidence. The reversal has now been located in
+`FactCanonSort`, before lowering: it sorts the Y-square expression ahead of
+the X-square expression by their keys. Continue from that cause; the scalar
+component-alias control regressed and was restored.
 Keep the build graph and `.analysis/step-back-compiler/`.
 
 ## Historical checkpoint (2026-11-23)
