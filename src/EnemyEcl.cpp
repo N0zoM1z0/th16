@@ -214,6 +214,7 @@ static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array off
 // exclusive ECL temporaries, so they share the original dispatcher's stack slot.
 union EclScratchStorage
 {
+    char spell_name[0x20];
     LaserLineInner line;
     // The ECL temporary uses the inline constructor to initialize its default speed.
     LaserInfiniteInner infinite;
@@ -2216,7 +2217,7 @@ int EnemyData::ecl_run_over_300()
         u8 key_step = 7;
         // The encrypted input advances while the destination uses a frame
         // index; this also keeps the original loop's key-update order.
-        char dest[0x20];
+        char *dest = scratch.spell_name;
         for (i32 i = 0; i < name_length; i++)
         {
             dest[i] = (char)(*encrypted_name++ ^ key);
