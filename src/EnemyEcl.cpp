@@ -2306,8 +2306,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
-        *reinterpret_cast<D3DXVECTOR2 *>(&scratch.infinite.start_pos) =
-            get_shot_origin_and_copy_ex_packed(this, slot, &scratch.infinite.start_pos.z, scratch.infinite.ex);
+        get_shot_origin_and_copy_ex_branch_first(this, slot, &scratch.infinite.start_pos, scratch.infinite.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
@@ -2355,8 +2354,7 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
-        *reinterpret_cast<D3DXVECTOR2 *>(&scratch.curve.start_pos) =
-            get_shot_origin_and_copy_ex_packed(this, slot, &scratch.curve.start_pos.z, scratch.curve.ex);
+        get_shot_origin_and_copy_ex_branch_first(this, slot, &scratch.curve.start_pos, scratch.curve.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
