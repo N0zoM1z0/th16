@@ -41,9 +41,9 @@ static const f32 ecl_move_rand_third = 3.0f;
 static const f32 ecl_move_rand_pi = ZUN_PI;
 static const f32 ecl_move_rand_half_pi = ZUN_PI / 2;
 static const f32 ecl_move_rand_five_cents = 0.05f;
-// The largest f32 below the original double threshold 0.05; since the
-// operand is f32, <= preserves the original double comparison exactly.
-static const double ecl_move_velocity_keep_threshold = -999999.0;
+// -999999 is exactly representable as f32. Comparing f32 operands directly
+// preserves the original promotion-to-double comparison.
+static const f32 ecl_move_velocity_keep_threshold = -999999.0f;
 static const f32 ecl_move_rand_neg_half_pi = -ZUN_PI / 2;
 static const f32 ecl_move_rand_neg_half_pi_low = -ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_neg_half_pi_high = -ZUN_PI / 2 + 0.05f;
@@ -858,7 +858,7 @@ int EnemyData::ecl_run_over_300()
         i32 mode = full->context.current_context->get_int_arg(1);
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
-            if (static_cast<double>(angle) > ecl_move_velocity_keep_threshold)
+            if (angle > ecl_move_velocity_keep_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -871,14 +871,14 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = pv->angle.value;
             }
-            if (!(static_cast<double>(speed) > ecl_move_velocity_keep_threshold))
+            if (!(speed > ecl_move_velocity_keep_threshold))
             {
                 speed = pv->speed;
             }
         }
         else
         {
-            if (static_cast<double>(angle) > ecl_move_velocity_keep_threshold)
+            if (angle > ecl_move_velocity_keep_threshold)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -891,7 +891,7 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = 0.0f;
             }
-            if (!(static_cast<double>(speed) > ecl_move_velocity_keep_threshold))
+            if (!(speed > ecl_move_velocity_keep_threshold))
             {
                 speed = 0.0f;
             }
