@@ -248,3 +248,126 @@ was byte-neutral at 1301 / 1305, including the same four differing bytes.
 The source was restored. A separate COFF control with a `register float`
 local also showed no register-preference effect in the one-comparison and
 scan-loop examples. These do not provide the needed priority distinction.
+
+## The equal priorities come from block costs
+
+Explicit sites in `NColPrioritizeCandidates` now account for both priorities
+of 239. `priority-terms.jsonl` records the credit at RVA `0x2463dd`, the cost
+subtraction at `0x24637b`, and the final store at `0x24622b`. Both constants
+span blocks 73–79, with block costs 18, 17, 31, 20, 22, 20 and 17. Blocks 73
+and 74 have loop depth zero; the remaining blocks have depth one. The base
+benefit is the maximum block cost plus four: 31 + 4 = 35.
+
+For a block containing a use, the credit is
+`8 * use_count * (35 - block_cost) * 4^loop_depth`; an intervening block costs
+`block_cost * 4^loop_depth`. The 192 constant has a definition/use in block 73
+and a comparison use in block 76. The 448 constant shares the first block and
+has its comparison use in block 78. Their sums are:
+
+- 192: `136 - 17 - 124 + 480 - 88 - 80 - 68 = 239`.
+- 448: `136 - 17 - 124 - 80 - 88 + 480 - 68 = 239`.
+
+Thus the equal costs of the two comparison blocks explain the tie. These
+costs count compiler symbol encounters, including values that will not occupy
+separate physical registers. A watch on block 76 catches its value 20 being
+written at `NColBuildInfo+0x3d3` (RVA `0x114283`). This function initializes
+its running count with `SbvCount` at `0x1145b0`, then increments it when backward scanning
+encounters a symbol absent from the current set. Removing a definition from the
+set does not decrement that count: neither the initial nor the final set size
+is the block cost. Also track the actual thread-state base: this routine adds
+`0x10`, so its field `+0x106a4` is the true thread-state `+0x106b4` cost table.
+
+The read-only priority and write-watch replays completed and reproduced all
+1305 ordinary bytes. Keep `priority-terms-control.json`,
+`block-cost-write-control.json`, the matching JSONL traces and GDB logs.
+
+Caching the segment Y coordinate before the X tests was rejected by the full
+comparison: 1231 / 1305. Its native listing shows X, Y and width alive together,
+using an extra XMM register and moving the promoted constants. Caching X
+instead gives 1293 / 1305: it keeps both constant priorities at 239 and changes
+the width load and addition operand order. The read-only X replay reproduces
+that complete trial body; neither source trial is retained. Preserve the
+`scalar-y-position-*` and `scalar-x-position-*` reports and listings, and
+`scalar-x-priority-members.jsonl` with `scalar-x-members-control.json`.
+
+`baseline-priority-members.jsonl` captures the final sets at the actual block
+cost stores, and its completed read-only control reproduces the retained
+1305-byte body. A staged X accumulator is identical to the failed cached-X
+native body, including the unchanged priority tie. Its `staged-x-priority-costs`
+trace follows the initial count and each increment: the X comparison block
+starts at 18 and adds two virtual-symbol encounters; the Y block starts at 17
+and adds three. Both finish at 20. The separate completed control reproduces
+all 1305 bytes of that trial. Keep the `staged-x-position-strict.json` report
+and `staged-x-costs-control.json`.
+
+Binding a const reference to the X field instead of copying its value is
+byte-neutral at 1301 / 1305 and was removed. Negating both sides of the right
+comparison is unsuitable: the pinned COFF control emits an extra `xorps` and
+uses the negative constant. Keep `negated-boundary-control.*`; it rejects that
+lowering before an unnecessary whole-owner build.
+
+## A source predicate changes exactly the predicted cost
+
+The staged right-boundary integer predicate is the first source control to
+produce the predicted unequal priorities. After rejecting the left boundary,
+it saves `x - width >= 192.0f` in a used `i32` and tests that value before the
+vertical bounds. `integer-x-priority-costs.jsonl` records block 76 increasing
+from 20 to 21 while the other six block costs and the maximum remain unchanged.
+The measured priorities become 207 for 192 and 235 for 448, exactly as the
+formula predicts. The emitted constants use the target's XMM4 and XMM3.
+
+This trial is not retained: materializing the integer adds `xor eax, eax`,
+`setae al` and `test eax, eax`, growing the owner from 1305 to 1312 bytes. The
+strict report correctly refuses its mismatched complete boundary. Its completed
+read-only compiler replay reproduces the entire 1312-byte ordinary trial;
+keep `integer-x-predicate-*`, `integer-x-priority-costs.jsonl` and
+`integer-x-costs-control.json`. This separates a verified source effect on
+priority from a successful reconstruction.
+
+The pinned `boundary-flag-branch-control` COFF experiment distinguishes the
+integer materialization from narrow predicates: bool, char and unsigned char
+can lower directly to the float branch, whereas int, short and an explicit
+comparison with one retain a materialized result. These are lowering controls;
+the whole owner and its allocator trace must establish whether a narrow form
+also retains the needed cost distinction.
+
+The whole-owner bool and unsigned-byte predicates are byte-neutral at
+1301 / 1305. The bool replay restores block 76 to 20 and both priorities to
+239; it reproduces the entire retained native body. A separately assigned
+integer flag (`outside_x = 0; if (comparison) outside_x = 1`) also becomes
+that same body and the same tie. Keep the `boolean-x-*`, `byte-x-*` and
+`assigned-x-*` source controls and strict reports, with the completed bool
+and assigned-integer allocator controls.
+
+The extra encounter in the direct integer initializer is the materialized
+integer result consumed by opcode `0x2f` (the integer test). Its symbol type
+is `0x41004`; the other two encounters have float type `0x8e004` and occur
+while processing the float comparison (`0x111`) and move (`0x125`). The bool
+and conditionally assigned forms have only those two float encounters. Their
+native branch simplification has already removed the extra test before
+NColor counts symbols. Changing the predicate's spelling alone therefore
+does not preserve the useful priority distinction.
+
+A non-local vector-expression control replaces `head += position` with
+`head = head + position`. It grows the complete owner to 1314 bytes: the
+returned vector introduces packed component assembly and copy instructions,
+while the boundary constants still use the wrong registers. Accessing X through
+the vector's indexing operator instead of its named field, either for both
+tests or only the second, is byte-neutral. These controls are restored; keep
+their source snapshots, strict extent reports and the vector-assignment native listing.
+
+Closing the head vector's source scope after the horizontal tests, before the
+vertical tests, is also byte-neutral. The completed `horizontal-head-scope`
+replay reproduces the retained body and the same seven block costs and two
+priorities. Scope markers alone do not shorten these allocator lifetimes.
+
+The common loop sets are not simply a count of active scalar registers.
+`constants-after-initialize-complete.json` identifies address-producing tuples
+for `this+0x5f4` (segment count), `this+0x70` (hit length), `this+0x6c` (angle),
+`this+0x54` (position), the position reference's offsets 4 and 8, and
+`this+0x74` (width). The corresponding candidates appear in the sets captured
+by `baseline-priority-members.jsonl` throughout the comparison blocks. Their
+native accesses use base-plus-displacement operands rather than separate
+address registers. A future natural vector or alias change must be traced
+through these temporary identities and lifetimes before attributing a cost
+change to physical register pressure.
