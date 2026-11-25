@@ -161,5 +161,5 @@ def review_ecl_boss(context, record, statics, pdb):
                 handler=dict(symbol="__ehhandler$" + symbol, address=candidate_code + _ACTION_SIZE,
                              owner_symbol=code_owner["symbol"], owner_offset=_ACTION_SIZE),
                 code_target=code, code_owner=code_owner, func_info_target=info,
-                descriptor=descriptor, eh_flags=1, handler_field_offset=25,
+                descriptor=descriptor, eh_flags=1, handler_field_offset=6,
                 evidence=record["evidence"])
