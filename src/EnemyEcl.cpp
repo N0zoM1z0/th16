@@ -111,30 +111,30 @@ static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
     return &enemy_ecl_sincosmul;
 }
 
-// Line, infinite and curve lasers test the origin before copying transforms;
-// beam lasers copy transforms first. Keep the two access orders distinct.
+// The line laser tests the origin before copying transforms; the beam laser
+// copies them first. Keep the two access orders distinct.
 static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
     f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
     memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
     bool has_origin = origin_enabled > 0.9f;
-    f32 y = enemy->bullet_mgr_offsets[i].y;
-    D3DXVECTOR2 xy;
+    f32 y = *(volatile f32 *)&enemy->bullet_mgr_offsets[i].y;
+    f32 x;
     if (has_origin)
     {
-        xy.x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
+        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
         y += enemy->bullet_mgr_origins[i].xy.y;
         out->z = 0.0f;
     }
     else
     {
         out->z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        xy.x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
+        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
         y += enemy->final_pos.pos.y;
     }
-    xy.y = y;
-    memcpy(out, &xy, sizeof(xy));
+    out->x = x;
+    out->y = y;
 }
 static __forceinline D3DXVECTOR2 LTCG_VECTORCALL get_shot_origin_and_copy_ex_packed(
     EnemyData *enemy, i32 i, f32 *out_z, BulletEx *ex)
@@ -2279,26 +2279,8 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.line) LaserLineInner();
         i32 slot = get_int_arg(0);
+        get_shot_origin_and_copy_ex_branch_first(this, slot, &scratch.line.start_pos, scratch.line.ex);
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
-        f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        memcpy(scratch.line.ex, bullet_props[slot].ex, sizeof(bullet_props[slot].ex));
-        bool has_origin = origin_enabled > 0.9f;
-        f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
-        f32 x;
-        if (has_origin)
-        {
-            x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
-            y += bullet_mgr_origins[slot].xy.y;
-            scratch.line.start_pos.z = 0.0f;
-        }
-        else
-        {
-            scratch.line.start_pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
-            x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
-            y += final_pos.pos.y;
-        }
-        scratch.line.start_pos.x = x;
-        scratch.line.start_pos.y = y;
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
         scratch.line.bullet_type = bullet_type;
