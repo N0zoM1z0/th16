@@ -155,7 +155,66 @@ restored and incrementally rebuilt. Keep `Laser.cpp.components-yx`,
 The lowering and pre-lowering snapshots are `*-lowering.json` and
 `*-prelower.json`, with corresponding event logs and successful diagnostic
 image controls. The relevant probes are `trace-local.py`, `trace-lowering.py`,
-`trace-prelower.py`, and `trace-commute-software.py`. The current next question
-is where X/Y's aggregate-field symbols first acquire their ordinals, including
-the preceding position-vector inline context. Establish that before changing
-source again, then check the complete owner's other branches and stack layout.
+`trace-prelower.py`, and `trace-commute-software.py`. The following controls resolve the field-creation question and expose a later
+canonicalization pass. That later pass must be included in further experiments.
+
+## Reader order is overridden by a second canonicalization
+
+`SymNewEquiv` at RVA `0x2584ce`, called through `SymMakeEquiv` and
+`RdrExtract`, creates the explicit aggregate component symbols while
+`RdrReadProc` imports this function. The baseline creates X at offset zero
+with ordinal `0x14`, then Y at offset four with ordinal `0x15`. Reversing
+only the squared terms reverses this creation order: Y becomes `0x14` and
+X becomes `0x15`. The first `FactCanonSort` consequently places X's square
+first, as predicted by its higher key. Both builds still produce the same
+complete candidate body with the original four mismatching bytes.
+
+The reverse-expression pipeline brackets the second reversal inside
+`dop2_PreLowerGlobalOpts`. At entry the sum reads X's result `0xb6` then
+Y's `0xab`; at return it reads Y's `0x5e` then X's `0x1a0`. Lowering,
+NColor and scheduling preserve that latter order. A single write watch on
+the sum's source-list pointer completed normally and caught the second
+`FactCanonSort`, again at RVA `0xdd5c5`. Its leaves are now scalar symbols
+`0x12d` for Y and `0x121` for X. Their square keys are `0x01037117` and
+`0x01036c97`, respectively, so Y is sorted first again. The trace also
+records the intervening hash-table and SDSU rebuilds. Changing Reader field
+ordinals alone therefore does not control the final squared-length operands.
+
+These observations are in `field-creation*.jsonl`,
+`reverse-expression-fields.jsonl`, `reverse-expression-canonical.jsonl`,
+`reverse-expression-pipeline.jsonl`, and `prelower-commute-watch.jsonl`.
+The corresponding successful image controls remain alongside them. Internal
+addresses changed after a source edit, so the later probes find the selected
+sum by its two square definitions instead of assuming an old tuple address.
+
+## Definition order controls both arithmetic and scheduling
+
+Defining the motion sum's Y component before X changes the promoted values
+and recovers the target's four square-register bytes. Direct component
+assignments in the caller also change the other motion branches. Keeping the
+same caller shape through a normal three-pointer inline sum helper restores
+those branches, but computes Y before X and saves Y before X, whereas the
+target computes and saves X first. The helper owner is still a mismatch.
+
+| Complete owner control | Strict matching bytes / 986 | Finding |
+| --- | ---: | --- |
+| Reverse the squared terms | 982 | Reader and early tree order reverse, then PreLower sorts Y first again |
+| Assign sum components Y/X/Z in the caller | 545 | Square-register bytes recover; other branch scheduling changes |
+| Y/X/Z assignments in an inline sum helper | 974 | Squares recover; component sums and saves are reversed |
+| Helper computes Y/X/Z locals, writes X/Y/Z | 982 | Returns to the original four differences |
+| Helper computes a Y/X/Z aggregate then copies it | 974 | Same complete outcome as direct helper assignments |
+| Force-inline the Y/X/Z helper like the SDK | 974 | Same complete outcome; the inline attribute does not repair scheduling |
+| Helper assigns a three-argument vector constructor | 980 | Original four differences plus two Y-add operand differences |
+
+All these source experiments were restored. Only the focused TODO comment
+was corrected: field-wise sums can change the disputed operands, but have not
+yet preserved the complete owner's scheduling. The next useful comparison is
+the scheduler's input order and DAG priorities for the 974-byte helper control
+against the baseline. Identify what fixes X's sum and spill order without
+losing the desired scalar identities before proposing another helper rewrite.
+
+The source controls are retained as `Laser.cpp.*` under the compiler evidence
+directory, with matching `*-build.log` and `*-strict.json` reports. The helper
+native listing is also in `.analysis/curve-exact-work/20261125-yx-helper/`.
+A small ordinary `/O2` COFF control retains two precise `pow` calls for the
+`powf(x, 2)` form; it was not imported into the game source.

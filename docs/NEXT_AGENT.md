@@ -16,10 +16,13 @@ of speculative local rewrites. A read-only v141 LTCG/GDB trace now captures
 `NColor` entry/return and `Schedule` entry for this owner. Its full raw body is
 identical to the regular build. Follow
 [the compiler investigation](knowledge/curve-step-back-compiler-trace.md)
-for controls and private evidence. The reversal has now been located in
-`FactCanonSort`, before lowering: it sorts the Y-square expression ahead of
-the X-square expression by their keys. Continue from that cause; the scalar
-component-alias control regressed and was restored.
+for controls and private evidence. A reversed source expression changes the
+Reader field ordinals and first canonicalization, but a second `FactCanonSort`
+in PreLower sorts the promoted Y value ahead of X again. A Y/X/Z sum helper
+recovers the target square registers but reverses component sums and saves
+(974 / 986 strictly matching bytes). All functional trials were restored;
+only the TODO comment was corrected. Continue with that helper's scheduler
+input and priorities against the baseline before another source rewrite.
 Keep the build graph and `.analysis/step-back-compiler/`.
 
 ## Historical checkpoint (2026-11-23)

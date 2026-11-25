@@ -2855,7 +2855,7 @@ void LaserCurveInf::run_ex()
 // Steps a segment back from the previous one's position (pos, speed, angle)
 // along the node's motion. In mode 2 the whole part of t is kept as the
 // double floor returns: the original converts it with cvtpd2ps.
-// TODO: mode 1 still squares sum.y into the register it adds to where the original squares sum.x (the operand order of the sum, a length-squared local, offset_length_sq, D3DXVec2Length and field-wise sums do not change it).
+// TODO: align the promoted squared-length operands without changing component scheduling.
 // FUNCTION: TH16 0x438370
 void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, Float3 *pos, f32 speed, f32 angle,
                                f32 t)
