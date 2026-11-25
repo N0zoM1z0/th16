@@ -38,12 +38,29 @@ native instructions are added. Read
 further edits. It also corrects misleading unwind-derived GDB return captures;
 use explicit call sites. Keep `.analysis/curve-tick-compiler/`.
 
-Next investigate the promoted floating constants' candidate creation order or
-priority. In the traced baseline both had priority `0xef`; 192 was processed
-first and took XMM3, leaving XMM4 for 448. Named bounds, an inline bound helper and a staged bottom
-predicate did not repair that order. The conditional speedup initializer
-regressed and was restored. Preserve the retained source and build graph.
-Do not push local checkpoints unless the user asks.
+The remaining investigation now distinguishes allocation priority from tuple
+order. A private compiler-state control raising only 448's priority from 239
+to 240 repairs all four bytes while retaining the 30 linked fields. Swapping
+the two preload tuples instead also swaps their machine load order and fails.
+Neither control is a source reconstruction result. Both complete replays and
+their separate diagnostic images/reports are retained under
+`.analysis/curve-tick-compiler/`.
+
+`LoConvertFPConstToGlobal` materializes 192 before 448; the actual caller
+`AvoidAirlocks+0x25c` later inserts their preloads. NColor indexes them in tuple
+order and both priorities are 239. Continue from that chain: find a natural
+priority or scheduling distinction that retains the target load and comparison
+order. A pool-order swap alone is insufficient. Trace the benefit and lifetime
+cost terms that produce 239 in `NColPrioritizeCandidates`. The full vertical
+predicate control exchanges the registers but materializes AL and grows to
+1315 bytes. A used Float2 bounds object and
+reversing the last comparison's operands were byte-neutral. Reversed lexical
+block layout regressed. All failed source controls were restored.
+
+The fresh verification after restoration is
+`.analysis/curve-tick-compiler/priority-investigation-checkpoint-strict.json`:
+curve tick remains 1301 / 1305 and reverse step remains 986 / 986. Preserve
+the retained source and build graph. Do not push unless the user asks.
 
 ## Historical checkpoint (2026-11-23)
 

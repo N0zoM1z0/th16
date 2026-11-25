@@ -135,3 +135,116 @@ the boundary-register result. It was restored to the simpler condition.
 Investigate how the promoted constant candidates acquire their record order
 or priority; declarations, call arguments and this predicate staging have not
 changed the emitted allocation.
+
+## Constant candidates and a bounded priority control
+
+A fresh trace of the retained accumulator source confirms equal priorities of
+239 (`0xef`) for both bounds. At `NColInitializeSyms`, the 192.0f and 448.0f
+loads receive candidate indices 111 and 112. The initializer walks the tuple
+chain, processing each destination list before its source list; its candidate
+index store is at RVA `0x23fc4e`. The sorted candidates remain consecutive,
+with 192.0f first. Keep `constant-candidates-complete.jsonl`,
+`constants-after-initialize-complete.json` and `constant-candidates-control.json`.
+The completed replay reproduces the retained 1305-byte ordinary body.
+
+The first capture of that probe stopped on an indexing error: the prioritizer's
+input count includes entries omitted from its zero-terminated output array.
+The corrected capture stops at the terminator. Its incomplete predecessor and
+GDB log remain separate; a batch debugger exit code alone does not establish a
+completed replay.
+
+A bounded compiler-state control changes only the computed priority of
+`__real@43e00000$1`, from 239 to 240, immediately before the ordinary priority
+store. The unmodified source then produces diagnostic agreement for all 1305
+bytes after replaying the 30 independently bound linkage fields. Only the four
+known register bytes change; the linked fields remain unchanged. This isolates
+the allocation choice without changing instruction scheduling or the scalar
+arithmetic. It is not a source reconstruction result.
+
+Keep `priority-counterfactual.exe`, its map, GDB log,
+`priority-counterfactual.jsonl` and `priority-counterfactual-comparison.json`.
+The diagnostic raw body SHA-256 is
+`f86ea5e64cc92cafa9486544122742caa10c08a050bac7c81e3db6b55a1e6fad`.
+The retained source still has four differences.
+
+The preload trace reaches `CmdInsertEnter` between global allocation setup and
+NColor. Its boundary symbols have ordinals `0x30`, `0x32`, `0x34` for -192,
+192 and 448, and all three insert before the same loop marker. Symbol
+enumeration scans allocation pools; NColor later numbers the resulting
+preloads in tuple order. `SYM+0x38` holds a pointer during global promotion and
+an integer candidate index after NColor initialization, so its interpretation
+must follow the phase. Keep `constant-enterloads.jsonl`, `enterloads-control.json`
+and its completed GDB log. Use explicit stack return addresses to identify
+callers; the older-frame names produced by unwinding at function entry can
+skip a caller in this stripped DLL.
+
+## Source and lowering controls after the accumulator checkpoint
+
+A real `Float2` boundary object initialized Y then X, with both components used
+by the tests, was byte-neutral at 1301 / 1305. It did not change the emitted
+constant assignments. The object was removed.
+
+Computing the entire vertical outside predicate before the horizontal tests
+instead yields a 1315-byte owner. It does give 448 to XMM3 and 192 to XMM4, but
+computes Y first and materializes the predicate in AL before checking X. Its
+size and instruction order fail the complete comparison. This differs from
+the earlier single bottom-predicate staging, which was byte-neutral. Preserve
+`Laser.cpp.vertical-predicate-first`, its complete extent report and native
+listing; it proves that source can exchange the constant registers while also
+showing the cost of this particular control flow.
+
+A private source-layout control places the vertical block text first but jumps
+to the horizontal block first. It remains 1305 bytes but matches only 1254;
+the boundary-register differences remain, and component scheduling changes.
+It was restored. Reversing the lexical block order alone is not a solution.
+
+Standalone COFF lowering controls also reject two broader rewrites before a
+whole-owner trial: a double 448.0 comparison emits `cvtps2pd` and `comisd`, and
+bitwise OR of the Boolean comparisons emits `setae` and integer OR operations.
+Their sources and disassemblies are retained as `literal-comparison-*control*`.
+These controls establish those lowering behaviors, not an owner match.
+
+## Materialization precedes preload insertion
+
+The completed `float-materialization` replay records actual callee-entry stack
+return addresses and the explicit `MscFloatConst` return site (`0x1c88d4`).
+The earlier frame-unwind attribution of the preload caller was wrong: its
+actual caller is `AvoidAirlocks+0x25c`, not `Globregs+0x1d6`. The scalar
+parameter/local loads later come from `Enterloads+0x72e`.
+
+`LoConvertFPConstToGlobal+0x17` calls `MscFloatConst` for -192 first, then 192,
+then zero, then 448. `MscFloatConst` is at RVA `0x1c888a`; its FloatConstTuple
+contains a ten-byte extended floating value at `+0x24`. Decoding that value and
+recording the returned symbol/root proves the bounds become symbols `0x30`,
+`0x32`, `0x34` in that order. Repeated zero and timer-constant lookups reuse
+the earlier symbols. `AvoidAirlocks` subsequently inserts the bound preloads
+in the same order, before the common loop marker. This locates the ordering
+before NColor's candidate indexing; changing declaration order after constants
+have folded does not address its origin.
+
+Keep `trace-float-materialization.py`, `float-materialization.jsonl`,
+`float-materialization-control.json` and its GDB log. The read-only replay
+completed and reproduced the retained ordinary body. A fresh focused audit
+in `after-float-controls-strict.json` confirms that the source was restored:
+curve tick remains 1301 / 1305, and reverse step still passes 986 / 986.
+
+A standalone named-constant control also shows that local/static floating
+constants and an address taken into a local pointer fold back to
+`__real@43e00000`. Only an undefined external constant retains its own data
+symbol in that COFF control.
+
+A second bounded compiler-state control swaps the adjacent 192/448 preload
+tuples before NColor. It exchanges the constant registers in their uses, but
+also emits the 448 load before the 192 load. The target loads 192 first. This
+control therefore differs from increasing 448's priority while preserving the
+original tuple order. Its absolute linked fields move with those loads, so
+the comparison deliberately does not replay the old field bindings at the old
+offsets. Preserve `preload-order-counterfactual.*`, its native listing and the
+explicit diagnostic comparison. A candidate-order swap by itself does not
+reproduce the target stream.
+
+Swapping only the operands of the last comparison (`448.0f <= y - width`)
+was byte-neutral at 1301 / 1305, including the same four differing bytes.
+The source was restored. A separate COFF control with a `register float`
+local also showed no register-preference effect in the one-comparison and
+scan-loop examples. These do not provide the needed priority distinction.
