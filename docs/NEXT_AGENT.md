@@ -29,6 +29,12 @@ Find a natural source form that preserves the scalar identities while giving
 X the earlier ordinals or a real priority advantage. Position-copy, raw-loop
 and X-reference controls regressed and were restored. Preserve the separate
 counterfactual image and its explicit diagnostic label.
+A later read-only trace identifies recycled temporary-symbol ordinals as the
+source of the promoted identities. Omitting only the angle branch's final
+position update changes X/Y from `0x121 / 0x12d` to `0x27a / 0xf9` and restores
+the target square order before allocation. The omitted owner is only 888
+bytes; retain that update in any reconstruction. Follow the latest section
+of the compiler note for completed controls and source trials.
 Keep the build graph and `.analysis/step-back-compiler/`.
 
 ## Historical checkpoint (2026-11-23)

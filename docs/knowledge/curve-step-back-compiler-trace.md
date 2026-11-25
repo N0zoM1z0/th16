@@ -277,3 +277,59 @@ priority advantage for X. The following complete-source controls did not do so:
 All functional source trials were restored. Ordinary `/O2` COFF controls also
 show that `fabsf` and a float/double/float round trip leave actual instructions
 in v141; they do not supply a zero-byte scheduling operation here.
+
+## Promoted scalar ordinals come from recycled temporaries
+
+The promoted X/Y ordinals are inherited from a free list. `SymAlloc`'s
+temporary-symbol path at RVA `0xd9cc6` takes the head at context `+0x2c`.
+It saves the symbol's ordinal (`+0x20`), clears its 100-byte record, and
+restores that ordinal at `0xd9ce3`. `SymFree` pushes temporary symbols onto
+the same list at `0xda16c`–`0xda175`. A newly promoted scalar can therefore
+receive an older, smaller ordinal than the preceding allocation.
+
+The completed baseline trace records `0x12d` and then `0x121` being freed
+inside `GlobalOptimize`. `GdfInstrSdsu`, called by `GoptRebuildSdsu`, reuses
+them in the opposite order. `GoptRehashLexicalHelper` subsequently frees
+`0x12d` then `0x121` again. After nine other scalar promotions, the sum's X
+field receives the recycled `0x121` record and its Y field receives `0x12d`.
+The earlier tuple snapshot contains these same records as an address-add
+temporary and a floating multiply temporary; their numerical identities
+are not unique to the final motion components. This explains why Reader
+field order alone fails to control the second canonicalization. It does
+not yet identify a natural source change that preserves all target bytes.
+
+Private evidence is `baseline-sroa.jsonl`, `baseline-reuse-sroa.jsonl`,
+their `*.gdb.log` and `*-control.json` files, and `trace-sroa.py`.
+Both completed replays preserve the baseline's whole `.text`, base
+relocations and selected raw owner. The useful next source controls change
+real aggregate construction or another live expression, then check the
+complete owner and trace which recycled identities changed. Adding dead
+locals to steer the pool is not a reconstruction.
+
+Further complete-owner source controls rejected moving the angle-acceleration
+case before the acceleration case (987 bytes), copy-then-accumulate motion
+(1006 bytes), compound assignment for the angle branch's final position
+(980 bytes), and a named remaining fraction at that final store (988 bytes).
+Consuming `D3DXVec3Add`'s returned pointer, using a two-float length helper,
+reversing the angle branch's final scalar/vector multiplication, scaling `d`
+in place before its final subtraction, and returning directly from the three
+cases each reproduce the baseline's same four differences. A by-value vector
+length helper retains a parameter stack copy and `/GS` code (1064 bytes), even
+though the helper is inlined. These controls were not retained as reconstruction.
+
+An omission control removes only the angle-acceleration branch's last
+position update. The unchanged acceleration branch then uses the target's
+square-register order. Its complete owner is 888 bytes and cannot pass;
+the omission isolates a non-local influence, not a usable implementation.
+Keep `Laser.cpp.omit-angle-final-position`, its strict report and the
+native listing under `.analysis/curve-exact-work/omit-angle-final-position/`.
+Two completed read-only replays reproduce that entire 888-byte body. In the
+omission control, SROA gives X ordinal `0x27a` and Y `0xf9`, instead of the
+baseline's `0x121` and `0x12d`. At Lower entry the first square reads the SSA
+leaf whose parent is X's `0x27a` record; the second reads Y's `0xf9`. Thus the
+non-local omission changes the canonicalized operands before register
+allocation. The field mapping is in
+`omit-angle-final-position-focused-sroa.jsonl`; the phase snapshots are in
+`omit-angle-final-position-pipeline.jsonl`. Preserve both completed body
+controls and their GDB logs. Source reconstruction must retain the omitted
+motion update while changing this temporary-object path.
