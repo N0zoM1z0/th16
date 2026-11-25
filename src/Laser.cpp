@@ -3153,7 +3153,7 @@ i32 LaserLineInf::on_tick()
 // start), leaving the screen once every segment is off it.
 // The segments are indexed (segs[i], segs[i - 1]): the loop then walks them
 // with a pointer biased by -8 like the original's.
-// TODO: the original calls step_ex_accel through eax (ours edx), keeps 192 and 448 in swapped registers, and tests the first node for NULL (the for loop form keeps that test but differs more elsewhere).
+// TODO: align the promoted 192 and 448 boundary registers.
 // FUNCTION: TH16 0x4377d0
 i32 LaserCurveInf::on_tick()
 {
@@ -3168,7 +3168,7 @@ i32 LaserCurveInf::on_tick()
         again = 0;
         if (ex_flags & BULLET_EX_SPEEDUP)
         {
-            again = step_ex_speedup();
+            again += step_ex_speedup();
         }
         if (ex_flags & BULLET_EX_ACCEL)
         {

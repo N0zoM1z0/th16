@@ -105,7 +105,11 @@ this owner, including five non-null returns. The records do not yet explain
 the square-result assignments: the two generated copy symbols `0x427` and
 `0x428` do not appear in that call set. Keep the later rewrite and local
 allocation paths in scope. Do not interpret an intermediate null return as
-the final allocation outcome.
+the final allocation outcome. The later
+[curve-tick investigation](curve-tick-compiler-trace.md) found that these
+entry-created `FinishBreakpoint` probes can miss the actual return value in
+the stripped backend; confirm returns at explicit caller sites before using
+these records to explain an allocation.
 
 For scalar type `0x8e004`, `NColMdGetRegOrder` (RVA `0xeb2a7`) returns the
 constant table at RVA `0x123b0`: physical IDs 189 through 196, followed by

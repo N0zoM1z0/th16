@@ -22,11 +22,28 @@ for the derivation, failed controls and private evidence. Preserve the separate
 scheduler counterfactual's diagnostic label, `.analysis/step-back-compiler/`
 and the current build graph.
 
-Next, focus only `LaserCurveInf::on_tick` (`0x4377d0`) until its complete owner
-is resolved. Refresh its strict audit against the current incremental candidate
-before using the older six-byte mismatch below. Follow compiler and whole-owner
-evidence rather than guessing from a local instruction. Do not push local
-checkpoints unless the user asks.
+Continue only `LaserCurveInf::on_tick` (`0x4377d0`) until its complete owner
+is resolved. The retained speedup branch now uses `again += step_ex_speedup()`
+after explicitly clearing `again`. Its complete local strict comparison is
+1301 / 1305 bytes, with all 30 linked fields bound. Only the 192/448 boundary
+registers differ, at offsets 791, 799, 915 and 941. The focused checkpoint
+report is `.analysis/curve-tick-compiler/checkpoint-strict.json`.
+
+The call-register fix follows a measured non-local cause: the accumulator has
+an EAX preference window of tuples 37–47. Compound accumulation introduces
+three intermediate tuples, moving the later call target from 44–46
+to 47–49. It can then use EAX without an interior preference overlap, and no
+native instructions are added. Read
+[the curve-tick compiler note](knowledge/curve-tick-compiler-trace.md) before
+further edits. It also corrects misleading unwind-derived GDB return captures;
+use explicit call sites. Keep `.analysis/curve-tick-compiler/`.
+
+Next investigate the promoted floating constants' candidate creation order or
+priority. In the traced baseline both had priority `0xef`; 192 was processed
+first and took XMM3, leaving XMM4 for 448. Named bounds, an inline bound helper and a staged bottom
+predicate did not repair that order. The conditional speedup initializer
+regressed and was restored. Preserve the retained source and build graph.
+Do not push local checkpoints unless the user asks.
 
 ## Historical checkpoint (2026-11-23)
 
@@ -60,14 +77,14 @@ receipts are separate from the current shared snapshot. Do not describe local
 similarity, local strict reports, imported labels or historical pilot receipts
 as current accepted exactness.
 
-Focused strict results (the step-back result is current; other rows precede
-that change and require a focused refresh before further work):
+Focused strict results (both curve owners are current; the enemy rows require
+a focused refresh before further work):
 
 | Owner | Local strict result | Remaining difference |
 | --- | --- | --- |
 | EnemyData::ecl_run_over_300 (0x41dcb0) | incomplete | Two linked fields lack independent symbol/addend bindings |
 | EnemyData::step_interpolators (0x41bb50) | mismatch | 24 bytes differ; frame size and several stack slots differ |
-| LaserCurveInf::on_tick (0x4377d0) | mismatch | 6 bytes differ at offsets 68, 73, 791, 799, 915 and 941 |
+| LaserCurveInf::on_tick (0x4377d0) | mismatch | 4 bytes differ at offsets 791, 799, 915 and 941 |
 | LaserCurveNode::step_back (0x438370) | pass | 986 / 986 bytes; 14 linked fields; Factory not-submitted |
 
 A strict result is only as complete as its audited owner boundary and
@@ -110,8 +127,8 @@ edit and remeasure the complete owner.
    only a local opcode ratio.
 
 2. **Curve laser — LaserCurveInf::on_tick.** Its earlier normalized
-   instruction similarity was 1.0000, yet the strict audit had six differing
-   bytes. It is the next selected owner above. The earlier positive-bounds
+   instruction similarity was 1.0000. Its strict audit now has four differing
+   bytes, as described in the active investigation above. The earlier positive-bounds
    rewrite regressed and was reverted. `LaserCurveNode::step_back` has since
    closed its local strict comparison.
 
