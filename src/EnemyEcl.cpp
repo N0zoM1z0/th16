@@ -1245,15 +1245,10 @@ int EnemyData::ecl_run_over_300()
         radial_i->bezier_1 = g_zero_vec2;
         radial_i->bezier_2 = g_zero_vec2;
         radial_i->method = static_cast<InterpMode>(mode);
-        u32 radial_bits;
-        memcpy(&radial_bits, &initial_radius, sizeof(radial_bits));
-        *(volatile u32 *)&radial_i->initial.x = radial_bits;
-        memcpy(&radial_bits, &initial_radial_speed, sizeof(radial_bits));
-        *(volatile u32 *)&radial_i->initial.y = radial_bits;
-        radial_bits = *(volatile u32 *)&goal_radius;
-        *(volatile u32 *)&radial_i->goal.x = radial_bits;
-        radial_bits = *(volatile u32 *)&goal_radial_speed;
-        *(volatile u32 *)&radial_i->goal.y = radial_bits;
+        radial_i->initial.x = initial_radius;
+        radial_i->initial.y = initial_radial_speed;
+        radial_i->goal.x = goal_radius;
+        radial_i->goal.y = goal_radial_speed;
         radial_i->reset_timer();
 
         ellipse_i->end_time = time;
