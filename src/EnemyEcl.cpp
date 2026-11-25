@@ -209,10 +209,10 @@ static_assert(sizeof(LaserCurveInner) <= sizeof(EclScratchStorage), "curve param
 // FUNCTION: TH16 0x41dcb0
 int EnemyData::ecl_run_over_300()
 {
-    u32 movement_pos_vel_offset;
-    InterpStrange1 *movement_interp;
-    f32 movement_goal_x;
-    f32 movement_goal_y;
+    register u32 movement_pos_vel_offset;
+    register InterpStrange1 *movement_interp;
+    register f32 movement_goal_x;
+    register f32 movement_goal_y;
     register EnemyInf *full_vm = full;
     register EclRawInstr *instr = full_vm->context.current_context->current_instr();
     EclScratchStorage scratch;
