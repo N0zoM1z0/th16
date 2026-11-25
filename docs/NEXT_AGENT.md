@@ -1,9 +1,25 @@
 # TH16 reconstruction: next-agent handoff
 
-**Updated 2026-11-23.** Read AGENTS.md first. This is the active handoff;
+**Updated 2026-11-25.** Read AGENTS.md first. This is the active handoff;
 the dated 2026-11-19 and 2026-11-21 notes are historical.
 
-## Checkpoint
+## Active investigation (2026-11-25)
+
+Continue only `LaserCurveNode::step_back` (`0x438370`) until it is closed.
+The worktree inspected at the start was clean at `e61c39b`; the older checkpoint
+below is historical. An incremental build refreshed its stale source receipt.
+The owner still has four strict differing bytes, not an accepted exact result.
+The dot-product experiment was byte-neutral and restored.
+
+The user requested compiler debugging and non-local context analysis instead
+of speculative local rewrites. A read-only v141 LTCG/GDB trace now captures
+`NColor` entry/return and `Schedule` entry for this owner. Its full raw body is
+identical to the regular build. Follow
+[the compiler investigation](knowledge/curve-step-back-compiler-trace.md)
+for controls, private evidence and the next operand/preference question.
+Keep the build graph and `.analysis/step-back-compiler/`.
+
+## Historical checkpoint (2026-11-23)
 
 - Latest source checkpoint: de0cb82a22e2921813d893c5ea592f04de22bc14
   (gpt-web: return packed laser shot origins). A documentation-only handoff
