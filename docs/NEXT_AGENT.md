@@ -5,42 +5,32 @@ the dated 2026-11-19 and 2026-11-21 notes are historical.
 
 ## Active reconstruction (2026-11-26)
 
-`LaserCurveInf::on_tick` (`0x4377d0`) now passes the complete local strict
-comparison: 1305 / 1305 bytes, 332 instructions and 30 independently bound
-linked fields. `LaserCurveNode::step_back` (`0x438370`) remains exact at
-986 / 986 bytes and 14 linked fields. Both are freshly verified in
-`.analysis/curve-tick-compiler/curve-tick-final-strict.json`. Factory acceptance
-remains not-submitted; the shared snapshot is inventory-only.
+`EnemyData::step_interpolators` (`0x41bb50`) now passes the complete local
+strict comparison: 1692 / 1692 bytes, 421 instructions and 48 independently
+bound linked fields. Removing the camera helper's two volatile reads restores
+stack sharing for the earlier radial results and position-return buffers;
+the frame falls from 0x48 to the target's 0x38. A used Y field reference then
+recovers the remaining camera addition order. Read
+[the compiler investigation](knowledge/enemy-interpolators-compiler-trace.md)
+for the interference graph, exact producer and later canonicalization keys.
+The completed read-only replay reproduces the entire ordinary owner and
+confirms both the Y key `0x10008` and the repaired stack colors. Preserve
+`.analysis/enemy-interpolators-compiler/` and the incremental build.
 
-Curve tick retains the speedup accumulator's call-register repair and now
-uses a real mutable Float2 point with one width snapshot. Loading Y only
-after the horizontal checks keeps three simultaneous floating values. The
-point's component copies change the allocator model without adding native
-instructions: X/Y comparison costs are 22/20 and constant priorities are
-175/231. Naming the four-use width value then repairs addition and load order.
-The final ordinary body and two completed read-only replays have SHA-256
-`f86ea5e64cc92cafa9486544122742caa10c08a050bac7c81e3db6b55a1e6fad`.
-Read [the curve-tick compiler note](knowledge/curve-tick-compiler-trace.md)
-for the source controls, SROA/canonicalization evidence and debugger pitfalls.
-Preserve `.analysis/curve-tick-compiler/` and the build graph.
+The final focused report also rechecks both completed curve owners:
+`.analysis/enemy-interpolators-compiler/enemy-interpolators-final-strict.json`.
+`LaserCurveInf::on_tick` (`0x4377d0`) passes 1305 / 1305 bytes and 30 linked
+fields; `LaserCurveNode::step_back` (`0x438370`) passes 986 / 986 and 14 fields.
+Their compiler evidence remains in
+[the tick note](knowledge/curve-tick-compiler-trace.md) and
+[the reverse-step note](knowledge/curve-step-back-compiler-trace.md), with
+private replay controls in `.analysis/curve-tick-compiler/` and
+`.analysis/step-back-compiler/`. Factory acceptance remains not-submitted;
+the shared accepted snapshot is inventory-only.
 
-The reverse-step source uses planar scalars, a used Z sum, a movement-speed
-accumulator and SDK vector scaling. Its operand-order repair follows an
-observed memory-hash wrap and temporary reuse, documented in
-[the reverse-step investigation](knowledge/curve-step-back-compiler-trace.md).
-Preserve `.analysis/step-back-compiler/` and its separate diagnostic controls.
-
-Continue only `EnemyData::step_interpolators` (`0x41bb50`) next. Its fresh
-complete local comparison is 1668 / 1692 bytes with all 48 linked fields bound:
-`.analysis/enemy-interpolators-compiler/baseline-strict.json`. All 24 differing
-bytes are the frame allocation or stack displacements; the candidate reserves
-0x48 bytes where the target reserves 0x38. Registers, instruction lengths and
-other instruction bytes agree. Inspect actual temporary owners, extents and
-lifetimes before editing `src/Enemy.cpp`; the radial-result locals, vector
-return/subtraction temporaries and later animation position all share this
-frame. The 2026-11-23 direct-assignment/shared-radial controls are archived;
-read them through `scripts/evidence-archive.py` before repeating those changes.
-
+Choose and freshly compare only one next complete owner. The historical
+`LaserCurveInf::run_ex` (`0x438cb0`) comparison is a useful next candidate,
+but its old 0.9698 similarity does not establish current bytes or linkage.
 Keep coherent checkpoints local and do not push unless the user asks.
 
 ## Historical checkpoint (2026-11-23)
@@ -81,7 +71,7 @@ the ECL row requires a focused refresh before further work):
 | Owner | Local strict result | Remaining difference |
 | --- | --- | --- |
 | EnemyData::ecl_run_over_300 (0x41dcb0) | incomplete | Two linked fields lack independent symbol/addend bindings |
-| EnemyData::step_interpolators (0x41bb50) | mismatch | 1668 / 1692 bytes; 48 linked fields; 24 frame/stack bytes differ |
+| EnemyData::step_interpolators (0x41bb50) | pass | 1692 / 1692 bytes; 48 linked fields; Factory not-submitted |
 | LaserCurveInf::on_tick (0x4377d0) | pass | 1305 / 1305 bytes; 30 linked fields; Factory not-submitted |
 | LaserCurveNode::step_back (0x438370) | pass | 986 / 986 bytes; 14 linked fields; Factory not-submitted |
 
