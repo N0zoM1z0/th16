@@ -101,8 +101,9 @@ EnemyHitCheckFunc g_ecl_unknown_634_funcs[1];
 // FUNCTION: TH16 0x426260
 static void __fastcall enemy_ecl_sincosmul(Float3 *dst, f32 angle, f32 radius)
 {
-    dst->x = radius * cosf(angle);
-    dst->y = radius * sinf(angle);
+    double radians = angle;
+    dst->x = radius * (f32)cos(radians);
+    dst->y = radius * (f32)sin(radians);
 }
 typedef void(__fastcall *EnemyEclSincosmulFunc)(Float3 *dst, f32 angle, f32 radius);
 static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()

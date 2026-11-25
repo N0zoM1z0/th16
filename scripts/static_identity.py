@@ -215,10 +215,11 @@ def review_functions(context, path, *, unavailable=None):
                 source_text = (Path(__file__).resolve().parents[1] / source).read_text()
                 require(re.search(r'static\s+void\s+__fastcall\s+enemy_ecl_sincosmul\s*'
                                   r'\(Float3\s*\*dst,\s*f32\s+angle,\s*f32\s+radius\)\s*'
-                                  r'\{\s*dst->x\s*=\s*radius\s*\*\s*cosf\(angle\);\s*'
-                                  r'dst->y\s*=\s*radius\s*\*\s*sinf\(angle\);\s*\}',
+                                  r'\{\s*double\s+radians\s*=\s*angle;\s*'
+                                  r'dst->x\s*=\s*radius\s*\*\s*\(f32\)cos\(radians\);\s*'
+                                  r'dst->y\s*=\s*radius\s*\*\s*\(f32\)sin\(radians\);\s*\}',
                                   source_text) is not None,
-                        'private SSE2 sincos source is not the reviewed natural C++ implementation')
+                        'private SSE2 sincos source is not the reviewed natural double-precision C++ implementation')
                 fields = linked_code_fields(context.image,context.publics,owner['address'],candidate_size)
                 require(fields['decoded_bytes'] == candidate_size and fields['normalization_complete']
                         and [(f['offset'],f['width'],f['type'],f.get('candidate_symbols'))
