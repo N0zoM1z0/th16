@@ -1735,17 +1735,18 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
+        f32 offset_y = bullet_mgr_offsets[slot].y;
         D3DXVECTOR3 position;
         if (origin_enabled > 0.9f)
         {
             position.x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
-            position.y = bullet_mgr_offsets[slot].y + bullet_mgr_origins[slot].xy.y;
+            position.y = offset_y + bullet_mgr_origins[slot].xy.y;
             position.z = 0.0f;
         }
         else
         {
             position.x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
-            position.y = bullet_mgr_offsets[slot].y + final_pos.pos.y;
+            position.y = offset_y + final_pos.pos.y;
             position.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
         }
         bullet_props[slot].pos = position;
