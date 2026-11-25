@@ -1111,13 +1111,18 @@ int EnemyData::ecl_run_over_300()
         {
             radial_speed = pv->radial.speed;
         }
-        if (!(radius > -999999.0))
+        f32 goal_radius;
+        if (radius > -999999.0)
         {
-            radius = pv->radial.distance;
+            goal_radius = radius;
+        }
+        else
+        {
+            goal_radius = pv->radial.distance;
         }
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
-        D3DXVECTOR2 goal_radial(radius, radial_speed);
+        D3DXVECTOR2 goal_radial(goal_radius, radial_speed);
         D3DXVECTOR2 initial_radial(initial_radius, initial_radial_speed);
 
         i32 time = get_int_arg(0);
