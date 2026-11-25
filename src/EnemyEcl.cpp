@@ -41,9 +41,7 @@ static const f32 ecl_move_rand_third = 3.0f;
 static const f32 ecl_move_rand_pi = ZUN_PI;
 static const f32 ecl_move_rand_half_pi = ZUN_PI / 2;
 static const f32 ecl_move_rand_five_cents = 0.05f;
-// -999999 is exactly representable as f32. Comparing f32 operands directly
-// preserves the original promotion-to-double comparison.
-static const f32 ecl_move_velocity_keep_threshold = -999999.0f;
+static const double ecl_move_rand_five_cents_double = 0.05;
 static const f32 ecl_move_rand_neg_half_pi = -ZUN_PI / 2;
 static const f32 ecl_move_rand_neg_half_pi_low = -ZUN_PI / 2 - 0.05f;
 static const f32 ecl_move_rand_neg_half_pi_high = -ZUN_PI / 2 + 0.05f;
@@ -858,7 +856,7 @@ int EnemyData::ecl_run_over_300()
         i32 mode = full->context.current_context->get_int_arg(1);
         if (mode != INTERP_CONSTANT_VELOCITY)
         {
-            if (angle > ecl_move_velocity_keep_threshold)
+            if (angle > -999999.0)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -871,14 +869,14 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = pv->angle.value;
             }
-            if (!(speed > ecl_move_velocity_keep_threshold))
+            if (!(speed > -999999.0))
             {
                 speed = pv->speed;
             }
         }
         else
         {
-            if (angle > ecl_move_velocity_keep_threshold)
+            if (angle > -999999.0)
             {
                 if ((flags_low & ENEMY_FLAG_MIRRORED) &&
                     (instr->opcode == ECL_OP_MOVE_VEL_TIME ||
@@ -891,7 +889,7 @@ int EnemyData::ecl_run_over_300()
             {
                 angle = 0.0f;
             }
-            if (!(speed > ecl_move_velocity_keep_threshold))
+            if (!(speed > -999999.0))
             {
                 speed = 0.0f;
             }
@@ -1416,7 +1414,7 @@ int EnemyData::ecl_run_over_300()
         else
         {
             f32 positive_vertical_distance = zun_fabsf(angle - ecl_move_rand_half_pi);
-            if (positive_vertical_distance < 0.05)
+            if (positive_vertical_distance < ecl_move_rand_five_cents_double)
             {
                 angle = (ecl_move_rand_half_pi > angle) ? ecl_move_rand_pos_half_pi_low
                                                         : ecl_move_rand_pos_half_pi_high;
