@@ -1763,7 +1763,7 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        register f32 y = *(volatile f32 *)&bullet_mgr_offsets[slot].y;
+        register f32 y = bullet_mgr_offsets[slot].y;
         if (origin_enabled > 0.9f)
         {
             register f32 x = bullet_mgr_origins[slot].xy.x;
