@@ -190,16 +190,6 @@ static inline void set_next(EnemyInf *enemy, int index, int life, int time, cons
     }
 }
 
-// The fog instruction's `new Fog(0, 0x11, 0)`. Inlined: the original
-// constructs the fog in ecl_run_over_300 itself, which gives that function
-// its EH frame. (Earlier, with less of the program decompiled, that frame
-// made LTCG stop inlining the UCRT math into several callees; it no longer
-// does.)
-static __forceinline Fog *new_enemy_fog()
-{
-    return new Fog(0, 0x11, 0);
-}
-
 // The laser instructions and angleToPlayer, as forceinline helpers: the
 // original has them inline in ecl_run_over_300.
 
@@ -210,11 +200,10 @@ static_assert(offsetof(EnemyData, bullet_props) + offsetof(EnemyBulletShooter, e
               "ECL transform c field offset");
 static_assert(offsetof(EnemyBulletShooter, ex) == 0x28, "ECL transform array offset");
 
-// The spell-name bytes and the four laser parameter records are mutually
-// exclusive ECL temporaries, so they share the original dispatcher's stack slot.
+// The four laser parameter records are mutually exclusive ECL temporaries,
+// so they share the original dispatcher's stack slot.
 union EclScratchStorage
 {
-    char spell_name[0x20];
     LaserLineInner line;
     // The ECL temporary uses the inline constructor to initialize its default speed.
     LaserInfiniteInner infinite;
@@ -2217,7 +2206,7 @@ int EnemyData::ecl_run_over_300()
         u8 key_step = 7;
         // The encrypted input advances while the destination uses a frame
         // index; this also keeps the original loop's key-update order.
-        char *dest = scratch.spell_name;
+        char dest[0x20];
         for (i32 i = 0; i < name_length; i++)
         {
             dest[i] = (char)(*encrypted_name++ ^ key);
@@ -2715,7 +2704,7 @@ int EnemyData::ecl_run_over_300()
         *(ZunAngle *)&fog.wave_angle_y = 0.0f;
         if (fog.fog_radius > 0.0f)
         {
-            fog.fog_ptr = new_enemy_fog();
+            fog.fog_ptr = new Fog(0, 0x11, 0);
         }
         break;
     // callSTD(label): jumps the stage script.

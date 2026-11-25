@@ -9,7 +9,8 @@ FuncInfo is at `0x0049B274` and its unwind-map entry follows the 36-byte header.
 
 The linked candidate keeps the same 18+40-byte action/handler shape in the
 `EnemyEcl.obj` PDB contribution. Its saved Fog pointer, cookie and state are at
-different frame offsets (`-0x3F8`, `-0x460`, and `-8`); its unwind-map record
+different frame offsets (`-0x410`, `-0x470`, and `-4`) with the current
+case-local spell buffer and direct Fog allocation; its unwind-map record
 precedes the FuncInfo header in the 44-byte data contribution. The review
 checks the complete target parent extent, both complete EH aggregates, the
 source-qualified PDB contributions, all five instruction fields, and the
