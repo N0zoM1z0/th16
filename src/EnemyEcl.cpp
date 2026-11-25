@@ -111,8 +111,8 @@ static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
     return &enemy_ecl_sincosmul;
 }
 
-// The line laser tests the origin before copying transforms; the beam laser
-// copies them first. Keep the two access orders distinct.
+// Line, infinite and curved lasers test the origin before copying transforms;
+// the beam laser copies transforms first.
 static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
@@ -136,28 +136,6 @@ static __forceinline void get_shot_origin_and_copy_ex_branch_first(
     out->x = x;
     out->y = y;
 }
-static __forceinline D3DXVECTOR2 LTCG_VECTORCALL get_shot_origin_and_copy_ex_packed(
-    EnemyData *enemy, i32 i, f32 *out_z, BulletEx *ex)
-{
-    f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
-    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    f32 y = enemy->bullet_mgr_offsets[i].y;
-    f32 x;
-    if (origin_enabled > 0.9f)
-    {
-        *out_z = 0.0f;
-        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
-        y += enemy->bullet_mgr_origins[i].xy.y;
-    }
-    else
-    {
-        *out_z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
-        y += enemy->final_pos.pos.y;
-    }
-    return D3DXVECTOR2(x, y);
-}
-
 static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
