@@ -2723,7 +2723,7 @@ int EnemyData::ecl_run_over_300()
         *(ZunAngle *)&fog.wave_angle_y = 0.0f;
         if (fog.fog_radius > 0.0f)
         {
-            fog.fog_ptr = new Fog(0, 0x11, 0);
+            fog.fog_ptr = new_enemy_fog();
         }
         break;
     // callSTD(label): jumps the stage script.
