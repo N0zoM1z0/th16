@@ -21,8 +21,14 @@ Reader field ordinals and first canonicalization, but a second `FactCanonSort`
 in PreLower sorts the promoted Y value ahead of X again. A Y/X/Z sum helper
 recovers the target square registers but reverses component sums and saves
 (974 / 986 strictly matching bytes). All functional trials were restored;
-only the TODO comment was corrected. Continue with that helper's scheduler
-input and priorities against the baseline before another source rewrite.
+only the TODO comment was corrected. Scheduler graphs now show equal X/Y
+priorities, with the helper's earlier Y ordinals winning both ties. Swapping
+three ordinal pairs in a private compiler-state control gives diagnostic
+986-byte agreement after linkage replay; it is not a source exact result.
+Find a natural source form that preserves the scalar identities while giving
+X the earlier ordinals or a real priority advantage. Position-copy, raw-loop
+and X-reference controls regressed and were restored. Preserve the separate
+counterfactual image and its explicit diagnostic label.
 Keep the build graph and `.analysis/step-back-compiler/`.
 
 ## Historical checkpoint (2026-11-23)

@@ -208,13 +208,72 @@ target computes and saves X first. The helper owner is still a mismatch.
 
 All these source experiments were restored. Only the focused TODO comment
 was corrected: field-wise sums can change the disputed operands, but have not
-yet preserved the complete owner's scheduling. The next useful comparison is
-the scheduler's input order and DAG priorities for the 974-byte helper control
-against the baseline. Identify what fixes X's sum and spill order without
-losing the desired scalar identities before proposing another helper rewrite.
+yet preserved the complete owner's scheduling. The scheduler comparison below resolves the remaining helper differences.
 
 The source controls are retained as `Laser.cpp.*` under the compiler evidence
 directory, with matching `*-build.log` and `*-strict.json` reports. The helper
 native listing is also in `.analysis/curve-exact-work/20261125-yx-helper/`.
 A small ordinary `/O2` COFF control retains two precise `pow` calls for the
 `powf(x, 2)` form; it was not imported into the game source.
+
+## Scheduler ties and an isolated ordinal control
+
+Read-only replays captured all ten scheduling regions for the baseline and
+the Y/X/Z helper. Both completed normally. The helper trace was checked against
+the completed ordinary build: the entire 986-byte raw body is identical,
+SHA-256 `f9f10b401b54fedadcbddb383537afd7714bd83a5fa617ead2de1f940615b532`.
+
+Region 8 contains both planar chains. Their static priorities and weighted
+paths are equal in both sources; only their input ordering differs:
+
+| Axis operation | Static priority | Path | Outgoing edges | Baseline ordinal | Helper ordinal |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| X load | `0x1c400` | 78 | 3 | 19 | 22 |
+| X add | `0x1c400` | 76 | 5 | 20 | 23 |
+| X save | `0xb000` | 43 | 1 | 21 | 24 |
+| Y load | `0x1c400` | 78 | 3 | 22 | 19 |
+| Y add | `0x1c400` | 76 | 5 | 23 | 20 |
+| Y save | `0xb000` | 43 | 1 | 24 | 21 |
+
+For this pinned backend, a DAG node's tuple is at `+0x1c`, static priority
+at `+0x24`, dynamic priority at `+0x28`, and original ordinal at `+0x34`.
+The forward node link is `+0`, not `+4`. `SchSelectInstrs` compares dynamic
+priorities at RVA `0x219f47`; equal priorities reach the unsigned ordinal
+comparison at `0x219f55`. Earlier ordinals win. The observed Y-before-X
+order matches this tie-break; the ordinal-only control below isolates its
+effect.
+
+A separate compiler-state control swapped only the three X/Y ordinal pairs
+at `SchSchedGraph` entry in the private helper compilation. It made no source
+change. The resulting owner differs from the ordinary helper at exactly the
+12 previously mismatching byte offsets: 688, 690, 694, 696, 700, 702, 706,
+708, 756, 758, 762 and 764. All 14 linked fields remain byte-identical to the
+ordinary helper. Replaying their independently bound target encodings gives
+agreement across all 986 target bytes. This is a diagnostic mutation, not
+source exactness or a Factory acceptance result.
+
+Keep `counterfactual.exe`, `counterfactual.map`,
+`counterfactual-ordinary-owner.bin`, `counterfactual-ordinary-strict.json`,
+`counterfactual-scheduler.jsonl`, `counterfactual-comparison.json`,
+`trace-scheduler-counterfactual.py`, and `compare-counterfactual.py` separate
+from ordinary build evidence. The read-only graphs are
+`baseline-scheduler.jsonl` and `helper-scheduler.jsonl`; the ordinary helper
+identity check is `helper-scheduler-control.json`. The counterfactual body
+hash is `b889894b5aedbc29f7d215186eea9cc60f20e1aac068c1b559473dff105fa643`.
+
+The source search must now preserve the helper's promoted scalar identities
+while either restoring X's earlier scheduler ordinals or adding a real
+priority advantage for X. The following complete-source controls did not do so:
+
+- Swapping the position addition to `sum + *pos` reproduces the same 974-byte
+  helper match.
+- A position helper that copies the input and then applies `+= motion`
+  grows the owned extent to 1007 bytes.
+- A three-element sum loop using the SDK's float-pointer views introduces
+  `/GS` cookie code, a larger frame and a 1056-byte extent.
+- Read-only references to the helper's two X inputs also introduce cookie
+  code and a 1050-byte extent.
+
+All functional source trials were restored. Ordinary `/O2` COFF controls also
+show that `fabsf` and a float/double/float round trip leave actual instructions
+in v141; they do not supply a zero-byte scheduling operation here.
