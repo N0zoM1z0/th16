@@ -454,8 +454,7 @@ HARNESS_CALLED void InterpFloat2::step_radial_dist(D3DXVECTOR2 *out)
     if (self->method == INTERP_CONSTANT_VELOCITY)
     {
         D3DXVECTOR2 tmp = self->initial;
-        self->initial.x = self->goal.x + tmp.x;
-        self->initial.y = self->goal.y + tmp.y;
+        self->initial = self->goal + tmp;
         self->current = self->initial;
     }
     else if (self->method == INTERP_CONSTANT_ACCEL)
