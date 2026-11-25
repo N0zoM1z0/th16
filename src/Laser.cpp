@@ -3153,7 +3153,6 @@ i32 LaserLineInf::on_tick()
 // start), leaving the screen once every segment is off it.
 // The segments are indexed (segs[i], segs[i - 1]): the loop then walks them
 // with a pointer biased by -8 like the original's.
-// TODO: align the promoted 192 and 448 boundary registers.
 // FUNCTION: TH16 0x4377d0
 i32 LaserCurveInf::on_tick()
 {
@@ -3276,8 +3275,15 @@ i32 LaserCurveInf::on_tick()
             Float3 head;
             laser_sincosmul(&head, angle, hit_length);
             head += position;
-            if (!(segment->pos.x + width <= -192.0f || segment->pos.x - width >= 192.0f ||
-                  segment->pos.y + width <= 0.0f || segment->pos.y - width >= 448.0f))
+            Float2 point;
+            point.x = segment->pos.x;
+            const f32 segment_width = width;
+            if (point.x + segment_width <= -192.0f || (point.x -= segment_width) >= 192.0f)
+            {
+                continue;
+            }
+            point.y = segment->pos.y;
+            if (!(point.y + segment_width <= 0.0f || (point.y -= segment_width) >= 448.0f))
             {
                 goto on_screen;
             }

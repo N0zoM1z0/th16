@@ -1,13 +1,18 @@
 # Curve tick: v141 register allocation
 
-The retained `LaserCurveInf::on_tick` source (`0x4377d0`) now matches
-1301 / 1305 bytes in the complete local strict comparison, with all 30 linked
-fields bound. Compound accumulation in the speedup branch repairs the
-acceleration call-target registers through a measured intermediate-layout
-change. Only offsets 791, 799, 915 and 941 remain: XMM3/XMM4 are exchanged for
-192.0f and 448.0f. The final checkpoint report is
-`.analysis/curve-tick-compiler/checkpoint-strict.json`. Factory acceptance
+The retained `LaserCurveInf::on_tick` source (`0x4377d0`) now passes the
+complete local strict comparison: 1305 / 1305 bytes, 332 instructions and
+30 independently bound linked fields. The final report is
+`.analysis/curve-tick-compiler/curve-tick-final-strict.json`. Factory acceptance
 remains not-submitted.
+
+Compound accumulation in the speedup branch repairs the acceleration call's
+register preference. The boundary checks use a real mutable two-component
+point and one width snapshot; Y is loaded after the horizontal checks. This
+changes allocation costs without adding native copies, and the named width
+restores the target's addition and load order. The closing investigation is
+at the end of this note. Earlier sections retain the failed baselines and
+the explicit-site traces that led to these changes.
 
 The original refreshed baseline after reverse-step checkpoint `9c64980` was
 1299 / 1305. It also differed at offsets 68 and 73, selecting EDX instead of
@@ -17,8 +22,8 @@ otherwise agreed. That baseline report is
 
 Private evidence lives in `.analysis/curve-tick-compiler/`. It uses the same
 pinned v141 DLL and public symbols as the
-[reverse-step investigation](curve-step-back-compiler-trace.md). Completed
-read-only replays reproduce the entire ordinary 1305-byte owner,
+[reverse-step investigation](curve-step-back-compiler-trace.md). The initial
+baseline's completed read-only replays reproduce its entire 1305-byte owner,
 SHA-256 `c92ca8e55156cfa0d330e414fab9495c914834d643312c934dc6a8a42d08f017`.
 The controls, phase snapshots and logs retain the original observations.
 The physical writes below and the explicit Schedule entry show that the
@@ -26,7 +31,7 @@ virtual-table pointer is in ECX, its call target is in EDX, and the promoted
 192.0f/448.0f values use XMM3/XMM4 before scheduling. The unwind-derived
 post-NColor capture is diagnostic; explicit sites establish these choices.
 
-## Candidate order and register writes
+## Baseline candidate order and register writes
 
 `baseline-allocation.jsonl` retains 92 candidate processes, 92 rewrites,
 104 availability queries and the candidate priority order. By candidate processing,
@@ -368,6 +373,70 @@ for `this+0x5f4` (segment count), `this+0x70` (hit length), `this+0x6c` (angle),
 `this+0x74` (width). The corresponding candidates appear in the sets captured
 by `baseline-priority-members.jsonl` throughout the comparison blocks. Their
 native accesses use base-plus-displacement operands rather than separate
-address registers. A future natural vector or alias change must be traced
-through these temporary identities and lifetimes before attributing a cost
-change to physical register pressure.
+address registers. These temporary identities and lifetimes explain why
+allocator cost can change without extra native address calculations.
+
+## Closing the boundary allocation with real component lifetimes
+
+A scalar Y accumulator loaded after the horizontal checks still costs 20 in
+the bottom-comparison block. It adds two operand-order differences and gives
+1299 / 1305, so it is not retained. A real position aggregate provides the
+useful distinction instead:
+
+| Source control | Owner size | X / Y comparison cost | 192 / 448 priority | Result |
+| --- | ---: | --- | --- | --- |
+| Earlier retained direct fields | 1305 | 20 / 20 | 239 / 239 | Four register bytes differ |
+| Mutable Float3 copy | 1318 | 22 / 20 | 215 / 271 | Registers repaired; stack copy remains |
+| Float2 scalar construction | 1305 | 23 / 20 | 219 / 303 | Y stays live during X; constants shift up one register |
+| Delayed Y component assignment | 1305 | 22 / 20 | 175 / 231 | Registers repaired; ten load/addition bytes differ |
+| Delayed Y plus named width | 1305 | 22 / 20 | 175 / 231 | Complete strict pass |
+
+The Float3 copy lowers to a `movq` load/store of X and Y, then scalar reads
+from that stack copy. Scalar construction removes the stack copy but makes
+X, Y, width and the arithmetic scratch live together. Delaying the actual
+Y assignment until both X checks pass removes that fourth simultaneous value.
+The 192 and 448 preloads can then use XMM4 and XMM3, matching the target.
+
+The delayed-component NColor input retains extra X copies around its in-place
+subtraction: the arithmetic temporary feeds the updated SROA field, which
+feeds a comparison temporary. These increase block 76's modeled cost from
+20 to 22. They coalesce away before native emission. The Y field's final
+update does not retain those same copies. This yields the verified unequal
+priorities without the earlier integer predicate's seven extra bytes.
+Keep `position-copy-*`, `point-scalars-*`, `point-delayed-y-*`, their source
+snapshots and their completed read-only controls. Both the initialized tuple
+chains and the explicit Schedule-entry chains are retained.
+
+Two controls separate this lifetime change from arithmetic order. Direct
+component-to-edge assignments and using the original position fields only
+for the plus tests both restore the earlier 1301 / 1305 result and the priority
+tie. Explicit left/top scalar accumulators instead reproduce the delayed
+point's same ten differences. None is retained.
+
+`point-delayed-y-add-canonical.jsonl` records the second canonicalization:
+by Lower entry the width operand precedes the point component in both adds.
+The width SSA leaf has ordinal `0x50e`, parent `0x3aa`; the point leaves have
+ordinals `0x2aa`/`0x2ab`, parents `0x217`/`0x216`. The component parents carry
+SROA names. This establishes the ordering before physical allocation and
+native scheduling, rather than inferring it from the final register bytes.
+
+The final source snapshots width once after loading X. This real value is
+used in all four tests; its NColor symbol is `_segment_width$1`, with flags
+`0x20004` instead of an unnamed temporary's `0x3`. The block costs and both
+constant priorities stay unchanged, while the two adds and the initial
+X/width loads regain the target order. The complete strict result binds all
+30 fields and covers the full PDB owner extent.
+
+The completed final allocator replay reproduces all 1305 ordinary bytes,
+SHA-256 `f86ea5e64cc92cafa9486544122742caa10c08a050bac7c81e3db6b55a1e6fad`.
+Keep `point-named-width-costs-control.json`, its JSONL trace, both tuple
+snapshots and GDB log. This is now a source result; it also reproduces the
+body previously isolated by the private priority-only control.
+
+A separate completed canonicalization replay of the final source confirms the
+ordering at Lower entry. Both adds now read the point component before
+`_segment_width`. The component parents are SROA symbols `0x208` and `0x207`;
+the width parent is the named local `0x12`. Their SSA leaves are
+`0x28b`/`0x28d` and `0x28c`. Keep
+`point-named-width-add-canonical.jsonl` and its completed full-owner control.
+This places the repaired ordering before lowering, allocation and scheduling.

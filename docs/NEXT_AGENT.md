@@ -1,77 +1,47 @@
 # TH16 reconstruction: next-agent handoff
 
-**Updated 2026-11-25.** Read AGENTS.md first. This is the active handoff;
+**Updated 2026-11-26.** Read AGENTS.md first. This is the active handoff;
 the dated 2026-11-19 and 2026-11-21 notes are historical.
 
-## Active reconstruction (2026-11-25)
+## Active reconstruction (2026-11-26)
 
-`LaserCurveNode::step_back` (`0x438370`) now passes its complete local strict
-comparison: 986 / 986 bytes, 248 instructions and 14 independently bound linked
-fields. The final report is
-`.analysis/step-back-compiler/curve-step-back-final-strict.json`.
-Factory acceptance remains `not-submitted`; the shared snapshot is inventory-only.
+`LaserCurveInf::on_tick` (`0x4377d0`) now passes the complete local strict
+comparison: 1305 / 1305 bytes, 332 instructions and 30 independently bound
+linked fields. `LaserCurveNode::step_back` (`0x438370`) remains exact at
+986 / 986 bytes and 14 linked fields. Both are freshly verified in
+`.analysis/curve-tick-compiler/curve-tick-final-strict.json`. Factory acceptance
+remains not-submitted; the shared snapshot is inventory-only.
 
-The retained natural source uses scalar planar coordinates, an explicit used Z
-sum, a movement-speed accumulator and `D3DXVec3Scale` in the straight branch.
-Read-only compiler traces explain both the square-register order and the last
-multiply form. A zero-offset memory canonicalization key retains only three
-bits of its base symbol ordinal; changing the real component path crosses its
-wrap at `0x108`. The final compiler replay reproduces the complete ordinary
-owner. See [the compiler investigation](knowledge/curve-step-back-compiler-trace.md)
-for the derivation, failed controls and private evidence. Preserve the separate
-scheduler counterfactual's diagnostic label, `.analysis/step-back-compiler/`
-and the current build graph.
+Curve tick retains the speedup accumulator's call-register repair and now
+uses a real mutable Float2 point with one width snapshot. Loading Y only
+after the horizontal checks keeps three simultaneous floating values. The
+point's component copies change the allocator model without adding native
+instructions: X/Y comparison costs are 22/20 and constant priorities are
+175/231. Naming the four-use width value then repairs addition and load order.
+The final ordinary body and two completed read-only replays have SHA-256
+`f86ea5e64cc92cafa9486544122742caa10c08a050bac7c81e3db6b55a1e6fad`.
+Read [the curve-tick compiler note](knowledge/curve-tick-compiler-trace.md)
+for the source controls, SROA/canonicalization evidence and debugger pitfalls.
+Preserve `.analysis/curve-tick-compiler/` and the build graph.
 
-Continue only `LaserCurveInf::on_tick` (`0x4377d0`) until its complete owner
-is resolved. The retained speedup branch now uses `again += step_ex_speedup()`
-after explicitly clearing `again`. Its complete local strict comparison is
-1301 / 1305 bytes, with all 30 linked fields bound. Only the 192/448 boundary
-registers differ, at offsets 791, 799, 915 and 941. The focused checkpoint
-report is `.analysis/curve-tick-compiler/checkpoint-strict.json`.
+The reverse-step source uses planar scalars, a used Z sum, a movement-speed
+accumulator and SDK vector scaling. Its operand-order repair follows an
+observed memory-hash wrap and temporary reuse, documented in
+[the reverse-step investigation](knowledge/curve-step-back-compiler-trace.md).
+Preserve `.analysis/step-back-compiler/` and its separate diagnostic controls.
 
-The call-register fix follows a measured non-local cause: the accumulator has
-an EAX preference window of tuples 37–47. Compound accumulation introduces
-three intermediate tuples, moving the later call target from 44–46
-to 47–49. It can then use EAX without an interior preference overlap, and no
-native instructions are added. Read
-[the curve-tick compiler note](knowledge/curve-tick-compiler-trace.md) before
-further edits. It also corrects misleading unwind-derived GDB return captures;
-use explicit call sites. Keep `.analysis/curve-tick-compiler/`.
+Continue only `EnemyData::step_interpolators` (`0x41bb50`) next. Its fresh
+complete local comparison is 1668 / 1692 bytes with all 48 linked fields bound:
+`.analysis/enemy-interpolators-compiler/baseline-strict.json`. All 24 differing
+bytes are the frame allocation or stack displacements; the candidate reserves
+0x48 bytes where the target reserves 0x38. Registers, instruction lengths and
+other instruction bytes agree. Inspect actual temporary owners, extents and
+lifetimes before editing `src/Enemy.cpp`; the radial-result locals, vector
+return/subtraction temporaries and later animation position all share this
+frame. The 2026-11-23 direct-assignment/shared-radial controls are archived;
+read them through `scripts/evidence-archive.py` before repeating those changes.
 
-The remaining four bytes follow a measured allocator tie. Bound preloads stay
-in 192-then-448 order; both NColor priorities are 239, so 192 takes XMM3 first.
-A private priority-only change for 448 repairs all four bytes, but swapping
-preload order also exchanges the machine load order and fails. These diagnostic
-controls are separate from source progress.
-
-The priority formula is now traced at explicit sites. Blocks 73–79 cost
-18, 17, 31, 20, 22, 20 and 17; comparison blocks 76 and 78 both cost 20.
-`NColBuildInfo` starts from an exit-set count and increments for symbol
-encounters during backward scanning. Its running cost is neither the initial
-nor the final set size. The true thread-state cost table is `+0x106b4`; this
-routine uses a base adjusted by `+0x10`. Read the compiler note for the full
-benefit/cost calculation and completed read-only controls.
-
-A used integer right-boundary predicate raises only block 76 to 21, producing
-the predicted priorities 207/235 and the correct constant registers. It also
-emits seven extra bytes (`xor/setae/test`) and is rejected by the strict owner
-boundary. The extra symbol is the integer result consumed by the new test.
-Bool, byte and conditional-assignment forms remove that test before NColor and restore the tie. Coordinate snapshots,
-indexed accesses and the recorded vector/scope variants have not improved the
-retained body. Do not repeat these controls without a new prediction.
-
-Continue this owner from real temporary/address lifetimes and the block-cost
-trace. The common loop set includes compiler address values for segment count,
-angle, hit length, position components and width; these survive in the allocator
-model even when their address calculations fold into native operands. Trace
-where a proposed natural vector or alias form changes those values instead of
-assuming that a source local adds register pressure. Preserve
-`.analysis/curve-tick-compiler/` and the current incremental build graph.
-
-The restored-source verification is
-`.analysis/curve-tick-compiler/block-cost-investigation-checkpoint-strict.json`:
-curve tick remains 1301 / 1305 and reverse step remains 986 / 986. Do not push
-unless the user asks.
+Keep coherent checkpoints local and do not push unless the user asks.
 
 ## Historical checkpoint (2026-11-23)
 
@@ -105,14 +75,14 @@ receipts are separate from the current shared snapshot. Do not describe local
 similarity, local strict reports, imported labels or historical pilot receipts
 as current accepted exactness.
 
-Focused strict results (both curve owners are current; the enemy rows require
-a focused refresh before further work):
+Focused strict results (both curve owners and enemy interpolation are current;
+the ECL row requires a focused refresh before further work):
 
 | Owner | Local strict result | Remaining difference |
 | --- | --- | --- |
 | EnemyData::ecl_run_over_300 (0x41dcb0) | incomplete | Two linked fields lack independent symbol/addend bindings |
-| EnemyData::step_interpolators (0x41bb50) | mismatch | 24 bytes differ; frame size and several stack slots differ |
-| LaserCurveInf::on_tick (0x4377d0) | mismatch | 4 bytes differ at offsets 791, 799, 915 and 941 |
+| EnemyData::step_interpolators (0x41bb50) | mismatch | 1668 / 1692 bytes; 48 linked fields; 24 frame/stack bytes differ |
+| LaserCurveInf::on_tick (0x4377d0) | pass | 1305 / 1305 bytes; 30 linked fields; Factory not-submitted |
 | LaserCurveNode::step_back (0x438370) | pass | 986 / 986 bytes; 14 linked fields; Factory not-submitted |
 
 A strict result is only as complete as its audited owner boundary and
@@ -154,25 +124,13 @@ edit and remeasure the complete owner.
    Resolve linkage and frame/stack-layout differences rather than optimizing
    only a local opcode ratio.
 
-2. **Curve laser — LaserCurveInf::on_tick.** Its earlier normalized
-   instruction similarity was 1.0000. Its strict audit now has four differing
-   bytes, as described in the active investigation above. The earlier positive-bounds
-   rewrite regressed and was reverted. `LaserCurveNode::step_back` has since
-   closed its local strict comparison.
-
-3. **Enemy interpolation — EnemyData::step_interpolators (0x41bb50).**
-   It is at 0.9976 normalized similarity but still has a 24-byte strict
-   mismatch. The prologue uses sub esp, 0x48 instead of target
-   sub esp, 0x38; multiple temporary stack slots also differ. Avoid
-   broad helper extraction until the stack layout is understood.
-
-4. **Large interpreters and laser owners.** AnmVm::run is 0.9514,
+2. **Large interpreters and laser owners.** AnmVm::run is 0.9514,
    EclRunContext::ecl_run 0.9042, LaserLineInf::run_ex 0.9159,
    LaserLineInf::on_tick 0.9408 and LaserCurveInf::run_ex 0.9698.
    Work on complete owners and preserve call order, register lifetimes and
    branch layout through ordinary C++.
 
-5. **Radial interpolation.** InterpFloat2::step_radial_dist is 0.9175
+3. **Radial interpolation.** InterpFloat2::step_radial_dist is 0.9175
    (207 target instructions versus 205 candidate). The prior declaration,
    operand-order and local-result trials did not improve the whole owner;
    remeasure the complete function after each source change.
