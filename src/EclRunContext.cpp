@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <xmmintrin.h>
+
 #include "Ecl.h"
 #include "Rng.h"
 #include "ZunAsm.h"
@@ -531,6 +533,7 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
 {
     EclRawInstr *ins = current_instr();
     i32 name_len = ins->args[0].i;
+    register i32 start_index = start;
     i32 old_top = dest->stack.stack_offset;
     // The callee's locals start after the saved frame (four values).
     i32 locals = old_top + 0x10;
@@ -545,11 +548,11 @@ HARNESS_CALLED i32 EclRunContext::call_sub(EclRunContext *dest, i32 start, i32 u
     // aligned offset from the instruction's argument area.
     register u8 *arg_base = (u8 *)ins;
     EclStackItem *arg_values = ins->args;
-    i32 i = start + 1;
+    i32 i = start_index + 1;
     if (i < ins->param_count)
     {
         register EclStackItem *local = (EclStackItem *)((u8 *)dest->stack.data + locals);
-        register u32 arg_offset = name_len + (start + 2) * sizeof(i32);
+        register u32 arg_offset = name_len + (start_index + 2) * sizeof(i32);
         do
         {
             if (arg_base[arg_offset + 0xc] == ECL_CALL_FLOAT ||
@@ -994,14 +997,14 @@ HARNESS_CALLED i32 EclRunContext::ecl_run(f32 speed)
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack_result = a == b ? true_value : 0;
+                stack_result = _mm_ucomieq_ss(_mm_set_ss(a), _mm_set_ss(b));
                 goto push_expression_result;
             }
             case ECL_OP_NEQF:
             {
                 f32 b = stack.pop_float();
                 f32 a = stack.pop_float();
-                stack_result = a != b ? true_value : 0;
+                stack_result = _mm_ucomineq_ss(_mm_set_ss(a), _mm_set_ss(b));
                 goto push_expression_result;
             }
             case ECL_OP_LESSF:
