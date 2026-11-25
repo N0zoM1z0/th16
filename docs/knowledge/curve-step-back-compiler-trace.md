@@ -1,15 +1,26 @@
 # Curve reverse step: tracing the v141 allocator
 
-The selected owner is `LaserCurveNode::step_back` at `0x438370`.
-The 2026-11-25 focused strict audit still reports 982 matching bytes out of
-986, with differences at offsets 770, 779, 787 and 791. The target copies
-X into XMM1 and Y into XMM0 for the two squares; the candidate copies Y into
-XMM1 and X into XMM0. The surrounding instruction stream matches after
-independent linkage replay. The shared Factory snapshot remains inventory-only.
+The final 2026-11-25 native audit passes the complete 986-byte PDB contribution
+of `LaserCurveNode::step_back` at `0x438370`: 248 instructions, all 14 linked
+fields independently bound, and no byte differences after linkage replay.
+The report is `.analysis/step-back-compiler/curve-step-back-final-strict.json`.
+Its `factory_acceptance` remains `not-submitted`; the shared accepted snapshot
+is still inventory-only. This closes the local source comparison, not Factory
+acceptance.
 
-A `D3DXVec2Dot` formulation produced the same complete candidate bytes as
-the scalar expression. It was reverted. Further work should use the compiler
-trace rather than repeat equivalent local expressions.
+The source uses separate planar accumulators, an explicit Z sum, a real
+movement-speed accumulator and the SDK scale helper in the straight branch.
+The final section explains the zero-offset memory hash wrap that resolves the
+last multiplication. Earlier sections retain the failed controls and compiler
+observations that led to this source.
+
+## Original frontier
+
+The initial focused audit reported 982 / 986 matching bytes, with differences
+at offsets 770, 779, 787 and 791. The target copies X into XMM1 and Y into XMM0
+for the two squares; the old candidate copied Y into XMM1 and X into XMM0.
+The surrounding stream matched after independent linkage replay.
+`D3DXVec2Dot` produced the same old body and was reverted.
 
 ## Applicable compiler and diagnostic controls
 
@@ -56,7 +67,7 @@ SHA-256 `0d7a0eccc1fad3b515e77f93878056e2e914dfea396cef36252656a88c3e6ff4`.
 This validates observation of this candidate; it does not establish target
 exactness or equivalence of unrelated owners.
 
-## Captured phases and next question
+## Initial allocation observations
 
 The debugger identified the selected owner through the symbol at `tagFUNC+0`,
 whose decorated-name pointer is at symbol offset `+4`. In this backend the
@@ -333,3 +344,93 @@ allocation. The field mapping is in
 `omit-angle-final-position-pipeline.jsonl`. Preserve both completed body
 controls and their GDB logs. Source reconstruction must retain the omitted
 motion update while changing this temporary-object path.
+
+## Single-use propagation defeats early component calculation
+
+An inline Y/X/Z helper that first calculates `const f32 x = a->x + b->x`
+and later assigns `sum->x = x` still produces the same 974 / 986 helper
+result. The helper's own Lower-entry chain computes X before Y. After
+inlining, the owner's PreLower-entry chain also computes X first, followed
+by the local X copy, Y addition, Y store and X store. By Lower entry the
+order is Y addition/store, then X addition/store.
+
+A single hardware watch on the X tuple's next link captures the move.
+`SduMoveExpr` changes its previous link from the preceding call to the
+sum's Y store. `GoptSingleUseCopyProp` then removes the local X copy,
+leaving the X addition immediately before the X store. This occurs inside
+`GlobalOptimize`, reached from PreLower at `+0xa5`; the outer call site is
+`GlobalOptimize+0xa38`. Later `OptRebuildTuples` passes retain that order.
+Precomputing a component only to copy it into the aggregate therefore does
+not preserve its earlier arithmetic definition in this owner.
+
+Both read-only replays completed and reproduce the entire ordinary
+986-byte helper body, SHA-256
+`f9f10b401b54fedadcbddb383537afd7714bd83a5fa617ead2de1f940615b532`.
+Keep `staged-x-{helper,owner}-before-*-prelower.json`,
+`staged-x-phase-events.txt`, `staged-x-link-watch.jsonl`, both
+`staged-x-*-control.json` reports and their GDB logs. The probes are
+`trace-staged-x-order.py` and `trace-staged-x-link-watch.py`.
+
+Using actual scalar coordinates in all three outputs exposes a different
+control. Initializing Y from `a.y`, calculating X, then accumulating `b.y`
+into Y recovers the target square-register order. Initializing Y from `b.y`
+instead reverses the Y addition's input loads; keep the forward input order.
+Plain single-assignment X/Y locals do not recover the squares. The complete
+owner still fails because the straight and sentinel branches choose different
+X multiplication forms, shifting the curved branch by one byte.
+
+Keeping the scalar Y accumulator and using `D3DXVec3Scale` for the straight
+branch recovers that branch too. The resulting owner is 987 bytes. A
+diagnostic instruction alignment preserving every register and instruction
+size leaves only the sentinel's X multiplication: it loads velocity X into
+XMM0 then multiplies by XMM1, whereas the target copies the speed difference
+from XMM1 into XMM0 and multiplies by velocity X in memory. The candidate's
+sequence is one byte longer. This is not a complete-owner match.
+
+The completed read-only `near-mul-order` replay reproduces all 987 raw owner
+bytes, SHA-256
+`24d9a1543d8ce1a6e2540742a038838aa213cd3d4e759965fb63a6284b1a4fea`.
+At Lower entry, the baseline sentinel X multiply reads scalar symbol `0x443`
+before its indirect operand. The near candidate reads the indirect operand
+before scalar `0x423`. Its velocity base is `0x106`, versus baseline `0x101`.
+The discrepancy therefore precedes lowering and allocation. Keep
+`Laser.cpp.y-accumulator-straight-scale-api`, its 987-byte strict report and
+native listing, `straight-scale-register-sensitive-diagnostic.json`,
+`near-mul-owner-before-*-prelower.json`, and the completed replay control/log.
+This 987-byte control isolated the last multiplication but was not retained
+as the final source.
+
+## Closing the zero-offset memory hash wrap
+
+The multiply-key trace explains the remaining operand order. For the observed
+non-temporary scalar-symbol bases with ordinals below `0x800`, `OptHashNode`
+shifts the ordinal left five bits and returns its low 16 bits. The memory
+case shifts that address hash left eight bits, adds the displacement and
+opcode contribution, and again keeps 16 bits. `FactCanonSort` adds the
+operand-class bit at `0x10000`. For this zero-displacement float load its key
+is therefore `0x10000 | ((8 + (base_ordinal << 13)) & 0xffff)`. Only the base
+ordinal's low three bits survive. This derives the observed period-eight
+effect without treating declaration counts as an acceptance rule.
+
+In the 987-byte control, base `0x107` gives memory key `0x1e008`, above the
+movement-speed scalar's `0x10180`. The descending sort puts the memory
+operand first. Naming the already-used Z sum moves this base to `0x108` and
+wraps its key to `0x10008`; the scalar now sorts first and the target's
+`movaps` plus memory-source `mulss` appears. The straight branch's SDK scale
+base moves from `0x104` to `0x105`; both memory keys remain above its scalar
+key `0x10020`, preserving its correct order.
+
+The relevant instructions are in `FactCanonSort` at RVAs `0xdd6e7`–`0xdd720`
+and `OptHashNode` at `0xd7de1`–`0xd7e0d` in the pinned compiler. Private
+`mul-canonical-keys.jsonl` and `matched-mul-canonical-keys.jsonl` capture the
+before/after keys. Both completed read-only replays reproduce their entire
+ordinary owner; their controls and GDB logs remain alongside them.
+
+After removing the stale TODO, the incremental build and focused strict
+audit again pass all 986 bytes and 14 linked fields. The final raw candidate
+body at `0x44fcc0` has SHA-256
+`b889894b5aedbc29f7d215186eea9cc60f20e1aac068c1b559473dff105fa643`.
+The final read-only compiler replay has that same body. This equals the
+earlier scheduler counterfactual's bytes, now generated by the retained
+natural source and the unmodified compiler. Preserve the counterfactual's
+separate diagnostic label.

@@ -2855,7 +2855,6 @@ void LaserCurveInf::run_ex()
 // Steps a segment back from the previous one's position (pos, speed, angle)
 // along the node's motion. In mode 2 the whole part of t is kept as the
 // double floor returns: the original converts it with cvtpd2ps.
-// TODO: align the promoted squared-length operands without changing component scheduling.
 // FUNCTION: TH16 0x438370
 void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, Float3 *pos, f32 speed, f32 angle,
                                f32 t)
@@ -2863,15 +2862,20 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
     switch (mode)
     {
     case LASER_CURVE_MOTION_STRAIGHT:
-        *out_pos = *pos - velocity * this->speed;
+    {
+        Float3 displacement;
+        D3DXVec3Scale(&displacement, &velocity, this->speed);
+        *out_pos = *pos - displacement;
         *out_speed = this->speed;
         *out_angle = this->angle;
         break;
+    }
     case LASER_CURVE_MOTION_ACCEL:
         if (-990.0f > angle_delta)
         {
-            // The inline difference retains the original X multiplication operands.
-            *out_pos = *pos - velocity * (speed - speed_delta);
+            f32 movement_speed = speed;
+            movement_speed -= speed_delta;
+            *out_pos = *pos - velocity * movement_speed;
             *out_speed = this->speed - speed_delta;
             *out_angle = angle;
         }
@@ -2883,11 +2887,14 @@ void LaserCurveNode::step_back(Float3 *out_pos, f32 *out_speed, f32 *out_angle, 
             b.z = 0.0f;
             laser_sincosmul(&a, angle, -speed);
             laser_sincosmul(&b, angle_delta, -speed_delta);
-            Float3 sum;
-            D3DXVec3Add(&sum, &a, &b);
+            f32 y = a.y;
+            const f32 x = a.x + b.x;
+            y += b.y;
+            const f32 z = a.z + b.z;
+            Float3 sum(x, y, z);
             *out_pos = *pos + sum;
-            *out_speed = (f32)sqrt(sum.x * sum.x + sum.y * sum.y);
-            *out_angle = atan2(sum.y, sum.x);
+            *out_speed = (f32)sqrt(x * x + y * y);
+            *out_angle = atan2(y, x);
         }
         break;
     case LASER_CURVE_MOTION_ANGLE_ACCEL:

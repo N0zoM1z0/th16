@@ -3,39 +3,30 @@
 **Updated 2026-11-25.** Read AGENTS.md first. This is the active handoff;
 the dated 2026-11-19 and 2026-11-21 notes are historical.
 
-## Active investigation (2026-11-25)
+## Active reconstruction (2026-11-25)
 
-Continue only `LaserCurveNode::step_back` (`0x438370`) until it is closed.
-The worktree inspected at the start was clean at `e61c39b`; the older checkpoint
-below is historical. An incremental build refreshed its stale source receipt.
-The owner still has four strict differing bytes, not an accepted exact result.
-The dot-product experiment was byte-neutral and restored.
+`LaserCurveNode::step_back` (`0x438370`) now passes its complete local strict
+comparison: 986 / 986 bytes, 248 instructions and 14 independently bound linked
+fields. The final report is
+`.analysis/step-back-compiler/curve-step-back-final-strict.json`.
+Factory acceptance remains `not-submitted`; the shared snapshot is inventory-only.
 
-The user requested compiler debugging and non-local context analysis instead
-of speculative local rewrites. A read-only v141 LTCG/GDB trace now captures
-`NColor` entry/return and `Schedule` entry for this owner. Its full raw body is
-identical to the regular build. Follow
-[the compiler investigation](knowledge/curve-step-back-compiler-trace.md)
-for controls and private evidence. A reversed source expression changes the
-Reader field ordinals and first canonicalization, but a second `FactCanonSort`
-in PreLower sorts the promoted Y value ahead of X again. A Y/X/Z sum helper
-recovers the target square registers but reverses component sums and saves
-(974 / 986 strictly matching bytes). All functional trials were restored;
-only the TODO comment was corrected. Scheduler graphs now show equal X/Y
-priorities, with the helper's earlier Y ordinals winning both ties. Swapping
-three ordinal pairs in a private compiler-state control gives diagnostic
-986-byte agreement after linkage replay; it is not a source exact result.
-Find a natural source form that preserves the scalar identities while giving
-X the earlier ordinals or a real priority advantage. Position-copy, raw-loop
-and X-reference controls regressed and were restored. Preserve the separate
-counterfactual image and its explicit diagnostic label.
-A later read-only trace identifies recycled temporary-symbol ordinals as the
-source of the promoted identities. Omitting only the angle branch's final
-position update changes X/Y from `0x121 / 0x12d` to `0x27a / 0xf9` and restores
-the target square order before allocation. The omitted owner is only 888
-bytes; retain that update in any reconstruction. Follow the latest section
-of the compiler note for completed controls and source trials.
-Keep the build graph and `.analysis/step-back-compiler/`.
+The retained natural source uses scalar planar coordinates, an explicit used Z
+sum, a movement-speed accumulator and `D3DXVec3Scale` in the straight branch.
+Read-only compiler traces explain both the square-register order and the last
+multiply form. A zero-offset memory canonicalization key retains only three
+bits of its base symbol ordinal; changing the real component path crosses its
+wrap at `0x108`. The final compiler replay reproduces the complete ordinary
+owner. See [the compiler investigation](knowledge/curve-step-back-compiler-trace.md)
+for the derivation, failed controls and private evidence. Preserve the separate
+scheduler counterfactual's diagnostic label, `.analysis/step-back-compiler/`
+and the current build graph.
+
+Next, focus only `LaserCurveInf::on_tick` (`0x4377d0`) until its complete owner
+is resolved. Refresh its strict audit against the current incremental candidate
+before using the older six-byte mismatch below. Follow compiler and whole-owner
+evidence rather than guessing from a local instruction. Do not push local
+checkpoints unless the user asks.
 
 ## Historical checkpoint (2026-11-23)
 
@@ -69,22 +60,23 @@ receipts are separate from the current shared snapshot. Do not describe local
 similarity, local strict reports, imported labels or historical pilot receipts
 as current accepted exactness.
 
-Current focused strict results on the committed candidate:
+Focused strict results (the step-back result is current; other rows precede
+that change and require a focused refresh before further work):
 
 | Owner | Local strict result | Remaining difference |
 | --- | --- | --- |
 | EnemyData::ecl_run_over_300 (0x41dcb0) | incomplete | Two linked fields lack independent symbol/addend bindings |
 | EnemyData::step_interpolators (0x41bb50) | mismatch | 24 bytes differ; frame size and several stack slots differ |
 | LaserCurveInf::on_tick (0x4377d0) | mismatch | 6 bytes differ at offsets 68, 73, 791, 799, 915 and 941 |
-| LaserCurveNode::step_back (0x438370) | mismatch | 4 bytes differ at offsets 770, 779, 787 and 791 |
+| LaserCurveNode::step_back (0x438370) | pass | 986 / 986 bytes; 14 linked fields; Factory not-submitted |
 
 A strict result is only as complete as its audited owner boundary and
 independent linkage bindings. The local audit does not promote Factory facts.
 
-## Current focused measurements
+## Earlier focused measurements
 
-The following are from the current committed source and current incremental
-candidate, measured with .analysis/measure-leaf.py. Ratios are normalized
+The following predate the step-back closure and were measured with
+.analysis/measure-leaf.py. Candidate map spans include alignment bytes. Ratios are normalized
 instruction similarity only; byte extents and instruction counts are included
 so apparent changes can be checked against the whole owner.
 
@@ -106,7 +98,7 @@ Do not compare these figures directly with the 2026-11-21 handoff's
 from different candidate/source states. Rebuild incrementally after a source
 edit and remeasure the complete owner.
 
-## Recommended work
+## Broader backlog after the active owner
 
 1. **Large ECL boss — EnemyData::ecl_run_over_300 (0x41dcb0).**
    Continue with natural C++ in src/EnemyEcl.cpp. The latest whole-owner
@@ -117,13 +109,11 @@ edit and remeasure the complete owner.
    Resolve linkage and frame/stack-layout differences rather than optimizing
    only a local opcode ratio.
 
-2. **Curve laser leaves — LaserCurveInf::on_tick and
-   LaserCurveNode::step_back.** Both currently reach 1.0000 normalized
-   instruction similarity, yet strict audits still show 6 and 4 differing
-   bytes respectively. Start from the exact mismatch offsets in the table.
-   Recent positive-bounds, squared-term local and helper rewrites regressed;
-   those experiments were reverted. Preserve the committed natural source
-   and change one semantic expression at a time.
+2. **Curve laser — LaserCurveInf::on_tick.** Its earlier normalized
+   instruction similarity was 1.0000, yet the strict audit had six differing
+   bytes. It is the next selected owner above. The earlier positive-bounds
+   rewrite regressed and was reverted. `LaserCurveNode::step_back` has since
+   closed its local strict comparison.
 
 3. **Enemy interpolation — EnemyData::step_interpolators (0x41bb50).**
    It is at 0.9976 normalized similarity but still has a 24-byte strict
