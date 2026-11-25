@@ -1128,6 +1128,7 @@ int EnemyData::ecl_run_over_300()
         f32 initial_radius = pv->radial.distance;
         f32 initial_radial_speed = pv->radial.speed;
         D3DXVECTOR2 initial_radial(initial_radius, initial_radial_speed);
+        D3DXVECTOR2 goal_radial(radius, radial_speed);
 
         i32 time = get_int_arg(0);
         i32 mode = get_int_arg(1);
@@ -1143,8 +1144,7 @@ int EnemyData::ecl_run_over_300()
         radial_i->bezier_2 = g_zero_vec2;
         radial_i->method = static_cast<InterpMode>(mode);
         radial_i->initial = initial_radial;
-        radial_i->goal.x = radius;
-        radial_i->goal.y = radial_speed;
+        radial_i->goal = goal_radial;
         radial_i->reset_timer();
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_CIRCLE;
         pv->step_from_center();
@@ -2723,7 +2723,7 @@ int EnemyData::ecl_run_over_300()
         *(ZunAngle *)&fog.wave_angle_y = 0.0f;
         if (fog.fog_radius > 0.0f)
         {
-            fog.fog_ptr = new_enemy_fog();
+            fog.fog_ptr = new Fog(0, 0x11, 0);
         }
         break;
     // callSTD(label): jumps the stage script.
