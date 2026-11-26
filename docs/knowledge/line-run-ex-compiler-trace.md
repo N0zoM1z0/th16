@@ -136,6 +136,12 @@ aliasing changes and duplicated completion paths:
 | `get-point-speedup-continue` | 1596 | Under the retained get_point context, the separate SPEEDUP increment remains and jumps past the shared XMM1 zero. The late common increment/return also remains |
 | `typed-fresh-index-guard` | 1592 | A fresh saved index before the bound check is now fully byte-neutral under typed blend/get_point. The older 1,608-byte result belongs to the earlier manual-mask context |
 | `unsigned-wait-case-constant` | 1592 | Explicitly casting the WAIT case constant to u32 changes neither its reader representation nor any native owner byte |
+| `void-command-step-reference` | 1592 | Moving dispatch and its shared increment into a forced-inline void step also reproduces the older typed-blend body: loop placement stays late and X regresses. The command-step helper family is rejected |
+| `automatic-command-step-reference` | 87 | Ordinary inline leaves a native helper call. The complete caller has no switch table and one unbound new callee; diagnostics use all 87 code bytes |
+| `wait-tail-recursion` | 1652 | Recursing only from WAIT retains the outer while source but loses ESP realignment and distributes several additional INCs; rejected |
+| `typed-default-advance` | 1604 | Under the current aliasing/get_point context, explicit SPEEDUP/default advancement creates separate SPEEDUP, default and shared increments; loop placement remains wrong |
+| `selector-only-local` | 1592 | A named u32 used only by switch is eliminated; all retained bytes and the rejected state-machine predicate are unchanged |
+| `guard-and-selector-local` | 1600 | Using that local for the zero guard as well changes dispatch to ECX and LEA, but leaves the late common loop and unnamed candidate symbol |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -399,6 +405,23 @@ Timer boundary does not solve this owner; its memory/register effects would
 need finer isolation before assigning one specific cause. Preserve
 `timer-boundary-*`; neither private image is a formal source result.
 
+The retained-source Timer control completes the missing second row of that
+experiment. `timer-boundary-retained-*` uses the current shared-advance source,
+not the separate-SPEEDUP trial. The control reproduces all retained bytes;
+its COFF substitution produces exactly the same complete 1,636-byte owner
+as the earlier COFF experiment, SHA-256
+`e8a44b8cf925ca8a19ede5405888d2ced8977e4afd8f02f87f28c77d3459eeb8`.
+Both substitutions preserve the target's complete 68-byte setter.
+
+| Timer compilation boundary | Shared advance source | Separate SPEEDUP increment source |
+| --- | ---: | ---: |
+| Ordinary LTCG object | 1592 bytes | 1596 bytes |
+| Private COFF object | 1636 bytes | Same complete 1636-byte body |
+
+This rules out the opaque Timer boundary for both source forms. It also
+shows that the effect of the source-level increment depends on the caller's
+link-time knowledge; the two controls cannot be interpreted independently.
+
 ## The extra SPEEDUP increment is compared but not tail-merged
 
 `speedup-tail-merge-control-*` observes FgDoCommonTailMerge under the
@@ -442,6 +465,35 @@ constant to u32: it retains the same four boundary words, the same switch
 stage observations and every ordinary owner byte. Both source spellings
 therefore normalize to this reader representation. The trial is restored;
 do not repeat case-literal casts based only on those high words.
+
+## A selector name changes candidacy but does not enable state-machine optimization
+
+`state-machine-switch-control-*` completes normally and reproduces the
+retained complete owner. LgoPrepareStateMachineOpt calls
+LgoHasPotentialStateMachine and LgoTupIsCandidateSwitch. The latter returns
+zero: the residual switch's source is a kind-1 temporary whose symbol has
+no name record. Its parent/self record's +4 entry is null, matching the
+observed rejection at the pinned predicate. The static predicate and its
+actual call sites are retained in `lgo-*-*.disasm.txt` and
+`lgo-switch-call-sites.json`.
+
+The selector-only and guard/selector source controls do not retain a name
+through this stage. Their paired read-only replays reproduce their complete
+ordinary 1,592- and 1,600-byte owners, and all three candidacy/potential/prepare
+results remain zero. The guard/selector form preserves the case flag reads;
+it is distinct from the older control that replaces every type read.
+
+`state-machine-name-read-only-*` first validates the new observer against
+every retained byte. The paired `state-machine-name-probe-*` then changes
+only the temporary symbol's null name-record pointer, borrowing the valid
+record for `_this`. The switch tuple, source operand and other symbol words
+are checked unchanged. It performs exactly one compiler metadata write.
+Candidacy now returns one, potential detection returns one, and the
+post-switch search finds the existing common advance, label 100085.
+LgoStateMachineOptApplicable nevertheless returns zero and preparation also
+returns zero. The probe exits normally and still reproduces all 1,592
+ordinary bytes. Naming alone therefore does not account for the layout.
+This is modified-compiler diagnostic evidence, not a source result.
 
 ## Loop recognition copies the condition; CodeMotion later moves that copy
 

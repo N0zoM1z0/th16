@@ -5,152 +5,73 @@ the dated 2026-11-19 and 2026-11-21 notes are historical.
 
 ## Active reconstruction (2026-11-26)
 
-`LaserCurveInf::run_ex` (`0x438cb0`) now passes the complete local strict
-comparison: 1548 / 1548 bytes and 29 independently bound linked fields.
-The extent includes 1512 code bytes, five absolute jump entries and a
-16-byte selector map. SHOOT advances the actual instruction cursor for its
-paired command, giving NColor two different definitions and preventing the
-full pointer from being folded into every field address. A named integer
-duration then repairs conversion-tree ordering. Read
-[the compiler investigation](knowledge/curve-run-ex-compiler-trace.md) and
-preserve `.analysis/curve-run-ex-compiler/` and the incremental build. The
-completed read-only replay reproduces the full ordinary owner, confirms the
-nonzero definition comparison and records the repaired conversion keys.
+Continue only `LaserLineInf::run_ex` at `0x431fe0`. Its reviewed target owns
+1,588 bytes: 1,550 code, two alignment bytes, five jump entries and a 16-byte
+selector map. The retained ordinary source owns 1,592 bytes and is incomplete.
+The remaining code-alignment difference is the common loop/return placement.
+Read [the active compiler investigation](knowledge/line-run-ex-compiler-trace.md)
+and preserve `.analysis/line-run-ex-compiler/` and the incremental build graph.
 
-The final focused report rechecks all four completed owners:
-`.analysis/curve-run-ex-compiler/final-strict.json`. Enemy interpolation passes
-1692 / 1692 bytes and 48 fields; curve tick passes 1305 / 1305 and 30 fields;
-curve reverse-step passes 986 / 986 and 14 fields. Their evidence remains in
-[the interpolation note](knowledge/enemy-interpolators-compiler-trace.md),
-[the tick note](knowledge/curve-tick-compiler-trace.md) and
-[the reverse-step note](knowledge/curve-step-back-compiler-trace.md).
-Preserve their three compiler-evidence directories. Factory acceptance remains
-not-submitted; the current shared accepted snapshot is inventory-only.
+The retained source is commit `4e7e4b0`, also saved privately as
+`Laser.cpp.get-point-x-repair-checkpoint`. Restore failed probes from that
+checkpoint, never from the older corrected-coordinate or manual-mask sources.
+Keep the paired SHOOT cursor advance and typed BLEND view. Qualified
+`LaserLineInf::get_point` in SHOOT repairs X input ordering through ordinary
+inlining; its read-only compiler replay reproduces every ordinary owner byte.
+Shooter X remains a kind-2 field. The inlined `_v` formal makes the memory
+input cheaper than that field; Y retains the opposite order.
 
-Continue only `LaserLineInf::run_ex` (`0x431fe0`). Its target owns 1,588
-bytes: 1,550 code bytes, two alignment bytes, five jump entries and 16
-selector bytes. The retained typed-blend/get_point candidate owns 1,592 bytes
-and remains incomplete. Its remaining residual is the late common loop/return
-block; ordinary get_point inlining now repairs SHOOT's X input order.
-The four completed owners and the complete 32-byte polar helper pass the
-six-owner `threaded-dfo-baseline-strict.json` check. The opcode-capture
-trial grows Line to 1,608 and is restored.
+The latest completed nine-owner checkpoint is
+`.analysis/line-run-ex-compiler/selector-ownership-restored-strict.json`:
+seven owners pass; Line EX and Line on_tick remain incomplete. The four closed
+reconstruction owners are enemy interpolation (1,692 bytes), curve tick
+(1,305), curve reverse-step (986) and curve EX (1,548). Their compiler notes
+and ignored evidence remain under the matching knowledge/evidence names.
+Line get_point (84), the polar helper (32) and Timer set_value (68) also pass
+as context. Factory acceptance is not-submitted; the shared accepted snapshot
+is inventory-only and has no Oracle results.
 
-Read [the active compiler note](knowledge/line-run-ex-compiler-trace.md) and
-preserve `.analysis/line-run-ex-compiler/`. The semantic-label trace shows
-FgChangeNextToDFOEx moving the common advance block from index 29 to 73/81.
-The X-weight counterfactual changes only X into target order, leaving the
-late loop intact; its modified compiler cannot establish source exactness.
-The completed `line-sroa-control-*` replay reproduces all ordinary bytes and
-shows that shooter X/Y/Z are reader-created field equivalents. SROA runs
-inside prelower but performs no field promotion in this owner. All phase
-snapshots retain kind-2 fields and zero replacement slots through Lower.
+The proven layout chain is now:
 
-Useful failed source controls are tabulated in the note. Ordinary alias and
-vector-add spellings normalize away; a value-returning vector expression
-changes the frame and packed stores. Removing the definition's noinline
-annotation alone is not a policy test because Laser.h also declares it.
-Do not repeat those controls or restore the old manual-mask blend context.
-An explicit default label at SPEEDUP's existing break is byte-neutral,
-without duplicating the INC. Its completed generic DFS trace precedes the
-first threaded DFO, so those two graph snapshots are not a paired traversal.
-The paired threaded-DFO control now reproduces both the full ordinary owner
-and the exact reverse-postorder block list. The first common-INC visit follows
-WAIT, before the low-opcode table. An explicit SPEEDUP exit guard retains
-separate comparisons and grows the owner to 1,608 bytes, so it is restored.
-The completed loop trace shows condition duplication during the first loop
-recognition and a later CodeMotion splice of that condition behind the late INC.
-The complete linear trace avoids the freed-graph observer limit. A focused
-CanMoveCode trace then observes nine common-block relocation attempts, all
-rejected because WAIT's timer store still falls through into the INC. The
-for-member-step control is rejected at 1,572 bytes and restored. See the note
-for those completed normal-exit controls and the 84-byte get_point context pass.
+- SwGenSwitch constructs the comparison tree in RdrReadProc before Initial.
+  Late FgLowerSwitches and FgSwitchTailDup do not move the common advance.
+- The first threaded traversal reaches the common INC through WAIT. Loop
+  recognition duplicates the bound test; later CodeMotion joins it to the INC.
+- Nine observed attempts to move the common block are rejected because WAIT's
+  timer store still falls through into it. A diagnostic WAIT-preserving JMP at
+  CodeMotion enables the target layout. The earlier composed intervention has
+  zero differing bytes across the complete bound 1,588-byte owner, but uses a
+  modified compiler and grants no source result.
+- Reversing the first WAIT/default traversal order alone does not survive flow
+  cleanup. FgFlowOpts removes label 100085 and coalesces it with 213780. Follow
+  the increment through label replacement, rather than following one ID forever.
 
-The effective-inline-policy control removes both declaration and definition
-annotations and rebuilds 14 known header consumers. Line is fully byte-neutral;
-the eight-owner report has six passing owners, with Line EX and on_tick still
-incomplete. The on_tick diagnostic byte span also equals the completed baseline
-replay. Removing the saved index's register keyword is also byte-neutral under
-the restored header, with the same focused results. Both source files were
-restored before the later get_point repair.
+Failed source controls are tabulated in the compiler note. In particular,
+lexical placement, explicit shared advance, the effective noinline policy,
+fresh-index guards and unsigned WAIT case casts do not repair this layout.
+The separate SPEEDUP increment is compared with other INC tails, but the
+observed one-instruction matches have cost 11 against threshold 20 and are not
+merged. Forced command-step helpers regress X; ordinary inline leaves a call.
+Tail-recursive forms lose the required ESP alignment. Do not repeat these
+controls without a different, evidenced compiler mechanism.
 
-The read-only internal-call control completes normally and reproduces all
-ordinary bytes. The paired insert-jump diagnostic preserves WAIT's successor
-with FgMakeGoto before CodeMotion, allowing the first common-block move. It
-produces the target's full 1,588-byte geometry, five jump offsets and selector
-map, with only X inputs left in the code alignment. Its compiler is modified,
-so it establishes no source exactness. Preserve line-hoist-read-only-* and
-line-hoist-insert-jump-* and the selector-derived extent extractor.
+The Timer boundary experiment preserves the same exact 68-byte setter but
+changes Line EX substantially. The completed two-by-two control uses both
+retained/shared-advance and separate-SPEEDUP sources: ordinary LTCG gives
+1,592/1,596 bytes; private COFF Timer substitution gives the same 1,636-byte
+body for both. Preserve `timer-boundary-*`; the formal recipe is unchanged.
 
-Moving WAIT into a guarded default produces 1,601 bytes and discards the
-target selector/jump table; it is rejected. Its diagnostic uses the full
-1,601 code bytes, without assuming the ordinary trailing 36 data bytes.
-The retained typed-blend source is restored, including both noinline
-annotations and the register keyword. The final composed diagnostic uses
-only six prelower X-key changes plus the WAIT-preserving JMP. Its complete
-1,588-byte bound-field replay resolves 27 fields and has zero remaining byte
-differences; source_acceptance remains false. Use the final composition,
-not the separately preserved early-gate variant with nine key changes.
-
-The ordinary return-alias helper model produces a complete 34-byte helper,
-adding MOV EAX,ECX to the target's 32 bytes. It is rejected and restored
-without changing the private linkage binding; source-local static helpers
-are not /INCLUDE roots. Moving shooter to iteration scope keeps its constructor
-at loop entry and grows the owner to 1,636 bytes. Zero termination in the
-switch produces 1,580 bytes with a nine-entry direct table and no selector.
-Both are rejected and restored.
-
-Qualified LaserLineInf::get_point in SHOOT repairs the native X input pair
-through ordinary inlining. Its full 1,592-byte body now has only the late
-common-loop/return layout in the code alignment. The existing get_point
-passes 84/84 bytes and the polar helper passes 32/32. Retain this source;
-the new baseline is Laser.cpp.get-point-x-repair-checkpoint, not the old
-corrected-coordinate baseline. The TODO now names only loop/return placement.
-The incremental rebuild and eight-owner checkpoint complete with six passes;
-Line EX and on_tick remain incomplete. The read-only operand trace also exits
-normally and reproduces every ordinary owner byte. X remains a kind-2 shooter
-field; the inlined _v formal changes the memory input key to 0x10008, below
-the field key 0x15220. Y retains memory-first order. Preserve
-get-point-x-operand-control-* and continue only the common-loop layout under
-the unmodified compiler.
-
-The first-DFO edge-order counterfactual is now closed: reversing the
-WAIT/default successor list changes the initial common predecessor but
-reproduces every ordinary byte after cleanup. FgFlowOpts removes label 100085
-inside the first loop recognition; the retargeted observer follows default
-label 213780 and reaches the same late MOV predecessor at CodeMotion.
-Preserve get-point-dfo-common-retarget-reverse-* and the paired read-only
-lifetime control. Do not interpret the earlier observer's lost label as a
-missing increment. The new source controls are tabulated in the compiler note.
-
-The timer linkage control is also rejected. ZunTimer::set_value passes its
-complete 68-byte owner, but substituting a private non-LTCG Timer object in
-the separate-SPEEDUP control changes Line EX from 1,596 to 1,636 bytes while
-preserving those same setter bytes. Preserve timer-boundary-*; the formal
-recipe and object graph were not changed. The retained get_point source is
-restored. The nine-owner flow-cleanup-restored-strict.json check completes
-with seven passes; Line EX and on_tick remain incomplete.
-
-The completed read-only speedup-tail-merge-control-* replay reproduces its
-entire 1,596-byte ordinary owner. Actual INC comparisons match one instruction,
-then record cost 11 against threshold 20 and return false. Do not assume that
-adding a separate SPEEDUP increment will be merged away. The typed fresh-index
-guard is now fully byte-neutral; its older 1,608-byte result was measured
-before the current aliasing/get_point context. Both controls are restored to
-the retained source. The final incremental build and nine-owner
-tail-merge-restored-strict.json report complete with seven passes; Line EX
-and on_tick remain incomplete.
-
-The reader-stage switch control is complete. SwGenSwitch constructs the
-comparison tree in RdrReadProc before Initial; the later FgLowerSwitches
-inside Emit processes the residual switch node without moving the common
-advance. FgSwitchTailDup leaves the tuple sequence unchanged. An explicit
-unsigned WAIT case retains both the same sign-extended reader bounds and
-every native byte, so the high boundary words do not establish a type bug.
-Preserve switch-lowering-control-* and unsigned-wait-case-lowering-control-*.
-The case-cast trial is restored. The incremental rebuild and final nine-owner
-switch-lowering-restored-strict.json report complete with seven passes;
-Line EX and on_tick remain incomplete.
+The current private investigation targets C2 state-machine preparation.
+`state-machine-switch-control-*` and `selector-only-state-machine-control-*`
+complete normally and reproduce their ordinary owners. The candidate switch
+uses an unnamed temporary; LgoTupIsCandidateSwitch, potential-state-machine
+and prepare all return zero. Naming a selector local alone is fully byte-neutral;
+using it in the zero guard also gives 1,600 bytes without preserving the name.
+The paired name-record intervention is complete: one metadata write changes
+candidacy/potential to one and finds the common INC, but applicability and
+preparation remain zero. The full ordinary owner is unchanged. Preserve
+`state-machine-name-*`; naming alone is ruled out and establishes no source
+result. The source controls are restored to the retained checkpoint.
 
 Keep coherent checkpoints local and do not push unless asked.
 
