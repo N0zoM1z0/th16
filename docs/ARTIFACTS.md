@@ -25,18 +25,24 @@ pilot receipts do not establish current shared Factory acceptance.
 
 ## Permanent cleanup on 2026-11-26
 
-The cleanup removed retired large native fixtures, expected/output files,
-historical audit reports, PDBs and trial binaries, plus their compressed copies
-and old pilot-prefix archives. The active compiler directories and current
-build graph were excluded. The deletion record is
-`.analysis/cleanup-deleted-20261126.json`.
+Two cleanup passes were performed on 2026-11-26:
 
-The deleted payloads reclaimed **2,620,059,648 allocated bytes (2.44 GiB)**;
-temporary cleanup inventories and Python bytecode caches freed about another
-8 MB. The repository fell from about **5.2 GiB to 2.8 GiB**, and `.analysis/`
-from about **4.3 GiB to 1.9 GiB**. Remaining archives occupy about **14 MiB**.
-The active build is about 108 MiB, `.tools/` 586 MiB, `.venv/` 26 MiB,
-Ghidra project 14 MiB and pinned reference checkout 17 MiB.
+1. **First pass**: removed retired large native fixtures, expected/output files,
+   historical audit reports, PDBs and trial binaries, plus their compressed
+   copies and old pilot-prefix archives (reclaiming **2.44 GiB**; record in
+   `.analysis/cleanup-deleted-20261126.json`).
+2. **Second pass (handoff cleanup)**: removed 3 detached historical git
+   worktrees (`.analysis/factory-replay-th16`,
+   `.analysis/factory-replay-th16-follow-up`, `.analysis/worktrees/de0cb82`),
+   76 obsolete `*-work` and old baseline directories, 13,740 loose `.analysis/`
+   trial files, stray `print_enemy_offsets.obj`, and `scripts/__pycache__/`.
+   This reclaimed another **~1.55 GiB**, bringing `.analysis/` down to
+   **467 MiB**.
+
+Active sizes after cleanup: `.analysis/` ~467 MiB (dominated by the preserved
+`*-compiler/` evidence directories, `claude-tools/`, and `archives/`),
+`build/reference-candidate/` ~108 MiB, `.tools/` ~586 MiB, `.venv/` ~26 MiB,
+`ghidra-project/` ~14 MiB, and `_reference/johnthreekay-th16/` ~17 MiB.
 
 Deleted evidence is not recoverable through the archive helper. Older notes
 may still cite its historical paths; those citations record the experiment,

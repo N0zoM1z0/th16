@@ -1,97 +1,101 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-26 after the user requested cleanup and handoff. The previous
-unattended reconstruction goal was cleared. Read [AGENTS.md](../AGENTS.md)
-before editing; keep checkpoints local and push only when asked.
+Updated 2026-11-26 after matching 28 additional functions, updating
+`resources/progress.svg`, and cleaning up ~1.55 GiB of obsolete `.analysis/`
+scratch artifacts. Read [AGENTS.md](../AGENTS.md) before editing; keep
+checkpoints local and push `main` only when asked.
 
-## Retained source and checks
+## Current baseline
 
-The retained Line EX source is the get_point repair from `4e7e4b0`.
-The temporary typed explicit-goto experiment was reverted, then the source
-was built incrementally. The build contains 1,166 annotated functions; preserve
-`build/reference-candidate/` and its object/dependency graph.
+- **Latest source commit**: `423f3d5` (`TitleInf::do_spell_practice_subseason`)
+- **Incremental build**: `build/reference-candidate/th16.exe` (1,166 annotated
+  functions; preserve its object/dependency graph for fast incremental builds).
+- **Local strict audit** (`.analysis/reference-audit.json` and
+  `resources/progress.svg`):
+  - **1,061 / 1,215 functions exact** (**257,831 / 442,168 bytes = 58.31%**)
+  - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
+- **Factory status**: `not-submitted` (local strict comparisons only; the shared
+  Factory accepted snapshot is inventory-only and returns no Oracle results).
 
-The current focused report is
-`.analysis/line-run-ex-compiler/handoff-cleanup-restored-strict.json`:
-
-| Complete owner | Local strict result | Target / candidate bytes |
-| --- | --- | ---: |
-| EnemyData::step_interpolators, 0x41bb50 | pass | 1692 / 1692 |
-| LaserCurveInf::on_tick, 0x4377d0 | pass | 1305 / 1305 |
-| LaserCurveNode::step_back, 0x438370 | pass | 986 / 986 |
-| LaserCurveInf::run_ex, 0x438cb0 | pass | 1548 / 1548 |
-| LaserLineInf::get_point, 0x431050 | pass | 84 / 84 |
-| laser_sincosmul, 0x43ad00 | pass | 32 / 32 |
-| ZunTimer::set_value, 0x406490 | pass | 68 / 68 |
-| LaserLineInf::run_ex, 0x431fe0 | incomplete | 1588 / 1592 |
-| LaserLineInf::on_tick, 0x432f40 | incomplete | 1473 / 1475 |
-
-These are local comparisons, with Factory status `not-submitted`. The shared
-Factory accepted snapshot is inventory-only and contains no Oracle results.
-The older 15-owner caller-context report also leaves AnmVm::run incomplete;
-its switch mapping was reviewed, not closed. Earlier global ratios and pilot
-totals are historical and do not describe this build.
-
-## Resume Line EX from compiler evidence
-
-The active incomplete owner is `LaserLineInf::run_ex`, 0x431fe0. Its target
-owns 1550 code bytes, two alignment bytes and 36 table bytes. The ordinary
-candidate owns 1553 code bytes, three alignment bytes and the same table sizes.
-Its complete raw SHA-256 is
-`29cd1e02444d8935f3ea1cf1a9efb48fefbf898ec06c6a3877541778ae85fdd5`.
-The remaining aligned-code difference is the common INC/check/return block
-appearing late after WAIT instead of early after SPEEDUP.
-
-Keep the qualified `LaserLineInf::get_point` call in SHOOT, actual paired
-`ex++`, saved entry index in TAG and typed BLEND field view. Private restore
-snapshots are `Laser.cpp.get-point-x-repair-checkpoint` and
-`Laser.cpp.before-wait-jump-trace` under `.analysis/line-run-ex-compiler/`.
-Do not restore the older corrected-coordinate baseline: it has wrong X order.
-
-Read [the Line EX compiler trace](knowledge/line-run-ex-compiler-trace.md)
-before trying another source form. The useful conclusions are:
-
-- The first threaded traversal reaches the common increment through WAIT.
-  Loop recognition copies the bound check; final CodeMotion joins that copy
-  to the late increment. WAIT's fall-through store rejects moving the block.
-- The typed explicit-goto lifetime trace is complete. Its WAIT jump survives
-  the first reorder, then `FgFlowOpts+0x49e` frees it during loop recognition
-  because its destination is the immediately following block. Scope markers
-  do not preserve the edge. Ordinary source already has WAIT fall-through.
-- A diagnostic WAIT-preserving jump inserted at late CodeMotion enables the
-  target layout. The composed compiler intervention reproduces all 1588 linked
-  target bytes, but supplies no ordinary-source result.
-- Caller context matters: adding one vector register to the exact Timer
-  setter's known-used-register set reproduces the complete 1636-byte regression.
-  Its extra INCs come from small-block copying after unconditional branches.
-- Scalar next-index PHIs reach early SSA merge gates, then fail safety on an
-  intervening GOTO or ADD. Selector naming and traversal order alone also fail.
-  The detailed note records these controls so they need not be repeated.
-
-The next useful question is which natural source completion graph survives
-early flow cleanup while preserving WAIT semantics and the required register
-and stack context. Compare the complete affected scope. A local layout gain
-can change SHOOT ordering or another caller; do not judge only the INC block.
-
-## Evidence and working commands
-
-Current Line EX traces, scripts, source snapshots, debug images and the focused
-restoration report remain in `.analysis/line-run-ex-compiler/`. Compiler evidence
-for the four closed owners also remains in its corresponding `*-compiler/`
-directories; see the [knowledge index](knowledge/README.md).
-
-Old large trial payloads and their compressed copies were permanently deleted
-at the user's request. They cannot be restored. Small historical notes and
-remaining archives are described in [ARTIFACTS.md](ARTIFACTS.md). Dated handoffs
-and older Git revisions preserve chronology, not current measurements.
+## Working commands
 
 ```sh
 git status --short --branch
 scripts/repo-python scripts/build.py
-scripts/repo-python scripts/audit-reference.py --address 0x431fe0 --json .analysis/line-ex-focused.json
-scripts/repo-python scripts/evidence-archive.py list
+scripts/repo-python scripts/audit-reference.py --address 0x450ef0 --json .analysis/audit_tmp.json
+# After committing an exact match, refresh config/ and resources/progress.svg:
+scripts/repo-python scripts/audit-reference.py --write-units && \
+  scripts/repo-python scripts/progress.py --svg resources/progress.svg
 ```
 
-Use incremental builds and affected complete-owner comparisons. Reserve cold
-builds and broad replay for a meaningful milestone or a demonstrated dependency
-problem. Prose edits need diff review only.
+Focus on one function at a time, verify the complete affected TU with
+`audit-reference.py`, update `resources/progress.svg` after exact matches, and
+avoid full cold builds unless a dependency/cache problem is demonstrated.
+
+## Key compiler findings from this session
+
+1. **`DECOMP_DEAD_DOUBLE_3;` flips callee-only `push ebx; mov ebx, esp` alignment
+   to compact `push ebp; mov ebp, esp; and esp, -8`**:
+   In MSVC v141 `/O2 /GL`, a 0-stack-parameter function that aligns its stack
+   only for a callee emits the 24-byte `push ebx; mov ebx, esp; sub esp, 8;
+   and esp, -8; add esp, 4; push ebp; ...` prologue with `[ebp-N]` locals.
+   Adding `DECOMP_DEAD_DOUBLE_3;` gives the function its own alignment weight
+   and flips it to the compact `push ebp; mov ebp, esp; and esp, -8` prologue
+   with `[esp+N]` locals. This immediately matched `TitleInf::do_options`
+   (836 B), `TitleInf::do_spell_practice_difficulty` (812 B), and
+   `TitleInf::do_spell_practice_subseason` (776 B).
+2. **`HARNESS_CALLED` (`__declspec(noinline)`) blocks LTCG inlining**:
+   When a target inlined a `HARNESS_CALLED` helper, adding a `static __forceinline`
+   copy restores exact codegen (e.g., `Spellcard::on_tick_body`, 650 B, matched
+   100% by inlining `EnemyManager::find_enemy_by_id`).
+3. **LICM preheader ordering**:
+   Moving loop-invariant initialization inside a `for` loop causes MSVC LICM to
+   hoist the stores after loop-counter initialization (e.g., moving `pos = 0`
+   inside the comment-line loop matched `TitleInf::do_music_room`, 3,136 B).
+4. **Tail-merge direction in large switches**:
+   Moving `return;` vs `break;` (fallthrough) between two identical tails flips
+   which `case` hosts the shared tail (`PauseMenu::tick_open` improved from
+   `incomplete` to 4,674 / 4,676 bytes, leaving only 2 scale-1 SIB base/index
+   tie-breakers).
+
+## Highest-value next targets
+
+### 1. Ready-to-test `DECOMP_DEAD_DOUBLE_3;` candidates (`push ebx` vs `push ebp; and esp, -8`)
+
+- `0x450ef0` (`TitleInf::do_practice_stage_select`, `src/MainMenuStates.cpp`, ~1,232 B)
+- `0x4440e0` (`PlayerInner::repopulate_options`, `src/Player.cpp`, ~2,178 B)
+- `0x44e930` (`TitleInf::do_key_config`, `src/MainMenu.cpp`, ~836 B; also has a
+  byte-vs-dword load on `g_hardware_input_pressed`)
+
+### 2. Incomplete functions missing `and esp, -8`
+
+- `0x4532f0` (`TitleInf::do_score_name_entry`, `src/MainMenuStates.cpp`, ~1,444 B)
+- `0x446260` (`sht_on_tick_laser`, `src/PlayerShot.cpp`, ~1,522 B)
+- `0x40fe80` (`BombMarisaAInf::cancel_bullets`, `src/BombMain.cpp`, ~595 B)
+- `0x412860` (`BulletManager::on_tick_body`, `src/BulletManager.cpp`, ~471 B)
+- `0x452330` (`TitleInf::do_player_data`, `src/MainMenuStates.cpp`, 2,304 B —
+  `DECOMP_DEAD_DOUBLE_3;` reaches 2,302 / 2,304 B; only 2 bytes differ in
+  vectorized OR load order `+16` vs `+0`)
+
+### 3. Near-exact large mismatches & preserved compiler traces
+
+- `0x44b5f0` (`TitleInf::do_title_screen`, `src/MainMenu.cpp`, 3,964 B —
+  3,875 / 3,964; mainly a +4 byte `esp` slot shift under `sub esp, 0x10` where
+  candidate uses 3 slots and target uses 4, plus 3 small diffs: swap
+  `g_Globals.difficulty = g_last_difficulty` before `set_state`, use
+  `MenuHelper *m = &menu` in `case 2`, and prevent `push ecx; push 9` head-merge
+  before `je`)
+- `0x43f980` (`PauseMenu::tick_open`, `src/PauseMenu.cpp`, 4,676 B — currently
+  4,674 / 4,676; only 2 scale-1 SIB base/index tie-breakers remain)
+- `0x431fe0` (`LaserLineInf::run_ex`, `src/Laser.cpp`, 1,588 B) — full compiler
+  trace and restore checkpoints remain in
+  [docs/knowledge/line-run-ex-compiler-trace.md](knowledge/line-run-ex-compiler-trace.md)
+  and `.analysis/line-run-ex-compiler/`.
+
+## Storage and preserved evidence
+
+Obsolete `.analysis/*-work` directories, detached historical git worktrees, and
+13,740 loose trial files were removed on 2026-11-26 (`.analysis/` is now ~467
+MiB). Active compiler evidence (`*-compiler/`), `claude-tools/`, `archives/`,
+Factory registration/validation files, and `build/reference-candidate/` remain
+intact. See [ARTIFACTS.md](ARTIFACTS.md) before cleaning further.

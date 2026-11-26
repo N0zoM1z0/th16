@@ -10,7 +10,7 @@ Agent workflow: follow the highest-priority requirements in [AGENTS.md](AGENTS.m
 </p>
 
 <p align="center">
-  <img src="resources/progress.svg" alt="Historical TH16 local strict-audit snapshot from 2026-11-15">
+  <img src="resources/progress.svg" alt="TH16 local strict-audit progress snapshot">
 </p>
 
 This project reconstructs C++ source for the original Japanese TH16 version
@@ -47,36 +47,26 @@ above is composited from the game's own textures for identification only.
 
 ## Current status (2026-11-26)
 
-The retained source includes the Line EX get_point repair from **4e7e4b0**.
-The temporary explicit-goto experiment was reverted.
-The incremental build completes with **1,166 annotated functions**. Its focused
-local strict report compares complete owners and independent linkage bindings:
+The incremental build completes with **1,166 annotated functions** (1,215
+annotated candidates audited locally in `.analysis/reference-audit.json` and
+summarized in `resources/progress.svg`):
 
-| Owner (target VA) | Target / candidate bytes | Local strict result |
-| --- | ---: | --- |
-| EnemyData::step_interpolators (0x41bb50) | 1,692 / 1,692 | pass |
-| LaserCurveInf::on_tick (0x4377d0) | 1,305 / 1,305 | pass |
-| LaserCurveNode::step_back (0x438370) | 986 / 986 | pass |
-| LaserCurveInf::run_ex (0x438cb0) | 1,548 / 1,548 | pass |
-| LaserLineInf::get_point (0x431050) | 84 / 84 | pass |
-| laser_sincosmul (0x43ad00) | 32 / 32 | pass |
-| ZunTimer::set_value (0x406490) | 68 / 68 | pass |
-| LaserLineInf::run_ex (0x431fe0) | 1,588 / 1,592 | incomplete |
-| LaserLineInf::on_tick (0x432f40) | 1,473 / 1,475 | incomplete |
+- **Exact**: **1,061 / 1,215 functions** (**257,831 / 442,168 bytes = 58.31%**)
+- **Mismatch**: **36 functions** (including `PauseMenu::tick_open` at 4,674 / 4,676 bytes)
+- **Incomplete**: **118 functions** (90.29% complete extents compared)
 
-The private report is
-`.analysis/line-run-ex-compiler/handoff-cleanup-restored-strict.json`.
-Line EX's remaining aligned-code difference is the placement of its common
-increment, loop check and return. Compiler traces now identify both the late
-motion rejection and the earlier removal of an explicit WAIT jump. The
-[investigation](docs/knowledge/line-run-ex-compiler-trace.md) records these
-findings and the effects of caller/register context on the complete owner.
+Recent exact matches include `TitleInf::do_music_room` (3,136 B),
+`TitleInf::do_options` (836 B), `TitleInf::do_spell_practice_difficulty`
+(812 B), `TitleInf::do_spell_practice_subseason` (776 B),
+`Spellcard::on_tick_body` (650 B), `SoundBufferEntry::play` (182 B),
+`EclRunContext::pop_int_arg_given_value` (179 B), and `CSound::SetVolume`
+(114 B).
 
 These local results have not been submitted to Factory. The current shared
 accepted snapshot is inventory-only and returns no Oracle results. Historical
 pilot receipts are separate evidence; full production closure remains open.
 
-For the next agent, read AGENTS.md, then the
+For the next agent, read [AGENTS.md](AGENTS.md), then the
 [current handoff](docs/NEXT_AGENT.md) and
 [artifact and recovery notes](docs/ARTIFACTS.md). The dated
 [2026-11-21 handoff](docs/HANDOFF_20261121.md) and
