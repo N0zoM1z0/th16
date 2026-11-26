@@ -56,7 +56,7 @@ Binding the current instruction as a `BulletEx` reference instead of a pointer
 produces that same entire body. `instruction-reference-ncolor.jsonl` records
 the more useful transition: NColor entry still has a complete LEA containing
 both `this`, the scaled index and displacement 0x600, followed by assignment
-to `_ex`. At NColor exit that definition is gone and the field load has a
+to `_ex`. At the first candidate-processing marker that definition is gone and the field load has a
 combined effective address with displacement 0x620. Thus the address survives
 lowering; it is folded during NColor. The completed debugger link and ordinary
 image agree over all 1,720 bytes.
@@ -79,7 +79,7 @@ the loop and again at the loop latch. The multiply writes ESI instead of EAX,
 and loop alignment changes. The floating input-order difference remains.
 
 `named-table-ncolor.jsonl` shows that the base LEA is already outside the loop
-at NColor entry. It survives allocation as `_instructions$1`; this is distinct
+at NColor entry. It survives into candidate processing as `_instructions$1`; this is distinct
 from a base first moved by NColor. The ordinary and completed debugger bodies
 agree over all 1,560 bytes, SHA-256
 `e742fc5882b2c44038c94f550be6d79602f869cd40647a30e977dfd01e3f1903`.
@@ -160,3 +160,10 @@ ordinary 1,548-byte body with the SHA-256 above. Keep `final-canonical.jsonl`,
 `final-strict.json` passes this owner plus enemy interpolation, curve tick and
 curve reverse-step. All retained evidence is from incremental builds and
 focused complete-owner comparisons; Factory acceptance remains not-submitted.
+
+A later line-owner probe verified that RVA `0x78774`, used by these scripts
+for an event labeled `ncolor-exit`, is `NColProcessCandidate` entry. Those
+snapshots are before candidate processing, not a full NColor return. The
+recorded disappearance of the cheap address definition and the explicit
+nonzero definition-comparison result remain valid; extend future allocation
+traces with the actual return PC and expected stack pointer.

@@ -3302,15 +3302,14 @@ on_screen:
 // Runs the laser's pending et_ex instructions: each one starts an et_ex
 // step (ex_flags and its ex_state), or acts at once (sounds, bullets, the
 // sprite, blend mode, jumps).
-// TODO: the shooter fields after pos are written through raw offsets; register allocation and the case layout differ.
+// TODO: common loop placement and SHOOT Y addition order still differ.
 // FUNCTION: TH16 0x431fe0
 DECOMP_NOINLINE void LaserLineInf::run_ex()
 {
     while (ex_index < 0x12)
     {
         register i32 index = ex_index;
-        BulletEx *volatile ex_ptr = &inner.ex[index];
-        BulletEx *ex = ex_ptr;
+        BulletEx *ex = &inner.ex[index];
         if (ex->type == 0)
         {
             return;
@@ -3421,10 +3420,11 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
             shooter.start_transform = a & 0xff;
             shooter.count = ex->b;
             ex_index++;
-            shooter.layers = ex[1].a;
-            shooter.ang_aim = ex[1].r;
-            shooter.sfx_flags = ex[1].b;
-            shooter.ang_bullet_dist = ex[1].s;
+            ex++;
+            shooter.layers = ex->a;
+            shooter.ang_aim = ex->r;
+            shooter.sfx_flags = ex->b;
+            shooter.ang_bullet_dist = ex->s;
             memcpy(shooter.ex, inner.ex, sizeof(inner.ex));
             g_BulletManager->shoot_bullets(&shooter);
             ex_index++;
@@ -3437,22 +3437,25 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
         }
         case BULLET_EX_TAG:
             id = ex->a;
-            ex_index++;
+            ex_index = index + 1;
             continue;
         case BULLET_EX_LOOP:
             ex_index = ex->a;
             continue;
         case BULLET_EX_BLEND:
+        {
+            AnmVmFlagsLoFields *blend_flags = (AnmVmFlagsLoFields *)&vm_92c.flags_lo;
             if (ex->a != 0)
             {
-                vm_92c.flags_lo = vm_92c.flags_lo & ~ANM_VM_BLEND_MODE_MASK | (1 << ANM_VM_BLEND_MODE_SHIFT);
+                blend_flags->blend_mode = 1;
             }
             else
             {
-                vm_92c.flags_lo &= ~ANM_VM_BLEND_MODE_MASK;
+                blend_flags->blend_mode = 0;
             }
             ex_index++;
             continue;
+        }
         case BULLET_EX_WAIT:
             ex_flags |= ex->type;
             ex_state[5].timer.set_inline(ex->a);

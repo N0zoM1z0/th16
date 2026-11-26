@@ -27,10 +27,24 @@ curve reverse-step passes 986 / 986 and 14 fields. Their evidence remains in
 Preserve their three compiler-evidence directories. Factory acceptance remains
 not-submitted; the current shared accepted snapshot is inventory-only.
 
-After checkpointing this owner, freshly compare only
-`LaserLineInf::run_ex` (`0x431fe0`). Its complete target extent is 1588 bytes;
-inspect its instruction-cursor definitions and complete switch data before
-changing source. Its historical similarity is not a current strict result.
+Continue only `LaserLineInf::run_ex` (`0x431fe0`). Its target extent is
+1588 bytes, including 1550 code bytes, two alignment bytes, five jump entries
+and 16 selector bytes. The current typed-blend candidate is 1592 bytes and
+remains incomplete in the local strict audit. TAG uses the saved entry index,
+SHOOT advances the same cursor, and the existing blend-mode field view
+restores EDX/ECX roles and both original member INCs. Remaining code differences
+are the late common loop/return block and SHOOT Y input order. The focused
+report `.analysis/line-run-ex-compiler/blend-field-view-focused.json` also
+rechecks the four completed owners.
+
+Read [the active compiler note](knowledge/line-run-ex-compiler-trace.md) and
+preserve `.analysis/line-run-ex-compiler/`. A semantic-label trace proves the
+first FgChangeNextToDFOEx moves the advance block from index 29 to 73/81.
+Simple continuation/default/goto forms and the shared-index loop controls did
+not repair it; their failed source and native controls remain. EmitFunction
+entry precedes allocation, and RVA 0x78774 is NColProcessCandidate entry;
+the corrected trace uses real pass returns. Continue from the typed field view,
+not the earlier 1596-byte paired-cursor source or any verbose goto trial.
 Keep coherent checkpoints local and do not push unless the user asks.
 
 ## Historical checkpoint (2026-11-23)
