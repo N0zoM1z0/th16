@@ -282,6 +282,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00417700,Spellcard::initialize,reference-00417700,local-strict-pass,131,131,131,.analysis/reference-audit.json
 0x00417790,Spellcard::~Spellcard,reference-00417790,local-strict-pass,272,272,272,.analysis/reference-audit.json
 0x004178A0,Spellcard::create,reference-004178a0,local-strict-pass,130,130,130,.analysis/reference-audit.json
+0x00417930,Spellcard::on_tick_body,reference-00417930,local-strict-pass,650,650,650,.analysis/reference-audit.json
 0x00417BC0,Spellcard::measure_real_time,reference-00417bc0,local-strict-pass,418,418,418,.analysis/reference-audit.json
 0x00417D70,Spellcard::on_draw_body,reference-00417d70,local-strict-pass,368,368,368,.analysis/reference-audit.json
 0x00417EE0,Spellcard::on_tick_callback,reference-00417ee0,local-strict-pass,5,5,5,.analysis/reference-audit.json
@@ -1047,6 +1048,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00471040,DSoundBufferRestore::restore,reference-00471040,local-strict-pass,105,105,105,.analysis/reference-audit.json
 0x004710B0,CSound::GetFreeBuffer,reference-004710b0,local-strict-pass,110,110,110,.analysis/reference-audit.json
 0x00471120,CSound::Play,reference-00471120,local-strict-pass,204,204,204,.analysis/reference-audit.json
+0x004711F0,CSound::SetVolume,reference-004711f0,local-strict-pass,114,114,114,.analysis/reference-audit.json
 0x00471270,CSound::Stop,reference-00471270,local-strict-pass,128,128,128,.analysis/reference-audit.json
 0x004712F0,CSound::Pause,reference-004712f0,local-strict-pass,144,144,144,.analysis/reference-audit.json
 0x004713F0,CSound::Reset,reference-004713f0,local-strict-pass,60,60,60,.analysis/reference-audit.json
