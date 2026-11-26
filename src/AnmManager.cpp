@@ -86,33 +86,5 @@ DECOMP_NOINLINE AnmId AnmLoaded::create_effect(i32 script, i32 layer, AnmVm **ou
 // FUNCTION: TH16 0x40e5c0
 HARNESS_CALLED AnmId AnmLoaded::create_vm(i32 script, D3DXVECTOR3 *pos, f32 rotation, i32 layer, i32 unused)
 {
-    ENTER_CS(CS_ANM_MANAGER);
-    vm_count++;
-    AnmVm *vm = g_AnmManager->allocate_vm();
-    copy_vm(vm, script);
-    vm->flags_hi |= ANM_VM_CREATED_BY_GAME;
-    if (layer >= 0)
-    {
-        vm->layer = layer;
-        if (layer <= ANM_LAYER_HUD_LAST)
-        {
-            vm->flags_hi &= ~ANM_VM_ORIGIN_HUD;
-            vm->flags_hi |= ANM_VM_ORIGIN_GAME;
-        }
-    }
-    if (pos == NULL)
-    {
-        vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    }
-    else
-    {
-        vm->entity_pos = *pos;
-    }
-    vm->rotation.z = rotation;
-    vm->run();
-    vm->mode_of_create_child = ANM_CREATE_WORLD_BACK;
-    AnmId id;
-    id = g_AnmManager->insert_in_world_list_back(vm);
-    LEAVE_CS(CS_ANM_MANAGER);
-    return id;
+    return create_vm_inline(script, pos, rotation, layer);
 }
