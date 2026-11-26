@@ -120,6 +120,7 @@ aliasing changes and duplicated completion paths:
 | `for-member-advance` | 1572 | Moving the member increment to a for-loop step removes required branch-local increments, folds away the saved TAG index, retains LOOP's decrement, and leaves X and the late common tail wrong |
 | `effective-inline-policy` | 1592 | Removing noinline from both the Line declaration and definition is now a real policy control and is byte-neutral; six other focused owners pass and the on_tick diagnostic byte span is unchanged |
 | `index-without-register` | 1592 | Removing the saved-index register keyword with the header restored is byte-neutral; the same six other focused owners pass |
+| `wait-in-default` | 1601 | Moving WAIT into a guarded default removes the selector/jump table and changes index/type allocation and completion paths; use its full 1,601 code bytes for diagnostics |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -350,3 +351,66 @@ while changing the resulting
 completion-path graph; forcing the safety result would not preserve that
 fall-through. The ordinary for-loop-step control changes saved-index use
 and completion-path increments without repairing either residual.
+
+
+## Preserving WAIT's successor enables the target loop layout
+
+`line-hoist-read-only-*` tests a debugger-mediated call to FgSafeLocation at
+CodeMotion entry. It saves and restores general, XMM, x87 and control
+registers, returns the expected false result, exits normally and reproduces
+all ordinary bytes. This validates the call transport before allocating or
+linking a compiler tuple.
+
+`line-hoist-insert-jump-*` then calls the pinned FgMakeGoto at RVA 0x6dde4
+with the common LABELDEF as both the target and InsertBefore location. The
+returned machine-JMP tuple is inserted between WAIT's original store and
+the common label. The trace checks both links, the target symbol and the
+unchanged store contents. This preserves WAIT's original successor when
+CodeMotion moves the common block. It does not force a safety predicate.
+The first common-block move now succeeds with a safe unconditional-JMP
+predecessor; later attempts see the new SPEEDUP fall-through and reject.
+
+The intervention exits normally. Its complete diagnostic extent is 1,588
+bytes: 1,550 code, two alignment bytes, five jump entries and 16 selector
+bytes. The jump offsets are 0x90, 0xdb, 0x183, 0x1b3 and 0xae, and the selector
+map agrees with the target. The code alignment, preserving local branch
+destinations, register operands, stack offsets and constants, leaves only
+the X MOVSS/ADDSS input pair. External call/global addresses are normalized
+without linkage credit. The complete raw SHA-256 is
+`927f2e58fac63e05b1ce42f3ca645492b899afe7d2ea14da1d1fc762b0a66fa2`.
+The control records `compiler_modified: true` and `source_acceptance: false`.
+
+The diagnostic extent comes from the actual selector operand plus its
+reviewed 16-byte map, checking the contiguous five-entry jump table and
+all local destinations. It does not reuse the ordinary 1,592-byte bound.
+The same extractor reproduces the unmodified control's full size and hash.
+This accounts for the loop-layout residual through an explicit causal
+intervention. A source repair still needs to produce the layout under the
+unmodified compiler.
+
+
+## The two interventions account for the complete linked owner
+
+`line-hoist-insert-jump-and-x-*` composes the six previously controlled X-key
+changes, gated from actual PreLower entry through Lower entry, with the
+WAIT-preserving JMP insertion at CodeMotion entry. It exits normally and
+produces 1,588 bytes with the target code geometry and both complete tables.
+Its raw hash is `e4da36654d322c1e6ef7d4a94b622452a49440244bec69b1c20e2b36eb6a3366`.
+
+The private bound-field replay enumerates the image's actual PE relocations
+and external control fields, then resolves all 27 fields from the ordinary
+report's independent bindings and the diagnostic map. Interior addends retain
+the normal PDB's bounded data ownership, and the reviewed private polar
+helper's entire 32-byte body is rechecked. It uses the existing linked-value
+packing routine and compares every code, alignment and table byte. There are
+no unresolved fields or differing bytes after this diagnostic replay. Both
+the replayed bytes and target owner hash to
+`67fce36bcdf4d296737bd87473ae40b27f6aa78795138c63737aead97995aa43`.
+
+This result belongs to modified compiler output with a selector-derived
+diagnostic extent. It grants no source exactness or Factory acceptance.
+The ordinary source owner is still 1,592 bytes. The interventions are
+sufficient to reproduce the linked target bytes, but do not uniquely identify
+the original C++. An earlier `*-early-gate*` variant applies three additional
+X-key changes during Initial and is preserved separately; the final
+composition above uses only the six prelower changes.

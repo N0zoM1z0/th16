@@ -74,12 +74,30 @@ replay. Removing the saved index's register keyword is also byte-neutral under
 the restored header, with the same focused results. Both source files are now
 restored to the retained typed-blend checkpoint.
 
-The next diagnostic tests a semantics-preserving explicit WAIT-to-common JMP
-at CodeMotion entry, after late-flow simplification. FgMakeGoto's static
-InsertBefore contract is recorded in .analysis/line-run-ex-compiler/loop-hoist-next.txt.
-Do not simply force the safety result: moving the INC without preserving that
-fall-through would break WAIT's continuation. Keep a normal companion control
-and exclude modified-compiler output from source exactness.
+The read-only internal-call control completes normally and reproduces all
+ordinary bytes. The paired insert-jump diagnostic preserves WAIT's successor
+with FgMakeGoto before CodeMotion, allowing the first common-block move. It
+produces the target's full 1,588-byte geometry, five jump offsets and selector
+map, with only X inputs left in the code alignment. Its compiler is modified,
+so it establishes no source exactness. Preserve line-hoist-read-only-* and
+line-hoist-insert-jump-* and the selector-derived extent extractor.
+
+Moving WAIT into a guarded default produces 1,601 bytes and discards the
+target selector/jump table; it is rejected. Its diagnostic uses the full
+1,601 code bytes, without assuming the ordinary trailing 36 data bytes.
+The retained typed-blend source is restored, including both noinline
+annotations and the register keyword. The final composed diagnostic uses
+only six prelower X-key changes plus the WAIT-preserving JMP. Its complete
+1,588-byte bound-field replay resolves 27 fields and has zero remaining byte
+differences; source_acceptance remains false. Use the final composition,
+not the separately preserved early-gate variant with nine key changes.
+
+The next source control tests the polar helper's ordinary return-alias model,
+starting by comparing its complete 32-byte body. Its current EAX happens to
+retain the destination, but the bounded scan of 48 direct-call encodings
+finds no post-call EAX read before overwrite or a control boundary; this does
+not determine the original return type. Preserve the retained void-helper
+checkpoint and require full helper/caller checks before retaining a change.
 
 Keep coherent checkpoints local and do not push unless asked.
 
