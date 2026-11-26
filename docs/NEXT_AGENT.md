@@ -141,6 +141,17 @@ the retained source. The final incremental build and nine-owner
 tail-merge-restored-strict.json report complete with seven passes; Line EX
 and on_tick remain incomplete.
 
+The reader-stage switch control is complete. SwGenSwitch constructs the
+comparison tree in RdrReadProc before Initial; the later FgLowerSwitches
+inside Emit processes the residual switch node without moving the common
+advance. FgSwitchTailDup leaves the tuple sequence unchanged. An explicit
+unsigned WAIT case retains both the same sign-extended reader bounds and
+every native byte, so the high boundary words do not establish a type bug.
+Preserve switch-lowering-control-* and unsigned-wait-case-lowering-control-*.
+The case-cast trial is restored. The incremental rebuild and final nine-owner
+switch-lowering-restored-strict.json report complete with seven passes;
+Line EX and on_tick remain incomplete.
+
 Keep coherent checkpoints local and do not push unless asked.
 
 ## Historical checkpoint (2026-11-23)

@@ -135,6 +135,7 @@ aliasing changes and duplicated completion paths:
 | `for-step-with-restart` | 1592 | A for-loop common step with explicit restart gotos preserves all branch-local increments and reproduces every retained byte; unlike the earlier for-member control, it does not remove those increments |
 | `get-point-speedup-continue` | 1596 | Under the retained get_point context, the separate SPEEDUP increment remains and jumps past the shared XMM1 zero. The late common increment/return also remains |
 | `typed-fresh-index-guard` | 1592 | A fresh saved index before the bound check is now fully byte-neutral under typed blend/get_point. The older 1,608-byte result belongs to the earlier manual-mask context |
+| `unsigned-wait-case-constant` | 1592 | Explicitly casting the WAIT case constant to u32 changes neither its reader representation nor any native owner byte |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -415,6 +416,32 @@ control and JSONL retain the pair neighborhoods and return results.
 This explains why a source-local SPEEDUP increment cannot simply be assumed
 to merge back into the retained common advance. The shared loop/return
 placement still requires an ordinary-source repair.
+
+## The reader constructs the comparison tree before Initial optimization
+
+`switch-lowering-control-*` begins at ReadFunction and follows SwGenSwitch,
+SwTidyCases, recursive SwChooseMethod calls and the later FgLowerSwitches.
+The read-only replay exits normally and reproduces the full retained owner.
+SwGenSwitch is called by RdrReadProc+0xdb4 through GetInitialTuples and
+ReadFunction, before InitialOptsAndSetup. Its list contains the default
+advance and sixteen command cases. Thus the early comparison tree is
+already present when Initial optimization begins; a hook starting at
+FgLowerSwitches would miss its construction.
+
+One residual SWITCH tuple remains through Initial, Prelower and Lower.
+FgLowerSwitches processes it inside Emit, with the common advance already
+at linear position 327. FgSwitchTailDup leaves the complete tuple-pointer,
+opcode and label sequence unchanged. Both late switch hooks retain the
+same common position. This stage does not explain the earlier late placement.
+
+The WAIT bounds in the reader case record are sign-extended to
+`ffffffff80000000`, despite the unsigned switch expression. That observation
+alone does not establish a signed selector or a layout bug. The paired
+`unsigned-wait-case-lowering-control-*` replay explicitly casts the case
+constant to u32: it retains the same four boundary words, the same switch
+stage observations and every ordinary owner byte. Both source spellings
+therefore normalize to this reader representation. The trial is restored;
+do not repeat case-literal casts based only on those high words.
 
 ## Loop recognition copies the condition; CodeMotion later moves that copy
 
