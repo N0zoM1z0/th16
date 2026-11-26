@@ -1700,11 +1700,11 @@ i32 TitleInf::do_replay_menu()
 // Line formats of the replay list: numbered and user replays, each with
 // and without a replay in the slot.
 // GLOBAL: TH16 0x493700
-extern const char *const g_replay_list_formats[2][2] = {
-    {"No.%.2d %s %.2d/%.2d/%.2d %.2d:%.2d %s %s %s %s %2.1f%%",
-     "No.%.2d -------- --/--/-- --:-- ------- ------ ------- --- ---%%"},
-    {"%s  %s %.2d/%.2d/%.2d %.2d:%.2d %s %s %s %s %s %2.1f%%",
-     "User  -------- --/--/-- --:-- ------- ------ ------- --- ---%%"},
+extern const char *const g_replay_list_formats[4] = {
+    "No.%.2d %s %.2d/%.2d/%.2d %.2d:%.2d %s %s %s %s %2.1f%%",
+    "No.%.2d -------- --/--/-- --:-- ------- ------ ------- --- ---%%",
+    "%s  %s %.2d/%.2d/%.2d %.2d:%.2d %s %s %s %s %s %2.1f%%",
+    "User  -------- --/--/-- --:-- ------- ------ ------- --- ---%%",
 };
 // GLOBAL: TH16 0x493710
 extern const char *const g_replay_spell_format[1] = {"No.%.2d %s %.2d/%.2d/%.2d %.2d:%.2d %s %s SpellPr %3d %2.1f%%"};
@@ -1715,7 +1715,6 @@ char g_replay_user_number[5];
 
 // The replay menu: a page of 25 replays, then the chosen replay with the
 // score at the end of each stage.
-// TODO: the empty slot format index: the original uses setne and a scaled index, ours neg/sbb/and.
 // FUNCTION: TH16 0x451d50
 HARNESS_CALLED i32 TitleInf::on_draw__replay()
 {
@@ -1741,7 +1740,7 @@ HARNESS_CALLED i32 TitleInf::on_draw__replay()
                     if (!(info->flags_a & 2))
                     {
                         g_AsciiManager->create_stringf(
-                            &pos, g_replay_list_formats[0][0], i + 1, info->name, time->tm_year % 100,
+                            &pos, g_replay_list_formats[0], i + 1, info->name, time->tm_year % 100,
                             time->tm_mon + 1, time->tm_mday, time->tm_hour, time->tm_min,
                             g_chara_names_short[info->character + info->subshot], g_season_names[info->subseason],
                             g_difficulty_names[info->difficulty], g_stage_names_short[info->stage], info->slowdown);
@@ -1761,7 +1760,7 @@ HARNESS_CALLED i32 TitleInf::on_draw__replay()
                     memcpy(g_replay_user_number, &(*replay)->filename[7], 4);
                     g_replay_user_number[4] = '\0';
                     g_AsciiManager->create_stringf(
-                        &pos, g_replay_list_formats[1][0], g_replay_user_number, info->name,
+                        &pos, g_replay_list_formats[2], g_replay_user_number, info->name,
                         time->tm_year % 100, time->tm_mon + 1, time->tm_mday, time->tm_hour, time->tm_min,
                         g_chara_names_short[info->character + info->subshot], g_difficulty_names[info->difficulty],
                         g_season_names[info->subseason], g_stage_names_short[info->stage], info->slowdown);
@@ -1769,7 +1768,7 @@ HARNESS_CALLED i32 TitleInf::on_draw__replay()
             }
             else
             {
-                g_AsciiManager->create_stringf(&pos, g_replay_list_formats[page_menu.next_selection != 0][1], i + 1);
+                g_AsciiManager->create_stringf(&pos, g_replay_list_formats[((page_menu.next_selection != 0) << 1) | 1], i + 1);
             }
             pos.y += 15.0f;
         }
@@ -1794,7 +1793,7 @@ HARNESS_CALLED i32 TitleInf::on_draw__replay()
             if (!(info->flags_a & 2))
             {
                 g_AsciiManager->create_stringf(
-                    &pos, g_replay_list_formats[0][0], replay_slot + 1, info->name, time->tm_year % 100,
+                    &pos, g_replay_list_formats[0], replay_slot + 1, info->name, time->tm_year % 100,
                     time->tm_mon + 1, time->tm_mday, time->tm_hour, time->tm_min,
                     g_chara_names_short[info->character + info->subshot], g_season_names[info->subseason],
                     g_difficulty_names[info->difficulty], g_stage_names_short[info->stage], info->slowdown);
@@ -1812,7 +1811,7 @@ HARNESS_CALLED i32 TitleInf::on_draw__replay()
             memcpy(g_replay_user_number, &replays[replay_slot]->filename[7], 4);
             g_replay_user_number[4] = '\0';
             g_AsciiManager->create_stringf(
-                &pos, g_replay_list_formats[1][0], g_replay_user_number, info->name,
+                &pos, g_replay_list_formats[2], g_replay_user_number, info->name,
                 time->tm_year % 100, time->tm_mon + 1, time->tm_mday, time->tm_hour, time->tm_min,
                 g_chara_names_short[info->character + info->subshot], g_difficulty_names[info->difficulty],
                 g_stage_names_short[info->stage], g_season_names[info->subseason], info->slowdown);
