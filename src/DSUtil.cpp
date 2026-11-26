@@ -663,22 +663,19 @@ HRESULT CSound::Play(DWORD dwPriority, DWORD dwFlags, DWORD offset)
     return pDSB->Play(0, dwPriority, dwFlags);
 }
 
-// TODO: the original has a call in each branch, pushing -10000 directly and loading the buffer early in the first; written that way ours hoists the buffer load above the test.
 // FUNCTION: TH16 0x4711f0
 HRESULT CSound::SetVolume(i32 volume)
 {
     if (g_SoundManager.bgm_volume != 0)
     {
-        f32 x = g_SoundManager.bgm_volume / 100.0f;
-        f32 t = (1.0f - x) * (1.0f - x);
-        f32 u = 1.0f - t;
-        volume = (i32)(u * (volume + 5000)) - 5000;
+        f32 x = 1.0f - g_SoundManager.bgm_volume / 100.0f;
+        f32 u = 1.0f - x * x;
+        return m_apDSBuffer[0]->SetVolume((i32)(u * (volume + 5000)) - 5000);
     }
     else
     {
-        volume = -10000;
+        return m_apDSBuffer[0]->SetVolume(-10000);
     }
-    return m_apDSBuffer[0]->SetVolume(volume);
 }
 
 // FUNCTION: TH16 0x471270
