@@ -280,6 +280,7 @@ static __forceinline i32 key_config_pressed_or_repeating(u8 mask)
 // FUNCTION: TH16 0x44c570
 i32 TitleInf::do_options()
 {
+    DECOMP_DEAD_DOUBLE_3;
     switch (substate)
     {
     case 0:

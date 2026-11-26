@@ -843,7 +843,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0044B5D0,TitleInf::on_tick_thunk,src/MainMenu.cpp,?on_tick_thunk@TitleInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0044B5E0,TitleInf::on_draw_thunk,src/MainMenu.cpp,?on_draw_thunk@TitleInf@@SIHPAX@Z,exact,,.analysis/reference-audit.json
 0x0044B5F0,TitleInf::do_title_screen,src/MainMenu.cpp,?do_title_screen@TitleInf@@QAEHXZ,mismatch,,.analysis/reference-audit.json
-0x0044C570,TitleInf::do_options,src/MainMenu.cpp,?do_options@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x0044C570,TitleInf::do_options,src/MainMenu.cpp,?do_options@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x0044C8C0,TitleInf::update_options_cursor,src/MainMenu.cpp,?update_options_cursor@TitleInf@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0044DC70,TitleInf::update_options_sprites,src/MainMenu.cpp,?update_options_sprites@TitleInf@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0044E930,TitleInf::do_key_config,src/MainMenu.cpp,?do_key_config@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
