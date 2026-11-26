@@ -534,7 +534,7 @@ address,name,module,source_file,notes
 0x00430DF0,item_sincosmul,Item,src/Item.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430E10,LaserDataInf::get_point,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430E20,LaserDataInf::run_ex,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x00430E30,LaserDataInf::method_8,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00430E30,LaserDataInf::set_beam_flag,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430E40,LaserDataInf::initialize,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430E50,LaserDataInf::on_tick,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00430E60,LaserDataInf::on_draw,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
@@ -566,7 +566,7 @@ address,name,module,source_file,notes
 0x004311F0,LaserCurveInf::get_point,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431250,LaserInfiniteInf::get_point,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004312B0,LaserBeamInf::get_point,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
-0x00431310,LaserBeamInf::method_8,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
+0x00431310,LaserBeamInf::set_beam_flag,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x00431330,LaserManager::initialize,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004313B0,LaserManager::~LaserManager,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.
 0x004314A0,LaserManager::create,Laser,src/Laser.cpp,Reference candidate; local comparison is separate from Factory acceptance.

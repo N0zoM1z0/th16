@@ -24,9 +24,9 @@ def bar(y: int, title: str, ratio: float, value: str, detail: str) -> str:
 
 def svg(counts: Counter, rows: list[dict]) -> str:
     total = len(rows)
-    total_bytes = sum(row["size"] for row in rows)
+    total_bytes = sum(row.get("size", 0) for row in rows)
     exact = [row for row in rows if row["result"] == "exact"]
-    exact_bytes = sum(row["size"] for row in exact)
+    exact_bytes = sum(row.get("size", 0) for row in exact)
     compared = counts["exact"] + counts["mismatch"]
     byte_ratio = exact_bytes / total_bytes
     label = (f"TH16 reconstruction progress: annotated bytes {byte_ratio:.2%} exact, "
