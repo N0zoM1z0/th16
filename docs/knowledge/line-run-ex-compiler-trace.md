@@ -104,6 +104,7 @@ aliasing changes and duplicated completion paths:
 | `wait-continue` | 1600 | Moves the common path before WAIT but retains an additional WAIT INC |
 | `dispatch-check-header` | 1592 | An explicit shared check entered before dispatch is byte-neutral |
 | `separate-shot-offset` | 1592 | Separate polar output grows the frame from 0x394 to 0x39c, without fixing X input order or the common loop position |
+| `d3dx-shoot-add` | 1592 | The SDK free-function add is also byte-neutral in this owner, despite useful operand-order differences recorded for other owners |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -159,3 +160,71 @@ current-owner positive control and signed replay use matching identities.
 The signed replay has the same source-input identity as the original signed
 build. Do not overwrite old native evidence from a report after replacing
 the executable it names.
+
+
+## A canonical-return swap does not reach native X ordering
+
+`line-x-control-*` is an unmodified-compiler replay from the corrected
+coordinate baseline. It exits normally and matches all 1,592 ordinary bytes,
+including the switch tables, with the checkpoint's `9c3967...` raw SHA-256.
+The paired `line-x-swap-*` replay changes only the X input chain, at six actual
+FactCanonSort return PCs with matching stack pointers and threads. Its JSONL
+records the memory-first chain before each intervention and the scalar-first
+chain afterward. The X field is identified by the `_shooter` parent and its
+8-byte subobject offset, rather than by a transient tuple address.
+
+The modified-compiler replay also exits normally and emits the same entire
+1,592-byte body, SHA-256
+`9c3967ecdd40c11ea6cea8afbe00847a383337fcc3b9465910a4c5b846763b64`.
+Its control explicitly records `compiler_modified: true` and
+`source_acceptance: false`. This does not establish independence of X ordering
+and loop layout: the intended X change did not survive to the native code.
+The boundary follow-up below locates the restoration before Lower. Do not
+assume that a FactCanonSort return fixes final SSE operand order.
+
+`BombMain.cpp` and `Gui.cpp` contain useful D3DXVec3Add operand-order notes;
+the SDK free function has three pointer arguments, unlike the member +=.
+Here its complete native control is byte-identical too. The other owners'
+source spelling is a hypothesis generator, not evidence that this owner has
+been repaired.
+
+
+## OptTree and OptLeftWeightTree restore the input order
+
+`line-x-boundary-swap-*` adds an input-head hardware watch and snapshots at
+actual pass entry/return. It uses the same source-input identity and complete
+ordinary owner as the unmodified control. Its six canonical-return swaps
+produce 20 watched writes, a normal process exit and the same entire ordinary
+body. The tracked FADD remains in the actual program: it is root 271 at
+prelower return and root 269 at Lower entry. Its first floating input is
+already the heap memory at displacement 0x54 again at both boundaries.
+Lower then changes opcode 0x723 to the 0x476 floating-add pseudo instruction;
+this trace does not implicate Lower as the first restoration point.
+
+The first restoring writes are in `OptTree` at RVA 0xd70bd, followed by
+`OptLeftWeightTree` at RVA 0xd6818. Static disassembly from the public function
+entries confirms a second source-chain merge sort in each. `OptTree` loads
+the left key at 0xd704b and compares it at 0xd704e; the left-weight variant
+loads at 0xd679c and compares at 0xd679f. Both read operand +0x18 and use an
+unsigned descending comparison. The unchanged heap key 0x10256dd therefore
+puts it ahead of the shooter-X field key 0x10120 after a list-only swap.
+These RVAs belong to the pinned v141 C2, not the older cross-game compilers.
+
+`line-x-weight-control-*` observes those actual comparisons without changing
+them. It records two OptTree comparisons and one left-weight comparison in
+each of two optimization rounds: all six have the same key pair. Its normal
+exit reproduces all 1,592 ordinary bytes. The corresponding diagnostic
+weight intervention changes that heap key from 0x10256dd to 0x1011f, just below
+the scalar's 0x10120, at all six comparisons. This time prelower return and
+Lower entry retain the scalar-first chain. Lower emits a register input
+followed by the heap memory operand, and NColor preserves it.
+
+The normal-exit counterfactual changes exactly the native X MOVSS/ADDSS input
+pair into the target's order. All other aligned operations, including the
+late common loop block, remain unchanged; the complete owner stays 1,592
+bytes. Its raw SHA-256 is
+`29cd1e02444d8935f3ea1cf1a9efb48fefbf898ec06c6a3877541778ae85fdd5`.
+Preserve `line-x-weight-swap-*`, whose control explicitly excludes source
+acceptance. This isolates a causal ordering input and leaves common-loop
+placement unresolved. A natural source repair must alter the effective
+expression decomposition/key and pass the unmodified compiler comparison.

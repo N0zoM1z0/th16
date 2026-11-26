@@ -53,11 +53,22 @@ was corrected against the actual field offsets. The native diagnostic helper
 now rejects executable/report identity mismatches; use the signed replay and
 preserve the quarantined wrong-build diagnostic separately.
 
-The current compiler probe compares an unmodified replay with a diagnostic
-X-input-chain swap at the actual FactCanonSort return. Its purpose is to test
-whether X ordering also controls common-loop placement; a modified-compiler
-image cannot establish source exactness. Preserve both controls and ordinary
-build inputs. Keep coherent checkpoints local and do not push unless asked.
+The unmodified `line-x-control-*` replay and diagnostic `line-x-swap-*`
+replay both exit normally and reproduce the same complete 1,592-byte body.
+Six X-input-chain swaps at actual FactCanonSort returns do not survive to
+native code, so they do not yet separate X ordering from loop placement.
+The SDK D3DXVec3Add source control is also byte-neutral here. The boundary
+watch now proves OptTree and OptLeftWeightTree restore heap-first before
+Lower: their descending operand keys are 0x10256dd versus 0x10120. The new
+`line-x-weight-control-*` replay observes all six comparisons and reproduces
+the full ordinary owner. Its paired weight intervention lowers the heap key
+to 0x1011f and changes only the native X input pair into the target's order.
+The loop block stays late and the complete owner remains 1,592 bytes. This
+separates the two residuals in a controlled intervention. Continue with a
+natural value-returning vector expression to test the source decomposition;
+plain += and the SDK pointer-output form were byte-neutral. Modified-compiler
+images cannot establish source exactness. Preserve both controls and ordinary build inputs. Keep
+coherent checkpoints local and do not push unless asked.
 
 ## Historical checkpoint (2026-11-23)
 
