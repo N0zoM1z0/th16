@@ -1192,7 +1192,7 @@ address,size,span_end,state,evidence
 0x00473EF0,229,0x00473FD4,strict-compared,.analysis/reference-audit.json
 0x00473FE0,171,0x0047408A,strict-compared,.analysis/reference-audit.json
 0x00474090,229,0x00474174,strict-compared,.analysis/reference-audit.json
-0x00474180,179,0x00474232,provisional,.analysis/reference-audit.json
+0x00474180,179,0x00474232,strict-compared,.analysis/reference-audit.json
 0x00474240,229,0x00474324,strict-compared,.analysis/reference-audit.json
 0x00474330,98,0x00474391,strict-compared,.analysis/reference-audit.json
 0x004743A0,139,0x0047442A,strict-compared,.analysis/reference-audit.json

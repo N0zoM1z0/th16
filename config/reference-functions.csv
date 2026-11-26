@@ -1192,7 +1192,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00473EF0,EclRunContext::get_float_arg_given_value,src/EclRunContext.cpp,?get_float_arg_given_value@EclRunContext@@QAEMHM@Z,exact,,.analysis/reference-audit.json
 0x00473FE0,EclRunContext::pop_int_arg,src/EclRunContext.cpp,?pop_int_arg@EclRunContext@@QAEHH@Z,exact,,.analysis/reference-audit.json
 0x00474090,EclRunContext::pop_float_arg,src/EclRunContext.cpp,?pop_float_arg@EclRunContext@@QAEMH@Z,exact,,.analysis/reference-audit.json
-0x00474180,EclRunContext::pop_int_arg_given_value,src/EclRunContext.cpp,?pop_int_arg_given_value@EclRunContext@@QAEHHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00474180,EclRunContext::pop_int_arg_given_value,src/EclRunContext.cpp,?pop_int_arg_given_value@EclRunContext@@QAEHHH@Z,exact,,.analysis/reference-audit.json
 0x00474240,EclRunContext::pop_float_arg_given_value,src/EclRunContext.cpp,?pop_float_arg_given_value@EclRunContext@@QAEMHM@Z,exact,,.analysis/reference-audit.json
 0x00474330,EclRunContext::get_int_arg_ptr,src/EclRunContext.cpp,?get_int_arg_ptr@EclRunContext@@QAEPAHH@Z,exact,,.analysis/reference-audit.json
 0x004743A0,EclRunContext::get_float_arg_ptr,src/EclRunContext.cpp,?get_float_arg_ptr@EclRunContext@@QAEPAMH@Z,exact,,.analysis/reference-audit.json

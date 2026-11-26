@@ -1071,6 +1071,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00473EF0,EclRunContext::get_float_arg_given_value,reference-00473ef0,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00473FE0,EclRunContext::pop_int_arg,reference-00473fe0,local-strict-pass,171,171,171,.analysis/reference-audit.json
 0x00474090,EclRunContext::pop_float_arg,reference-00474090,local-strict-pass,229,229,229,.analysis/reference-audit.json
+0x00474180,EclRunContext::pop_int_arg_given_value,reference-00474180,local-strict-pass,179,179,179,.analysis/reference-audit.json
 0x00474240,EclRunContext::pop_float_arg_given_value,reference-00474240,local-strict-pass,229,229,229,.analysis/reference-audit.json
 0x00474330,EclRunContext::get_int_arg_ptr,reference-00474330,local-strict-pass,98,98,98,.analysis/reference-audit.json
 0x004743A0,EclRunContext::get_float_arg_ptr,reference-004743a0,local-strict-pass,139,139,139,.analysis/reference-audit.json
