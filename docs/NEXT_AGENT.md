@@ -33,8 +33,8 @@ and 16 selector bytes. The current typed-blend candidate is 1592 bytes and
 remains incomplete in the local strict audit. TAG uses the saved entry index,
 SHOOT advances the same cursor, and the existing blend-mode field view
 restores EDX/ECX roles and both original member INCs. Remaining code differences
-are the late common loop/return block and SHOOT Y input order. The focused
-report `.analysis/line-run-ex-compiler/blend-field-view-focused.json` also
+are the late common loop/return block and SHOOT X input order. The focused
+report `.analysis/line-run-ex-compiler/corrected-coordinate-baseline-strict.json` also
 rechecks the four completed owners.
 
 Read [the active compiler note](knowledge/line-run-ex-compiler-trace.md) and
@@ -45,7 +45,19 @@ not repair it; their failed source and native controls remain. EmitFunction
 entry precedes allocation, and RVA 0x78774 is NColProcessCandidate entry;
 the corrected trace uses real pass returns. Continue from the typed field view,
 not the earlier 1596-byte paired-cursor source or any verbose goto trial.
-Keep coherent checkpoints local and do not push unless the user asks.
+The additional typed-source controls are summarized in the note. Signed-switch
+and size-policy controls discard the target's jump table; explicit loop-check
+placement and a vector-add control are byte-neutral. A separate polar offset
+grows the frame and does not repair X. The original X/Y label in earlier notes
+was corrected against the actual field offsets. The native diagnostic helper
+now rejects executable/report identity mismatches; use the signed replay and
+preserve the quarantined wrong-build diagnostic separately.
+
+The current compiler probe compares an unmodified replay with a diagnostic
+X-input-chain swap at the actual FactCanonSort return. Its purpose is to test
+whether X ordering also controls common-loop placement; a modified-compiler
+image cannot establish source exactness. Preserve both controls and ordinary
+build inputs. Keep coherent checkpoints local and do not push unless asked.
 
 ## Historical checkpoint (2026-11-23)
 

@@ -3302,7 +3302,7 @@ on_screen:
 // Runs the laser's pending et_ex instructions: each one starts an et_ex
 // step (ex_flags and its ex_state), or acts at once (sounds, bullets, the
 // sprite, blend mode, jumps).
-// TODO: common loop placement and SHOOT Y addition order still differ.
+// TODO: common loop placement and SHOOT X addition order still differ.
 // FUNCTION: TH16 0x431fe0
 DECOMP_NOINLINE void LaserLineInf::run_ex()
 {
