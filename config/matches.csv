@@ -663,6 +663,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0043F740,PauseMenu::leave_game_over,reference-0043f740,local-strict-pass,74,74,74,.analysis/reference-audit.json
 0x0043F790,PauseMenu::leave_stage_end,reference-0043f790,local-strict-pass,74,74,74,.analysis/reference-audit.json
 0x0043F7E0,PauseMenu::begin_score_entry,reference-0043f7e0,local-strict-pass,401,401,401,.analysis/reference-audit.json
+0x0043F980,PauseMenu::tick_open,reference-0043f980,mismatch,4676,4676,4674,.analysis/reference-audit.json
 0x00440BD0,SoundManager::resume_sounds,reference-00440bd0,local-strict-pass,47,47,47,.analysis/reference-audit.json
 0x00440C00,MenuHelper::disable,reference-00440c00,local-strict-pass,88,88,88,.analysis/reference-audit.json
 0x00440C60,AnmManager::queue_screen_copy,reference-00440c60,local-strict-pass,100,100,100,.analysis/reference-audit.json
@@ -779,7 +780,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004538B0,TitleInf::on_draw__score_name_entry,reference-004538b0,local-strict-pass,861,861,861,.analysis/reference-audit.json
 0x004541B0,TitleInf::on_draw__replay_save,reference-004541b0,local-strict-pass,997,997,997,.analysis/reference-audit.json
 0x004545A0,TitleInf::do_manual,reference-004545a0,local-strict-pass,331,331,331,.analysis/reference-audit.json
-0x004546F0,TitleInf::do_music_room,reference-004546f0,mismatch,3136,3136,3133,.analysis/reference-audit.json
+0x004546F0,TitleInf::do_music_room,reference-004546f0,local-strict-pass,3136,3136,3136,.analysis/reference-audit.json
 0x00455330,skip_line,reference-00455330,local-strict-pass,57,57,57,.analysis/reference-audit.json
 0x00455370,read_line,reference-00455370,local-strict-pass,92,92,92,.analysis/reference-audit.json
 0x004553D0,TitleInf::do_spell_practice_stage_select,reference-004553d0,local-strict-pass,956,956,956,.analysis/reference-audit.json

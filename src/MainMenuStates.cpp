@@ -2425,7 +2425,6 @@ static __forceinline void music_room_comment_step(TitleInf *menu)
 // The music room: the track list (ten rows shown, sliding in two at a time
 // at first) and the comment of the track last picked. Tracks not heard in
 // the game yet show as numbers, and playing one asks for a second press.
-// TODO: case 0 stores pos.x = 0 after pos.y and pos.z (the original first).
 // Declared __declspec(safebuffers) (MainMenu.h): without it ours adds a /GS
 // cookie for pos (a D3DXVECTOR3 in memory) that the original lacks.
 // FUNCTION: TH16 0x4546f0
@@ -2477,11 +2476,11 @@ i32 TitleInf::do_music_room()
             menu.set_cursor(0);
             music_scroll = 0;
             music_track_count = count;
-            pos.x = 0.0f;
-            pos.y = 0.0f;
-            pos.z = 0.0f;
             for (i32 i = 0; i < 8; i++)
             {
+                pos.x = 0.0f;
+                pos.y = 0.0f;
+                pos.z = 0.0f;
                 comment_line_ids[i] = g_Supervisor.text_anm->create_vm_inline(i + 0x13, &pos, 0.0f, -1);
             }
             music_comment_line = 0;

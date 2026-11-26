@@ -723,7 +723,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x0043F740,PauseMenu::leave_game_over,src/PauseMenu.cpp,?leave_game_over@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043F790,PauseMenu::leave_stage_end,src/PauseMenu.cpp,?leave_stage_end@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
 0x0043F7E0,PauseMenu::begin_score_entry,src/PauseMenu.cpp,?begin_score_entry@PauseMenu@@QAEXXZ,exact,,.analysis/reference-audit.json
-0x0043F980,PauseMenu::tick_open,src/PauseMenu.cpp,?tick_open@PauseMenu@@QAEXXZ,incomplete,reviewed switch ownership: switch table differs from the reviewed case mapping,.analysis/reference-audit.json
+0x0043F980,PauseMenu::tick_open,src/PauseMenu.cpp,?tick_open@PauseMenu@@QAEXXZ,mismatch,,.analysis/reference-audit.json
 0x00440BD0,SoundManager::resume_sounds,src/SoundManager.cpp,?resume_sounds@SoundManager@@SAXXZ,exact,,.analysis/reference-audit.json
 0x00440C00,MenuHelper::disable,src/MenuHelper.cpp,?disable@MenuHelper@@QAEXH@Z,exact,,.analysis/reference-audit.json
 0x00440C60,AnmManager::queue_screen_copy,src/AnmScreenCopy.cpp,?queue_screen_copy@AnmManager@@QAEHHHHHHHHHHH@Z,exact,,.analysis/reference-audit.json
@@ -867,7 +867,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00453C10,TitleInf::do_replay_save,src/MainMenuStates.cpp,?do_replay_save@TitleInf@@QAEHXZ,incomplete,reviewed switch ownership: switch table differs from the reviewed case mapping,.analysis/reference-audit.json
 0x004541B0,TitleInf::on_draw__replay_save,src/MainMenuStates.cpp,?on_draw__replay_save@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x004545A0,TitleInf::do_manual,src/MainMenuStates.cpp,?do_manual@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x004546F0,TitleInf::do_music_room,src/MainMenuStates.cpp,?do_music_room@TitleInf@@QAEHXZ,mismatch,,.analysis/reference-audit.json
+0x004546F0,TitleInf::do_music_room,src/MainMenuStates.cpp,?do_music_room@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00455330,skip_line,src/MainMenu.cpp,?skip_line@@YIPADPADPAH@Z,exact,,.analysis/reference-audit.json
 0x00455370,read_line,src/MainMenu.cpp,?read_line@@YIPADPAD0PAH@Z,exact,,.analysis/reference-audit.json
 0x004553D0,TitleInf::do_spell_practice_stage_select,src/MainMenuStates.cpp,?do_spell_practice_stage_select@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
