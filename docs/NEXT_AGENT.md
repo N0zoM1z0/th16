@@ -27,48 +27,40 @@ curve reverse-step passes 986 / 986 and 14 fields. Their evidence remains in
 Preserve their three compiler-evidence directories. Factory acceptance remains
 not-submitted; the current shared accepted snapshot is inventory-only.
 
-Continue only `LaserLineInf::run_ex` (`0x431fe0`). Its target extent is
-1588 bytes, including 1550 code bytes, two alignment bytes, five jump entries
-and 16 selector bytes. The current typed-blend candidate is 1592 bytes and
-remains incomplete in the local strict audit. TAG uses the saved entry index,
-SHOOT advances the same cursor, and the existing blend-mode field view
-restores EDX/ECX roles and both original member INCs. Remaining code differences
-are the late common loop/return block and SHOOT X input order. The focused
-report `.analysis/line-run-ex-compiler/corrected-coordinate-baseline-strict.json` also
-rechecks the four completed owners.
+Continue only `LaserLineInf::run_ex` (`0x431fe0`). Its target owns 1,588
+bytes: 1,550 code bytes, two alignment bytes, five jump entries and 16
+selector bytes. The retained typed-blend candidate owns 1,592 bytes and
+remains incomplete. Its two residuals are the late common loop/return block
+and SHOOT X input order (this+0x54 and shooter ESP+0x20); Y already agrees.
+The four completed owners and the complete 32-byte polar helper pass the
+six-owner `threaded-dfo-baseline-strict.json` check. The opcode-capture
+trial grows Line to 1,608 and is restored.
 
 Read [the active compiler note](knowledge/line-run-ex-compiler-trace.md) and
-preserve `.analysis/line-run-ex-compiler/`. A semantic-label trace proves the
-first FgChangeNextToDFOEx moves the advance block from index 29 to 73/81.
-Simple continuation/default/goto forms and the shared-index loop controls did
-not repair it; their failed source and native controls remain. EmitFunction
-entry precedes allocation, and RVA 0x78774 is NColProcessCandidate entry;
-the corrected trace uses real pass returns. Continue from the typed field view,
-not the earlier 1596-byte paired-cursor source or any verbose goto trial.
-The additional typed-source controls are summarized in the note. Signed-switch
-and size-policy controls discard the target's jump table; explicit loop-check
-placement and a vector-add control are byte-neutral. A separate polar offset
-grows the frame and does not repair X. The original X/Y label in earlier notes
-was corrected against the actual field offsets. The native diagnostic helper
-now rejects executable/report identity mismatches; use the signed replay and
-preserve the quarantined wrong-build diagnostic separately.
+preserve `.analysis/line-run-ex-compiler/`. The semantic-label trace shows
+FgChangeNextToDFOEx moving the common advance block from index 29 to 73/81.
+The X-weight counterfactual changes only X into target order, leaving the
+late loop intact; its modified compiler cannot establish source exactness.
+The completed `line-sroa-control-*` replay reproduces all ordinary bytes and
+shows that shooter X/Y/Z are reader-created field equivalents. SROA runs
+inside prelower but performs no field promotion in this owner. All phase
+snapshots retain kind-2 fields and zero replacement slots through Lower.
 
-The unmodified `line-x-control-*` replay and diagnostic `line-x-swap-*`
-replay both exit normally and reproduce the same complete 1,592-byte body.
-Six X-input-chain swaps at actual FactCanonSort returns do not survive to
-native code, so they do not yet separate X ordering from loop placement.
-The SDK D3DXVec3Add source control is also byte-neutral here. The boundary
-watch now proves OptTree and OptLeftWeightTree restore heap-first before
-Lower: their descending operand keys are 0x10256dd versus 0x10120. The new
-`line-x-weight-control-*` replay observes all six comparisons and reproduces
-the full ordinary owner. Its paired weight intervention lowers the heap key
-to 0x1011f and changes only the native X input pair into the target's order.
-The loop block stays late and the complete owner remains 1,592 bytes. This
-separates the two residuals in a controlled intervention. Continue with a
-natural value-returning vector expression to test the source decomposition;
-plain += and the SDK pointer-output form were byte-neutral. Modified-compiler
-images cannot establish source exactness. Preserve both controls and ordinary build inputs. Keep
-coherent checkpoints local and do not push unless asked.
+Useful failed source controls are tabulated in the note. Ordinary alias and
+vector-add spellings normalize away; a value-returning vector expression
+changes the frame and packed stores. Removing the definition's noinline
+annotation alone is not a policy test because Laser.h also declares it.
+Do not repeat those controls or restore the old manual-mask blend context.
+An explicit default label at SPEEDUP's existing break is byte-neutral,
+without duplicating the INC. Its completed generic DFS trace precedes the
+first threaded DFO, so those two graph snapshots are not a paired traversal.
+The paired threaded-DFO control now reproduces both the full ordinary owner
+and the exact reverse-postorder block list. The first common-INC visit follows
+WAIT, before the low-opcode table. An explicit SPEEDUP exit guard retains
+separate comparisons and grows the owner to 1,608 bytes, so it is restored.
+Continue from the typed-blend checkpoint by tracing loop-condition duplication
+and rotation through later block moves, with complete-owner checks.
+Keep coherent checkpoints local and do not push unless asked.
 
 ## Historical checkpoint (2026-11-23)
 

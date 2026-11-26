@@ -105,6 +105,18 @@ aliasing changes and duplicated completion paths:
 | `dispatch-check-header` | 1592 | An explicit shared check entered before dispatch is byte-neutral |
 | `separate-shot-offset` | 1592 | Separate polar output grows the frame from 0x394 to 0x39c, without fixing X input order or the common loop position |
 | `d3dx-shoot-add` | 1592 | The SDK free-function add is also byte-neutral in this owner, despite useful operand-order differences recorded for other owners |
+| `value-vector-shoot-add` | 1588 | Value-returning addition grows the frame to 0x39c and packs the XY result with UNPCKLPS/MOVQ; neither X order nor common-loop placement is repaired |
+| `coordinate-loop-shoot-add` | 1592 | A two-coordinate indexed loop is unrolled/normalized to the same entire checkpoint body |
+| `scalar-shot-x-accumulator` | 1592 | A real scalar X accumulator also produces the same entire checkpoint body |
+| `wait-timer-assignment` | 1592 | The ordinary timer assignment API in WAIT is byte-neutral against the forced inline helper |
+| `explicit-ignored-anim` | 1592 | An explicit no-op case for opcode 2 is merged into the same complete default-path body |
+| `tail-recursive-dispatch` | 1592 | The self call disappears, but the frame loses ESP realignment and uses EBP-relative slots; the common loop remains late |
+| `definition-annotation-only` | 1592 | Removing the definition annotation is byte-neutral because the header declaration still enforces noinline; this does not test the effective inline policy |
+| `advancing-origin-component` | 1592 | A real X-to-Y pointer advance is also normalized to the same complete checkpoint body |
+| `opaque-polar-interface` | 1592 | Changing the helper destination to void* leaves Line and the complete 32-byte helper unchanged; the new decorated private name lacks bindings, so the trial is restored without changing Oracle configuration |
+| `cached-unsigned-opcode` | 1608 | Capturing type once changes dispatch register use and folds ANGLE/WRAP flag updates to constants; X ordering and the late common loop remain wrong |
+| `default-at-speedup-exit` | 1592 | An explicit default label at SPEEDUP's existing break, keeping the one common increment, is byte-neutral |
+| `speedup-explicit-bound` | 1608 | Explicit SPEEDUP increment and exit guard retain a separate memory comparison and jump, plus the late common increment/test/return; no repair |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -228,3 +240,57 @@ Preserve `line-x-weight-swap-*`, whose control explicitly excludes source
 acceptance. This isolates a causal ordering input and leaves common-loop
 placement unresolved. A natural source repair must alter the effective
 expression decomposition/key and pass the unmodified compiler comparison.
+
+
+## Shooter fields are reader equivalents, not SROA replacements
+
+The read-only `line-sroa-control-*` replay exits normally and reproduces the
+entire ordinary 1,592-byte owner with the same `9c3967...` raw hash and
+`463620c2...` build-input identity. It observes actual entry and return for
+prelower, GlobalOptimize, GoptScalarReplacementOfAggregates and Lower.
+GlobalOptimize and SROA execute inside prelower in this run; public-symbol
+address order alone does not establish the execution order.
+
+SymNewEquiv creates shooter X, Z and Y while RdrReadProc imports the function.
+The float equivalents have offsets 8, 16 and 12 and ordinals 9, 10 and 14.
+The X creation comes through RdrExtract; its kind-2 field form already exists
+at prelower entry. All three remain kind 2 with a zero replacement slot
+(symbol +0x2c) across SROA, prelower return and Lower. There are no calls to
+DoScalarReplacement in this owner's observed optimization interval. The
+ordinary field import therefore explains their origin; a later SROA promotion
+is not the cause of this candidate's X ordering. This does not establish which
+field/address form the original source used.
+
+Preserve the early `line-sroa-reader-snapshot-failure.*` and
+`line-sroa-marker-snapshot-failure.*` traces separately. Their graph snapshots
+were invalid: the reader result precedes usable flow state, and tuple marker
+storage must not be traversed as an arithmetic destination. The completed
+control restricts expression traversal to ordinary instruction nodes.
+
+
+## The first threaded traversal explains the late common block
+
+`line-threaded-dfo-control-*` pairs GrInitDFOWalk's actual entry/return
+inside the first FgThreadDFOAndFreeDeadCode with the following
+FgChangeNextToDFOEx. It exits normally and reproduces all ordinary bytes.
+The input has 81 blocks; DFS visits 80 and dead-code removal leaves 80.
+An independent walk over the captured successor lists reproduces the
+compiler's complete DFS completion chain, and reversing that chain exactly
+reproduces the reordered block list. GrInitDFOWalk records completion order;
+FgChangeNextToDFOEx prepends those nodes to form reverse postorder.
+
+The common increment is input block 78, label 100085, with many incoming
+case paths. It ends up at index 72. The first DFS route to it follows the
+high-opcode dispatcher to WAIT (input blocks 0, 1, 2, 3, 5, 8, 18, 24, 25,
+26, 75, 77, 78), before the low-opcode table is visited. The switch-default
+edge is therefore not the sole reason this block appears late. Reversing
+one successor list at a time in the captured graph does not move it ten
+positions earlier. This graph replay is a diagnostic of the actual pass,
+not a source repair or a statement about the original compiler's graph.
+
+The earlier `default-at-speedup-exit-graph.jsonl` starts with a generic
+102-block DFS before the threaded traversal. Its first DFS and first
+reorder are different graph instances and must not be paired. The default
+label source control itself is valid and byte-neutral. Continue by locating
+loop-condition duplication/rotation and subsequent block moves, rather than
+assuming a different default-label position will reproduce the early loop.
