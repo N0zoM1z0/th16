@@ -787,6 +787,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x004553D0,TitleInf::do_spell_practice_stage_select,reference-004553d0,local-strict-pass,956,956,956,.analysis/reference-audit.json
 0x00455790,TitleInf::do_spell_practice_character,reference-00455790,local-strict-pass,354,354,354,.analysis/reference-audit.json
 0x00455900,TitleInf::do_spell_practice_row,reference-00455900,local-strict-pass,1096,1096,1096,.analysis/reference-audit.json
+0x00455D50,TitleInf::do_spell_practice_subseason,reference-00455d50,local-strict-pass,776,776,776,.analysis/reference-audit.json
 0x00456060,spell_practice_row_seen,reference-00456060,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x004569A0,TitleInf::highlight_spell_row,reference-004569a0,local-strict-pass,119,119,119,.analysis/reference-audit.json
 0x00456A20,TitleInf::do_spell_practice_difficulty,reference-00456a20,local-strict-pass,812,812,812,.analysis/reference-audit.json

@@ -873,7 +873,7 @@ address,size,span_end,state,evidence
 0x004553D0,956,0x0045578B,strict-compared,.analysis/reference-audit.json
 0x00455790,354,0x004558F1,strict-compared,.analysis/reference-audit.json
 0x00455900,1096,0x00455D47,strict-compared,.analysis/reference-audit.json
-0x00455D50,776,0x00456057,provisional,.analysis/reference-audit.json
+0x00455D50,776,0x00456057,strict-compared,.analysis/reference-audit.json
 0x00456060,80,0x004560AF,strict-compared,.analysis/reference-audit.json
 0x004560B0,2286,0x0045699D,provisional,.analysis/reference-audit.json
 0x004569A0,119,0x00456A16,strict-compared,.analysis/reference-audit.json

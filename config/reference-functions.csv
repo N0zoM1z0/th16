@@ -873,7 +873,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x004553D0,TitleInf::do_spell_practice_stage_select,src/MainMenuStates.cpp,?do_spell_practice_stage_select@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00455790,TitleInf::do_spell_practice_character,src/MainMenuStates.cpp,?do_spell_practice_character@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00455900,TitleInf::do_spell_practice_row,src/MainMenuStates.cpp,?do_spell_practice_row@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
-0x00455D50,TitleInf::do_spell_practice_subseason,src/MainMenuStates.cpp,?do_spell_practice_subseason@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00455D50,TitleInf::do_spell_practice_subseason,src/MainMenuStates.cpp,?do_spell_practice_subseason@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00456060,spell_practice_row_seen,src/MainMenu.cpp,?spell_practice_row_seen@@YGHHH@Z,exact,,.analysis/reference-audit.json
 0x004560B0,TitleInf::load_spell_list,src/MainMenuStates.cpp,?load_spell_list@TitleInf@@QAEHHHPAHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004569A0,TitleInf::highlight_spell_row,src/MainMenuStates.cpp,?highlight_spell_row@TitleInf@@QAEHH@Z,exact,,.analysis/reference-audit.json

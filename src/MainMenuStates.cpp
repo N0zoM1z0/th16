@@ -2976,6 +2976,7 @@ i32 g_practice_last_stage = -1;
 // FUNCTION: TH16 0x455d50
 i32 TitleInf::do_spell_practice_subseason()
 {
+    DECOMP_DEAD_DOUBLE_3;
     switch (substate)
     {
     case 0:
