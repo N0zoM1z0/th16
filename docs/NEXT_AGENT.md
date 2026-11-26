@@ -114,6 +114,23 @@ the field key 0x15220. Y retains memory-first order. Preserve
 get-point-x-operand-control-* and continue only the common-loop layout under
 the unmodified compiler.
 
+The first-DFO edge-order counterfactual is now closed: reversing the
+WAIT/default successor list changes the initial common predecessor but
+reproduces every ordinary byte after cleanup. FgFlowOpts removes label 100085
+inside the first loop recognition; the retargeted observer follows default
+label 213780 and reaches the same late MOV predecessor at CodeMotion.
+Preserve get-point-dfo-common-retarget-reverse-* and the paired read-only
+lifetime control. Do not interpret the earlier observer's lost label as a
+missing increment. The new source controls are tabulated in the compiler note.
+
+The timer linkage control is also rejected. ZunTimer::set_value passes its
+complete 68-byte owner, but substituting a private non-LTCG Timer object in
+the separate-SPEEDUP control changes Line EX from 1,596 to 1,636 bytes while
+preserving those same setter bytes. Preserve timer-boundary-*; the formal
+recipe and object graph were not changed. The retained get_point source is
+restored. The nine-owner flow-cleanup-restored-strict.json check completes
+with seven passes; Line EX and on_tick remain incomplete.
+
 Keep coherent checkpoints local and do not push unless asked.
 
 ## Historical checkpoint (2026-11-23)

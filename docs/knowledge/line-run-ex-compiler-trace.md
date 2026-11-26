@@ -126,6 +126,14 @@ aliasing changes and duplicated completion paths:
 | `iteration-shooter-lifetime` | 1636 | The real shooter object declared per iteration keeps its constructor at loop entry, changes index/pointer allocation and does not repair X or the common loop |
 | `terminator-switch-case` | 1580 | Moving zero termination into the switch changes index/type allocation and produces a nine-entry direct table with no selector; the target requires five entries plus the 16-byte selector |
 | `shoot-get-point-context` | 1592 | Qualified get_point inlining repairs only the X input pair; retained as the new baseline, with the common loop/return layout still incomplete |
+| `step-dispatch-lambda` | 130 | The command lambda remains a separate native call; the complete caller has no switch table and one unbound new callee. Rejected using its actual 130 code bytes |
+| `typed-shared-advance` | 1592 | Repeating the single named advance under the current typed-blend/get_point context reproduces every retained byte |
+| `compound-command-guard` | 1592 | Moving bounds, zero termination and slot blocking into one while condition is fully byte-neutral |
+| `wait-first` | 1592 | Moving WAIT before SPEEDUP in source is fully byte-neutral; lexical order does not repair its completion path |
+| `forced-command-step` | 1744 | A forced-inline command step removes the extra call but folds the by-value cursor into indexed field addresses; the common loop stays late |
+| `forced-command-step-reference` | 1592 | Passing the cursor by reference restores its retained address, but regresses X. Every byte equals the earlier typed-blend checkpoint, despite the qualified get_point call inside the helper |
+| `for-step-with-restart` | 1592 | A for-loop common step with explicit restart gotos preserves all branch-local increments and reproduces every retained byte; unlike the earlier for-member control, it does not remove those increments |
+| `get-point-speedup-continue` | 1596 | Under the retained get_point context, the separate SPEEDUP increment remains and jumps past the shared XMM1 zero. The late common increment/return also remains |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -330,6 +338,64 @@ label source control itself is valid and byte-neutral. Track condition
 contents as well as labels through the loop recognition and final
 CodeMotion splice described below.
 
+
+## Changing the first traversal alone does not survive flow cleanup
+
+`get-point-dfo-read-only-*` repeats the paired first traversal under the
+retained get_point source and reproduces all 1,592 bytes. Reversing only the
+WAIT/default successor-list order at that walk changes the first common
+predecessor from WAIT's input block 77 to default stub 27. It preserves every
+CFG destination, incoming edge link and tuple; only outgoing list links
+change. FgChangeNextToDFOEx adds a break-fallthrough block, and the common
+block moves from position 72 to 74. Nevertheless,
+`get-point-dfo-edge-reverse-*` exits normally and reproduces the same entire
+ordinary owner. The traversal intervention does not repair the final layout.
+
+The lifetime controls explain why following the old label was insufficient.
+During the first loop recognition, FgFlowOpts removes label 100085. The
+observed call stack is RemoveLabel, FgFlowOpts+0x5eb, LgBuildLoopGraph+0xd7,
+FgDFOReorderLoopRecogEx+0x3e, then InitialOptsAndSetup+0x91b. A marker and the
+default stub's label 213780 precede the deleted label, with no intervening
+executable tuple. `get-point-dfo-common-retarget-reverse-*` follows that
+replacement label while retaining the same first increment tuple as its
+anchor. By Prelower entry the common position again equals the read-only
+control (657 tuples from the current linear-list start). At CodeMotion
+entry it is position 327 with the same fall-through MOV predecessor.
+
+All completed controls exit normally and reproduce the retained complete
+owner. The intervened compiler grants no source result. Preserve both the
+read-only lifetime replay and the retargeted replay. The earlier lifetime
+observer that stops finding 100085 after Initial is a limited observer;
+its subsequent pool-allocation watch event does not identify the increment.
+A source change must survive flow cleanup, rather than merely alter the
+first reverse-postorder list.
+
+## An exact timer body does not determine the caller's link-time context
+
+The separate SPEEDUP increment control now retains the get_point repair.
+Its complete ordinary owner is 1,596 bytes, with an additional INC after
+SPEEDUP and the shared INC still at the tail. SPEEDUP jumps directly to the
+index reload, bypassing the common XMM1 zero. This is not the target's one
+shared advance. ZunTimer::set_value at 0x406490 independently passes its
+complete 68-byte local strict comparison.
+
+`timer-boundary-link.py` compiles only ZunTimer.cpp into a private COFF object
+with the ordinary flags except /GL. It then links two private images from
+the same ordinary objects: the control uses the original Timer LTCG object;
+the other substitutes the private COFF object. The script records both
+responses, object hashes, flags and the ordinary build receipt in
+`timer-boundary-inputs.json`. The formal object graph and recipe are untouched.
+
+The private control reproduces the ordinary 1,596 bytes exactly. Without
+Timer LTCG visibility, Line EX grows to 1,636 bytes: several completion
+increments are distributed into individual cases, and the loop reload and
+XMM1 zero change order. Both private images still contain the same complete
+68-byte setter body as the target, checked in
+`timer-boundary-setter-bodies.json`. Thus matching the callee's native body
+does not establish identical caller optimization metadata. The broader
+Timer boundary does not solve this owner; its memory/register effects would
+need finer isolation before assigning one specific cause. Preserve
+`timer-boundary-*`; neither private image is a formal source result.
 
 ## Loop recognition copies the condition; CodeMotion later moves that copy
 
