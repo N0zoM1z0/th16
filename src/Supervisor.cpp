@@ -108,8 +108,22 @@ i16 g_pad_mapping[10] = {0, 1, 2, 5, -1, -1, -1, -1, -1, 3};
 // or DirectInput) to input. The Acquire retries are written like
 // get_controller_state's: that keeps the joyGetPosEx failure's return as
 // the shared copy the later returns jump to, as in the original.
-// TODO: 74%; the original loads some mapping words through ax and a 16-bit
-// stack temporary (ours: cx), and keeps input in a different stack slot.
+static inline void apply_winmm_button(u32 &input, u32 buttons, i16 btn, u32 mask)
+{
+    if (btn >= 0)
+    {
+        input |= (buttons & (1 << btn)) ? mask : 0;
+    }
+}
+
+static inline void apply_di_button(u32 &input, const u8 *buttons, i16 btn, u32 mask)
+{
+    if (btn >= 0)
+    {
+        input |= (buttons[btn] & 0x80) ? mask : 0;
+    }
+}
+
 // FUNCTION: TH16 0x4018e0
 HARNESS_CALLED u32 Supervisor::read_joypad(u32 input)
 {
@@ -123,34 +137,19 @@ HARNESS_CALLED u32 Supervisor::read_joypad(u32 input)
         {
             return input;
         }
-        if (g_pad_mapping[PAD_SHOT] >= 0)
-        {
-            input |= (info.dwButtons & (1 << g_pad_mapping[PAD_SHOT])) ? INPUT_SHOT : 0;
-        }
-        if (g_pad_mapping[PAD_BOMB] >= 0)
-        {
-            input |= (info.dwButtons & (1 << g_pad_mapping[PAD_BOMB])) ? INPUT_BOMB : 0;
-        }
-        if (g_pad_mapping[PAD_PAUSE] >= 0)
-        {
-            input |= (info.dwButtons & (1 << g_pad_mapping[PAD_PAUSE])) ? INPUT_MENU : 0;
-        }
-        if (g_pad_mapping[PAD_FOCUS] >= 0)
-        {
-            input |= (info.dwButtons & (1 << g_pad_mapping[PAD_FOCUS])) ? INPUT_FOCUS : 0;
-        }
-        if (g_pad_mapping[PAD_RELEASE] >= 0)
-        {
-            input |= (info.dwButtons & (1 << g_pad_mapping[PAD_RELEASE])) ? INPUT_RELEASE : 0;
-        }
-        u32 center_x = (g_joypad_caps.wXmin + g_joypad_caps.wXmax) / 2;
-        u32 margin_x = (g_joypad_caps.wXmax - g_joypad_caps.wXmin) / 4;
-        u32 center_y = (g_joypad_caps.wYmin + g_joypad_caps.wYmax) / 2;
-        u32 margin_y = (g_joypad_caps.wYmax - g_joypad_caps.wYmin) / 4;
-        input |= (info.dwXpos > center_x + margin_x) ? INPUT_RIGHT : 0;
-        input |= (info.dwXpos < center_x - margin_x) ? INPUT_LEFT : 0;
-        input |= (info.dwYpos > center_y + margin_y) ? INPUT_DOWN : 0;
-        input |= (info.dwYpos < center_y - margin_y) ? INPUT_UP : 0;
+        apply_winmm_button(input, info.dwButtons, g_pad_mapping[PAD_SHOT], INPUT_SHOT);
+        apply_winmm_button(input, info.dwButtons, g_pad_mapping[PAD_BOMB], INPUT_BOMB);
+        apply_winmm_button(input, info.dwButtons, g_pad_mapping[PAD_PAUSE], INPUT_MENU);
+        apply_winmm_button(input, info.dwButtons, g_pad_mapping[PAD_FOCUS], INPUT_FOCUS);
+        apply_winmm_button(input, info.dwButtons, g_pad_mapping[PAD_RELEASE], INPUT_RELEASE);
+        u32 margin = (g_joypad_caps.wXmax - g_joypad_caps.wXmin) / 4;
+        u32 center = (g_joypad_caps.wXmin + g_joypad_caps.wXmax) / 2;
+        input |= (info.dwXpos > center + margin) ? INPUT_RIGHT : 0;
+        input |= (info.dwXpos < center - margin) ? INPUT_LEFT : 0;
+        margin = (g_joypad_caps.wYmax - g_joypad_caps.wYmin) / 4;
+        center = (g_joypad_caps.wYmin + g_joypad_caps.wYmax) / 2;
+        input |= (info.dwYpos > center + margin) ? INPUT_DOWN : 0;
+        input |= (info.dwYpos < center - margin) ? INPUT_UP : 0;
         return input;
     }
 
@@ -176,26 +175,11 @@ HARNESS_CALLED u32 Supervisor::read_joypad(u32 input)
     {
         return input;
     }
-    if (g_pad_mapping[PAD_SHOT] >= 0)
-    {
-        input |= (js.rgbButtons[g_pad_mapping[PAD_SHOT]] & 0x80) ? INPUT_SHOT : 0;
-    }
-    if (g_pad_mapping[PAD_BOMB] >= 0)
-    {
-        input |= (js.rgbButtons[g_pad_mapping[PAD_BOMB]] & 0x80) ? INPUT_BOMB : 0;
-    }
-    if (g_pad_mapping[PAD_PAUSE] >= 0)
-    {
-        input |= (js.rgbButtons[g_pad_mapping[PAD_PAUSE]] & 0x80) ? INPUT_MENU : 0;
-    }
-    if (g_pad_mapping[PAD_FOCUS] >= 0)
-    {
-        input |= (js.rgbButtons[g_pad_mapping[PAD_FOCUS]] & 0x80) ? INPUT_FOCUS : 0;
-    }
-    if (g_pad_mapping[PAD_RELEASE] >= 0)
-    {
-        input |= (js.rgbButtons[g_pad_mapping[PAD_RELEASE]] & 0x80) ? INPUT_RELEASE : 0;
-    }
+    apply_di_button(input, js.rgbButtons, g_pad_mapping[PAD_SHOT], INPUT_SHOT);
+    apply_di_button(input, js.rgbButtons, g_pad_mapping[PAD_BOMB], INPUT_BOMB);
+    apply_di_button(input, js.rgbButtons, g_pad_mapping[PAD_PAUSE], INPUT_MENU);
+    apply_di_button(input, js.rgbButtons, g_pad_mapping[PAD_FOCUS], INPUT_FOCUS);
+    apply_di_button(input, js.rgbButtons, g_pad_mapping[PAD_RELEASE], INPUT_RELEASE);
     return input | ((js.lX < -g_Supervisor.config.deadzone_x) ? INPUT_LEFT : 0) |
            ((js.lY < -g_Supervisor.config.deadzone_y) ? INPUT_UP : 0) |
            ((js.lX > g_Supervisor.config.deadzone_x) ? INPUT_RIGHT : 0) |
