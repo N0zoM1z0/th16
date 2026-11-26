@@ -729,7 +729,7 @@ static __forceinline i32 menu_selection_moved(MenuHelper *m)
     return m->current_selection != m->next_selection;
 }
 
-// TODO: ours keeps the Q key's shared tail in case 6 (the original's is in case 7), and around the replay save loads the slot index after create_from_file (the original before, keeping it in esi where ours keeps name's address).
+// TODO: 2 scale-1 SIB base/index tie-breakers remain (4674/4676): [esi+ecx-1] vs [ecx+esi-1] at +0b26 (strcpy last_replay_name) and [edi+eax+0x2d3] vs [eax+edi+0x2d3] at +0dd0 (name[i-1]).
 // FUNCTION: TH16 0x43f980
 void PauseMenu::tick_open()
 {
@@ -903,6 +903,7 @@ void PauseMenu::tick_open()
             AnmManager::interrupt_tree(menu_anm_id.search_children(0x81, 0), 6);
             item_menu.set_cursor(PAUSE_ITEM_QUIT);
             set_substate(PAUSE_SUB_CLOSE);
+            return;
         }
         break;
     case PAUSE_SUB_CONFIRM:
@@ -988,7 +989,6 @@ void PauseMenu::tick_open()
             AnmManager::interrupt_tree(menu_anm_id, 1);
             item_menu.set_cursor(PAUSE_ITEM_RESUME);
             set_substate(PAUSE_SUB_CLOSE);
-            return;
         }
         break;
     case PAUSE_SUB_CONFIRM_CLOSE:
@@ -1139,51 +1139,52 @@ void PauseMenu::tick_open()
                     replays[replay_slot] = ReplayManager::create_from_file(path);
                     set_substate(PAUSE_SUB_REPLAY_SLOT_SELECT);
                     strcpy(g_Scorefile->last_replay_name, name);
-                    g_SoundManager.play_sound_centered(SE_OK00, 0);
-                    return;
-                }
-                g_SoundManager.play_sound_centered(SE_OK00, 0);
-                strcpy(((ScorefileData *)g_Scorefile)
-                           ->charas[g_Globals.subshot + g_Globals.character]
-                           .scores[g_Globals.difficulty][item_menu.next_selection]
-                           .name,
-                       name);
-                strcpy(g_Scorefile->last_replay_name, name);
-            score_entered:
-                set_substate(PAUSE_SUB_CHOOSE);
-                item_menu.num_choices = PAUSE_ITEM_COUNT;
-                item_menu.wraps = 1;
-                if (!(menu_flags & PAUSE_FROM_STAGE_END) && g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
-                {
-                    menu_anm_id = front_anm->create_ui_vm_at_origin(PAUSE_SCRIPT_GAME_OVER_MENU, 0);
-                    if (g_Globals.continues_used > 0)
-                    {
-                        item_menu.disable(PAUSE_ITEM_SAVE_REPLAY);
-                    }
-                    if (g_continues_remaining <= 0)
-                    {
-                        item_menu.disable(PAUSE_ITEM_RESUME);
-                        item_menu.set_cursor(PAUSE_ITEM_QUIT);
-                    }
-                    else
-                    {
-                        item_menu.set_cursor(PAUSE_ITEM_RESUME);
-                    }
                 }
                 else
                 {
-                    menu_anm_id = front_anm->create_ui_vm_at_origin(PAUSE_SCRIPT_PRACTICE_END_MENU, 0);
-                    item_menu.disable(PAUSE_ITEM_RESUME);
-                    item_menu.disable(PAUSE_ITEM_MANUAL);
-                    item_menu.set_cursor(PAUSE_ITEM_RESUME);
-                    if (!(menu_flags & PAUSE_FROM_STAGE_END))
+                    g_SoundManager.play_sound_centered(SE_OK00, 0);
+                    strcpy(((ScorefileData *)g_Scorefile)
+                               ->charas[g_Globals.subshot + g_Globals.character]
+                               .scores[g_Globals.difficulty][item_menu.next_selection]
+                               .name,
+                           name);
+                    strcpy(g_Scorefile->last_replay_name, name);
+                score_entered:
+                    set_substate(PAUSE_SUB_CHOOSE);
+                    item_menu.num_choices = PAUSE_ITEM_COUNT;
+                    item_menu.wraps = 1;
+                    if (!(menu_flags & PAUSE_FROM_STAGE_END) && g_Globals.flags_45c_fields.game_mode == GAME_MODE_NORMAL)
                     {
-                        item_menu.set_cursor(PAUSE_ITEM_RESTART);
+                        menu_anm_id = front_anm->create_ui_vm_at_origin(PAUSE_SCRIPT_GAME_OVER_MENU, 0);
+                        if (g_Globals.continues_used > 0)
+                        {
+                            item_menu.disable(PAUSE_ITEM_SAVE_REPLAY);
+                        }
+                        if (g_continues_remaining <= 0)
+                        {
+                            item_menu.disable(PAUSE_ITEM_RESUME);
+                            item_menu.set_cursor(PAUSE_ITEM_QUIT);
+                        }
+                        else
+                        {
+                            item_menu.set_cursor(PAUSE_ITEM_RESUME);
+                        }
                     }
+                    else
+                    {
+                        menu_anm_id = front_anm->create_ui_vm_at_origin(PAUSE_SCRIPT_PRACTICE_END_MENU, 0);
+                        item_menu.disable(PAUSE_ITEM_RESUME);
+                        item_menu.disable(PAUSE_ITEM_MANUAL);
+                        item_menu.set_cursor(PAUSE_ITEM_RESUME);
+                        if (!(menu_flags & PAUSE_FROM_STAGE_END))
+                        {
+                            item_menu.set_cursor(PAUSE_ITEM_RESTART);
+                        }
+                    }
+                    AnmManager::interrupt_tree_and_run(menu_anm_id, 3);
+                    AnmManager::interrupt_tree(menu_anm_id, (i16)(item_menu.next_selection + 7));
+                    return;
                 }
-                AnmManager::interrupt_tree_and_run(menu_anm_id, 3);
-                AnmManager::interrupt_tree(menu_anm_id, (i16)(item_menu.next_selection + 7));
-                return;
             }
             g_SoundManager.play_sound_centered(SE_OK00, 0);
             return;
@@ -1258,9 +1259,8 @@ void PauseMenu::tick_open()
             }
             name_cursor = i;
             g_SoundManager.play_sound_centered(SE_OK00, 0);
-            return;
         }
-        if (g_hardware_input_pressed & (INPUT_MENU | INPUT_BOMB))
+        else if (g_hardware_input_pressed & (INPUT_MENU | INPUT_BOMB))
         {
             menu_flags &= ~(PAUSE_SHOW_REPLAY_SLOTS | PAUSE_SHOW_REPLAY_NAME);
             item_menu.pop();
