@@ -9,6 +9,10 @@ Agent workflow: follow the highest-priority requirements in [AGENTS.md](AGENTS.m
     alt="TH16 title artwork composited from the original title.anm textures">
 </p>
 
+<p align="center">
+  <img src="resources/progress.svg" alt="Historical TH16 local strict-audit snapshot from 2026-11-15">
+</p>
+
 This project reconstructs C++ source for the original Japanese TH16 version
 1.00a executable. The source is built with the historical MSVC 2017 (v141_xp)
 toolchain under whole-program optimization (/GL, /LTCG). The intended
@@ -78,17 +82,6 @@ For the next agent, read AGENTS.md, then the
 [2026-11-21 handoff](docs/HANDOFF_20261121.md) and
 [2026-11-19 chronology](docs/HANDOFF_20261119.md) are historical records;
 their checkpoint hashes and measurements have been superseded.
-
-<details>
-<summary>Historical local audit image (2026-11-15)</summary>
-
-This image predates the current source and is not a current acceptance total.
-
-<p align="center">
-  <img src="resources/progress.svg" alt="Historical TH16 local strict-audit snapshot from 2026-11-15">
-</p>
-
-</details>
 
 ## Project map
 
