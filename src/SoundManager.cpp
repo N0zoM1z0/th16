@@ -733,7 +733,6 @@ void SoundManager::stop_sound(i32 id)
     g_SoundManager.queued_counts[i] = -1;
 }
 
-// TODO: ours merges the two SetVolume calls into one; the original keeps both.
 // FUNCTION: TH16 0x45e8d0
 void SoundBufferEntry::play(i32 pan)
 {
@@ -745,12 +744,12 @@ void SoundBufferEntry::play(i32 pan)
     buffer->SetCurrentPosition(0);
     buffer->SetPan(pan);
     this->pan = pan;
-    if (g_SoundManager.se_volume != 0)
+    i32 vol = g_SoundManager.se_volume;
+    if (vol != 0)
     {
-        f32 x = g_SoundManager.se_volume / 100.0f;
-        f32 t = (1.0f - x) * (1.0f - x) * (1.0f - x);
-        f32 u = 1.0f - t;
-        buffer->SetVolume((i32)(u * (data->volume + 5000)) - 5000);
+        f32 x = 1.0f - vol / 100.0f;
+        f32 u = 1.0f - x * x * x;
+        buffer->SetVolume((i32)((data->volume + 5000) * u) - 5000);
     }
     else
     {
