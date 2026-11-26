@@ -142,6 +142,7 @@ aliasing changes and duplicated completion paths:
 | `typed-default-advance` | 1604 | Under the current aliasing/get_point context, explicit SPEEDUP/default advancement creates separate SPEEDUP, default and shared increments; loop placement remains wrong |
 | `selector-only-local` | 1592 | A named u32 used only by switch is eliminated; all retained bytes and the rejected state-machine predicate are unchanged |
 | `guard-and-selector-local` | 1600 | Using that local for the zero guard as well changes dispatch to ECX and LEA, but leaves the late common loop and unnamed candidate symbol |
+| `natural-nonzero-setters` | 1592 | Using ordinary set() at OFFSCREEN, WRAP and WAIT instead of the forced-inline helper preserves every retained byte; the seven other closed/context owners still pass |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -378,6 +379,25 @@ its subsequent pool-allocation watch event does not identify the increment.
 A source change must survive flow cleanup, rather than merely alter the
 first reverse-postorder list.
 
+`get-point-dfo-speedup-first-*` tests the stronger alternative: six outgoing
+successor lists along the low-opcode route are reordered so the first walk
+reaches the common increment through SPEEDUP. Every CFG destination, incoming
+edge and tuple is preserved. The normal-exit replay has no Python callback
+errors. The first common position becomes 82, immediately after SPEEDUP's
+label 100099, and that label survives to CodeMotion.
+
+This changes the broader layout rather than repairing it. The high-opcode
+cases now precede the low-opcode cases; SHOOT's saved stack slots exchange
+positions and X ordering regresses. The complete diagnostic owner happens to
+be 1,588 bytes, but contains 1,551 code bytes and one alignment byte, with
+table destinations 0x5c4, 0x48f, 0x537, 0x567 and 0x5e2. The target requires
+1,550 code bytes, two alignment bytes and different destinations. The ordinary
+source remains untouched. An earlier observer attempt stopped on an undefined
+Python variable after changing the private graph; it is archived separately
+as `get-point-dfo-speedup-first-observer-name-error-*` and is not a completed
+compiler result. The successful extractor scans through the later dispatcher
+before validating the actual selector and contiguous five-entry table.
+
 ## An exact timer body does not determine the caller's link-time context
 
 The separate SPEEDUP increment control now retains the get_point repair.
@@ -421,6 +441,93 @@ Both substitutions preserve the target's complete 68-byte setter.
 This rules out the opaque Timer boundary for both source forms. It also
 shows that the effect of the source-level increment depends on the caller's
 link-time knowledge; the two controls cannot be interpreted independently.
+
+### A native caller of the shared setter reproduces the boundary effect
+
+Calling `set_inline(time)` directly from the out-of-line setter, instead of
+`set(time)`, preserves both the exact 68-byte setter and every retained Line
+EX byte. The source control is restored. The expanded complete-owner audit,
+`caller-context-restored-strict.json`, checks the nine previous owners and
+the six other source callees called directly by Line EX. Twelve pass. Line EX,
+Line on_tick and AnmVm::run remain incomplete; the latter fails the reviewed
+switch mapping. The five newly passing callees are AnmLoaded::copy_vm,
+BulletManager::shoot_bullets, Player::angle_to_player and the two sound calls.
+
+`anm-run-boundary-*` substitutes only a private non-/GL AnmVmRun.cpp object.
+The ordinary control reproduces the full retained owner. The substitution
+gives 1,636 bytes, with the same instruction structure and table geometry as
+the opaque Timer experiment. This does not isolate AnmVm::run: its translation
+unit also calls ZunTimer::set_value, as its COFF undefined-symbol list confirms.
+
+Two controls narrow that interaction. `input-repeat-boundary-*` substitutes
+an unrelated native InputRepeat object and retains the 1,592-byte structure.
+`timer-native-caller-*` adds a private rooted COFF wrapper to the ordinary
+graph. The control returns its integer argument; the other calls set_value
+with its real timer pointer and integer argument before returning that value.
+The control retains the 1,592-byte structure. The one extra native call edge
+reproduces the opaque Timer/AnmVmRun experiment's 1,636-byte structure.
+
+`caller-boundary-geometry-pairs.json` compares all actual code instructions,
+alignment size, local branch offsets, five table destinations and selector
+bytes for these pairs. Only external call/global addresses are normalized;
+this is structural diagnosis without linkage credit. All six private images
+retain the target's entire raw 68-byte setter, recorded with the wrapper's
+actual native instructions in `caller-boundary-timer-bodies.json`.
+
+The shared native caller edge is sufficient for this effect. An unrelated
+COFF module is not, and the original broad Timer substitution cannot be
+assigned solely to hiding its body. This follows TH10's graph-completeness
+lesson while testing the current pinned compiler independently. The formal
+build recipe and source graph remain unchanged.
+
+`callee-context-ordinary-*` and `callee-context-native-caller-*` observe the
+actual four setter call tuples from Initial through Emit. Both exit normally
+and reproduce their complete private owners. Their tuple counts agree through
+Emit entry, before diverging in the late flow passes. The setter's symbol
+flags at +0x64 are identical, 0x90102a; the proposed external-reference flag
+explanation is not supported. Its call-graph node instead loses the used-register
+set at +0x58, while the BottomUpInformation ipNoFPRegs bit also clears.
+Function SYMBOL +4 points directly to its name string; the local-variable
+name-record indirection is incorrect for these call operands. The earlier
+`callee-context-unresolved-function-names-*` observer retains raw symbols but
+does not identify callees; use the corrected pair above.
+
+The read-only `callee-no-fp-read-only-*` replay reproduces all retained bytes.
+The paired `callee-no-fp-clear-*` and `callee-no-fp-set-*` controls change only
+bit 0x2000 at call-graph node +0x88, from Line Initial entry through Emit return,
+then restore it. Both exit normally, record restoration and leave their
+respective complete 1,592/1,636-byte owners unchanged. The correlated ipNoFPRegs
+change therefore does not explain this caller difference.
+
+`callee-register-mask-clear-*` isolates the other record. It changes only the
+setter's nonnull used-register-set pointer at node +0x58 to null while compiling
+Line EX, then restores it. This normally exiting intervention produces the
+1,636-byte structure. The captured sparse set contains physical register IDs
+1, 5, 6, 93 and 225. The pinned RegName table identifies them as eax, esp, ebp,
+zmm0 and cc; zmm0 is the backend's vector-register name here, while the actual
+setter uses xmm0. The table capture and linked sparse-set nodes are preserved.
+
+The static LoAddCallScratchRegs at RVA 0x807c0 reads this exact +0x58 record.
+When available and readable, it filters the call's scratch-register operands
+through the known set; a null set takes the conservative path. This explains
+why identical setter bytes can yield different caller register constraints.
+The metadata interventions are diagnostic compiler changes, not source results.
+
+`callee-vector1-mask-add-*` narrows this further without removing the known
+set. It adds only register ID 94 to the sparse set while compiling Line EX,
+then restores that bit at Emit return. RegName calls this register zmm1; it
+overlaps xmm1 in the SSE2 owner. This conservative additional clobber produces
+a byte-for-byte identical complete 1,636-byte mask-clearing diagnostic, SHA-256
+`5780017e2d12b1faf41ec6809a398f9e7477f2ed774a8ac04bac9a866f27a9bd`.
+`callee-register-constraint-results.json` records both full-body equality and
+the normal exits/restorations for these and the NoFP controls.
+
+Thus the broad boundary experiment's observed caller structure can be
+reproduced by one extra vector-register constraint. The working explanation
+should follow xmm1's zero value and completion paths, rather than an unmeasured
+Timer memory-alias effect. Opaque Timer or native caller variants do not repair
+the target; they destroy useful register-preservation information and distribute
+additional increments. Preserve this distinction when evaluating other callees.
 
 ## The extra SPEEDUP increment is compared but not tail-merged
 

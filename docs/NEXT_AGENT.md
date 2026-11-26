@@ -21,9 +21,10 @@ inlining; its read-only compiler replay reproduces every ordinary owner byte.
 Shooter X remains a kind-2 field. The inlined `_v` formal makes the memory
 input cheaper than that field; Y retains the opposite order.
 
-The latest completed nine-owner checkpoint is
-`.analysis/line-run-ex-compiler/selector-ownership-restored-strict.json`:
-seven owners pass; Line EX and Line on_tick remain incomplete. The four closed
+The latest restored checkpoint is
+`.analysis/line-run-ex-compiler/callee-register-context-restored-strict.json`:
+twelve of fifteen owners pass. Line EX, Line on_tick and the added direct-callee
+context AnmVm::run remain incomplete. The four closed
 reconstruction owners are enemy interpolation (1,692 bytes), curve tick
 (1,305), curve reverse-step (986) and curve EX (1,548). Their compiler notes
 and ignored evidence remain under the matching knowledge/evidence names.
@@ -55,13 +56,20 @@ merged. Forced command-step helpers regress X; ordinary inline leaves a call.
 Tail-recursive forms lose the required ESP alignment. Do not repeat these
 controls without a different, evidenced compiler mechanism.
 
-The Timer boundary experiment preserves the same exact 68-byte setter but
-changes Line EX substantially. The completed two-by-two control uses both
-retained/shared-advance and separate-SPEEDUP sources: ordinary LTCG gives
-1,592/1,596 bytes; private COFF Timer substitution gives the same 1,636-byte
-body for both. Preserve `timer-boundary-*`; the formal recipe is unchanged.
+The Timer boundary investigation now isolates a register constraint. A private
+native caller of the shared setter reproduces the 1,636-byte Timer/AnmVmRun
+COFF structure; unrelated InputRepeat COFF does not. All private setter bodies
+remain the same exact 68 bytes. In C2, clearing only the setter's known-used-regs
+pointer reproduces that structure. Adding only physical register 94 (zmm1,
+overlapping xmm1 here) to the existing set produces identical complete owner bytes.
+Both scoped metadata changes are restored at Line Emit return. The correlated
+ipNoFPRegs flag is ruled out by bidirectional, byte-neutral interventions.
+Preserve `callee-context-*`, `callee-register-*`, `callee-vector1-*` and
+`timer-native-caller-*`. Follow xmm1 zero liveness and completion paths rather
+than assigning the broad Timer result to unknown memory effects. The formal
+recipe is unchanged; these interventions grant no source result.
 
-The current private investigation targets C2 state-machine preparation.
+The completed state-machine investigation rules out selector naming alone.
 `state-machine-switch-control-*` and `selector-only-state-machine-control-*`
 complete normally and reproduce their ordinary owners. The candidate switch
 uses an unnamed temporary; LgoTupIsCandidateSwitch, potential-state-machine
@@ -72,6 +80,14 @@ candidacy/potential to one and finds the common INC, but applicability and
 preparation remain zero. The full ordinary owner is unchanged. Preserve
 `state-machine-name-*`; naming alone is ruled out and establishes no source
 result. The source controls are restored to the retained checkpoint.
+
+The stronger first-DFS control `get-point-dfo-speedup-first-*` visits the
+common INC through SPEEDUP by reordering six outgoing lists without changing
+CFG destinations. It exits normally, but moves the high cases before the low
+cases and changes SHOOT stack slots/X ordering. Its coincidental 1,588 bytes
+contain 1,551 code bytes plus one alignment byte, unlike the target's 1,550+2.
+It does not repair the owner. Ordinary nonzero Timer set() calls at all three
+Line sites are also fully byte-neutral; that source trial is restored.
 
 Keep coherent checkpoints local and do not push unless asked.
 
