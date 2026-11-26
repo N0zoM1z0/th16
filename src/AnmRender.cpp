@@ -293,16 +293,15 @@ i32 AnmManager::draw_vertex_fan(AnmVm *vm, RenderVertex144 *vertices, i32 vertex
 // Draws count points, each center + offsets[i] in colors[i], as a line
 // strip (despite the name) from the primitive buffer. Always returns 0
 // (the original sets eax although its caller ignores it).
-// TODO: ours stores the saved count to [ebp-4] one instruction earlier; the rest matches since the device calls go through supervisor_d3d_device().
 // FUNCTION: TH16 0x469890
 HARNESS_CALLED i32 AnmManager::draw_triangle_fan(i32 count, Float3 *center, Float2 *offsets, ZunColor *colors)
 {
     AnmManager *mgr = g_AnmManager;
-    RenderVertex044 *vertices = mgr->primitive_write_cursor;
-    if (vertices + 1 + count >= mgr->primitive_vertex_data + 0x8000)
+    if (mgr->primitive_write_cursor + 1 + count >= mgr->primitive_vertex_data + 0x8000)
     {
         return 0;
     }
+    RenderVertex044 *vertices = mgr->primitive_write_cursor;
     mgr->flush_sprites();
     for (i32 i = 0; i < count; i++)
     {
