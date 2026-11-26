@@ -3302,7 +3302,7 @@ on_screen:
 // Runs the laser's pending et_ex instructions: each one starts an et_ex
 // step (ex_flags and its ex_state), or acts at once (sounds, bullets, the
 // sprite, blend mode, jumps).
-// TODO: common loop placement and SHOOT X addition order still differ.
+// TODO: common loop and return placement still differ.
 // FUNCTION: TH16 0x431fe0
 DECOMP_NOINLINE void LaserLineInf::run_ex()
 {
@@ -3407,13 +3407,11 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
         case BULLET_EX_SHOOT:
         {
             EnemyBulletShooter shooter;
-            laser_sincosmul(&shooter.pos, angle, hit_length);
+            LaserLineInf::get_point(hit_length, &shooter.pos);
             u32 a = ex->a;
-            shooter.pos.x += position.x;
             shooter.pos.z = 0.0f;
             shooter.aim_type = static_cast<EtAimMode>((u16)((a >> 24) & 0x7f));
             shooter.type = (a >> 16) & 0xff;
-            shooter.pos.y += position.y;
             shooter.color = (a >> 8) & 0xff;
             shooter.spd1 = ex->r;
             shooter.spd2 = ex->s;

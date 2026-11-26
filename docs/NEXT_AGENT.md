@@ -29,9 +29,9 @@ not-submitted; the current shared accepted snapshot is inventory-only.
 
 Continue only `LaserLineInf::run_ex` (`0x431fe0`). Its target owns 1,588
 bytes: 1,550 code bytes, two alignment bytes, five jump entries and 16
-selector bytes. The retained typed-blend candidate owns 1,592 bytes and
-remains incomplete. Its two residuals are the late common loop/return block
-and SHOOT X input order (this+0x54 and shooter ESP+0x20); Y already agrees.
+selector bytes. The retained typed-blend/get_point candidate owns 1,592 bytes
+and remains incomplete. Its remaining residual is the late common loop/return
+block; ordinary get_point inlining now repairs SHOOT's X input order.
 The four completed owners and the complete 32-byte polar helper pass the
 six-owner `threaded-dfo-baseline-strict.json` check. The opcode-capture
 trial grows Line to 1,608 and is restored.
@@ -71,8 +71,8 @@ annotations and rebuilds 14 known header consumers. Line is fully byte-neutral;
 the eight-owner report has six passing owners, with Line EX and on_tick still
 incomplete. The on_tick diagnostic byte span also equals the completed baseline
 replay. Removing the saved index's register keyword is also byte-neutral under
-the restored header, with the same focused results. Both source files are now
-restored to the retained typed-blend checkpoint.
+the restored header, with the same focused results. Both source files were
+restored before the later get_point repair.
 
 The read-only internal-call control completes normally and reproduces all
 ordinary bytes. The paired insert-jump diagnostic preserves WAIT's successor
@@ -92,12 +92,27 @@ only six prelower X-key changes plus the WAIT-preserving JMP. Its complete
 differences; source_acceptance remains false. Use the final composition,
 not the separately preserved early-gate variant with nine key changes.
 
-The next source control tests the polar helper's ordinary return-alias model,
-starting by comparing its complete 32-byte body. Its current EAX happens to
-retain the destination, but the bounded scan of 48 direct-call encodings
-finds no post-call EAX read before overwrite or a control boundary; this does
-not determine the original return type. Preserve the retained void-helper
-checkpoint and require full helper/caller checks before retaining a change.
+The ordinary return-alias helper model produces a complete 34-byte helper,
+adding MOV EAX,ECX to the target's 32 bytes. It is rejected and restored
+without changing the private linkage binding; source-local static helpers
+are not /INCLUDE roots. Moving shooter to iteration scope keeps its constructor
+at loop entry and grows the owner to 1,636 bytes. Zero termination in the
+switch produces 1,580 bytes with a nine-entry direct table and no selector.
+Both are rejected and restored.
+
+Qualified LaserLineInf::get_point in SHOOT repairs the native X input pair
+through ordinary inlining. Its full 1,592-byte body now has only the late
+common-loop/return layout in the code alignment. The existing get_point
+passes 84/84 bytes and the polar helper passes 32/32. Retain this source;
+the new baseline is Laser.cpp.get-point-x-repair-checkpoint, not the old
+corrected-coordinate baseline. The TODO now names only loop/return placement.
+The incremental rebuild and eight-owner checkpoint complete with six passes;
+Line EX and on_tick remain incomplete. The read-only operand trace also exits
+normally and reproduces every ordinary owner byte. X remains a kind-2 shooter
+field; the inlined _v formal changes the memory input key to 0x10008, below
+the field key 0x15220. Y retains memory-first order. Preserve
+get-point-x-operand-control-* and continue only the common-loop layout under
+the unmodified compiler.
 
 Keep coherent checkpoints local and do not push unless asked.
 

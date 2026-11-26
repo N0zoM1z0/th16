@@ -7,12 +7,13 @@ There are 327 actual code instructions. Older linear measurements also
 decode the tables and must not be used as code-only instruction counts.
 The scope comes from [the remapped-owner review](remapped-owner-scopes.md).
 
-The retained typed-blend checkpoint owns 1,592 bytes and remains incomplete
-in the local strict audit. Its cursor calculation, EDX entry index, ECX type,
+The retained typed-blend/get_point checkpoint owns 1,592 bytes and remains
+incomplete in the local strict audit. Its cursor calculation, EDX entry index, ECX type,
 BLEND masks and both branch-local member increments agree with the target.
-The remaining operation differences after code alignment are the common
-loop/return block's late position and SHOOT's X input order.
-`blend-field-view-focused.json` also rechecks the four completed owners.
+Qualified get_point inlining repairs SHOOT's X input order. The remaining
+difference after code alignment is the common loop/return block's late position.
+`get-point-x-repair-checkpoint-strict.json` rechecks eight complete owners:
+six pass, while Line EX and Line on_tick remain incomplete.
 All private controls and scripts below are in
 `.analysis/line-run-ex-compiler/`; preserve that directory and the incremental
 build. These diagnostic controls do not establish Factory acceptance.
@@ -35,7 +36,7 @@ Returning BLEND to the common completion path restores register roles but
 shares away one required branch-local increment. Keeping its continuation
 and assigning through the existing four-bit
 `AnmVmFlagsLoFields::blend_mode` view instead preserves both memory INCs,
-the target masks and EDX/ECX roles. This is the retained source checkpoint.
+the target masks and EDX/ECX roles. This is the earlier typed-blend checkpoint.
 Its complete raw body SHA-256 is
 `9c3967ecdd40c11ea6cea8afbe00847a383337fcc3b9465910a4c5b846763b64`.
 The four-byte extent difference still prevents a local strict pass.
@@ -121,13 +122,43 @@ aliasing changes and duplicated completion paths:
 | `effective-inline-policy` | 1592 | Removing noinline from both the Line declaration and definition is now a real policy control and is byte-neutral; six other focused owners pass and the on_tick diagnostic byte span is unchanged |
 | `index-without-register` | 1592 | Removing the saved-index register keyword with the header restored is byte-neutral; the same six other focused owners pass |
 | `wait-in-default` | 1601 | Moving WAIT into a guarded default removes the selector/jump table and changes index/type allocation and completion paths; use its full 1,601 code bytes for diagnostics |
+| `polar-return-alias` | helper 34 | Returning dst in ordinary C++ adds MOV EAX,ECX to the complete 32-byte helper; the changed private name also lacks the existing independent binding. Restored before testing caller uses |
+| `iteration-shooter-lifetime` | 1636 | The real shooter object declared per iteration keeps its constructor at loop entry, changes index/pointer allocation and does not repair X or the common loop |
+| `terminator-switch-case` | 1580 | Moving zero termination into the switch changes index/type allocation and produces a nine-entry direct table with no selector; the target requires five entries plus the 16-byte selector |
+| `shoot-get-point-context` | 1592 | Qualified get_point inlining repairs only the X input pair; retained as the new baseline, with the common loop/return layout still incomplete |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
 extent alone is insufficient: its 1,588 bytes still fail strict comparison.
-All of these trial source forms are restored after evaluation.
+Failed source controls are restored after evaluation; the get_point repair is retained.
 
-## SHOOT X ordering and complete observer boundaries
+## Ordinary get_point inlining repairs X ordering
+
+SHOOT now calls `LaserLineInf::get_point(hit_length, &shooter.pos)` and then
+flattens Z. The helper already computes the polar offset and adds position;
+its qualified call inlines without adding a native call. The complete owner
+equals the earlier X-key counterfactual, SHA-256
+`29cd1e02444d8935f3ea1cf1a9efb48fefbf898ec06c6a3877541778ae85fdd5`.
+Only the common loop/return layout remains. Preserve
+`Laser.cpp.get-point-x-repair-checkpoint` as the source baseline.
+
+`get-point-x-operand-control-*` is a completed read-only compiler replay.
+It exits normally and reproduces all 1,592 ordinary bytes. At canonical
+sorting, shooter X remains a kind-2 field: the fix is not promotion to a
+memory operand. Its field ordinal is now 657 and its key is 0x15220. The
+other input is a kind-6 memory read through the inlined vector operator's
+kind-2 `_v` formal, displacement zero, key 0x10008. The field therefore
+sorts first. Previously, the direct this+0x54 memory input had key 0x10256dd
+and sorted ahead of the field. Y retains the target's opposite ordering:
+its memory key 0x102523d exceeds its field key 0x15260. This is an inlining
+and address-tree effect, despite the equivalent source arithmetic.
+
+The eight-owner checkpoint has six strict passes: enemy interpolation,
+Line get_point (84 bytes), all three completed curve owners and the polar
+helper (32 bytes). Line EX remains 1,592 bytes; Line on_tick remains 1,475
+against 1,473. No Factory result is submitted by this diagnostic replay.
+
+## Earlier SHOOT X ordering and complete observer boundaries
 
 Earlier notes called the remaining coordinate mismatch Y. The real layout
 is X at `this+0x54` and shooter `ESP+0x20`; Y is at `this+0x58` and
@@ -414,3 +445,8 @@ sufficient to reproduce the linked target bytes, but do not uniquely identify
 the original C++. An earlier `*-early-gate*` variant applies three additional
 X-key changes during Initial and is preserved separately; the final
 composition above uses only the six prelower changes.
+
+The polar helper is a source-local static and receives no /INCLUDE root
+from the annotation keepalive pass. The build script explicitly skips such
+statics, and the actual link response confirms this. An artificial private
+keepalive therefore does not explain the extra return move in that control.
