@@ -12,8 +12,11 @@ incomplete in the local strict audit. Its cursor calculation, EDX entry index, E
 BLEND masks and both branch-local member increments agree with the target.
 Qualified get_point inlining repairs SHOOT's X input order. The remaining
 difference after code alignment is the common loop/return block's late position.
-`get-point-x-repair-checkpoint-strict.json` rechecks eight complete owners:
-six pass, while Line EX and Line on_tick remain incomplete.
+The 2026-11-26 restored-source report,
+`handoff-cleanup-restored-strict.json`, rechecks nine complete owners: seven
+pass, while Line EX and Line on_tick remain incomplete. The complete ordinary
+Line EX body still hashes to
+`29cd1e02444d8935f3ea1cf1a9efb48fefbf898ec06c6a3877541778ae85fdd5`.
 All private controls and scripts below are in
 `.analysis/line-run-ex-compiler/`; preserve that directory and the incremental
 build. These diagnostic controls do not establish Factory acceptance.
@@ -323,6 +326,17 @@ storage must not be traversed as an arithmetic destination. The completed
 control restricts expression traversal to ordinary instruction nodes.
 
 
+## A small if-chain control remains a comparison ladder
+
+`if-chain-switch-probe.cpp` compares eight dense unsigned values, 1 through 8,
+each calling a separate external action before a common counter increment.
+With the pinned compiler's native `/O2` profile, omitting `/GL`, the if/else
+form stays a linear comparison ladder. The explicit switch emits an eight-entry
+jump table. The source, input flags, object and disassembly remain under the
+`if-chain-switch-probe-*` prefix. This result applies to that small native
+control; no complete Line EX if-chain rewrite or equivalent LTCG control was
+tested. It does not establish a general rule about switch recognition.
+
 ## The first threaded traversal explains the late common block
 
 `line-threaded-dfo-control-*` pairs GrInitDFOWalk's actual entry/return
@@ -389,9 +403,35 @@ jump that this observer never saw. The historical pre-typed
 `shared-advance-dfo-block-order.jsonl` provides the explicit-goto contrast.
 Its WAIT post-assignment block 213755 still ends in JMP after the first
 FgChangeNextToDFOEx return, immediately before $advance_ex. By the next
-FgThreadDFOAndFreeDeadCode entry that JMP is absent. This narrows a future
-deletion trace to the intervening cleanup, but is not yet a deletion event
-for the retained typed source.
+FgThreadDFOAndFreeDeadCode entry that JMP is absent. The completed typed
+lifetime trace below identifies the actual deletion.
+
+`typed-goto-lifetime.jsonl` follows the same explicit shared advance under the
+current typed-BLEND/get_point context. It selects WAIT's JMP tuple `0x3d38f94`
+from thirteen jumps to `$advance_ex`, label 100088. The jump survives the first
+FgChangeNextToDFOEx, immediately before the advance with only a scope marker
+between them. Its actual `Tuple::Free` event has this caller chain:
+
+```text
+FgFlowOpts+0x49e
+LgBuildLoopGraph+0xd7
+FgDFOReorderLoopRecogEx+0x3e
+InitialOptsAndSetup+0x91b
+```
+
+The pinned FgFlowOpts starts at RVA 0x71cd0. Its call to `Tuple::Remove` is
+at 0x72169, returning to 0x7216e. The disassembly in
+`fg-flow-opts.disasm.txt` shows that this path follows a scan where all outgoing
+edges target the immediately next block, then removes an unconditional,
+unmarked GOTO. The trace observes the selected jump being freed at that site;
+the condition explains why an explicit source goto and its scope marker do
+not preserve the edge. This supersedes the earlier recommendation to locate
+the deletion. A useful source control must survive this cleanup.
+
+The observer exits normally without Python errors and reproduces every
+ordinary 1,592-byte owner byte. Its paired strict report again has seven
+passing owners and the two incomplete Line owners. The temporary source was
+restored before the handoff build; the trace remains diagnostic evidence.
 
 `get-point-dfo-speedup-first-*` tests the stronger alternative: six outgoing
 successor lists along the low-opcode route are reordered so the first walk

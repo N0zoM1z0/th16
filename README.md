@@ -9,10 +9,6 @@ Agent workflow: follow the highest-priority requirements in [AGENTS.md](AGENTS.m
     alt="TH16 title artwork composited from the original title.anm textures">
 </p>
 
-<p align="center">
-  <img src="resources/progress.svg" alt="Historical TH16 strict-audit snapshot from 2026-11-15, not the current source">
-</p>
-
 This project reconstructs C++ source for the original Japanese TH16 version
 1.00a executable. The source is built with the historical MSVC 2017 (v141_xp)
 toolchain under whole-program optimization (/GL, /LTCG). The intended
@@ -45,41 +41,36 @@ Original executables, game data, Ghidra projects, decompiler output, build
 outputs and downloaded tools are private and never committed. The title image
 above is composited from the game's own textures for identification only.
 
-## Current status (2026-11-23)
+## Current status (2026-11-26)
 
-The current source checkpoint is **de0cb82**
-(gpt-web: return packed laser shot origins). The six source commits since
-origin/main are local and have not been pushed; this handoff/documentation
-update is also local. The worktree is clean. The latest incremental build
-compiles **1,166 annotated functions**.
+The retained source includes the Line EX get_point repair from **4e7e4b0**.
+The temporary explicit-goto experiment was reverted.
+The incremental build completes with **1,166 annotated functions**. Its focused
+local strict report compares complete owners and independent linkage bindings:
 
-Current focused normalized instruction comparisons:
+| Owner (target VA) | Target / candidate bytes | Local strict result |
+| --- | ---: | --- |
+| EnemyData::step_interpolators (0x41bb50) | 1,692 / 1,692 | pass |
+| LaserCurveInf::on_tick (0x4377d0) | 1,305 / 1,305 | pass |
+| LaserCurveNode::step_back (0x438370) | 986 / 986 | pass |
+| LaserCurveInf::run_ex (0x438cb0) | 1,548 / 1,548 | pass |
+| LaserLineInf::get_point (0x431050) | 84 / 84 | pass |
+| laser_sincosmul (0x43ad00) | 32 / 32 | pass |
+| ZunTimer::set_value (0x406490) | 68 / 68 | pass |
+| LaserLineInf::run_ex (0x431fe0) | 1,588 / 1,592 | incomplete |
+| LaserLineInf::on_tick (0x432f40) | 1,473 / 1,475 | incomplete |
 
-| Owner (target VA) | Target / candidate bytes | Target / candidate instructions | Local ratio |
-| --- | ---: | ---: | ---: |
-| EnemyData::ecl_run_over_300 (0x41dcb0) | 21,408 / 21,584 | 4,562 / 4,833 | **0.9224** |
-| AnmVm::run (0x45f980) | 14,177 / 14,192 | 3,837 / 3,825 | **0.9514** |
-| EclRunContext::ecl_run (0x472030) | 7,046 / 6,976 | 1,807 / 1,701 | **0.9042** |
-| LaserLineInf::run_ex (0x431fe0) | 1,588 / 1,600 | 344 / 346 | **0.9159** |
-| LaserCurveInf::run_ex (0x438cb0) | 1,548 / 1,568 | 360 / 368 | **0.9698** |
-| LaserLineInf::on_tick (0x432f40) | 1,473 / 1,488 | 356 / 354 | **0.9408** |
-| LaserCurveInf::on_tick (0x4377d0) | 1,305 / 1,312 | 332 / 332 | **1.0000** |
-| LaserCurveNode::step_back (0x438370) | 986 / 992 | 248 / 248 | **1.0000** |
-| EnemyData::step_interpolators (0x41bb50) | 1,692 / 1,696 | 421 / 421 | **0.9976** |
-| InterpFloat2::step_radial_dist (0x425570) | 757 / 752 | 207 / 205 | **0.9175** |
+The private report is
+`.analysis/line-run-ex-compiler/handoff-cleanup-restored-strict.json`.
+Line EX's remaining aligned-code difference is the placement of its common
+increment, loop check and return. Compiler traces now identify both the late
+motion rejection and the earlier removal of an explicit WAIT jump. The
+[investigation](docs/knowledge/line-run-ex-compiler-trace.md) records these
+findings and the effects of caller/register context on the complete owner.
 
-These are local instruction-similarity measurements, not exactness claims.
-The focused strict audits still report ecl_run_over_300 incomplete because
-two linked fields lack independent symbol/addend bindings;
-step_interpolators differs in 24 bytes; LaserCurveInf::on_tick differs in
-6 bytes; and LaserCurveNode::step_back differs in 4 bytes. Even a local
-ratio of 1.0000 is not proof of byte-, relocation- or owner-exactness.
-
-The current Factory accepted snapshot is still inventory-only and returns no
-Oracle results. Earlier isolated pilot receipts are retained as historical,
-separate evidence; they are not current shared accepted facts. Source-origin
-review and full production closure remain open. The progress image above is
-also historical: it records the 2026-11-15 local audit, not current status.
+These local results have not been submitted to Factory. The current shared
+accepted snapshot is inventory-only and returns no Oracle results. Historical
+pilot receipts are separate evidence; full production closure remains open.
 
 For the next agent, read AGENTS.md, then the
 [current handoff](docs/NEXT_AGENT.md) and
@@ -87,6 +78,17 @@ For the next agent, read AGENTS.md, then the
 [2026-11-21 handoff](docs/HANDOFF_20261121.md) and
 [2026-11-19 chronology](docs/HANDOFF_20261119.md) are historical records;
 their checkpoint hashes and measurements have been superseded.
+
+<details>
+<summary>Historical local audit image (2026-11-15)</summary>
+
+This image predates the current source and is not a current acceptance total.
+
+<p align="center">
+  <img src="resources/progress.svg" alt="Historical TH16 local strict-audit snapshot from 2026-11-15">
+</p>
+
+</details>
 
 ## Project map
 
