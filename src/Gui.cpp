@@ -1283,8 +1283,6 @@ void Gui::update_bombs(i32 bombs, i32 fragments)
 
 // The marker is the stage table's for boss 0 from chapter 0x29 on, and
 // boss 1's before that.
-// TODO: the original tests the script again after adding 0xa4 instead of
-// using the add's flags.
 // FUNCTION: TH16 0x42c480
 void Gui::show_boss_marker()
 {
@@ -1292,24 +1290,24 @@ void Gui::show_boss_marker()
     {
         return;
     }
-    i32 script;
+    i32 script = -1;
     if (g_Globals.chapter >= 0x29)
     {
-        script = g_stage_data->bosses[0].marker_script;
+        if (g_stage_data->bosses[0].marker_script >= 0)
+        {
+            script = g_stage_data->bosses[0].marker_script + FRONT_ANM_BOSS_MARKER;
+        }
     }
     else
     {
-        script = g_stage_data->bosses[1].marker_script;
+        if (g_stage_data->bosses[1].marker_script >= 0)
+        {
+            script = g_stage_data->bosses[1].marker_script + FRONT_ANM_BOSS_MARKER;
+        }
     }
     if (script >= 0)
     {
-        // The binary performs this addition as 32-bit unsigned arithmetic,
-        // then checks the wrapped result as signed before creating the VM.
-        u32 marker_script = (u32)script + FRONT_ANM_BOSS_MARKER;
-        if ((i32)marker_script >= 0)
-        {
-            boss_marker_id = create_effect_via_pointer(front_anm, (i32)marker_script, -1, NULL);
-        }
+        boss_marker_id = create_effect_via_pointer(front_anm, script, -1, NULL);
     }
 }
 
