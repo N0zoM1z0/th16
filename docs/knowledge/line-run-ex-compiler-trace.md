@@ -134,6 +134,7 @@ aliasing changes and duplicated completion paths:
 | `forced-command-step-reference` | 1592 | Passing the cursor by reference restores its retained address, but regresses X. Every byte equals the earlier typed-blend checkpoint, despite the qualified get_point call inside the helper |
 | `for-step-with-restart` | 1592 | A for-loop common step with explicit restart gotos preserves all branch-local increments and reproduces every retained byte; unlike the earlier for-member control, it does not remove those increments |
 | `get-point-speedup-continue` | 1596 | Under the retained get_point context, the separate SPEEDUP increment remains and jumps past the shared XMM1 zero. The late common increment/return also remains |
+| `typed-fresh-index-guard` | 1592 | A fresh saved index before the bound check is now fully byte-neutral under typed blend/get_point. The older 1,608-byte result belongs to the earlier manual-mask context |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -396,6 +397,24 @@ does not establish identical caller optimization metadata. The broader
 Timer boundary does not solve this owner; its memory/register effects would
 need finer isolation before assigning one specific cause. Preserve
 `timer-boundary-*`; neither private image is a formal source result.
+
+## The extra SPEEDUP increment is compared but not tail-merged
+
+`speedup-tail-merge-control-*` observes FgDoCommonTailMerge under the
+separate-SPEEDUP/get_point source. It exits normally and reproduces every
+ordinary byte of the 1,596-byte owner. The hook records actual instruction
+comparisons and returns, rather than inferring an optimizer decision from
+the final duplicate instructions.
+
+In the SPEEDUP-related pairs, FgMdInstrsMatch accepts the two machine INCs
+and rejects their different predecessors. The subsequent cost check records
+one matched instruction, cost 11 and threshold 20; FgDoCommonTailMerge returns
+false. There are fourteen such cost checks across the two observed late-flow
+calls, including the other matching increment tails. The complete linked
+control and JSONL retain the pair neighborhoods and return results.
+This explains why a source-local SPEEDUP increment cannot simply be assumed
+to merge back into the retained common advance. The shared loop/return
+placement still requires an ordinary-source repair.
 
 ## Loop recognition copies the condition; CodeMotion later moves that copy
 

@@ -131,6 +131,16 @@ recipe and object graph were not changed. The retained get_point source is
 restored. The nine-owner flow-cleanup-restored-strict.json check completes
 with seven passes; Line EX and on_tick remain incomplete.
 
+The completed read-only speedup-tail-merge-control-* replay reproduces its
+entire 1,596-byte ordinary owner. Actual INC comparisons match one instruction,
+then record cost 11 against threshold 20 and return false. Do not assume that
+adding a separate SPEEDUP increment will be merged away. The typed fresh-index
+guard is now fully byte-neutral; its older 1,608-byte result was measured
+before the current aliasing/get_point context. Both controls are restored to
+the retained source. The final incremental build and nine-owner
+tail-merge-restored-strict.json report complete with seven passes; Line EX
+and on_tick remain incomplete.
+
 Keep coherent checkpoints local and do not push unless asked.
 
 ## Historical checkpoint (2026-11-23)
