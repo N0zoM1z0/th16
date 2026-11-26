@@ -2649,15 +2649,13 @@ i32 LaserCurveInf::on_draw()
 // or by speed and angle deltas from the given time, followed by a straight
 // one after a duration (a) unless that is negative. An instruction already
 // running stops the list.
-// TODO: the original keeps ex as a pointer (this + 0x600 + index * 0x2c) where ours addresses through this plus the scaled index; case 4 stores start_pos.z after loading the angle, and (f32)b goes to xmm1.
 // FUNCTION: TH16 0x438cb0
 void LaserCurveInf::run_ex()
 {
     while (ex_index < 0x12)
     {
         i32 index = ex_index;
-        BulletEx *volatile ex_ptr = &inner.ex[ex_index];
-        BulletEx *ex = ex_ptr;
+        BulletEx *ex = &inner.ex[index];
         if (ex->type == 0)
         {
             return;
@@ -2688,9 +2686,10 @@ void LaserCurveInf::run_ex()
             node->velocity.z = 0.0f;
             node->speed_delta = ex->r;
             node->angle_delta = ex->s;
-            if (ex->a >= 0)
+            const i32 duration = ex->a;
+            if (duration >= 0)
             {
-                node->end_time = (f32)ex->a + (f32)ex->b;
+                node->end_time = (f32)ex->b + (f32)duration;
                 node = append_node(node->end_time);
                 node->mode = LASER_CURVE_MOTION_STRAIGHT;
                 node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
@@ -2716,9 +2715,10 @@ void LaserCurveInf::run_ex()
             node->velocity.z = 0.0f;
             node->speed_delta = ex->r;
             node->angle_delta = ex->s;
-            if (ex->a >= 0)
+            const i32 duration = ex->a;
+            if (duration >= 0)
             {
-                node->end_time = (f32)ex->a + (f32)ex->b;
+                node->end_time = (f32)ex->b + (f32)duration;
                 node = append_node(node->end_time);
                 node->mode = LASER_CURVE_MOTION_STRAIGHT;
                 node->prev->get_state(&node->start_pos, &node->speed, &node->angle, node->prev->end_time);
@@ -2804,10 +2804,11 @@ void LaserCurveInf::run_ex()
             shooter.start_transform = a & 0xff;
             shooter.count = ex->b;
             ex_index++;
-            shooter.layers = ex[1].a;
-            shooter.ang_aim = ex[1].r;
-            shooter.sfx_flags = ex[1].b;
-            shooter.ang_bullet_dist = ex[1].s;
+            ex++;
+            shooter.layers = ex->a;
+            shooter.ang_aim = ex->r;
+            shooter.sfx_flags = ex->b;
+            shooter.ang_bullet_dist = ex->s;
             memcpy(shooter.ex, inner.ex, sizeof(inner.ex));
             g_BulletManager->shoot_bullets(&shooter);
             ex_index++;

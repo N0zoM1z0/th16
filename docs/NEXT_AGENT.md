@@ -5,32 +5,32 @@ the dated 2026-11-19 and 2026-11-21 notes are historical.
 
 ## Active reconstruction (2026-11-26)
 
-`EnemyData::step_interpolators` (`0x41bb50`) now passes the complete local
-strict comparison: 1692 / 1692 bytes, 421 instructions and 48 independently
-bound linked fields. Removing the camera helper's two volatile reads restores
-stack sharing for the earlier radial results and position-return buffers;
-the frame falls from 0x48 to the target's 0x38. A used Y field reference then
-recovers the remaining camera addition order. Read
-[the compiler investigation](knowledge/enemy-interpolators-compiler-trace.md)
-for the interference graph, exact producer and later canonicalization keys.
-The completed read-only replay reproduces the entire ordinary owner and
-confirms both the Y key `0x10008` and the repaired stack colors. Preserve
-`.analysis/enemy-interpolators-compiler/` and the incremental build.
+`LaserCurveInf::run_ex` (`0x438cb0`) now passes the complete local strict
+comparison: 1548 / 1548 bytes and 29 independently bound linked fields.
+The extent includes 1512 code bytes, five absolute jump entries and a
+16-byte selector map. SHOOT advances the actual instruction cursor for its
+paired command, giving NColor two different definitions and preventing the
+full pointer from being folded into every field address. A named integer
+duration then repairs conversion-tree ordering. Read
+[the compiler investigation](knowledge/curve-run-ex-compiler-trace.md) and
+preserve `.analysis/curve-run-ex-compiler/` and the incremental build. The
+completed read-only replay reproduces the full ordinary owner, confirms the
+nonzero definition comparison and records the repaired conversion keys.
 
-The final focused report also rechecks both completed curve owners:
-`.analysis/enemy-interpolators-compiler/enemy-interpolators-final-strict.json`.
-`LaserCurveInf::on_tick` (`0x4377d0`) passes 1305 / 1305 bytes and 30 linked
-fields; `LaserCurveNode::step_back` (`0x438370`) passes 986 / 986 and 14 fields.
-Their compiler evidence remains in
+The final focused report rechecks all four completed owners:
+`.analysis/curve-run-ex-compiler/final-strict.json`. Enemy interpolation passes
+1692 / 1692 bytes and 48 fields; curve tick passes 1305 / 1305 and 30 fields;
+curve reverse-step passes 986 / 986 and 14 fields. Their evidence remains in
+[the interpolation note](knowledge/enemy-interpolators-compiler-trace.md),
 [the tick note](knowledge/curve-tick-compiler-trace.md) and
-[the reverse-step note](knowledge/curve-step-back-compiler-trace.md), with
-private replay controls in `.analysis/curve-tick-compiler/` and
-`.analysis/step-back-compiler/`. Factory acceptance remains not-submitted;
-the shared accepted snapshot is inventory-only.
+[the reverse-step note](knowledge/curve-step-back-compiler-trace.md).
+Preserve their three compiler-evidence directories. Factory acceptance remains
+not-submitted; the current shared accepted snapshot is inventory-only.
 
-Choose and freshly compare only one next complete owner. The historical
-`LaserCurveInf::run_ex` (`0x438cb0`) comparison is a useful next candidate,
-but its old 0.9698 similarity does not establish current bytes or linkage.
+After checkpointing this owner, freshly compare only
+`LaserLineInf::run_ex` (`0x431fe0`). Its complete target extent is 1588 bytes;
+inspect its instruction-cursor definitions and complete switch data before
+changing source. Its historical similarity is not a current strict result.
 Keep coherent checkpoints local and do not push unless the user asks.
 
 ## Historical checkpoint (2026-11-23)
@@ -65,13 +65,14 @@ receipts are separate from the current shared snapshot. Do not describe local
 similarity, local strict reports, imported labels or historical pilot receipts
 as current accepted exactness.
 
-Focused strict results (both curve owners and enemy interpolation are current;
+Focused strict results (the three curve owners and enemy interpolation are current;
 the ECL row requires a focused refresh before further work):
 
 | Owner | Local strict result | Remaining difference |
 | --- | --- | --- |
 | EnemyData::ecl_run_over_300 (0x41dcb0) | incomplete | Two linked fields lack independent symbol/addend bindings |
 | EnemyData::step_interpolators (0x41bb50) | pass | 1692 / 1692 bytes; 48 linked fields; Factory not-submitted |
+| LaserCurveInf::run_ex (0x438cb0) | pass | 1548 / 1548 bytes; 29 linked fields; Factory not-submitted |
 | LaserCurveInf::on_tick (0x4377d0) | pass | 1305 / 1305 bytes; 30 linked fields; Factory not-submitted |
 | LaserCurveNode::step_back (0x438370) | pass | 986 / 986 bytes; 14 linked fields; Factory not-submitted |
 
