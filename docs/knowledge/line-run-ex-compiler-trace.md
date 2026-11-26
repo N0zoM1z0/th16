@@ -143,6 +143,9 @@ aliasing changes and duplicated completion paths:
 | `selector-only-local` | 1592 | A named u32 used only by switch is eliminated; all retained bytes and the rejected state-machine predicate are unchanged |
 | `guard-and-selector-local` | 1600 | Using that local for the zero guard as well changes dispatch to ECX and LEA, but leaves the late common loop and unnamed candidate symbol |
 | `natural-nonzero-setters` | 1592 | Using ordinary set() at OFFSCREEN, WRAP and WAIT instead of the forced-inline helper preserves every retained byte; the seven other closed/context owners still pass |
+| `scalar-advance-phi` | 1592 | A next-index scalar joins SPEEDUP's result with the other normal completions before publishing it. This reaches the two-input integer PHI tail-merge gate, but safety rejects it; every retained byte is unchanged |
+| `return-next-index-step` | 1716 | Returning the next index from the forced-inline command step introduces additional counter publication and grows the complete owner; the seven other closed/context owners pass |
+| `pre-dispatch-next-index` | 1660 | Preparing SPEEDUP's next index before dispatch still fails the actual SSA safety walk and adds per-path counter calculations; the other seven focused owners pass |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -379,6 +382,17 @@ its subsequent pool-allocation watch event does not identify the increment.
 A source change must survive flow cleanup, rather than merely alter the
 first reverse-postorder list.
 
+The ordinary `get-point-dfo-read-only-graph.jsonl` already has no trailing
+WAIT JMP at the first DFS entry: its post-assignment block 213770 falls directly
+into common label 100085. Do not assume a later pass deleted an ordinary WAIT
+jump that this observer never saw. The historical pre-typed
+`shared-advance-dfo-block-order.jsonl` provides the explicit-goto contrast.
+Its WAIT post-assignment block 213755 still ends in JMP after the first
+FgChangeNextToDFOEx return, immediately before $advance_ex. By the next
+FgThreadDFOAndFreeDeadCode entry that JMP is absent. This narrows a future
+deletion trace to the intervening cleanup, but is not yet a deletion event
+for the retained typed source.
+
 `get-point-dfo-speedup-first-*` tests the stronger alternative: six outgoing
 successor lists along the low-opcode route are reordered so the first walk
 reaches the common increment through SPEEDUP. Every CFG destination, incoming
@@ -547,6 +561,72 @@ This explains why a source-local SPEEDUP increment cannot simply be assumed
 to merge back into the retained common advance. The shared loop/return
 placement still requires an ordinary-source repair.
 
+### Conditional termination excludes late block copying before its budget check
+
+`code-motion-budget-read-only-*` and the fuller `code-motion-scan-read-only-*`
+observe FgCodeMotion's distinct small-block copying path. Both normally exiting
+replays reproduce every retained byte. For each of the nine jumps to common
+label 100085, the scan reaches machine conditional branch opcode 0xf with a
+nonnull condition operand at +0x38. The check at RVA 0xe297c skips the candidate
+before the byte-budget loop. Increasing an assumed copying budget would not
+address this observed rejection.
+
+The measured budget is 20 encoded bytes. The ordinary replay accepts one
+11-byte INC/JMP pair associated with BLEND. Its other measured candidate starts
+with BOUNCE's DEC/MOV/MOV/store sequence and exceeds the budget after 22 bytes.
+These are not the common INC/loop-test block. The observer captures the actual
+decode output bytes, avoiding guesses from internal opcode numbers.
+
+`code-motion-scan-vector1-*` repeats the prior single-vector-register
+intervention with the same observer. Each common-label scan instead ends at
+unconditional JMP opcode 0x10 with no condition operand. All nine enter the
+budget path: the compiler encodes a six-byte member INC plus a five-byte JMP,
+then copies that pair. Together with the existing BLEND copy, ten pairs are
+accepted. The complete normal-exit output reproduces every byte of the earlier
+1,636-byte vector-clobber diagnostic, and the metadata bit is restored.
+
+This identifies where the additional increments are introduced. Keep this
+CodeMotion byte budget separate from FgDoCommonTailMerge's cost/threshold
+measurement: they are different decisions. The ordinary common block is
+excluded by its conditional terminator, while its attempted movement is still
+excluded by WAIT's fall-through predecessor.
+
+### Early SSA merging sees the scalar control but rejects it
+
+`early-tail-speedup-control-*` follows GoptSsaBasedTailMerge at RVA 0x187d2c
+under the already measured separate-SPEEDUP source. The normal-exit replay
+reproduces its full 1,596-byte owner. The pass observes three two-input float
+PHIs; each reaches the single-use checks and receives a false safety result.
+No counter PHI or accepted merge is observed.
+
+The `scalar-advance-phi` source control computes a next-index local in SPEEDUP
+and at the other normal completions, then publishes it at one shared label.
+Its complete ordinary owner is byte-identical to the retained source and the
+same seven context/closed owners pass. `scalar-advance-phi-control-*` confirms
+that this source reaches the intended additional two-input integer PHI,
+named _next_index. Both inputs pass the single-use gates. The first actual
+GoptSsaBasedTailMerge_Safety call returns false, so no merge is selected.
+`scalar-safety-path-control-*` observes the rejection branch: the expression's
+side-effect query returns zero, then the walk encounters unconditional jump
+opcode 0x74d before the block-end marker. The helper permits compare, conditional
+branch and marker opcodes there, but rejects this jump. The replay exits
+normally and reproduces every retained byte.
+
+The follow-up `pre-dispatch-next-index` prepares SPEEDUP's value before the
+switch, while other normal completions still read the live member after their
+work. Its normal-exit observer again records zero for expression side effects,
+but an intervening ADD opcode 0x723 rejects the safety walk. No expression
+comparison or accepted merge is reached. The ordinary owner grows to 1,660
+bytes, and the other seven focused owners pass. Merely moving a source
+declaration before dispatch does not establish the required compiler tuple
+adjacency; use the actual walk rather than lexical order.
+
+Returning a next-index value from the forced-inline command step is a separate
+failed control. It grows the full owner to 1,716 bytes, distributes counter
+loads/register increments, publishes the result through a shared store and
+regresses X. Its other seven focused owners still pass. Both source controls
+are restored; preserve their snapshots and complete strict reports.
+
 ## The reader constructs the comparison tree before Initial optimization
 
 `switch-lowering-control-*` begins at ReadFunction and follows SwGenSwitch,
@@ -572,6 +652,25 @@ constant to u32: it retains the same four boundary words, the same switch
 stage observations and every ordinary owner byte. Both source spellings
 therefore normalize to this reader representation. The trial is restored;
 do not repeat case-literal casts based only on those high words.
+
+## The pinned linker distinguishes profile modes in the debug record
+
+The target's native dumpbin header view identifies debug type 13's signature
+as 0x4c544347, LTCG. `link-pogo-signature-producer.json` records the pinned
+linker's actual signature writer and mode-label decoder, with its binary hash.
+At writer RVA 0x39a03, the PGU and PGO mode-byte checks and the PGI context-bit
+check precede the ordinary LTCG context-bit check. Their cold branches write
+distinct signatures 0x50475500, 0x50474f00 and 0x50474900; the ordinary path
+writes 0x4c544347. The decoder labels each of these separately.
+
+For this producer, the target's LTCG marker is not evidence of profile-guided
+code generation. There is no basis here for introducing PGO inputs to explain
+the loop layout. The earlier observation that both images contain debug type
+13 was insufficient without inspecting its signature and writer.
+
+A HostX64 control remains untested: the installed HostX64 directories contain
+vcmeta.dll but no compiler/linker backend, and the game prefix is win32. Mere
+directory presence does not establish an available alternative compiler host.
 
 ## A selector name changes candidacy but does not enable state-machine optimization
 

@@ -21,7 +21,7 @@ inlining; its read-only compiler replay reproduces every ordinary owner byte.
 Shooter X remains a kind-2 field. The inlined `_v` formal makes the memory
 input cheaper than that field; Y retains the opposite order.
 
-The latest restored checkpoint is
+The expanded restored caller-context checkpoint is
 `.analysis/line-run-ex-compiler/callee-register-context-restored-strict.json`:
 twelve of fifteen owners pass. Line EX, Line on_tick and the added direct-callee
 context AnmVm::run remain incomplete. The four closed
@@ -31,6 +31,8 @@ and ignored evidence remain under the matching knowledge/evidence names.
 Line get_point (84), the polar helper (32) and Timer set_value (68) also pass
 as context. Factory acceptance is not-submitted; the shared accepted snapshot
 is inventory-only and has no Oracle results.
+The later nine-owner restoration is `ssa-safety-restored-strict.json`: the
+same seven owners pass and Line EX/on_tick remain incomplete.
 
 The proven layout chain is now:
 
@@ -69,17 +71,10 @@ Preserve `callee-context-*`, `callee-register-*`, `callee-vector1-*` and
 than assigning the broad Timer result to unknown memory effects. The formal
 recipe is unchanged; these interventions grant no source result.
 
-The completed state-machine investigation rules out selector naming alone.
-`state-machine-switch-control-*` and `selector-only-state-machine-control-*`
-complete normally and reproduce their ordinary owners. The candidate switch
-uses an unnamed temporary; LgoTupIsCandidateSwitch, potential-state-machine
-and prepare all return zero. Naming a selector local alone is fully byte-neutral;
-using it in the zero guard also gives 1,600 bytes without preserving the name.
-The paired name-record intervention is complete: one metadata write changes
-candidacy/potential to one and finds the common INC, but applicability and
-preparation remain zero. The full ordinary owner is unchanged. Preserve
-`state-machine-name-*`; naming alone is ruled out and establishes no source
-result. The source controls are restored to the retained checkpoint.
+Selector naming alone is ruled out. The `state-machine-name-*` intervention
+enables candidate/potential predicates and finds the common INC, but applicability
+and preparation stay zero and the full ordinary owner is unchanged. Named
+selector source controls either remain byte-neutral or grow the owner.
 
 The stronger first-DFS control `get-point-dfo-speedup-first-*` visits the
 common INC through SPEEDUP by reordering six outgoing lists without changing
@@ -88,6 +83,27 @@ cases and changes SHOOT stack slots/X ordering. Its coincidental 1,588 bytes
 contain 1,551 code bytes plus one alignment byte, unlike the target's 1,550+2.
 It does not repair the owner. Ordinary nonzero Timer set() calls at all three
 Line sites are also fully byte-neutral; that source trial is restored.
+
+`code-motion-scan-*` now explains the extra INCs in the vector-clobber control.
+All nine ordinary common-label scans stop at a conditional branch and skip
+small-block copying before its budget check. With the extra vector constraint,
+the same scans stop at unconditional JMPs; each INC/JMP pair is 11 bytes and
+is copied under the 20-byte budget. This is separate from late tail-merging.
+
+Early SSA merging is also traced. `scalar-advance-phi` reaches its two-input,
+single-use integer PHI gate, but safety rejects an intervening unconditional
+JMP despite a zero side-effect result. Preparing the value before dispatch
+instead rejects an intervening ADD and grows to 1,660 bytes. A returning command
+step grows to 1,716. These controls are restored. The ordinary first-DFS input
+already has WAIT fall-through. In the historical explicit shared-advance
+control, its JMP survives the first reorder and disappears before the next
+threaded traversal. Trace the deletion in the retained typed explicit-goto
+control next; do not assume the ordinary version originally had a JMP.
+
+The target's LTCG signature was checked against the pinned linker's writer,
+which distinguishes PGI/PGO/PGU before selecting LTCG. This gives no basis for
+introducing profile inputs. HostX64 directories have only vcmeta.dll; no
+alternative compiler host was available or tested.
 
 Keep coherent checkpoints local and do not push unless asked.
 
