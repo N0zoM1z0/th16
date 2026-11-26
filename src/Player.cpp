@@ -189,12 +189,12 @@ HARNESS_CALLED i32 Player::check_hit_rect(Float3 *pos, Float3 *size, i32 graze_o
     f32 half_x = size->x * 0.5f;
     f32 center_x = pos->x;
     f32 half_y = size->y * 0.5f;
+    f32 center_y = pos->y;
     D3DXVECTOR3 lo;
     D3DXVECTOR3 hi;
-    hi.x = center_x + half_x;
-    f32 center_y = pos->y;
     lo.x = center_x - half_x;
     lo.y = center_y - half_y;
+    hi.x = center_x + half_x;
     hi.y = center_y + half_y;
     if (hurtbox.min_pos.x > hi.x || hurtbox.min_pos.y > hi.y || lo.x > hurtbox.max_pos.x ||
         lo.y > hurtbox.max_pos.y)
