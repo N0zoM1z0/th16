@@ -3080,6 +3080,7 @@ i32 TitleInf::do_spell_practice_subseason()
 // FUNCTION: TH16 0x456a20
 i32 TitleInf::do_spell_practice_difficulty()
 {
+    DECOMP_DEAD_DOUBLE_3;
     switch (substate)
     {
     case 0:

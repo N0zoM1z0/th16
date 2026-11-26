@@ -789,6 +789,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x00455900,TitleInf::do_spell_practice_row,reference-00455900,local-strict-pass,1096,1096,1096,.analysis/reference-audit.json
 0x00456060,spell_practice_row_seen,reference-00456060,local-strict-pass,80,80,80,.analysis/reference-audit.json
 0x004569A0,TitleInf::highlight_spell_row,reference-004569a0,local-strict-pass,119,119,119,.analysis/reference-audit.json
+0x00456A20,TitleInf::do_spell_practice_difficulty,reference-00456a20,local-strict-pass,812,812,812,.analysis/reference-audit.json
 0x00456D50,TitleInf::on_draw__spell_practice_histories,reference-00456d50,local-strict-pass,595,595,595,.analysis/reference-audit.json
 0x00456FB0,Arcfile::Arcfile,reference-00456fb0,local-strict-pass,30,30,30,.analysis/reference-audit.json
 0x00456FD0,Arcfile::~Arcfile,reference-00456fd0,local-strict-pass,5,5,5,.analysis/reference-audit.json

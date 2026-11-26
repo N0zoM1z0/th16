@@ -877,7 +877,7 @@ address,name,source_file,symbol,result,reason,evidence
 0x00456060,spell_practice_row_seen,src/MainMenu.cpp,?spell_practice_row_seen@@YGHHH@Z,exact,,.analysis/reference-audit.json
 0x004560B0,TitleInf::load_spell_list,src/MainMenuStates.cpp,?load_spell_list@TitleInf@@QAEHHHPAHH@Z,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
 0x004569A0,TitleInf::highlight_spell_row,src/MainMenuStates.cpp,?highlight_spell_row@TitleInf@@QAEHH@Z,exact,,.analysis/reference-audit.json
-0x00456A20,TitleInf::do_spell_practice_difficulty,src/MainMenuStates.cpp,?do_spell_practice_difficulty@TitleInf@@QAEHXZ,incomplete,complete candidate owner differs from the independent target boundary,.analysis/reference-audit.json
+0x00456A20,TitleInf::do_spell_practice_difficulty,src/MainMenuStates.cpp,?do_spell_practice_difficulty@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00456D50,TitleInf::on_draw__spell_practice_histories,src/MainMenuStates.cpp,?on_draw__spell_practice_histories@TitleInf@@QAEHXZ,exact,,.analysis/reference-audit.json
 0x00456FB0,Arcfile::Arcfile,src/Arcfile.cpp,??0Arcfile@@QAE@XZ,exact,,.analysis/reference-audit.json
 0x00456FD0,Arcfile::~Arcfile,src/Arcfile.cpp,??1Arcfile@@QAE@XZ,exact,,.analysis/reference-audit.json
