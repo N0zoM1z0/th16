@@ -117,6 +117,9 @@ aliasing changes and duplicated completion paths:
 | `cached-unsigned-opcode` | 1608 | Capturing type once changes dispatch register use and folds ANGLE/WRAP flag updates to constants; X ordering and the late common loop remain wrong |
 | `default-at-speedup-exit` | 1592 | An explicit default label at SPEEDUP's existing break, keeping the one common increment, is byte-neutral |
 | `speedup-explicit-bound` | 1608 | Explicit SPEEDUP increment and exit guard retain a separate memory comparison and jump, plus the late common increment/test/return; no repair |
+| `for-member-advance` | 1572 | Moving the member increment to a for-loop step removes required branch-local increments, folds away the saved TAG index, retains LOOP's decrement, and leaves X and the late common tail wrong |
+| `effective-inline-policy` | 1592 | Removing noinline from both the Line declaration and definition is now a real policy control and is byte-neutral; six other focused owners pass and the on_tick diagnostic byte span is unchanged |
+| `index-without-register` | 1592 | Removing the saved-index register keyword with the header restored is byte-neutral; the same six other focused owners pass |
 
 The byte-neutral controls reproduce the checkpoint's entire raw body, not
 just its code alignment. The shared-X control demonstrates why matching
@@ -291,6 +294,59 @@ not a source repair or a statement about the original compiler's graph.
 The earlier `default-at-speedup-exit-graph.jsonl` starts with a generic
 102-block DFS before the threaded traversal. Its first DFS and first
 reorder are different graph instances and must not be paired. The default
-label source control itself is valid and byte-neutral. Continue by locating
-loop-condition duplication/rotation and subsequent block moves, rather than
-assuming a different default-label position will reproduce the early loop.
+label source control itself is valid and byte-neutral. Track condition
+contents as well as labels through the loop recognition and final
+CodeMotion splice described below.
+
+
+## Loop recognition copies the condition; CodeMotion later moves that copy
+
+The completed `line-loop-rotation-*` replay preserves all ordinary bytes.
+Its first FgDFOReorderLoopRecogEx already copies the original index-bound
+condition to a latch labeled 213768. The old 100081 label remains at the
+body entry and now compares the instruction type against zero. The operand
+trees, including constants 18 versus 0, distinguish these roles; a persistent
+label alone does not prove persistent semantics. The six observed FgMoveBlock
+calls come from LgRemoveBreakBlocks1 and do not hoist the common increment.
+FgMoveBlock's second register argument names the new next block, not an
+insertion predecessor. The common increment stays late through Lower,
+early tail duplication and NColor.
+
+PostCodegenFlow frees the basic-block graph. The old block observer then
+records one flattened tuple chain capped at 250 tuples, which is not evidence
+that the function has become one basic block. `line-loop-final-flow-*` instead
+walks the complete linear tuple list, with actual pass returns and no cap hit.
+This normal-exit replay also reproduces all 1,592 ordinary bytes. At final
+FgCodeMotion entry, the common label is tuple 327 and the copied condition
+label is tuple 349. At return, the common label remains at 327 while the
+condition moves to 331, directly behind the increment. This pass joins the
+late increment to its condition; it does not move the increment to SPEEDUP.
+
+`get-point-pointer-context-strict.json` checks the same translation unit's
+LaserLineInf::get_point at 0x431050: the full 84-byte owner passes locally.
+It calls the same polar helper and reads output X before position X, while
+reading position Y before output Y. Its pointer-output expression provides
+a useful existing source context for comparing operand forms with SHOOT;
+this observation does not by itself identify the required SHOOT rewrite.
+
+
+## WAIT's fall-through rejects hoisting the common increment
+
+`line-can-move-control-*` observes actual FgCanMoveCode entry/return and its
+FgSafeLocation result inside this owner's final FgCodeMotion. The replay
+exits normally and reproduces the complete ordinary 1,592 bytes. There are
+nine attempts targeting common label 100085, starting with the jump following
+SPEEDUP. Every attempt returns null because the previous instruction at the
+move destination is not a safe location. The observed previous instruction
+is the WAIT timer's integer store at this+0x1ec, still falling through into
+the common increment. The final native schedule puts the FP timer store
+after that integer store, so identify the pre-scheduling predecessor from
+the actual compiler snapshot.
+
+The pinned static helper tests the predecessor with FgSafeLocation before
+scanning the destination range. That helper rejects ordinary fall-through
+instructions. A source repair must preserve WAIT's store and continuation
+while changing the resulting
+completion-path graph; forcing the safety result would not preserve that
+fall-through. The ordinary for-loop-step control changes saved-index use
+and completion-path increments without repairing either residual.

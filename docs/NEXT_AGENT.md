@@ -58,8 +58,29 @@ The paired threaded-DFO control now reproduces both the full ordinary owner
 and the exact reverse-postorder block list. The first common-INC visit follows
 WAIT, before the low-opcode table. An explicit SPEEDUP exit guard retains
 separate comparisons and grows the owner to 1,608 bytes, so it is restored.
-Continue from the typed-blend checkpoint by tracing loop-condition duplication
-and rotation through later block moves, with complete-owner checks.
+The completed loop trace shows condition duplication during the first loop
+recognition and a later CodeMotion splice of that condition behind the late INC.
+The complete linear trace avoids the freed-graph observer limit. A focused
+CanMoveCode trace then observes nine common-block relocation attempts, all
+rejected because WAIT's timer store still falls through into the INC. The
+for-member-step control is rejected at 1,572 bytes and restored. See the note
+for those completed normal-exit controls and the 84-byte get_point context pass.
+
+The effective-inline-policy control removes both declaration and definition
+annotations and rebuilds 14 known header consumers. Line is fully byte-neutral;
+the eight-owner report has six passing owners, with Line EX and on_tick still
+incomplete. The on_tick diagnostic byte span also equals the completed baseline
+replay. Removing the saved index's register keyword is also byte-neutral under
+the restored header, with the same focused results. Both source files are now
+restored to the retained typed-blend checkpoint.
+
+The next diagnostic tests a semantics-preserving explicit WAIT-to-common JMP
+at CodeMotion entry, after late-flow simplification. FgMakeGoto's static
+InsertBefore contract is recorded in .analysis/line-run-ex-compiler/loop-hoist-next.txt.
+Do not simply force the safety result: moving the INC without preserving that
+fall-through would break WAIT's continuation. Keep a normal companion control
+and exclude modified-compiler output from source exactness.
+
 Keep coherent checkpoints local and do not push unless asked.
 
 ## Historical checkpoint (2026-11-23)
