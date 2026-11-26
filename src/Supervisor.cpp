@@ -321,13 +321,18 @@ HARNESS_CALLED void Supervisor::swap_transform_matrices(Camera *camera)
 // FUNCTION: TH16 0x43c780
 void __stdcall camera_update_2d(Camera *camera)
 {
-    D3DXVECTOR3 eye;
-    eye.x = camera->viewport.X + camera->viewport.Width * 0.5f;
-    eye.y = camera->viewport.Height * 0.5f + camera->viewport.Y;
+    f32 x = camera->viewport.X + camera->viewport.Width * 0.5f;
+    f32 y = camera->viewport.Height * 0.5f + camera->viewport.Y;
     f32 half_height = camera->viewport.Height / 2;
-    eye.z = half_height / tanf(camera->field_of_view * 0.5f);
-    D3DXVECTOR3 up(0.0f, -1.0f, 0.0f);
-    D3DXVECTOR3 at(eye.x, eye.y, 0.0f);
+    f32 z = half_height / tanf(camera->field_of_view * 0.5f);
+    D3DXVECTOR3 at;
+    D3DXVECTOR3 up;
+    D3DXVECTOR3 eye(x, y, z);
+    up.x = 0.0f;
+    up.y = -1.0f;
+    up.z = 0.0f;
+    at = eye;
+    at.z = 0.0f;
     D3DXMatrixLookAtLH((D3DXMATRIX *)&camera->view_matrix, &eye, &at, &up);
     D3DXMatrixPerspectiveFovLH((D3DXMATRIX *)&camera->projection_matrix, camera->field_of_view,
                                (f32)camera->viewport.Width / (f32)camera->viewport.Height, 1.0f, 10000.0f);
