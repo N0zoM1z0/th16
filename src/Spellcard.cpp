@@ -440,6 +440,28 @@ static inline f32 advance_spellcard_time(ZunTimer &time, i32 &cur)
     return value;
 }
 
+// EnemyManager::find_enemy_by_id, inlined here in the original (marked
+// HARNESS_CALLED so it stays out of line for its own annotation).
+static __forceinline EnemyInf *find_enemy_by_id_inline(EnemyManager *mgr, i32 id)
+{
+    EnemyInf *enemy = NULL;
+    if (id == 0)
+    {
+        return NULL;
+    }
+    EnemyList *node = mgr->active_enemy_list_head;
+    while (node != NULL)
+    {
+        enemy = node->entry;
+        if (enemy->enemy_id == id)
+        {
+            return enemy;
+        }
+        node = node->next;
+    }
+    return enemy;
+}
+
 // Bonus decay, scaled time, title placement, boss marker and early-bomb state.
 // FUNCTION: TH16 0x417930
 i32 Spellcard::on_tick_body()
@@ -486,7 +508,8 @@ i32 Spellcard::on_tick_body()
             flags &= ~SPELLCARD_TEXT_MOVED;
         }
     }
-    EnemyInf *boss = g_EnemyManager->find_enemy_by_id(g_EnemyManager->inner.boss_ids[0]);
+    EnemyManager *emgr = g_EnemyManager;
+    EnemyInf *boss = find_enemy_by_id_inline(emgr, emgr->inner.boss_ids[0]);
     // The boss marker follows the boss with 5% smoothing. Written back through
     // a pointer of its own, so boss_pos is read again for the adds instead
     // of reusing the loads of the subtractions (as in the original).
