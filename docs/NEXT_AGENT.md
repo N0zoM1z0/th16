@@ -44,11 +44,12 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
   EX-copy logic into the line, infinite, and curve laser cases adds 52 bytes
   from the 21,312-byte checkpoint. Reusing the four parsed radial/ellipse
   arguments as their final goal values removes another 16 bytes. The current
-  single-angle `moveAngleTime` dataflow then leaves a 21,380-byte owner (68
-  bytes net growth from that checkpoint), 28 bytes short of the 21,408-byte
-  target; whole-owner alignment is 0.943158.
+  single-angle `moveAngleTime` dataflow with explicit effective-angle stores
+  on the mirrored, unmirrored, and missing-angle paths leaves a 21,396-byte
+  owner (84 bytes net growth from that checkpoint), 12 bytes short of the
+  21,408-byte target; whole-owner alignment is 0.943183.
   Opcode 702 is 439/441 bytes and opcode 711 is 401/394. The remaining large
-  dispatch differences include `moveAngleTime` (527/531 bytes, 111/115
+  dispatch differences include `moveAngleTime` (537/531 bytes, 114/115
   instructions), `moveEllipseTime` (796/780 bytes, 168/169 instructions), and
   `diffF` (163 contiguous candidate bytes versus 189 contiguous target bytes)
   is now resolved structurally: target table `0x423040` entry 0 points to
@@ -57,11 +58,16 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
   remaining branches are inline; counting the out-of-line Easy block gives
   189 B / 44 instructions, exactly the target total. This is code placement,
   not missing source logic.
-  The `moveAngleTime` case now mutates one effective `angle` local directly;
-  the mirrored and missing-angle paths retain the volatile self-store, while
-  the ordinary non-mirrored path does not. This yields 527 bytes versus 531
-  target bytes. The current EH3 graph validates with candidate Fog pointer/cookie/state
-  slots at EBP-`0x40c`/EBP-`0x46c`/EBP-`4`. The original Fog cleanup saves its
+  The `moveAngleTime` case now mutates one effective `angle` local directly
+  and retains volatile self-stores on all three non-constant paths (mirrored,
+  unmirrored, and missing-angle). This yields 537 bytes / 114 instructions
+  versus 531 bytes / 115 target instructions. It adds 16 bytes to the complete
+  owner versus the selective-store variant, bringing the owner within 12 bytes
+  of target and slightly improving whole-owner instruction alignment. The
+  current EH3 graph validates with candidate Fog pointer/cookie/state
+  slots at EBP-`0x40c`/EBP-`0x46c`/EBP-`4`; refresh match-unit candidate
+  addresses with `audit-reference.py --write-units` after owner layout changes.
+  The original Fog cleanup saves its
   pointer at EBP-`0x420`, with cookie/state at EBP-`0x484`/EBP-`4`. Keep the
   original `has_origin` true branch first and preload y before branching; the
   inverted condition experiment was 48 bytes larger and aligned worse (0.9379).

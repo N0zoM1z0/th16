@@ -910,6 +910,10 @@ int EnemyData::ecl_run_over_300()
                     angle = mirror_angle(angle);
                     *(volatile f32 *)&angle = angle;
                 }
+                else
+                {
+                    *(volatile f32 *)&angle = angle;
+                }
             }
             else
             {
