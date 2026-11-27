@@ -1195,29 +1195,32 @@ int EnemyData::ecl_run_over_300()
         InterpFloat2 *radial_i = instr->opcode == ECL_OP_MOVE_ELLIPSE_TIME ? &abs_radial_dist_i : &rel_radial_dist_i;
         InterpFloat2 *ellipse_i = instr->opcode == ECL_OP_MOVE_ELLIPSE_TIME ? &abs_ellipse_i : &rel_ellipse_i;
         f32 speed = get_float_arg(EclFloatArgIndex{2});
-        f32 radius = get_float_arg(EclFloatArgIndex{3});
-        f32 radial_speed = get_float_arg(EclFloatArgIndex{4});
-        f32 ellipse_angle = get_float_arg(EclFloatArgIndex{5});
-        f32 ellipse_ratio = get_float_arg(EclFloatArgIndex{6});
+        Float2 radial_goal;
+        radial_goal.x = get_float_arg(EclFloatArgIndex{3});
+        radial_goal.y = get_float_arg(EclFloatArgIndex{4});
+        Float2 ellipse_goal;
+        ellipse_goal.x = get_float_arg(EclFloatArgIndex{5});
+        ellipse_goal.y = get_float_arg(EclFloatArgIndex{6});
         speed = speed > -999999.0 ? speed : pv->speed;
         f32 initial_speed = pv->speed;
-        if (!(radial_speed > -999999.0))
+        if (!(radial_goal.y > -999999.0))
         {
-            radial_speed = pv->radial.speed;
+            radial_goal.y = pv->radial.speed;
         }
-        if (!(radius > -999999.0))
+        if (!(radial_goal.x > -999999.0))
         {
-            radius = pv->radial.distance;
+            radial_goal.x = pv->radial.distance;
         }
-        f32 initial_radius = pv->radial.distance;
-        f32 initial_radial_speed = pv->radial.speed;
-        ellipse_ratio = ellipse_ratio > -999999.0 ? ellipse_ratio : pv->ellipse_ratio;
-        if (!(ellipse_angle > -999999.0))
+        Float2 radial_initial(pv->radial.distance, pv->radial.speed);
+        if (!(ellipse_goal.y > -999999.0))
         {
-            ellipse_angle = pv->ellipse_angle.value;
+            ellipse_goal.y = pv->ellipse_ratio;
         }
-        f32 initial_ellipse_angle = pv->ellipse_angle.value;
-        f32 initial_ellipse_ratio = pv->ellipse_ratio;
+        if (!(ellipse_goal.x > -999999.0))
+        {
+            ellipse_goal.x = pv->ellipse_angle.value;
+        }
+        Float2 ellipse_initial(pv->ellipse_angle.value, pv->ellipse_ratio);
         i32 time = get_int_arg(0);
         i32 mode = get_int_arg(1);
         if (time <= 0)
@@ -1232,25 +1235,16 @@ int EnemyData::ecl_run_over_300()
         radial_i->bezier_1 = g_zero_vec2;
         radial_i->bezier_2 = g_zero_vec2;
         radial_i->method = static_cast<InterpMode>(mode);
-        radial_i->initial.x = initial_radius;
-        radial_i->initial.y = initial_radial_speed;
-        radial_i->goal.x = radius;
-        radial_i->goal.y = radial_speed;
+        radial_i->initial = radial_initial;
+        radial_i->goal = radial_goal;
         radial_i->reset_timer();
 
         ellipse_i->end_time = time;
         ellipse_i->bezier_1 = g_zero_vec2;
         ellipse_i->bezier_2 = g_zero_vec2;
         ellipse_i->method = static_cast<InterpMode>(mode);
-        u32 ellipse_bits;
-        memcpy(&ellipse_bits, &initial_ellipse_angle, sizeof(ellipse_bits));
-        *(volatile u32 *)&ellipse_i->initial.x = ellipse_bits;
-        memcpy(&ellipse_bits, &initial_ellipse_ratio, sizeof(ellipse_bits));
-        *(volatile u32 *)&ellipse_i->initial.y = ellipse_bits;
-        ellipse_bits = *(volatile u32 *)&ellipse_angle;
-        *(volatile u32 *)&ellipse_i->goal.x = ellipse_bits;
-        ellipse_bits = *(volatile u32 *)&ellipse_ratio;
-        *(volatile u32 *)&ellipse_i->goal.y = ellipse_bits;
+        ellipse_i->initial = ellipse_initial;
+        ellipse_i->goal = ellipse_goal;
         ellipse_i->reset_timer();
         pv->velocity = pv->pos;
         pv->flags = pv->flags & ~0xf | POSVEL_MODE_ELLIPSE;
