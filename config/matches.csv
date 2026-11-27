@@ -764,7 +764,7 @@ address,name,unit,status,size,compared_size,matched_bytes,evidence
 0x0044B530,TitleInf::on_draw,reference-0044b530,local-strict-pass,156,156,156,.analysis/reference-audit.json
 0x0044B5D0,TitleInf::on_tick_thunk,reference-0044b5d0,local-strict-pass,5,5,5,.analysis/reference-audit.json
 0x0044B5E0,TitleInf::on_draw_thunk,reference-0044b5e0,local-strict-pass,5,5,5,.analysis/reference-audit.json
-0x0044B5F0,TitleInf::do_title_screen,reference-0044b5f0,mismatch,3964,3964,3875,.analysis/reference-audit.json
+0x0044B5F0,TitleInf::do_title_screen,reference-0044b5f0,mismatch,3964,3964,3899,.analysis/reference-audit.json
 0x0044C570,TitleInf::do_options,reference-0044c570,local-strict-pass,836,836,836,.analysis/reference-audit.json
 0x0044C8C0,TitleInf::update_options_cursor,reference-0044c8c0,local-strict-pass,5034,5034,5034,.analysis/reference-audit.json
 0x0044DC70,TitleInf::update_options_sprites,reference-0044dc70,local-strict-pass,3255,3255,3255,.analysis/reference-audit.json
