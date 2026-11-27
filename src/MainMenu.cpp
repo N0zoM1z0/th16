@@ -1249,7 +1249,7 @@ static __forceinline void title_highlight_inline(TitleInf *menu)
 }
 
 // The first "no clear" greying inlines search_children, the second calls it.
-// TODO: 92%; some locals sit 4 bytes off the original's stack slots.
+// TODO: 98%; remaining differences are stack spills and argument-load scheduling.
 // FUNCTION: TH16 0x44b5f0
 i32 TitleInf::do_title_screen()
 {
@@ -1337,22 +1337,24 @@ i32 TitleInf::do_title_screen()
         }
         break;
     case 2:
-        menu.current_selection = menu.next_selection;
+    {
+        MenuHelper *m = &menu;
+        m->current_selection = m->next_selection;
         if ((g_hardware_input_pressed & INPUT_UP) || (g_hardware_input_repeat & INPUT_UP))
         {
-            menu.move_cursor(-1);
+            m->move_cursor(-1);
         }
         if ((g_hardware_input_pressed & INPUT_DOWN) || (g_hardware_input_repeat & INPUT_DOWN))
         {
-            menu.move_cursor(1);
+            m->move_cursor(1);
         }
-        if (menu.current_selection != menu.next_selection)
+        if (m->current_selection != m->next_selection)
         {
             g_SoundManager.play_sound_centered(SE_SELECT00, 0);
             AnmManager::interrupt_tree_and_run(anm_ids[0], 3);
-            AnmManager::interrupt_tree(anm_ids[0], (i16)(menu.next_selection + 7));
+            AnmManager::interrupt_tree(anm_ids[0], (i16)(m->next_selection + 7));
             i32 i;
-            for (i = 0; i < menu.next_selection; i++)
+            for (i = 0; i < m->next_selection; i++)
             {
                 interrupt_child_and_run(0, i + 3, TITLE_INTERRUPT_ABOVE_CURSOR);
                 interrupt_child_and_run(0, i + 13, TITLE_INTERRUPT_ABOVE_CURSOR);
@@ -1370,16 +1372,14 @@ i32 TitleInf::do_title_screen()
         }
         if (g_hardware_input_pressed & (INPUT_BOMB | INPUT_MENU))
         {
-            if (menu.next_selection == TITLE_ITEM_QUIT)
+            if (m->next_selection == TITLE_ITEM_QUIT)
             {
-                g_SoundManager.play_sound_centered(SE_CANCEL00, 0);
-                set_substate(4);
-                return 1;
+                goto title_quit;
             }
             g_SoundManager.play_sound_centered(SE_CANCEL00, 0);
-            menu.set_cursor(TITLE_ITEM_QUIT);
+            m->set_cursor(TITLE_ITEM_QUIT);
             AnmManager::interrupt_tree_and_run(anm_ids[0], 3);
-            AnmManager::interrupt_tree(anm_ids[0], (i16)(menu.next_selection + 7));
+            AnmManager::interrupt_tree(anm_ids[0], (i16)(m->next_selection + 7));
             title_highlight_inline(this);
             if (!g_Scorefile->any_cleared())
             {
@@ -1390,7 +1390,7 @@ i32 TitleInf::do_title_screen()
         if (g_hardware_input_pressed & (INPUT_SHOT | INPUT_ENTER))
         {
             AnmManager::interrupt_tree(anm_ids[0], 6);
-            switch (menu.next_selection)
+            switch (m->next_selection)
             {
             case TITLE_ITEM_START:
                 g_SoundManager.play_sound_centered(SE_OK00, 0);
@@ -1453,12 +1453,15 @@ i32 TitleInf::do_title_screen()
                 set_substate(4);
                 return 1;
             case TITLE_ITEM_QUIT:
-                g_SoundManager.play_sound_centered(SE_CANCEL00, 0);
-                set_substate(4);
-                return 1;
+                goto title_quit;
             }
         }
         break;
+    title_quit:
+        g_SoundManager.play_sound_centered(SE_CANCEL00, 0);
+        set_substate(4);
+        return 1;
+    }
     case 4:
         if (time_in_state.current < 20)
         {
@@ -1487,8 +1490,8 @@ i32 TitleInf::do_title_screen()
             AnmManager::interrupt_tree_and_run(anm_ids[0x61], 3);
             menu.push();
             menu.set_cursor(g_last_difficulty);
-            set_state(TITLE_STATE_DIFFICULTY_SELECT);
             g_Globals.difficulty = g_last_difficulty;
+            set_state(TITLE_STATE_DIFFICULTY_SELECT);
             return 1;
         case TITLE_ITEM_SPELL_PRACTICE:
             g_Globals.set_game_mode(GAME_MODE_SPELL_PRACTICE);
