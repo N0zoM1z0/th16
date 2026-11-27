@@ -23,16 +23,17 @@ and a 96-byte extent difference at the prior checkpoint (whole-owner
 instruction-signature alignment 0.93995). Inlining the shot-origin and EX-copy
 sequence into the line, infinite, and curve laser cases adds 52 bytes. Reusing
 `radial_speed`, `radius`, `ellipse_angle`, and `ellipse_ratio` as their final
-fallback-adjusted goal values then removes 16 bytes, leaving a 21,348-byte
-owner and a 60-byte extent difference (36 bytes net growth from the 21,312-byte
-checkpoint); whole-owner alignment is 0.942702. This natural local reuse also
+fallback-adjusted goal values then removes 16 bytes. The current single-angle
+`moveAngleTime` dataflow raises the owner to 21,380 bytes, 28 bytes below the
+target (68 bytes net growth from the 21,312-byte checkpoint); whole-owner
+alignment is 0.943158. This natural local reuse also
 moves the emitted cookie slot from EBP-`0x470` to EBP-`0x46c`; the Fog pointer
 remains at EBP-`0x40c` and the EH state at EBP-`4`. `moveEllipseTime` shrinks
 from 804/780 to 796/780 bytes and from 169 to 168 instructions. Opcode 702 is
 439/441 bytes and opcode 711 is 401/394.
 
 The remaining dispatch frontier is compiler-sensitive. `moveAngleTime` is
-502/531 bytes (110/115 instructions); `moveEllipseTime` is 796/780 bytes
+527/531 bytes (111/115 instructions); `moveEllipseTime` is 796/780 bytes
 (168/169 instructions). For `moveEllipseTime`, Ghidra's target decompilation
 shows each sentinel-checked radial/ellipse argument being overwritten with its
 fallback-adjusted value and then used as the goal. Reusing `radial_speed`,
@@ -50,18 +51,16 @@ three difficulty branches are inline, giving 163 + 26 = 189 bytes and 38 + 6
 = 44 instructions, exactly the target's 189-byte / 44-instruction case total.
 The apparent contiguous-case deficit is only block placement.
 
-Several source-shape trials on `moveAngleTime` were measured and discarded.
-A single angle local with branch-local volatile self-stores reached 537 bytes
-and a 21,396-byte owner (alignment 0.942297). Moving the volatile store after
-the branch reached 522 bytes and a 21,380-byte owner (alignment 0.941945).
-A Ghidra-shaped single-local form without volatile stores reached 493 bytes
-(alignment 0.938165); making the local itself volatile grew the case to 576
-bytes and the owner to 21,444 bytes (alignment 0.938663). A volatile
-`angle_for_delta` local reached 552 bytes and a 21,412-byte owner. Register
-hints on `angle`, `angle_for_delta`, and `initial` did not change codegen. The
-two-local, branch-local-store source remains the best measured `moveAngleTime`
-form, but is not an exact match. Ternary radial-goal expressions and extra
-`register` hints had no useful code-size effect. Ordinary vector-field assignments for the
+Several source-shape trials on `moveAngleTime` were measured. A single angle
+local with volatile self-stores in all three non-constant paths reached 537
+bytes and a 21,396-byte owner. Removing the self-store only from the ordinary
+non-mirrored path yields the current best source: one effective `angle` local,
+volatile self-stores only after mirrored-angle and missing-angle adjustments,
+527 bytes, and a 21,380-byte owner (alignment 0.943158). Removing all volatile
+stores, making `angle_for_delta` volatile (552 bytes / 21,412-byte owner), or
+adding register hints all aligned worse or generated larger code. The current
+case remains four bytes and four instructions smaller than the target; the
+whole boss owner is still 28 bytes short and is not exact. Ordinary vector-field assignments for the
 ellipse interpolator changed the owner to 21,428 bytes and invalidated the
 reviewed cleanup frame, so the raw volatile field stores remain. The earlier
 line-only direct ellipse-field trial also aligned worse (0.93707); a later

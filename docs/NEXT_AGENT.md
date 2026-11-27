@@ -1,14 +1,14 @@
 # TH16 next-agent handoff
 
 Updated 2026-11-27 after reconstructing ECL boss `moveEllipseTime` argument
-lifetimes, rebasing its cleanup-frame evidence, and tracing the `diffF`
-out-of-line Easy branch through its actual switch table. No new exact credit
+lifetimes, aligning the `moveAngleTime` local dataflow, rebasing cleanup-frame
+evidence, and tracing the `diffF` out-of-line Easy branch. No new exact credit
 was added. Read [AGENTS.md](../AGENTS.md) before editing; keep checkpoints
 local and push `main` only when asked.
 
 ## Current baseline
 
-- **Latest source commit**: `653cd2d` (`gpt-web: reconstruct ECL ellipse argument lifetimes`); retain the `gpt-web: ...` message format.
+- **Latest source commit**: see `git log -1`; retain the `gpt-web: ...` message format.
 - **Incremental build**: `build/reference-candidate/th16.exe` (1,166 annotated
   functions; preserve its object/dependency graph for fast incremental builds).
 - **Local strict audit** (`.analysis/reference-audit.json` and
@@ -43,11 +43,12 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
   direct-reference ET_ON stores then remove 16 bytes. Inlining shot-origin and
   EX-copy logic into the line, infinite, and curve laser cases adds 52 bytes
   from the 21,312-byte checkpoint. Reusing the four parsed radial/ellipse
-  arguments as their final goal values removes another 16 bytes, leaving a
-  21,348-byte owner (36 bytes net growth from that checkpoint) and whole-owner
-  alignment 0.942702.
+  arguments as their final goal values removes another 16 bytes. The current
+  single-angle `moveAngleTime` dataflow then leaves a 21,380-byte owner (68
+  bytes net growth from that checkpoint), 28 bytes short of the 21,408-byte
+  target; whole-owner alignment is 0.943158.
   Opcode 702 is 439/441 bytes and opcode 711 is 401/394. The remaining large
-  dispatch differences include `moveAngleTime` (502/531 bytes, 110/115
+  dispatch differences include `moveAngleTime` (527/531 bytes, 111/115
   instructions), `moveEllipseTime` (796/780 bytes, 168/169 instructions), and
   `diffF` (163 contiguous candidate bytes versus 189 contiguous target bytes)
   is now resolved structurally: target table `0x423040` entry 0 points to
@@ -56,7 +57,10 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
   remaining branches are inline; counting the out-of-line Easy block gives
   189 B / 44 instructions, exactly the target total. This is code placement,
   not missing source logic.
-  The current EH3 graph validates with candidate Fog pointer/cookie/state
+  The `moveAngleTime` case now mutates one effective `angle` local directly;
+  the mirrored and missing-angle paths retain the volatile self-store, while
+  the ordinary non-mirrored path does not. This yields 527 bytes versus 531
+  target bytes. The current EH3 graph validates with candidate Fog pointer/cookie/state
   slots at EBP-`0x40c`/EBP-`0x46c`/EBP-`4`. The original Fog cleanup saves its
   pointer at EBP-`0x420`, with cookie/state at EBP-`0x484`/EBP-`4`. Keep the
   original `has_origin` true branch first and preload y before branching; the
