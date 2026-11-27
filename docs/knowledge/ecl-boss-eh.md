@@ -9,8 +9,7 @@ FuncInfo is at `0x0049B274` and its unwind-map entry follows the 36-byte header.
 
 The linked candidate keeps the same 18+40-byte action/handler shape in the
 `EnemyEcl.obj` PDB contribution. Its saved Fog pointer, cookie and state are at
-frame offsets `-0x40c`, `-0x46c`, and `-4`, respectively, with the current
-case-local spell buffer and direct Fog allocation. The pointer offset is
+frame offsets `-0x40c`, `-0x45c`, and `-4`, respectively. The pointer offset is
 verified against the actual allocation store and matching load in the
 sized-delete funclet; the cookie and state offsets are read from the emitted
 EH3 handler loads. The original uses `-0x420`, `-0x484`, and `-4`.
@@ -29,20 +28,27 @@ paths (mirrored, unmirrored, and missing-angle), raises the owner to 21,396
 bytes, 12 bytes below the target (84 bytes net growth from the 21,312-byte
 checkpoint); whole-owner alignment is 0.943183. This natural local reuse also
 moves the emitted cookie slot from EBP-`0x470` to EBP-`0x46c`; the Fog pointer
-remains at EBP-`0x40c` and the EH state at EBP-`4`. `moveEllipseTime` shrinks
-from 804/780 to 796/780 bytes and from 169 to 168 instructions. Opcode 702 is
-439/441 bytes and opcode 711 is 401/394.
+remains at EBP-`0x40c` and the EH state at EBP-`4`.
+
+`moveEllipseTime` now represents its parsed radial and ellipse goals, plus
+their initial values, as four `Float2` locals rather than eight independent
+scalars. This preserves the argument/fallback lifetime while allowing the
+compiler to copy each pair as an aggregate. Both opcode 421 and 423 now occupy
+780 bytes, matching the target extent (target/candidate instruction counts are
+169/168). The complete owner remains 21,408 bytes. This changes the emitted
+candidate cookie slot from EBP-`0x46c` to EBP-`0x45c`; the pointer remains at
+EBP-`0x40c` and the state at EBP-`4`. Opcode 702 is 439/441 bytes and opcode
+711 is 401/394.
 
 The remaining dispatch frontier is compiler-sensitive. `moveAngleTime` is
-537/531 bytes (114/115 instructions); `moveEllipseTime` is 796/780 bytes
-(168/169 instructions). For `moveEllipseTime`, Ghidra's target decompilation
-shows each sentinel-checked radial/ellipse argument being overwritten with its
-fallback-adjusted value and then used as the goal. Reusing `radial_speed`,
-`radius`, `ellipse_angle`, and `ellipse_ratio` in place matches that lifetime
-more closely than four separate `goal_*` locals. The candidate case falls from
-804 to 796 bytes and the complete owner from 21,364 to 21,348 bytes. Register
-hints on the five parsed float arguments did not change the build; ordinary
-local declarations are retained.
+537/531 bytes (115/114 instructions); `moveEllipseTime` is 780/780 bytes
+(169/168 instructions). The ellipse case now has the target byte extent, but
+one instruction and several operand/dataflow choices still differ. Ghidra's
+target decompilation and the target instruction stream show that each
+sentinel-checked radial/ellipse argument is replaced by its fallback and then
+used as a goal; the paired locals preserve that lifetime without duplicating
+scalar and vector temporaries. Register hints on the five parsed float
+arguments did not change the build; ordinary local declarations are retained.
 
 `diffF` is not missing 26 bytes of logic. The target's switch table at
 `0x423040` sends Easy (entry 0) to `0x4207f3`, a 26-byte, six-instruction
@@ -62,14 +68,16 @@ owner and slightly lower whole-owner alignment (0.943158). A two-local
 `angle_for_delta` form yields a 502-byte case and a 21,348-byte owner. Making
 `angle_for_delta` volatile (552 bytes / 21,412-byte owner), removing all
 volatile stores, or adding register hints all aligned worse or generated larger
-code. The full boss owner remains incomplete; the case-level byte counts are
-not exact credit. Ordinary vector-field assignments for the
-ellipse interpolator changed the owner to 21,428 bytes and invalidated the
-reviewed cleanup frame, so the raw volatile field stores remain. The earlier
-line-only direct ellipse-field trial also aligned worse (0.93707); a later
-all-inline ordinary-float-store trial reached 21,380 bytes and alignment
-0.941385. The inverted shot-origin condition ordering was 48 bytes larger and
-aligned worse (0.9379).
+code. The full boss owner remains incomplete because its reviewed switch table
+still differs from the candidate case mapping; the case-level byte counts are
+not exact credit. Adding vector temporaries on top of the old scalar locals was
+rejected: it expanded the owner to 21,536 bytes. Replacing those scalar locals with four
+`Float2` pair locals instead is the retained natural-source form; it preserves
+the 21,408-byte owner while changing the verified candidate cookie slot to
+EBP-`0x45c`. The earlier line-only direct ellipse-field trial also aligned
+worse (0.93707); a later all-inline ordinary-float-store trial reached
+21,380 bytes and alignment 0.941385. The inverted shot-origin condition
+ordering was 48 bytes larger and aligned worse (0.9379).
 The values are measured from emitted builds, never inferred from the target
 frame. Its unwind-map record
 precedes the FuncInfo header in the 44-byte data contribution. The review

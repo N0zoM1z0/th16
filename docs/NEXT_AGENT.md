@@ -1,18 +1,19 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-27 after reconstructing ECL boss `moveEllipseTime` argument
-lifetimes, aligning the `moveAngleTime` local dataflow, rebasing cleanup-frame
-evidence, and tracing the `diffF` out-of-line Easy branch. No new exact credit
-was added. Read [AGENTS.md](../AGENTS.md) before editing; keep checkpoints
-local and push `main` only when asked.
+Updated 2026-11-27 after restoring ECL boss `moveEllipseTime` pair-local
+lifetimes, matching positioned ANM rotation setup, and rebasing the EH3 cleanup
+cookie slot. The boss PDB extent now matches 21,408 bytes, but its reviewed
+switch mapping still differs, so no exact credit was added. Read
+[AGENTS.md](../AGENTS.md) before editing; keep checkpoints local and push `main`
+only when asked.
 
 ## Current baseline
 
 - **Latest source commit**: see `git log -1`; retain the `gpt-web: ...` message format.
 - **Incremental build**: `build/reference-candidate/th16.exe` (1,166 annotated
   functions; preserve its object/dependency graph for fast incremental builds).
-- **Local strict audit** (`.analysis/reference-audit.json` and
-  `resources/progress.svg`):
+- **Last full local strict audit** (`.analysis/reference-audit.json` and
+  `resources/progress.svg`; not rerun during this focused session):
   - **1,061 / 1,215 functions exact** (**257,831 / 442,168 bytes = 58.31%**)
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
@@ -35,46 +36,35 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
 
 ## Current reconstruction frontier
 
-- `0x41dcb0` (`EnemyData::ecl_run_over_300`): the reviewed EH3 cleanup graph
-  validates. The original complete owner is 21,408 bytes; the current
-  `EnemyEcl.obj` contribution is 21,348 bytes, leaving a 60-byte extent
-  difference. Returning the line/infinite/curve shot origin as `D3DXVECTOR3`
-  adds 32 bytes over the original output-pointer helper (21,296 to 21,328);
-  direct-reference ET_ON stores then remove 16 bytes. Inlining shot-origin and
-  EX-copy logic into the line, infinite, and curve laser cases adds 52 bytes
-  from the 21,312-byte checkpoint. Reusing the four parsed radial/ellipse
-  arguments as their final goal values removes another 16 bytes. The current
-  single-angle `moveAngleTime` dataflow with explicit effective-angle stores
-  on the mirrored, unmirrored, and missing-angle paths leaves a 21,396-byte
-  owner (84 bytes net growth from that checkpoint), 12 bytes short of the
-  21,408-byte target; whole-owner alignment is 0.943183.
-  Opcode 702 is 439/441 bytes and opcode 711 is 401/394. The remaining large
-  dispatch differences include `moveAngleTime` (537/531 bytes, 114/115
-  instructions), `moveEllipseTime` (796/780 bytes, 168/169 instructions), and
-  `diffF` (163 contiguous candidate bytes versus 189 contiguous target bytes)
-  is now resolved structurally: target table `0x423040` entry 0 points to
-  `0x4207f3` (26 B / 6 instructions), while candidate table `0x4398f4` entry 0
-  points to `0x438ef2` (also 26 B / 6 instructions). The candidate's three
-  remaining branches are inline; counting the out-of-line Easy block gives
-  189 B / 44 instructions, exactly the target total. This is code placement,
-  not missing source logic.
-  The `moveAngleTime` case now mutates one effective `angle` local directly
-  and retains volatile self-stores on all three non-constant paths (mirrored,
-  unmirrored, and missing-angle). This yields 537 bytes / 114 instructions
-  versus 531 bytes / 115 target instructions. It adds 16 bytes to the complete
-  owner versus the selective-store variant, bringing the owner within 12 bytes
-  of target and slightly improving whole-owner instruction alignment. The
-  current EH3 graph validates with candidate Fog pointer/cookie/state
-  slots at EBP-`0x40c`/EBP-`0x46c`/EBP-`4`; refresh match-unit candidate
-  addresses with `audit-reference.py --write-units` after owner layout changes.
-  The original Fog cleanup saves its
-  pointer at EBP-`0x420`, with cookie/state at EBP-`0x484`/EBP-`4`. Keep the
-  original `has_origin` true branch first and preload y before branching; the
-  inverted condition experiment was 48 bytes larger and aligned worse (0.9379).
-  All offsets are read from the allocation store and emitted EH3 funclet/handler,
-  not inferred. The four `EnemyData` ECL argument leaves are all strict exact:
-  `get_int_arg` (18/18), `get_int_arg_ptr` (14/14), `get_float_arg` (18/18),
-  and `get_float_arg_ptr` (18/18).
+- `0x41dcb0` (`EnemyData::ecl_run_over_300`): target and candidate complete
+  PDB extents are both 21,408 bytes; both code bodies are 19,976 bytes. The
+  owner is still **incomplete**, not exact: the candidate's main switch table
+  differs from the reviewed target case mapping. Its EH3 cleanup graph now
+  validates with candidate Fog pointer/cookie/state at EBP-`0x40c`/`0x45c`/`4`
+  (target: EBP-`0x420`/`0x484`/`4`). The four argument leaves remain strict
+  exact: `get_int_arg` (18/18), `get_int_arg_ptr` (14/14), `get_float_arg`
+  (18/18), and `get_float_arg_ptr` (18/18).
+  - `moveEllipseTime` (421/423): 780/780 bytes, 169/168 instructions
+    (target/candidate). The source now models radial and ellipse initial/goal
+    values as four `Float2` locals instead of eight scalar locals. This
+    restores the target case extent while preserving argument and fallback
+    order; the emitted EH cookie moves from EBP-`0x46c` to EBP-`0x45c`.
+  - `moveAngleTime`: 537/531 bytes, 115/114 instructions. One effective angle
+    local and explicit volatile self-stores remain on mirrored, unmirrored,
+    and missing-angle paths.
+  - `moveSpeedTime` (445/447): 283/272 bytes, 61/59 instructions. Rewriting
+    the fallback ternaries as explicit `if` branches produced identical code;
+    the remaining difference includes the compare direction and one extra
+    stack self-store. Do not count a size-only adjustment as reconstruction.
+  - Opcode 315 (`anmPlayRotate`) now matches at 70/70 bytes and instructions
+    after inlining the positioned VM setup in natural C++.
+  - Opcode 702 is 439/441 bytes and opcode 711 is 401/394. `diffF` is
+    structurally accounted for: target and candidate each have the same
+    26-byte / 6-instruction out-of-line Easy block; the apparent contiguous
+    difference is block placement, not missing logic.
+  Whole-owner instruction alignment is 0.943756 (diagnostic only, not an
+  exactness receipt). Continue from the disassembly and full table mapping;
+  do not update switch ownership to excuse candidate offsets.
 - `0x44b5f0` (`TitleInf::do_title_screen`): 3,899/3,964 bytes after using a
   `MenuHelper *` alias in substate 2, sharing the Quit exit path, and storing
   `g_Globals.difficulty` before `set_state`. The remaining differences are
