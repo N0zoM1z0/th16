@@ -1675,14 +1675,14 @@ int EnemyData::ecl_run_over_300()
         f32 lunatic = get_float_arg(EclFloatArgIndex{4});
         switch (g_Globals.difficulty)
         {
-        case DIFFICULTY_HARD:
-            *get_float_arg_ptr(0) = hard;
-            break;
         case DIFFICULTY_EASY:
             *get_float_arg_ptr(0) = easy;
             break;
         case DIFFICULTY_NORMAL:
             *get_float_arg_ptr(0) = normal;
+            break;
+        case DIFFICULTY_HARD:
+            *get_float_arg_ptr(0) = hard;
             break;
         case DIFFICULTY_LUNATIC:
             *get_float_arg_ptr(0) = lunatic;
@@ -1732,7 +1732,7 @@ int EnemyData::ecl_run_over_300()
     {
         i32 slot = get_int_arg(0);
         f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
-        D3DXVECTOR3 position;
+        D3DXVECTOR3 &position = bullet_props[slot].pos;
         if (origin_enabled > 0.9f)
         {
             position.x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
@@ -1745,7 +1745,6 @@ int EnemyData::ecl_run_over_300()
             position.y = bullet_mgr_offsets[slot].y + final_pos.pos.y;
             position.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
         }
-        bullet_props[slot].pos = position;
         g_BulletManager->et_protect_range = et_protect_range;
         g_BulletManager->shoot_bullets(&bullet_props[slot]);
         g_BulletManager->et_protect_range = 0.0f;

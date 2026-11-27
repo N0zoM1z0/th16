@@ -36,14 +36,15 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`): the reviewed EH3 cleanup graph
   validates. The original complete owner is 21,408 bytes; the current
-  `EnemyEcl.obj` contribution is 21,328 bytes, leaving an 80-byte extent
+  `EnemyEcl.obj` contribution is 21,312 bytes, leaving a 96-byte extent
   difference. Returning the line/infinite/curve shot origin as `D3DXVECTOR3`
-  improved instruction-signature alignment from 0.9390 to 0.9398 and adds
-  32 bytes over the original output-pointer helper. Keep the original
+  adds 32 bytes over the original output-pointer helper (21,296 to 21,328);
+  direct-reference ET_ON stores then remove 16 bytes. Whole-owner
+  instruction-signature alignment is 0.93995. Keep the original
   `has_origin` true branch first and preload y before branching; the inverted
   condition experiment was 48 bytes larger but aligned worse (0.9379). The
   original Fog cleanup saves its pointer at EBP-`0x420`; the candidate stores
-  and cleans up its pointer at EBP-`0x404`, with cookie/state at
+  and cleans up its pointer at EBP-`0x410`, with cookie/state at
   EBP-`0x474`/EBP-`4`. All offsets are read
   from the allocation store and emitted EH3 funclet/handler, not inferred.
 - `0x44b5f0` (`TitleInf::do_title_screen`): 3,899/3,964 bytes after using a

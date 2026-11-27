@@ -9,15 +9,16 @@ FuncInfo is at `0x0049B274` and its unwind-map entry follows the 36-byte header.
 
 The linked candidate keeps the same 18+40-byte action/handler shape in the
 `EnemyEcl.obj` PDB contribution. Its saved Fog pointer, cookie and state are at
-different frame offsets (`-0x404`, `-0x474`, and `-4`) with the current
+different frame offsets (`-0x410`, `-0x474`, and `-4`) with the current
 case-local spell buffer and direct Fog allocation. The pointer offset is
 verified against the actual allocation store and matching load in the
 sized-delete funclet; the cookie and state offsets are read from the emitted
 EH3 handler loads. Returning the shot-origin helper's `D3DXVECTOR3` by value,
 with the original `has_origin` true branch first and y loaded before the
 branch, adds 32 bytes over the original output-pointer helper (21,296 to
-21,328 bytes), leaving an 80-byte owner difference. It improves full-function
-instruction-signature alignment from 0.9390 to 0.9398. The inverted condition
+21,328 bytes). The ET_ON direct-reference experiment then removes 16 bytes,
+leaving a 21,312-byte owner and a 96-byte extent difference. Full-function
+instruction-signature alignment rises from 0.9390 to 0.93995. The inverted condition
 ordering was 48 bytes larger but aligned worse (0.9379). The values are
 therefore measured from each emitted build, never inferred from the target
 frame. Its unwind-map record
