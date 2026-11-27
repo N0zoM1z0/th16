@@ -36,16 +36,24 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`): the reviewed EH3 cleanup graph
   validates. The original complete owner is 21,408 bytes; the current
-  `EnemyEcl.obj` contribution is 21,312 bytes, leaving a 96-byte extent
+  `EnemyEcl.obj` contribution is 21,364 bytes, leaving a 44-byte extent
   difference. Returning the line/infinite/curve shot origin as `D3DXVECTOR3`
   adds 32 bytes over the original output-pointer helper (21,296 to 21,328);
-  direct-reference ET_ON stores then remove 16 bytes. Whole-owner
-  instruction-signature alignment is 0.93995. Keep the original
+  direct-reference ET_ON stores then remove 16 bytes. Inlining shot-origin and
+  EX-copy logic into the line, infinite, and curve laser cases adds 52 bytes
+  from the 21,312-byte checkpoint; whole-owner alignment reaches 0.94294.
+  Opcode 702 is 439/441 bytes and opcode 711 is 401/394. The direct ellipse
+  field-store experiment from the earlier line-only variant was measured but
+  not retained (whole-owner alignment 0.93707). Repeating ordinary float field
+  stores on the all-inline build raised the owner to 21,380 bytes and lowered
+  alignment to 0.94139; restore the volatile raw stores. The current EH3 graph
+  validates with the candidate Fog pointer/cookie/state slots at
+  EBP-`0x40c`/EBP-`0x470`/EBP-`4`. Keep the original
   `has_origin` true branch first and preload y before branching; the inverted
   condition experiment was 48 bytes larger but aligned worse (0.9379). The
   original Fog cleanup saves its pointer at EBP-`0x420`; the candidate stores
-  and cleans up its pointer at EBP-`0x410`, with cookie/state at
-  EBP-`0x474`/EBP-`4`. All offsets are read
+  and cleans up its pointer at EBP-`0x40c`, with cookie/state at
+  EBP-`0x470`/EBP-`4`. All offsets are read
   from the allocation store and emitted EH3 funclet/handler, not inferred.
 - `0x44b5f0` (`TitleInf::do_title_screen`): 3,899/3,964 bytes after using a
   `MenuHelper *` alias in substate 2, sharing the Quit exit path, and storing

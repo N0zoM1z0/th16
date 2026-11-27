@@ -111,35 +111,6 @@ static inline EnemyEclSincosmulFunc enemy_ecl_sincosmul_func()
     return &enemy_ecl_sincosmul;
 }
 
-// Line, infinite and curved lasers test the origin before copying transforms;
-// the beam laser copies transforms first.
-static __forceinline D3DXVECTOR3 get_shot_origin_and_copy_ex_branch_first(
-    EnemyData *enemy, i32 i, BulletEx *ex)
-{
-    f32 origin_enabled = *(volatile f32 *)&enemy->bullet_mgr_origins[i].enabled;
-    memcpy(ex, enemy->bullet_props[i].ex, sizeof(enemy->bullet_props[i].ex));
-    bool has_origin = origin_enabled > 0.9f;
-    f32 y = *(volatile f32 *)&enemy->bullet_mgr_offsets[i].y;
-    f32 x;
-    f32 z;
-    if (has_origin)
-    {
-        x = enemy->bullet_mgr_origins[i].xy.x + enemy->bullet_mgr_offsets[i].x;
-        y += enemy->bullet_mgr_origins[i].xy.y;
-        z = 0.0f;
-    }
-    else
-    {
-        z = enemy->bullet_mgr_offsets[i].z + enemy->final_pos.pos.z;
-        x = enemy->bullet_mgr_offsets[i].x + enemy->final_pos.pos.x;
-        y += enemy->final_pos.pos.y;
-    }
-    D3DXVECTOR3 out;
-    out.x = x;
-    out.y = y;
-    out.z = z;
-    return out;
-}
 static __forceinline void copy_ex_and_get_shot_origin(
     EnemyData *enemy, i32 i, D3DXVECTOR3 *out, BulletEx *ex)
 {
@@ -2258,7 +2229,20 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.line) LaserLineInner();
         i32 slot = get_int_arg(0);
-        scratch.line.start_pos = get_shot_origin_and_copy_ex_branch_first(this, slot, scratch.line.ex);
+        f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
+        memcpy(scratch.line.ex, bullet_props[slot].ex, sizeof(bullet_props[slot].ex));
+        if (origin_enabled > 0.9f)
+        {
+            scratch.line.start_pos.x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
+            scratch.line.start_pos.y = bullet_mgr_offsets[slot].y + bullet_mgr_origins[slot].xy.y;
+            scratch.line.start_pos.z = 0.0f;
+        }
+        else
+        {
+            scratch.line.start_pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
+            scratch.line.start_pos.x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
+            scratch.line.start_pos.y = bullet_mgr_offsets[slot].y + final_pos.pos.y;
+        }
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 bullet_type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
@@ -2283,7 +2267,20 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.infinite) LaserInfiniteInner();
         i32 slot = get_int_arg(0);
-        scratch.infinite.start_pos = get_shot_origin_and_copy_ex_branch_first(this, slot, scratch.infinite.ex);
+        f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
+        memcpy(scratch.infinite.ex, bullet_props[slot].ex, sizeof(bullet_props[slot].ex));
+        if (origin_enabled > 0.9f)
+        {
+            scratch.infinite.start_pos.x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
+            scratch.infinite.start_pos.y = bullet_mgr_offsets[slot].y + bullet_mgr_origins[slot].xy.y;
+            scratch.infinite.start_pos.z = 0.0f;
+        }
+        else
+        {
+            scratch.infinite.start_pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
+            scratch.infinite.start_pos.x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
+            scratch.infinite.start_pos.y = bullet_mgr_offsets[slot].y + final_pos.pos.y;
+        }
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
@@ -2331,7 +2328,20 @@ int EnemyData::ecl_run_over_300()
     {
         ::new (&scratch.curve) LaserCurveInner();
         i32 slot = get_int_arg(0);
-        scratch.curve.start_pos = get_shot_origin_and_copy_ex_branch_first(this, slot, scratch.curve.ex);
+        f32 origin_enabled = *(volatile f32 *)&bullet_mgr_origins[slot].enabled;
+        memcpy(scratch.curve.ex, bullet_props[slot].ex, sizeof(bullet_props[slot].ex));
+        if (origin_enabled > 0.9f)
+        {
+            scratch.curve.start_pos.x = bullet_mgr_origins[slot].xy.x + bullet_mgr_offsets[slot].x;
+            scratch.curve.start_pos.y = bullet_mgr_offsets[slot].y + bullet_mgr_origins[slot].xy.y;
+            scratch.curve.start_pos.z = 0.0f;
+        }
+        else
+        {
+            scratch.curve.start_pos.z = bullet_mgr_offsets[slot].z + final_pos.pos.z;
+            scratch.curve.start_pos.x = bullet_mgr_offsets[slot].x + final_pos.pos.x;
+            scratch.curve.start_pos.y = bullet_mgr_offsets[slot].y + final_pos.pos.y;
+        }
         const volatile EnemyBulletShooter &shooter = bullet_props[slot];
         i32 type = shooter.type;
         f32 ang_aim = shooter.ang_aim;
