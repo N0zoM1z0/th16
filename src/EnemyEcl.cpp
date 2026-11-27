@@ -26,6 +26,33 @@
 #include "ZunAsm.h"
 #include "ZunMath.h"
 
+// Positioned front-list VM creation used by ECL's positioned ANM instructions.
+// Keep the shared rotation store after the position branch, as in the inlined
+// target setup sequence.
+static __forceinline AnmId create_vm_front_at(AnmLoaded *file, i32 script, Float3 *pos, f32 rotation)
+{
+    ENTER_CS(CS_ANM_MANAGER);
+    file->vm_count++;
+    AnmVm *vm = g_AnmManager->allocate_vm();
+    file->copy_vm(vm, script);
+    vm->flags_hi |= ANM_VM_CREATED_BY_GAME;
+    if (pos == NULL)
+    {
+        vm->entity_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+    else
+    {
+        vm->entity_pos = *pos;
+    }
+    vm->rotation.z = rotation;
+    vm->run();
+    vm->mode_of_create_child = ANM_CREATE_FRONT;
+    AnmId id;
+    id = g_AnmManager->insert_in_world_list_front(vm);
+    LEAVE_CS(CS_ANM_MANAGER);
+    return id;
+}
+
 static_assert(offsetof(EnemyData, anm_ids) == 0x124, "ECL ANM id array offset");
 static_assert(sizeof(BulletEx) == 0x2c, "ECL transform stride");
 static_assert(sizeof(EnemyBulletShooter) == 0x380, "ECL shooter stride");
@@ -326,19 +353,19 @@ int EnemyData::ecl_run_over_300()
         // y is read before x as in the original (random variables draw from the replay RNG).
         f32 y = full->context.current_context->get_float_arg(EclFloatArgIndex{3});
         f32 x = full->context.current_context->get_float_arg(EclFloatArgIndex{2});
-        Float3 pos = Float3(x, y, 0.0f) + final_pos.pos;
-        g_EffectManager->track(g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)]->create_vm_front_inline(
-            full->context.current_context->get_int_arg(1), &pos, full->context.current_context->get_float_arg(EclFloatArgIndex{4})));
+        Float3 pos = final_pos.pos + Float3(x, y, 0.0f);
+        g_EffectManager->track(create_vm_front_at(
+            g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)],
+            full->context.current_context->get_int_arg(1), &pos,
+            full->context.current_context->get_float_arg(EclFloatArgIndex{4})));
         break;
     }
     // anmPlay(file, script)
     case ECL_OP_ANM_PLAY:
     {
-        i32 script = full->context.current_context->get_int_arg(1);
-        i32 file_index = full->context.current_context->get_int_arg(0);
-        EnemyManager *enemy_manager = g_EnemyManager;
-        AnmLoaded *file = enemy_manager->anim_statement_anms[file_index];
-        g_EffectManager->track(file->create_vm_front_inline(script, &final_pos.pos, 0.0f));
+        g_EffectManager->track(create_vm_front_at(
+            g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)],
+            full->context.current_context->get_int_arg(1), &final_pos.pos, 0.0f));
         break;
     }
     // anmPlayHigh(file, script): creates a VM at the enemy's current position.
@@ -379,10 +406,9 @@ int EnemyData::ecl_run_over_300()
     // anmPlayRotate(file, script, rotation)
     case ECL_OP_ANM_PLAY_ROTATE:
     {
-        i32 script = full->context.current_context->get_int_arg(1);
-        i32 file_index = full->context.current_context->get_int_arg(0);
-        AnmId id = g_EnemyManager->anim_statement_anms[file_index]->create_vm_front_inline(
-            script, &final_pos.pos, 0.0f);
+        AnmId id = create_vm_front_at(
+            g_EnemyManager->anim_statement_anms[full->context.current_context->get_int_arg(0)],
+            full->context.current_context->get_int_arg(1), &final_pos.pos, 0.0f);
         AnmVm *vm = id.find_or_clear();
         if (vm != NULL)
         {
