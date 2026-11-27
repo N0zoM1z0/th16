@@ -9,7 +9,7 @@ FuncInfo is at `0x0049B274` and its unwind-map entry follows the 36-byte header.
 
 The linked candidate keeps the same 18+40-byte action/handler shape in the
 `EnemyEcl.obj` PDB contribution. Its saved Fog pointer, cookie and state are at
-frame offsets `-0x40c`, `-0x470`, and `-4`, respectively, with the current
+frame offsets `-0x40c`, `-0x46c`, and `-4`, respectively, with the current
 case-local spell buffer and direct Fog allocation. The pointer offset is
 verified against the actual allocation store and matching load in the
 sized-delete funclet; the cookie and state offsets are read from the emitted
@@ -21,17 +21,30 @@ over the original output-pointer helper (21,296 to 21,328 bytes). The ET_ON
 direct-reference experiment then removes 16 bytes, leaving a 21,312-byte owner
 and a 96-byte extent difference at the prior checkpoint (whole-owner
 instruction-signature alignment 0.93995). Inlining the shot-origin and EX-copy
-sequence into the line, infinite, and curve laser cases adds 52 bytes, leaving
-a 21,364-byte owner and a 44-byte extent difference; whole-owner alignment
-improves to 0.942936. Opcode 702 is 439/441 bytes and opcode 711 is 401/394.
+sequence into the line, infinite, and curve laser cases adds 52 bytes. Reusing
+`radial_speed`, `radius`, `ellipse_angle`, and `ellipse_ratio` as their final
+fallback-adjusted goal values then removes 16 bytes, leaving a 21,348-byte
+owner and a 60-byte extent difference (36 bytes net growth from the 21,312-byte
+checkpoint); whole-owner alignment is 0.942702. This natural local reuse also
+moves the emitted cookie slot from EBP-`0x470` to EBP-`0x46c`; the Fog pointer
+remains at EBP-`0x40c` and the EH state at EBP-`4`. `moveEllipseTime` shrinks
+from 804/780 to 796/780 bytes and from 169 to 168 instructions. Opcode 702 is
+439/441 bytes and opcode 711 is 401/394.
 
 The remaining dispatch frontier is compiler-sensitive. `moveAngleTime` is
-502/531 bytes (110/115 instructions); `moveEllipseTime` is 804/780 bytes
-(169/169 instructions). `diffF` has a 163-byte contiguous candidate case and
-a 22-byte easy-difficulty block at `0x00438F02`, reached through its jump table;
-counting that block gives 185 bytes against 189 contiguous target bytes. Thus
-its apparent 26-byte case-extent deficit is mostly block placement, not missing
-branch logic.
+502/531 bytes (110/115 instructions); `moveEllipseTime` is 796/780 bytes
+(168/169 instructions). For `moveEllipseTime`, Ghidra's target decompilation
+shows each sentinel-checked radial/ellipse argument being overwritten with its
+fallback-adjusted value and then used as the goal. Reusing `radial_speed`,
+`radius`, `ellipse_angle`, and `ellipse_ratio` in place matches that lifetime
+more closely than four separate `goal_*` locals. The candidate case falls from
+804 to 796 bytes and the complete owner from 21,364 to 21,348 bytes. The
+`register` hint on `ellipse_ratio` was separately removed; the incremental
+build and case/owner sizes were unchanged, so the ordinary local declaration
+is retained. `diffF` has a 163-byte contiguous candidate case against 189 contiguous target
+bytes. Its dispatch has a separate candidate branch block; map its actual
+jump-table and branch targets before treating the 26-byte contiguous extent
+delta as missing code or merely code placement.
 
 Several source-shape trials on `moveAngleTime` were measured and discarded.
 A single angle local with branch-local volatile self-stores reached 537 bytes
@@ -39,9 +52,9 @@ and a 21,396-byte owner (alignment 0.942297). Moving the volatile store after
 the branch reached 522 bytes and a 21,380-byte owner (alignment 0.941945).
 A Ghidra-shaped single-local form without volatile stores reached 493 bytes
 (alignment 0.938165); making the local itself volatile grew the case to 576
-bytes and the owner to 21,444 bytes (alignment 0.938663). The current two-local,
-branch-local-store source is therefore the best measured whole-owner result,
-not an exact match. Ternary radial-goal expressions and extra `register` hints
+bytes and the owner to 21,444 bytes (alignment 0.938663). The two-local,
+branch-local-store source remains the best measured `moveAngleTime` form, but
+is not an exact match. Ternary radial-goal expressions and extra `register` hints
 had no useful code-size effect. Ordinary vector-field assignments for the
 ellipse interpolator changed the owner to 21,428 bytes and invalidated the
 reviewed cleanup frame, so the raw volatile field stores remain. The earlier

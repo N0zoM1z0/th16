@@ -1,13 +1,13 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-27 after a 3,899/3,964-byte title-screen reconstruction
-advance and correction of the ECL boss cleanup-frame evidence. No new exact
-credit was added. Read [AGENTS.md](../AGENTS.md) before editing; keep
-checkpoints local and push `main` only when asked.
+Updated 2026-11-27 after reconstructing the ECL boss `moveEllipseTime`
+argument lifetimes and rebasing its cleanup-frame evidence. No new exact credit
+was added. Read [AGENTS.md](../AGENTS.md) before editing; keep checkpoints
+local and push `main` only when asked.
 
 ## Current baseline
 
-- **Latest source commit**: `9e1616c` (`gpt-web: align TH16 title-screen control flow`)
+- **Latest source commit**: see `git log -1`; retain the `gpt-web: ...` message format.
 - **Incremental build**: `build/reference-candidate/th16.exe` (1,166 annotated
   functions; preserve its object/dependency graph for fast incremental builds).
 - **Local strict audit** (`.analysis/reference-audit.json` and
@@ -36,20 +36,24 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`): the reviewed EH3 cleanup graph
   validates. The original complete owner is 21,408 bytes; the current
-  `EnemyEcl.obj` contribution is 21,364 bytes, leaving a 44-byte extent
+  `EnemyEcl.obj` contribution is 21,348 bytes, leaving a 60-byte extent
   difference. Returning the line/infinite/curve shot origin as `D3DXVECTOR3`
   adds 32 bytes over the original output-pointer helper (21,296 to 21,328);
   direct-reference ET_ON stores then remove 16 bytes. Inlining shot-origin and
   EX-copy logic into the line, infinite, and curve laser cases adds 52 bytes
-  from the 21,312-byte checkpoint; whole-owner alignment is 0.942936.
+  from the 21,312-byte checkpoint. Reusing the four parsed radial/ellipse
+  arguments as their final goal values removes another 16 bytes, leaving a
+  21,348-byte owner (36 bytes net growth from that checkpoint) and whole-owner
+  alignment 0.942702.
   Opcode 702 is 439/441 bytes and opcode 711 is 401/394. The remaining large
   dispatch differences include `moveAngleTime` (502/531 bytes, 110/115
-  instructions), `moveEllipseTime` (804/780 bytes, 169/169 instructions), and
-  `diffF` (163-byte in-line case plus a 22-byte out-of-line easy branch versus
-  189 contiguous target bytes). The `diffF` table's easy entry points to
-  `0x00438F02`; do not mistake the case extent alone for missing semantics.
+  instructions), `moveEllipseTime` (796/780 bytes, 168/169 instructions), and
+  `diffF` (163 contiguous candidate bytes versus 189 contiguous target bytes).
+  Its jump-table control flow has a separate candidate branch block; trace the
+  actual table and branch targets before treating the extent delta as missing
+  behavior.
   The current EH3 graph validates with candidate Fog pointer/cookie/state
-  slots at EBP-`0x40c`/EBP-`0x470`/EBP-`4`. The original Fog cleanup saves its
+  slots at EBP-`0x40c`/EBP-`0x46c`/EBP-`4`. The original Fog cleanup saves its
   pointer at EBP-`0x420`, with cookie/state at EBP-`0x484`/EBP-`4`. Keep the
   original `has_origin` true branch first and preload y before branching; the
   inverted condition experiment was 48 bytes larger and aligned worse (0.9379).
