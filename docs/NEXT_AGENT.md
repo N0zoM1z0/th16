@@ -54,7 +54,9 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
   original `has_origin` true branch first and preload y before branching; the
   inverted condition experiment was 48 bytes larger and aligned worse (0.9379).
   All offsets are read from the allocation store and emitted EH3 funclet/handler,
-  not inferred.
+  not inferred. The four `EnemyData` ECL argument leaves are all strict exact:
+  `get_int_arg` (18/18), `get_int_arg_ptr` (14/14), `get_float_arg` (18/18),
+  and `get_float_arg_ptr` (18/18).
 - `0x44b5f0` (`TitleInf::do_title_screen`): 3,899/3,964 bytes after using a
   `MenuHelper *` alias in substate 2, sharing the Quit exit path, and storing
   `g_Globals.difficulty` before `set_state`. The remaining differences are
