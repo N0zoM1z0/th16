@@ -38,13 +38,17 @@ shows each sentinel-checked radial/ellipse argument being overwritten with its
 fallback-adjusted value and then used as the goal. Reusing `radial_speed`,
 `radius`, `ellipse_angle`, and `ellipse_ratio` in place matches that lifetime
 more closely than four separate `goal_*` locals. The candidate case falls from
-804 to 796 bytes and the complete owner from 21,364 to 21,348 bytes. The
-`register` hint on `ellipse_ratio` was separately removed; the incremental
-build and case/owner sizes were unchanged, so the ordinary local declaration
-is retained. `diffF` has a 163-byte contiguous candidate case against 189 contiguous target
-bytes. Its dispatch has a separate candidate branch block; map its actual
-jump-table and branch targets before treating the 26-byte contiguous extent
-delta as missing code or merely code placement.
+804 to 796 bytes and the complete owner from 21,364 to 21,348 bytes. Register
+hints on the five parsed float arguments did not change the build; ordinary
+local declarations are retained.
+
+`diffF` is not missing 26 bytes of logic. The target's switch table at
+`0x423040` sends Easy (entry 0) to `0x4207f3`, a 26-byte, six-instruction
+block. The candidate's case-local table at `0x4398f4` sends Easy to
+`0x438ef2`, also a 26-byte, six-instruction block. The candidate's remaining
+three difficulty branches are inline, giving 163 + 26 = 189 bytes and 38 + 6
+= 44 instructions, exactly the target's 189-byte / 44-instruction case total.
+The apparent contiguous-case deficit is only block placement.
 
 Several source-shape trials on `moveAngleTime` were measured and discarded.
 A single angle local with branch-local volatile self-stores reached 537 bytes
@@ -52,10 +56,12 @@ and a 21,396-byte owner (alignment 0.942297). Moving the volatile store after
 the branch reached 522 bytes and a 21,380-byte owner (alignment 0.941945).
 A Ghidra-shaped single-local form without volatile stores reached 493 bytes
 (alignment 0.938165); making the local itself volatile grew the case to 576
-bytes and the owner to 21,444 bytes (alignment 0.938663). The two-local,
-branch-local-store source remains the best measured `moveAngleTime` form, but
-is not an exact match. Ternary radial-goal expressions and extra `register` hints
-had no useful code-size effect. Ordinary vector-field assignments for the
+bytes and the owner to 21,444 bytes (alignment 0.938663). A volatile
+`angle_for_delta` local reached 552 bytes and a 21,412-byte owner. Register
+hints on `angle`, `angle_for_delta`, and `initial` did not change codegen. The
+two-local, branch-local-store source remains the best measured `moveAngleTime`
+form, but is not an exact match. Ternary radial-goal expressions and extra
+`register` hints had no useful code-size effect. Ordinary vector-field assignments for the
 ellipse interpolator changed the owner to 21,428 bytes and invalidated the
 reviewed cleanup frame, so the raw volatile field stores remain. The earlier
 line-only direct ellipse-field trial also aligned worse (0.93707); a later
