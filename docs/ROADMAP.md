@@ -12,9 +12,10 @@ passes all 519 bytes and eight linked fields after recovering the predicate
 control flow that feeds scheduling. Move update now passes all 597 bytes and
 12 linked fields after restoring the shared scalar/vector state layout.
 Clear-all now passes all 500 bytes and 11 linked fields after recovering the
-constructed vector between its two scaling operations. The current menu
-focus covers `PauseMenu::take_snapshot`, now 443/464 bytes after recovering
-the surface-copy exits, and `PauseMenu::tick_open`, at 4,675/4,676 bytes. Both
+constructed vector between its two scaling operations. Difficulty selection
+now passes its complete 1,180-byte owner after sharing the cancellation exit.
+The current menu focus covers `PauseMenu::take_snapshot`, now 443/464 bytes
+after recovering the surface-copy exits, and `PauseMenu::tick_open`, at 4,675/4,676 bytes. Both
 complete owners remain mismatches. `Bullet::on_tick` remains open. Follow
 [the compiler-context evidence](knowledge/bullet-compiler-context.md) when
 choosing allocation or scheduling controls. The clear-all traces show how
@@ -36,10 +37,11 @@ apply that method to Bullet tick's remaining movement branches.
    Preserve its surface-copy exit helper. Revisit `PauseMenu::tick_open`
    (`0x43f980`, one remaining copy SIB byte) from
    [the compiler-context finding](knowledge/pause-menu-compiler-context.md).
-   `TitleInf::do_difficulty_select` (`0x44fe20`) isolates a one-byte load-base
-   fold that currently prevents complete switch-code decoding; follow
-   [its address context](knowledge/title-menu-compiler-context.md) with the
-   target record unchanged. Then continue `TitleInf::do_title_screen`
+   Preserve `TitleInf::do_difficulty_select` (`0x44fe20`, 1,180-byte local
+   pass): its shared cancellation exit restores the load address before the
+   switch table without changing target ownership. Follow
+   [its compiler context](knowledge/title-menu-compiler-context.md) when
+   examining shared tails. Then continue `TitleInf::do_title_screen`
    (`0x44b5f0`). Recover real call/local shapes
    in `do_practice_stage_select` (`0x450ef0`), `do_player_data` (`0x452330`),
    and `do_score_name_entry` (`0x4532f0`). Do not introduce dead arithmetic or

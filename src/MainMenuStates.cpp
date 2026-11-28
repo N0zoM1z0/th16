@@ -340,7 +340,6 @@ i32 g_last_difficulty = DIFFICULTY_NORMAL;
 i32 g_last_character;
 
 // Picking the difficulty, or confirming Extra.
-// TODO: in case 4's main game branch the original reloads menu.next_selection as [esi + 0x24] after the g_Globals store; ours through ecx, the menu pointer for pop.
 // FUNCTION: TH16 0x44fe20
 i32 TitleInf::do_difficulty_select()
 {
@@ -479,8 +478,7 @@ i32 TitleInf::do_difficulty_select()
                 set_state(TITLE_STATE_MAIN);
                 g_Globals.difficulty = menu.next_selection;
                 g_last_difficulty = menu.next_selection;
-                menu.pop();
-                return 1;
+                goto restore_previous_menu;
             }
             else
             {
@@ -490,6 +488,7 @@ i32 TitleInf::do_difficulty_select()
             AnmManager::interrupt_tree(submenu_ascii_id, 1);
             submenu_ascii_id.id = 0;
             set_state(TITLE_STATE_MAIN);
+        restore_previous_menu:
             menu.pop();
         }
         break;

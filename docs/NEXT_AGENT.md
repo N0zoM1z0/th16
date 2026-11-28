@@ -1,9 +1,9 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after tracing menu return aliases and load-address reuse.
-All source controls from this investigation are restored. `take_snapshot`
-remains 443/464 bytes and `tick_open` retains its single SIB difference.
-The existing ECL opcode 601 experiment remains dirty and preserved.
+Updated 2026-11-28 after matching difficulty selection through its shared
+cancellation exit. The complete 1,180-byte owner is now a local strict pass.
+`take_snapshot` remains 443/464 bytes and `tick_open` retains its single SIB
+difference. The existing ECL opcode 601 experiment remains dirty and preserved.
 Read [AGENTS.md](../AGENTS.md); keep checkpoints local and push `main` only
 when asked.
 
@@ -18,19 +18,16 @@ when asked.
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
-- **Latest restoration result**:
-  `.analysis/title-compiler/menu-context-restored-strict.json` compares 280
-  related complete owners: 245 local passes, 30 incomplete and five
-  mismatches. All 280 verdicts, owner sizes and recorded differences agree
-  with the preceding baselines. No source control is retained and no complete
-  function is newly exact in this checkpoint.
-  The last retained source change remains the snapshot surface-copy exits:
-  443/464 bytes, with 21 frame/stack-displacement bytes different.
-  `tick_open` retains its complete 4,676-byte scope, linked fields and both
-  reviewed switch tables; only SIB +0xb28 differs. All 34 preceding Bullet
-  passes survive. The earlier 86-owner source checkpoint and 125-owner
-  shared-state reports remain under `.analysis/pause-compiler/` and
-  `.analysis/bullet-compiler/`; the broad totals above remain historical.
+- **Latest focused result**:
+  `.analysis/title-compiler/difficulty-shared-exit-final-strict.json` compares
+  89 complete owners across MainMenu, MainMenuStates, MenuHelper and PauseMenu:
+  75 local passes, eleven incomplete and three mismatches. All preceding
+  passes survive. `do_difficulty_select` newly passes its complete 1,180-byte
+  extent, 81 linked fields and independently reviewed switch table.
+  Both baseline and retained-source compiler traces reproduce their ordinary
+  complete owners (63 and 89 respectively); all eight phase walks finish.
+  Earlier restoration and Bullet/shared-state results remain private evidence;
+  the broad totals above remain historical.
 
 ## Working commands
 
@@ -65,13 +62,15 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
   can be reused by another copy; follow source provenance. The smaller
   `trace-copy-address-routines.py` observer is prepared but unexecuted.
 
-- `TitleInf::do_difficulty_select` (`0x44fe20`) has a specific source gap;
-  read [the title menu context](knowledge/title-menu-compiler-context.md).
-  Its 1,180-byte extent matches, but `[ecx]` replaces `[esi+0x24]` for the last
-  menu reload. The shorter instruction leaves the reviewed code range inside
-  a two-byte NOP. Keep the independent switch record unchanged. A const
-  receiver and opaque pop provider do not repair it. Trace when the ready
-  menu address replaces the title-based load address.
+- Preserve the shared cancellation exit in `TitleInf::do_difficulty_select`
+  (`0x44fe20`, complete 1,180-byte local pass). Read
+  [the title menu context](knowledge/title-menu-compiler-context.md).
+  One source pop call is duplicated between Lower and PreEncode; by then
+  the final reload uses the title base separately from the pop address.
+  This restores the three-byte instruction and one-byte alignment NOP with
+  the independent switch record unchanged. A const receiver and opaque pop
+  provider had not repaired it. Continue the larger title-screen frame and
+  lifetime question from the roadmap, using the same complete-carrier method.
   GameThread's BGM store remains 622/623 bytes. Its validated AddrModes entry
   receives g_Scorefile before music (keys 0x104e0 and 0x10040). Same-TU and
   cross-TU BGM sharing retain that order. The pilot's FinishBreakpoints at
