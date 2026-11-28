@@ -7,10 +7,11 @@ is under `.analysis/bullet-compiler/`. The restored-source focused report
 three mismatch. These results agree with the preceding ledger. Factory
 acceptance is unchanged.
 
-The completed manager timer now passes the local strict comparison over all
-502 bytes and nine linked fields. `manager-frame-delayed-current-strict.json`
-compares all 40 bullet owners: 31 local passes, six incomplete and three
-mismatches. The additional `manager-final-timer-consumers.json` keeps both
+The completed manager timer passes all 502 bytes and nine linked fields;
+the wrap update now passes all 519 bytes and eight linked fields.
+`step12-explicit-returns-strict.json` compares all 40 bullet owners: 32 local
+passes, six incomplete and two mismatches. The earlier
+`manager-final-timer-consumers.json` also keeps both
 EnemyManager update and the out-of-line timer increment exact. The earlier
 controls below explain the recovered alignment and source lifetimes.
 
@@ -31,7 +32,7 @@ the historical audit. This is a routing aid, not an ownership comparison.
 
 ## Constant loading and callee visibility
 
-`Bullet::step_ex_12` (`0x415d80`) still compares 515 / 519 bytes locally.
+`Bullet::step_ex_12` (`0x415d80`) initially compares 515 / 519 bytes locally.
 The only differing instructions load 192 into XMM4 and 448 into XMM2 in
 opposite order. The complete read-only C2 replay in `baseline-phases.jsonl`
 exits normally and reproduces all 40 ordinary bullet owners byte for byte;
@@ -50,6 +51,36 @@ for `this`. Its early constant-load order is unchanged. The normalized
 instruction streams of `step_ex_17` and the manager tick body are unchanged.
 This rejects that callee boundary as the explanation for this load-order
 pair; it is not a replacement production recipe.
+
+The later scheduler controls isolate the source of that ordering. In the
+first DAG, both loads have priority `0x8c00` at node +`0x28`, with only the
+graph entry and exit as dependencies. The ready-list insertion at C2 RVA
+`0x21ae36` breaks equal priorities by the ascending WORD ordinal at +`0x34`.
+Static priorities are computed at `Schedule +0x1d7`, before the graph-entry
+sample at `+0x1e2`.
+
+| Constant | Destination | Starting ordinal | Explicit-return ordinal |
+| --- | --- | ---: | ---: |
+| 192 | XMM4 | 20 | 19 |
+| 448 | XMM2 | 19 | 21 |
+
+Returning `bool` from the predicate and using an actual `Float2` boundary
+value are byte-neutral controls. Their focused reports are
+`step12-bool-strict.json` and `step12-bounds-strict.json`. The retained
+`outside_range` instead returns one immediately for either boundary test,
+then zero for the inside case. This preserves the predicate's behavior but
+changes the constant loads' input order before scheduling. Both priorities
+remain `0x8c00`, so the existing tie-breaker now selects the target order.
+
+Use graph-entry records from `step12-priority.jsonl` and
+`step12-explicit-returns-priority.jsonl` for this comparison. The earlier
+`FinishBreakpoint` sampler observed recycled graph storage at delayed
+returns. The replacement binds return points to a thread and exact stack
+position. Both read-only controls exit normally and reproduce every ordinary
+bullet owner; their corresponding `*-control.json` records bind the inputs.
+The ordinary final comparison passes the complete 519-byte owner and all
+eight linked fields. The original manager pass and every other preceding
+local pass survive.
 
 ## Recovering alignment with real iterator setup
 

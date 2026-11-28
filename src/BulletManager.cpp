@@ -1621,7 +1621,15 @@ static AnmLoadedSprite *vm_sprite(AnmVm *vm)
 static i32 outside_range(f32 *x, f32 size, f32 lo, f32 hi)
 {
     f32 half = size * 0.5f;
-    return *x + half <= lo || *x - half >= hi;
+    if (*x + half <= lo)
+    {
+        return 1;
+    }
+    if (*x - half >= hi)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 // outside_range for Bullet::on_tick's offscreen test (sizes scaled by the
@@ -1634,7 +1642,6 @@ static i32 outside_range_scaled(f32 *x, f32 size, f32 lo, f32 hi)
     return v + half <= lo || v - half >= hi;
 }
 
-// TODO: reccmp effective match: the original loads 192.0f before 448.0f.
 // FUNCTION: TH16 0x415d80
 i32 Bullet::step_ex_12()
 {
