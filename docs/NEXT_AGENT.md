@@ -1,7 +1,8 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after tracing title-screen storage families and restoring
-the source controls. Difficulty selection retains its complete 1,180-byte
+Updated 2026-11-28 after tracing menu alignment, native frame decisions and
+late replay-name address folding, then restoring the source controls.
+Difficulty selection retains its complete 1,180-byte
 local strict pass through the shared cancellation exit.
 `take_snapshot` remains 443/464 bytes and `tick_open` retains its single SIB
 difference. The existing ECL opcode 601 experiment remains dirty and preserved.
@@ -20,7 +21,7 @@ when asked.
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
 - **Latest focused result**:
-  `.analysis/title-compiler/title-storage-final-strict.json` compares
+  `.analysis/title-compiler/menu-frontier-restored-strict.json` compares
   89 complete owners across MainMenu, MainMenuStates, MenuHelper and PauseMenu:
   75 local passes, eleven incomplete and three mismatches. All preceding
   passes survive. `do_difficulty_select` newly passes its complete 1,180-byte
@@ -28,7 +29,8 @@ when asked.
   Both difficulty-selection compiler traces reproduce their ordinary
   complete owners (63 and 89 respectively); all eight phase walks finish.
   Earlier restoration and Bullet/shared-state results remain private evidence;
-  the broad totals above remain historical.
+  the broad totals above remain historical. The latest call-graph and copy
+  study adds no newly exact owner.
 
 ## Working commands
 
@@ -77,9 +79,18 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
   context for rejected value/reference, reset, helper and shared-confirmation
   controls. The world-creator initialization control regresses its exact
   236-byte owner; the provider is restored and its 395-owner related scope is
-  checked. Next examine `TitleInf::on_tick` and the practice-stage selector's
-  different alignment prologue as a caller/callee group before more
-  title-local spelling changes.
+  checked. The newer menu call-graph observation reproduces all 89 owners.
+  Reusing the creation member in the tick caller removes its weight-2 direct
+  edge and restores that caller's prologue, but regresses the key-config
+  cursor and leaves the practice selector short. The one-helper trace records
+  zero native reference weights in both frame-decision walks of those owners.
+  All controls are restored; one correct prologue does not close this group.
+  The replay-save phase trace also reproduces all 89 owners and completes all
+  eight linear walks. At IR source location 0xa9 the field still has its own
+  LEA after Lower; by PreEncode entry the copy store contains its 0x19f8c
+  displacement. Trace that intervening address merge by source provenance,
+  keeping the independent switch record unchanged. Read the title context
+  before repeating local value/reference, reset or name-operation controls.
   GameThread's BGM store remains 622/623 bytes. Its validated AddrModes entry
   receives g_Scorefile before music (keys 0x104e0 and 0x10040). Same-TU and
   cross-TU BGM sharing retain that order. The pilot's FinishBreakpoints at

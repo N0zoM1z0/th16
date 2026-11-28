@@ -47,11 +47,19 @@ apply that method to Bullet tick's remaining movement branches.
    handles do not have the snapshot's extended alias lifetime. Local value,
    reference, reset and helper controls do not repair it; retain the restored
    source and the evidence in the title context instead of repeating them.
-   Next examine the `TitleInf::on_tick` caller together with
-   `do_practice_stage_select` (`0x450ef0`): its 1,292-byte candidate uses an
+   The `TitleInf::on_tick` caller and `do_practice_stage_select` (`0x450ef0`)
+   have now been observed together. The selector's 1,292-byte candidate uses an
    EBX-based alignment prologue, while the 1,232-byte target uses EBP and an
-   aligned ESP frame. Recover the real caller and return contexts before
-   revisiting title-slot allocation. Then recover real call/local shapes in
+   aligned ESP frame. Hiding the caller's weight-2 creation edge fixes its
+   prologue but leaves the selector at 1,220 bytes and regresses the key-config
+   cursor. The native reference weights are zero; the target's selecting source
+   property remains unknown. Preserve the restored group. The phase trace of
+   `do_replay_save` (`0x453c10`) now places its saved-name address merge between
+   Lower return and PreEncode entry. Its complete 1,432-byte candidate still
+   fails the reviewed switch mapping after that copy. Trace the intervening
+   loop/address transformation by the write's source location 0xa9.
+   Resolve its folded destination offset and BOMB store together before
+   claiming the owner. Then recover real call/local shapes in
    `do_player_data` (`0x452330`) and `do_score_name_entry` (`0x4532f0`).
    Do not introduce dead arithmetic or
    dummy locals for stack alignment.

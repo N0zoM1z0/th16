@@ -169,3 +169,102 @@ three mismatches. The difficulty-selection pass survives; this storage study
 adds no newly exact owner. The roadmap next checks the title tick caller and
 practice-stage selector's alignment context before returning to this packing
 question.
+
+## The tick caller changes alignment throughout the menu chain
+
+The `menu-alignment-stages.jsonl` observation completes all ten global-stage
+snapshots and reproduces the 89 ordinary menu owners
+(`menu-alignment-baseline-control.json`). The world-effect creator has local
+alignment weight 8. `TitleInf::on_tick` has local weight zero and accumulated
+weight 4,073,660; its two direct world-creator calls form one weight-2 edge.
+After the new decision and final selection its node flags are 0xc00. The
+practice selector and key-config handler have flags 0x1800 and local weight
+zero. This is the current candidate's graph, not the target's unavailable IR.
+
+Reusing the existing `TitleInf::create_effect` member for either the first
+return-path creation or both creations removes that weight-2 direct edge.
+The ordinary build removes the tick caller's ESP realignment, but changes its
+callees too:
+
+| Complete owner | Target size | Baseline size | Helper-control size |
+| --- | ---: | ---: | ---: |
+| `on_tick` | 1,452 | 1,460 | 1,452 |
+| `do_practice_stage_select` | 1,232 | 1,292 | 1,220 |
+| `do_key_config` | 812 | 836 | 800 |
+| `update_key_config_cursor` | 1,540 | 1,540 | 1,540 |
+
+The cursor's preceding local pass becomes a one-byte mismatch: its allocation
+is eight rather than twelve bytes. The tick owner still fails its independent
+switch guard, despite reaching the target length. Its replay pointer stays
+in EBX with a branch-local save, where the target spills it and later reads it
+into ESI. One redundant ECX reload also remains. The 89-owner comparisons are
+`tick-create-helper-strict.json` and `tick-spell-create-helper-strict.json`.
+The whole group regresses from 75 to 74 local passes, so neither source control
+is retained.
+
+The one-helper `menu-caller-frame.jsonl` trace also exits normally and
+reproduces all 89 owners (`tick-one-helper-frame-control.json`). Final node
+flags are now zero for the tick caller, practice selector, key-config handler
+and key-config cursor. All five remaining locally weighted callee edges of
+the tick caller have weight one; other edge weights total 55, exceeding the
+five-to-one new-decision threshold (5.0 at RVA 0x18d20). Final alignment
+hoisting separately uses 3.0 at RVA 0x18d18. The selector and key-config
+handler each have only one locally weighted callee edge. Two native
+frame-decision walks per selected function
+record zero return weight and zero in both reference counters from
+`MdmComputeReferenceWeights` (RVA 0x17eec0). `MdmDetermineDoubleAlignAndFpo`
+(0x17ed42) therefore has no independent native weight to restore those frames.
+The target's original source property that selected its frames remains unknown.
+
+Other ordinary controls also fail the complete tick owner: a replay reference
+and a demo-loader return helper retain 1,452 bytes; a demo-index reference
+leaves 1,444; a shared title-display exit leaves 1,436. Replacing the state
+setter's timer reset with `reset_inline` retains its exact 115-byte provider
+but does not remove the caller's ECX reload. These reports use the
+`tick-replay-reference`, `tick-demo-loader`, `tick-demo-index-reference`,
+`tick-shared-title-exit` and `state-expanded-reset` prefixes. All controls are
+restored. Reaching one correct prologue is insufficient evidence for retaining
+a change to this call chain.
+
+## Replay-save folding happens after lowering
+
+The baseline `do_replay_save` owner at 0x453c10 is 1,432 bytes, but fails its
+reviewed switch mapping. An instruction alignment with absolute addresses
+abstracted narrows the code-shape differences to the remembered-name copy and
+the BOMB path's indexed space store. This diagnostic does not validate linked
+fields or override the independent switch record.
+
+The target adds 0x19f8c to the Scorefile pointer before its copy loop and
+stores through `[ecx+edx-1]`. The candidate folds that field offset into the
+store, `[edx+ecx+0x19f8b]`. The longer store shifts the BOMB path and following
+case entry; later alignment absorbs the size difference. Equal complete
+extents therefore do not establish equal switch ownership. The target BOMB
+path uses a memory decrement followed by `[edi+eax+0x5a48]`, while the baseline
+candidate's store reverses those base/index roles.
+
+`replay-save-phases.jsonl` completes all eight linear walks, with 742, 631,
+597, 560, 537, 580, 431 and 431 statements, respectively. Its terminal guard
+reproduces all 89 ordinary owners (`replay-save-phases-control.json`). For the
+saved-name write at IR source location 0xa9:
+
+| Observation | Address form |
+| --- | --- |
+| AddrModes and Lower returns | Separate LEA with displacement 0x19f8c |
+| PreEncode entry | Store already contains displacement 0x19f8c |
+| PreEncode return | Store displacement becomes 0x19f8b after increment scheduling |
+
+The field-offset merge occurs between Lower return and PreEncode entry.
+PreEncode is not its origin. Follow the regenerated copy operand in that
+interval, using source location and role rather than a recycled tuple address.
+
+The bounded source controls are restored. A local cursor value, before or
+after the decrement, changes the target memory decrement into a register
+decrement and store. A cursor field reference leaves the original mapping
+failure. A Scorefile receiver helper, explicit copy loop, structured
+`ScorefileData::status.name` view and helpers for remembering/erasing a name
+also fail. The explicit loop extends the source-pointer lifetime across replay
+operations; the structured status view leaves the original 1,432-byte result.
+Reports use the `replay-bomb-local`, `replay-name-helper`, `replay-copy-loop`,
+`replay-status-view`, `replay-cursor-field-reference` and
+`replay-name-operation-helpers` prefixes. These controls do not justify a
+padding variable, a compiler-flag change or relaxed table ownership.
