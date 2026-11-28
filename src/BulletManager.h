@@ -107,9 +107,22 @@ static_assert(sizeof(BulletEx) == 0x2c, "BulletEx bytecode record size");
 struct BulletExState
 {
     ZunTimer timer;
-    f32 floats[8];
+    union
+    {
+        f32 floats[5];
+        struct
+        {
+            f32 speed;
+            f32 unused[4];
+        } move;
+    };
+    D3DXVECTOR3 vector;
     i32 ints[5];
 };
+
+static_assert(offsetof(BulletExState, vector) == 0x28, "BulletExState vector offset");
+static_assert(offsetof(BulletExState, ints) == 0x34, "BulletExState integer arguments offset");
+static_assert(sizeof(BulletExState) == 0x48, "BulletExState byte size");
 
 // Bullet::state.
 enum BulletState : u16

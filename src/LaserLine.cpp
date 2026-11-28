@@ -54,7 +54,7 @@ i32 LaserLineInf::step_ex_accel()
         return 1;
     }
     length += st->floats[0] * g_game_speed;
-    Float3 v = *(Float3 *)&st->floats[5] * g_game_speed;
+    Float3 v = st->vector * g_game_speed;
     D3DXVec3Add(&tip_offset, &tip_offset, &v);
     if (fabsf(tip_offset.x) > 0.0001f || fabsf(tip_offset.y) > 0.0001f)
     {

@@ -926,7 +926,7 @@ i32 LaserCurveInf::step_ex_accel()
         return 1;
     }
     length += st->floats[0] * g_game_speed;
-    Float3 v = *(Float3 *)&st->floats[5] * g_game_speed;
+    Float3 v = st->vector * g_game_speed;
     D3DXVec3Add(&tip_offset, &tip_offset, &v);
     if (fabsf(tip_offset.x) > 0.0001f || fabsf(tip_offset.y) > 0.0001f)
     {
@@ -2673,7 +2673,7 @@ void LaserCurveInf::run_ex()
         case BULLET_EX_SPEEDUP:
             ex_flags |= BULLET_EX_SPEEDUP;
             ex_state[0].timer.set_value(0);
-            ex_state[0].floats[7] = 0.0f;
+            ex_state[0].vector.z = 0.0f;
             break;
         case BULLET_EX_ACCEL:
         {
@@ -3323,7 +3323,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
         case BULLET_EX_SPEEDUP:
             ex_flags |= BULLET_EX_SPEEDUP;
             ex_state[0].timer.set_value(0);
-            ex_state[0].floats[7] = 0.0f;
+            ex_state[0].vector.z = 0.0f;
             break;
         case BULLET_EX_ACCEL:
             ex_flags |= BULLET_EX_ACCEL;
@@ -3332,7 +3332,7 @@ DECOMP_NOINLINE void LaserLineInf::run_ex()
                 -990.0f >= ex->s ? angle : (ex->s >= 990.0f ? g_Player->angle_to_player(&position) : ex->s);
             ex_state[1].timer.set_value(0);
             ex_state[1].ints[0] = ex->a;
-            laser_sincosmul((Float3 *)&ex_state[1].floats[5], ex_state[1].floats[1], ex_state[1].floats[0]);
+            laser_sincosmul(&ex_state[1].vector, ex_state[1].floats[1], ex_state[1].floats[0]);
             if (ex_index != 0 && inner.shot_transform_sfx >= 0)
             {
                 g_SoundManager.play_sound_centered(inner.shot_transform_sfx, 0);

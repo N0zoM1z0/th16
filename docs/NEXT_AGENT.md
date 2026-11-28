@@ -1,9 +1,9 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after closing Bullet wrap update at 519 bytes and eight
-linked fields through the boundary predicate's actual control flow. The
-502-byte manager tick remains locally exact. The existing ECL opcode 601 vector
-assignment experiment remains dirty and preserved. Read
+Updated 2026-11-28 after closing Bullet movement at 597 bytes and 12 linked
+fields through the shared transform state's scalar/vector layout. The
+502-byte manager tick and 519-byte wrap update remain locally exact. The
+existing ECL opcode 601 vector assignment experiment remains dirty and preserved. Read
 [AGENTS.md](../AGENTS.md) before editing; keep checkpoints local and push `main`
 only when asked.
 
@@ -18,10 +18,11 @@ only when asked.
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
-- **Latest focused result**: `Bullet::step_ex_12` (`0x415d80`) passes
-  519/519 bytes and eight linked fields. The full Bullet TU has 32 local passes,
-  six incomplete and two mismatches, retaining the 502-byte manager tick pass.
-  Evidence: `.analysis/bullet-compiler/step12-explicit-returns-strict.json`.
+- **Latest focused result**: `Bullet::step_ex_17` (`0x415f90`) passes
+  597/597 bytes and 12 linked fields. The shared-state consumer scope covers
+  125 complete owners in BulletManager, Laser and LaserLine: 102 local passes,
+  20 incomplete and three mismatches, retaining every preceding local pass.
+  Evidence: `.analysis/bullet-compiler/step17-final-consumers-strict.json`.
   The broad totals above remain historical.
 
 ## Working commands
@@ -29,7 +30,7 @@ only when asked.
 ```sh
 git status --short --branch
 scripts/repo-python scripts/build.py
-scripts/repo-python scripts/audit-reference.py --address 0x415f90 --json .analysis/audit_tmp.json
+scripts/repo-python scripts/audit-reference.py --address 0x416f40 --json .analysis/audit_tmp.json
 ```
 
 Verify the complete affected TU with `audit-reference.py`. Keep focused reports
@@ -42,11 +43,13 @@ Follow [the remaining-function roadmap](ROADMAP.md) for the next batches and
 their affected comparison scopes. The existing dirty opcode 601 vector
 assignment in `src/EnemyEcl.cpp` is preserved for review.
 
-- Continue with `Bullet::step_ex_17` (`0x415f90`, 541/597 bytes). The residual
-  is in the completed-movement branch: the target clears the active flag
-  before storing XY and stores Z after loading the angle. Preserve the timer
-  tail, whose existing `tick_goto` form matches. The earlier by-value goal
-  snapshot changed that tail and was rejected. `Bullet::on_tick`
+- Continue with `BulletManager::clear_all` (`0x416f40`, 491/500 bytes), then
+  `Bullet::on_tick`. The remaining clear-all difference swaps the scaled X/Y
+  velocity registers; inspect the real vector expression and allocation context.
+  Preserve `step_ex_17`: the retained `BulletExState` has a vector at `+0x28`
+  and a move-specific saved-speed scalar at `+0x14`, rather than accessing both
+  through an eight-float array. This closes the completed-movement branch
+  without changing its timer tail. `Bullet::on_tick`
   (`0x411e70`) still has a 1,568/1,592-byte extent gap. Read
   [the compiler-context finding](knowledge/bullet-compiler-context.md) before
   choosing source controls.

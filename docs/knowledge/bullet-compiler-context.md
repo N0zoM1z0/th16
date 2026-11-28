@@ -8,7 +8,11 @@ three mismatch. These results agree with the preceding ledger. Factory
 acceptance is unchanged.
 
 The completed manager timer passes all 502 bytes and nine linked fields;
-the wrap update now passes all 519 bytes and eight linked fields.
+the wrap update now passes all 519 bytes and eight linked fields. The move
+update also passes all 597 bytes and 12 linked fields after restoring its
+shared scalar/vector state layout. `step17-final-consumers-strict.json` covers
+all 125 annotated owners in BulletManager, Laser and LaserLine: 102 local
+passes, 20 incomplete and three mismatches. Every preceding local pass holds.
 `step12-explicit-returns-strict.json` compares all 40 bullet owners: 32 local
 passes, six incomplete and two mismatches. The earlier
 `manager-final-timer-consumers.json` also keeps both
@@ -154,6 +158,55 @@ control do not identify a final physical register. The canonical operands,
 pass snapshots and ordinary native instructions supply the relevant evidence.
 Filter small tuple reads before expanding trees; reading whole pages at every
 generic hash breakpoint made the earlier private sampler unnecessarily slow.
+
+## Closing movement through the shared state layout
+
+`Bullet::step_ex_17` (`0x415f90`) begins this control at 541/597 bytes. Its
+timer tail already matches. The completed-movement branch instead writes XY
+before reading goal Z, clears the active flag too late, and writes Z before
+the speed/angle loads. Moving only the flag clear earlier gives 530/597.
+The by-value goal control recovers the early goal reads but changes the
+timer tail, growing the complete owner to 612 bytes.
+
+The controlled baseline scheduler trace is `step17-baseline-schedule.jsonl`.
+It exits normally and reproduces all 40 ordinary bullet owners;
+`step17-baseline-schedule-control.json` binds that check. In graph 1, the
+XY store has a `0x20` edge to the goal-Z load. The Z store also has a `0x20`
+edge to the saved-speed load. These dependencies prevent the target order
+regardless of the ready-list priorities.
+
+The old state represents both data shapes through `floats[8]`, with casts
+for its final three slots. Its Bullet, Laser and LaserLine consumers use
+those slots as a vector. Restoring a real `D3DXVECTOR3` member at `+0x28`
+recovers the goal-read/flag/XY sequence and retains the existing timer tail:
+568/597 bytes. A state reference instead grows the owner to 612 bytes;
+moving the speed assignment first gives 547/597. Both are rejected.
+
+The retained state also provides a move-specific scalar view of the five
+preceding float slots. `run_ex` saves the current speed to `move.speed` at
+`+0x14`; `step_ex_17` restores that same field. Only this scalar is used by
+MOVE in the five-slot view. The vector, integer arguments and full state
+remain at `+0x28`, `+0x34` and 72 bytes respectively, checked by static
+assertions. All vector consumers now use the real member.
+
+In graph 1 of `step17-final-schedule.jsonl`, both `0x20` edges are absent.
+The Z store's static priority falls from `0x2c00` to `0x1000`, allowing the
+angle load (`0x9c00`) to precede it. The original source assignment order and
+timer helper remain in place. This final read-only link exits normally and
+reproduces all 125 ordinary consumer owners byte for byte;
+`step17-final-schedule-control.json` binds the image check and build inputs.
+
+This source passes the complete 597-byte move owner and all 12 linked fields.
+`step17-final-consumers-strict.json` compares all 125 annotated owners in
+the three changed consumer TUs: 102 exact, 20 incomplete, three mismatches.
+The Bullet subset has 33 exact, six incomplete and one mismatch. Every
+preceding local pass survives, including manager tick and wrap update.
+These are local strict results; Factory acceptance remains unchanged.
+
+Private control sources and reports use the `step17-` prefix. The intermediate
+`typed-state` debugger image was retained before its ordinary comparison was
+completed; use it only as provisional diagnostic evidence. The baseline and
+final controls have separate image comparisons.
 
 ## Rejected source controls
 

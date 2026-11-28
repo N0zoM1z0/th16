@@ -782,7 +782,7 @@ void Bullet::run_ex()
         case BULLET_EX_SPEEDUP:
             active_ex_flags |= BULLET_EX_SPEEDUP;
             ex_state[0].timer.set_value(0);
-            ex_state[0].floats[7] = 0.0f;
+            ex_state[0].vector.z = 0.0f;
             break;
         case BULLET_EX_ACCEL:
         {
@@ -795,7 +795,7 @@ void Bullet::run_ex()
                     .value;
             ex_state[1].timer.set_value(0);
             ex_state[1].ints[0] = ex->a;
-            bullet_sincosmul((Float3 *)&ex_state[1].floats[5], ex_state[1].floats[1], ex_state[1].floats[0]);
+            bullet_sincosmul(&ex_state[1].vector, ex_state[1].floats[1], ex_state[1].floats[0]);
             if (ex_index != 0 && bounce_sound >= 0)
             {
                 g_SoundManager.play_sound_centered(bounce_sound, 0);
@@ -1028,8 +1028,8 @@ void Bullet::run_ex()
             continue;
         case BULLET_EX_VELADD:
             active_ex_flags |= type;
-            bullet_sincosmul((Float3 *)&ex_state[9].floats[5], ex->r, ex->s);
-            ex_state[9].floats[7] = 0.0f;
+            bullet_sincosmul(&ex_state[9].vector, ex->r, ex->s);
+            ex_state[9].vector.z = 0.0f;
             ex_state[9].floats[1] = ex->r;
             ex_state[9].floats[0] = ex->s;
             ex_state[9].ints[0] = ex->a;
@@ -1055,7 +1055,7 @@ void Bullet::run_ex()
         case BULLET_EX_MOVE:
         {
             active_ex_flags |= type;
-            D3DXVECTOR3 *target = (D3DXVECTOR3 *)&ex_state[8].floats[5];
+            D3DXVECTOR3 *target = &ex_state[8].vector;
             target->x = ex->r;
             target->y = ex->s;
             if (ex->b & 0x100)
@@ -1064,7 +1064,7 @@ void Bullet::run_ex()
                 target->y += pos.y;
                 target->z += pos.z;
             }
-            ex_state[8].floats[0] = speed;
+            ex_state[8].move.speed = speed;
             target->z = 0.0f;
             ex_state[8].ints[0] = ex->a;
             ex_state[8].ints[1] = (u8)ex->b;
@@ -1117,7 +1117,7 @@ void Bullet::run_ex()
                     .value;
             ex_state[10].timer.reset_inline();
             ex_state[10].ints[0] = ex->a;
-            bullet_sincosmul((Float3 *)&ex_state[10].floats[5], ex_state[10].floats[1], ex_state[10].floats[0]);
+            bullet_sincosmul(&ex_state[10].vector, ex_state[10].floats[1], ex_state[10].floats[0]);
             if (ex_index != 0 && bounce_sound >= 0)
             {
                 g_SoundManager.play_sound_centered(bounce_sound, 0);
@@ -1497,7 +1497,7 @@ i32 Bullet::step_ex_19()
         active_ex_flags &= 0xfffffff6;
         return 1;
     }
-    pos += *(D3DXVECTOR3 *)&ex_state[9].floats[5] * g_game_speed;
+    pos += ex_state[9].vector * g_game_speed;
     ex_state[9].timer.reset();
     return 0;
 }
@@ -1580,7 +1580,7 @@ i32 Bullet::step_ex_02()
         return 1;
     }
     speed += ex_state[1].floats[0] * g_game_speed;
-    velocity += *(D3DXVECTOR3 *)&ex_state[1].floats[5] * g_game_speed;
+    velocity += ex_state[1].vector * g_game_speed;
     if (fabsf(velocity.x) > 0.0001f || fabsf(velocity.y) > 0.0001f)
     {
         angle = wrap_angle(atan2(velocity.y, velocity.x));
@@ -1599,7 +1599,7 @@ i32 Bullet::step_ex_21()
         return 1;
     }
     speed += ex_state[10].floats[0] * g_game_speed;
-    velocity += *(D3DXVECTOR3 *)&ex_state[10].floats[5] * g_game_speed;
+    velocity += ex_state[10].vector * g_game_speed;
     if (fabsf(velocity.x) > 0.0001f || fabsf(velocity.y) > 0.0001f)
     {
         angle = wrap_angle(atan2(velocity.y, velocity.x));
@@ -1683,16 +1683,14 @@ i32 Bullet::step_ex_12()
     return 0;
 }
 
-// TODO: the original stores pos.z after loading the angle (tick_goto gives the
-// timer tick's registers).
 // FUNCTION: TH16 0x415f90
 i32 Bullet::step_ex_17()
 {
     if (ex_state[8].timer.current >= ex_state[8].ints[0])
     {
-        pos = *(D3DXVECTOR3 *)&ex_state[8].floats[5];
+        pos = ex_state[8].vector;
         active_ex_flags &= ~BULLET_EX_MOVE;
-        speed = ex_state[8].floats[0];
+        speed = ex_state[8].move.speed;
         bullet_sincosmul(&velocity, angle, speed);
         velocity.z = 0.0f;
         return 1;

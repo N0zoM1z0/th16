@@ -9,15 +9,18 @@ separate. Recheck each selected owner against the current incremental build.
 
 The Bullet manager passes all 502 bytes and nine linked fields; wrap update
 passes all 519 bytes and eight linked fields after recovering the predicate
-control flow that feeds scheduling. The active step is `Bullet::step_ex_17`. Follow
-[the compiler-context evidence](knowledge/bullet-compiler-context.md) before
-returning to the leaf load-order work.
+control flow that feeds scheduling. Move update now passes all 597 bytes and
+12 linked fields after restoring the shared scalar/vector state layout.
+The active step is `BulletManager::clear_all`. Follow
+[the compiler-context evidence](knowledge/bullet-compiler-context.md) when
+choosing allocation or scheduling controls.
 
-1. **Bullet leaves and update loop.** Continue `step_ex_17` (`0x415f90`) and
-   `clear_all` (`0x416f40`), then the
+1. **Bullet leaves and update loop.** Continue `clear_all` (`0x416f40`), then the
    remaining movement/data layout in `Bullet::on_tick` (`0x411e70`). Preserve
-   the closed manager (`0x412860`) and wrap update (`0x415d80`). Compare every annotated
-   owner in `src/BulletManager.cpp` after a retained change, including helper callers.
+   the closed manager (`0x412860`), wrap (`0x415d80`) and move (`0x415f90`)
+   updates. Compare every annotated owner in `src/BulletManager.cpp` after a
+   retained change, including helper callers. Shared transform-state changes
+   also require the complete Laser and LaserLine consumer scopes.
 2. **Menu control flow and real local lifetimes.** Revisit
    `PauseMenu::tick_open` (`0x43f980`, two recorded SIB encoding differences),
    then `TitleInf::do_title_screen` (`0x44b5f0`). Recover real call/local shapes
