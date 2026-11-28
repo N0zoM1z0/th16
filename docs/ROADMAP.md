@@ -11,15 +11,16 @@ The Bullet manager passes all 502 bytes and nine linked fields; wrap update
 passes all 519 bytes and eight linked fields after recovering the predicate
 control flow that feeds scheduling. Move update now passes all 597 bytes and
 12 linked fields after restoring the shared scalar/vector state layout.
-The active step is `BulletManager::clear_all`. Follow
+Clear-all now passes all 500 bytes and 11 linked fields after recovering the
+constructed vector between its two scaling operations. The active step is
+`Bullet::on_tick`. Follow
 [the compiler-context evidence](knowledge/bullet-compiler-context.md) when
-choosing allocation or scheduling controls. Its X/Y allocation priorities
-tie; the remaining question is the input lifetime order and coalescing,
-before the final instruction scheduler. The related movement branches in
-`Bullet::on_tick` provide a second consumer for that investigation.
+choosing allocation or scheduling controls. The clear-all traces show how
+first definitions and coalescing feed allocation before the final scheduler;
+apply that method to Bullet tick's remaining movement branches.
 
-1. **Bullet leaves and update loop.** Continue `clear_all` (`0x416f40`), then the
-   remaining movement/data layout in `Bullet::on_tick` (`0x411e70`). Preserve
+1. **Bullet leaves and update loop.** Continue the remaining movement/data
+   layout in `Bullet::on_tick` (`0x411e70`). Preserve clear-all (`0x416f40`),
    the closed manager (`0x412860`), wrap (`0x415d80`) and move (`0x415f90`)
    updates. Compare every annotated owner in `src/BulletManager.cpp` after a
    retained change, including helper callers. Shared transform-state changes

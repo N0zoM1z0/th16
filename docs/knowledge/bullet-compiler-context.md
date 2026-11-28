@@ -10,7 +10,10 @@ acceptance is unchanged.
 The completed manager timer passes all 502 bytes and nine linked fields;
 the wrap update now passes all 519 bytes and eight linked fields. The move
 update also passes all 597 bytes and 12 linked fields after restoring its
-shared scalar/vector state layout. `step17-final-consumers-strict.json` covers
+shared scalar/vector state layout. Clear-all now passes all 500 bytes and
+11 linked fields; `clear-all-final-strict.json` retains 34 local passes and
+six incomplete owners across the Bullet TU. The earlier
+`step17-final-consumers-strict.json` covers
 all 125 annotated owners in BulletManager, Laser and LaserLine: 102 local
 passes, 20 incomplete and three mismatches. Every preceding local pass holds.
 `step12-explicit-returns-strict.json` compares all 40 bullet owners: 32 local
@@ -210,8 +213,11 @@ final controls have separate image comparisons.
 
 ## Clear-all allocation and movement controls
 
-`clear_all` (`0x416f40`) remains 491/500 bytes locally, while `Bullet::cancel`
-(`0x416840`) passes all 444 bytes. In `clear-all-allocation.jsonl`, the
+`clear_all` (`0x416f40`) now passes all 500 bytes and 11 linked fields locally;
+`Bullet::cancel` (`0x416840`) retains its 444-byte pass. The final TU report
+is `clear-all-final-strict.json`: 34 local passes and six incomplete owners,
+retaining every preceding pass. The controls below start from 491/500 bytes.
+In `clear-all-allocation.jsonl`, the
 PreEncode entry already assigns the half-step X and Y velocity loads to
 XMM1 and XMM2, respectively. Their SROA values are `$T1$sroa$66$1` and
 `$T1$sroa$65$1`; Z uses `$T1$sroa$431$1` in XMM3. The target instead uses
@@ -241,12 +247,36 @@ is not that lifetime index. Recover the value creation/coalescing context
 that feeds this order; the final instruction scheduler already receives the
 opposite register assignment from the target.
 
-Trace `NColInitializeSyms` (`0x23fb8f`) and `NColCombineLifetimes`
-(`0x1bfd75`) next to distinguish initial symbol order from later coalescing.
+`clear-all-life-origin.jsonl` follows `NColInitializeSyms` (`0x23fb8f`) and
+`NColCombineLifetimes` (`0x1bfd75`). Initialization assigns first-use ordinals
+31 to speed, 33 to X, 35 to Y and 37 to Z. Each named component first appears
+as the destination of a copy following its anonymous load (32, 34 and 36).
+The subsequent combines keep the named lifetime while absorbing that load
+and later arithmetic temporaries. They preserve the X/Y order. This control
+also exits normally and reproduces all 40 ordinary owners; see
+`clear-all-life-origin-control.json`.
 
 Putting game speed on the left of the vector multiplication is byte-neutral
 across all 40 owners (`clear-all-left-scale-strict.json`). A lexical operand
 swap does not recover the missing lifetime order.
+
+The retained expression explicitly constructs the three game-speed-scaled
+velocity components, then multiplies that vector by 0.5 before adding it to
+position. This preserves the intermediate vector between the two scaling
+operations. Constructing a vector from components that each already include
+both multiplications does not close either cancellation owner. The standalone
+cancel retains its existing displacement local; the manager loop uses the
+constructed scaled value. No compiler flags or allocator state are modified.
+
+The positive `clear-all-final-origin.jsonl` trace shows that X still precedes
+Y at initialization, at ordinals 32 and 34. Their allocation priorities now
+differ: X is 132 and Y is 133; Z is 131. The priority comparator consequently
+selects Y first, assigning XMM1 to Y, XMM2 to X and XMM3 to Z. Construction
+changes the allocator's priority inputs rather than reversing the initial
+X/Y order. This read-only link exits normally and reproduces all 40 ordinary
+owners; see `clear-all-final-origin-control.json`. The ordinary source change
+alters only clear-all's raw bytes among those 40 owners, with all extents
+unchanged. The complete strict comparison passes all 11 linked fields.
 
 The earlier pointer-filtered `clear-all-baseline-phases.jsonl` captures
 frontend/lowering snapshots but misses the backend passes. Its Emit entry
@@ -263,6 +293,7 @@ The following ordinary source controls were rejected:
 | One real cancel method with a one-step delta local | clear-all grows to 504 bytes; cancel remains exact |
 | Scale a delta local, then halve it in place | clear-all is 504 bytes; cancel is 443 bytes |
 | Assign `pos + delta` as a vector value | both cancellation owners have incomplete extents |
+| Construct each component with both multiplications in a real cancel method | clear-all is 504 bytes; cancel is 440 bytes |
 
 `Bullet::on_tick` has related movement differences. A named vector delta in
 `move_full_step` is byte-neutral across all 40 Bullet owners. Using
@@ -274,11 +305,10 @@ The target's full step keeps three scaled velocity components live before
 updating position, and its half-step cases have different partial sharing.
 Preserve both data lifetimes and the complete switch when continuing.
 
-All source controls were restored. Their source snapshots, build logs and
+Rejected source controls were restored. Their snapshots, build logs and
 focused reports use the `clear-all-` and `tick-` prefixes under the private
-evidence directory. The restored TU retains 33 local passes, six incomplete
-and one mismatch. Follow the allocator's competing lifetimes and coalescing
-before trying another expression form.
+evidence directory. Continue with Bullet tick's movement branches, preserving
+the completed clear-all, cancel, manager, wrap and move owners.
 
 ## Rejected source controls
 

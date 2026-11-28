@@ -1,9 +1,9 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after closing Bullet movement at 597 bytes and 12 linked
-fields through the shared transform state's scalar/vector layout. The
-502-byte manager tick and 519-byte wrap update remain locally exact. The
-existing ECL opcode 601 vector assignment experiment remains dirty and preserved. Read
+Updated 2026-11-28 after closing clear-all at 500 bytes and 11 linked fields
+through construction of the scaled velocity vector. The manager tick,
+wrap and move updates remain locally exact. The existing ECL opcode 601
+vector assignment experiment remains dirty and preserved. Read
 [AGENTS.md](../AGENTS.md) before editing; keep checkpoints local and push `main`
 only when asked.
 
@@ -18,12 +18,13 @@ only when asked.
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
-- **Latest focused result**: the restored Bullet TU retains 33 local passes,
-  six incomplete and one mismatch after rejecting the allocation controls.
+- **Latest focused result**: the complete Bullet TU has 34 local passes and
+  six incomplete owners. Clear-all passes 500/500 bytes and 11 linked fields;
+  the standalone cancel retains all 444 bytes and 10 linked fields.
   The preceding shared-state comparison covers 125 complete owners in
   BulletManager, Laser and LaserLine: 102 local passes, 20 incomplete and
   three mismatches, including the 597-byte move update with 12 linked fields.
-  Evidence: `.analysis/bullet-compiler/allocation-final-restored-strict.json`
+  Evidence: `.analysis/bullet-compiler/clear-all-final-strict.json`
   and `step17-final-consumers-strict.json`.
   The broad totals above remain historical.
 
@@ -45,20 +46,19 @@ Follow [the remaining-function roadmap](ROADMAP.md) for the next batches and
 their affected comparison scopes. The existing dirty opcode 601 vector
 assignment in `src/EnemyEcl.cpp` is preserved for review.
 
-- Continue with `BulletManager::clear_all` (`0x416f40`, 491/500 bytes), then
-  `Bullet::on_tick`. The remaining clear-all difference swaps the scaled X/Y
-  velocity registers. A controlled NColor replay finds equal allocation
-  priorities of 134, with X preceding Y by two lifetime records; the tie-breaker
-  therefore allocates XMM1 to X and XMM2 to Y before instruction scheduling.
-  Follow the upstream lifetime creation/coalescing context. Direct callee,
-  unified cancel, vector-value and scalar movement controls were rejected;
-  scalar-left multiplication is byte-neutral. Detailed evidence and retained
-  controls are in the compiler-context note below.
+- Continue with `Bullet::on_tick` (`0x411e70`, 1,568/1,592 bytes). Its full
+  step keeps three scaled velocity values live before position updates, and
+  its half-step cases have different partial sharing. Prior vector-delta,
+  D3DX API and scalar controls did not close the complete owner.
+  Clear-all is now closed by constructing the game-speed-scaled vector
+  before the half-step multiplication. The controlled allocator traces
+  distinguish initial symbol order from later coalescing; use that evidence
+  when investigating the movement branches, rather than changing only the
+  final instruction scheduler.
   Preserve `step_ex_17`: the retained `BulletExState` has a vector at `+0x28`
   and a move-specific saved-speed scalar at `+0x14`, rather than accessing both
   through an eight-float array. This closes the completed-movement branch
-  without changing its timer tail. `Bullet::on_tick`
-  (`0x411e70`) still has a 1,568/1,592-byte extent gap. Read
+  without changing its timer tail. Read
   [the compiler-context finding](knowledge/bullet-compiler-context.md) before
   choosing source controls.
 

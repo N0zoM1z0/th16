@@ -324,10 +324,6 @@ static_assert(offsetof(BulletManager, bounce_rect_size_override) == 0x48,
 static_assert(offsetof(BulletManager, anm_ids) == 0x13ffc8c, "BulletManager layout");
 static_assert(offsetof(BulletManager, cancel_count) == 0x1403b14, "BulletManager layout");
 
-// Bullet::cancel's body, which clear_all has inlined. The half step the
-// bullet takes is written two ways: through a delta local in Bullet::cancel
-// and in one expression where clear_all inlines it; each matches its copy
-// (half_step_in_place is a constant at both call sites).
 static inline void bullet_set_blend_mode(AnmVm *vm, u32 mode)
 {
     ((AnmVmFlagsLoBits *)&vm->flags_lo)->blend_mode = mode;
@@ -341,6 +337,8 @@ static __forceinline ZunAngle zun_angle_inline(f32 value)
     return angle;
 }
 
+// The manager loop constructs scaled velocity before taking the half step.
+// The standalone cancel keeps the full displacement in a local.
 static __forceinline i32 cancel_bullet(Bullet *bullet, i32 mode, BOOL half_step_in_place)
 {
     bullet->vm0.interrupt(1);
@@ -361,7 +359,9 @@ static __forceinline i32 cancel_bullet(Bullet *bullet, i32 mode, BOOL half_step_
     }
     if (half_step_in_place)
     {
-        bullet->pos += bullet->velocity * g_game_speed * 0.5f;
+        bullet->pos += D3DXVECTOR3(bullet->velocity.x * g_game_speed,
+                                   bullet->velocity.y * g_game_speed,
+                                   bullet->velocity.z * g_game_speed) * 0.5f;
     }
     else
     {
@@ -379,7 +379,6 @@ i32 Bullet::cancel(i32 mode)
     return cancel_bullet(this, mode, FALSE);
 }
 
-// TODO: in the inlined half step, x and y of the scaled velocity trade xmm1 and xmm2.
 // FUNCTION: TH16 0x416f40
 HARNESS_CALLED void BulletManager::clear_all(i32 unused)
 {
