@@ -1,11 +1,9 @@
 # Bullet compiler context
 
 Investigated 2026-11-28 with the maintained v141 `/GL` graph. Private evidence
-is under `.analysis/bullet-compiler/`. The restored-source focused report
-`restored-tu-strict.json` compares all 40 annotated function owners in
-`src/BulletManager.cpp`: 30 pass locally, seven have incomplete extents and
-three mismatch. These results agree with the preceding ledger. Factory
-acceptance is unchanged.
+is under `.analysis/bullet-compiler/`. The starting report
+`restored-tu-strict.json` predates the closures below. Factory acceptance is
+unchanged.
 
 The completed manager timer passes all 502 bytes and nine linked fields;
 the wrap update now passes all 519 bytes and eight linked fields. The move
@@ -309,6 +307,103 @@ Rejected source controls were restored. Their snapshots, build logs and
 focused reports use the `clear-all-` and `tick-` prefixes under the private
 evidence directory. Continue with Bullet tick's movement branches, preserving
 the completed clear-all, cancel, manager, wrap and move owners.
+
+## Bullet tick canonicalization and shared movement values
+
+The timer and movement branches in `Bullet::on_tick` must be reconstructed
+as one owner. Constructor expressions that improve the cancel-animation goal
+also change the timer add and the HIT/state-5 tail sharing. None of the
+controls below closes the 1,592-byte owner. Every focused comparison retains
+all 34 existing local passes; six Bullet owners remain incomplete.
+
+`tick-canonical.jsonl` observes the constructed-movement source with a named
+spawning displacement. The read-only link exits normally and reproduces all
+40 ordinary owners (`tick-canonical-control.json`). Match the decorated
+function name at each pass, rather than retaining a frontend function pointer.
+
+The slow timer add changes before lowering. In the later canonicalization,
+the frame-memory read has key `0x1c008`, while the promoted speed value has
+key `0x1fbc0`. Descending sorting puts speed first. Lowering consequently
+receives `speed + frame`, and PreEncode uses the speed's XMM1 lifetime as the
+add destination. The frame's fast-path result coalesces to the same register.
+The target instead loads frame into XMM0 and adds the speed in XMM1. Reordering
+the printed operands cannot override the canonical sort.
+
+Capturing the old frame value only in the slow branch does not repair this
+choice (`tick-slow-frame-value-strict.json`, 1,568 bytes). Capturing the
+nullable speed's float value as a named `rate` before the threshold tests
+does recover the target's XMM0 timer add. Its full owner grows to 1,696 bytes,
+with different movement sharing and the delete-flag test moved before the
+timer stores (`tick-named-rate-strict.json`). This supports investigating
+value identity and lifetime across the complete function; it is not a
+retained timer fix.
+
+The movement controls are preserved under `.analysis/bullet-compiler/`:
+
+| Source control | Tick extent | Remaining diagnostic difference |
+| --- | ---: | --- |
+| Construct scaled vectors in every movement expression | 1,588 | Timer uses XMM1; half-step sharing differs |
+| Construct only the animation goal | 1,640 | HIT and state-5 duplicate too much movement |
+| Name only the full-step constructed vector | 1,588 | Byte-neutral relative to constructed movement |
+| Expand the manager-style timer with a frame reference | 1,660 | Slow add still uses XMM1 |
+| Compute a spawning next-position vector before field stores | 1,704 | Extra live coordinates and early state-time comparison |
+| Name the spawning displacement | 1,584 | Coordinate allocation and update order still differ |
+| Assign the full-step delta's three fields before vector addition | 1,600 | X/Y/Z allocation recovers, but Y/Z use memory position operands; timer regresses |
+| Add that field-assigned delta to each position coordinate explicitly | 1,576 | Same full-step memory operands; timer and half-step sharing still differ |
+| Reuse one scaled-velocity local across physics states, with named rate | 1,580 | Full-step updates merge too early; half-step sharing differs |
+| Reuse that local for the animation goal as well | 1,584 | Stack reservation grows from 0x14 to 0x1c; goal gets packed stores |
+
+`tick-shared-displacement.jsonl` follows the final shared-local control
+through canonicalization, lowering, allocation and PreEncode. It exits
+normally and reproduces all 40 ordinary owners
+(`tick-shared-displacement-control.json`). The named rate has key `0x100a0`,
+below the frame read's `0x1c008`, so the slow add retains frame first. The
+allocator assigns `_next_frame$1` to XMM0 and `_rate$1` to XMM1.
+
+In that same control, spawning X/Y/Z priorities are 577/578/577, yielding
+XMM2/XMM1/XMM3. The full-step priorities are 587/586/585, yielding the target's
+XMM1/XMM2/XMM3. That register agreement is insufficient: PreEncode already
+uses a separate position load for X but memory position operands for Y and Z.
+The target loads each position coordinate separately. Recover the identities
+fed into the three position adds before trying to change final scheduling.
+
+The last two controls distinguish a shared physics value from an address
+passed to the animation method. Keeping the escaping animation goal separate
+avoids the extra stack reservation. The ordinary `set_pos_time` and
+`AnmId::find_or_clear` owners both pass independently in
+`tick-animation-callees-strict.json`; their emitted bodies do not need repair.
+Continue by tracing the movement operands and their live ranges, preserving
+the target's partial HIT/state-5 sharing and complete switch ownership.
+
+The collision callee has a related animation-goal difference: its complete
+target owns 448 bytes, while the baseline candidate owns 449. The target goal
+uses EBP-0x10 through EBP-8 and multiplies X from a speed-register copy; the
+candidate uses EBP-0xc through EBP-4 and loads X separately. Naming the real
+`AnmId` result before resolving it grows collision to 451 bytes and moves the
+VM lookup after the goal computation. Bullet tick stays 1,568 bytes; the
+manager and preceding local passes survive (`collision-named-id-strict.json`).
+Separating goal construction from its in-place multiplication by 10 leaves
+the diagnostic instruction stream unchanged at 449 bytes
+(`collision-staged-goal-strict.json`). Explicitly constructing its scaled
+components also stays at 449 bytes, but rotates the goal's X/Y/Z registers to
+XMM3/XMM1/XMM2 (`collision-constructed-goal-strict.json`). Preserve the existing
+temporary-handle call chain when investigating its stack slot and
+multiplication operands.
+
+`collision-baseline-stackpack.jsonl` reuses the existing interpolator
+StackPack probe on the restored collision owner. The normal debugger link
+reproduces all 40 ordinary owners (`collision-baseline-stackpack-control.json`).
+It enumerates four objects: the `graze_only` parameter, an anonymous four-byte
+ID result, the 12-byte goal and the 12-byte scaled size. Coloring puts the ID
+in the parameter home at EBP+8, and both vectors in a second color at EBP-0xc.
+The target's size is also at EBP-0xc, but its goal starts at EBP-0x10.
+Passing the scaled vector's address directly as a temporary is byte-neutral
+in the diagnostic stream and remains 449 bytes
+(`collision-temporary-goal-strict.json`). Merely removing the goal's name does
+not change this packing. Follow the actual vector/box lifetime and call
+summaries before another declaration-order control. All source controls were
+restored; `tick-collision-final-restored-strict.json` is the final complete
+Bullet TU comparison.
 
 ## Rejected source controls
 

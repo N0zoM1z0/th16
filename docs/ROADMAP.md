@@ -20,8 +20,11 @@ first definitions and coalescing feed allocation before the final scheduler;
 apply that method to Bullet tick's remaining movement branches.
 
 1. **Bullet leaves and update loop.** Continue the remaining movement/data
-   layout in `Bullet::on_tick` (`0x411e70`). Preserve clear-all (`0x416f40`),
-   the closed manager (`0x412860`), wrap (`0x415d80`) and move (`0x415f90`)
+   layout in `Bullet::on_tick` (`0x411e70`), together with its collision callee
+   (`0x4124b0`). The read-only canonicalization trace now explains why timer
+   and position operand choices change across movement-source controls;
+   investigate those input values before final scheduling. Preserve clear-all
+   (`0x416f40`), manager (`0x412860`), wrap (`0x415d80`) and move (`0x415f90`)
    updates. Compare every annotated owner in `src/BulletManager.cpp` after a
    retained change, including helper callers. Shared transform-state changes
    also require the complete Laser and LaserLine consumer scopes.
