@@ -395,7 +395,29 @@ int PauseMenu::on_draw()
     return 1;
 }
 
-// TODO: the original realigns its frame to 8 bytes (whole-program alignment) and keeps vm in a stack slot, not ebx.
+static __forceinline i32 copy_snapshot_surface(AnmManager *manager, i32 slot, i32 entry,
+                                              IDirect3DSurface9 *source, const RECT *src, const RECT *dst)
+{
+    if (manager->loaded_anms[slot]->d3d[entry].texture == NULL)
+    {
+        return -1;
+    }
+    manager->flush_sprites();
+    IDirect3DSurface9 *surface;
+    if (manager->loaded_anms[slot]->d3d[entry].texture->GetSurfaceLevel(0, &surface) != D3D_OK)
+    {
+        return -1;
+    }
+    if (D3DXLoadSurfaceFromSurface(surface, NULL, dst, source, NULL, src, D3DX_FILTER_POINT, 0) == D3D_OK)
+    {
+        surface->Release();
+        return 0;
+    }
+    surface->Release();
+    return -1;
+}
+
+// TODO: recover the snapshot frame's temporary and rectangle slot reuse.
 // FUNCTION: TH16 0x43ef20
 void PauseMenu::take_snapshot()
 {
@@ -423,19 +445,7 @@ void PauseMenu::take_snapshot()
     i32 entry = loaded->sprites[vm->sprite_id].image_file_num_in_anm;
     i32 slot = loaded->slot_num;
     IDirect3DSurface9 *src_surface = g_Supervisor.arcade_surface_1;
-    if (anm_manager->loaded_anms[slot]->d3d[entry].texture != NULL)
-    {
-        anm_manager->flush_sprites();
-        IDirect3DSurface9 *surface;
-        if (anm_manager->loaded_anms[slot]->d3d[entry].texture->GetSurfaceLevel(0, &surface) == D3D_OK)
-        {
-            if (D3DXLoadSurfaceFromSurface(surface, NULL, &dst, src_surface, NULL, &src, D3DX_FILTER_POINT, 0) ==
-                D3D_OK)
-            {
-            }
-            surface->Release();
-        }
-    }
+    copy_snapshot_surface(anm_manager, slot, entry, src_surface, &src, &dst);
 }
 
 // FUNCTION: TH16 0x43f0f0

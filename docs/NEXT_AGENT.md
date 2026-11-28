@@ -1,11 +1,11 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after recovering the pause name-scan receiver context.
-`PauseMenu::tick_open` now matches 4,675/4,676 bytes, with one SIB byte still
-different. Its complete owner remains a mismatch. Other source controls were
-restored, and the existing ECL opcode 601 experiment remains dirty and
-preserved. Read [AGENTS.md](../AGENTS.md); keep checkpoints local and push
-`main` only when asked.
+Updated 2026-11-28 after recovering the pause snapshot's surface-copy exits.
+`take_snapshot` now has the complete 464-byte target extent, with 443 matching
+bytes and only stack-layout differences. `tick_open` retains its single SIB
+difference. The existing ECL opcode 601 experiment remains dirty and preserved.
+Read [AGENTS.md](../AGENTS.md); keep checkpoints local and push `main` only
+when asked.
 
 ## Current baseline
 
@@ -19,14 +19,16 @@ preserved. Read [AGENTS.md](../AGENTS.md); keep checkpoints local and push
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
 - **Latest focused result**:
-  `.analysis/pause-compiler/name-read-const-receiver-final-strict.json`
-  compares 82 complete owners: 70 local passes, ten incomplete and two
-  mismatches. This covers BulletManager, PauseMenu, GameThread and the two
-  real callers of `open_game_over_menu`.
-  `tick_open` retains its 4,676-byte scope, linked fields and both reviewed
-  switch tables; its single differing byte is at +0xb28.
-  All 34 preceding Bullet passes survive, including clear-all (500 bytes),
-  cancel (444), manager tick (502), wrap (519) and move (597).
+  `.analysis/pause-compiler/snapshot-exits-final-strict.json` compares 86
+  complete owners: 74 local passes, nine incomplete and three mismatches.
+  This covers BulletManager, PauseMenu, GameThread, both real game-over
+  callers and the four direct ANM callees of snapshot capture.
+  `take_snapshot` is now 443/464 bytes, with 21 frame/stack-displacement bytes
+  different; it remains a mismatch. `tick_open` retains its 4,676-byte scope,
+  linked fields and both reviewed switch tables, with one differing SIB at
+  +0xb28. All 34 preceding Bullet passes survive. The direct ANM callees also
+  pass, including `create_ui_vm_at_origin` and `get_vm_with_id`.
+  No new complete function is locally exact in this checkpoint.
   The earlier shared-state report `step17-final-consumers-strict.json` covers
   125 Bullet/Laser/LaserLine owners and predates the later closures.
   The broad totals above remain historical.
@@ -49,16 +51,28 @@ Follow [the remaining-function roadmap](ROADMAP.md) for the next batches and
 their affected comparison scopes. The existing dirty opcode 601 vector
 assignment in `src/EnemyEcl.cpp` is preserved for review.
 
-- Continue `PauseMenu::tick_open` (`0x43f980`) from
-  [its compiler-context finding](knowledge/pause-menu-compiler-context.md).
-  Keep the const receiver for name reads: it recovers the trailing-space scan
-  without changing name-write addresses. Only the replay-save name-copy SIB
-  remains: candidate 0x0e versus target 0x31 at +0xb28. C2's string-copy
-  expander starts with separate source/destination cursors; trace their later
-  loop address formation into source plus destination delta. The public C2
-  symbols, read-only tuple controls and private compiler Ghidra project are
-  preserved. Pointer reordering, shared indices, path-owning inline helpers
-  and an explicit byte-copy loop have already failed complete-owner checks.
+- Continue the menu frame and copy questions from
+  [the compiler-context finding](knowledge/pause-menu-compiler-context.md).
+  The retained `copy_snapshot_surface` helper releases the surface on both
+  result paths before returning status. This restores `take_snapshot`'s
+  post-D3DX test and slot/entry schedule; its remaining differences are stack
+  placement (frame 0x38 versus target 0x30). A common-Release result helper
+  stays 462 bytes; a scoped named AnmId produces 466 bytes. Both are restored.
+  The validated `snapshot-frame` StackPack trace reproduces all 86 ordinary
+  owners. VM and acquired surface already share a color, but the created
+  AnmId return object and later source-surface pointer do not; the target
+  reuses their storage. The extra four-byte color crosses frame rounding.
+  Follow the return object's uses and callee escape/lifetime summaries,
+  together with the related Bullet collision question, before declaration
+  permutations.
+  Keep `tick_open`'s const receiver for name reads. Its copy SIB remains
+  candidate 0x0e versus target 0x31 at +0xb28. The validated `copy-provenance`
+  trace shows separate cursors at PreLower and source plus delta by Lower.
+  Freed memory operands can be reused by another copy; follow source
+  provenance rather than a saved pointer. A broad add-key diagnostic was
+  stopped without a conclusion. The smaller `trace-copy-address-routines.py`
+  is prepared but unexecuted. Receiver captures and a shared last-name saver
+  did not close the copy. Preserve the private compiler project and evidence.
 
 - Continue `Bullet::on_tick` (`0x411e70`, 1,568/1,592 bytes) together with
   `check_player_collision` (`0x4124b0`, 449/448 bytes). Read

@@ -13,8 +13,9 @@ control flow that feeds scheduling. Move update now passes all 597 bytes and
 12 linked fields after restoring the shared scalar/vector state layout.
 Clear-all now passes all 500 bytes and 11 linked fields after recovering the
 constructed vector between its two scaling operations. The current menu
-focus is `PauseMenu::tick_open`, now 4,675/4,676 bytes with its complete
-4,676-byte owner still a mismatch. `Bullet::on_tick` remains open. Follow
+focus covers `PauseMenu::take_snapshot`, now 443/464 bytes after recovering
+the surface-copy exits, and `PauseMenu::tick_open`, at 4,675/4,676 bytes. Both
+complete owners remain mismatches. `Bullet::on_tick` remains open. Follow
 [the compiler-context evidence](knowledge/bullet-compiler-context.md) when
 choosing allocation or scheduling controls. The clear-all traces show how
 first definitions and coalescing feed allocation before the final scheduler;
@@ -29,8 +30,11 @@ apply that method to Bullet tick's remaining movement branches.
    updates. Compare every annotated owner in `src/BulletManager.cpp` after a
    retained change, including helper callers. Shared transform-state changes
    also require the complete Laser and LaserLine consumer scopes.
-2. **Menu control flow and real local lifetimes.** Revisit
-   `PauseMenu::tick_open` (`0x43f980`, one remaining copy SIB byte) from
+2. **Menu control flow and real local lifetimes.** Follow the remaining
+   temporary/rectangle stack placement in `PauseMenu::take_snapshot`
+   (`0x43ef20`, 443/464 bytes) alongside the Bullet collision packing question.
+   Preserve its surface-copy exit helper. Revisit `PauseMenu::tick_open`
+   (`0x43f980`, one remaining copy SIB byte) from
    [the compiler-context finding](knowledge/pause-menu-compiler-context.md),
    then `TitleInf::do_title_screen` (`0x44b5f0`). Recover real call/local shapes
    in `do_practice_stage_select` (`0x450ef0`), `do_player_data` (`0x452330`),
