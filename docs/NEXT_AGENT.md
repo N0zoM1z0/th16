@@ -9,7 +9,7 @@ only when asked.
 
 ## Current baseline
 
-- **Latest source commit**: see `git log -1`; retain the `gpt-web: ...` message format.
+- **Latest source commit**: see `git log -1`; use the user's `gpt-6.1-sol: ...` message format.
 - **Incremental build**: `build/reference-candidate/th16.exe` (1,166 annotated
   functions; preserve its object/dependency graph for fast incremental builds).
 - **Last full local strict audit** (`.analysis/reference-audit.json` and
@@ -35,6 +35,10 @@ Focus on one function at a time, verify the complete affected TU with
 avoid full cold builds unless a dependency/cache problem is demonstrated.
 
 ## Current reconstruction frontier
+
+Follow [the remaining-function roadmap](ROADMAP.md) for the next batches and
+their affected comparison scopes. The existing dirty opcode 601 vector
+assignment in `src/EnemyEcl.cpp` is preserved for review.
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`): target and candidate complete
   PDB extents are both 21,408 bytes; both code bodies are 19,976 bytes. The
