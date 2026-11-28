@@ -1,10 +1,9 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after recovering the Bullet manager/callee alignment
-placement through real iterator setup and read-only whole-program C2 traces.
-The manager now owns 498 bytes against 502, with timer allocation still open;
-no exact credit was added. The existing ECL opcode 601 vector-assignment
-experiment remains dirty and preserved. Read
+Updated 2026-11-28 after closing the complete 502-byte Bullet manager tick
+owner locally through real iterator setup, timer field identity and read
+lifetimes. All nine linked fields pass. The existing ECL opcode 601 vector
+assignment experiment remains dirty and preserved. Read
 [AGENTS.md](../AGENTS.md) before editing; keep checkpoints local and push `main`
 only when asked.
 
@@ -19,21 +18,24 @@ only when asked.
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
+- **Latest focused result**: `BulletManager::on_tick_body` (`0x412860`) passes
+  502/502 bytes and nine linked fields. The full Bullet TU has 31 local passes,
+  six incomplete and three mismatches; EnemyManager update and the out-of-line
+  timer increment also retain their local passes. Evidence:
+  `.analysis/bullet-compiler/manager-frame-delayed-current-strict.json` and
+  `manager-final-timer-consumers.json`. The broad totals above remain historical.
 
 ## Working commands
 
 ```sh
 git status --short --branch
 scripts/repo-python scripts/build.py
-scripts/repo-python scripts/audit-reference.py --address 0x450ef0 --json .analysis/audit_tmp.json
-# After committing an exact match, refresh config/ and resources/progress.svg:
-scripts/repo-python scripts/audit-reference.py --write-units && \
-  scripts/repo-python scripts/progress.py --svg resources/progress.svg
+scripts/repo-python scripts/audit-reference.py --address 0x415d80 --json .analysis/audit_tmp.json
 ```
 
-Focus on one function at a time, verify the complete affected TU with
-`audit-reference.py`, update `resources/progress.svg` after exact matches, and
-avoid full cold builds unless a dependency/cache problem is demonstrated.
+Verify the complete affected TU with `audit-reference.py`. Keep focused reports
+for routine iterations; refresh the global ledgers and progress graphic at a
+broader milestone. Preserve the incremental build graph.
 
 ## Current reconstruction frontier
 
@@ -41,17 +43,14 @@ Follow [the remaining-function roadmap](ROADMAP.md) for the next batches and
 their affected comparison scopes. The existing dirty opcode 601 vector
 assignment in `src/EnemyEcl.cpp` is preserved for review.
 
-- `0x412860` (`BulletManager::on_tick_body`): the retained iterator setup and
-  `tick_nested` call restore the target manager realignment and the ordinary
-  EBP frame in its `Bullet::on_tick` callee (`0x411e70`). The manager contribution
-  is 498/502 bytes; Bullet tick is 1,568/1,592. Remaining manager differences
-  are timer XMM allocation and the scaled-add memory operand, including one
-  missing load. `manager-begin-nested-strict.json` under
-  `.analysis/bullet-compiler/` compares all 40 TU owners: 30 local passes,
-  seven incomplete and three mismatches, preserving every preceding pass.
-  Read [the compiler-context finding](knowledge/bullet-compiler-context.md)
-  before editing. The next useful action is a read-only timer allocation and
-  operand trace under this retained full owner, not more alignment padding.
+- Continue with `Bullet::step_ex_12` (`0x415d80`, 515/519 bytes), whose remaining
+  difference is the order of the 192/448 constant loads. The earlier read-only
+  trace places that order after allocation and before PreEncode hoisting;
+  inspect the real load ranges and scheduling. Preserve the newly closed
+  manager and its correct caller/callee alignment. `Bullet::on_tick`
+  (`0x411e70`) still has a 1,568/1,592-byte extent gap. Read
+  [the compiler-context finding](knowledge/bullet-compiler-context.md) before
+  choosing source controls.
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`): target and candidate complete
   PDB extents are both 21,408 bytes; both code bodies are 19,976 bytes. The
@@ -121,9 +120,9 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
 
 ### 1. Large remaining source owners
 
-First finish the active Bullet manager timer allocation above. The C2
-investigation explains why caller/callee alignment must be handled together;
-the larger owners below remain queued in [ROADMAP.md](ROADMAP.md).
+The active Bullet leaf follows the completed manager. The C2 investigation
+explains why caller/callee alignment must be handled together; the larger
+owners below remain queued in [ROADMAP.md](ROADMAP.md).
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`, `src/EnemyEcl.cpp`, 21,408 B):
   continue from the verified EH graph and compare the complete dispatch body,
@@ -141,7 +140,6 @@ the larger owners below remain queued in [ROADMAP.md](ROADMAP.md).
 - `0x4532f0` (`TitleInf::do_score_name_entry`, `src/MainMenuStates.cpp`, ~1,444 B)
 - `0x446260` (`sht_on_tick_laser`, `src/PlayerShot.cpp`, ~1,522 B)
 - `0x40fe80` (`BombMarisaAInf::cancel_bullets`, `src/BombMain.cpp`, ~595 B)
-- `0x412860` (`BulletManager::on_tick_body`, `src/BulletManager.cpp`, ~471 B)
 
 ### 3. Near-exact large mismatches & preserved compiler traces
 

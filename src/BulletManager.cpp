@@ -232,10 +232,6 @@ i32 BulletManager::on_draw_body()
     return 1;
 }
 
-// TODO: the original keeps 1.0f in xmm2 across the loop for the inlined
-// ZunTimer::tick (reloaded after Bullet::on_tick). tick_nested hoists it too,
-// but puts the speed, 1.0f and 1.01f in xmm0, xmm1 and xmm2 (the original:
-// xmm1, xmm2, xmm0) and adds into the speed's register.
 // FUNCTION: TH16 0x412860
 i32 BulletManager::on_tick_body()
 {
@@ -279,7 +275,33 @@ i32 BulletManager::on_tick_body()
             b->next_in_layer = NULL;
         }
         bullet_count++;
-        b->state_time.tick_nested();
+        ZunTimer &timer = b->state_time;
+        i32 current;
+        f32 &frame = timer.current_f;
+        f32 *speed = timer.speed();
+        f32 next_frame;
+        current = timer.current;
+        timer.previous = current;
+        if (speed != NULL)
+        {
+            if (*speed > 0.99f && *speed < 1.01f)
+            {
+                current++;
+                next_frame = frame + 1.0f;
+            }
+            else
+            {
+                next_frame = frame + *speed;
+                current = (i32)next_frame;
+            }
+        }
+        else
+        {
+            current++;
+            next_frame = frame + 1.0f;
+        }
+        timer.current = current;
+        frame = next_frame;
     }
     return 1;
 }

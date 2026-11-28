@@ -7,14 +7,21 @@ is under `.analysis/bullet-compiler/`. The restored-source focused report
 three mismatch. These results agree with the preceding ledger. Factory
 acceptance is unchanged.
 
+The completed manager timer now passes the local strict comparison over all
+502 bytes and nine linked fields. `manager-frame-delayed-current-strict.json`
+compares all 40 bullet owners: 31 local passes, six incomplete and three
+mismatches. The additional `manager-final-timer-consumers.json` keeps both
+EnemyManager update and the out-of-line timer increment exact. The earlier
+controls below explain the recovered alignment and source lifetimes.
+
 ## Alignment belongs to a call chain
 
 The original `BulletManager::on_tick_body` (`0x412860`) begins with
 `push ebp; mov ebp, esp; and esp, -8`. Its original `Bullet::on_tick` callee
-(`0x411e70`) has an ordinary EBP frame without that realignment. The current
-candidate instead realigns `Bullet::on_tick`, leaving the manager without an
-EBP frame. Both complete owners remain incomplete. Treat these two prologue
-differences together before trying to repair the manager in isolation.
+(`0x411e70`) has an ordinary EBP frame without that realignment. The starting
+candidate instead realigned `Bullet::on_tick`, leaving the manager without an
+EBP frame. Both owners initially had incomplete extents. Treat these two
+prologue differences together before trying to repair the manager in isolation.
 
 The same diagnostic scan finds the opposite mismatch in the menu chain:
 `TitleInf::on_tick` realigns only in the candidate, while several of its menu
@@ -61,19 +68,61 @@ is now 475 bytes against 502; Bullet tick is 1,568 against 1,592. Both still
 need complete-owner reconstruction, including the manager's timer constant
 lifetimes and Bullet tick's movement/data layout.
 
-The retained source also uses the existing `tick_nested` variant for the
-state timer. It recovers the target's loop-invariant 1.0f load and reload
-after Bullet tick, bringing the complete manager to 498/502 bytes.
+The next checkpoint used the existing `tick_nested` variant for the state
+timer. It recovered the target's loop-invariant 1.0f load and reload after
+Bullet tick, bringing the complete manager to 498/502 bytes.
 `manager-begin-nested-strict.json` retains the same 30 local passes across all
-40 owners. The remaining timer uses speed/1.0f/1.01f in XMM0/XMM1/XMM2 rather
-than XMM1/XMM2/XMM0, and adds `current_f` through a memory operand instead of
-loading it first. Trace those actual ranges and operand lowering next. The
-four-byte extent gap does not mean that only four encoded bytes differ.
+40 owners. The timer then used speed/1.0f/1.01f in XMM0/XMM1/XMM2 rather
+than XMM1/XMM2/XMM0, and added `current_f` through a memory operand instead of
+loading it first. Those ranges and operand lowering were the next issue.
+The four-byte extent gap did not mean that only four encoded bytes differed.
 
 This isolates a real cross-function effect of a reconstructed helper
 boundary. The `/INCLUDE` difference recorded in the call graph was a useful
 lead, but the successful control does not need to change entry rooting or
 noinline policy.
+
+## Closing the timer with a real field reference
+
+The read-only `manager-timer-fast.jsonl` follows the complete 498-byte
+checkpoint through canonicalization, lowering and allocation. It exits
+normally and reproduces every ordinary bullet owner byte for byte; see
+`manager-timer-debug-control.json` and the `manager-timer-*` replay image/logs.
+
+The early scaled add reads through named `_speed`, ordinal 7. In the second
+canonicalization, the speed value is temporary 648, with sort key `0x1a200`.
+The frame's address is temporary 652, whose zero-offset memory key is
+`0x10008`. Descending order puts the speed value first. The resulting scaled
+add uses the speed register as its destination and folds the frame read into
+its memory operand. These keys describe the 498-byte checkpoint, not the
+final source.
+
+Saving the old float value before selecting the branch restores the desired
+speed and 1.0f registers, but emits an early frame load and moves the 1.01f
+threshold into XMM3. Its complete owner is 494 bytes and is rejected in
+`manager-early-frame-strict.json`. A value snapshot and a field reference do
+not have the same lifetime.
+
+The retained code instead binds the actual `current_f` field by reference,
+computes `next_frame` in each branch and writes it back once. This preserves
+the field identity without reading the value before the comparison. The
+first reference control recovers every float instruction and the 502-byte
+extent, but reads the integer counter before `speed()` normalizes the index;
+that changes the EAX/ECX allocation. `manager-frame-reference-strict.json`
+records that complete mismatch at 465/502 bytes.
+
+Declaring the used integer counter with the other timer locals, then reading
+it after `speed()`, restores the original read schedule and register roles.
+The ordinary complete-owner comparison now passes 502/502 bytes, all 119
+instructions and all nine independently bound linked fields. Validation uses
+the normal incremental build and complete linked-owner scope.
+
+For future allocation traces, RVA `0x79391` is
+`NColDeterminePhysregAvail`, an availability query. Its zero returns in this
+control do not identify a final physical register. The canonical operands,
+pass snapshots and ordinary native instructions supply the relevant evidence.
+Filter small tuple reads before expanding trees; reading whole pages at every
+generic hash breakpoint made the earlier private sampler unnecessarily slow.
 
 ## Rejected source controls
 

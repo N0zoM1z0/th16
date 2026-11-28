@@ -7,19 +7,19 @@ separate. Recheck each selected owner against the current incremental build.
 
 ## Execution order
 
-The active step is now the Bullet manager timer allocation. Real iterator
-setup has recovered the manager/callee alignment placement; the complete
-manager is still 498/502 bytes. Follow
+The Bullet manager now passes its complete 502-byte local comparison with
+nine linked fields, after recovering caller/callee alignment and timer field
+lifetimes. The active step is `Bullet::step_ex_12`. Follow
 [the compiler-context evidence](knowledge/bullet-compiler-context.md) before
 returning to the leaf load-order work.
 
-1. **Bullet leaves and update loop.** After the active manager, revisit `Bullet::step_ex_12`
+1. **Bullet leaves and update loop.** Continue `Bullet::step_ex_12`
    (`0x415d80`): its recorded complete 519-byte comparison differs only in two
    constant-load instructions. Recover the natural expression/call shape, then
-   inspect `step_ex_17` (`0x415f90`) and `clear_all` (`0x416f40`). Follow with
-   `BulletManager::on_tick_body` (`0x412860`), whose stack alignment and timer
-   register lifetimes remain unresolved. Compare every annotated owner in
-   `src/BulletManager.cpp` after a retained change, including helper callers.
+   inspect `step_ex_17` (`0x415f90`) and `clear_all` (`0x416f40`), then the
+   remaining movement/data layout in `Bullet::on_tick` (`0x411e70`). Preserve
+   the closed `BulletManager::on_tick_body` (`0x412860`). Compare every annotated
+   owner in `src/BulletManager.cpp` after a retained change, including helper callers.
 2. **Menu control flow and real local lifetimes.** Revisit
    `PauseMenu::tick_open` (`0x43f980`, two recorded SIB encoding differences),
    then `TitleInf::do_title_screen` (`0x44b5f0`). Recover real call/local shapes
