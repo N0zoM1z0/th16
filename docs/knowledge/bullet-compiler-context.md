@@ -402,8 +402,16 @@ in the diagnostic stream and remains 449 bytes
 (`collision-temporary-goal-strict.json`). Merely removing the goal's name does
 not change this packing. Follow the actual vector/box lifetime and call
 summaries before another declaration-order control. All source controls were
-restored; `tick-collision-final-restored-strict.json` is the final complete
-Bullet TU comparison.
+restored; `tick-collision-final-restored-strict.json` is the complete
+Bullet TU comparison for that checkpoint.
+
+A later local two-dimensional size control uses `Float2` for the two scaled
+hitbox coordinates, keeping the existing callee ABI for diagnosis. Collision
+grows from 449 to 460 bytes and acquires `and esp, -8`; the target has no such
+realignment. The complete Bullet comparison retains 34 passes and six
+incomplete owners (`collision-float2-size-strict.json`). Reading only X/Y is
+therefore insufficient evidence to change the shared rectangle API or retain
+this smaller local. The control is restored.
 
 ## Rejected source controls
 

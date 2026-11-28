@@ -729,10 +729,11 @@ static __forceinline i32 menu_selection_moved(MenuHelper *m)
     return m->current_selection != m->next_selection;
 }
 
-// TODO: 2 scale-1 SIB base/index tie-breakers remain (4674/4676): [esi+ecx-1] vs [ecx+esi-1] at +0b26 (strcpy last_replay_name) and [edi+eax+0x2d3] vs [eax+edi+0x2d3] at +0dd0 (name[i-1]).
+// TODO: the replay-name copy retains a scale-1 SIB base/index difference at +0xb26.
 // FUNCTION: TH16 0x43f980
 void PauseMenu::tick_open()
 {
+    const PauseMenu *name_owner = this;
     char path[0x40];
 
     switch (substate)
@@ -1134,11 +1135,11 @@ void PauseMenu::tick_open()
                     g_SoundManager.play_sound_centered(SE_EXTEND, 0);
                     sprintf(path, "th16_%.2d.rpy", item_menu.next_selection + 1);
                     ReplayManager::destroy(replays[item_menu.next_selection]);
-                    g_ReplayManager->save(path, name, 0, 1);
+                    g_ReplayManager->save(path, name_owner->name, 0, 1);
                     const i32 replay_slot = item_menu.next_selection;
                     replays[replay_slot] = ReplayManager::create_from_file(path);
                     set_substate(PAUSE_SUB_REPLAY_SLOT_SELECT);
-                    strcpy(g_Scorefile->last_replay_name, name);
+                    strcpy(g_Scorefile->last_replay_name, name_owner->name);
                 }
                 else
                 {
@@ -1147,8 +1148,8 @@ void PauseMenu::tick_open()
                                ->charas[g_Globals.subshot + g_Globals.character]
                                .scores[g_Globals.difficulty][item_menu.next_selection]
                                .name,
-                           name);
-                    strcpy(g_Scorefile->last_replay_name, name);
+                           name_owner->name);
+                    strcpy(g_Scorefile->last_replay_name, name_owner->name);
                 score_entered:
                     set_substate(PAUSE_SUB_CHOOSE);
                     item_menu.num_choices = PAUSE_ITEM_COUNT;
@@ -1245,14 +1246,14 @@ void PauseMenu::tick_open()
             }
             strcpy(name, g_Scorefile->last_replay_name);
             name_cursor = 0;
-            if (strcmp(name, "        ") != 0)
+            if (strcmp(name_owner->name, "        ") != 0)
             {
                 name_entry_menu.move_cursor(-1);
             }
             i32 i;
             for (i = 8; i > 0; i--)
             {
-                if (name[i - 1] != ' ')
+                if (name_owner->name[i - 1] != ' ')
                 {
                     break;
                 }

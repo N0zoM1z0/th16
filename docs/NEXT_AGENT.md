@@ -1,11 +1,11 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after tracing Bullet tick operand canonicalization,
-allocation and collision-goal controls. The source controls were rejected and
-restored; all 34 local Bullet passes survive. The existing ECL opcode 601
-vector assignment experiment remains dirty and preserved. Read
-[AGENTS.md](../AGENTS.md) before editing; keep checkpoints local and push `main`
-only when asked.
+Updated 2026-11-28 after recovering the pause name-scan receiver context.
+`PauseMenu::tick_open` now matches 4,675/4,676 bytes, with one SIB byte still
+different. Its complete owner remains a mismatch. Other source controls were
+restored, and the existing ECL opcode 601 experiment remains dirty and
+preserved. Read [AGENTS.md](../AGENTS.md); keep checkpoints local and push
+`main` only when asked.
 
 ## Current baseline
 
@@ -18,16 +18,17 @@ only when asked.
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
-- **Latest focused result**: the complete Bullet TU has 34 local passes and
-  six incomplete owners. Clear-all passes 500/500 bytes and 11 linked fields;
-  the standalone cancel retains all 444 bytes and 10 linked fields.
-  The preceding shared-state comparison covers 125 complete owners in
-  BulletManager, Laser and LaserLine: 102 local passes, 20 incomplete and
-  three mismatches, including the 597-byte move update with 12 linked fields.
-  Latest restored Bullet evidence:
-  `.analysis/bullet-compiler/tick-collision-final-restored-strict.json`.
-  Closure and shared-consumer evidence: `clear-all-final-strict.json`
-  and `step17-final-consumers-strict.json`.
+- **Latest focused result**:
+  `.analysis/pause-compiler/name-read-const-receiver-final-strict.json`
+  compares 82 complete owners: 70 local passes, ten incomplete and two
+  mismatches. This covers BulletManager, PauseMenu, GameThread and the two
+  real callers of `open_game_over_menu`.
+  `tick_open` retains its 4,676-byte scope, linked fields and both reviewed
+  switch tables; its single differing byte is at +0xb28.
+  All 34 preceding Bullet passes survive, including clear-all (500 bytes),
+  cancel (444), manager tick (502), wrap (519) and move (597).
+  The earlier shared-state report `step17-final-consumers-strict.json` covers
+  125 Bullet/Laser/LaserLine owners and predates the later closures.
   The broad totals above remain historical.
 
 ## Working commands
@@ -47,6 +48,17 @@ broader milestone. Preserve the incremental build graph.
 Follow [the remaining-function roadmap](ROADMAP.md) for the next batches and
 their affected comparison scopes. The existing dirty opcode 601 vector
 assignment in `src/EnemyEcl.cpp` is preserved for review.
+
+- Continue `PauseMenu::tick_open` (`0x43f980`) from
+  [its compiler-context finding](knowledge/pause-menu-compiler-context.md).
+  Keep the const receiver for name reads: it recovers the trailing-space scan
+  without changing name-write addresses. Only the replay-save name-copy SIB
+  remains: candidate 0x0e versus target 0x31 at +0xb28. C2's string-copy
+  expander starts with separate source/destination cursors; trace their later
+  loop address formation into source plus destination delta. The public C2
+  symbols, read-only tuple controls and private compiler Ghidra project are
+  preserved. Pointer reordering, shared indices, path-owning inline helpers
+  and an explicit byte-copy loop have already failed complete-owner checks.
 
 - Continue `Bullet::on_tick` (`0x411e70`, 1,568/1,592 bytes) together with
   `check_player_collision` (`0x4124b0`, 449/448 bytes). Read
@@ -103,9 +115,9 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
   `MenuHelper *` alias in substate 2, sharing the Quit exit path, and storing
   `g_Globals.difficulty` before `set_state`. The remaining differences are
   mostly stack-slot offsets and argument scheduling; do not add dummy locals.
-- `0x43f980` (`PauseMenu::tick_open`): 4,674/4,676 bytes. Pointer-addition
-  reordering and integer-address casts did not change either scale-1 SIB
-  encoding; retain natural indexing rather than keeping those experiments.
+- `0x43f980` (`PauseMenu::tick_open`): 4,675/4,676 bytes. The retained name
+  reader fixes the scan; only the replay-name copy SIB remains. See the active
+  frontier above.
 
 ## Key compiler findings from this session
 
@@ -131,8 +143,8 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
 4. **Tail-merge direction in large switches**:
    Moving `return;` vs `break;` (fallthrough) between two identical tails flips
    which `case` hosts the shared tail (`PauseMenu::tick_open` improved from
-   `incomplete` to 4,674 / 4,676 bytes, leaving only 2 scale-1 SIB base/index
-   tie-breakers).
+   `incomplete` to 4,674 / 4,676 bytes at that checkpoint). The later const
+   name-reader binding recovers one of the two SIB bytes.
 
 ## Highest-value next targets
 
@@ -165,7 +177,7 @@ owners below remain queued in [ROADMAP.md](ROADMAP.md).
   3,899 / 3,964 after the control-flow changes above; the remaining 65 bytes
   are mainly stack-slot offsets and argument-load scheduling)
 - `0x43f980` (`PauseMenu::tick_open`, `src/PauseMenu.cpp`, 4,676 B — currently
-  4,674 / 4,676; only 2 scale-1 SIB base/index tie-breakers remain)
+  4,675 / 4,676; one replay-name copy SIB byte remains)
 - `0x431fe0` (`LaserLineInf::run_ex`, `src/Laser.cpp`, 1,588 B) — full compiler
   trace and restore checkpoints remain in
   [docs/knowledge/line-run-ex-compiler-trace.md](knowledge/line-run-ex-compiler-trace.md)
