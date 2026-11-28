@@ -35,8 +35,12 @@ apply that method to Bullet tick's remaining movement branches.
    (`0x43ef20`, 443/464 bytes) alongside the Bullet collision packing question.
    Preserve its surface-copy exit helper. Revisit `PauseMenu::tick_open`
    (`0x43f980`, one remaining copy SIB byte) from
-   [the compiler-context finding](knowledge/pause-menu-compiler-context.md),
-   then `TitleInf::do_title_screen` (`0x44b5f0`). Recover real call/local shapes
+   [the compiler-context finding](knowledge/pause-menu-compiler-context.md).
+   `TitleInf::do_difficulty_select` (`0x44fe20`) isolates a one-byte load-base
+   fold that currently prevents complete switch-code decoding; follow
+   [its address context](knowledge/title-menu-compiler-context.md) with the
+   target record unchanged. Then continue `TitleInf::do_title_screen`
+   (`0x44b5f0`). Recover real call/local shapes
    in `do_practice_stage_select` (`0x450ef0`), `do_player_data` (`0x452330`),
    and `do_score_name_entry` (`0x4532f0`). Do not introduce dead arithmetic or
    dummy locals for stack alignment.

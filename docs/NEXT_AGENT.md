@@ -1,9 +1,9 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after recovering the pause snapshot's surface-copy exits.
-`take_snapshot` now has the complete 464-byte target extent, with 443 matching
-bytes and only stack-layout differences. `tick_open` retains its single SIB
-difference. The existing ECL opcode 601 experiment remains dirty and preserved.
+Updated 2026-11-28 after tracing menu return aliases and load-address reuse.
+All source controls from this investigation are restored. `take_snapshot`
+remains 443/464 bytes and `tick_open` retains its single SIB difference.
+The existing ECL opcode 601 experiment remains dirty and preserved.
 Read [AGENTS.md](../AGENTS.md); keep checkpoints local and push `main` only
 when asked.
 
@@ -18,20 +18,19 @@ when asked.
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
-- **Latest focused result**:
-  `.analysis/pause-compiler/snapshot-exits-final-strict.json` compares 86
-  complete owners: 74 local passes, nine incomplete and three mismatches.
-  This covers BulletManager, PauseMenu, GameThread, both real game-over
-  callers and the four direct ANM callees of snapshot capture.
-  `take_snapshot` is now 443/464 bytes, with 21 frame/stack-displacement bytes
-  different; it remains a mismatch. `tick_open` retains its 4,676-byte scope,
-  linked fields and both reviewed switch tables, with one differing SIB at
-  +0xb28. All 34 preceding Bullet passes survive. The direct ANM callees also
-  pass, including `create_ui_vm_at_origin` and `get_vm_with_id`.
-  No new complete function is locally exact in this checkpoint.
-  The earlier shared-state report `step17-final-consumers-strict.json` covers
-  125 Bullet/Laser/LaserLine owners and predates the later closures.
-  The broad totals above remain historical.
+- **Latest restoration result**:
+  `.analysis/title-compiler/menu-context-restored-strict.json` compares 280
+  related complete owners: 245 local passes, 30 incomplete and five
+  mismatches. All 280 verdicts, owner sizes and recorded differences agree
+  with the preceding baselines. No source control is retained and no complete
+  function is newly exact in this checkpoint.
+  The last retained source change remains the snapshot surface-copy exits:
+  443/464 bytes, with 21 frame/stack-displacement bytes different.
+  `tick_open` retains its complete 4,676-byte scope, linked fields and both
+  reviewed switch tables; only SIB +0xb28 differs. All 34 preceding Bullet
+  passes survive. The earlier 86-owner source checkpoint and 125-owner
+  shared-state reports remain under `.analysis/pause-compiler/` and
+  `.analysis/bullet-compiler/`; the broad totals above remain historical.
 
 ## Working commands
 
@@ -53,26 +52,32 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
 
 - Continue the menu frame and copy questions from
   [the compiler-context finding](knowledge/pause-menu-compiler-context.md).
-  The retained `copy_snapshot_surface` helper releases the surface on both
-  result paths before returning status. This restores `take_snapshot`'s
-  post-D3DX test and slot/entry schedule; its remaining differences are stack
-  placement (frame 0x38 versus target 0x30). A common-Release result helper
-  stays 462 bytes; a scoped named AnmId produces 466 bytes. Both are restored.
-  The validated `snapshot-frame` StackPack trace reproduces all 86 ordinary
-  owners. VM and acquired surface already share a color, but the created
-  AnmId return object and later source-surface pointer do not; the target
-  reuses their storage. The extra four-byte color crosses frame rounding.
-  Follow the return object's uses and callee escape/lifetime summaries,
-  together with the related Bullet collision question, before declaration
-  permutations.
-  Keep `tick_open`'s const receiver for name reads. Its copy SIB remains
-  candidate 0x0e versus target 0x31 at +0xb28. The validated `copy-provenance`
-  trace shows separate cursors at PreLower and source plus delta by Lower.
-  Freed memory operands can be reused by another copy; follow source
-  provenance rather than a saved pointer. A broad add-key diagnostic was
-  stopped without a conclusion. The smaller `trace-copy-address-routines.py`
-  is prepared but unexecuted. Receiver captures and a shared last-name saver
-  did not close the copy. Preserve the private compiler project and evidence.
+  Keep the snapshot surface-copy exits. Its remaining stack gap is one extra
+  color: the created AnmId return area does not share the later source-surface
+  slot. The validated `snapshot-lifetime` trace finds that return object in
+  later loaded-anm and flush_sprites alias sets. A single opaque creator
+  allows sharing but changes other ABI/frame choices. Scalar-copy and scoped
+  handle controls do not repair the ordinary source. Follow alias-summary
+  provenance rather than repeating declarations.
+  Keep `tick_open`'s const name-reading receiver. Its copy SIB remains 0x0e
+  versus target 0x31 at +0xb28. The validated `copy-provenance` trace has
+  separate cursors at PreLower and source plus delta by Lower. Freed operands
+  can be reused by another copy; follow source provenance. The smaller
+  `trace-copy-address-routines.py` observer is prepared but unexecuted.
+
+- `TitleInf::do_difficulty_select` (`0x44fe20`) has a specific source gap;
+  read [the title menu context](knowledge/title-menu-compiler-context.md).
+  Its 1,180-byte extent matches, but `[ecx]` replaces `[esi+0x24]` for the last
+  menu reload. The shorter instruction leaves the reviewed code range inside
+  a two-byte NOP. Keep the independent switch record unchanged. A const
+  receiver and opaque pop provider do not repair it. Trace when the ready
+  menu address replaces the title-based load address.
+  GameThread's BGM store remains 622/623 bytes. Its validated AddrModes entry
+  receives g_Scorefile before music (keys 0x104e0 and 0x10040). Same-TU and
+  cross-TU BGM sharing retain that order. The pilot's FinishBreakpoints at
+  unprologued entries observe enclosing returns: use entry facts only. The
+  explicit return-PC/ESP observer `trace-stage-address-returns.py` is prepared
+  with verified cleanup sizes, but is unexecuted.
 
 - Continue `Bullet::on_tick` (`0x411e70`, 1,568/1,592 bytes) together with
   `check_player_collision` (`0x4124b0`, 449/448 bytes). Read

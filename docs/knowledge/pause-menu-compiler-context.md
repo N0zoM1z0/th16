@@ -209,3 +209,109 @@ Investigate why the returned AnmId storage remains separate: follow its
 actual uses and the callee's escape/lifetime information, using the same
 real-definition visibility controls as TH09 if needed. Matching callee bytes
 alone does not establish identical whole-program summaries.
+
+## UI creator visibility and return aliases
+
+The private single-callee visibility control removes only
+`create_ui_vm_at_origin` from its ordinary `/GL` object and supplies the same
+body from a second object. With `/GL` on both objects, all 86 preceding owners
+reproduce the ordinary raw bytes (`ui-single-callee-gl-control.json`). With
+only the creator compiled as native COFF, the snapshot return area and later
+source-surface pointer share EBP-0x2c. Its prologue, calling sequence and RECT
+placement also change, so this native control is diagnostic, not a source
+solution. The earlier whole-EffectManager native control shows the same
+sharing but is less specific. Inputs and outputs use `ui-single-` and
+`ui-boundary-` prefixes.
+
+`snapshot-lifetime-liveness.jsonl` observes the ordinary source after local
+liveness and live-on-definition analysis. It exits normally and reproduces
+all 141 owners in the expanded menu/Gui/EffectManager scope
+(`snapshot-lifetime-control.json`). Both linear walks complete at 135 tuples.
+The hidden AnmId return object appears in the alias sets of later
+`loaded_anms` reads and the `flush_sprites` call, after its value was copied
+into `snapshot_id`. This is a concrete place to investigate the interference;
+it is not just a lexical-scope or final offset choice.
+
+The PAS decoder is read-only. `ItfGetPas` at C2 RVA 0x1d83d5 obtains its TLS
+pointer by +0x0f, uses the index threshold at TLS+0xfc4c, optionally remaps
+through TLS+0xfc20, then loads the list from TLS+0xfbf0. A memory tuple's PAS
+index is at +0x28; a kind-11 effect operand uses +0x24. Nested PAS symbols
+need their child lists, rather than treating the top list as flat. Selected
+PDB decompiles are `compiler-stack-liveness.c` and `compiler-stack-colors.c`.
+
+These natural return-copy controls were checked and restored:
+
+| Control | Result |
+| --- | --- |
+| Initialize the creator's local AnmId directly from insertion | Creator becomes 180/193 bytes; snapshot stays 443/464 |
+| Copy only the returned handle's integer field in the creator | Creator remains exact at 193 bytes; snapshot unchanged |
+| Copy only the returned integer field at the snapshot assignment | Snapshot unchanged |
+| Return a local handle populated from `vm->id.id` in UI-list insertion | Insertion remains exact at 177 bytes; snapshot unchanged |
+
+The first three controls cover 141 owners. The last uses a conservative
+reverse closure of direct calls and tail jumps in both target inventory and
+candidate PDB extents, plus the preceding scope and the full edited TU.
+Its 356-owner comparison retains 286 local passes, 53 incomplete owners and
+17 mismatches. The scan does not infer indirect edges; two closure entries
+have no candidate annotations. No new exact function follows from these
+controls. Their reports and source snapshots remain under the corresponding
+`ui-return-`, `snapshot-scalar-handle` and `ui-value-return` prefixes.
+
+The following ordinary-source controls were restored after complete affected
+comparisons. Directly initializing the creator's local ID changes that exact
+callee from 193 to 180 bytes. Copying its returned scalar field instead of
+the whole class preserves all 141 results but leaves snapshot at 443/464.
+The caller-side scalar assignment has the same result. Constructing a local
+value in `insert_in_ui_list_back` before returning it also leaves every result
+unchanged in the 356-owner caller scope; the provider stays exact at 177 bytes.
+That scope combines the known source consumers with the reverse direct-call
+and tail-jump closure from target inventory and candidate PDB contributions
+(`ui-value-return-callers.json`). It does not infer indirect call edges.
+Reports use `ui-return-`, `snapshot-scalar-handle` and `ui-value-return`
+prefixes. These spellings do not recover the needed lifetime separation.
+
+The neighboring GameThread BGM-unlock difference is another complete-owner
+SIB issue: `finish_stage_transition` remains 622/623 bytes, with +0x208 encoded
+as 0x30 rather than target 0x06. Extracting the real `Supervisor::play_bgm`
+body into a local inline helper and independently capturing a Scorefile
+receiver do not change it. Both controls preserve all 13 preceding passes in
+the 15-owner GameThread-plus-BGM scope and are restored (`stage-play-helper`
+and `stage-score-owner`). Follow integer address formation for this smaller
+owner before extrapolating the Bullet float canonical-sort findings.
+
+## Integer address inputs and return-hook timing
+
+The stage address pilot reproduces 142 ordinary owners
+(`stage-address-baseline-control.json`). At AddrModes entry, the BGM store is
+fed by an integer add of `g_Scorefile` and `_music`, followed by the 0x19fa6
+field offset. The global pointer has key 0x104e0 and symbol ordinal 39;
+`_music` has key 0x10040 and ordinal 2. The pointer-first ordering therefore
+already exists before BuildAddr processes the expression.
+
+Passing `music_ids[0]` directly into the same-file inline BGM implementation
+does not recover the target order. Its entry snapshot still has `_track` at
+ordinal 2 and key 0x10040, while `g_Scorefile` is at ordinal 57 with key
+0x10720. That trace reproduces all 15 selected ordinary owners
+(`stage-direct-track-address-control.json`). Moving the shared BGM body to
+Supervisor.cpp and calling it across TUs also leaves every result unchanged
+in the 203-owner BGM-consumer scope (`stage-cross-tu-strict.json`). Both
+source controls are restored. An immutable reference to the stage's track
+field instead generates 624 bytes; the target owns 623. A block-scoped const
+reference to the snapshot's returned AnmId generates 466 bytes, like the
+named-value control. It is restored too.
+
+Only the entry records establish the BuildAddr input facts above. The
+pilot's GDB FinishBreakpoints were installed before the C2 function prologue;
+all 146 purported BuildReturn callbacks occurred after all 146 entries.
+They observed a later enclosing return, not each BuildAddr return, and may
+follow reused tuples. The prepared `trace-stage-address-returns.py` uses the
+saved return PC and expected ESP instead: BuildAddr pops 12 argument bytes,
+while AddrModes pops none. Those cleanup sizes are verified against all
+returns in the two public C2 functions. This corrected observer is not yet
+executed; attest its complete ordinary owners before interpreting its output.
+
+The unexecuted copy-address observer now uses the same explicit return
+handling and checks that the selected statement still has its source
+provenance. Its additional LoptFoldIntoAddressMode and
+LoptGenAddressModeExpression cleanup sizes are verified as 20 and zero bytes.
+This fixes the prepared observer, not the unresolved source address choice.
