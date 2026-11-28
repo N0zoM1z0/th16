@@ -1,7 +1,8 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-28 after matching difficulty selection through its shared
-cancellation exit. The complete 1,180-byte owner is now a local strict pass.
+Updated 2026-11-28 after tracing title-screen storage families and restoring
+the source controls. Difficulty selection retains its complete 1,180-byte
+local strict pass through the shared cancellation exit.
 `take_snapshot` remains 443/464 bytes and `tick_open` retains its single SIB
 difference. The existing ECL opcode 601 experiment remains dirty and preserved.
 Read [AGENTS.md](../AGENTS.md); keep checkpoints local and push `main` only
@@ -19,12 +20,12 @@ when asked.
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
 - **Latest focused result**:
-  `.analysis/title-compiler/difficulty-shared-exit-final-strict.json` compares
+  `.analysis/title-compiler/title-storage-final-strict.json` compares
   89 complete owners across MainMenu, MainMenuStates, MenuHelper and PauseMenu:
   75 local passes, eleven incomplete and three mismatches. All preceding
   passes survive. `do_difficulty_select` newly passes its complete 1,180-byte
   extent, 81 linked fields and independently reviewed switch table.
-  Both baseline and retained-source compiler traces reproduce their ordinary
+  Both difficulty-selection compiler traces reproduce their ordinary
   complete owners (63 and 89 respectively); all eight phase walks finish.
   Earlier restoration and Bullet/shared-state results remain private evidence;
   the broad totals above remain historical.
@@ -69,8 +70,16 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
   the final reload uses the title base separately from the pop address.
   This restores the three-byte instruction and one-byte alignment NOP with
   the independent switch record unchanged. A const receiver and opaque pop
-  provider had not repaired it. Continue the larger title-screen frame and
-  lifetime question from the roadmap, using the same complete-carrier method.
+  provider had not repaired it. The title-screen compiler trace reproduces
+  all 89 menu owners: 27 objects use three colors, while the target uses four
+  distinct slots. Both liveness walks finish at 1,601 tuples; the first four
+  returned handles do not retain the snapshot's later aliases. Read the title
+  context for rejected value/reference, reset, helper and shared-confirmation
+  controls. The world-creator initialization control regresses its exact
+  236-byte owner; the provider is restored and its 395-owner related scope is
+  checked. Next examine `TitleInf::on_tick` and the practice-stage selector's
+  different alignment prologue as a caller/callee group before more
+  title-local spelling changes.
   GameThread's BGM store remains 622/623 bytes. Its validated AddrModes entry
   receives g_Scorefile before music (keys 0x104e0 and 0x10040). Same-TU and
   cross-TU BGM sharing retain that order. The pilot's FinishBreakpoints at

@@ -41,10 +41,19 @@ apply that method to Bullet tick's remaining movement branches.
    pass): its shared cancellation exit restores the load address before the
    switch table without changing target ownership. Follow
    [its compiler context](knowledge/title-menu-compiler-context.md) when
-   examining shared tails. Then continue `TitleInf::do_title_screen`
-   (`0x44b5f0`). Recover real call/local shapes
-   in `do_practice_stage_select` (`0x450ef0`), `do_player_data` (`0x452330`),
-   and `do_score_name_entry` (`0x4532f0`). Do not introduce dead arithmetic or
+   examining shared tails. `TitleInf::do_title_screen` (`0x44b5f0`) remains
+   3,899/3,964 bytes: the validated compiler trace packs 27 objects into three
+   colors, while the target uses four distinct slots. Its first four returned
+   handles do not have the snapshot's extended alias lifetime. Local value,
+   reference, reset and helper controls do not repair it; retain the restored
+   source and the evidence in the title context instead of repeating them.
+   Next examine the `TitleInf::on_tick` caller together with
+   `do_practice_stage_select` (`0x450ef0`): its 1,292-byte candidate uses an
+   EBX-based alignment prologue, while the 1,232-byte target uses EBP and an
+   aligned ESP frame. Recover the real caller and return contexts before
+   revisiting title-slot allocation. Then recover real call/local shapes in
+   `do_player_data` (`0x452330`) and `do_score_name_entry` (`0x4532f0`).
+   Do not introduce dead arithmetic or
    dummy locals for stack alignment.
 3. **Large ECL dispatch.** Preserve the existing uncommitted opcode 601
    vector-assignment experiment before further changes. Compare
