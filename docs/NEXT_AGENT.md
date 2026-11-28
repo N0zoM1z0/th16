@@ -9,7 +9,7 @@ only when asked.
 
 ## Current baseline
 
-- **Latest source commit**: see `git log -1`; use the user's `gpt-6.1-sol: ...` message format.
+- **Latest checkpoint**: see `git log -1`; use the user's `gpt-6.1-sol: ...` message format.
 - **Incremental build**: `build/reference-candidate/th16.exe` (1,166 annotated
   functions; preserve its object/dependency graph for fast incremental builds).
 - **Last full local strict audit** (`.analysis/reference-audit.json` and
@@ -18,11 +18,13 @@ only when asked.
   - **36 mismatch · 118 incomplete** (90.29% complete extents compared)
 - **Factory status**: `not-submitted` (local strict comparisons only; the shared
   Factory accepted snapshot is inventory-only and returns no Oracle results).
-- **Latest focused result**: `Bullet::step_ex_17` (`0x415f90`) passes
-  597/597 bytes and 12 linked fields. The shared-state consumer scope covers
-  125 complete owners in BulletManager, Laser and LaserLine: 102 local passes,
-  20 incomplete and three mismatches, retaining every preceding local pass.
-  Evidence: `.analysis/bullet-compiler/step17-final-consumers-strict.json`.
+- **Latest focused result**: the restored Bullet TU retains 33 local passes,
+  six incomplete and one mismatch after rejecting the allocation controls.
+  The preceding shared-state comparison covers 125 complete owners in
+  BulletManager, Laser and LaserLine: 102 local passes, 20 incomplete and
+  three mismatches, including the 597-byte move update with 12 linked fields.
+  Evidence: `.analysis/bullet-compiler/allocation-final-restored-strict.json`
+  and `step17-final-consumers-strict.json`.
   The broad totals above remain historical.
 
 ## Working commands
@@ -45,7 +47,13 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
 
 - Continue with `BulletManager::clear_all` (`0x416f40`, 491/500 bytes), then
   `Bullet::on_tick`. The remaining clear-all difference swaps the scaled X/Y
-  velocity registers; inspect the real vector expression and allocation context.
+  velocity registers. A controlled NColor replay finds equal allocation
+  priorities of 134, with X preceding Y by two lifetime records; the tie-breaker
+  therefore allocates XMM1 to X and XMM2 to Y before instruction scheduling.
+  Follow the upstream lifetime creation/coalescing context. Direct callee,
+  unified cancel, vector-value and scalar movement controls were rejected;
+  scalar-left multiplication is byte-neutral. Detailed evidence and retained
+  controls are in the compiler-context note below.
   Preserve `step_ex_17`: the retained `BulletExState` has a vector at `+0x28`
   and a move-specific saved-speed scalar at `+0x14`, rather than accessing both
   through an eight-float array. This closes the completed-movement branch

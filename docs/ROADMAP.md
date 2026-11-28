@@ -13,7 +13,10 @@ control flow that feeds scheduling. Move update now passes all 597 bytes and
 12 linked fields after restoring the shared scalar/vector state layout.
 The active step is `BulletManager::clear_all`. Follow
 [the compiler-context evidence](knowledge/bullet-compiler-context.md) when
-choosing allocation or scheduling controls.
+choosing allocation or scheduling controls. Its X/Y allocation priorities
+tie; the remaining question is the input lifetime order and coalescing,
+before the final instruction scheduler. The related movement branches in
+`Bullet::on_tick` provide a second consumer for that investigation.
 
 1. **Bullet leaves and update loop.** Continue `clear_all` (`0x416f40`), then the
    remaining movement/data layout in `Bullet::on_tick` (`0x411e70`). Preserve

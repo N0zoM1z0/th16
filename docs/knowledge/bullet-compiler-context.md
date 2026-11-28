@@ -208,6 +208,78 @@ Private control sources and reports use the `step17-` prefix. The intermediate
 completed; use it only as provisional diagnostic evidence. The baseline and
 final controls have separate image comparisons.
 
+## Clear-all allocation and movement controls
+
+`clear_all` (`0x416f40`) remains 491/500 bytes locally, while `Bullet::cancel`
+(`0x416840`) passes all 444 bytes. In `clear-all-allocation.jsonl`, the
+PreEncode entry already assigns the half-step X and Y velocity loads to
+XMM1 and XMM2, respectively. Their SROA values are `$T1$sroa$66$1` and
+`$T1$sroa$65$1`; Z uses `$T1$sroa$431$1` in XMM3. The target instead uses
+XMM2 for X and XMM1 for Y. Investigate allocation and its input lifetimes
+before changing the final scheduler. This read-only link exits normally
+and reproduces all 40 ordinary Bullet owners; see
+`clear-all-allocation-control.json`.
+
+`clear-all-ncolor.jsonl` follows the allocator itself. Its read-only link also
+exits normally and reproduces all 40 owners; the input bindings and checks are
+in `clear-all-ncolor-control.json`. `NColUpdatePhysregAvail` (`0x111850`)
+records these selections, which agree with the later PreEncode operands:
+
+| Value | Allocation priority | Register |
+| --- | ---: | --- |
+| Game-speed `_f$1` | 146 | XMM0 |
+| X, `$T1$sroa$66$1` | 134 | XMM1 |
+| Y, `$T1$sroa$65$1` | 134 | XMM2 |
+| Z, `$T1$sroa$431$1` | 132 | XMM3 |
+
+The observed X/Y comparison reaches `NColColPriorityCompare` (`0x2585b3`).
+It subtracts the left lifetime's DWORD at `+0x48` from the right one's,
+sorting higher priorities first. A tie returns `(left - right) / 0x5c`,
+the relative lifetime-array index. X precedes Y by two records in this
+control, so their equal priority still orders X first. The SROA name suffix
+is not that lifetime index. Recover the value creation/coalescing context
+that feeds this order; the final instruction scheduler already receives the
+opposite register assignment from the target.
+
+Trace `NColInitializeSyms` (`0x23fb8f`) and `NColCombineLifetimes`
+(`0x1bfd75`) next to distinguish initial symbol order from later coalescing.
+
+Putting game speed on the left of the vector multiplication is byte-neutral
+across all 40 owners (`clear-all-left-scale-strict.json`). A lexical operand
+swap does not recover the missing lifetime order.
+
+The earlier pointer-filtered `clear-all-baseline-phases.jsonl` captures
+frontend/lowering snapshots but misses the backend passes. Its Emit entry
+still has virtual symbols. Use the separate PreEncode trace for the physical
+register observation. Match the decorated function name at the pass being
+observed, and bind returns to that function instance, thread and stack.
+
+The following ordinary source controls were rejected:
+
+| Control | Complete-owner result |
+| --- | --- |
+| `clear_all` calls the real `cancel` wrapper | clear-all grows to 504 bytes; cancel remains exact |
+| One real cancel method with the in-place expression | clear-all stays 491/500; cancel shrinks to 436 bytes |
+| One real cancel method with a one-step delta local | clear-all grows to 504 bytes; cancel remains exact |
+| Scale a delta local, then halve it in place | clear-all is 504 bytes; cancel is 443 bytes |
+| Assign `pos + delta` as a vector value | both cancellation owners have incomplete extents |
+
+`Bullet::on_tick` has related movement differences. A named vector delta in
+`move_full_step` is byte-neutral across all 40 Bullet owners. Using
+`D3DXVec3Scale` and `D3DXVec3Add` instead grows tick from 1,568 to 1,704 bytes.
+The scalar delta control captures game speed before the position stores but
+still sinks each velocity calculation into its coordinate update; tick is
+1,596 bytes. These controls do not recover the target's 1,592-byte owner.
+The target's full step keeps three scaled velocity components live before
+updating position, and its half-step cases have different partial sharing.
+Preserve both data lifetimes and the complete switch when continuing.
+
+All source controls were restored. Their source snapshots, build logs and
+focused reports use the `clear-all-` and `tick-` prefixes under the private
+evidence directory. The restored TU retains 33 local passes, six incomplete
+and one mismatch. Follow the allocator's competing lifetimes and coalescing
+before trying another expression form.
+
 ## Rejected source controls
 
 Expanding only the horizontal boundary helper in `step_ex_12` produces a
