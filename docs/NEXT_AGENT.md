@@ -1,9 +1,10 @@
 # TH16 next-agent handoff
 
-Updated 2026-11-27 after restoring ECL boss `moveEllipseTime` pair-local
-lifetimes, matching positioned ANM rotation setup, and rebasing the EH3 cleanup
-cookie slot. The boss PDB extent now matches 21,408 bytes, but its reviewed
-switch mapping still differs, so no exact credit was added. Read
+Updated 2026-11-28 after recovering the Bullet manager/callee alignment
+placement through real iterator setup and read-only whole-program C2 traces.
+The manager now owns 498 bytes against 502, with timer allocation still open;
+no exact credit was added. The existing ECL opcode 601 vector-assignment
+experiment remains dirty and preserved. Read
 [AGENTS.md](../AGENTS.md) before editing; keep checkpoints local and push `main`
 only when asked.
 
@@ -39,6 +40,18 @@ avoid full cold builds unless a dependency/cache problem is demonstrated.
 Follow [the remaining-function roadmap](ROADMAP.md) for the next batches and
 their affected comparison scopes. The existing dirty opcode 601 vector
 assignment in `src/EnemyEcl.cpp` is preserved for review.
+
+- `0x412860` (`BulletManager::on_tick_body`): the retained iterator setup and
+  `tick_nested` call restore the target manager realignment and the ordinary
+  EBP frame in its `Bullet::on_tick` callee (`0x411e70`). The manager contribution
+  is 498/502 bytes; Bullet tick is 1,568/1,592. Remaining manager differences
+  are timer XMM allocation and the scaled-add memory operand, including one
+  missing load. `manager-begin-nested-strict.json` under
+  `.analysis/bullet-compiler/` compares all 40 TU owners: 30 local passes,
+  seven incomplete and three mismatches, preserving every preceding pass.
+  Read [the compiler-context finding](knowledge/bullet-compiler-context.md)
+  before editing. The next useful action is a read-only timer allocation and
+  operand trace under this retained full owner, not more alignment padding.
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`): target and candidate complete
   PDB extents are both 21,408 bytes; both code bodies are 19,976 bytes. The
@@ -107,6 +120,10 @@ assignment in `src/EnemyEcl.cpp` is preserved for review.
 ## Highest-value next targets
 
 ### 1. Large remaining source owners
+
+First finish the active Bullet manager timer allocation above. The C2
+investigation explains why caller/callee alignment must be handled together;
+the larger owners below remain queued in [ROADMAP.md](ROADMAP.md).
 
 - `0x41dcb0` (`EnemyData::ecl_run_over_300`, `src/EnemyEcl.cpp`, 21,408 B):
   continue from the verified EH graph and compare the complete dispatch body,

@@ -7,7 +7,13 @@ separate. Recheck each selected owner against the current incremental build.
 
 ## Execution order
 
-1. **Bullet leaves and update loop.** Start with `Bullet::step_ex_12`
+The active step is now the Bullet manager timer allocation. Real iterator
+setup has recovered the manager/callee alignment placement; the complete
+manager is still 498/502 bytes. Follow
+[the compiler-context evidence](knowledge/bullet-compiler-context.md) before
+returning to the leaf load-order work.
+
+1. **Bullet leaves and update loop.** After the active manager, revisit `Bullet::step_ex_12`
    (`0x415d80`): its recorded complete 519-byte comparison differs only in two
    constant-load instructions. Recover the natural expression/call shape, then
    inspect `step_ex_17` (`0x415f90`) and `clear_all` (`0x416f40`). Follow with
@@ -46,6 +52,22 @@ separate. Recheck each selected owner against the current incremental build.
    later work, not consequences of matching selected functions.
 
 ## Iteration and checkpoints
+
+Treat this ordering as a starting point, not a requirement to tune each
+function in isolation. When several differences suggest a common compiler
+cause, follow the real caller/callee graph, shared definitions and source
+lifetimes before rewriting the visible instruction site. TH09's
+`docs/RE_WORKFLOW.md` compiler-context procedure and TH10's ECL subroutine
+entry investigation in `docs/KNOWLEDGE_BASE.md` are useful methodological
+references. Their VC7.1 offsets and thresholds do not apply to TH16's v141 C2.
+
+For a stubborn difference, keep the full carrier and ordinary build inputs,
+then use a private control that hides one real callee definition or observes
+C2 pass entry/return. Trace the competing live ranges through allocation and
+scheduling; an early source load need not survive to the emitted instruction.
+Confirm that a read-only debugger link reproduces the ordinary complete owner
+before relying on the trace. Diagnostic compiler modifications and alternate
+visibility controls are not acceptance evidence.
 
 Use `scripts/build.py` without `--clean`, then repeat `audit-reference.py
 --address ... --json .analysis/...json` for the affected complete owners.

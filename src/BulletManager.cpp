@@ -240,7 +240,9 @@ i32 BulletManager::on_draw_body()
 i32 BulletManager::on_tick_body()
 {
     Bullet *b;
-    b = iter_first();
+    iter_current = tick_list_head.next;
+    iter_next = iter_current != NULL ? iter_current->next : NULL;
+    b = iter_current != NULL ? iter_current->entry : NULL;
     bullet_count = 0;
     for (i32 i = BULLET_LAYER_COUNT - 1; i >= 0; i--)
     {
@@ -277,7 +279,7 @@ i32 BulletManager::on_tick_body()
             b->next_in_layer = NULL;
         }
         bullet_count++;
-        b->state_time.tick();
+        b->state_time.tick_nested();
     }
     return 1;
 }
